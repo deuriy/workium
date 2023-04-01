@@ -1,0 +1,96 @@
+{
+  "name": "frontend_builder_boilerplate",
+  "version": "2.5.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build",
+    "dev": "nodemon --watch gulpfile.js --watch package.json --ext js,json,styl,pug --exec gulp dev",
+    "format": "gulp format",
+    "validate": "gulp validate",
+    "imagemin": "gulp imagemin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:khv2online/frontend_builder_boilerplate.git"
+  },
+  "author": "khv2online@gmail.com",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@prettier/plugin-pug": "^1.17.1",
+    "gulp-debug": "^4.0.0",
+    "gulp-html": "^3.5.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-prettier": "^4.0.0",
+    "gulp-run-command": "0.0.10",
+    "jshint": "^2.13.0",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1"
+  },
+  "dependencies": {
+    "argv": "0.0.2",
+    "autoprefixer": "^10.4.0",
+    "browser-sync": "^2.27.7",
+    "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.3",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-esbuild": "^0.9.1",
+    "gulp-filter": "^7.0.0",
+    "gulp-if": "^3.0.0",
+    "gulp-postcss": "^9.0.1",
+    "gulp-progeny": "^0.4.1",
+    "gulp-pug": "^5.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-stylus": "^2.7.0",
+    "gulp-touch-fd": "^2.0.0",
+    "postcss": "^8.3.11",
+    "stylus-supremacy": "^2.15.0",
+    "yargs": "^17.2.1"
+  },
+  "optionalDependencies": {
+    "swiper": "^6.6.2",
+    "bootstrap": "5.0.1"
+  },
+  "jshintConfig": {
+    "maxerr": 99,
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "freeze": true,
+    "latedef": true,
+    "noarg": true,
+    "nonbsp": true,
+    "nonew": true,
+    "plusplus": true,
+    "undef": true,
+    "unused": true,
+    "strict": false,
+    "maxparams": 3,
+    "varstmt": true,
+    "esversion": 11,
+    "browser": true,
+    "devel": true,
+    "leanswitch": true,
+    "noreturnawait": true,
+    "regexpu": true,
+    "singleGroups": false,
+    "predef": [
+      "__DEBUG__"
+    ],
+    "globals": {}
+  },
+  "prettier": {
+    "printWidth": 99,
+    "endOfLine": "lf",
+    "tabWidth": 2
+  },
+  "stylusSupremacy.insertSemicolons": false,
+  "stylusSupremacy.insertBraces": false,
+  "stylusSupremacy.tabStopChar": "  ",
+  "stylusSupremacy.quoteChar": "\"",
+  "browserslist": [
+    ">1%",
+    "not IE 11",
+    "not dead"
+  ]
+}
