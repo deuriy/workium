@@ -1,0 +1,77 @@
+.partners-table
+	width 100%
+	// width 944px
+	padding 15px 30px
+	// padding 16px 32px
+	background var(--light)
+	border-radius 12px
+	
+	&__caption
+		margin-bottom 8px
+		font-weight 600
+		text-align left
+		
+		@media $xs
+			font-size 16px
+			line-height 1.625
+	
+	&__th
+		padding-bottom 6px
+		border-bottom 1px solid var(--grey)
+		text-align left
+		font-weight 500
+		font-size 13px
+		line-height 1.6923
+		color var(--grey2)
+		
+		&--date
+			width 142px
+			
+		&--name
+			width 262px
+		
+		&--profit
+			width 110px
+			text-align right
+		
+		&--profit-and-date
+			text-align right
+	
+	&__td
+		padding 15px 0
+		
+		&--profit,
+		&--profit-and-date
+			text-align right
+	
+	&__body
+		.partners-table__row:first-child
+			.partners-table__td
+				padding-top 22px
+	
+	&__email,
+	&__profit
+		font-size 16px
+		line-height 26px
+	
+	&__id,
+	&__date
+		font-size 13px
+		line-height 22px
+		color var(--grey2)
+	
+	&--mobile
+		width calc(100% + 34px)
+		padding 8px 14px
+		
+		.partners-table__caption
+			margin-bottom 15px
+			margin-left 17px
+		
+		.partners-table__body
+			.partners-table__row:first-child
+				.partners-table__td
+					padding-top 10px
+		
+		.partners-table__td
+			padding 7px 0

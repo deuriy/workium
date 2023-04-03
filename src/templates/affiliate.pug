@@ -1,0 +1,74 @@
+extends layouts/user_profile
+
+block content
+  .affiliate-program
+    h1.page-title.affiliate-program__title Партнерська програма
+    .affiliate-program__text
+      p Використовуючи ваше унікальне бонусне посилання, яке розміщене нижче, ви можете запрошувати необмежену кількість користувачів. Вам необхідно зробити – скопіювати її та відправити своїм друзям і знайомим. Після того, як вони пройдуть по ній і зареєструються на сервісі – ви миттєво побачите їх у себе в команді.
+    .bonus-link.affiliate-program__bonus-link
+      h4.bonus-link__title Ваше бонус посилання:
+      .copy-link
+        input(type="text" readonly value="https://website.com?i=wmj7drft").copy-link__input
+        button(type="button").copy-btn.copy-link__btn
+    table.partners-table.affiliate-program__partners-table.hidden-xs
+      caption.partners-table__caption Ваші партнери:
+      thead.partners-table__thead
+        tr.partners-table__row
+          th.partners-table__th.partners-table__th--date Дата
+          th.partners-table__th.partners-table__th--name Ім'я
+          th.partners-table__th.partners-table__th--id ID
+          th.partners-table__th.partners-table__th--profit Прибуток (грн)
+      tbody.partners-table__body
+        tr.partners-table__row
+          td.partners-table__td 5 січ 2023
+          td.partners-table__td alma.lawson@mail.com
+          td.partners-table__td 39974294
+          td.partners-table__td.partners-table__td--profit 2658,67
+        tr.partners-table__row
+          td.partners-table__td 5 січ 2023
+          td.partners-table__td alma.lawson@mail.com
+          td.partners-table__td 39974294
+          td.partners-table__td.partners-table__td--profit 2658,67
+        tr.partners-table__row
+          td.partners-table__td 7 лют 2023
+          td.partners-table__td willie.jennings@mail.com
+          td.partners-table__td 52334797
+          td.partners-table__td.partners-table__td--profit 456,89
+        tr.partners-table__row
+          td.partners-table__td 7 лют 2023
+          td.partners-table__td willie.jennings@mail.com
+          td.partners-table__td 52334797
+          td.partners-table__td.partners-table__td--profit 456,89
+        tr.partners-table__row
+          td.partners-table__td 2 бер 2023
+          td.partners-table__td michelle.rivera@mail.com
+          td.partners-table__td 75775297
+          td.partners-table__td.partners-table__td--profit 127,32
+    table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
+      caption.partners-table__caption Ваші партнери:
+      thead.partners-table__thead
+        tr.partners-table__row
+          th.partners-table__th.partners-table__th--email-and-id Ім'я
+          th.partners-table__th.partners-table__th--profit-and-date Прибуток (грн)
+      tbody.partners-table__body
+        tr.partners-table__row
+          td.partners-table__td
+            .partners-table__email alma.lawson@mail.com
+            .partners-table__id ID: 39974294
+          td.partners-table__td.partners-table__td--profit-and-date
+            .partners-table__profit 2658,67
+            .partners-table__date 5 січ 2023
+        tr.partners-table__row
+          td.partners-table__td
+            .partners-table__email willie.jennings@mail.com
+            .partners-table__id ID: 52334797
+          td.partners-table__td.partners-table__td--profit-and-date
+            .partners-table__profit 456,89
+            .partners-table__date 7 лют 2023
+        tr.partners-table__row
+          td.partners-table__td
+            .partners-table__email michelle.rivera@mail.com
+            .partners-table__id ID: 75775297
+          td.partners-table__td.partners-table__td--profit-and-date
+            .partners-table__profit 127,32
+            .partners-table__date 2 бер 2023
