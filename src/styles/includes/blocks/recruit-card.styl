@@ -1,0 +1,51 @@
+.recruit-card
+	padding 24px 32px
+	border-radius 12px
+	background var(--light)
+	
+	&__header
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items center
+		margin-bottom 24px
+	
+	&__id-and-comment
+		margin-top -3px
+		margin-right 3px
+		text-align right
+	
+	&__name
+		font-weight 600
+	
+	&__phone
+		color var(--accent)
+		text-decoration none
+	
+	&__id,
+	&__comment,
+	&__item-title
+		color var(--grey)
+		font-size 13px
+		line-height 1.6923
+	
+	&__info
+		display grid
+		grid-template-columns repeat(5, auto)
+		gap 32px
+		margin-bottom 35px
+	
+	&__item
+		position relative
+		padding-left 16px
+		
+		&::before
+			content ""
+			position absolute
+			top 0
+			bottom 0
+			left 0
+			width 1px
+			height 32px
+			margin auto
+			background var(--grey-medium)

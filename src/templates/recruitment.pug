@@ -1,0 +1,129 @@
+extends layouts/user_profile
+
+block vars
+  - userProfileClasses = 'user-profile--recruitment';
+
+block content
+  .recruitment
+    h1.page-title.recruitment__title Рекрутація
+    .recruit-cards
+      .recruit-card.recruit-cards__item
+        .recruit-card__header
+          .recruit-card__name-and-phone
+            .recruit-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").recruit-card__phone +380987653498
+          .recruit-card__id-and-comment
+            .recruit-card__id ID: 5233479
+            .recruit-card__comment Якийсь невеликий коментар
+        .recruit-card__info
+          .recruit-card__item
+            .recruit-card__item-title Бронь
+            .recruit-card__item-value 5 січ 2023
+          .recruit-card__item
+            .recruit-card__item-title Виїзд
+            .recruit-card__item-value 28 січ 2023
+          .recruit-card__item
+            .recruit-card__item-title Вакансія
+            .recruit-card__item-value Склад фабрики з пошиття робочого одягу
+          .recruit-card__item
+            .recruit-card__item-title Партнер
+            .recruit-card__item-value Ворк Профi
+          .recruit-card__item
+            .recruit-card__item-title Винагорода
+            .recruit-card__item-value 500 злт
+        .status-line.recruit-card__status-line
+          .status-line__line
+            .status-line__line-fill(style="width: 80%")
+          .status-line__items
+            .status-line__item.status-line__item--highlighted.status-line__item--booked
+              .status-line__item-text Заброньований
+            .status-line__item.status-line__item--highlighted.status-line__item--left
+              .status-line__item-text Виїхав
+            .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+              .status-line__item-text Оформлення
+            .status-line__item.status-line__item--highlighted.status-line__item--working
+              .status-line__item-text Працює
+            .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+              .status-line__item-text Відпрацював
+            .status-line__item.status-line__item--payment
+              .status-line__item-text Виплата
+      .recruit-card.recruit-cards__item
+        .recruit-card__header
+          .recruit-card__name-and-phone
+            .recruit-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").recruit-card__phone +380987653498
+          .recruit-card__id-and-comment
+            .recruit-card__id ID: 5233479
+            .recruit-card__comment Якийсь невеликий коментар
+        .recruit-card__info
+          .recruit-card__item
+            .recruit-card__item-title Бронь
+            .recruit-card__item-value 5 січ 2023
+          .recruit-card__item
+            .recruit-card__item-title Виїзд
+            .recruit-card__item-value 28 січ 2023
+          .recruit-card__item
+            .recruit-card__item-title Вакансія
+            .recruit-card__item-value Склад фабрики з пошиття робочого одягу
+          .recruit-card__item
+            .recruit-card__item-title Партнер
+            .recruit-card__item-value Ворк Профi
+          .recruit-card__item
+            .recruit-card__item-title Винагорода
+            .recruit-card__item-value 500 злт
+        .status-line.recruit-card__status-line
+          .status-line__line
+            .status-line__line-fill(style="width: 60%")
+          .status-line__items
+            .status-line__item.status-line__item--highlighted.status-line__item--booked
+              .status-line__item-text Заброньований
+            .status-line__item.status-line__item--highlighted.status-line__item--left
+              .status-line__item-text Виїхав
+            .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+              .status-line__item-text Оформлення
+            .status-line__item.status-line__item--highlighted.status-line__item--working
+              .status-line__item-text Працює
+            .status-line__item.status-line__item--worked-out
+              .status-line__item-text Відпрацював
+            .status-line__item.status-line__item--payment
+              .status-line__item-text Виплата
+      .recruit-card.recruit-cards__item
+        .recruit-card__header
+          .recruit-card__name-and-phone
+            .recruit-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").recruit-card__phone +380987653498
+          .recruit-card__id-and-comment
+            .recruit-card__id ID: 5233479
+            .recruit-card__comment Якийсь невеликий коментар
+        .recruit-card__info
+          .recruit-card__item
+            .recruit-card__item-title Бронь
+            .recruit-card__item-value 5 січ 2023
+          .recruit-card__item
+            .recruit-card__item-title Виїзд
+            .recruit-card__item-value 28 січ 2023
+          .recruit-card__item
+            .recruit-card__item-title Вакансія
+            .recruit-card__item-value Склад фабрики з пошиття робочого одягу
+          .recruit-card__item
+            .recruit-card__item-title Партнер
+            .recruit-card__item-value Ворк Профi
+          .recruit-card__item
+            .recruit-card__item-title Винагорода
+            .recruit-card__item-value 500 злт
+        .status-line.recruit-card__status-line
+          .status-line__line
+            .status-line__line-fill(style="width: 100%")
+          .status-line__items
+            .status-line__item.status-line__item--highlighted.status-line__item--booked
+              .status-line__item-text Заброньований
+            .status-line__item.status-line__item--highlighted.status-line__item--left
+              .status-line__item-text Виїхав
+            .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+              .status-line__item-text Оформлення
+            .status-line__item.status-line__item--highlighted.status-line__item--working
+              .status-line__item-text Працює
+            .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+              .status-line__item-text Відпрацював
+            .status-line__item.status-line__item--highlighted.status-line__item--payment
+              .status-line__item-text Виплата
