@@ -10,5 +10,12 @@ html(lang="en")
     link(href="/css/styles.css", rel="stylesheet")
     script(src="/js/vendor.js", defer="")
     script(src="/js/app.js", defer="")
+    script(src="/js/profile.js", defer="")
   body
-    block content
+    include ../includes/blocks/mobile-header
+    
+    .user-profile
+      include ../includes/blocks/user-sidebar
+
+      .user-profile__main
+        block content

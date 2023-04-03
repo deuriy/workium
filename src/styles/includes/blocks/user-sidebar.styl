@@ -1,0 +1,30 @@
+.user-sidebar
+	width 280px
+	height 100%
+	background var(--accent)
+	overflow auto
+	@extend .transition
+	
+	@media $xs
+		position fixed
+		top 56px
+		left -280px
+		height calc(100% - 56px)
+	
+	&__top
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items center
+		margin 28px 32px 8px
+	
+	&__user-info
+		@media $smPlus
+			display none
+	
+	&__user-menu
+		margin 12px 11px 20px
+	
+	&--opened
+		left 0
+		width 100%

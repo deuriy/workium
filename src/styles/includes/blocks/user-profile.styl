@@ -1,0 +1,28 @@
+.user-profile
+	display grid
+	grid-template-columns 280px 1fr
+	
+	@media $xs
+		grid-template-columns 100%
+		padding-top 56px
+	
+	&__main
+		padding 24px 48px
+		background var(--user-profile-bg)
+		
+		@media $smMinus
+			padding-right 30px
+			padding-left 30px
+		
+		@media $xs
+			padding-right 17px
+			padding-left 17px
+	
+	&__page-title
+		margin-bottom 40px
+		
+		@media $smMinus
+			margin-bottom 32px
+		
+		@media $xs
+			margin-bottom 24px

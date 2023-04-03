@@ -1,6 +1,6 @@
 class Example {
   constructor() {
-    alert("is debug mode: " + __DEBUG__);
+    // alert("is debug mode: " + __DEBUG__);
   }
 }
 

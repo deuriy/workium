@@ -1,0 +1,14 @@
+.achievements
+	display grid
+	grid-template-columns repeat(auto-fill, minmax(218px, auto))
+	justify-content start
+	gap: 32px 24px
+	
+	@media $smMinus
+		grid-template-columns repeat(auto-fill, minmax(186px, auto))
+		
+	@media $xs
+		grid-template-columns repeat(auto-fill, minmax(154px, auto))
+		
+	@media $xxs
+		grid-template-columns repeat(2, auto)
