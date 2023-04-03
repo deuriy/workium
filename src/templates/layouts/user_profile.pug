@@ -1,5 +1,6 @@
 doctype html
-html(lang="en")
+block vars
+html(lang="uk")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
@@ -14,7 +15,7 @@ html(lang="en")
   body
     include ../includes/blocks/mobile-header
     
-    .user-profile
+    .user-profile(class=userProfileClasses)
       include ../includes/blocks/user-sidebar
 
       .user-profile__main

@@ -1,0 +1,31 @@
+.edit-avatar
+	display grid
+	grid-template-columns 80px 1fr
+	align-items center
+	gap 20px
+	padding 30px 30px 22px
+	border 1px solid var(--light-grey)
+	border-radius 12px
+	background var(--light)
+		
+	@media $xs
+		padding 14px 16px
+	
+	&__avatar
+		@media $xs
+			margin-top -5px
+	
+	&__avatar-img
+		border-radius 50%
+	
+	&__text-wrapper
+		margin-top -3px
+		
+		@media $xs
+			margin-top 0
+	
+	&__username
+		margin-bottom 11px
+		color var(--dark)
+		font-size 18px
+		line-height 1.56

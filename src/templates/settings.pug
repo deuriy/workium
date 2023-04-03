@@ -1,0 +1,58 @@
+extends layouts/user_profile
+
+block vars
+  - userProfileClasses = 'user-profile--settings';
+
+block content
+  .user-settings
+    h1.page-title.user-settings__title Налаштування
+    .tabs-menu.user-settings__tabs-menu
+      ul.tabs-menu__list
+        li.tabs-menu__item
+          a(href="/settings.html").tabs-menu__link.tabs-menu__link--active Загальна інформація
+        li.tabs-menu__item
+          a(href="/security.html").tabs-menu__link Безпека
+        li.tabs-menu__item
+          a(href="/verification.html").tabs-menu__link Варифікація
+        li.tabs-menu__item
+          a(href="/notifications.html").tabs-menu__link Сповіщення
+    .edit-avatar.user-settings__edit-avatar
+      .edit-avatar__avatar
+        img(src="/img/andrew.png" alt="Андрій").edit-avatar__avatar-img
+      .edit-avatar__text-wrapper
+        .edit-avatar__username Андрій
+        a(href="#").edit-link.edit-avatar__edit-link Змінити фото профілю
+    .fieldgroup.user-settings__fieldgroup
+      .fieldgroup__inner
+        .fieldgroup__row
+          .field.field-row__item
+            label(for="username").form-label.field__label Ім’я
+            input(type="text" name="username" id="username" placeholder="Ім’я" value="Андрій").form-text
+          .field.field-row__item
+            label(for="surname").form-label.field__label Прізвище
+            input(type="text" name="surname" id="surname" placeholder="Прізвище" value="Марисюк").form-text
+        .fieldgroup__row
+          .field.field-row__item
+            label(for="patronym").form-label.field__label По-батькові
+            input(type="text" name="patronym" id="patronym" placeholder="По батькові").form-text
+          .field.field-row__item
+            label(for="login").form-label.field__label Логін
+            input(type="text" name="login" id="login" placeholder="Логін").form-text
+        .fieldgroup__row
+          .field.field-row__item
+            label.form-label.field__label Показувати ім’я
+            select(name="display_name").form-select
+              option(value="name") Показувати ім’я
+              option(value="login") Показувати логін
+        .fieldgroup__row.fieldgroup__row--align-items-end
+          .field.field-row__item
+            label(for="phone").form-label.field__label Контактний телефон
+            input(type="text" name="phone" id="phone" placeholder="Телефон").form-text
+          .field.field-row__item
+            select(name="messenger" id="messenger").form-select
+              option(value="none") Мессенжер
+              option(value="viber") Viber
+              option(value="telegram") Telegram
+              option(value="whatsapp") WhatsApp
+    .user-settings__actions
+      button(type="submit").btn-info.user-settings__action-btn Зберегти зміни

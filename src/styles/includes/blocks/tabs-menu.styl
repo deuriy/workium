@@ -1,0 +1,46 @@
+.tabs-menu
+	@media $xs
+		height 48px
+		padding 6px
+		background var(--light-grey)
+		overflow hidden
+		
+	&__list
+		list-style none
+		display flex
+		align-items center
+		gap 20px
+		
+		@media $xs
+			align-items start
+			height 48px
+			gap 13px
+			overflow auto
+	
+	&__item
+		font-size 14px
+		line-height 1.7143
+	
+	&__link
+		display grid
+		padding 6px 16px
+		border-radius 6px
+		background var(--light)
+		color var(--accent)
+		text-decoration none
+		white-space nowrap
+		@extend .transition
+		
+		@media $xs
+			padding 6px 5px
+			background transparent
+		
+		&:hover
+			@media $smPlus
+				background var(--dark)
+				color var(--light)
+						
+		&--active
+			padding 6px 16px
+			background var(--dark)
+			color var(--light)
