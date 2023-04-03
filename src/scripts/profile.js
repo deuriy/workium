@@ -19,4 +19,15 @@ $(function () {
 		$('.user-sidebar').toggleClass('user-sidebar--opened');
 		$('body').toggleClass('no-scroll');
 	});
+
+	$('.copy-link__btn').click(function(e) {
+		let $copyLinkInput = $(this).closest('.copy-link').find('.copy-link__input');
+
+		if (!$copyLinkInput.length) return;
+
+		$copyLinkInput[0].select();
+	  $copyLinkInput[0].setSelectionRange(0, 99999);
+
+	  document.execCommand("copy");
+	});
 });
