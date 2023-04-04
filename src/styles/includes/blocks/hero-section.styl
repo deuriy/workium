@@ -1,0 +1,37 @@
+.hero-section
+	&__container
+		display grid
+		grid-template-columns 1fr auto
+		align-items center
+		gap 80px
+		
+		@media $mdMinus
+			grid-template-columns repeat(2, 1fr)
+			gap 60px
+			
+		@media $smMinus
+			gap 40px
+			
+		@media $xs
+			grid-template-columns 100%
+			gap 18px
+	
+	&__title
+		margin-bottom 24px
+		
+		@media $xs
+			margin-bottom 16px
+	
+	&__text
+		margin-bottom 32px
+		
+		@media $xs
+			margin-bottom 24px
+	
+	&__img-wrapper
+		@media $xs
+			order -1
+	
+	&__btn
+		@media $xs
+			width 100%

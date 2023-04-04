@@ -1,0 +1,25 @@
+.statistics-section
+	&__title
+		margin-bottom 12px
+	
+	&__text
+		margin-bottom 48px
+		
+		@media $xs
+			margin-bottom 24px
+	
+	&__items
+		background var(--grey-light)
+	
+	&__items-container
+		display grid
+		grid-template-columns repeat(auto-fit, minmax(271px, auto))
+		justify-content center
+		gap 32px
+		padding-top 90px
+		padding-bottom 80px
+		
+		@media $xs
+			gap 40px
+			padding-top 40px
+			padding-bottom 40px

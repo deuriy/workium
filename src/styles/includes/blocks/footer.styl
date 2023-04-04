@@ -1,0 +1,20 @@
+.footer
+	&__container,
+	&__right
+		display grid
+		grid-template-columns repeat(2, auto)
+		align-items center
+		gap 32px
+		
+		@media $xs
+			grid-template-columns 100%
+			gap 24px
+		
+	&__container
+		justify-content space-between
+		padding-top 18px
+		padding-bottom 18px
+	
+	&__logo-img
+		@media $xs
+			vertical-align middle

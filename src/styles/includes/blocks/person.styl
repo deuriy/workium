@@ -1,0 +1,55 @@
+.person
+	display grid
+	grid-template-columns 100%
+	// align-items end
+	width 271px
+	height 420px
+	max-width 100%
+	border-radius 16px
+	text-decoration none
+	overflow hidden
+	
+	// &::after
+	// 	content ""
+	// 	z-index 10
+	// 	background linear-gradient(180deg, rgba(15, 24, 42, 0) 77.14%, rgba(15, 24, 42, 0.7) 100%)
+	
+	@media $xs
+		width 312px
+		height 484px
+	
+	&__photo,
+	&__info
+		grid-area 1 / 1 / 2 / 3
+	
+	&__photo
+		display grid
+		place-content center
+		overflow hidden
+	
+	&__photo-img
+		height 420px
+		max-width none
+		vertical-align middle
+		
+		@media $xs
+			height 484px
+	
+	&__info
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items end
+		background linear-gradient(180deg, rgba(15, 24, 42, 0) 77.14%, rgba(15, 24, 42, 0.7) 100%)
+		padding 0 24px 22px
+		color var(--light)
+		
+		@media $xs
+			padding 0 26px 25px 24px
+	
+	&__name
+		font-weight 600
+	
+	&__position
+		font-size 13px
+		line-height 1.6923

@@ -1,0 +1,9 @@
+.steps
+	display grid
+	grid-template-columns repeat(auto-fit, minmax(420px, auto))
+	justify-content center
+	gap 32px
+	
+	@media $xs
+		grid-template-columns repeat(auto-fit, minmax(320px, auto))
+		gap 16px

@@ -1,0 +1,22 @@
+.people-swiper-container
+	position relative
+	padding-right 55px
+	padding-left 55px
+	
+	@media $xs
+		padding-right 0
+		padding-left 0
+	
+	&__prev,
+	&__next
+		position absolute
+		z-index 10
+		top 0
+		bottom 0
+		margin auto
+	
+	&__prev
+		left 0
+	
+	&__next
+		right 0

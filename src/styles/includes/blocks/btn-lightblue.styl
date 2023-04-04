@@ -1,0 +1,29 @@
+.btn-lightblue
+	display inline-grid
+	justify-content center
+	padding 14px 32px
+	border none
+	outline none
+	border-radius 12px
+	font-weight 500
+	font-size 16px
+	line-height 1.625
+	font-family var(--base-font)
+	background var(--light-blue)
+	color var(--light)
+	white-space nowrap
+	cursor pointer
+	text-decoration none
+	@extend .transition
+	
+	&--telegram
+		grid-template-columns repeat(2, auto)
+		align-items center
+		gap 12px
+		padding 14px 24px
+		
+		&::before
+			content ""
+			width 21px
+			height 16px
+			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='21' height='16' fill='none' viewBox='0 0 21 16'%3E%3Cpath fill='%23fff' fill-rule='evenodd' d='M1.875 6.888c5.369-2.258 8.949-3.747 10.74-4.466C17.729.37 18.792.012 19.485 0c.152-.002.493.034.713.207a.74.74 0 0 1 .262.481c.025.139.055.454.031.7-.277 2.811-1.476 9.633-2.086 12.781-.259 1.333-.767 1.78-1.259 1.823-1.07.095-1.882-.682-2.917-1.338-1.621-1.025-2.537-1.664-4.11-2.665-1.818-1.156-.64-1.792.396-2.831.272-.272 4.984-4.41 5.075-4.785.011-.047.022-.222-.086-.314-.107-.092-.266-.06-.381-.036-.163.036-2.752 1.688-7.768 4.957-.735.487-1.4.724-1.997.712-.658-.014-1.923-.359-2.863-.654C1.342 8.676.425 8.485.505 7.87c.041-.32.498-.647 1.37-.982Z' clip-rule='evenodd'/%3E%3C/svg%3E") 0 0 no-repeat

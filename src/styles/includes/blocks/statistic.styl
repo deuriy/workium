@@ -1,0 +1,31 @@
+.statistic
+	width 271px
+	text-align center
+	
+	@media $xs
+		width 325px
+	
+	&__title
+		@extend .section-title
+		
+		@media $xs
+			font-size 32px
+			line-height 1.25
+		
+		&::after
+			content ""
+			display block
+			width 48px
+			height 3px
+			margin 12px auto
+			background var(--info)
+			
+			@media $xs
+				margin 8px auto
+	
+	&__text
+		color var(--text-color)
+		
+		@media $xs
+			font-size 16px
+			line-height 1.625

@@ -5,10 +5,17 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     //- meta(name='description' content='')
     title Workium
-    link(href="/img/favicon.svg", rel="icon", type="image/svg+xml")
+    link(href="/img/favicon.png", rel="icon", type="image/png")
     link(href="/css/vendor.css", rel="stylesheet")
     link(href="/css/styles.css", rel="stylesheet")
     script(src="/js/vendor.js", defer="")
     script(src="/js/app.js", defer="")
   body
-    block content
+    .wrapper
+      include ../includes/blocks/mobile-header-light
+      include ../includes/blocks/header
+
+      main.main
+        block content
+
+      include ../includes/blocks/footer
