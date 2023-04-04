@@ -68,5 +68,14 @@
 			.status-line__item-text
 				position relative
 				right calc(100% - 10px)
+	
+	&--full
+		.status-line__line-fill
+			background var(--success)
+		
+		.status-line__item--highlighted
+			color var(--success)
 			
+			&::before
+				background var(--success)
 

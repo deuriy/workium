@@ -31,8 +31,10 @@
 	
 	&__info
 		display grid
-		grid-template-columns repeat(5, auto)
+		// grid-template-columns repeat(5, auto)
+		grid-template-columns repeat(6, auto)
 		gap 32px
+		margin-right -5px
 		margin-bottom 35px
 	
 	&__item
@@ -49,3 +51,16 @@
 			height 32px
 			margin auto
 			background var(--grey-medium)
+		
+		&:first-child
+			padding-left 0
+			
+			&::before
+				display none
+	
+	&__item-value
+		&--vacancy
+			width 170px
+			white-space nowrap
+			text-overflow ellipsis
+			overflow hidden
