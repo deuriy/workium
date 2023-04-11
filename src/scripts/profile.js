@@ -30,4 +30,10 @@ $(function () {
 
 	  document.execCommand("copy");
 	});
+
+	$('[data-bookmark]').click(function(e) {
+		e.preventDefault();
+
+		$(this).toggleClass('bookmark-icon--fill');
+	});
 });

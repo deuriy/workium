@@ -44,12 +44,11 @@
 	
 	&__id,
 	&__comment,
-	&__item-title
 		color var(--grey)
 		font-size 13px
 		line-height 1.6923
 	
-	&__info
+	&__specifications
 		display grid
 		grid-template-columns repeat(6, auto)
 		gap 32px
@@ -66,12 +65,12 @@
 			grid-template-columns repeat(2, auto)
 			gap 16px 31px
 	
-	&__item
+	&__specification
 		@media $md
 			position relative
 			padding-left 16px
 		
-			&::before
+			&:not(:first-child)::before
 				content ""
 				position absolute
 				top 0
@@ -84,36 +83,6 @@
 		
 			&:first-child
 				padding-left 0
-				
-				&::before
-					display none
-	
-	&__item-value
-		@media $xxs
-			font-size 16px
-			line-height 1.625
-			
-		&--vacancy
-			display -webkit-box
-			-webkit-line-clamp 1
-			-webkit-box-orient vertical
-			overflow hidden
-			text-overflow ellipsis
-			max-width 208px
-			
-			// width 170px
-			// white-space nowrap
-			// text-overflow ellipsis
-			// overflow hidden
-			
-			@media $xs
-				max-width 150px
-		
-		&--company
-			@media $xs
-				white-space nowrap
-				text-overflow ellipsis
-				overflow hidden
 	
 	&__status-btn
 		margin-top 16px
