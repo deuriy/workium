@@ -12,7 +12,7 @@ block content
           .recruit-card__name-and-phone
             .recruit-card__name Теребей Наталiя Iванiвна
             a(href="tel:+380987653498").recruit-card__phone +380987653498
-          .recruit-card__id-and-comment
+          .recruit-card__id-and-comment.hidden-xxs
             .recruit-card__id ID: 5233479
             .recruit-card__comment Якийсь невеликий коментар
         .recruit-card__info
@@ -24,7 +24,7 @@ block content
             .recruit-card__item-value 28 січ 2023
           .recruit-card__item
             .recruit-card__item-title Підприємство
-            .recruit-card__item-value LG Electronics
+            .recruit-card__item-value.recruit-card__item-value--company LG Electronics
           .recruit-card__item
             .recruit-card__item-title Вакансія
             .recruit-card__item-value.recruit-card__item-value--vacancy Склад фабрики з пошиття робочого одягу
@@ -34,7 +34,32 @@ block content
           .recruit-card__item
             .recruit-card__item-title Винагорода
             .recruit-card__item-value 500 злт
-        .status-line.recruit-card__status-line
+        button(type="button" data-fancybox data-src="#recruit-status-popup1" data-slug="recruit-status-popup1").recruit-status.recruit-card__status-btn.mobile-popup-toggle.hidden-smPlus Працює
+        .mobile-popup#recruit-status-popup1(style="display: none;")
+          h3.mobile-popup__title Статус
+          .mobile-popup__recruit-info
+            .mobile-popup__recruit-name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").mobile-popup__recruit-phone +380987653498
+          .status-line.status-line--vertical.mobile-popup__status-line
+            .status-line__line
+              .status-line__line-fill(style="height: 80%")
+            .status-line__items
+              .status-line__item.status-line__item--highlighted.status-line__item--booked
+                .status-line__item-text Заброньований
+              .status-line__item.status-line__item--highlighted.status-line__item--left
+                .status-line__item-text Виїхав
+              .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+                .status-line__item-text Оформлення
+              .status-line__item.status-line__item--highlighted.status-line__item--working
+                .status-line__item-text Працює
+              .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+                .status-line__item-text Відпрацював
+              .status-line__item.status-line__item--payment
+                .status-line__item-text Виплата
+        .recruit-card__id-and-comment.hidden-xxsPlus
+          .recruit-card__id ID: 5233479
+          .recruit-card__comment Якийсь невеликий коментар
+        .status-line.recruit-card__status-line.hidden-xs
           .status-line__line
             .status-line__line-fill(style="width: 80%")
           .status-line__items
@@ -55,7 +80,7 @@ block content
           .recruit-card__name-and-phone
             .recruit-card__name Теребей Наталiя Iванiвна
             a(href="tel:+380987653498").recruit-card__phone +380987653498
-          .recruit-card__id-and-comment
+          .recruit-card__id-and-comment.hidden-xxs
             .recruit-card__id ID: 5233479
             .recruit-card__comment Якийсь невеликий коментар
         .recruit-card__info
@@ -67,7 +92,7 @@ block content
             .recruit-card__item-value 28 січ 2023
           .recruit-card__item
             .recruit-card__item-title Підприємство
-            .recruit-card__item-value LG Electronics
+            .recruit-card__item-value.recruit-card__item-value--company LG Electronics
           .recruit-card__item
             .recruit-card__item-title Вакансія
             .recruit-card__item-value.recruit-card__item-value--vacancy Склад фабрики з пошиття робочого одягу
@@ -77,7 +102,32 @@ block content
           .recruit-card__item
             .recruit-card__item-title Винагорода
             .recruit-card__item-value 500 злт
-        .status-line.recruit-card__status-line
+        button(type="button" data-fancybox data-src="#recruit-status-popup2" data-slug="recruit-status-popup2").recruit-status.recruit-card__status-btn.mobile-popup-toggle.hidden-smPlus Працює
+        .mobile-popup#recruit-status-popup2(style="display: none;")
+          h3.mobile-popup__title Статус
+          .mobile-popup__recruit-info
+            .mobile-popup__recruit-name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").mobile-popup__recruit-phone +380987653498
+          .status-line.status-line--vertical.mobile-popup__status-line
+            .status-line__line
+              .status-line__line-fill(style="height: 80%")
+            .status-line__items
+              .status-line__item.status-line__item--highlighted.status-line__item--booked
+                .status-line__item-text Заброньований
+              .status-line__item.status-line__item--highlighted.status-line__item--left
+                .status-line__item-text Виїхав
+              .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+                .status-line__item-text Оформлення
+              .status-line__item.status-line__item--highlighted.status-line__item--working
+                .status-line__item-text Працює
+              .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+                .status-line__item-text Відпрацював
+              .status-line__item.status-line__item--payment
+                .status-line__item-text Виплата
+        .recruit-card__id-and-comment.hidden-xxsPlus
+          .recruit-card__id ID: 5233479
+          .recruit-card__comment Якийсь невеликий коментар
+        .status-line.recruit-card__status-line.hidden-xs
           .status-line__line
             .status-line__line-fill(style="width: 60%")
           .status-line__items
@@ -98,7 +148,7 @@ block content
           .recruit-card__name-and-phone
             .recruit-card__name Теребей Наталiя Iванiвна
             a(href="tel:+380987653498").recruit-card__phone +380987653498
-          .recruit-card__id-and-comment
+          .recruit-card__id-and-comment.hidden-xxs
             .recruit-card__id ID: 5233479
             .recruit-card__comment Якийсь невеликий коментар
         .recruit-card__info
@@ -110,7 +160,7 @@ block content
             .recruit-card__item-value 28 січ 2023
           .recruit-card__item
             .recruit-card__item-title Підприємство
-            .recruit-card__item-value LG Electronics
+            .recruit-card__item-value.recruit-card__item-value--company LG Electronics
           .recruit-card__item
             .recruit-card__item-title Вакансія
             .recruit-card__item-value.recruit-card__item-value--vacancy Склад фабрики з пошиття робочого одягу
@@ -120,7 +170,29 @@ block content
           .recruit-card__item
             .recruit-card__item-title Винагорода
             .recruit-card__item-value 500 злт
-        .status-line.status-line--full.recruit-card__status-line
+        button(type="button" data-fancybox data-src="#recruit-status-popup3" data-slug="recruit-status-popup3").recruit-status.recruit-status--success.recruit-card__status-btn.mobile-popup-toggle.hidden-smPlus Працює
+        .mobile-popup#recruit-status-popup3(style="display: none;")
+          h3.mobile-popup__title Статус
+          .mobile-popup__recruit-info
+            .mobile-popup__recruit-name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").mobile-popup__recruit-phone +380987653498
+          .status-line.status-line--full.status-line--vertical.mobile-popup__status-line
+            .status-line__line
+              .status-line__line-fill(style="height: 100%")
+            .status-line__items
+              .status-line__item.status-line__item--highlighted.status-line__item--booked
+                .status-line__item-text Заброньований
+              .status-line__item.status-line__item--highlighted.status-line__item--left
+                .status-line__item-text Виїхав
+              .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+                .status-line__item-text Оформлення
+              .status-line__item.status-line__item--highlighted.status-line__item--working
+                .status-line__item-text Працює
+              .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+                .status-line__item-text Відпрацював
+              .status-line__item.status-line__item--highlighted.status-line__item--payment
+                .status-line__item-text Виплата
+        .status-line.status-line--full.recruit-card__status-line.hidden-xs
           .status-line__line
             .status-line__line-fill(style="width: 100%")
           .status-line__items
@@ -136,3 +208,4 @@ block content
               .status-line__item-text Відпрацював
             .status-line__item.status-line__item--highlighted.status-line__item--payment
               .status-line__item-text Виплата
+  script(src="/js/recruitment.js")

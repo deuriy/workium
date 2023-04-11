@@ -3,17 +3,37 @@
 	border-radius 12px
 	background var(--light)
 	
+	@media $xs
+		padding 20px 24px
+	
+	@media $xxs
+		padding 16px 16px 24px
+	
 	&__header
 		display grid
 		grid-template-columns repeat(2, auto)
 		justify-content space-between
 		align-items center
+		gap 20px
 		margin-bottom 24px
+		
+		@media $xxs
+			margin-bottom 16px
 	
 	&__id-and-comment
-		margin-top -3px
-		margin-right 3px
-		text-align right
+		@media $xxs
+			margin-top 16px
+		
+		@media $xxsPlus
+			margin-top -3px
+			margin-right 3px
+			text-align right
+	
+	&__name,
+	&__phone
+		@media $xxs
+			font-size 16px
+			line-height 1.625
 	
 	&__name
 		font-weight 600
@@ -34,32 +54,66 @@
 		grid-template-columns repeat(6, auto)
 		gap 32px
 		margin-right -5px
-		margin-bottom 35px
+		
+		@media $smMinus
+			grid-template-columns repeat(3, auto)
+			gap 24px
+		
+		@media $smPlus
+			margin-bottom 35px
+		
+		@media $xxs
+			grid-template-columns repeat(2, auto)
+			gap 16px 31px
 	
 	&__item
-		position relative
-		padding-left 16px
+		@media $md
+			position relative
+			padding-left 16px
 		
-		&::before
-			content ""
-			position absolute
-			top 0
-			bottom 0
-			left 0
-			width 1px
-			height 32px
-			margin auto
-			background var(--grey-medium)
-		
-		&:first-child
-			padding-left 0
-			
 			&::before
-				display none
+				content ""
+				position absolute
+				top 0
+				bottom 0
+				left 0
+				width 1px
+				height 32px
+				margin auto
+				background var(--grey-medium)
+		
+			&:first-child
+				padding-left 0
+				
+				&::before
+					display none
 	
 	&__item-value
+		@media $xxs
+			font-size 16px
+			line-height 1.625
+			
 		&--vacancy
-			width 170px
-			white-space nowrap
-			text-overflow ellipsis
+			display -webkit-box
+			-webkit-line-clamp 1
+			-webkit-box-orient vertical
 			overflow hidden
+			text-overflow ellipsis
+			max-width 208px
+			
+			// width 170px
+			// white-space nowrap
+			// text-overflow ellipsis
+			// overflow hidden
+			
+			@media $xs
+				max-width 150px
+		
+		&--company
+			@media $xs
+				white-space nowrap
+				text-overflow ellipsis
+				overflow hidden
+	
+	&__status-btn
+		margin-top 16px
