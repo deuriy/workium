@@ -1,21 +1,22 @@
 .fancybox
 	&--popup
-		--fancybox-bg: rgba(0, 0, 0, 0.6)
-	    
-		.fancybox__slide
-			padding 0
-			justify-content end
+		@media $xs
+			--fancybox-bg: rgba(0, 0, 0, 0.6)
+		    
+			.fancybox__slide
+				padding 0
+				justify-content end
+				
+				&::before,
+				&::after
+					display none
 			
-			&::before,
-			&::after
-				display none
-		
-		.fancybox__content
-			& > .f-button.is-close-btn
-				top 18px
-				right 12px
-				--f-button-width: 24px
-				--f-button-height: 24px
-				--f-button-svg-width: 15px
-				--f-button-svg-height: 15px
-				--f-button-bg: rgba(0, 0, 0, 0.45)
+			.fancybox__content
+				& > .f-button.is-close-btn
+					top 18px
+					right 12px
+					--f-button-width: 24px
+					--f-button-height: 24px
+					--f-button-svg-width: 15px
+					--f-button-svg-height: 15px
+					--f-button-bg: rgba(0, 0, 0, 0.45)
