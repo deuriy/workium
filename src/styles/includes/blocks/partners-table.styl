@@ -39,7 +39,7 @@
 		&--currency
 			width 80px
 			
-		&--status
+		&--history
 			width 140px
 		
 		&--profit-and-date
@@ -51,6 +51,14 @@
 		
 		&--profit-and-date
 			text-align right
+	
+	&__no-operations
+		padding-left 10px
+		color rgba(#0f182a, .33)
+		
+		@media $xs
+			margin-top 10px
+			font-size 12px
 	
 	&__body
 		.partners-table__row:first-child
@@ -68,6 +76,16 @@
 		line-height 22px
 		color var(--grey)
 	
+	&__date
+		@media $xs
+			margin-top 10px
+			margin-left 27px
+			line-height normal
+	
+	&__more-btn
+		@media $xs
+			margin-top 5px
+	
 	&--mobile
 		width calc(100% + 34px)
 		padding 8px 14px
@@ -83,3 +101,4 @@
 		
 		.partners-table__td
 			padding 7px 0
+			vertical-align top

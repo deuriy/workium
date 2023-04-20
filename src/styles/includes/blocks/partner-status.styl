@@ -3,9 +3,16 @@
 	grid-template-columns auto 1fr
 	align-items center
 	gap 6px
+	color var(--accent)
+	
+	@media $xs
+		grid-template-columns 100%
 	
 	&::before
 		content ""
 		width 20px
 		height 20px
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' viewBox='0 0 32 32'%3E%3Cpath fill='%237360F2' fill-rule='evenodd' d='M27.704 8.397a1.016 1.016 0 0 0-1.428 0L11.988 22.59l-6.282-6.193a1.016 1.016 0 0 0-1.428 0 .994.994 0 0 0 0 1.414l6.999 6.899c.39.386 1.039.386 1.429 0L27.704 9.811a.992.992 0 0 0 0-1.414c-.394-.391.395.39 0 0z' clip-rule='evenodd'/%3E%3C/svg%3E") 0 0 no-repeat
+		
+		@media $xs
+			display none
