@@ -41,7 +41,6 @@
 				color var(--light)
 						
 		&--active
-			padding 6px 16px
 			background var(--dark)
 			color var(--light)
 	
@@ -86,3 +85,30 @@
 			
 			.tabs-menu__list
 				height 60px
+	
+	&--underline-style
+		@media $xs
+			height auto
+			padding 0
+			background transparent
+			
+		.tabs-menu__list
+			justify-content center
+			
+			@media $xs
+				height auto
+				
+		.tabs-menu__link
+			padding-top 4px
+			padding-bottom 4px
+			border-bottom 3px solid transparent
+			border-radius 0
+			
+			&:hover,
+			&--active
+				border-bottom-color var(--purple)
+				background transparent
+				color var(--accent)
+			
+			&--active
+				font-weight 600

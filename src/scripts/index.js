@@ -5,6 +5,11 @@ import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 $(function () {
   Fancybox.bind("[data-fancybox]");
 
+  Fancybox.bind(".fancybox-popup-toggle", {
+    dragToClose: false,
+    mainClass: 'fancybox--popup',
+  });
+
   $('.tabs__list').each(function() {
     $(this).find('.tabs__item').each(function(i) {
       $(this).click(function(e) {

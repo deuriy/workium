@@ -309,4 +309,51 @@ block content
                     a(href="#").btn-purple.btn-purple--viber Написати у Viber
                   li.contact-buttons__item
                     a(href="#").btn-lightblue.btn-lightblue--telegram Написати в Telegram
+  .fancybox-popup.authorization-popup#authorization-popup(style="display: none;")
+    .tabs
+      .tabs-menu.tabs-menu--underline-style.authorization-popup__tabs-menu
+        ul.tabs-menu__list.tabs__list
+          li.tabs-menu__item.tabs__item
+            a(href="#").tabs-menu__link Реєстрація
+          li.tabs-menu__item.tabs__item
+            a(href="#").tabs-menu__link.tabs-menu__link--active Вхід
+      .tabs__content
+        form(action="").authorization-form
+          ul.authorization-form__socbtns-list
+            li.authorization-form__socbtns-item
+              a(href="#").social-btn.social-btn--google
+                span.social-btn__inner.social-btn__inner--large Зареєструватись за допомогою Google
+            li.authorization-form__socbtns-item
+              a(href="#").social-btn.social-btn--fb
+                span.social-btn__inner.social-btn__inner--large Зареєструватись за допомогою FaceBook
+          .sep-text.authorization-form__sep-text Або зареєструватись через форму:
+          .authorization-form__fields
+            .authorization-form__field
+              input(type="tel" placeholder="Телефон" name="phone").form-text
+            .authorization-form__field
+              input(type="password" placeholder="Пароль" name="password").form-text.form-text--password
+            .authorization-form__field
+              input(type="password" placeholder="Повторіть пароль" name="password").form-text.form-text--password
+          .authorization-form__actions
+            button(type="submit").btn-default.authorization-form__btn-submit Зареєструватись
+      .tabs__content(style="display: block")
+        form(action="").authorization-form
+          ul.authorization-form__socbtns-list
+            li.authorization-form__socbtns-item
+              a(href="#").social-btn.social-btn--google
+                span.social-btn__inner Увійти за допомогою Google
+            li.authorization-form__socbtns-item
+              a(href="#").social-btn.social-btn--fb
+                span.social-btn__inner Увійти за допомогою FaceBook
+          .sep-text.authorization-form__sep-text Або увійти через форму:
+          .authorization-form__fields
+            .authorization-form__field
+              input(type="tel" placeholder="Телефон" name="phone").form-text
+            .authorization-form__field
+              input(type="password" placeholder="Пароль" name="password").form-text.form-text--password
+          .authorization-form__forgot-link-wrapper
+            a(href="/password_recovery.html").authorization-form__link Забули пароль?
+          .authorization-form__actions
+            button(type="submit").btn-default.authorization-form__btn-submit Увійти
+        
   script(src="/js/index.js")
