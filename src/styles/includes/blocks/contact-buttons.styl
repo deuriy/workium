@@ -6,10 +6,22 @@
 	
 	&__list
 		list-style none
+		display grid
+		grid-template-columns 100%
+		gap 16px
 	
 	&__item
 		display grid
-		margin-bottom 16px
+	
+	&--row
+		width auto
+		max-width 100%
 		
-		&:last-child
-			margin-bottom 0
+		.contact-buttons__list
+			grid-template-columns repeat(2, 260px)
+			justify-content space-between
+			align-items center
+			gap 10px
+			
+			@media $xs
+				grid-template-columns 100%
