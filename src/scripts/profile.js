@@ -36,4 +36,10 @@ $(function () {
 
 		$(this).toggleClass('bookmark-icon--fill');
 	});
+
+	$('.promo-block').hover(function() {
+		$(this).find('.more-link').addClass('more-link--hover more-link--full-width-hover');
+	}, function() {
+		$(this).find('.more-link').removeClass('more-link--hover more-link--full-width-hover');
+	});
 });

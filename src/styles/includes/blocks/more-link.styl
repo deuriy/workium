@@ -19,7 +19,8 @@
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath stroke='%235340FF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M.75 7h12.5m0 0L7.625 1.375M13.25 7l-5.625 5.625'/%3E%3C/svg%3E") 0 0 no-repeat
 		@extend .transition
 	
-	&:hover
+	&:hover,
+	&--hover
 		&::after
 			left 10px
 	
@@ -30,4 +31,7 @@
 		padding 14px 0
 		
 		&:hover
-			background rgb(246, 246, 252) 
+			background rgb(246, 246, 252)
+	
+	&--full-width-hover
+		background rgb(246, 246, 252)
