@@ -6,9 +6,17 @@
 	border 1.4px solid var(--grey)
 	border-radius 50%
 	cursor pointer
+	@extend .transition
 	
 	&--prev
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='18' fill='none' viewBox='0 0 10 18'%3E%3Cpath stroke='%23989DB3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M8.5 16.5 1 9l7.5-7.5'/%3E%3C/svg%3E") center center no-repeat
 	
 	&--next
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='18' fill='none' viewBox='0 0 10 18'%3E%3Cpath stroke='%23989DB3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1.503 1.5 7.5 7.5-7.5 7.5'/%3E%3C/svg%3E") center center no-repeat
+	
+	&--white
+		border none
+		background-color var(--light)
+	
+	&--disabled
+		opacity 0.75

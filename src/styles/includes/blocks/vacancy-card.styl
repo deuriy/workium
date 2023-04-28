@@ -4,6 +4,12 @@
 	border-radius 12px
 	background var(--light)
 	
+	&__wrapper
+		padding 32px 17px 32px 32px
+		border 1px solid var(--grey-medium)
+		border-radius 12px
+		background var(--light)
+	
 	&__header
 		display grid
 		grid-template-columns repeat(2, auto)
@@ -52,14 +58,23 @@
 		font-weight 600
 		font-size 24px
 		line-height 1.25
+		
+		&:last-child
+			margin-bottom 0
+	
+	&__swiper
+		margin-top 20px
 	
 	&__promo-blocks
-		display grid
-		// grid-template-columns repeat(3, auto)
-		grid-template-columns repeat(3, 1fr)
-		justify-content start
-		gap 27px
 		margin-top 26px
-		// margin-right -15px
 		margin-bottom -76px
 		margin-left -15px
+	
+	&--full
+		padding 0
+		border none
+		background transparent
+		
+		.vacancy-card__promo-blocks
+			margin-bottom 30px
+			margin-left 0
