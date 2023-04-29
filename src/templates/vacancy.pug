@@ -4,119 +4,117 @@ block vars
   - userProfileClasses = 'user-profile--vacancies';
 
 block content
-  .vacancy-page
-    h1.page-title.vacancy-page__title Вакансії
-    .vacancy-card.vacancy-card--full
-      .vacancy-card__header
-        .vacancy-info.vacancy-card__info
-          .vacancy-info__logo
-            img(src="/img/lg_electronics.svg" alt="LG Electronics").vacancy-info__logo-img
-          .vacancy-info__top
-            .vacancy-info__company-name LG Electronics
-            .tag.vacancy-info__category Автозавод
-            a(href="#" data-bookmark).bookmark-icon.vacancy-info__bookmark-icon
-          .vacancy-info__specialization Виготовлення електроніки та різних складових
-        .vacancy-card__rating-and-address
-          .rating
-            .rating__wrapper
-              .rating__mark 8.8
-              .rating__total 10
-            .rating__label (198 відгуків)
-          .vacancy-card__address Poland, Gorzów Wielkopolski, Złotego Smoka 9, 66-400
-      .vacancy-card__wrapper
-        h2.vacancy-card__title Оператор на виробництво електроніки
-        .vacancy-card__specifications
-          .specification.specification--large.vacancy-card__specification
-            .specification__title Оплата за годину
-            .specification__value 18 – 20 zl / год
-          .specification.specification--large.vacancy-card__specification
-            .specification__title Відпрацювання
-            .specification__value 500 – 800 zl
-          .specification.specification--large.vacancy-card__specification
-            .specification__title Оплата за міс
-            .specification__value 3500 – 4900 zl / міс
-          .specification.specification--large.vacancy-card__specification
-            .specification__title Термін
-            .specification__value 30 днів
-          .specification.vacancy-card__specification.vacancy-card__specification--responsibilities
-            .specification__title Обов'язки 
-            .specification__value
-              p Комплектація замовлень Комплектація замовлень Комплектація замовлень Комплектація замовлень за допомогою сканера та електровузика пакування товару в коробки, палетування а інші
-        .vacancy-images-swiper.vacancy-card__swiper
-          h3.vacancy-images-swiper__title Фотографії з місця роботи
-          .swiper.vacancy-images-swiper__swiper
-            .swiper-wrapper
-              .swiper-slide
-                a(href="/img/vacancy/1.jpg" data-fancybox="swiper-gallery")
-                  .proportional-image(style="background-image: url('/img/vacancy/1.jpg')")
-              .swiper-slide
-                a(href="/img/vacancy/2.jpg" data-fancybox="swiper-gallery")
-                  .proportional-image(style="background-image: url('/img/vacancy/2.jpg')")
-              .swiper-slide
-                a(href="/img/vacancy/3.jpg" data-fancybox="swiper-gallery")
-                  .proportional-image(style="background-image: url('/img/vacancy/3.jpg')")
-              .swiper-slide
-                a(href="/img/vacancy/4.jpg" data-fancybox="swiper-gallery")
-                  .proportional-image(style="background-image: url('/img/vacancy/4.jpg')")
-              .swiper-slide
-                a(href="/img/vacancy/5.jpg" data-fancybox="swiper-gallery")
-                  .proportional-image(style="background-image: url('/img/vacancy/5.jpg')")
-              .swiper-slide
-                a(href="/img/vacancy/6.jpg" data-fancybox="swiper-gallery")
-                  .proportional-image(style="background-image: url('/img/vacancy/6.jpg')")
-            button.swiper-btn.swiper-btn--white.swiper-btn--prev.vacancy-images-swiper__prev
-            button.swiper-btn.swiper-btn--white.swiper-btn--next.vacancy-images-swiper__next
-        .promo-blocks.vacancy-card__promo-blocks
-          h3.promo-blocks__title Агенції, які працевлаштовують на дану вакансію
-          .promo-blocks__items
-            .promo-block.promo-block--active.vacancy-card__promo-block
-              .promo-block__header
-                .promo-block__logo
-                  img(src="/img/white_work_company.png" alt="White Work Company").promo-block__logo-img
-                h3.promo-block__title White Work Company
-              .characteristics.promo-block__characteristics
-                .characteristic.characteristic--sex.characteristics__item
-                  .characteristic__value Чоловіки, жінки, сімейні пари
-                .characteristic.characteristic--age.characteristics__item
-                  .characteristic__value до 55 років
-                .characteristic.characteristic--schedule.characteristics__item
-                  .characteristic__value Пн–Пт, 2 зміни по 8–12 год
-                .characteristic.characteristic--house.characteristics__item
-                  .characteristic__value Безкоштовне, 300 зл/міс комуналь
-              .salary.promo-block__salary #[span.salary__value 800 zl] винагорода
-            .promo-block.vacancy-card__promo-block
-              .promo-block__header
-                .promo-block__logo
-                  img(src="/img/people_and_work.png" alt="T&T People and Work").promo-block__logo-img
-                h3.promo-block__title T&T People and Work
-              .characteristics.promo-block__characteristics
-                .characteristic.characteristic--sex.characteristics__item
-                  .characteristic__value Чоловіки, жінки, сімейні пари
-                .characteristic.characteristic--age.characteristics__item
-                  .characteristic__value до 55 років
-                .characteristic.characteristic--schedule.characteristics__item
-                  .characteristic__value Пн–Пт, 2 зміни по 8–12 год
-                .characteristic.characteristic--house.characteristics__item
-                  .characteristic__value Безкоштовне, 300 зл/міс комуналь
-              .salary.promo-block__salary #[span.salary__value 800 zl] винагорода
-              .promo-block__footer
-                a(href="#").more-link.more-link--full-width.promo-block__more-link Детальніше
-            .promo-block.vacancy-card__promo-block
-              .promo-block__header
-                .promo-block__logo
-                  img(src="/img/dream_pol.png" alt="Dream Pol").promo-block__logo-img
-                h3.promo-block__title Dream Pol
-              .characteristics.promo-block__characteristics
-                .characteristic.characteristic--sex.characteristics__item
-                  .characteristic__value Чоловіки, жінки, сімейні пари
-                .characteristic.characteristic--age.characteristics__item
-                  .characteristic__value до 55 років
-                .characteristic.characteristic--schedule.characteristics__item
-                  .characteristic__value Пн–Пт, 2 зміни по 8–12 год
-                .characteristic.characteristic--house.characteristics__item
-                  .characteristic__value Безкоштовне, 300 зл/міс комуналь
-              .salary.promo-block__salary #[span.salary__value 800 zl] винагорода
-              .promo-block__footer
-                a(href="#").more-link.more-link--full-width.promo-block__more-link Детальніше
-        h2.vacancy-card__title Оператор на виробництво електроніки
+  .vacancy-card.vacancy-card--full
+    .vacancy-card__header
+      .vacancy-info.vacancy-card__info
+        .vacancy-info__logo
+          img(src="/img/lg_electronics.svg" alt="LG Electronics").vacancy-info__logo-img
+        .vacancy-info__top
+          .vacancy-info__company-name LG Electronics
+          .tag.vacancy-info__category Автозавод
+          a(href="#" data-bookmark).bookmark-icon.vacancy-info__bookmark-icon
+        .vacancy-info__specialization Виготовлення електроніки та різних складових
+      .vacancy-card__rating-and-address
+        .rating
+          .rating__wrapper
+            .rating__mark 8.8
+            .rating__total 10
+          .rating__label (198 відгуків)
+        .vacancy-card__address Poland, Gorzów Wielkopolski, Złotego Smoka 9, 66-400
+    .vacancy-card__wrapper
+      h2.vacancy-card__title Оператор на виробництво електроніки
+      .vacancy-card__specifications
+        .specification.specification--large.vacancy-card__specification
+          .specification__title Оплата за годину
+          .specification__value 18 – 20 zl / год
+        .specification.specification--large.vacancy-card__specification
+          .specification__title Відпрацювання
+          .specification__value 500 – 800 zl
+        .specification.specification--large.vacancy-card__specification
+          .specification__title Оплата за міс
+          .specification__value 3500 – 4900 zl / міс
+        .specification.specification--large.vacancy-card__specification
+          .specification__title Термін
+          .specification__value 30 днів
+        .specification.vacancy-card__specification.vacancy-card__specification--responsibilities
+          .specification__title Обов'язки 
+          .specification__value
+            p Комплектація замовлень Комплектація замовлень Комплектація замовлень Комплектація замовлень за допомогою сканера та електровузика пакування товару в коробки, палетування а інші
+      .vacancy-images-swiper.vacancy-card__swiper
+        h3.vacancy-images-swiper__title Фотографії з місця роботи
+        .swiper.vacancy-images-swiper__swiper
+          .swiper-wrapper
+            .swiper-slide
+              a(href="/img/vacancy/1.jpg" data-fancybox="swiper-gallery")
+                .proportional-image(style="background-image: url('/img/vacancy/1.jpg')")
+            .swiper-slide
+              a(href="/img/vacancy/2.jpg" data-fancybox="swiper-gallery")
+                .proportional-image(style="background-image: url('/img/vacancy/2.jpg')")
+            .swiper-slide
+              a(href="/img/vacancy/3.jpg" data-fancybox="swiper-gallery")
+                .proportional-image(style="background-image: url('/img/vacancy/3.jpg')")
+            .swiper-slide
+              a(href="/img/vacancy/4.jpg" data-fancybox="swiper-gallery")
+                .proportional-image(style="background-image: url('/img/vacancy/4.jpg')")
+            .swiper-slide
+              a(href="/img/vacancy/5.jpg" data-fancybox="swiper-gallery")
+                .proportional-image(style="background-image: url('/img/vacancy/5.jpg')")
+            .swiper-slide
+              a(href="/img/vacancy/6.jpg" data-fancybox="swiper-gallery")
+                .proportional-image(style="background-image: url('/img/vacancy/6.jpg')")
+          button.swiper-btn.swiper-btn--white.swiper-btn--prev.vacancy-images-swiper__prev
+          button.swiper-btn.swiper-btn--white.swiper-btn--next.vacancy-images-swiper__next
+      .promo-blocks.vacancy-card__promo-blocks
+        h3.promo-blocks__title Агенції, які працевлаштовують на дану вакансію
+        .promo-blocks__items
+          .promo-block.promo-block--active.vacancy-card__promo-block
+            .promo-block__header
+              .promo-block__logo
+                img(src="/img/white_work_company.png" alt="White Work Company").promo-block__logo-img
+              h3.promo-block__title White Work Company
+            .characteristics.promo-block__characteristics
+              .characteristic.characteristic--sex.characteristics__item
+                .characteristic__value Чоловіки, жінки, сімейні пари
+              .characteristic.characteristic--age.characteristics__item
+                .characteristic__value до 55 років
+              .characteristic.characteristic--schedule.characteristics__item
+                .characteristic__value Пн–Пт, 2 зміни по 8–12 год
+              .characteristic.characteristic--house.characteristics__item
+                .characteristic__value Безкоштовне, 300 зл/міс комуналь
+            .salary.promo-block__salary #[span.salary__value 800 zl] винагорода
+          .promo-block.vacancy-card__promo-block
+            .promo-block__header
+              .promo-block__logo
+                img(src="/img/people_and_work.png" alt="T&T People and Work").promo-block__logo-img
+              h3.promo-block__title T&T People and Work
+            .characteristics.promo-block__characteristics
+              .characteristic.characteristic--sex.characteristics__item
+                .characteristic__value Чоловіки, жінки, сімейні пари
+              .characteristic.characteristic--age.characteristics__item
+                .characteristic__value до 55 років
+              .characteristic.characteristic--schedule.characteristics__item
+                .characteristic__value Пн–Пт, 2 зміни по 8–12 год
+              .characteristic.characteristic--house.characteristics__item
+                .characteristic__value Безкоштовне, 300 зл/міс комуналь
+            .salary.promo-block__salary #[span.salary__value 800 zl] винагорода
+            .promo-block__footer
+              a(href="#").more-link.more-link--full-width.promo-block__more-link Детальніше
+          .promo-block.vacancy-card__promo-block
+            .promo-block__header
+              .promo-block__logo
+                img(src="/img/dream_pol.png" alt="Dream Pol").promo-block__logo-img
+              h3.promo-block__title Dream Pol
+            .characteristics.promo-block__characteristics
+              .characteristic.characteristic--sex.characteristics__item
+                .characteristic__value Чоловіки, жінки, сімейні пари
+              .characteristic.characteristic--age.characteristics__item
+                .characteristic__value до 55 років
+              .characteristic.characteristic--schedule.characteristics__item
+                .characteristic__value Пн–Пт, 2 зміни по 8–12 год
+              .characteristic.characteristic--house.characteristics__item
+                .characteristic__value Безкоштовне, 300 зл/міс комуналь
+            .salary.promo-block__salary #[span.salary__value 800 zl] винагорода
+            .promo-block__footer
+              a(href="#").more-link.more-link--full-width.promo-block__more-link Детальніше
+      h2.vacancy-card__title Оператор на виробництво електроніки
   script(src="/js/vacancy.js")
