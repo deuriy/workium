@@ -1,0 +1,154 @@
+extends layouts/user_profile
+
+block content
+  .operations
+    h1.page-title.operations__title Баланс
+    .wallets.operations__wallets
+      .wallet.wallets__item
+        .wallet__currency PLN
+        .wallet__sum 0.00 #[span.wallet__currency-prefix zł]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+      .wallet.wallets__item
+        .wallet__currency CZK
+        .wallet__sum 0.00 #[span.wallet__currency-prefix Kč]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+      .wallet.wallets__item
+        .wallet__currency USD
+        .wallet__sum 0.00 #[span.wallet__currency-prefix $]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+      .wallet.wallets__item
+        .wallet__currency EUR
+        .wallet__sum 0.00 #[span.wallet__currency-prefix €]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+    .operations-table.operations__operations-table
+      .operations-table__header
+        h3.operations-table__caption Історія операцій
+        .tabs-menu.operations-table__tabs-menu
+          ul.tabs-menu__list
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link.tabs-menu__link--active Всі операції
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link PLN
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link CZK
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link USD
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link EUR
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link Рекрутація
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link Партнерська програма
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link Інше
+      table.operations-table__table
+        thead.operations-table__thead
+          tr.operations-table__row
+            th.operations-table__th.operations-table__th--datetime-id Час, дата та ID
+            th.operations-table__th.operations-table__th--type Тип
+            th.operations-table__th.operations-table__th--category Категорія
+            th.operations-table__th.operations-table__th--sum Сума та валюта
+            th.operations-table__th.operations-table__th--balance Залишок
+            th.operations-table__th.operations-table__th--status Статус
+            th.operations-table__th.operations-table__th--details Деталі операції
+        tbody.operations-table__body
+          tr.operations-table__row
+            td.operations-table__td.operations-table__td--datetime-id
+              .operations-table__datetime 17:35 &nbsp;22.12.23
+              .operations-table__id 32122
+            td.operations-table__td.operations-table__td--type
+              .operation-type.operation-type--withdrawals
+            td.operations-table__td.operations-table__td--category
+              .operations-table__type Зняття коштів
+              .operations-table__bank Monobank
+            td.operations-table__td.operations-table__td--sum
+              .operations-table__sum.operations-table__sum--negative - 1,444 USD
+            td.operations-table__td.operations-table__td--balance
+              .operations-table__balance 123,21 USD
+            td.operations-table__td.operations-table__td--status
+              .operation-status.operation-status--completed Виконано
+            td.operations-table__td.operations-table__td--details
+              .operations-table__details Зняття власних коштів. Банківський переказ: Monobank (28***419).
+          tr.operations-table__row
+            td.operations-table__td.operations-table__td--datetime-id
+              .operations-table__datetime 17:35 &nbsp;22.12.23
+              .operations-table__id 32122
+            td.operations-table__td.operations-table__td--type
+              .operation-type.operation-type--replenishment
+            td.operations-table__td.operations-table__td--category
+              .operations-table__type Партнерська програма
+            td.operations-table__td.operations-table__td--sum
+              .operations-table__sum + 1,444 USD
+            td.operations-table__td.operations-table__td--balance
+              .operations-table__balance 123,21 USD
+            td.operations-table__td.operations-table__td--status
+              .operation-status.operation-status--completed Виконано
+            td.operations-table__td.operations-table__td--details
+              .operations-table__details Зарахування партнерської винагороди від Микола. ID партнера: 344221.
+          tr.operations-table__row
+            td.operations-table__td.operations-table__td--datetime-id
+              .operations-table__datetime 17:35 &nbsp;22.12.23
+              .operations-table__id 32122
+            td.operations-table__td.operations-table__td--type
+              .operation-type.operation-type--replenishment
+            td.operations-table__td.operations-table__td--category
+              .operations-table__type Рекрутація
+            td.operations-table__td.operations-table__td--sum
+              .operations-table__sum + 1,444 USD
+            td.operations-table__td.operations-table__td--balance
+              .operations-table__balance 123,21 USD
+            td.operations-table__td.operations-table__td--status
+              .operation-status.operation-status--completed Виконано
+            td.operations-table__td.operations-table__td--details
+              .operations-table__details Винагорода за відпрацювання кандидата Шумко Ігор. ID кандидата: 3392112.
+          tr.operations-table__row
+            td.operations-table__td.operations-table__td--datetime-id
+              .operations-table__datetime 17:35 &nbsp;22.12.23
+              .operations-table__id 32122
+            td.operations-table__td.operations-table__td--type
+              .operation-type.operation-type--withdrawals
+            td.operations-table__td.operations-table__td--category
+              .operations-table__type Зняття коштів
+              .operations-table__bank Приват24
+            td.operations-table__td.operations-table__td--sum
+              .operations-table__sum.operations-table__sum--negative - 1,444 USD
+            td.operations-table__td.operations-table__td--balance
+              .operations-table__balance 123,21 USD
+            td.operations-table__td.operations-table__td--status
+              .operation-status.operation-status--waiting На розгляді
+            td.operations-table__td.operations-table__td--details
+              .operations-table__details Зняття власних коштів. Банківський переказ: Приват24 (28***419).
+          tr.operations-table__row
+            td.operations-table__td.operations-table__td--datetime-id
+              .operations-table__datetime 17:35 &nbsp;22.12.23
+              .operations-table__id 32122
+            td.operations-table__td.operations-table__td--type
+              .operation-type.operation-type--withdrawals
+            td.operations-table__td.operations-table__td--category
+              .operations-table__type Зняття коштів
+              .operations-table__bank Приват24
+            td.operations-table__td.operations-table__td--sum
+              .operations-table__sum.operations-table__sum--negative - 1,444 USD
+            td.operations-table__td.operations-table__td--balance
+              .operations-table__balance 123,21 USD
+            td.operations-table__td.operations-table__td--status
+              .operation-status.operation-status--canceled Скасовано
+            td.operations-table__td.operations-table__td--details
+              .operations-table__details Операцію скасовано. #[a(href="#") Зверніться] в службу підтримки для уточнення деталей. #[br]#[a(href="#") Переглянути опис операції]
+          tr.operations-table__row
+            td.operations-table__td.operations-table__td--datetime-id
+              .operations-table__datetime 17:35 &nbsp;22.12.23
+              .operations-table__id 32122
+            td.operations-table__td.operations-table__td--type
+              .operation-type.operation-type--replenishment
+            td.operations-table__td.operations-table__td--category
+              .operations-table__type Партнерська програма
+            td.operations-table__td.operations-table__td--sum
+              .operations-table__sum + 1,444 USD
+            td.operations-table__td.operations-table__td--balance
+              .operations-table__balance 123,21 USD
+            td.operations-table__td.operations-table__td--status
+              .operation-status.operation-status--completed Виконано
+            td.operations-table__td.operations-table__td--details
+              .operations-table__details Зарахування партнерської винагороди від Микола. ID партнера: 344221.
+  //- script(src="/js/operations.js")

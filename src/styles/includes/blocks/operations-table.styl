@@ -1,0 +1,127 @@
+.operations-table
+	&__header
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content start
+		align-items center
+		gap 16px
+		margin-bottom 20px
+		
+	&__caption
+		font-weight 500
+		font-size 22px
+	
+	&__table
+		width 100%
+		border-collapse collapse
+		// padding 18px 15px
+		// padding 18px 0
+		border-radius 10px
+		background var(--light)
+	
+	// &__thead
+	// 	position relative
+		
+	// 	&::after
+	// 		content ""
+	// 		position absolute
+	// 		right 16px
+	// 		bottom 0
+	// 		left 16px
+	// 		height 1px
+	// 		background var(--grey-medium)
+	
+	&__th
+		padding-top 18px
+		// padding-left 5px
+		border-bottom 1px solid var(--grey-medium)
+		color var(--grey)
+		// font-weight 400
+		font-size 13px
+		text-align left
+		
+		&--datetime-id
+			width 124px
+			padding-left 20px
+		
+		&--type
+			width 8.6%
+			text-align center
+		
+		&--category
+			// width 177px
+			// width 180px
+			width 14.5%
+		
+		&--sum
+			// width 159px
+			// width 165px
+			// width 165px
+			width 13.2%
+		
+		&--balance
+			// width 164px
+			width 13.2%
+		
+		&--status
+			// width 180px
+			// width 181px
+			width 14.6%
+	
+	&__row
+		&:first-child
+			.operations-table__td
+				padding-top 31px
+				
+		&:nth-child(even)
+			background #FAFAFA
+	
+	&__td
+		// padding 5px 0
+		padding 14px 0
+		// font-weight 400
+		
+		&--datetime-id
+			padding-right 10px
+			text-align right
+		
+		&--type
+			text-align center
+		
+		&--details
+			padding-right 30px
+	
+	&__datetime
+		line-height normal
+	
+	&__id
+		// margin-top -6px
+		color #A5A9BC
+		font-size 12px
+		line-height normal
+	
+	&__sum
+		font-size 15px
+		color var(--green)
+		
+		&--negative
+			color var(--brown)
+	
+	&__type
+		line-height normal
+	
+	&__bank
+		// margin-top -2px
+		font-size 13px
+		line-height normal
+		color var(--grey)
+	
+	&__details
+		font-size 13px
+		line-height normal
+		
+		& > a
+			color var(--accent)
+			
+			&:hover
+				text-decoration none

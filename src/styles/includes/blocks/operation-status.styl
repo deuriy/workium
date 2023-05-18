@@ -1,0 +1,18 @@
+.operation-status
+	display inline-grid
+	padding-left 22px
+	font-size 15px
+	color var(--accent)
+	background-position 0 center
+	background-repeat no-repeat
+	background-size 18px
+	
+	&--completed
+		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' viewBox='0 0 512 512'%3E%3Cpath d='M256 60.338c-107.895 0-195.659 87.776-195.659 195.664 0 107.888 87.764 195.659 195.659 195.659 107.888 0 195.658-87.771 195.658-195.659 0-107.887-87.77-195.664-195.658-195.664zm0 360.46c-90.871 0-164.796-73.931-164.796-164.796 0-90.87 73.925-164.795 164.796-164.795s164.796 73.925 164.796 164.795c0 90.865-73.925 164.796-164.796 164.796z' fill='%237ec442' /%3E%3Cpath d='M348.617 174.362 223.249 302.094l-62.117-44.981c-7.882-5.708-18.912-3.944-24.632 3.938-5.708 7.894-3.944 18.917 3.944 24.632l74.418 53.884a17.571 17.571 0 0 0 10.341 3.35c4.597 0 9.165-1.787 12.586-5.279l136-138.566c6.825-6.95 6.724-18.116-.237-24.941-6.938-6.819-18.11-6.718-24.935.231z' fill='%237ec442' /%3E%3C/svg%3E")
+	
+	&--waiting
+		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23e3ab00' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' class='feather feather-clock' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 6v6l4 2'/%3E%3C/svg%3E")
+		background-size 16px
+	
+	&--canceled
+		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' data-name='Layer 1' viewBox='0 0 200 200'%3E%3Cpath d='M100 15a85 85 0 1 0 85 85 84.93 84.93 0 0 0-85-85Zm0 150a65 65 0 1 1 65-65 64.87 64.87 0 0 1-65 65Z' fill='%23c51616' /%3E%3Cpath d='M128.5 74a9.67 9.67 0 0 0-14 0L100 88.5l-14-14a9.9 9.9 0 0 0-14 14l14 14-14 14a9.9 9.9 0 0 0 14 14l14-14 14 14a9.9 9.9 0 0 0 14-14l-14-14 14-14a10.77 10.77 0 0 0 .5-14.5Z' fill='%23c51616' /%3E%3C/svg%3E")
