@@ -1,0 +1,62 @@
+extends layouts/user_profile
+
+block content
+  .operations
+    h1.page-title.operations__title Баланс
+    .wallets.operations__wallets
+      .wallet.wallets__item
+        .wallet__currency PLN
+        .wallet__sum 0.00 #[span.wallet__currency-prefix zł]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+      .wallet.wallets__item
+        .wallet__currency CZK
+        .wallet__sum 0.00 #[span.wallet__currency-prefix Kč]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+      .wallet.wallets__item
+        .wallet__currency USD
+        .wallet__sum 0.00 #[span.wallet__currency-prefix $]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+      .wallet.wallets__item
+        .wallet__currency EUR
+        .wallet__sum 0.00 #[span.wallet__currency-prefix €]
+        a(href="#").operation-link.wallet__operation-link Зняти кошти
+    .operations-table.operations__operations-table
+      .operations-table__header
+        h3.operations-table__caption Історія операцій
+        .tabs-menu.tabs-menu--operations-types.operations-table__tabs-menu
+          ul.tabs-menu__list
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link.tabs-menu__link--active Всі операції
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link PLN
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link CZK
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link USD
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link EUR
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link Рекрутація
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link Партнерська програма
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link Інше
+      table.operations-table__table
+        thead.operations-table__thead
+          tr.operations-table__row
+            th.operations-table__th.operations-table__th--datetime-id Час, дата та ID
+            th.operations-table__th.operations-table__th--type Тип
+            th.operations-table__th.operations-table__th--category Категорія
+            th.operations-table__th.operations-table__th--sum Сума та валюта
+            th.operations-table__th.operations-table__th--balance Залишок
+            th.operations-table__th.operations-table__th--status Статус
+            th.operations-table__th.operations-table__th--details Деталі операції
+        tbody.operations-table__body
+          tr.operations-table__row
+            td.operations-table__td.operations-table__td--no-operations(colspan="7")
+              .no-operations
+                .no-operations__icon-wrapper
+                  img(src="/img/wallet.svg" alt="").no-operations__icon
+                .no-operations__text У вас ще не було операцій...
+
+  //- script(src="/js/operations.js")

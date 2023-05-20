@@ -1,0 +1,53 @@
+.user-level
+	display grid
+	// grid-template-columns auto 1fr
+	grid-template-columns 162px 1fr
+	gap 82px
+	align-items start
+	width 1188px
+	max-width 100%
+	padding 20px
+	border-radius 14px
+	background var(--light)
+	
+	@media $1440-
+		gap 50px
+	
+	@media $smMinus
+		gap 35px
+	
+	@media $xs
+		grid-template-columns 100%
+		gap 25px
+	
+	&__avatar
+		position relative
+		
+		@media $xs
+			width 162px
+			margin-right auto
+			margin-left auto
+	
+	&__avatar-img
+		width 162px
+		opacity 0.59
+	
+	&__award-block
+		position absolute
+		right -2px
+		bottom -7px
+	
+	&__text-wrapper
+		margin-top 6px
+	
+	&__rating
+		margin-bottom 30px
+		
+		@media $1440-
+			margin-bottom 20px
+	
+	&__rating-line
+		margin-bottom 28px
+		
+		@media $1440-
+			margin-bottom 18px
