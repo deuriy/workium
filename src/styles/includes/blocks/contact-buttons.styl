@@ -18,7 +18,8 @@
 		max-width 100%
 		
 		.contact-buttons__list
-			grid-template-columns repeat(2, 260px)
+			// grid-template-columns repeat(2, 260px)
+			grid-template-columns repeat(2, 216px)
 			justify-content space-between
 			align-items center
 			gap 10px
@@ -29,3 +30,13 @@
 	&--center
 		.contact-buttons__list
 			justify-content center
+	
+	&--text-page
+		.contact-buttons__list
+			gap 30px
+			
+			@media $smMinus
+				gap 20px
+			
+			@media $xs
+				gap 10px
