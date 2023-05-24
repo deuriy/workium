@@ -10,6 +10,9 @@
 	color var(--info)
 	@extend .transition
 	
+	@media $xs
+		gap 6px
+	
 	&::after
 		content ""
 		position relative
@@ -32,6 +35,12 @@
 		
 		&:hover
 			background rgb(246, 246, 252)
+		
+		@media $xs
+			background var(--grey-light)
 	
 	&--full-width-hover
 		background rgb(246, 246, 252)
+		
+		@media $xs
+			background var(--grey-light)

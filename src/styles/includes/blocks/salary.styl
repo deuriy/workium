@@ -6,6 +6,9 @@
 	gap 6px
 	font-size 13px
 	
+	@media $xs
+		gap 4px
+	
 	&__value
 		display inline-grid
 		grid-template-columns auto 1fr
@@ -13,6 +16,9 @@
 		gap 10px
 		font-weight 600
 		font-size 16px
+		
+		@media $xs
+			gap 8px
 	
 		&::before
 			content ""

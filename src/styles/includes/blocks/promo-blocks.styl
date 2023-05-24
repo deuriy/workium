@@ -12,3 +12,10 @@
 		align-items start
 		justify-content start
 		gap 27px
+		
+		@media $mdMinus
+			grid-template-columns repeat(2, 1fr)
+		
+		@media $smMinus
+			grid-template-columns repeat(3, 1fr)
+			gap 20px

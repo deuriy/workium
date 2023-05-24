@@ -8,6 +8,11 @@
 	background var(--light)
 	@extend .transition
 	
+	@media $xs
+		width 280px
+		max-width 100%
+		box-shadow 0 0 24px rgba(0, 0, 0, 0.2)
+	
 	&:hover
 		// box-shadow 0 0 24px rgba(19, 31, 54, 0.25)
 		box-shadow 0 0 24px rgba(19, 31, 54, 0.65)
@@ -30,9 +35,18 @@
 	
 	&__characteristics
 		margin-bottom 17px
+		
+		@media $xs
+			margin-bottom 12px
 	
 	&__salary
 		margin-bottom 24px
+		
+		@media $smMinus
+			margin-bottom 15px
+		
+		@media $xs
+			margin-bottom 18px
 	
 	&__footer
 		text-align center

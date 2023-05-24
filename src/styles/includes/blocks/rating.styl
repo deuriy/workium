@@ -1,6 +1,9 @@
 .rating
 	gap 7px
 	
+	@media $xs
+		gap 4px
+	
 	&,
 	&__wrapper
 		display flex
@@ -35,6 +38,10 @@
 	
 	&__total
 		margin-left 3px
+		
+		@media $xs
+			margin-left 4px
+			font-size 16px
 		
 		&::before
 			content "/"
