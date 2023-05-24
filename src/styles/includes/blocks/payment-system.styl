@@ -1,0 +1,55 @@
+.payment-system
+	position relative
+	
+	&__input
+		position absolute
+		clip rect(0, 0, 0, 0)
+
+		&:checked ~ .payment-system__label
+			padding 13px 13px 13px 18px
+			border 2px solid var(--info)
+			
+			&::after
+				display block
+				bottom -10px
+	
+	&__label
+		position relative
+		display grid
+		grid-template-columns 1fr auto
+		gap 17px 5px
+		align-items end
+		width 162px
+		padding 14px 14px 14px 19px
+		border 1px solid #e9e8ea
+		border-radius 20px
+		background #F5F4F7
+		cursor pointer
+		// @extend .transition
+		
+		&::after
+			content ""
+			display none
+			position absolute
+			z-index 10
+			bottom -9px
+			right 4px
+			left 0
+			width 18px
+			height 18px
+			margin auto
+			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='none' d='M-1-1h582v402H-1z'/%3E%3Cellipse cx='16.416' cy='16.28' fill='%23fff' stroke='%23000' stroke-width='1.5' rx='11.337' ry='11.556'/%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath fill='%235340ff' d='M.024 16.065c0 8.838 7.164 16 16 16s16-7.162 16-16c0-8.836-7.164-16-16-16s-16 7.164-16 16zm13.474 7.002-2.968-2.971-3.006-3.013 2.968-2.971 3.013 3.008 8.05-8.055 2.969 2.97-11.026 11.032z'/%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat
+		
+		&:hover
+			padding 13px 13px 13px 18px
+			border 2px solid var(--info)
+			
+			&::after
+				bottom -10px
+	
+	&__name
+		font-weight 600
+	
+	&__icon
+		grid-area 1 / 2 / 3 / 3
+		margin-bottom -2px
