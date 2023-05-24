@@ -1,0 +1,23 @@
+extends layouts/user_profile
+
+block content
+  .page.page--verification
+    h1.page-title.page__title Верифікація
+    .page__content
+      .page__content-inner
+        .page__text-wrapper
+          .page__img-wrapper
+            img(src="/img/ver.png" alt="Верифікація").page__img
+          .page__large-text
+            p.text-center.medium Верифікація - додатковий та необов'язковий процес, який виконується для підвищення довіри до вашого аккаунту в нейромережі та спільноті WORKIUM. Крім цього верифікація сприяє отриманню додаткового захисту вашого профілю, збільшення особистого рейтингу та відкриває доступ до нових досягнень.
+          p.text-center Щоб отримати верифікований статус для вашого аккаунту, вам потрібно підтвердити ваш номер телефону і надіслати необхідні документи для підтвердження особистості.
+          p.text-center Після проходження верифікації, всі користувачі побачать спеціальний значок #[img(src="/img/checkmark_ok_success_icon.svg").page__checkmark-icon] поруч з вашим іменем, що вказує на те, що ви успішно підтвердили свою особистість. Додатково, весь рейтинг, який ви отримуєте як верифікований користувач, і який буде використовуватись для підвищення важливості ваших коментарів та будь-яких інших дій в нейромережі WORKIUM - автоматично буде збільшуватись на +50%.
+          p.text-center Також, верифікація - це не лише про безпеку. Пройшовши верифікацію, ви отримуєте доступ до розширених та раніше недоступних функцій в нейромережі WORKIUM, збільшення швидкості виводу грошових коштів, максимально оперативні відповіді на ваші запитання та пріоритет при бронюванні власної кандидатури чи зрекрутованих осіб.
+          p.text-center Проходження верифікації абсолютно безкоштовне!
+          p.text-center Для проходження верифікації напишіть на пошту: #[a(href="mailto:info@workium.pl") info@workium.pl] або в один із месенджерів: Viber або Telegram, які знаходяться нижче і повідомте ваш унікальний ID в WORKIUM: #[strong 173676]
+        .contact-buttons.contact-buttons--row.contact-buttons--center.contact-buttons--text-page.page__contact-buttons
+          ul.contact-buttons__list
+            li.contact-buttons__item
+              a(href="#").btn-purple.btn-purple--viber Написати у Viber
+            li.contact-buttons__item
+              a(href="#").btn-lightblue.btn-lightblue--telegram Написати в Telegram
