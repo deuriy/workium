@@ -41,6 +41,9 @@
 	&__large-text
 		margin-bottom 36px
 		font-size 16px
+		
+		@media $xs
+			margin-bottom 24px
 	
 	&__img-wrapper
 		margin-bottom 35px
@@ -97,8 +100,17 @@
 	&--verification
 		.page__img-wrapper
 			margin-bottom 71px
+			
+			@media $xs
+				margin-bottom 40px
 		
 		.page__text-wrapper
 			p
 				margin-bottom 32px
 				line-height 1.25
+				
+				@media $xs
+					margin-bottom 15px
+				
+				&:last-child
+					margin-bottom 0
