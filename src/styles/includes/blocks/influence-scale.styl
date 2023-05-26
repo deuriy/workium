@@ -1,0 +1,56 @@
+.influence-scale
+	position relative
+	width 1003px
+	max-width 100%
+	padding-top 33px
+		
+	&::before
+		content ""
+		position absolute
+		z-index 10
+		top 0
+		left -7px
+		width 22px
+		height 30px
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' style='enable-background:new 0 0 91 91' viewBox='0 0 91 91'%3E%3Cpath d='M66.9 41.8c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4 0 11.3 20.4 32.4 20.4 32.4s20.4-21.1 20.4-32.4zM37 41.4c0-5.2 4.3-9.5 9.5-9.5s9.5 4.2 9.5 9.5c0 5.2-4.2 9.5-9.5 9.5-5.2 0-9.5-4.3-9.5-9.5z'/%3E%3C/svg%3E") center / 38px no-repeat
+	
+	&__scale
+		display grid
+		grid-template-columns repeat(5, 1fr)
+		height 13px
+	
+	&__part
+		&:nth-child(1)
+			border-top-left-radius 6px
+			border-bottom-left-radius 6px
+			background linear-gradient(90deg, #727171, #9d9d9d)
+			
+		&:nth-child(2)
+			background linear-gradient(90deg, #8ecb18, #98da13)
+			
+		&:nth-child(3)
+			background linear-gradient(90deg, #5c2f9d, #7d4ec1)
+			
+		&:nth-child(4)
+			background linear-gradient(90deg, #f29624, #ffc10e)
+			
+		&:nth-child(5)
+			border-top-right-radius 6px
+			border-bottom-right-radius 6px
+			background linear-gradient(90deg, #b9191a, #df3e3d)
+	
+	&__numbers
+		display flex
+		justify-content space-between
+		margin-top 2px
+		margin-right -2.7%
+		// margin-right -15px
+	
+	&__number
+		font-size 12px
+		color #3A3A3A
+		
+		&:last-child
+			position relative
+			right 1.3%
+			color #BA1A1A
