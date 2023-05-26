@@ -11,11 +11,27 @@
 		padding-left 18px
 		border-radius 20px
 	
-	&__currency
-		justify-self end
-		
+	@media $smMinus
+		max-width 100%
+		padding-right 10px
+		padding-left 10px
+		border-radius 20px
+	
+	@media $xs
+		width 254px
+		padding 10px 17px 12px
+		box-shadow 0 0 24px rgba(0, 0, 0, 0.17)
+	
+	&__currency		
 		@media $1440-
 			font-size 14px
+			
+		@media $smPlus
+			justify-self end
+
+		@media $xs
+			justify-self start
+			font-size 15px
 	
 	&__sum
 		margin-top 18px
@@ -25,16 +41,27 @@
 		
 		@media $1440-
 			font-size 42px
+		
+		@media $smMinus
+			font-size 36px
+		
+		@media $xs
+			margin-top 2px
+			margin-bottom 25px
+			font-size 37px
 	
 	&__currency-prefix
-		font-weight 400
 		font-size 33px
+		
+		@media $smPlus
+			font-weight 400
 		
 		@media $1440-
 			font-size 28px
 	
 	&__operation-link
-		margin-bottom -14px
+		@media $smPlus
+			margin-bottom -14px
 	
 	&__selected
 		display inline-grid

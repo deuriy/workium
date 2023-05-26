@@ -1,26 +1,10 @@
 .operations-table
-	&__header
-		display grid
-		grid-template-columns repeat(2, auto)
-		justify-content start
-		align-items center
-		gap 16px
-		margin-bottom 20px
-		
-		@media $1440-
-			grid-template-columns 100%
-		
-	&__caption
-		font-weight 500
-		font-size 22px
-	
-	&__table
-		width 100%
-		border-collapse collapse
-		// padding 18px 15px
-		// padding 18px 0
-		border-radius 10px
-		background var(--light)
+	width 100%
+	border-collapse collapse
+	// padding 18px 15px
+	// padding 18px 0
+	border-radius 10px
+	background var(--light)
 	
 	&__thead
 		position relative
@@ -62,6 +46,10 @@
 		
 		&--status
 			width 14.6%
+		
+		&--details
+			@media $mdMinus
+				padding-left 10px
 	
 	&__row
 		&:first-child
@@ -77,12 +65,19 @@
 		&--datetime-id
 			padding-right 10px
 			text-align right
+			
+			@media $mdMinus
+				padding-left 5px
 		
 		&--type
 			text-align center
 		
 		&--details
 			padding-right 30px
+			
+			@media $mdMinus
+				padding-right 15px
+				padding-left 10px
 	
 	&__datetime
 		line-height normal

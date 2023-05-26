@@ -114,6 +114,31 @@
 				font-weight 600
 	
 	&--operations-types
+		@media $xs
+			padding-right 0
+			padding-left 0
+			
 		.tabs-menu__list
-			flex-wrap wrap
-			gap 19px
+			@media $smPlus
+				flex-wrap wrap
+				gap 19px
+			
+			@media $xs
+				gap 9px
+				padding-right 17px
+				padding-left 17px
+		
+		.tabs-menu__item
+			@media $xs
+				font-size 13px
+		
+		.tabs-menu__link
+			@media $xs
+				padding 7px 16px
+				
+				&:not(.tabs-menu__link--active)
+					background var(--light)
+					
+					&:hover
+						background var(--dark)
+						color var(--light) 

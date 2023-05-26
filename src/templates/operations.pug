@@ -1,9 +1,34 @@
 extends layouts/user_profile
 
+block vars
+  - userProfileClasses = 'user-profile--operations';
+
 block content
   .operations
-    h1.page-title.operations__title Баланс
-    .wallets.operations__wallets
+    h1.page-title.operations-page__title Баланс
+    .swiper.wallets-swiper.operations-page__wallets-swiper.hidden-smPlus
+      .swiper-wrapper
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency PLN
+            .wallet__sum 0.00 #[span.wallet__currency-prefix zł]
+            a(href="#").operation-link.wallet__operation-link Зняти кошти
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency CZK
+            .wallet__sum 0.00 #[span.wallet__currency-prefix Kč]
+            a(href="#").operation-link.wallet__operation-link Зняти кошти
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency USD
+            .wallet__sum 0.00 #[span.wallet__currency-prefix $]
+            a(href="#").operation-link.wallet__operation-link Зняти кошти
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency EUR
+            .wallet__sum 0.00 #[span.wallet__currency-prefix €]
+            a(href="#").operation-link.wallet__operation-link Зняти кошти
+    .wallets.operations-page__wallets.hidden-xs
       .wallet.wallets__item
         .wallet__currency PLN
         .wallet__sum 0.00 #[span.wallet__currency-prefix zł]
@@ -20,10 +45,10 @@ block content
         .wallet__currency EUR
         .wallet__sum 0.00 #[span.wallet__currency-prefix €]
         a(href="#").operation-link.wallet__operation-link Зняти кошти
-    .operations-table.operations__operations-table
-      .operations-table__header
-        h3.operations-table__caption Історія операцій
-        .tabs-menu.operations-table__tabs-menu
+    .operations.operations-page__operations
+      .operations__header
+        h3.operations__caption Історія операцій
+        .tabs-menu.tabs-menu--operations-types.operations__tabs-menu
           ul.tabs-menu__list
             li.tabs-menu__item
               a(href="#").tabs-menu__link.tabs-menu__link--active Всі операції
@@ -41,7 +66,61 @@ block content
               a(href="#").tabs-menu__link Партнерська програма
             li.tabs-menu__item
               a(href="#").tabs-menu__link Інше
-      table.operations-table__table
+      .operations__titles.hidden-smPlus
+        h4.operations__col-title Категорія
+        h4.operations__col-title Сума / Залишок 
+      .operations__items.hidden-smPlus
+        .operation.operations__item
+          .operation__header
+            .operation__info
+              .operation-type.operation-type--withdrawals.operation__type
+              .operation__name Зняття коштів
+              .operation__bank Monobank
+            .operation__sum-and-balance
+              .operation__sum.operation__sum--negative - 1,444 USD
+              .operation__balance 123,21 USD
+          .operation__details Зняття власних коштів. Банківський переказ: Monobank (28***419).
+          .operation__footer
+            .operation__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 32122
+            .operation-status.operation-status--completed Виконано
+        .operation.operation--grey-bg.operations__item
+          .operation__header
+            .operation__info
+              .operation-type.operation-type--replenishment.operation__type
+              .operation__name Партнерська програма
+            .operation__sum-and-balance
+              .operation__sum + 1,444 USD
+              .operation__balance 123,21 USD
+          .operation__details Зарахування партнерської винагороди від Микола. ID партнера: 344221.
+          .operation__footer
+            .operation__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 32122
+            .operation-status.operation-status--completed Виконано
+        .operation.operations__item
+          .operation__header
+            .operation__info
+              .operation-type.operation-type--replenishment.operation__type.operation__type--one-row
+              .operation__name Рекрутація
+            .operation__sum-and-balance
+              .operation__sum + 1,444 USD
+              .operation__balance 123,21 USD
+          .operation__details Винагорода за відпрацювання кандидата Шумко Ігор. ID кандидата: 3392112.
+          .operation__footer
+            .operation__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 32122
+            .operation-status.operation-status--completed Виконано
+        .operation.operation--grey-bg.operations__item
+          .operation__header
+            .operation__info
+              .operation-type.operation-type--withdrawals.operation__type
+              .operation__name Зняття коштів
+              .operation__bank Приват24
+            .operation__sum-and-balance
+              .operation__sum.operation__sum--negative - 1,444 USD
+              .operation__balance 123,21 USD
+          .operation__details Зняття власних коштів. Банківський переказ: Monobank (28***419).
+          .operation__footer
+            .operation__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 32122
+            .operation-status.operation-status--waiting На розгляді
+      table.operations-table.hidden-xs
         thead.operations-table__thead
           tr.operations-table__row
             th.operations-table__th.operations-table__th--datetime-id Час, дата та ID
@@ -151,4 +230,4 @@ block content
               .operation-status.operation-status--completed Виконано
             td.operations-table__td.operations-table__td--details
               .operations-table__details Зарахування партнерської винагороди від Микола. ID партнера: 344221.
-  //- script(src="/js/operations.js")
+  script(src="/js/operations.js")

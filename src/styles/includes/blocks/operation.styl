@@ -1,0 +1,58 @@
+.operation
+	// padding 20px 16px 24px
+	// padding 24px 19px 28px 16px
+	padding 23px 19px 28px 16px
+	background var(--light)
+	
+	&__header,
+	&__footer
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items center
+		
+	&__header
+		gap 15px
+		margin-bottom 10px
+	
+	&__info
+		display grid
+		grid-template-columns auto 1fr
+		align-items center
+		column-gap 12px
+	
+	&__type
+		grid-row 1 / 3
+		
+		&--one-row
+			grid-row 1 / 2
+	
+	&__name
+		font-size 16px
+		line-height 20px
+	
+	&__bank,
+	&__balance,
+	&__datetime-and-id
+		color #989DB2
+		font-size 13px
+		line-height 22px
+	
+	&__sum-and-balance
+		text-align right
+	
+	&__sum
+		font-size 16px
+		line-height normal
+		color var(--green)
+		
+		&--negative
+			color var(--brown)
+	
+	&__details
+		margin-bottom 7px
+		font-size 16px
+		line-height 1.5
+	
+	&--grey-bg
+		background #FAFAFA
