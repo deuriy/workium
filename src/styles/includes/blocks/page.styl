@@ -7,9 +7,25 @@
 		
 		@media $xs
 			margin-bottom 20px
+	
+	&__tabs-menu
+		margin-bottom 40px
+		
+		@media $mdMinus
+			margin-bottom 25px
+		
+		@media $smMinus
+			margin-bottom 20px
+		
+		@media $xs
+			margin-bottom 15px
+	
+	// &__subtitle
+	// 	margin-bottom 10px
 		
 	&__content
 		padding 40px 35px
+		border-radius 13px
 		background var(--light)
 		
 		@media $smMinus
@@ -62,7 +78,7 @@
 		position relative
 		top 6px
 	
-	&__subtitle
+	&__text-subtitle
 		margin-top 35px
 		margin-bottom 30px
 		text-align center
@@ -92,6 +108,15 @@
 			margin-top 20px
 	
 	&--clients
+		.page__title
+			margin-bottom 33px
+			
+			@media $smMinus
+				margin-bottom 20px
+			
+			@media $xs
+				margin-bottom 10px
+			
 		.page__text-wrapper
 			p
 				a

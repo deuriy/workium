@@ -3,15 +3,23 @@ extends layouts/user_profile
 block content
   .page.page--clients
     h1.page-title.page__title Клієнти
+    .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.page__tabs-menu
+      ul.tabs-menu__list
+        li.tabs-menu__item
+          a(href="/recruitment.html").tabs-menu__link.tabs-menu__link--active Рекрутація
+        li.tabs-menu__item
+          a(href="/documents.html").tabs-menu__link Документи
+            span.count.tabs-menu__count 3
     .page__content
       .page__content-inner
         .page__text-wrapper
           .page__img-wrapper
             img(src="/img/noclients.jpg" alt="Клієнти").page__img
-          h2.page__subtitle Поки що у вас немає жодного клієнта...
-          p.text-center В цьому розділі будуть відображатись всі ваші клієнти, яких ви працевлаштували або яким виготовляєте будь-які документи.
-          p.text-center Зверніть увагу, що за правилами нейромережі WORKIUM не забороняється працевлаштувати самого себе та виготовляти собі документи. Таким чином, ви можете повноцінно використовувати WORKIUM для власних потреб та отримувати винагороду за власне працевлаштування та документи зі 100% гарантією.
-          p.text-center Почніть прямо зараз! Перегляньте #[a(href="/vacancies.html") Вакансії] та розділ #[a(href="#") Документи] і оберіть те, що найбільше вас влаштує.
+          h2.page__text-subtitle Поки що ви нікого не працевлаштували...
+          p.text-center В цьому розділі будуть відображатись всі ваші клієнти, яких ви працевлаштували.
+          p.text-center Зверніть увагу, що за правилами нейромережі WORKIUM не забороняється працевлаштувати самого себе.
+          p.text-center Таким чином, ви можете повноцінно використовувати WORKIUM для власних потреб та отримувати винагороду за власне працевлаштування зі 100% гарантією.
+          p.text-center Почніть прямо зараз! Перегляньте #[a(href="/vacancies.html") Вакансії] та оберіть саме той варіант праці, який найбільше вас влаштує.
           p.text-center Пам’ятайте, що команда підтримки нейромережі WORKIUM завжди на зв’язку і з радістю відповість на ваші запитання.
         .contact-buttons.contact-buttons--row.contact-buttons--center.contact-buttons--text-page.page__contact-buttons
           ul.contact-buttons__list
