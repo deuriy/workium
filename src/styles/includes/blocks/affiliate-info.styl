@@ -24,6 +24,7 @@
 		
 		@media $xs
 			font-size 20px
+			line-height normal
 	
 	&__title-sum
 		font-weight 700
@@ -33,7 +34,11 @@
 			font-size 23px
 	
 	&__text
-		font-weight 400
+		@media $xs
+			color var(--black)
+		
+		@media $smPlus
+			font-weight 400
 		
 		& > p
 			margin-bottom 19px
@@ -51,6 +56,9 @@
 			-webkit-box-orient vertical
 			overflow hidden
 			text-overflow ellipsis
+			
+			& > p
+				display inline
 	
 	&__more-link-wrapper
 		margin-top 20px
