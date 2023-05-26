@@ -160,8 +160,18 @@
 				background var(--light)
 				color var(--accent)
 			
+			&:hover,
 			&--active
 				@media $xs
 					background var(--dark)
 					color var(--light)
+	
+	&--has-count
+		@media $xs
+			height 56px
+		
+		.tabs-menu__list
+			@media $xs
+				height 56px
+				padding-top 8px
 			
