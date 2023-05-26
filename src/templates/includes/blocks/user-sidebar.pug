@@ -5,11 +5,18 @@
         img(src="/img/logo.svg" title="Workium")
       a(href="#").user-sidebar__user-avatar
         img(src="/img/user_avatar.png" alt="sadwolf27")
-    .user-info.user-sidebar__user-info
-      .user-info__top
-        a(href="/user.html").username.user-info__username sadwolf27
-        a(href="/logout").logout-link.user-info__logout-link
-      .user-balance.user-info__balance 5257,45 грн
+    //- .user-info.user-sidebar__user-info
+    //-   .user-info__top
+    //-     a(href="/user.html").username.user-info__username sadwolf27
+    //-     a(href="/logout").logout-link.user-info__logout-link
+    //-   .user-balance.user-info__balance 5257,45 грн
+    .user-sidebar__user-info-wrapper
+      .user-info
+        img(src="/img/user_sidebar_avatar.png" alt="Sobat Jariyah").user-info__avatar
+        .user-info__text-wrapper
+          a(href="/user.html").username.user-info__username Sobat Jariyah
+          .user-label.user-info__user-label Впливовість: 0
+        a(href="#").dots-link
     .user-menu.user-sidebar__user-menu
       ul.user-menu__list
         li.user-menu__item

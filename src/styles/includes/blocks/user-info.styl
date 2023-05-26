@@ -1,9 +1,21 @@
 .user-info
-	padding 24px 32px
+	// padding 24px 32px
+	display grid
+	grid-template-columns auto 1fr auto
+	align-items center
+	gap 10px
+	// padding 15px 28px 22px
+	padding 15px 0 22px
 	border-bottom 1px solid var(--accent-light)
 	
-	&__top
-		display grid
-		grid-template-columns repeat(2, auto)
-		justify-content space-between
-		align-items center
+	&__text-wrapper
+		margin-top -3px
+	
+	&__user-label
+		margin-top 2px
+	
+	// &__top
+	// 	display grid
+	// 	grid-template-columns repeat(2, auto)
+	// 	justify-content space-between
+	// 	align-items center
