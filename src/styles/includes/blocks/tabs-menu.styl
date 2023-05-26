@@ -141,4 +141,21 @@
 					
 					&:hover
 						background var(--dark)
-						color var(--light) 
+						color var(--light)
+	
+	&--light-bg-mob
+		@media $xs
+			padding-right 0
+			padding-left 0
+			
+		.tabs-menu__link
+			@media $xs
+				padding 6px 16px
+				background var(--light)
+				color var(--accent)
+			
+			&--active
+				@media $xs
+					background var(--dark)
+					color var(--light)
+			

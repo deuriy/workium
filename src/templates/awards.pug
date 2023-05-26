@@ -3,6 +3,13 @@ extends layouts/user_profile
 block content
   .awards-page
     h1.page-title.awards-page__title Досягнення
+    .tabs-menu.tabs-menu--light-bg-mob.awards-page__tabs-menu
+      ul.tabs-menu__list
+        li.tabs-menu__item
+          a(href="/awards.html").tabs-menu__link.tabs-menu__link--active Нагороди
+        li.tabs-menu__item
+          a(href="/influence.html").tabs-menu__link Впливовість
+    h2.page-title.awards-page__subtitle Нагороди
     .awards-page__description
       p Виконуйте завдання, відкривайте досягнення, підвищуйте рівень та отримуйте унікальні бонуси та нагороди.
     .user-level.awards-page__user-level
@@ -10,8 +17,8 @@ block content
         img(src="/img/avatar_default_head_person.svg" alt="Андрій").user-level__avatar-img
         .award-block.user-level__award-block 1
       .user-level__text-wrapper
-        .user-level__level Андрій, ваш поточний рівень: #[strong 1]
-        .user-level__rating Поточний рейтинг: #[strong 15]
+        .user-level__level Андрій, поки що ви не відкрили жодної нагороди!
+        .user-level__rating Відкритих нагород: #[strong 0] із 67
         .rating-line.user-level__rating-line
           .rating-line__line
             .rating-line__line-inner(style="width: 50%;")
@@ -19,7 +26,7 @@ block content
             .rating-line__number 0
             .rating-line__number 100
         .user-level__text
-          p Поки що ви не відкрили жодної нагороди! Почніть прямо зараз!
+          p Почніть прямо зараз!
     .awards.awards-page__awards
       .award.awards__item
         img(src="/img/workium_logo_graphic.svg" alt="Workium падаван").award__icon-img
