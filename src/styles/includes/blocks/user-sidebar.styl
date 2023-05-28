@@ -11,10 +11,18 @@
 		top 56px
 		left -280px
 		height calc(100% - 56px)
+		overflow auto
 	
 	&__inner
 		position sticky
 		top 0
+		display grid
+		grid-template-columns 100%
+		grid-template-rows auto 1fr auto
+		min-height 100vh
+		
+		@media $smMinus
+			min-height calc(100vh - 56px)
 	
 	&__top
 		display grid
@@ -27,14 +35,26 @@
 		margin-right 28px
 		margin-left 28px
 		
-		@media $smPlus
+		@media $md
 			display none
 	
 	&__user-menu
-		max-height calc(100vh - 75px)
+		// max-height calc(100vh - 75px)
+		// max-height calc(100vh - 123px)
+		max-height calc(100vh - 159px)
 		// padding 12px 11px 20px
-		padding 16px 11px 20px
+		// padding 16px 11px 20px
+		margin 16px 0 20px
+		padding 0 11px
 		overflow auto
+		
+		@media $smMinus
+			// max-height calc(100vh - 227px)
+			max-height none
+	
+	&__footer
+		padding-bottom 20px
+		padding-left 29px
 	
 	&--opened
 		left 0
