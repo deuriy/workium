@@ -1,0 +1,198 @@
+extends layouts/user_profile
+
+block content
+  .docs-page
+    h1.page-title.docs-page__title Документи
+    .page-header.docs-page__header
+      .page-header__img-wrapper
+        img(src="/img/folder.png" alt="Документи").page-header__img
+      .page-header__text-wrapper
+        h2.page-header__title Виготовлення будь-яких документів зі #[span.highlighted-text 100% гарантією] від WORKIUM!
+        .page-header__text
+          p #[span.semibold WORKIUM Документи] - це більше 100 видів документів та понад 1000 пропозицій від роботодавців Польщі, Чехії та інших країн світу.
+    .tabs.docs-page__tabs
+      .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.tabs-menu--center-desktop.docs-page__tabs-menu
+        ul.tabs-menu__list.tabs__list
+          li.tabs-menu__item.tabs__item
+            a(href="#").tabs-menu__link.tabs-menu__link--active Польща
+          li.tabs-menu__item.tabs__item
+            a(href="#").tabs-menu__link Чехія
+          li.tabs-menu__item.tabs__item
+            a(href="#").tabs-menu__link Інші країни
+      .tabs__content(style="display: block")
+        .services
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Пакет документів для відкриття візи
+            .service-box__description
+              p Легальне запрошення, заповнена анкета, акредитований #[br]страховий поліс та стартовий пакет мобільного оператора.
+            a(href="#").btn-action.service-box__order-btn Замовити пакет документів
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Страхування (20+ типів)
+            .service-box__description
+              p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
+            a(href="#").btn-action.service-box__order-btn Замовити послуги страхування
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Логістичні послуги
+            .service-box__description
+              p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
+            a(href="#").btn-action.service-box__order-btn Замовити логістичні послуги
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Легалізація в Польщі
+            .service-box__description
+              p Карти побиту та інші типи легалізації на території Польщі.#[br] Безкоштовна консультація та індивідуальний підхід до кожного.
+            a(href="#").btn-action.service-box__order-btn Замовити послуги із легалізації
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+      .tabs__content
+        .services
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Пакет документів для відкриття візи
+            .service-box__description
+              p Легальне запрошення, заповнена анкета, акредитований #[br]страховий поліс та стартовий пакет мобільного оператора.
+            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити пакет документів
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Страхування (20+ типів)
+            .service-box__description
+              p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
+            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити послуги страхування
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Логістичні послуги
+            .service-box__description
+              p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
+            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити логістичні послуги
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Легалізація в Чехії
+            .service-box__description
+              p Карти побиту та інші типи легалізації на території Чехії.#[br] Безкоштовна консультація та індивідуальний підхід до кожного.
+            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити послуги із легалізації
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+      .tabs__content
+        .services
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Пакет документів для відкриття візи
+            .service-box__description
+              p Легальне запрошення, заповнена анкета, акредитований #[br]страховий поліс та стартовий пакет мобільного оператора.
+            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити пакет документів
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Страхування (20+ типів)
+            .service-box__description
+              p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
+            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити послуги страхування
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Логістичні послуги
+            .service-box__description
+              p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
+            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити логістичні послуги
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+          .service-box.services__item
+            .service-box__country PL
+            h3.service-box__title Легалізація в інших країнах
+            .service-box__description
+              p Різні види легалізації в країнах ЄС і не тільки.#[br] Безкоштовна консультація та індивідуальний підхід до кожного.
+            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити послуги із легалізації
+            .service-box__footer
+              a(href="#").more-link.more-link--dark Детальніше
+    .articles-boxes.docs-page__articles
+      .article-box.articles-boxes__item
+        h3.article-box__title Замовляй документи з гарантією або рекомендуй друзям та отримуй #[span.highlighted-text.highlighted-text--beige 10% винагороди!]
+        .article-box__content
+          .article-box__text
+            p Рекомендуючи WORKIUM друзям та знайомим - ви гарантовано та миттєво в автоматичному режимі отримаєте грошову винагороду за кожне замовлення документів, яке здійснять ваші знайомі, перейшовши за вашим унікальним посиланням навіть без реєстрації у системі. 
+            p Тобто, ви допоможете своїм друзям або знайомим вигідно та надійно виготовити необхідні документи і миттєво отримаєте на свій баланс винагороду у розмірі 10% від суми замовлення! Це ваша винагорода за рекомендацію! #[a(href="#") Детальніше] про заробіток на документах.
+      .article-box.articles-boxes__item
+        h3.article-box__title Як «WORKIUM документи» безповоротньо змінили сферу працевлаштування
+        .article-box__content(style="display: none;")
+          .theses-group.article-box__theses-group
+            .theses.theses-group__item
+              .theses__header
+                h3.theses__title Як все працювало раніше:
+              .theses__items
+                .thesis.theses__item
+                  h4.thesis__title Пошук роботодавця або посередника
+                  .thesis__text
+                    p Вам потрібно було знайти компанію або посередника і домовитись про виготовлення необхідних документів. Іноземна мова, небажання спілкуватись та довготривалі відповіді - це найменші проблеми, які вас чекатимуть на цьому етапі.
+                .thesis.theses__item
+                  h4.thesis__title Оплата наперед та відсутність гарантій
+                  .thesis__text
+                    p Вам пообіцяли виготовити необхідні документи? Супер! Тоді заплатіть наперед відразу повну суму і не розраховуйте на будь-які гарантії. Якщо пощастить - вас не обмануть. Якщо пощастить менше - ви втратите час та гроші.
+                .thesis.theses__item
+                  h4.thesis__title Постійні затримки та відсутність будь-якого впливу
+                  .thesis__text
+                    p В 95% випадків обіцяні вам документи виготовляються з тривалою затримкою. Ні роботодавець ні посередник на процес виготовлення ваших документів повпливати не може, а це означає, що, в кращому випадку, ви отримаєте документи значно пізніше. В гіршому - вони просто загубляться або будуть зареєстровані з помилками або іншими порушеннями. Тому, будьте особливо обережні, коли вам потрібно виготовити документи максимально швидко, без права на помилку чи повторну подачу.
+                .thesis.theses__item
+                  h4.thesis__title Хвилювання та сумніви стосовно легальності
+                  .thesis__text
+                    p Якщо роботодавець виявиться порядним, не привласнить ваші кошти і, хоч із затримкою, але все-таки надішле вам потрібні документи - це тільки половина процесу. Далі вам необхідно пересвідчитись що документи, які ви замовляли, на 100% офіційні та легальні і що до вас не буде жодних питань від виконавчих органів. На жаль, відсутність механізму оскарження дій зі сторони замовника максимально сприяє розповсюдженню шахрайських дій. Будьте обережні!
+            .theses.theses-group__item
+              .theses__header
+                h3.theses__title.theses__title--green-bg Як все працює завдяки WORKIUM тепер:
+              .theses__items
+                .thesis.thesis--check-icon.theses__item
+                  h4.thesis__title Всі документи - в одному місці
+                  .thesis__text
+                    p Більше не потрібно нікого та нічого шукати. WORKIUM перевірив сотні роботодавців в Польщі, Чехії та інших країнах і з найкращими із них підписав договори про співпрацю. Тому, все що вам необхідно - просто довіритись команді WORKIUM, яка складається виключно із професіоналів з багаторічним досвідом! Безкоштовна консультація, повний супровід, інформування на кожному етапі - це всього лише частина механізму нашої моделі ідеальної співпраці. Спробуйте, і ми гарантуємо що ви залишитесь задоволеними!
+                .thesis.thesis--check-icon.theses__item
+                  h4.thesis__title Оплата зі 100% гарантією! Або повернемо кошти!
+                  .thesis__text
+                    p WORKIUM працює тільки з акредитованими роботодавцями, які пройшли багаторівневу перевірку. На кожен тип документів ви отримуєте гарантію. Крім цього, нейромережа WORKIUM кожну секунду аналізує сотні пропозицій по вашому запиту і завжди запропонує вам той варіант, який  буде для вас завжди максимально фінансово вигідним, швидким у виготовленні та на 100% легальним! Прозоро, якісно та з гарантією результату!
+                .thesis.thesis--check-icon.theses__item
+                  h4.thesis__title Жодних хвилювань та сумнівів
+                  .thesis__text
+                    p Замовляючи документи у WORKIUM ви на 100% можете бути впевнені в їх легальності та офіційності. Кожного дня команда WORKIUM виготовляє сотні різноманітних документів в Польщі, Чехії та інших країнах ЄС і не тільки. Ми максимально піклуємось про свою репутацію тому завжди докладаємо усіх зусиль, щоб співпрацею з нами ви пишались!
+                .thesis.thesis--check-icon.theses__item
+                  h4.thesis__title Просто, зручно та спокійно
+                  .thesis__text
+                    p Завдяки нейромережі WORKIUM - процес виготовлення документів став доступним всім без вийнятку. Використовуючи багаторічний досвід, ми зберігаємо ваш час та нерви. А ще, 87% користувачів звертаються до нас повторно і це є найкращим підтвердженням якості нашої роботи.
+          .article-box__subtitle-wrapper
+            h2.article-box__subtitle Як замовити документи з гарантією?
+          .article-box__text
+            p Процес замовлення відбувається в телефонному режимі або за допомогою спілкування в зручному для вас месенджері.
+            p #[a(href="#") Зв’яжіться] з нами та повідомте, які саме документи ви б хотіли замовити. На сьогодні WORKIUM працює практично з усіма документами в Польщі та стрімко збільшує перелік документів в Чехії.
+            p Команда нейромережі WORKIUM виготовляє повні пакети документів, працює з найрізноматнішими страховими полісами, надає послуги з легалізації та пропонує перелік більше 20-ти інших послуг, які стосуються усіх можливих документів. Тобто, команда WORKIUM зможе підготувати для вас саме ті документи, які ви оберете!
+            p Для безкоштовної консультації та замовлення документів - напишіть нам у зручний для вас месенджер:
+          .contact-buttons.contact-buttons--row.contact-buttons--center.contact-buttons--article-box.article-box__contact-buttons
+            ul.contact-buttons__list
+              li.contact-buttons__item
+                a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-article-box Написати у Viber
+              li.contact-buttons__item
+                a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-article-box Написати в Telegram
+        .article-box__footer
+          a(href="#").more-btn.article-box__more-btn Читати статтю
+
+
+    //- .contact-buttons.contact-buttons--row.contact-buttons--center.contact-buttons--text-page
+    //-   ul.contact-buttons__list
+    //-     li.contact-buttons__item
+    //-       a(href="#").btn-purple.btn-purple--viber Написати у Viber
+    //-     li.contact-buttons__item
+    //-       a(href="#").btn-lightblue.btn-lightblue--telegram Написати в Telegram
+  script(src="/js/docs.js")

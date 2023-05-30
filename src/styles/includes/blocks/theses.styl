@@ -1,0 +1,46 @@
+.theses
+	&__header
+		margin-bottom 67px
+		text-align center
+		
+		@media $1440-
+			margin-bottom 50px
+		
+		@media $mdMinus
+			margin-bottom 40px
+		
+		@media $smMinus
+			margin-bottom 30px
+		
+		@media $xs
+			margin-bottom 25px
+		
+	&__title
+		display inline-grid
+		padding 8px 22px
+		border-radius 10px
+		background #ECEEFA
+		font-weight 500
+		font-size 16px
+		
+		@media $xs
+			font-size 15px
+			line-height normal
+		
+		&--green-bg
+			background var(--light-green)
+		
+	&__items
+		display grid
+		grid-template-columns repeat(2, 1fr)
+		gap 34px 114px
+		
+		@media $1440-
+			gap 34px 60px
+		
+		@media $mdMinus
+			gap 30px 40px
+		
+		@media $xs
+			grid-template-columns 100%
+			gap 20px

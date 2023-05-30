@@ -1,0 +1,36 @@
+.btn-action
+	display inline-grid
+	justify-content center
+	padding 9px 36px
+	border none
+	outline none
+	border-radius 9px
+	font-weight 500
+	font-size 16px
+	line-height 1.625
+	font-family var(--base-font)
+	background var(--light-green)
+	// background #d4e2fc
+	color var(--black)
+	white-space nowrap
+	cursor pointer
+	text-decoration none
+	@extend .transition
+	
+	@media $1440-
+		padding-right 26px
+		padding-left 26px
+		font-size 15px
+	
+	@media $mdMinus
+		padding-right 20px
+		padding-left 20px
+	
+	// &:hover
+	// 	background #c7dcad
+	
+	&--czech
+		background #DCE9F2
+	
+	&--other
+		background #d4e2fc

@@ -1,0 +1,84 @@
+.article-box
+	// padding 21px 29px 16px
+	padding 26px 29px 16px
+	background var(--light)
+	border-radius 10px
+	
+	@media $xs
+		padding 20px
+	
+	&__title
+		// margin-bottom 27px
+		margin-bottom 31px
+		font-weight 600
+		font-size 20px
+		line-height normal
+		text-align center
+		
+		@media $1440-
+			margin-bottom 20px
+		
+		@media $xs
+			font-size 18px
+	
+	&__subtitle-wrapper
+		margin-bottom 42px
+		text-align center
+		
+		@media $mdMinus
+			margin-bottom 30px
+	
+	&__subtitle
+		display inline-grid
+		padding 8px 44px
+		border-radius 12px
+		background var(--light-green)
+		font-weight 500
+		font-size 16px
+	
+	&__text
+		& > p
+			margin-bottom 18px
+			font-size 15px
+			line-height normal
+		
+		a
+			color #5340FF
+			text-decoration none
+	
+	&__theses-group
+		margin-top 47px
+		margin-bottom 67px
+		margin-left -5px
+		
+		@media $1440-
+			margin-top 30px
+			margin-bottom 50px
+		
+		@media $mdMinus
+			margin-bottom 35px
+		
+		@media $smMinus
+			margin-top 35px
+		
+		@media $xs
+			margin-top 25px
+	
+	&__contact-buttons
+		margin-top 48px
+		margin-bottom 54px
+		
+		@media $1440-
+			margin-top 35px
+			margin-bottom 40px
+		
+		@media $mdMinus
+			margin-top 30px
+			margin-bottom 30px
+		
+		@media $xs
+			margin-top 20px
+			margin-bottom 20px
+	
+	&__footer
+		text-align center
