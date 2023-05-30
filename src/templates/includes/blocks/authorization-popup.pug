@@ -19,10 +19,12 @@
         .authorization-form__fields
           .authorization-form__field
             input(type="tel" placeholder="Телефон" name="phone").form-text
-          .authorization-form__field
+          .authorization-form__field.authorization-form__field--password
             input(type="password" placeholder="Пароль" name="password").form-text.form-text--password
-          .authorization-form__field
+            button(type="button").password-toggle.authorization-form__password-toggle
+          .authorization-form__field.authorization-form__field--password
             input(type="password" placeholder="Повторіть пароль" name="password").form-text.form-text--password
+            button(type="button").password-toggle.authorization-form__password-toggle
         .authorization-form__actions
           button(type="submit").btn-default.authorization-form__btn-submit Зареєструватись
     .tabs__content(style="display: block")
@@ -38,8 +40,9 @@
         .authorization-form__fields
           .authorization-form__field
             input(type="tel" placeholder="Телефон" name="phone").form-text
-          .authorization-form__field
+          .authorization-form__field.authorization-form__field--password
             input(type="password" placeholder="Пароль" name="password").form-text.form-text--password
+            button(type="button").password-toggle.authorization-form__password-toggle
         .authorization-form__forgot-link-wrapper
           a(href="/password_recovery.html").link Забули пароль?
         .authorization-form__actions
