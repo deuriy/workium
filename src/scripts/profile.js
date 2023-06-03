@@ -44,14 +44,6 @@ function copyInputText (targetElem) {
   document.execCommand("copy");
 }
 
-// function hideBlockWithCookie (blockId, time = 5184000) {
-// 	setCookie(`${blockId}`, true, time);
-// }
-
-// function checkBlockHidden (blockId) {
-//   return !!getCookie(blockId);
-// }
-
 $(function () {
 	let hideProfileCookie = getCookie('hideProfile');
 	console.log(hideProfileCookie);
@@ -76,11 +68,6 @@ $(function () {
 			$(link).addClass('user-menu__link--active');
 		}
 	});
-
-	// $('.user-sidebar__user-avatar').click(function(e) {
-	// 	e.preventDefault();
-	// 	$('.user-sidebar__user-info-wrapper').slideToggle(200);
-	// });
 
 	$('.mobile-header__menu-hamburger').click(function(e) {
 		$(this).toggleClass('menu-hamburger--opened');
@@ -146,14 +133,14 @@ $(function () {
   	if (!$userAvatarLink.hasClass('user-sidebar__user-avatar-link--profile-shown')) {
 	  	$(this).find('.context-menu__link-title').text('Показати профіль');
 	  	$(this).find('.context-menu__icon').attr('src', '/img/context_menu/show_profile.svg');
-	  	// $userInfoWrapper.slideUp();
+	  	
 	  	$userInfoWrapper.hide();
 
 	  	setCookie('hideProfile', 'yes', {'max-age': 3153600000});
   	} else {
   		$(this).find('.context-menu__link-title').text('Приховати профіль');
 	  	$(this).find('.context-menu__icon').attr('src', '/img/context_menu/hide_profile.svg');
-	  	// $userInfoWrapper.slideDown();
+
 	  	$userInfoWrapper.show();
 
 	  	setCookie('hideProfile', 'no', {'max-age': 3153600000});
