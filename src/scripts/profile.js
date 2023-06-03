@@ -7,7 +7,68 @@ function copyLink(input) {
   document.execCommand("copy");
 }
 
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options = {}) {
+  options = {
+    path: '/',
+    ...options
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
+function copyInputText (targetElem) {
+  targetElem.select();
+  targetElem.setSelectionRange(0, 99999);
+
+  document.execCommand("copy");
+}
+
+// function hideBlockWithCookie (blockId, time = 5184000) {
+// 	setCookie(`${blockId}`, true, time);
+// }
+
+// function checkBlockHidden (blockId) {
+//   return !!getCookie(blockId);
+// }
+
 $(function () {
+	let hideProfileCookie = getCookie('hideProfile');
+	console.log(hideProfileCookie);
+
+	let $userAvatarLink = $('.user-sidebar__user-avatar-link');
+  let $userInfoWrapper = $('.user-sidebar__user-info-wrapper');
+  let $menuLinkHideProfile = $('.context-menu__link--hide-profile');
+
+	if (hideProfileCookie === 'yes') {
+		$userAvatarLink.removeClass('user-sidebar__user-avatar-link--profile-shown');
+
+		$menuLinkHideProfile.find('.context-menu__link-title').text('Показати профіль');
+  	$menuLinkHideProfile.find('.context-menu__icon').attr('src', '/img/context_menu/show_profile.svg');
+
+  	$userInfoWrapper.hide();
+	}
+
 	$('.user-menu__link').each(function(index, link) {
 		let linkHref = $(link).attr('href');
 
@@ -80,9 +141,6 @@ $(function () {
   });
 
   $('.context-menu__link--hide-profile').click(function(e) {
-  	let $userAvatarLink = $('.user-sidebar__user-avatar-link');
-  	let $userInfoWrapper = $('.user-sidebar__user-info-wrapper');
-
   	$userAvatarLink.toggleClass('user-sidebar__user-avatar-link--profile-shown');
 
   	if (!$userAvatarLink.hasClass('user-sidebar__user-avatar-link--profile-shown')) {
@@ -90,11 +148,15 @@ $(function () {
 	  	$(this).find('.context-menu__icon').attr('src', '/img/context_menu/show_profile.svg');
 	  	// $userInfoWrapper.slideUp();
 	  	$userInfoWrapper.hide();
+
+	  	setCookie('hideProfile', 'yes', {'max-age': 3153600000});
   	} else {
   		$(this).find('.context-menu__link-title').text('Приховати профіль');
 	  	$(this).find('.context-menu__icon').attr('src', '/img/context_menu/hide_profile.svg');
 	  	// $userInfoWrapper.slideDown();
 	  	$userInfoWrapper.show();
+
+	  	setCookie('hideProfile', 'no', {'max-age': 3153600000});
   	}
 
   	$(this).closest('.context-block').removeClass('context-block--opened');
