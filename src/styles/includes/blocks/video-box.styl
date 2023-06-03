@@ -1,0 +1,12 @@
+.video-box
+	&__inner
+		display inline-grid
+		grid-template-columns 100%
+	
+	&__video,
+	&__inner::after
+		grid-area 1 / 1 / 2 / 2
+		
+	&__inner::after
+		content ""
+		background linear-gradient(180deg, rgba(15, 24, 42, 0) 77.14%, rgba(15, 24, 42, 0.7) 100%)
