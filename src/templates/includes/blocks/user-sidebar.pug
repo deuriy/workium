@@ -91,4 +91,19 @@
             img(src="/img/user_menu/settings.svg" alt="Налаштування").user-menu__icon
             span.user-menu__item-text Налаштування
     .user-sidebar__footer
-      a(href="#").support-link Підтримка онлайн
+      .context-block.context-block--support.user-sidebar__context-support-block#support-block
+        .contact-box.contact-box--support
+          h3.contact-box__title З радістю відповімо на ваші запитання!
+          .contact-phones.contact-phones--support.contact-box__phones
+            ul.contact-phones__list
+              li.contact-phones__item
+                a(href="tel:+380680990302").phone.phone--with-icon +380 68 099 03 02
+              li.contact-phones__item
+                a(href="tel:+48732222356").phone.phone--with-icon +48 732 222 356
+          .contact-buttons.contact-buttons--support.contact-box__buttons
+            ul.contact-buttons__list
+              li.contact-buttons__item
+                a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-contact-box-support Написати у Viber
+              li.contact-buttons__item
+                a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-contact-box-support Написати в Telegram
+      a(href="#support-block" data-context-block-trigger).support-link Підтримка онлайн

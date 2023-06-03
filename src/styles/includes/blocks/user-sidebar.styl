@@ -32,7 +32,8 @@
 		grid-template-columns repeat(2, auto)
 		justify-content space-between
 		align-items center
-		padding 28px 32px 8px
+		padding 28px 32px 12px
+		// padding 28px 32px 8px
 	
 	&__user-avatar-link
 		&--profile-shown
@@ -52,6 +53,13 @@
 		top 80px
 		right calc(-100% - 9px)
 	
+	&__context-support-block
+		position absolute
+		// top 0
+		bottom 46px
+		right -403px
+		// right calc(-100% - 9px)
+	
 	&__user-menu
 		// max-height calc(100vh - 75px)
 		// max-height calc(100vh - 123px)
@@ -67,6 +75,7 @@
 			max-height none
 	
 	&__footer
+		position relative
 		padding 0 10px 20px
 	
 	&--opened
