@@ -1,13 +1,15 @@
 .user-info
 	// padding 24px 32px
+	position relative
 	display grid
-	// grid-template-columns auto 1fr auto
-	grid-template-columns 1fr auto
+	grid-template-columns auto 1fr auto
+	// grid-template-columns 1fr auto
 	// align-items center
 	align-items start
 	gap 10px
 	// padding 15px 28px 22px
-	padding 15px 0 22px
+	// padding 15px 0 22px
+	padding 18px 0 23px
 	border-bottom 1px solid var(--accent-light)
 	
 	&__text-wrapper
@@ -18,6 +20,18 @@
 	
 	&__user-label
 		margin-top 2px
+	
+	&__context-menu
+		position fixed
+		// position absolute
+		// z-index 10
+		top 10px
+		left calc(100% + 25px)
+		
+		@media $smMinus
+			top 46px
+			right 0
+			left auto
 	
 	// &__top
 	// 	display grid

@@ -1,4 +1,6 @@
 .user-sidebar
+	position relative
+	z-index 10
 	width 280px
 	height 100%
 	background var(--accent)
@@ -11,7 +13,8 @@
 		top 56px
 		left -280px
 		height calc(100% - 56px)
-		overflow auto
+		overflow-x hidden
+		overflow-y auto
 	
 	&__inner
 		position sticky
@@ -31,13 +34,23 @@
 		align-items center
 		padding 28px 32px 8px
 	
+	&__user-avatar-link
+		&--profile-shown
+			display none
+	
 	&__user-info-wrapper
 		// margin-right 28px
 		margin-right 16px
 		margin-left 28px
 		
-		@media $md
-			display none
+		// @media $md
+		// 	display none
+	
+	&__context-menu
+		position absolute
+		z-index 10
+		top 80px
+		right calc(-100% - 9px)
 	
 	&__user-menu
 		// max-height calc(100vh - 75px)

@@ -1,0 +1,22 @@
+.context-menu
+	&__list
+		list-style none
+	
+	&__link
+		color #1A1919
+		display grid
+		grid-template-columns 24px 1fr
+		align-items center
+		gap 12px
+		padding 6px 12px
+		color var(--accent)
+		text-decoration none
+		@extend .transition
+		
+		&:hover
+			background #F4F4FB
+	
+	&__icon-wrapper
+		display grid
+		grid-template-columns 100%
+		place-items start
