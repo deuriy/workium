@@ -1,4 +1,7 @@
 import $ from "jquery";
+import PerfectScrollbar from 'perfect-scrollbar';
+
+// console.log(PerfectScrollbar);
 
 function copyLink(input) {
 	input.select();
@@ -59,6 +62,12 @@ $(function () {
 
   	$userInfoWrapper.hide();
 	}
+
+	const userSidebarMenuPS = new PerfectScrollbar('.user-sidebar__user-menu', {
+		wheelSpeed: 2,
+		wheelPropagation: true,
+		minScrollbarLength: 20
+	});
 
 	$('.user-menu__link').each(function(index, link) {
 		let linkHref = $(link).attr('href');
