@@ -46,7 +46,6 @@ function copyInputText (targetElem) {
 
 $(function () {
 	let hideProfileCookie = getCookie('hideProfile');
-	console.log(hideProfileCookie);
 
 	let $userAvatarLink = $('.user-sidebar__user-avatar-link');
   let $userInfoWrapper = $('.user-sidebar__user-info-wrapper');
