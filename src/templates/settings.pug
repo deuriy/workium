@@ -14,8 +14,8 @@ block content
           a(href="/security.html").tabs-menu__link Безпека
         li.tabs-menu__item
           a(href="/verification.html").tabs-menu__link Верифікація
-        li.tabs-menu__item
-          a(href="/notifications.html").tabs-menu__link Сповіщення
+        //- li.tabs-menu__item
+        //-   a(href="/notifications.html").tabs-menu__link Сповіщення
     .edit-avatar.user-settings__edit-avatar
       .edit-avatar__avatar
         img(src="/img/default_avatar.png" alt="").edit-avatar__avatar-img
@@ -49,7 +49,7 @@ block content
             label(for="phone").form-label.field__label Контактний телефон
             input(type="text" name="phone" id="phone" placeholder="Телефон").form-text
           .field.field-row__item
-            select(name="messenger" id="messenger").form-select
+            select(name="messenger" id="messenger").form-select.form-select--black
               option(value="none") Мессенжер
               option(value="viber") Viber
               option(value="telegram") Telegram
