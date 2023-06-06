@@ -83,6 +83,46 @@ $(function () {
 		$('body').toggleClass('no-scroll');
 	});
 
+	// $('[data-copy-text]').click(function(e) {
+	// 	document.execCommand("copy");
+	// 	// console.log('fmfwmewf');
+
+	// 	// e.preventDefault();
+	// });
+
+	
+
+	// document.querySelector('[data-copy-text]').addEventListener("copy", function(event) {
+	// 	console.log('mekmdmewmlmwl')
+	//   event.preventDefault();
+	//   if (event.clipboardData) {
+	//     event.clipboardData.setData("text/plain", document.querySelector('[data-copy-text]').textContent);
+	//     console.log(event.clipboardData.getData("text"))
+	//   }
+	// });
+
+	// $('[data-copy-text]').on('copy', function(e) {
+	// 	e.preventDefault();
+
+	//   if (e.clipboardData) {
+	//   	console.log('rgme');
+	//     e.clipboardData.setData("text/plain", this.textContent);
+	//     console.log(e.clipboardData.getData("text"))
+	//   }
+	// });
+
+	// span.onclick = function() {
+	//   document.execCommand("copy");
+	// }
+
+	// span.addEventListener("copy", function(event) {
+	//   event.preventDefault();
+	//   if (event.clipboardData) {
+	//     event.clipboardData.setData("text/plain", span.textContent);
+	//     console.log(event.clipboardData.getData("text"))
+	//   }
+	// });
+
 	$('.copy-link__btn').click(function(e) {
 		let $copyLinkInput = $(this).closest('.copy-link').find('.copy-link__input');
 
@@ -92,20 +132,10 @@ $(function () {
 
 		let $copyLink = $copyLinkInput.closest('.copy-link');
 		let $tooltip = $copyLink.find('.tooltip');
-		
+
 		$tooltip.addClass('tooltip--visible');
 
-		// let tooltip = copyLink.querySelector('.tooltip');
-
-    // if (!tooltip) {
-    //   tooltip = document.createElement('div');
-    //   tooltip.className = 'tooltip tooltip--copied copy-link__tooltip';
-    //   tooltip.textContent = 'Скопійовано!';
-    //   copyLink.append(tooltip);
-    // }
-
     setTimeout(() => {
-    	// tooltip.remove();
     	$tooltip.removeClass('tooltip--visible');
     }, 2000);
 	});
@@ -123,6 +153,7 @@ $(function () {
 	});
 
 
+	// Show/hide context block
 	$('[data-context-block-trigger]').click(function(e) {
     let $contextBlock = $($(this).attr('href'));
     $contextBlock.toggleClass('context-block--opened');
