@@ -13,9 +13,9 @@ $(function () {
         console.log(slide);
         if (slide.src === '#authorization-popup') {
           let activeTabNumber = slide.activeTabNumber !== undefined ? slide.activeTabNumber : 1;
+          let $activeTabLink = $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`);
 
-          // slide.el.querySelector(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`).click();
-          $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`).trigger('click');
+          $activeTabLink.trigger('click');
         }
       },
     },
@@ -24,6 +24,11 @@ $(function () {
       closeButton: '<button data-fancybox-close class="fancybox-close-button" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" id="Icons" viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 12 12A12.013 12.013 0 0 0 12 0Zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1-10 10Z" fill="currentColor"/><path d="M16.707 7.293a1 1 0 0 0-1.414 0L12 10.586 8.707 7.293a1 1 0 1 0-1.414 1.414L10.586 12l-3.293 3.293a1 1 0 1 0 1.414 1.414L12 13.414l3.293 3.293a1 1 0 0 0 1.414-1.414L13.414 12l3.293-3.293a1 1 0 0 0 0-1.414Z" fill="currentColor"/></svg></button>'
     }
 	});
+  
+  Fancybox.bind(".fancybox-guest-popup-toggle", {
+    dragToClose: false,
+    mainClass: 'fancybox--guest-popup',
+  });
 
   $('.authorization-form__password-toggle').click(function(e) {    
     let $formText = $(this).parent().find('.form-text');

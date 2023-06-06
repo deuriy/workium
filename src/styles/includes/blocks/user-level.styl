@@ -1,7 +1,8 @@
 .user-level
 	display grid
 	// grid-template-columns auto 1fr
-	grid-template-columns 162px 1fr
+	// grid-template-columns 162px 1fr
+	grid-template-columns auto 1fr
 	gap 79px
 	align-items start
 	width 1188px
@@ -19,23 +20,6 @@
 	@media $xs
 		grid-template-columns 100%
 		gap 25px
-	
-	&__avatar
-		position relative
-		
-		@media $xs
-			width 162px
-			margin-right auto
-			margin-left auto
-	
-	&__avatar-img
-		width 162px
-		opacity 0.59
-	
-	&__award-block
-		position absolute
-		right -2px
-		bottom -7px
 	
 	&__text-wrapper
 		margin-top 6px

@@ -36,3 +36,47 @@
 	&__status-line
 		margin-bottom 20px
 		margin-left 5px
+	
+	&__img-wrapper
+		min-height 180px
+		margin-bottom 26px
+		// margin-bottom 30px
+	
+	&__user-level-avatar
+		margin-right auto
+		margin-left auto
+	
+	&__text
+		font-size 15px
+		line-height normal
+		
+		& > p
+			& + p
+				margin-top 32px
+	
+	&__large-text-interval
+		line-height 24px
+		
+		a
+			color #5340FF
+			text-decoration none
+	
+	&__buttons
+		display grid
+		grid-template-columns repeat(auto-fill, minmax(194px, auto))
+		justify-content center
+		gap 38px
+		margin-top 42px
+	
+	&--guest
+		text-align center
+		
+		.fancybox-popup__title
+			margin-bottom 40px
+			padding-right 0
+			font-weight 500
+			font-size 22px
+			line-height normal
+		
+		@media $smPlus
+			width 612px

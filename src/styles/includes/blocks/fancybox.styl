@@ -1,5 +1,13 @@
 .fancybox
-	&--popup
+	// &__slide
+	// 	padding-top 0 !important
+		
+	// 	&::before,
+	// 	&::after
+	// 		display none
+			
+	&--popup,
+	&--guest-popup
 		--fancybox-bg: rgba(0, 0, 0, 0.6)
 	
 		@media $xs
@@ -11,20 +19,37 @@
 				&::after
 					display none
 			
-		.fancybox__content
-			@media $smPlus
-				padding 1.3rem 2rem
-				
+		.fancybox__content				
 			.f-button.is-close-btn
 				top 18px
 				right 12px
-				--f-button-width: 24px
-				--f-button-height: 24px
-				--f-button-svg-width: 15px
-				--f-button-svg-height: 15px
-				--f-button-border-radius: 50%
-				--f-button-bg: rgba(0, 0, 0, 0.45)
-				--f-button-hover-bg: rgba(0, 0, 0, 0.6)
+				opacity 1
+				--f-button-bg: transparent
+				--f-button-hover-bg: transparent
+				--f-button-color: #a9a9a9
+				--f-button-hover-color: #a9a9a9
+				
+				// --f-button-width: 24px
+				// --f-button-height: 24px
+				// --f-button-svg-width: 15px
+				// --f-button-svg-height: 15px
+				// --f-button-border-radius: 50%
+				// --f-button-bg: rgba(0, 0, 0, 0.45)
+				// --f-button-hover-bg: rgba(0, 0, 0, 0.6)
 				
 				@media $smPlus
-					right 18px
+					// right 18px
+					top 10px
+					right 14px
+	
+	&--popup
+		.fancybox__content
+			@media $smPlus
+				padding 1.3rem 2rem
+	
+	&--guest-popup
+		--fancybox-bg: rgba(0, 0, 0, 0.51)
+		
+		.fancybox__content
+			@media $smPlus
+				padding 31px 20px

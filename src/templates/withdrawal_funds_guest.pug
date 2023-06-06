@@ -21,108 +21,311 @@ block content
         .wallet__currency EUR
         .wallet__sum 0.00 #[span.wallet__currency-prefix €]
         a(href="#").operation-link.wallet__operation-link Зняти кошти
-    .withdrawal-funds
-      h2.withdrawal-funds__title Зняття коштів з балансу #[span.semibold PLN (zł)]
-      .payment-systems.withdrawal-funds__payment-systems
-        h3.payment-systems__title Оберіть спосіб зняття коштів
-        .payment-systems__items
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="privat24" id="privat24").payment-system__input
-            label(for="privat24").payment-system__label
-              .payment-system__name Приват24
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Приват24").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono" id="mono").payment-system__input
-            label(for="mono").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/mono.png" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_2" id="mono_2").payment-system__input
-            label(for="mono_2").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_3" id="mono_3").payment-system__input
-            label(for="mono_3").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_4" id="mono_4").payment-system__input
-            label(for="mono_4").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_5" id="mono_5").payment-system__input
-            label(for="mono_5").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_6" id="mono_6").payment-system__input
-            label(for="mono_6").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/mono.png" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_7" id="mono_7").payment-system__input
-            label(for="mono_7").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_8" id="mono_8").payment-system__input
-            label(for="mono_8").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_9" id="mono_9").payment-system__input
-            label(for="mono_9").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-          .payment-system.payment-systems__item
-            input(type="radio" name="payment_system" value="mono_10" id="mono_10").payment-system__input
-            label(for="mono_10").payment-system__label
-              .payment-system__name Monobank
-              .payment-system__currency UAH
-              img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
-      form(action="#").withdrawal-form.withdrawal-funds__form
-        h3.withdrawal-form__title Введіть реквізити для отримання
-        .withdrawal-form__fields
-          .withdrawal-form__row.withdrawal-form__row--requisites
-            .withdrawal-form__item
-              label(for="card_number").withdrawal-form__label Номер карти Приват24
-              input(type="text" name="card_number" id="card_number").form-text
-            .withdrawal-form__name-and-surname
-              .withdrawal-form__item.withdrawal-form__item--name
-                label(for="name").withdrawal-form__label Ім’я
-                input(type="text" name="name" id="name").form-text
-              .withdrawal-form__item.withdrawal-form__item--surname
-                label(for="surname").withdrawal-form__label Прізвище
-                input(type="text" name="surname" id="surname").form-text
-          .withdrawal-form__row.withdrawal-form__row--amount
-            .withdrawal-form__item
-              label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття
-              .withdrawal-form__control.withdrawal-form__control--amount
-                input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
-                span.withdrawal-form__field-suffix PLN
-              .withdrawal-form__field-note
-                p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
-            .withdrawal-form__item.withdrawal-form__item--final-amount
-              label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
-              .withdrawal-form__control.withdrawal-form__control--amount
-                input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
-                span.withdrawal-form__field-suffix UAH
-              .withdrawal-form__field-note
-                p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
-        .notice.withdrawal-form__notice
-          p На жаль, на вашому балансі недостатньо коштів для зняття
-        .withdrawal-form__actions
-          button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
-          button(type="reset").btn-grey Скасувати
+    .withdrawal-funds.tabs
+      .withdrawal-funds__header
+        h2.withdrawal-funds__title Зняття коштів з балансу #[span.semibold PLN (zł)]
+        .withdrawal-funds__description
+          p Оберіть тип платіжного переказу
+        .tabs-menu.tabs-menu--grey-bg.tabs-menu--light-bg-mob.withdrawal-funds__tabs-menu
+          ul.tabs-menu__list.tabs__list
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link.tabs-menu__link--active Банки України
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link Банки Польщі
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link Банки Чехії
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link Банки іншої країни
+      .withdrawal-funds__content
+        .tabs__content(style="display: block;")
+          .payment-systems.withdrawal-funds__payment-systems
+            h3.payment-systems__title Оберіть спосіб отримання
+            .payment-systems__items
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="privat24" id="privat24").payment-system__input
+                label(for="privat24").payment-system__label
+                  .payment-system__name Інший банк України
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Інший банк України").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono" id="mono").payment-system__input
+                label(for="mono").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Інший банк України").payment-system__icon
+                  //- img(src="/img/mono.png" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_2" id="mono_2").payment-system__input
+                label(for="mono_2").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_3" id="mono_3").payment-system__input
+                label(for="mono_3").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_4" id="mono_4").payment-system__input
+                label(for="mono_4").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_5" id="mono_5").payment-system__input
+                label(for="mono_5").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_6" id="mono_6").payment-system__input
+                label(for="mono_6").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Інший банк України").payment-system__icon
+                  //- img(src="/img/mono.png" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_7" id="mono_7").payment-system__input
+                label(for="mono_7").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_8" id="mono_8").payment-system__input
+                label(for="mono_8").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              //- .payment-system.payment-systems__item
+              //-   input(type="radio" name="payment_system" value="mono_9" id="mono_9").payment-system__input
+              //-   label(for="mono_9").payment-system__label
+              //-     .payment-system__name Monobank
+              //-     .payment-system__currency UAH
+              //-     img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              //- .payment-system.payment-systems__item
+              //-   input(type="radio" name="payment_system" value="mono_10" id="mono_10").payment-system__input
+              //-   label(for="mono_10").payment-system__label
+              //-     .payment-system__name Monobank
+              //-     .payment-system__currency UAH
+              //-     img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+          form(action="#").withdrawal-form.withdrawal-funds__form
+            h3.withdrawal-form__title Введіть реквізити для отримання
+            .withdrawal-form__fields
+              .withdrawal-form__row.withdrawal-form__row--requisites
+                .withdrawal-form__item
+                  label(for="card_number").withdrawal-form__label Номер карти Приват24
+                  input(type="text" name="card_number" id="card_number").form-text
+                .withdrawal-form__name-and-surname
+                  .withdrawal-form__item.withdrawal-form__item--name
+                    label(for="name").withdrawal-form__label Ім’я
+                    input(type="text" name="name" id="name").form-text
+                  .withdrawal-form__item.withdrawal-form__item--surname
+                    label(for="surname").withdrawal-form__label Прізвище
+                    input(type="text" name="surname" id="surname").form-text
+              .withdrawal-form__row.withdrawal-form__row--amount
+                .withdrawal-form__item
+                  label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix PLN
+                  .withdrawal-form__field-note
+                    p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
+                .withdrawal-form__item.withdrawal-form__item--final-amount
+                  label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix UAH
+                  .withdrawal-form__field-note
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+            .notice.withdrawal-form__notice
+              p На жаль, на вашому балансі недостатньо коштів для зняття
+            .withdrawal-form__actions
+              button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
+              button(type="reset").btn-grey Скасувати
+        .tabs__content
+          .payment-systems.withdrawal-funds__payment-systems
+            h3.payment-systems__title Оберіть спосіб зняття коштів
+            .payment-systems__items
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="privat24" id="privat24").payment-system__input
+                label(for="privat24").payment-system__label
+                  .payment-system__name Приват24
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Приват24").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono" id="mono").payment-system__input
+                label(for="mono").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/mono.png" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_2" id="mono_2").payment-system__input
+                label(for="mono_2").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_3" id="mono_3").payment-system__input
+                label(for="mono_3").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_4" id="mono_4").payment-system__input
+                label(for="mono_4").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+          form(action="#").withdrawal-form.withdrawal-funds__form
+            h3.withdrawal-form__title Введіть реквізити для отримання
+            .withdrawal-form__fields
+              .withdrawal-form__row.withdrawal-form__row--requisites
+                .withdrawal-form__item
+                  label(for="card_number").withdrawal-form__label Номер карти Приват24
+                  input(type="text" name="card_number" id="card_number").form-text
+                .withdrawal-form__name-and-surname
+                  .withdrawal-form__item.withdrawal-form__item--name
+                    label(for="name").withdrawal-form__label Ім’я
+                    input(type="text" name="name" id="name").form-text
+                  .withdrawal-form__item.withdrawal-form__item--surname
+                    label(for="surname").withdrawal-form__label Прізвище
+                    input(type="text" name="surname" id="surname").form-text
+              .withdrawal-form__row.withdrawal-form__row--amount
+                .withdrawal-form__item
+                  label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття 2
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix PLN
+                  .withdrawal-form__field-note
+                    p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
+                .withdrawal-form__item.withdrawal-form__item--final-amount
+                  label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix UAH
+                  .withdrawal-form__field-note
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+            .notice.withdrawal-form__notice
+              p На жаль, на вашому балансі недостатньо коштів для зняття
+            .withdrawal-form__actions
+              button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
+              button(type="reset").btn-grey Скасувати
+        .tabs__content
+          .payment-systems.withdrawal-funds__payment-systems
+            h3.payment-systems__title Оберіть спосіб зняття коштів
+            .payment-systems__items
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="privat24" id="privat24").payment-system__input
+                label(for="privat24").payment-system__label
+                  .payment-system__name Приват24
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Приват24").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono" id="mono").payment-system__input
+                label(for="mono").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/mono.png" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_2" id="mono_2").payment-system__input
+                label(for="mono_2").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_3" id="mono_3").payment-system__input
+                label(for="mono_3").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+          form(action="#").withdrawal-form.withdrawal-funds__form
+            h3.withdrawal-form__title Введіть реквізити для отримання
+            .withdrawal-form__fields
+              .withdrawal-form__row.withdrawal-form__row--requisites
+                .withdrawal-form__item
+                  label(for="card_number").withdrawal-form__label Номер карти Приват24
+                  input(type="text" name="card_number" id="card_number").form-text
+                .withdrawal-form__name-and-surname
+                  .withdrawal-form__item.withdrawal-form__item--name
+                    label(for="name").withdrawal-form__label Ім’я
+                    input(type="text" name="name" id="name").form-text
+                  .withdrawal-form__item.withdrawal-form__item--surname
+                    label(for="surname").withdrawal-form__label Прізвище
+                    input(type="text" name="surname" id="surname").form-text
+              .withdrawal-form__row.withdrawal-form__row--amount
+                .withdrawal-form__item
+                  label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття 3
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix PLN
+                  .withdrawal-form__field-note
+                    p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
+                .withdrawal-form__item.withdrawal-form__item--final-amount
+                  label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix UAH
+                  .withdrawal-form__field-note
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+            .notice.withdrawal-form__notice
+              p На жаль, на вашому балансі недостатньо коштів для зняття
+            .withdrawal-form__actions
+              button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
+              button(type="reset").btn-grey Скасувати
+        .tabs__content
+          .payment-systems.withdrawal-funds__payment-systems
+            h3.payment-systems__title Оберіть спосіб зняття коштів
+            .payment-systems__items
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="privat24" id="privat24").payment-system__input
+                label(for="privat24").payment-system__label
+                  .payment-system__name Приват24
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Приват24").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono" id="mono").payment-system__input
+                label(for="mono").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/mono.png" alt="Monobank").payment-system__icon
+              .payment-system.payment-systems__item
+                input(type="radio" name="payment_system" value="mono_2" id="mono_2").payment-system__input
+                label(for="mono_2").payment-system__label
+                  .payment-system__name Monobank
+                  .payment-system__currency UAH
+                  img(src="/img/privat24.svg" alt="Monobank").payment-system__icon
+          form(action="#").withdrawal-form.withdrawal-funds__form
+            h3.withdrawal-form__title Введіть реквізити для отримання
+            .withdrawal-form__fields
+              .withdrawal-form__row.withdrawal-form__row--requisites
+                .withdrawal-form__item
+                  label(for="card_number").withdrawal-form__label Номер карти Приват24
+                  input(type="text" name="card_number" id="card_number").form-text
+                .withdrawal-form__name-and-surname
+                  .withdrawal-form__item.withdrawal-form__item--name
+                    label(for="name").withdrawal-form__label Ім’я
+                    input(type="text" name="name" id="name").form-text
+                  .withdrawal-form__item.withdrawal-form__item--surname
+                    label(for="surname").withdrawal-form__label Прізвище
+                    input(type="text" name="surname" id="surname").form-text
+              .withdrawal-form__row.withdrawal-form__row--amount
+                .withdrawal-form__item
+                  label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття 4
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix PLN
+                  .withdrawal-form__field-note
+                    p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
+                .withdrawal-form__item.withdrawal-form__item--final-amount
+                  label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
+                  .withdrawal-form__control.withdrawal-form__control--amount
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    span.withdrawal-form__field-suffix UAH
+                  .withdrawal-form__field-note
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+            .notice.withdrawal-form__notice
+              p На жаль, на вашому балансі недостатньо коштів для зняття
+            .withdrawal-form__actions
+              button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
+              button(type="reset").btn-grey Скасувати
