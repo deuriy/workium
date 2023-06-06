@@ -90,18 +90,23 @@ $(function () {
 
 		copyText($copyLinkInput[0]);
 
-		let copyLink = $copyLinkInput[0].closest('.copy-link');
-		let tooltip = copyLink.querySelector('.tooltip');
+		let $copyLink = $copyLinkInput.closest('.copy-link');
+		let $tooltip = $copyLink.find('.tooltip');
+		
+		$tooltip.addClass('tooltip--visible');
 
-    if (!tooltip) {
-      tooltip = document.createElement('div');
-      tooltip.className = 'tooltip tooltip--copied copy-link__tooltip';
-      tooltip.textContent = 'Скопійовано!';
-      copyLink.append(tooltip);
-    }
+		// let tooltip = copyLink.querySelector('.tooltip');
+
+    // if (!tooltip) {
+    //   tooltip = document.createElement('div');
+    //   tooltip.className = 'tooltip tooltip--copied copy-link__tooltip';
+    //   tooltip.textContent = 'Скопійовано!';
+    //   copyLink.append(tooltip);
+    // }
 
     setTimeout(() => {
-    	tooltip.remove();
+    	// tooltip.remove();
+    	$tooltip.removeClass('tooltip--visible');
     }, 2000);
 	});
 
