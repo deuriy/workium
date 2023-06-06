@@ -3,7 +3,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
 // console.log(PerfectScrollbar);
 
-function copyLink(input) {
+function copyText(input) {
 	input.select();
   input.setSelectionRange(0, 99999);
 
@@ -88,7 +88,21 @@ $(function () {
 
 		if (!$copyLinkInput.length) return;
 
-		copyLink($copyLinkInput[0]);
+		copyText($copyLinkInput[0]);
+
+		let copyLink = $copyLinkInput[0].closest('.copy-link');
+		let tooltip = copyLink.querySelector('.tooltip');
+
+    if (!tooltip) {
+      tooltip = document.createElement('div');
+      tooltip.className = 'tooltip tooltip--copied copy-link__tooltip';
+      tooltip.textContent = 'Скопійовано!';
+      copyLink.append(tooltip);
+    }
+
+    setTimeout(() => {
+    	tooltip.remove();
+    }, 2000);
 	});
 
 	$('[data-bookmark]').click(function(e) {
