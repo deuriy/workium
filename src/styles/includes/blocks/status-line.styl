@@ -1,24 +1,35 @@
 .status-line
 	position relative
+	// width 880px
+	// max-width 100%
 	min-height 41px
 	
 	&__line
-		content ""
-		position absolute
+		// content ""
+		// position absolute
 		width 100%
-		height 3px
+		height 6px
+		border-radius 6px
 		background var(--grey-medium)
 	
 	&__line-fill
 		width 0
 		height 100%
-		background var(--info)
+		// background var(--info)
+		background linear-gradient(90deg, #5340FF 0%, #40A0FF 100%)
+		border-top-left-radius 6px
+		border-bottom-left-radius 6px
 		@extend .transition
+		
+		&--rounded
+			border-top-right-radius 6px
+			border-bottom-right-radius 6px
 	
 	&__item
 		position absolute
-		top -5px
-		color var(--grey-medium)
+		top 0
+		// top -5px
+		// color var(--grey-medium)
 		font-size 13px
 		line-height 1.6923
 		
@@ -26,20 +37,20 @@
 			content ""
 			display block
 			top -16px
-			width 8px
-			height 8px
-			margin-bottom 4px
-			border 2px solid var(--light)
-			border-radius 50%
-			background var(--grey-medium)
+			width 2px
+			height 6px
+			// margin-bottom 4px
+			margin-bottom 8px
+			background var(--light)
+			// border 2px solid var(--light)
+			// background var(--grey-medium)
 		
-		&--highlighted
-			color var(--info)
-			
+		&:first-child
 			&::before
-				background var(--info)
+				background transparent
 		
-		&--booked
+		&--booked,
+		&--taken-to-work
 			left 0
 		
 		&--left,
@@ -67,17 +78,34 @@
 			
 			.status-line__item-text
 				position relative
-				right calc(100% - 10px)
+				// right calc(100% - 10px)
+				right calc(100% - 1px)
+		
+		&--for-processing
+			left 25%
+		
+		&--ready
+			left 50%
+		
+		&--sent
+			left 75%
+		
+		&--payment
+			left 100%
 	
 	&--full
 		.status-line__line-fill
-			background var(--success)
+			// background var(--success)
+			// background linear-gradient(90deg, #1EB300 0%, #7ACC29 100%)
+			border-top-right-radius 6px
+			border-bottom-right-radius 6px
+			background linear-gradient(90deg, #1EB300 0%, #7ACC29 100%)
 		
-		.status-line__item--highlighted
-			color var(--success)
+		// .status-line__item--highlighted
+		// 	color var(--success)
 			
-			&::before
-				background var(--success)
+		// 	&::before
+		// 		background var(--success)
 	
 	&--vertical
 		display grid
@@ -85,7 +113,8 @@
 		
 		.status-line__line
 			position static
-			width 2px
+			// width 2px
+			width 4px
 			height calc(100% - 16px)
 			margin-top 6px
 			// height 100%
@@ -93,25 +122,47 @@
 		.status-line__line-fill
 			width 100%
 			height 0
+			border-top-right-radius 6px
+			border-bottom-right-radius 0
+			border-bottom-left-radius 0
+			
+			&--rounded
+				border-bottom-right-radius 6px
+				border-bottom-left-radius 6px
 		
 		.status-line__items
 			display grid
 			grid-template-columns 100%
 			gap 48px
-			margin-left -9px
+			margin-left -4px
+			// margin-left -9px
 			
 		.status-line__item
 			position static
 			display grid
 			grid-template-columns auto 1fr
+			// align-items center
 			align-items center
-			gap 10px
+			gap 17px
+			// gap 21px
+			// gap 10px
 			// margin-left -6px
 			
 			&::before
-				width 16px
-				height 16px
-				margin-bottom 0
+				// width 16px
+				// height 16px
+				width 4px
+				height 2px
+				margin-bottom 2px
+				// margin-bottom 0
+				background var(--light)
+			
+			&:first-child::before
+				// display none
+				background transparent
+			
+			&:last-child::before
+				background transparent
 			
 			&--left,
 			&--working,

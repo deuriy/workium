@@ -1,29 +1,317 @@
 extends layouts/user_profile
 
 block content
-  .page.page--clients
-    h1.page-title.page__title Клієнти
-    .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.page__tabs-menu
+  .clients
+    h1.page-title.clients__title Клієнти
+    .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.clients__tabs-menu
       ul.tabs-menu__list
         li.tabs-menu__item
           a(href="/recruitment.html").tabs-menu__link Рекрутація
-            span.count.tabs-menu__count 3
         li.tabs-menu__item
           a(href="/documents.html").tabs-menu__link.tabs-menu__link--active Документи
-    .page__content
-      .page__content-inner
-        .page__text-wrapper
-          .page__img-wrapper
-            img(src="/img/nodocs.jpg" alt="Документи").page__img
-          h2.page__text-subtitle Поки що у вас ніхто не замовив виготовлення документів...
-          p.text-center В цьому розділі будуть відображатись всі клієнти, яким ви виготовляєте будь-які документи.
-          p.text-center Зверніть увагу, що за правилами нейромережі WORKIUM не забороняється самому собі виготовляти документи. 
-          p.text-center Таким чином, ви можете повноцінно використовувати WORKIUM для власних потреб та бути впевненими в якості, офіційності та термінах підготовки необхідних вам документів.
-          p.text-center Почніть прямо зараз! Перегляньте розділ #[a(href="/documents.html") Документи] та зв’яжіться з командою WORKIUM для формування замовлення.
-          p.text-center Команда підтримки нейромережі WORKIUM завжди на зв’язку і з радістю відповість на ваші запитання.
-        .contact-buttons.contact-buttons--row.contact-buttons--center.contact-buttons--text-page.page__contact-buttons
-          ul.contact-buttons__list
-            li.contact-buttons__item
-              a(href="#").btn-purple.btn-purple--viber Написати у Viber
-            li.contact-buttons__item
-              a(href="#").btn-lightblue.btn-lightblue--telegram Написати в Telegram
+    .client-cards
+      .client-card.client-card--grey-bg.client-cards__item
+        .client-card__header
+          .client-card__name-and-phone
+            .client-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").client-card__phone +380987653498
+          .client-card__id-and-comment.hidden-xxs
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+        .client-card__body
+          .client-card__specifications
+            .specification.client-card__specification
+              .specification__title Країна
+              .specification__value Польща
+            .specification.client-card__specification
+              .specification__title Дата подачі
+              .specification__value 28 січ 2023
+            .specification.client-card__specification
+              .specification__title Дата отримання
+              .specification__value 30 січ 2023
+            .specification.client-card__specification
+              .specification__title Тип замовлення
+              .specification__value.specification__value--order-type Віза без присутності з запрошенням
+            .specification.client-card__specification
+              .specification__title Кешбек (3%)
+              .specification__value 15 zł
+          button(type="button" data-src="#client-status-popup1" data-slug="client-status-popup1").client-status.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Працює
+          .fancybox-popup#client-status-popup1(style="display: none;")
+            h3.fancybox-popup__title Статус
+            .fancybox-popup__client-info
+              .fancybox-popup__client-name Теребей Наталiя Iванiвна
+              a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+            .status-line.status-line--full.status-line--vertical.fancybox-popup__status-line
+              .status-line__line
+                .status-line__line-fill(style="height: 90%")
+              .status-line__items
+                .status-line__item.status-line__item--taken-to-work
+                  .status-line__item-text Прийнято в роботу
+                .status-line__item.status-line__item--for-processing
+                  .status-line__item-text На опрацювання
+                .status-line__item.status-line__item--ready
+                  .status-line__item-text Готово
+                .status-line__item.status-line__item--sent
+                  .status-line__item-text Відправлено
+                .status-line__item.status-line__item--payment
+                  .status-line__item-text Виплата
+          .client-card__id-and-comment.hidden-xxsPlus
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+          .status-line.client-card__status-line.hidden-xs
+            .status-line__line
+              .status-line__line-fill.status-line__line-fill--rounded(style="width: 9%")
+            .status-line__items
+              .status-line__item.status-line__item--taken-to-work
+                .status-line__item-text Прийнято в роботу
+              .status-line__item.status-line__item--for-processing
+                .status-line__item-text На опрацювання
+              .status-line__item.status-line__item--ready
+                .status-line__item-text Готово
+              .status-line__item.status-line__item--sent
+                .status-line__item-text Відправлено
+              .status-line__item.status-line__item--payment
+                .status-line__item-text Виплата
+      .client-card.client-cards__item
+        .client-card__header
+          .client-card__name-and-phone
+            .client-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").client-card__phone +380987653498
+          .client-card__id-and-comment.hidden-xxs
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+        .client-card__body
+          .client-card__specifications
+            .specification.client-card__specification
+              .specification__title Країна
+              .specification__value Польща
+            .specification.client-card__specification
+              .specification__title Дата подачі
+              .specification__value 28 січ 2023
+            .specification.client-card__specification
+              .specification__title Дата отримання
+              .specification__value 30 січ 2023
+            .specification.client-card__specification
+              .specification__title Тип замовлення
+              .specification__value.specification__value--order-type Віза без присутності з запрошенням
+            .specification.client-card__specification
+              .specification__title Кешбек (3%)
+              .specification__value 15 zł
+          button(type="button" data-src="#client-status-popup1" data-slug="client-status-popup1").client-status.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Працює
+          .fancybox-popup#client-status-popup1(style="display: none;")
+            h3.fancybox-popup__title Статус
+            .fancybox-popup__client-info
+              .fancybox-popup__client-name Теребей Наталiя Iванiвна
+              a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+            .status-line.status-line--full.status-line--vertical.fancybox-popup__status-line
+              .status-line__line
+                .status-line__line-fill(style="height: 100%")
+              .status-line__items
+                .status-line__item.status-line__item--taken-to-work
+                  .status-line__item-text Прийнято в роботу
+                .status-line__item.status-line__item--for-processing
+                  .status-line__item-text На опрацювання
+                .status-line__item.status-line__item--ready
+                  .status-line__item-text Готово
+                .status-line__item.status-line__item--sent
+                  .status-line__item-text Відправлено
+                .status-line__item.status-line__item--payment
+                  .status-line__item-text Виплата
+          .client-card__id-and-comment.hidden-xxsPlus
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+          .status-line.client-card__status-line.hidden-xs
+            .status-line__line
+              .status-line__line-fill(style="width: 75%")
+            .status-line__items
+              .status-line__item.status-line__item--taken-to-work
+                .status-line__item-text Прийнято в роботу
+              .status-line__item.status-line__item--for-processing
+                .status-line__item-text На опрацювання
+              .status-line__item.status-line__item--ready
+                .status-line__item-text Готово
+              .status-line__item.status-line__item--sent
+                .status-line__item-text Відправлено
+              .status-line__item.status-line__item--payment
+                .status-line__item-text Виплата
+      .client-card.client-card--paid.client-cards__item
+        .client-card__header
+          .client-card__name-and-phone
+            .client-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").client-card__phone +380987653498
+          .client-card__id-and-comment.hidden-xxs
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+        .client-card__body
+          .client-card__specifications
+            .specification.client-card__specification
+              .specification__title Країна
+              .specification__value Польща
+            .specification.client-card__specification
+              .specification__title Дата подачі
+              .specification__value 28 січ 2023
+            .specification.client-card__specification
+              .specification__title Дата отримання
+              .specification__value 30 січ 2023
+            .specification.client-card__specification
+              .specification__title Тип замовлення
+              .specification__value Віза без присутності з запрошенням
+            .specification.client-card__specification
+              .specification__title Кешбек (3%)
+              .specification__value 15 zł
+          button(type="button" data-src="#client-status-popup2" data-slug="client-status-popup2").client-status.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Працює
+          .fancybox-popup#client-status-popup2(style="display: none;")
+            h3.fancybox-popup__title Статус
+            .fancybox-popup__client-info
+              .fancybox-popup__client-name Теребей Наталiя Iванiвна
+              a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+            .status-line.status-line--vertical.fancybox-popup__status-line
+              .status-line__line
+                .status-line__line-fill(style="height: 80%")
+              .status-line__items
+                .status-line__item.status-line__item--taken-to-work
+                  .status-line__item-text Прийнято в роботу
+                .status-line__item.status-line__item--for-processing
+                  .status-line__item-text На опрацювання
+                .status-line__item.status-line__item--ready
+                  .status-line__item-text Готово
+                .status-line__item.status-line__item--sent
+                  .status-line__item-text Відправлено
+                .status-line__item.status-line__item--payment
+                  .status-line__item-text Виплата
+          .client-card__id-and-comment.hidden-xxsPlus
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+          .status-line.status-line--full.client-card__status-line.hidden-xs
+            .status-line__line
+              .status-line__line-fill(style="width: 100%")
+            .status-line__items
+              .status-line__item.status-line__item--taken-to-work
+                .status-line__item-text Прийнято в роботу
+              .status-line__item.status-line__item--for-processing
+                .status-line__item-text На опрацювання
+              .status-line__item.status-line__item--ready
+                .status-line__item-text Готово
+              .status-line__item.status-line__item--sent
+                .status-line__item-text Відправлено
+              .status-line__item.status-line__item--payment
+                .status-line__item-text Виплата
+      .client-card.client-card--aqua-bg.client-cards__item
+        .client-card__header
+          .client-card__name-and-phone
+            .client-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").client-card__phone +380987653498
+          .client-card__id-and-comment.hidden-xxs
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+        .client-card__body
+          .client-card__specifications
+            .specification.client-card__specification
+              .specification__title Країна
+              .specification__value Польща
+            .specification.client-card__specification
+              .specification__title Дата подачі
+              .specification__value 28 січ 2023
+            .specification.client-card__specification
+              .specification__title Дата отримання
+              .specification__value 30 січ 2023
+            .specification.client-card__specification
+              .specification__title Тип замовлення
+              .specification__value Віза без присутності з запрошенням
+            .specification.client-card__specification
+              .specification__title Кешбек (3%)
+              .specification__value 15 zł
+          button(type="button" data-src="#client-status-popup3" data-slug="client-status-popup3").client-status.client-status--success.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Працює
+          .fancybox-popup#client-status-popup3(style="display: none;")
+            h3.fancybox-popup__title Статус
+            .fancybox-popup__client-info
+              .fancybox-popup__client-name Теребей Наталiя Iванiвна
+              a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+            .status-line.status-line--full.status-line--vertical.fancybox-popup__status-line
+              .status-line__line
+                .status-line__line-fill(style="height: 100%")
+              .status-line__items
+                .status-line__item.status-line__item--taken-to-work
+                  .status-line__item-text Прийнято в роботу
+                .status-line__item.status-line__item--for-processing
+                  .status-line__item-text На опрацювання
+                .status-line__item.status-line__item--ready
+                  .status-line__item-text Готово
+                .status-line__item.status-line__item--sent
+                  .status-line__item-text Відправлено
+                .status-line__item.status-line__item--payment
+                  .status-line__item-text Виплата
+          .status-line.client-card__status-line.hidden-xs
+            .status-line__line
+              .status-line__line-fill(style="width: 50%")
+            .status-line__items
+              .status-line__item.status-line__item--taken-to-work
+                .status-line__item-text Прийнято в роботу
+              .status-line__item.status-line__item--for-processing
+                .status-line__item-text На опрацювання
+              .status-line__item.status-line__item--ready
+                .status-line__item-text Готово
+              .status-line__item.status-line__item--sent
+                .status-line__item-text Відправлено
+              .status-line__item.status-line__item--payment
+                .status-line__item-text Виплата
+      .client-card.client-card--beige-bg.client-cards__item
+        .client-card__header
+          .client-card__name-and-phone
+            .client-card__name Теребей Наталiя Iванiвна
+            a(href="tel:+380987653498").client-card__phone +380987653498
+          .client-card__id-and-comment.hidden-xxs
+            .client-card__id ID: 5233479
+            .client-card__comment Якийсь невеликий коментар
+        .client-card__body
+          .client-card__specifications
+            .specification.client-card__specification
+              .specification__title Країна
+              .specification__value Польща
+            .specification.client-card__specification
+              .specification__title Дата подачі
+              .specification__value 28 січ 2023
+            .specification.client-card__specification
+              .specification__title Дата отримання
+              .specification__value 30 січ 2023
+            .specification.client-card__specification
+              .specification__title Тип замовлення
+              .specification__value Віза без присутності з запрошенням
+            .specification.client-card__specification
+              .specification__title Кешбек (3%)
+              .specification__value 15 zł
+          button(type="button" data-src="#client-status-popup3" data-slug="client-status-popup3").client-status.client-status--success.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Працює
+          .fancybox-popup#client-status-popup3(style="display: none;")
+            h3.fancybox-popup__title Статус
+            .fancybox-popup__client-info
+              .fancybox-popup__client-name Теребей Наталiя Iванiвна
+              a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+            .status-line.status-line--full.status-line--vertical.fancybox-popup__status-line
+              .status-line__line
+                .status-line__line-fill(style="height: 100%")
+              .status-line__items
+                .status-line__item.status-line__item--taken-to-work
+                  .status-line__item-text Прийнято в роботу
+                .status-line__item.status-line__item--for-processing
+                  .status-line__item-text На опрацювання
+                .status-line__item.status-line__item--ready
+                  .status-line__item-text Готово
+                .status-line__item.status-line__item--sent
+                  .status-line__item-text Відправлено
+                .status-line__item.status-line__item--payment
+                  .status-line__item-text Виплата
+          .status-line.client-card__status-line.hidden-xs
+            .status-line__line
+              .status-line__line-fill(style="width: 50%")
+            .status-line__items
+              .status-line__item.status-line__item--taken-to-work
+                .status-line__item-text Прийнято в роботу
+              .status-line__item.status-line__item--for-processing
+                .status-line__item-text На опрацювання
+              .status-line__item.status-line__item--ready
+                .status-line__item-text Готово
+              .status-line__item.status-line__item--sent
+                .status-line__item-text Відправлено
+              .status-line__item.status-line__item--payment
+                .status-line__item-text Виплата
+  script(src="/js/recruitment.js")

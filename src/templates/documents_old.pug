@@ -1,0 +1,29 @@
+extends layouts/user_profile
+
+block content
+  .page.page--clients
+    h1.page-title.page__title Клієнти
+    .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.page__tabs-menu
+      ul.tabs-menu__list
+        li.tabs-menu__item
+          a(href="/recruitment.html").tabs-menu__link Рекрутація
+            span.count.tabs-menu__count 3
+        li.tabs-menu__item
+          a(href="/documents.html").tabs-menu__link.tabs-menu__link--active Документи
+    .page__content
+      .page__content-inner
+        .page__text-wrapper
+          .page__img-wrapper
+            img(src="/img/nodocs.jpg" alt="Документи").page__img
+          h2.page__text-subtitle Поки що у вас ніхто не замовив виготовлення документів...
+          p.text-center В цьому розділі будуть відображатись всі клієнти, яким ви виготовляєте будь-які документи.
+          p.text-center Зверніть увагу, що за правилами нейромережі WORKIUM не забороняється самому собі виготовляти документи. 
+          p.text-center Таким чином, ви можете повноцінно використовувати WORKIUM для власних потреб та бути впевненими в якості, офіційності та термінах підготовки необхідних вам документів.
+          p.text-center Почніть прямо зараз! Перегляньте розділ #[a(href="/documents.html") Документи] та зв’яжіться з командою WORKIUM для формування замовлення.
+          p.text-center Команда підтримки нейромережі WORKIUM завжди на зв’язку і з радістю відповість на ваші запитання.
+        .contact-buttons.contact-buttons--row.contact-buttons--center.contact-buttons--text-page.page__contact-buttons
+          ul.contact-buttons__list
+            li.contact-buttons__item
+              a(href="#").btn-purple.btn-purple--viber Написати у Viber
+            li.contact-buttons__item
+              a(href="#").btn-lightblue.btn-lightblue--telegram Написати в Telegram
