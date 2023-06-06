@@ -1,0 +1,115 @@
+.user-sidebar
+  .user-sidebar__inner
+    //- .context-block.user-sidebar__context-menu#user-context-menu
+    //-   input(type="text" readonly value="https://website.com?i=wmj7drft").context-block__copy-input#copy-link-input
+    //-   .context-menu
+    //-     ul.context-menu__list
+    //-       li.context-menu__item
+    //-         a(href="#").context-menu__link.context-menu__link--hide-profile
+    //-           .context-menu__icon-wrapper
+    //-             img(src="/img/context_menu/hide_profile.svg" alt="Приховати профіль" width="20").context-menu__icon
+    //-           span.context-menu__link-title Приховати профіль
+    //-       li.context-menu__item
+    //-         a(href="#copy-link-input").context-menu__link.context-menu__link--copy-link
+    //-           .context-menu__icon-wrapper
+    //-             img(src="/img/context_menu/link.svg" alt="Приховати профіль" width="22").context-menu__icon
+    //-           span.context-menu__link-title Партнерське посилання
+    //-       li.context-menu__item
+    //-         a(href="#").context-menu__link
+    //-           .context-menu__icon-wrapper
+    //-             img(src="/img/context_menu/settings.svg" alt="Приховати профіль" width="19").context-menu__icon
+    //-           span.context-menu__link-title Налаштування
+    //-       li.context-menu__item
+    //-         a(href="#").context-menu__link
+    //-           .context-menu__icon-wrapper
+    //-             img(src="/img/context_menu/logout.svg" alt="Приховати профіль" width="16").context-menu__icon
+    //-           span.context-menu__link-title Вийти
+    .user-sidebar__top.hidden-smMinus
+      a(href="/").user-sidebar__logo
+        img(src="/img/logo.svg" title="Workium")
+      //- a(href="#user-context-menu" data-context-block-trigger).user-sidebar__user-avatar-link.user-sidebar__user-avatar-link--profile-shown
+        img(src="/img/user_sidebar_avatar.png" alt="sadwolf27").user-avatar.user-avatar--small
+        //- img(src="/img/user_avatar.png" alt="sadwolf27")
+    //- .user-info.user-sidebar__user-info
+    //-   .user-info__top
+    //-     a(href="/user.html").username.user-info__username sadwolf27
+    //-     a(href="/logout").logout-link.user-info__logout-link
+    //-   .user-balance.user-info__balance 5257,45 грн
+    .buttons.user-sidebar__buttons
+      ul.buttons__list
+        li.buttons__item
+          a(href="#authorization-popup" data-active-tab-number="2").btn-blue.buttons__btn.fancybox-popup-toggle Увійти
+        li.buttons__item
+          a(href="#authorization-popup").btn-blue.buttons__btn.fancybox-popup-toggle Зареєструватись
+    .user-sidebar__user-info-wrapper
+      .user-info
+        img(src="/img/user_sidebar_avatar.png" alt="Sobat Jariyah").user-avatar.user-info__avatar
+        .user-info__text-wrapper
+          a(href="/user.html").username.user-info__username Sobat Jariyah
+          .user-label.user-info__user-label Впливовість: 0
+        a(href="#user-context-menu" data-context-block-trigger).dots-link
+    .user-menu.user-sidebar__user-menu
+      ul.user-menu__list
+        li.user-menu__item
+          a(href="/vacancies.html").user-menu__link
+            img(src="/img/user_menu/vacancies.svg" alt="Вакансії").user-menu__icon
+            span.user-menu__item-text Вакансії
+        li.user-menu__item
+          a(href="/recruitment.html").user-menu__link.user-menu__link--has-count
+            img(src="/img/user_menu/recruitment.svg" alt="Рекрутація").user-menu__icon
+            span.user-menu__item-text Клієнти
+            span.count.user-menu__count 3
+        li.user-menu__item
+          a(href="/docs.html").user-menu__link
+            img(src="/img/user_menu/documents.svg" alt="Документи").user-menu__icon
+            span.user-menu__item-text Документи
+        li.user-menu__item
+          a(href="/operations.html").user-menu__link
+            img(src="/img/user_menu/balance.svg" alt="Баланс та операції").user-menu__icon
+            span.user-menu__item-text Баланс та операції
+        li.user-menu__item
+          a(href="/affiliate.html").user-menu__link
+            img(src="/img/user_menu/affiliate.svg" alt="Партнерська програма").user-menu__icon
+            span.user-menu__item-text Партнерська програма
+        li.user-menu__item
+          a(href="/save.html").user-menu__link
+            img(src="/img/user_menu/save.svg" alt="Збереження").user-menu__icon.user-menu__icon--save
+            span.user-menu__item-text Збереження
+        li.user-menu__item
+          a(href="/awards.html").user-menu__link.user-menu__link--has-count
+            img(src="/img/user_menu/achievements.svg" alt="Досягнення").user-menu__icon
+            span.user-menu__item-text Досягнення
+            span.count.user-menu__count 3
+        li.user-menu__item
+          a(href="/verification.html").user-menu__link
+            img(src="/img/user_menu/verification.svg" alt="Верифікація").user-menu__icon
+            span.user-menu__item-text Верифікація
+        li.user-menu__item
+          a(href="/black_list.html").user-menu__link
+            img(src="/img/user_menu/black_list.svg" alt="Чорний список").user-menu__icon
+            span.user-menu__item-text Чорний список
+        li.user-menu__item
+          a(href="/ideas.html").user-menu__link
+            img(src="/img/user_menu/ideas.svg" alt="Ідеї та пропозиції").user-menu__icon
+            span.user-menu__item-text Ідеї та пропозиції
+        li.user-menu__item
+          a(href="/settings.html").user-menu__link
+            img(src="/img/user_menu/settings.svg" alt="Налаштування").user-menu__icon
+            span.user-menu__item-text Налаштування
+    .user-sidebar__footer
+      .context-block.context-block--support.user-sidebar__context-support-block#support-block
+        .contact-box.contact-box--support
+          h3.contact-box__title З радістю відповімо на ваші запитання!
+          .contact-phones.contact-phones--support.contact-box__phones
+            ul.contact-phones__list
+              li.contact-phones__item
+                a(href="tel:+380680990302").phone.phone--with-icon +380 68 099 03 02
+              li.contact-phones__item
+                a(href="tel:+48732222356").phone.phone--with-icon +48 732 222 356
+          .contact-buttons.contact-buttons--support.contact-box__buttons
+            ul.contact-buttons__list
+              li.contact-buttons__item
+                a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-contact-box-support Написати у Viber
+              li.contact-buttons__item
+                a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-contact-box-support Написати в Telegram
+      a(href="#support-block" data-context-block-trigger).support-link Підтримка онлайн

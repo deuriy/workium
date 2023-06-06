@@ -12,8 +12,10 @@ $(function () {
       reveal: (fancybox, slide) => {
         console.log(slide);
         if (slide.src === '#authorization-popup') {
-          let activeTabIndex = slide.activeTabIndex !== undefined ? slide.activeTabIndex : 1;
-          slide.el.querySelector(`.tabs-menu__item:nth-child(${activeTabIndex + 1}) .tabs-menu__link`).click();
+          let activeTabNumber = slide.activeTabNumber !== undefined ? slide.activeTabNumber : 1;
+
+          // slide.el.querySelector(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`).click();
+          $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`).trigger('click');
         }
       },
     },
