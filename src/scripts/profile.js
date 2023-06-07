@@ -204,11 +204,11 @@ $(function () {
     e.preventDefault();
   });
 
-  // $(document).click(function(e) {
-  //   if (!$(e.target).closest('.context-block').length && !$(e.target).closest('[data-context-block-trigger]').length) {
-  //     $('.context-block--opened').removeClass('context-block--opened');
-  //   }
-  // });
+  $(document).click(function(e) {
+    if (!$(e.target).closest('.context-block').length && !$(e.target).closest('[data-context-block-trigger]').length) {
+      $('.context-block--opened').removeClass('context-block--opened');
+    }
+  });
 
   $('.context-menu__link--copy-link').click(function(e) {
   	let $copyLinkInput = $($(this).attr('href'));
