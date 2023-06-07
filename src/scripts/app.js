@@ -3,7 +3,7 @@ import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
 $(function () {
   let currentFancybox = null;
-  
+
 	Fancybox.bind("[data-fancybox]");
 	
 	Fancybox.bind(".fancybox-popup-toggle", {
@@ -20,13 +20,9 @@ $(function () {
           $activeTabLink.trigger('click');
         }
 
-        // console.log(slide.closeExisting);
-        // console.log('gmememger');
-
-        // if (slide.closeExisting == "1") {
-        //   console.log('gmememger');
-        //   fancybox.close();
-        // }
+        if (currentFancybox) {
+          currentFancybox.close();
+        }
       },
     },
 
@@ -41,14 +37,11 @@ $(function () {
 
     on: {
       reveal: (fancybox, slide) => {
-        // Fancybox.close();
-        console.log(fancybox);
-        // console.log(slide);
+        if (currentFancybox) {
+          currentFancybox.close();
+        }
 
-        // if (fancybox.closeExisting == "1") {
-        //   console.log('gmememger');
-        //   Fancybox.close();
-        // }
+        currentFancybox = fancybox;
       },
     }
   });
