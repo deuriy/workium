@@ -87,19 +87,20 @@ $(function () {
 	// 	document.execCommand("copy");
 	// 	// console.log('fmfwmewf');
 
-	// 	// e.preventDefault();
+	// 	e.preventDefault();
 	// });
 
 	
 
-	// document.querySelector('[data-copy-text]').addEventListener("copy", function(event) {
-	// 	console.log('mekmdmewmlmwl')
+	// document.querySelector('[data-copy-text]').copy = function(event) {
+	// 	console.log('mekmdmewmlmwl');
+
 	//   event.preventDefault();
 	//   if (event.clipboardData) {
-	//     event.clipboardData.setData("text/plain", document.querySelector('[data-copy-text]').textContent);
+	//     event.clipboardData.setData("text/plain", this.textContent);
 	//     console.log(event.clipboardData.getData("text"))
 	//   }
-	// });
+	// };
 
 	// $('[data-copy-text]').on('copy', function(e) {
 	// 	e.preventDefault();
@@ -138,6 +139,27 @@ $(function () {
     setTimeout(() => {
     	$tooltip.removeClass('tooltip--visible');
     }, 2000);
+	});
+
+	$('.contact-phones--support .phone').click(function(e) {
+		let $contactPhonesSupport = $(this).closest('.contact-phones--support');
+
+    if (!$contactPhonesSupport.length) return;
+
+    $(this).after(`<input type="text" class="contact-phones__phone-form-text" value="${$(this).text()}" />`);
+
+  	let $tooltip = $contactPhonesSupport.find('.contact-phones__tooltip');
+  	let $contactPhoneFormText = $(this).next('.contact-phones__phone-form-text');
+
+  	copyInputText($contactPhoneFormText[0]);
+  	$contactPhoneFormText.remove();
+
+		$tooltip.addClass('tooltip--visible');
+    setTimeout(() => {
+    	$tooltip.removeClass('tooltip--visible');
+    }, 1500);
+
+    e.preventDefault();
 	});
 
 	$('.client-card__additional-item--copy').click(function(e) {
@@ -182,11 +204,11 @@ $(function () {
     e.preventDefault();
   });
 
-  $(document).click(function(e) {
-    if (!$(e.target).closest('.context-block').length && !$(e.target).closest('[data-context-block-trigger]').length) {
-      $('.context-block--opened').removeClass('context-block--opened');
-    }
-  });
+  // $(document).click(function(e) {
+  //   if (!$(e.target).closest('.context-block').length && !$(e.target).closest('[data-context-block-trigger]').length) {
+  //     $('.context-block--opened').removeClass('context-block--opened');
+  //   }
+  // });
 
   $('.context-menu__link--copy-link').click(function(e) {
   	let $copyLinkInput = $($(this).attr('href'));
