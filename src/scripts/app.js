@@ -2,6 +2,8 @@ import $ from "jquery";
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
 $(function () {
+  let currentFancybox = null;
+  
 	Fancybox.bind("[data-fancybox]");
 	
 	Fancybox.bind(".fancybox-popup-toggle", {
@@ -17,6 +19,14 @@ $(function () {
 
           $activeTabLink.trigger('click');
         }
+
+        // console.log(slide.closeExisting);
+        // console.log('gmememger');
+
+        // if (slide.closeExisting == "1") {
+        //   console.log('gmememger');
+        //   fancybox.close();
+        // }
       },
     },
 
@@ -25,9 +35,22 @@ $(function () {
     }
 	});
   
-  Fancybox.bind(".fancybox-guest-popup-toggle", {
+  Fancybox.bind(".fancybox-wide-popup-toggle", {
     dragToClose: false,
-    mainClass: 'fancybox--guest-popup',
+    mainClass: 'fancybox--wide-popup',
+
+    on: {
+      reveal: (fancybox, slide) => {
+        // Fancybox.close();
+        console.log(fancybox);
+        // console.log(slide);
+
+        // if (fancybox.closeExisting == "1") {
+        //   console.log('gmememger');
+        //   Fancybox.close();
+        // }
+      },
+    }
   });
 
   $('.authorization-form__password-toggle').click(function(e) {    
