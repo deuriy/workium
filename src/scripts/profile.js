@@ -140,6 +140,27 @@ $(function () {
     }, 2000);
 	});
 
+	$('.client-card__additional-item--copy').click(function(e) {
+    let $clientAdditionalText = $(this).closest('.client-card__additional').find('.client-card__additional-text');
+
+    if (!$clientAdditionalText.length) return;
+
+    $clientAdditionalText.after(`<textarea class="client-card__additional-textarea">${$clientAdditionalText.text()}</textarea`);
+
+  	let $tooltip = $(this).find('.client-card__additional-item-tooltip');
+  	let $clientAdditionalTextarea = $clientAdditionalText.next('.client-card__additional-textarea');
+
+  	copyInputText($clientAdditionalTextarea[0]);
+  	$clientAdditionalTextarea.remove();
+
+		$tooltip.addClass('tooltip--visible');
+    setTimeout(() => {
+    	$tooltip.removeClass('tooltip--visible');
+    }, 2000);
+
+    e.preventDefault();
+	});
+
 	$('[data-bookmark]').click(function(e) {
 		e.preventDefault();
 

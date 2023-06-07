@@ -87,11 +87,13 @@
 	
 	&__additional
 		display none
-		margin-right 10px
 		margin-bottom 32px
 		font-size 14px
 		// line-height normal
 		line-height 1.25
+		
+		@media $md
+			margin-right 10px
 	
 	&__additional-label
 		margin-bottom 10px
@@ -113,6 +115,7 @@
 		padding-bottom 13px
 	
 	&__additional-item
+		position relative
 		padding-top 9px
 		padding-bottom 9px
 		
@@ -131,12 +134,23 @@
 				height 24px
 				background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%235340FF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2Z'/%3E%3Cpath stroke='%235340FF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E") center center no-repeat
 	
+	&__additional-item-tooltip
+		position absolute
+		z-index 10
+		top -35px
+		right 0
+		// top -43px
+		// right -53px
+	
 	&__additional-footer,
 	&__additional-footer-left
 		display grid
 		grid-template-columns repeat(2, auto)
 		gap 7px
 		align-items center
+		
+		@media $xs
+			grid-template-columns 100%
 	
 	&__additional-footer
 		justify-content space-between
