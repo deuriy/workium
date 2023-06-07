@@ -1,0 +1,26 @@
+.partners-tabs
+	&__header
+		display grid
+		grid-template-columns auto auto
+		align-items center
+		justify-content start
+		gap 18px
+		margin-bottom 23px
+		
+		@media $mdMinus
+			grid-template-columns 100%
+		
+		@media $xs
+			gap 15px
+			margin-bottom 20px
+	
+	&__title
+		font-weight 500
+		font-size 22px
+		line-height normal
+		
+		@media $smMinus
+			font-size 20px
+		
+		@media $xs
+			font-size 18px

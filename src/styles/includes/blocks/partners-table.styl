@@ -1,6 +1,8 @@
 .partners-table
 	width 100%
-	padding 15px 30px
+	// padding 15px 30px
+	// padding 15px 25px
+	padding 15px 0
 	background var(--light)
 	border-radius 12px
 	
@@ -22,31 +24,72 @@
 		line-height 1.6923
 		color var(--grey)
 		
+		&:first-child
+			padding-left 25px
+		
+		&:last-child
+			padding-right 25px
+		
 		&--date
-			width 142px
+			// width 142px
+			// width 100px
+			// width 194px
+			// width 16.3%
+			width 17.8%
 			
 		&--name
 			// width 262px
-			width 190px
+			// width 191px
+			// width 16.3%
+			width 15.5%
 			
 		&--id
-			width 130px
+			// width 130px
+			width 192px
+		
+		// &--influence-and-awards
+		// 	width 200px
 		
 		&--profit
-			width 130px
+			width 14.1%
+			// width 176px
+			// width 15%
+			// width 130px
 			// text-align right
 		
 		&--currency
-			width 80px
+			// width 80px
+			// width 120px
+			// width 10.2%
+			width 10%
 			
 		&--history
-			width 140px
+			// width 140px
+			// width 209px
+			// width 17.7%
+			width 19%
 		
 		&--profit-and-date
 			text-align right
+		
+		&--country
+			width 10%
+		
+		&--remuneration
+			// width 16.7%
+			// width 15.9%
+			width 16.2%
+		
+		&--status
+			// width 14.4%
+			width 15.8%
+			
+			@media $1440-
+				width 18%
 	
 	&__td
-		padding 15px 0
+		// padding 15px 0
+		padding 11px 0
 		vertical-align middle
 		
 		&--profit-and-date
@@ -62,22 +105,52 @@
 			font-size 12px
 	
 	&__body
-		.partners-table__row:first-child
+		.partners-table__row
 			.partners-table__td
-				padding-top 22px
+				&:first-child
+					padding-left 25px
+				
+				&:last-child
+					padding-right 25px
+				
+			&:first-child
+				.partners-table__td
+					padding-top 27px
+					// padding-top 22px
+			
+			&:nth-child(even)
+				.partners-table__td
+					background #FAFAFA
 	
 	&__email,
 	&__profit
 		font-size 16px
 		line-height 26px
 	
-	&__id,
-	&__date
+	&__datetime-and-id
+		max-width 100px
+		text-align right
+	
+	&__influence-and-awards
+		display grid
+		grid-template-columns auto 34px
+		align-items center
+		justify-content start
+		gap 21px
+		margin-left 19px
+	
+	&__award-img
+		opacity 0.2
+	
+	&__id
 		font-size 13px
 		line-height 22px
 		color var(--grey)
 	
 	&__date
+		@media $smPlus
+			margin-bottom -6px
+			
 		@media $xs
 			margin-top 10px
 			margin-left 27px
@@ -87,6 +160,68 @@
 		@media $xs
 			// margin-top 5px
 			margin-top 3px
+	
+	&__vacancy
+		margin-bottom -5px
+	
+	&__agency
+		color #989DB2
+		font-size 13px
+	
+	// &__remuneration
+	// 	margin-top -10px
+	
+	&__zl
+		margin-bottom -5px
+	
+	&__eur
+		margin-left -4px
+		color #989DB2
+		font-weight 400
+		font-size 13px
+	
+	&__status
+		// margin-top -14px
+		margin-top -3px
+	
+	&--recruitment
+		.partners-table__th
+			&--date
+				// width 13%
+				width 14.5%
+			
+			&--name
+				// width 9.5%
+				width 9.1%
+		
+		.partners-table__body
+			.partners-table__row:first-child
+				.partners-table__td
+					padding-top 15px
+		
+		.partners-table__td
+			padding 13px 0
+	
+	&--documents
+		.partners-table__th
+			&--date
+				// width 13%
+				width 14.4%
+			
+			&--name
+				// width 9.5%
+				width 9.2%
+		
+		.partners-table__body
+			.partners-table__row:first-child
+				.partners-table__td
+					padding-top 16px
+		
+		.partners-table__td
+			padding 6px 0
+		
+		.partners-table__datetime-and-id
+			margin-top 10px
 	
 	&--mobile
 		width calc(100% + 34px)
