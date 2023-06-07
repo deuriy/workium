@@ -15,10 +15,21 @@ block content
           .client-card__name-and-phone
             .client-card__name Теребей Наталiя Iванiвна
             a(href="tel:+380987653498").client-card__phone +380987653498
-          .client-card__id-and-comment.hidden-xxs
-            .client-card__id ID: 5233479
-            .client-card__comment Якийсь невеликий коментар
+          button(type="button").toggle-btn.client-card__additional-toggle-btn Додатково
+          //- .client-card__id-and-comment.hidden-xxs
+          //-   .client-card__id ID: 5233479
+          //-   .client-card__comment Якийсь невеликий коментар
         .client-card__body
+          .client-card__additional
+            .client-card__additional-label Додаткова інформація:
+            .client-card__additional-text
+              p Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином.
+            .client-card__additional-footer
+              .client-card__additional-footer-left
+                .client-card__additional-item ID бронювання: #[span.semibold 232311]
+                .client-card__additional-item Час та дата бронювання: #[span.semibold 20:15 23.04.2023]
+              .client-card__additional-footer-right
+                a(href="#").client-card__additional-item.client-card__additional-item--copy Скопіювати інформацію
           .client-card__specifications
             .specification.client-card__specification
               .specification__title Країна

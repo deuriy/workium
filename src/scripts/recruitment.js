@@ -1,9 +1,15 @@
-// import $ from "jquery";
-// import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
+import $ from "jquery";
 
-// $(function () {
-//   Fancybox.bind(".fancybox-popup-toggle", {
-//     dragToClose: false,
-//     mainClass: 'fancybox--popup'
-//   });
-// });
+$(function () {
+  $('.client-card__additional-toggle-btn').click(function(e) {
+  	$(this).toggleClass('toggle-btn--opened').closest('.client-card').find('.client-card__additional').slideToggle();
+
+  	if ($(this).hasClass('toggle-btn--opened')) {
+  		$(this).text('Приховати');
+  	} else {
+  		$(this).text('Додатково');
+  	}
+
+  	e.preventDefault();
+  });
+});
