@@ -5,6 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // loop: true,
     slidesPerView: 'auto',
     // centeredSlides: true,
-    spaceBetween: 20,
+    spaceBetween: 23,
   });
 });
