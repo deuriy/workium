@@ -50,11 +50,14 @@ function copyInputText (targetElem) {
 $(function () {
 	let hideProfileCookie = getCookie('hideProfile');
 
+	let $userSidebar = $('.user-sidebar');
 	let $userAvatarLink = $('.user-sidebar__user-avatar-link');
   let $userInfoWrapper = $('.user-sidebar__user-info-wrapper');
   let $menuLinkHideProfile = $('.context-menu__link--hide-profile');
 
 	if (hideProfileCookie === 'yes') {
+		$userSidebar.addClass('user-sidebar')
+		$userSidebar.removeClass('user-sidebar--profile-shown');
 		$userAvatarLink.removeClass('user-sidebar__user-avatar-link--profile-shown');
 
 		$menuLinkHideProfile.find('.context-menu__link-title').text('Показати профіль');
@@ -229,6 +232,7 @@ $(function () {
   });
 
   $('.context-menu__link--hide-profile').click(function(e) {
+  	$userSidebar.toggleClass('user-sidebar--profile-shown');
   	$userAvatarLink.toggleClass('user-sidebar__user-avatar-link--profile-shown');
 
   	if (!$userAvatarLink.hasClass('user-sidebar__user-avatar-link--profile-shown')) {
