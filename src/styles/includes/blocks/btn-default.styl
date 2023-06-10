@@ -33,3 +33,27 @@
 	&--fancybox-popup
 		padding 10px 25px
 		border-radius 4px
+	
+	&--arrow
+		display inline-grid
+		grid-template-columns 1fr auto
+		gap 15px
+		align-items center
+		padding 12px 28px
+		font-weight 600
+		line-height 1.5
+		
+		@media $smMinus
+			font-size 15px
+		
+		@media $xs
+			gap 8px
+			padding-right 15px
+			padding-left 15px
+			font-size 14px
+		
+		&::after
+			content ""
+			width 14px
+			height 14px
+			background url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.75 7H13.25M13.25 7L7.625 1.375M13.25 7L7.625 12.625' stroke='%23fff' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A") center / cover no-repeat
