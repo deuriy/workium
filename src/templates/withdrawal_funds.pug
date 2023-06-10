@@ -3,7 +3,29 @@ extends layouts/user_profile
 block content
   .operations-page.operations-page--withdrawal-funds
     h1.page-title.operations-page__title Баланс
-    .wallets.operations-page__wallets
+    .swiper.wallets-swiper.operations-page__wallets-swiper.hidden-smPlus
+      .swiper-wrapper
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency PLN
+            .wallet__sum 0.00 #[span.wallet__currency-prefix zł]
+            .wallet__selected Обрано
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency CZK
+            .wallet__sum 0.00 #[span.wallet__currency-prefix Kč]
+            .wallet__selected Обрано
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency USD
+            .wallet__sum 0.00 #[span.wallet__currency-prefix $]
+            .wallet__selected Обрано
+        .swiper-slide.wallets-swiper__slide
+          .wallet.wallets__item
+            .wallet__currency EUR
+            .wallet__sum 0.00 #[span.wallet__currency-prefix €]
+            .wallet__selected Обрано
+    .wallets.operations-page__wallets.hidden-xs
       .wallet.wallet--active.wallets__item
         .wallet__currency PLN
         .wallet__sum 0.00 #[span.wallet__currency-prefix zł]
@@ -21,12 +43,12 @@ block content
         .wallet__currency EUR
         .wallet__sum 0.00 #[span.wallet__currency-prefix €]
         a(href="#").operation-link.wallet__operation-link Зняти кошти
-    .withdrawal-funds.tabs
+    .withdrawal-funds.tabs.operations-page__withdrawal-funds
       .withdrawal-funds__header
-        h2.withdrawal-funds__title Зняття коштів з балансу #[span.semibold PLN (zł)]
-        .withdrawal-funds__description
+        h2.withdrawal-funds__title Зняття коштів з балансу #[br.hidden-smPlus]#[span.semibold PLN (zł)]
+        .withdrawal-funds__description.hidden-xs
           p Оберіть тип платіжного переказу
-        .tabs-menu.tabs-menu--grey-bg.tabs-menu--light-bg-mob.withdrawal-funds__tabs-menu
+        .tabs-menu.tabs-menu--grey-bg.tabs-menu--light-bg-mob.tabs-menu--no-bg-mobile.tabs-menu--withdrawal-funds.withdrawal-funds__tabs-menu
           ul.tabs-menu__list.tabs__list
             li.tabs-menu__item.tabs__item
               a(href="#").tabs-menu__link.tabs-menu__link--active Банки України
@@ -40,7 +62,11 @@ block content
         .tabs__content(style="display: block;")
           .payment-systems.withdrawal-funds__payment-systems
             h3.payment-systems__title Оберіть спосіб отримання
-            .payment-systems__items
+            a(href="#payment-systems-popup").payment-systems-popup-link
+              h4.payment-systems-popup-link__name Інший банк України
+              .payment-systems-popup-link__currency UAH
+              img(src="/img/privat24.svg" alt="Інший банк України").payment-systems-popup-link__icon
+            .payment-systems__items.hidden-xs
               .payment-system.payment-systems__item
                 input(type="radio" name="payment_system" value="privat24" id="privat24").payment-system__input
                 label(for="privat24").payment-system__label
@@ -115,34 +141,34 @@ block content
               .withdrawal-form__row.withdrawal-form__row--requisites
                 .withdrawal-form__item
                   label(for="card_number").withdrawal-form__label Номер карти Приват24
-                  input(type="text" name="card_number" id="card_number").form-text
+                  input(type="text" name="card_number" id="card_number").form-text.withdrawal-form__form-text
                 .withdrawal-form__name-and-surname
                   .withdrawal-form__item.withdrawal-form__item--name
                     label(for="name").withdrawal-form__label Ім’я
-                    input(type="text" name="name" id="name").form-text
+                    input(type="text" name="name" id="name").form-text.withdrawal-form__form-text
                   .withdrawal-form__item.withdrawal-form__item--surname
                     label(for="surname").withdrawal-form__label Прізвище
-                    input(type="text" name="surname" id="surname").form-text
+                    input(type="text" name="surname" id="surname").form-text.withdrawal-form__form-text
               .withdrawal-form__row.withdrawal-form__row--amount
                 .withdrawal-form__item
                   label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix PLN
                   .withdrawal-form__field-note
                     p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
                 .withdrawal-form__item.withdrawal-form__item--final-amount
                   label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix UAH
                   .withdrawal-form__field-note
-                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції #[br.hidden-smPlus]8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
             .notice.withdrawal-form__notice
               p На жаль, на вашому балансі недостатньо коштів для зняття
             .withdrawal-form__actions
               button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
-              button(type="reset").btn-grey Скасувати
+              button(type="reset").btn-grey.btn-grey--withdrawal-form Скасувати
         .tabs__content
           .payment-systems.withdrawal-funds__payment-systems
             h3.payment-systems__title Оберіть спосіб зняття коштів
@@ -183,34 +209,34 @@ block content
               .withdrawal-form__row.withdrawal-form__row--requisites
                 .withdrawal-form__item
                   label(for="card_number").withdrawal-form__label Номер карти Приват24
-                  input(type="text" name="card_number" id="card_number").form-text
+                  input(type="text" name="card_number" id="card_number").form-text.withdrawal-form__form-text
                 .withdrawal-form__name-and-surname
                   .withdrawal-form__item.withdrawal-form__item--name
                     label(for="name").withdrawal-form__label Ім’я
-                    input(type="text" name="name" id="name").form-text
+                    input(type="text" name="name" id="name").form-text.withdrawal-form__form-text
                   .withdrawal-form__item.withdrawal-form__item--surname
                     label(for="surname").withdrawal-form__label Прізвище
-                    input(type="text" name="surname" id="surname").form-text
+                    input(type="text" name="surname" id="surname").form-text.withdrawal-form__form-text
               .withdrawal-form__row.withdrawal-form__row--amount
                 .withdrawal-form__item
                   label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття 2
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix PLN
                   .withdrawal-form__field-note
                     p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
                 .withdrawal-form__item.withdrawal-form__item--final-amount
                   label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix UAH
                   .withdrawal-form__field-note
-                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції #[br.hidden-smPlus]8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
             .notice.withdrawal-form__notice
               p На жаль, на вашому балансі недостатньо коштів для зняття
             .withdrawal-form__actions
               button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
-              button(type="reset").btn-grey Скасувати
+              button(type="reset").btn-grey.btn-grey--withdrawal-form Скасувати
         .tabs__content
           .payment-systems.withdrawal-funds__payment-systems
             h3.payment-systems__title Оберіть спосіб зняття коштів
@@ -245,34 +271,34 @@ block content
               .withdrawal-form__row.withdrawal-form__row--requisites
                 .withdrawal-form__item
                   label(for="card_number").withdrawal-form__label Номер карти Приват24
-                  input(type="text" name="card_number" id="card_number").form-text
+                  input(type="text" name="card_number" id="card_number").form-text.withdrawal-form__form-text
                 .withdrawal-form__name-and-surname
                   .withdrawal-form__item.withdrawal-form__item--name
                     label(for="name").withdrawal-form__label Ім’я
-                    input(type="text" name="name" id="name").form-text
+                    input(type="text" name="name" id="name").form-text.withdrawal-form__form-text
                   .withdrawal-form__item.withdrawal-form__item--surname
                     label(for="surname").withdrawal-form__label Прізвище
-                    input(type="text" name="surname" id="surname").form-text
+                    input(type="text" name="surname" id="surname").form-text.withdrawal-form__form-text
               .withdrawal-form__row.withdrawal-form__row--amount
                 .withdrawal-form__item
                   label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття 3
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix PLN
                   .withdrawal-form__field-note
                     p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
                 .withdrawal-form__item.withdrawal-form__item--final-amount
                   label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix UAH
                   .withdrawal-form__field-note
-                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції #[br.hidden-smPlus]8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
             .notice.withdrawal-form__notice
               p На жаль, на вашому балансі недостатньо коштів для зняття
             .withdrawal-form__actions
               button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
-              button(type="reset").btn-grey Скасувати
+              button(type="reset").btn-grey.btn-grey--withdrawal-form Скасувати
         .tabs__content
           .payment-systems.withdrawal-funds__payment-systems
             h3.payment-systems__title Оберіть спосіб зняття коштів
@@ -301,31 +327,95 @@ block content
               .withdrawal-form__row.withdrawal-form__row--requisites
                 .withdrawal-form__item
                   label(for="card_number").withdrawal-form__label Номер карти Приват24
-                  input(type="text" name="card_number" id="card_number").form-text
+                  input(type="text" name="card_number" id="card_number").form-text.withdrawal-form__form-text
                 .withdrawal-form__name-and-surname
                   .withdrawal-form__item.withdrawal-form__item--name
                     label(for="name").withdrawal-form__label Ім’я
-                    input(type="text" name="name" id="name").form-text
+                    input(type="text" name="name" id="name").form-text.withdrawal-form__form-text
                   .withdrawal-form__item.withdrawal-form__item--surname
                     label(for="surname").withdrawal-form__label Прізвище
-                    input(type="text" name="surname" id="surname").form-text
+                    input(type="text" name="surname" id="surname").form-text.withdrawal-form__form-text
               .withdrawal-form__row.withdrawal-form__row--amount
                 .withdrawal-form__item
                   label(for="withdrawal_amount").withdrawal-form__label.withdrawal-form__label--large Введіть суму зняття 4
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text
+                    input(type="text" name="withdrawal_amount" id="withdrawal_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix PLN
                   .withdrawal-form__field-note
                     p Максимально #[a(href="#").withdrawal-form__max-amount 0.00 PLN]
                 .withdrawal-form__item.withdrawal-form__item--final-amount
                   label(for="final_amount").withdrawal-form__label.withdrawal-form__label--large До отримання
                   .withdrawal-form__control.withdrawal-form__control--amount
-                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text
+                    input(type="text" name="final_amount" id="final_amount" value="0.00").form-text.withdrawal-form__form-text
                     span.withdrawal-form__field-suffix UAH
                   .withdrawal-form__field-note
-                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції 8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
+                    p 6% сплата податків в Україні #[br]4% подача звіту «1-ПА», юридичне оформлення міжнародної транзакції #[br.hidden-smPlus]8.64 UAH = 1 PLN - офіційний курс KREDOBANK на 16.05.2023
             .notice.withdrawal-form__notice
               p На жаль, на вашому балансі недостатньо коштів для зняття
             .withdrawal-form__actions
               button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
-              button(type="reset").btn-grey Скасувати
+              button(type="reset").btn-grey.btn-grey--withdrawal-form Скасувати
+  .fancybox-popup.fancybox-popup--payment-systems#payment-systems-popup(style="display: none;")
+    h3.fancybox-popup__title Банки
+    .banks-list.banks-list--popup
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat" value="privat").bank__input
+        label(for="privat").bank__label
+          h4.bank__name Інший банк України
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_2" value="privat_2").bank__input
+        label(for="privat_2").bank__label
+          h4.bank__name Інший банк України 2
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_3" value="privat_3").bank__input
+        label(for="privat_3").bank__label
+          h4.bank__name Інший банк України 3
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_4" value="privat_4").bank__input
+        label(for="privat_4").bank__label
+          h4.bank__name Інший банк України 4
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_5" value="privat_5").bank__input
+        label(for="privat_5").bank__label
+          h4.bank__name Інший банк України 5
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_6" value="privat_6").bank__input
+        label(for="privat_6").bank__label
+          h4.bank__name Інший банк України 6
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_7" value="privat_7").bank__input
+        label(for="privat_7").bank__label
+          h4.bank__name Інший банк України 7
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_8" value="privat_8").bank__input
+        label(for="privat_8").bank__label
+          h4.bank__name Інший банк України 8
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_9" value="privat_9").bank__input
+        label(for="privat_9").bank__label
+          h4.bank__name Інший банк України 9
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+      .bank.banks-list__item
+        input(type="radio" name="payment_system" id="privat_10" value="privat_10").bank__input
+        label(for="privat_10").bank__label
+          h4.bank__name Інший банк України 10
+          .bank__currency UAH
+          img(src="/img/privat24.svg" alt="Приват24").bank__icon
+  script(src="/js/operations.js")

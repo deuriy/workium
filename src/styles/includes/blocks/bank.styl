@@ -1,0 +1,25 @@
+.bank
+	position relative
+	
+	&__input
+		position absolute
+		clip rect(0, 0, 0, 0)
+	
+	&__label
+		display grid
+		grid-template-columns 1fr auto
+		align-items end
+		font-size 16px
+		line-height 1.625
+		cursor pointer
+	
+	&__name
+		font-weight 600
+	
+	&__currency
+		font-weight 400
+	
+	&__icon
+		grid-area 1 / 2 / 3 / 3
+		width 24px
+		margin-bottom 3px

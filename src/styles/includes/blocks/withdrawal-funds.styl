@@ -4,16 +4,33 @@
 		padding 24px 31px
 		border-radius 10px
 		background var(--light)
+		
+		@media $xs
+			padding 24px 16px
+			border-radius 0
 	
 	&__header
 		margin-bottom 20px
 		padding-bottom 40px
+		
+		@media $xs
+			margin-bottom 8px
+			padding-bottom 32px
 	
 	&__title
 		// margin-bottom 33px
 		margin-bottom 24px
 		font-weight 500
 		font-size 25px
+		
+		@media $xs
+			font-size 20px
+			line-height 1.3
+	
+	&__tabs-menu
+		@media $xs
+			margin-right -16px
+			margin-left -16px
 	
 	&__description
 		margin-bottom 27px
@@ -22,10 +39,17 @@
 	
 	&__content
 		padding-top 30px
+		
+		@media $xs
+			padding-top 26px
 	
 	&__payment-systems
 		// margin-bottom 56px
 		margin-bottom 50px
+		
+		@media $xs
+			margin-bottom 32px
 	
 	&__form
-		margin-left 2px
+		@media $smPlus
+			margin-left 2px
