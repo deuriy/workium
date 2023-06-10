@@ -143,10 +143,21 @@ block content
         .people-swiper-container.people-section__swiper-container
           .people-swiper.swiper
             .swiper-wrapper
+              //- .swiper-slide.people-swiper__slide
+              //-   a(href="/video/reviews/1IMG_3322.MP4" data-fancybox="video-reviews").person.people-swiper__person
+              //-     .person__photo
+              //-       img(src="/img/gennadiy_tkachenko.png" alt="Геннадій Ткаченко").person__photo-img
+              //-     .person__info
+              //-       .person__text-wrapper
+              //-         .person__name Геннадій Ткаченко
+              //-         .person__position CEO Fintoch Company
+              //-       span.play-icon.person__icon
               .swiper-slide.people-swiper__slide
-                a(href="/video/reviews/1IMG_3322.MP4" data-fancybox="video-reviews").person.people-swiper__person
-                  .person__photo
-                    img(src="/img/gennadiy_tkachenko.png" alt="Геннадій Ткаченко").person__photo-img
+                .person.people-swiper__person
+                  .video-box.person__video-box
+                    .video-box__inner
+                      video(autoplay muted loop).video-box__video
+                        source(src="/video/1.mp4" type="video/mp4")
                   .person__info
                     .person__text-wrapper
                       .person__name Геннадій Ткаченко
