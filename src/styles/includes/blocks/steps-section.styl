@@ -6,15 +6,71 @@
 			margin-bottom 16px
 	
 	&__tabs-menu
-		margin-bottom 24px
+		// margin-bottom 24px
+		margin-bottom 62px
 		
 		@media $xs
+			margin-right -16px
 			margin-bottom 12px
+			margin-left -16px
+	
+	&__about
+		display grid
+		grid-template-columns 1.03fr 1fr
+		gap 20px
+		align-items center
+		// margin-bottom 54px
+		margin-bottom 60px
+		
+		@media $smMinus
+			gap 10px
+		
+		@media $xs
+			grid-template-columns 100%
+			gap 15px
+			margin-bottom 35px
+	
+	&__description
+		margin-left -13px
+		// padding 30px 30px 40px 48px
+		// padding 20px 30px 20px 48px
+		padding 20px 25px 20px 48px
+		border-radius 12px
+		background var(--grey-light-gradient)
+		font-size 16px
+		line-height 1.5
+		
+		@media $smMinus
+			margin-left -10px
+			padding 20px 25px 20px 25px
+			font-size 15px
+		
+		@media $xs
+			margin-left 0
+			padding 15px 20px
+		
+		& > p
+			& + p
+				margin-top 24px
+				
+				@media $smMinus
+					margin-top 20px
+				
+				@media $xs
+					margin-top 16px
+	
+	&__img-wrapper
+		@media $xs
+			order -1
+	
+	&__img
+		vertical-align middle
 	
 	&__text
 		width 570px
 		max-width 100%
-		margin 0 auto 48px
+		margin 0 auto 28px
+		// margin 0 auto 48px
 		
 		@media $xs
 			margin-bottom 24px
