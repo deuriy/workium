@@ -51,21 +51,38 @@ block content
         .tabs-menu.tabs-menu--operations-types.operations__tabs-menu
           ul.tabs-menu__list
             li.tabs-menu__item
+              //- a(href="#").tabs-menu__link Валюта
+              a(href="#currency-dropdown-block" data-dropdown-block-trigger).dropdown-toggle Валюта
+              .dropdown-block.tabs-menu__dropdown-block#currency-dropdown-block
+                .dropdown-menu
+                  ul.dropdown-menu__list
+                    li.dropdown-menu__item
+                      a(href="#").dropdown-menu__link PLN
+                    li.dropdown-menu__item
+                      a(href="#").dropdown-menu__link CZK
+                    li.dropdown-menu__item
+                      a(href="#").dropdown-menu__link USD
+                    li.dropdown-menu__item
+                      a(href="#").dropdown-menu__link EUR
+            li.tabs-menu__item
               a(href="#").tabs-menu__link.tabs-menu__link--active Всі операції
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link PLN
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link CZK
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link USD
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link EUR
+            //- li.tabs-menu__item
+            //-   a(href="#").tabs-menu__link PLN
+            //- li.tabs-menu__item
+            //-   a(href="#").tabs-menu__link CZK
+            //- li.tabs-menu__item
+            //-   a(href="#").tabs-menu__link USD
+            //- li.tabs-menu__item
+            //-   a(href="#").tabs-menu__link EUR
             li.tabs-menu__item
               a(href="#").tabs-menu__link Рекрутація
+            li.tabs-menu__item
+              a(href="#").tabs-menu__link Кешбек
             li.tabs-menu__item
               a(href="#").tabs-menu__link Партнерська програма
             li.tabs-menu__item
               a(href="#").tabs-menu__link Інше
+        input(type="search" name="search" placeholder="Пошук…").form-search
       .operations__titles.hidden-smPlus
         h4.operations__col-title Категорія
         h4.operations__col-title Сума / Залишок 

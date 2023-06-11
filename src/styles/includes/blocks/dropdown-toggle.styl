@@ -1,0 +1,27 @@
+.dropdown-toggle
+	display inline-grid
+	grid-template-columns 1fr auto
+	gap 6px
+	align-items center
+	padding 6px 15px
+	border-radius 6px
+	background var(--light)
+	color var(--accent)
+	text-decoration none
+	white-space nowrap
+	@extend .transition
+	
+	&::after
+		content ""
+		width 14px
+		height 14px
+		margin-top 1px
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 10'%3E%3Cpath stroke='%230f182a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16.5 1 9 8.5 1.5 1'/%3E%3C/svg%3E") center no-repeat
+		@extend .transition
+	
+	&:hover
+		background var(--accent)
+		color var(--light)
+		
+		&::after
+			background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 10'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M16.5 1 9 8.5 1.5 1'/%3E%3C/svg%3E")

@@ -1,11 +1,13 @@
-.context-menu
+.dropdown-menu
+	background var(--light)
+	
 	&__list
 		list-style none
 	
 	&__link
 		color #1A1919
 		display grid
-		grid-template-columns 24px 1fr
+		grid-template-columns 100%
 		align-items center
 		gap 12px
 		padding 6px 12px
@@ -15,6 +17,9 @@
 		
 		&:hover
 			background #F4F4FB
+		
+		&--has-icon
+			grid-template-columns 24px 1fr
 	
 	&__icon-wrapper
 		display grid
