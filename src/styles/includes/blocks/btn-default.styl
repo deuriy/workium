@@ -54,6 +54,13 @@
 		
 		&::after
 			content ""
+			position relative
+			left 0
 			width 14px
 			height 14px
 			background url("data:image/svg+xml,%3Csvg viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.75 7H13.25M13.25 7L7.625 1.375M13.25 7L7.625 12.625' stroke='%23fff' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A") center / cover no-repeat
+			@extend .transition
+		
+		&:hover
+			&::after
+				left 5px
