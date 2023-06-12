@@ -160,14 +160,14 @@ $(function () {
 	// Show/hide dropdown block
 	$('[data-dropdown-block-trigger]').click(function(e) {
     let $dropdownBlock = $($(this).attr('href'));
-    $dropdownBlock.toggleClass('dropdown-block--opened');
+    $dropdownBlock.toggleClass('dropdown-block--visible');
 
     e.preventDefault();
   });
 
   $(document).click(function(e) {
     if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('[data-dropdown-block-trigger]').length) {
-      $('.dropdown-block--opened').removeClass('dropdown-block--opened');
+      $('.dropdown-block--visible').removeClass('dropdown-block--visible');
     }
   });
 
@@ -184,7 +184,7 @@ $(function () {
   	$(this).find('.dropdown-menu__icon').attr('src', '/img/context_menu/checked_ok.svg');
 
   	setTimeout(() => {
-  		$(this).closest('.dropdown-block').removeClass('dropdown-block--opened');
+  		$(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
 
   		$(this).find('.dropdown-menu__link-title').text('Партнерське посилання');
   		$(this).find('.dropdown-menu__icon').attr('src', '/img/context_menu/link.svg');
@@ -213,7 +213,7 @@ $(function () {
 	  	setCookie('hideProfile', 'no', {'max-age': 3153600000});
   	}
 
-  	$(this).closest('.dropdown-block').removeClass('dropdown-block--opened');
+  	$(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
 
   	e.preventDefault();
   });
