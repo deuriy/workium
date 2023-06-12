@@ -26,7 +26,7 @@
               span.dropdown-menu__link-title Вийти
     .user-sidebar__top.hidden-smMinus
       a(href="/").user-sidebar__logo
-        img(src="/img/logo.svg" title="Workium")
+        img(src="/img/logo.svg" title="Workium").user-sidebar__logo-img
       a(href="#user-dropdown-menu" data-dropdown-block-trigger).user-sidebar__user-avatar-link.user-sidebar__user-avatar-link--profile-shown
         img(src="/img/user_sidebar_avatar.png" alt="sadwolf27").user-avatar.user-avatar--small
         //- img(src="/img/user_avatar.png" alt="sadwolf27")
@@ -95,12 +95,14 @@
         .contact-box.contact-box--support
           h3.contact-box__title З радістю відповімо на ваші запитання!
           .contact-phones.contact-phones--support.contact-box__phones
-            .tooltip.tooltip--phone-copied.contact-phones__tooltip Скопійовано!
+            //- .tooltip.tooltip--phone-copied.contact-phones__tooltip Скопійовано!
             ul.contact-phones__list
               li.contact-phones__item
                 a(href="#").phone.phone--with-icon +380 68 099 03 02
+                .tooltip.tooltip--phone-copied.contact-phones__tooltip Скопійовано!
               li.contact-phones__item
                 a(href="#").phone.phone--with-icon +48 732 222 356
+                .tooltip.tooltip--phone-copied.contact-phones__tooltip Скопійовано!
           .contact-buttons.contact-buttons--support.contact-box__buttons
             ul.contact-buttons__list
               li.contact-buttons__item

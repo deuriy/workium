@@ -1,18 +1,20 @@
 .contact-phones
 	position relative
+		
+	&__list
+		list-style none
+	
+	&__item
+		position relative
+		
+		& + .contact-phones__item
+			margin-top 8px
 	
 	&__tooltip
 		position absolute
 		z-index 10
 		top -1px
 		right -24px
-		
-	&__list
-		list-style none
-	
-	&__item
-		& + .contact-phones__item
-			margin-top 8px
 	
 	&--support
 		.contact-phones__item + .contact-phones__item

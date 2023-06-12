@@ -103,13 +103,13 @@ $(function () {
 	});
 
 	$('.contact-phones--support .phone').click(function(e) {
-		let $contactPhonesSupport = $(this).closest('.contact-phones--support');
+		let $contactPhonesItem = $(this).closest('.contact-phones__item');
 
-    if (!$contactPhonesSupport.length) return;
+    if (!$contactPhonesItem.length) return;
 
     $(this).after(`<input type="text" class="contact-phones__phone-form-text" value="${$(this).text()}" />`);
 
-  	let $tooltip = $contactPhonesSupport.find('.contact-phones__tooltip');
+  	let $tooltip = $contactPhonesItem.find('.contact-phones__tooltip');
   	let $contactPhoneFormText = $(this).next('.contact-phones__phone-form-text');
 
   	copyInputText($contactPhoneFormText[0]);
