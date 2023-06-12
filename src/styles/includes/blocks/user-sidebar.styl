@@ -25,6 +25,7 @@
 		min-height 100vh
 		
 		@media $smMinus
+			grid-template-rows auto 1fr auto
 			min-height calc(100vh - 56px)
 	
 	&__top
@@ -92,6 +93,10 @@
 		left 0
 		width 100%
 	
-	&--profile-shown
+	&--profile-shown			
 		.user-sidebar__dropdown-block
 			top 80px
+		
+		.user-sidebar__user-menu
+			// max-height calc(100vh - 254px)
+			max-height calc(100vh - 243px)
