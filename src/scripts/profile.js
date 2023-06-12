@@ -217,4 +217,20 @@ $(function () {
 
   	e.preventDefault();
   });
+
+  $('.form-search-box__input').on('input', function(event) {
+  	// console.log($(this).val().length);
+  	let $clearBtn = $(this).next('.form-search-box__clear-btn');
+  	
+  	if ($(this).val().length) {
+  		$clearBtn.addClass('form-search-box__clear-btn--visible');
+  	} else {
+  		$clearBtn.removeClass('form-search-box__clear-btn--visible');
+  	}
+  });
+
+  $('.form-search-box__clear-btn').click(function(e) {
+  	$(this).removeClass('form-search-box__clear-btn--visible');
+  	$(this).prev('.form-search-box__input').val('');
+  });
 });

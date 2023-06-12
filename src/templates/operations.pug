@@ -82,7 +82,9 @@ block content
               a(href="#").tabs-menu__link Партнерська програма
             li.tabs-menu__item
               a(href="#").tabs-menu__link Інше
-        input(type="search" name="search" placeholder="Пошук…").form-search
+        .form-search-box.tabs-menu__form-search-box
+          input(type="search" name="search" placeholder="Пошук…").form-search.form-search-box__input
+          button(type="button").form-search-box__clear-btn
       .operations__titles.hidden-smPlus
         h4.operations__col-title Категорія
         h4.operations__col-title Сума / Залишок 
