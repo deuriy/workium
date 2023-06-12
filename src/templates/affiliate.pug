@@ -50,7 +50,7 @@ block content
             li.tabs-menu__item.tabs__item
               a(href="#").tabs-menu__link Документи
       .partners-tabs__content
-        .tabs__content
+        .tabs__content(style="display: block;")
           .partners-table-wrapper
             .partners-table-wrapper__description
               p В таблиці нижче відображаються усі користувачі, які перейшли по вашому партнерському посиланню та зареєструвались. Нейромережа WORKIUM миттєво та безпомилково відслідковує усі реєстрації не залежно від того, з якого розділу чи сторінки була здійснена дія. Користувачі залишаються у вашій команді назавжди.
@@ -78,7 +78,9 @@ block content
                     .partners-table__influence-and-awards
                       .influence-rating.influence-rating--small
                         .influence-rating__rating 0
-                      img(src="/img/award2.svg" alt="").partners-table__award-img
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
+                        span.partners-table__award-number 1
                   td.partners-table__td.partners-table__td--profit 2658,67
                   td.partners-table__td.partners-table__td--currency ZŁ
                   td.partners-table__td.partners-table__td--history
@@ -96,7 +98,9 @@ block content
                     .partners-table__influence-and-awards
                       .influence-rating.influence-rating--small
                         .influence-rating__rating 0
-                      img(src="/img/award2.svg" alt="").partners-table__award-img
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
+                        span.partners-table__award-number 1
                   td.partners-table__td.partners-table__td--profit 2658,67
                   td.partners-table__td.partners-table__td--currency ZŁ
                   td.partners-table__td.partners-table__td--history
@@ -114,7 +118,9 @@ block content
                     .partners-table__influence-and-awards
                       .influence-rating.influence-rating--small
                         .influence-rating__rating 0
-                      img(src="/img/award2.svg" alt="").partners-table__award-img
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
+                        span.partners-table__award-number 1
                   td.partners-table__td.partners-table__td--profit 2658,67
                   td.partners-table__td.partners-table__td--currency ZŁ
                   td.partners-table__td.partners-table__td--history
@@ -132,7 +138,9 @@ block content
                     .partners-table__influence-and-awards
                       .influence-rating.influence-rating--small
                         .influence-rating__rating 0
-                      img(src="/img/award2.svg" alt="").partners-table__award-img
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
+                        span.partners-table__award-number 1
                   td.partners-table__td.partners-table__td--profit 2658,67
                   td.partners-table__td.partners-table__td--currency ZŁ
                   td.partners-table__td.partners-table__td--history
@@ -332,7 +340,7 @@ block content
                       .partner-status 2658,67 ZŁ
                     //- .partners-table__date 5.01.2023 о 20:14
                     a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-        .tabs__content(style="display: block;")
+        .tabs__content
           .partners-table-wrapper
             .partners-table-wrapper__description
               p В таблиці нижче відображаються всі користувачі, які перейшли по вашому партнерському посиланню та замовили будь-які документи не зареєструвавшись. Незважаючи на це, нейромережа WORKIUM миттєво відслідкує усі здійснені замовлення та в повному розмірі автоматично нарахує вам партнерську винагороду.
