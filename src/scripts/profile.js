@@ -1,8 +1,6 @@
 import $ from "jquery";
 import PerfectScrollbar from 'perfect-scrollbar';
 
-// console.log(PerfectScrollbar);
-
 function copyText(input) {
 	input.select();
   input.setSelectionRange(0, 99999);
@@ -85,47 +83,7 @@ $(function () {
 		$('.user-sidebar').toggleClass('user-sidebar--opened');
 		$('body').toggleClass('no-scroll');
 	});
-
-	// $('[data-copy-text]').click(function(e) {
-	// 	document.execCommand("copy");
-	// 	// console.log('fmfwmewf');
-
-	// 	e.preventDefault();
-	// });
-
 	
-
-	// document.querySelector('[data-copy-text]').copy = function(event) {
-	// 	console.log('mekmdmewmlmwl');
-
-	//   event.preventDefault();
-	//   if (event.clipboardData) {
-	//     event.clipboardData.setData("text/plain", this.textContent);
-	//     console.log(event.clipboardData.getData("text"))
-	//   }
-	// };
-
-	// $('[data-copy-text]').on('copy', function(e) {
-	// 	e.preventDefault();
-
-	//   if (e.clipboardData) {
-	//   	console.log('rgme');
-	//     e.clipboardData.setData("text/plain", this.textContent);
-	//     console.log(e.clipboardData.getData("text"))
-	//   }
-	// });
-
-	// span.onclick = function() {
-	//   document.execCommand("copy");
-	// }
-
-	// span.addEventListener("copy", function(event) {
-	//   event.preventDefault();
-	//   if (event.clipboardData) {
-	//     event.clipboardData.setData("text/plain", span.textContent);
-	//     console.log(event.clipboardData.getData("text"))
-	//   }
-	// });
 
 	$('.copy-link__btn').click(function(e) {
 		let $copyLinkInput = $(this).closest('.copy-link').find('.copy-link__input');

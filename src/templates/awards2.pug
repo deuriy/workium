@@ -29,11 +29,15 @@ block content
           p Почніть прямо зараз!
     .awards.awards-page__awards
       .award.awards__item
-        img(src="/img/workium_logo_graphic.svg" alt="Workium падаван").award__icon-img
-        a(href="#leader-award-popup").award__link.fancybox-wide-popup-toggle Workium падаван
+        //- img(src="/img/workium_logo_graphic.svg" alt="Workium падаван").award__icon-img
+        .award__img-wrapper
+          img(src="/img/award-verify3.png" alt="Свій").award__img.award__img--own
+        a(href="#leader-award-popup").award__link.award__link--light-green.fancybox-wide-popup-toggle Свій
       .award.awards__item
-        img(src="/img/workium_logo_graphic.svg" alt="Workium падаван").award__icon-img
-        a(href="#ambassador-award-popup").award__link.fancybox-wide-popup-toggle Workium падаван
+        //- img(src="/img/workium_logo_graphic.svg" alt="Workium падаван").award__icon-img
+        .award__img-wrapper
+          img(src="/img/newborn.png" alt="Воркіум немовля").award__img
+        a(href="#ambassador-award-popup").award__link.award__link--light-green.fancybox-wide-popup-toggle Воркіум немовля
       .award.awards__item
         img(src="/img/workium_logo_graphic.svg" alt="Workium падаван").award__icon-img
         a(href="#").award__link Workium падаван

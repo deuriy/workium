@@ -1,6 +1,5 @@
 import $ from "jquery";
 import Swiper, { Navigation, Pagination } from 'swiper';
-// import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
 $(function () {
   const vacancyImagesSwiper = new Swiper('.vacancy-images-swiper__swiper', {

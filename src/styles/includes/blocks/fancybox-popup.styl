@@ -89,3 +89,62 @@
 		.fancybox-popup__title
 			margin-bottom 12px
 			font-weight 600
+	
+	&--award
+		text-align center
+		
+		// &.fancybox__content
+		// 	button.f-button.is-close-btn
+		// 		opacity 0.3
+		
+		.fancybox-popup__img-wrapper
+			position relative
+			display grid
+			grid-template-columns 100%
+			place-items center
+			margin -31px -20px 46px
+			padding 50px 20px
+			border-radius 24px 24px 0 0
+			overflow hidden
+			// border-bottom-right-radius 50%
+			// border-bottom-left-radius 50%
+			// background-image linear-gradient(90deg, #d8cffe 0%, #f6d0b7 100%)
+			
+			&::before
+				content ""
+				position absolute
+				top 0
+				right -70px
+				bottom 0
+				left -70px
+				border-radius 0 0 56% 60%
+				// border-bottom-right-radius 50%
+				// border-bottom-left-radius 50%
+				background-image linear-gradient(135deg, #d8cffe 0%, #f6d0b7 100%)
+		
+		.fancybox-popup__img
+			position relative
+		
+		.fancybox-popup__title
+			margin-bottom 33px
+			padding-right 0
+			font-weight 600
+			font-size 33px
+			line-height normal
+		
+		.fancybox-popup__text
+			// width 500px
+			width 544px
+			max-width 100%
+			margin-right auto
+			margin-left auto
+			line-height 1.6
+		
+		.fancybox-popup__buttons
+			// grid-template-columns 100%
+			// justify-items center
+			grid-template-columns 195px
+			margin-top 62px
+			
+		@media $smPlus
+			width 612px

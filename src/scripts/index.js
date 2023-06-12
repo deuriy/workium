@@ -1,6 +1,5 @@
 import $ from "jquery";
 import Swiper, { Navigation } from 'swiper';
-import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
 $(function () {
   const peopleSwiper = new Swiper('.people-swiper', {

@@ -16,14 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   $('.bank__input').change(function(event) {
-    // let id = $(this).val();
     let $bank = $(this).closest('.bank');
 
     $('.payment-systems-popup-link__name').text($bank.find('.bank__name').text());
     $('.payment-systems-popup-link__currency').text($bank.find('.bank__currency').text());
     $('.payment-systems-popup-link__icon').attr('src', $bank.find('.bank__icon').attr('src'));
 
-    // console.log($(this).val());
     Fancybox.close();
   });
 });
