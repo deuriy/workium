@@ -121,6 +121,10 @@
 				// border-bottom-right-radius 50%
 				// border-bottom-left-radius 50%
 				background-image linear-gradient(135deg, #d8cffe 0%, #f6d0b7 100%)
+			
+			&--dark-bg
+				&::before
+					background #525554
 		
 		.fancybox-popup__img
 			position relative
@@ -148,3 +152,9 @@
 			
 		@media $smPlus
 			width 612px
+	
+	&--award-dark-bg
+		&.fancybox-popup.fancybox__content
+			.f-button.is-close-btn
+				--f-button-color: var(--light)
+				--f-button-hover-color: var(--light)
