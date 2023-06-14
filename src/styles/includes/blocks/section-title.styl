@@ -13,9 +13,18 @@
 		margin-bottom 15px
 		font-size 50px
 		text-indent -3px
+		
+		@media $smMinus
+			margin-bottom 10px
+			font-size 42px
+		
+		@media $xs
+			margin-bottom 5px
+			font-size 36px
 	
 	&--hero-section
-		font-size 35px
+		@media $smPlus
+			font-size 35px
 	
 	&--left
 		text-align left
