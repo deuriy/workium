@@ -16,14 +16,15 @@
 		width 0
 		height 100%
 		// background var(--info)
+		border-radius 6px
 		background linear-gradient(90deg, #5340FF 0%, #40A0FF 100%)
-		border-top-left-radius 6px
-		border-bottom-left-radius 6px
+		// border-top-left-radius 6px
+		// border-bottom-left-radius 6px
 		@extend .transition
 		
-		&--rounded
-			border-top-right-radius 6px
-			border-bottom-right-radius 6px
+		// &--rounded
+		// 	border-top-right-radius 6px
+		// 	border-bottom-right-radius 6px
 	
 	&__item
 		position absolute
@@ -93,13 +94,27 @@
 		&--payment
 			left 100%
 	
-	&--full
+	&--grey-bg
+		.status-line__line-fill
+			// background linear-gradient(90deg, #a4a9d2 0%, #5b5e84 100%)
+			background linear-gradient(90deg, #5b5e84 0%, #a4a9d2 100%)
+			
+	&--aqua-bg
+		.status-line__line-fill
+			background linear-gradient(90deg, #1a6aa7 0%, #79cbde 100%)
+			
+	&--beige-bg
+		.status-line__line-fill
+			background linear-gradient(90deg, #cb6a1b 0%, #e6cc92 100%)
+	
+	&--green-bg
 		.status-line__line-fill
 			// background var(--success)
 			// background linear-gradient(90deg, #1EB300 0%, #7ACC29 100%)
-			border-top-right-radius 6px
-			border-bottom-right-radius 6px
-			background linear-gradient(90deg, #1EB300 0%, #7ACC29 100%)
+			// border-top-right-radius 6px
+			// border-bottom-right-radius 6px
+			// background linear-gradient(90deg, #1EB300 0%, #7ACC29 100%)
+			background linear-gradient(90deg, #00a422 0%, #93d323 100%)
 		
 		// .status-line__item--highlighted
 		// 	color var(--success)
@@ -112,6 +127,9 @@
 		grid-template-columns auto 1fr
 		
 		.status-line__line
+			display grid
+			grid-template-columns 100%
+			align-items end
 			position static
 			// width 2px
 			width 4px
@@ -122,13 +140,14 @@
 		.status-line__line-fill
 			width 100%
 			height 0
-			border-top-right-radius 6px
-			border-bottom-right-radius 0
-			border-bottom-left-radius 0
+			background linear-gradient(0deg, #5340FF 0%, #40A0FF 100%)
+			// border-top-right-radius 6px
+			// border-bottom-right-radius 0
+			// border-bottom-left-radius 0
 			
-			&--rounded
-				border-bottom-right-radius 6px
-				border-bottom-left-radius 6px
+			// &--rounded
+			// 	border-bottom-right-radius 6px
+			// 	border-bottom-left-radius 6px
 		
 		.status-line__items
 			display grid
@@ -176,10 +195,26 @@
 		.status-line__item-text
 			font-size 16px
 			line-height 1.625
+		
+		&.status-line--grey-bg
+			.status-line__line-fill
+				background linear-gradient(0deg, #5b5e84 0%, #a4a9d2 100%)
+				
+		&.status-line--aqua-bg
+			.status-line__line-fill
+				background linear-gradient(0deg, #1a6aa7 0%, #79cbde 100%)
+				
+		&.status-line--beige-bg
+			.status-line__line-fill
+				background linear-gradient(0deg, #cb6a1b 0%, #e6cc92 100%)
+		
+		&.status-line--green-bg
+			.status-line__line-fill
+				background linear-gradient(0deg, #00a422 0%, #93d323 100%)
 	
-	&--vertical-reverse
-		.status-line__line
-			display grid
-			grid-template-columns 100%
-			align-items end
+	// &--vertical-reverse
+	// 	.status-line__line
+	// 		display grid
+	// 		grid-template-columns 100%
+	// 		align-items end
 
