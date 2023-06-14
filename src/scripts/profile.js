@@ -103,12 +103,8 @@ $(function () {
 	});
 
 	$('.contact-phones--support .contact-phones__item').click(function(e) {
-		// let $contactPhonesItem = $(this).closest('.contact-phones__item');
-
-    // if (!$contactPhonesItem.length) return;
-
 		let $phone = $(this).find('.phone');
-    $phone.after(`<input type="text" class="contact-phones__phone-form-text" value="${$phone.text()}" />`);
+    $phone.after(`<input type="text" class="contact-phones__phone-form-text" value="${$phone.text().replaceAll(' ', '')}" />`);
 
   	let $tooltip = $(this).find('.contact-phones__tooltip');
   	let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
@@ -123,27 +119,6 @@ $(function () {
 
     e.preventDefault();
 	});
-
-	// $('.contact-phones__copy-btn').click(function(e) {
-	// 	let $contactPhonesItem = $(this).closest('.contact-phones__item');
-
-  //   if (!$contactPhonesItem.length) return;
-
-  //   $(this).after(`<input type="text" class="contact-phones__phone-form-text" value="${$(this).text()}" />`);
-
-  // 	let $tooltip = $contactPhonesItem.find('.contact-phones__tooltip');
-  // 	let $contactPhoneFormText = $(this).next('.contact-phones__phone-form-text');
-
-  // 	copyInputText($contactPhoneFormText[0]);
-  // 	$contactPhoneFormText.remove();
-
-	// 	$tooltip.addClass('tooltip--visible');
-  //   setTimeout(() => {
-  //   	$tooltip.removeClass('tooltip--visible');
-  //   }, 1500);
-
-  //   e.preventDefault();
-	// });
 
 	$('.client-card__additional-item--copy').click(function(e) {
     let $clientAdditionalText = $(this).closest('.client-card__additional').find('.client-card__additional-text');
@@ -187,11 +162,11 @@ $(function () {
     e.preventDefault();
   });
 
-  // $(document).click(function(e) {
-  //   if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('[data-dropdown-block-trigger]').length) {
-  //     $('.dropdown-block--visible').removeClass('dropdown-block--visible');
-  //   }
-  // });
+  $(document).click(function(e) {
+    if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('[data-dropdown-block-trigger]').length) {
+      $('.dropdown-block--visible').removeClass('dropdown-block--visible');
+    }
+  });
 
   $('.dropdown-toggle').click(function(e) {
   	e.preventDefault();
