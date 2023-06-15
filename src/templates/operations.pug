@@ -48,40 +48,53 @@ block content
     .operations.operations-page__operations
       .operations__header
         h3.operations__caption Історія операцій
-        .tabs-menu.tabs-menu--operations-types.operations__tabs-menu
-          ul.tabs-menu__list
-            li.tabs-menu__item
-              //- a(href="#").tabs-menu__link Валюта
-              a(href="#currency-dropdown-block" data-dropdown-block-trigger).dropdown-toggle Валюта
-              .dropdown-block.tabs-menu__dropdown-block#currency-dropdown-block
-                .dropdown-menu
-                  ul.dropdown-menu__list
-                    li.dropdown-menu__item
-                      a(href="#").dropdown-menu__link PLN
-                    li.dropdown-menu__item
-                      a(href="#").dropdown-menu__link CZK
-                    li.dropdown-menu__item
-                      a(href="#").dropdown-menu__link USD
-                    li.dropdown-menu__item
-                      a(href="#").dropdown-menu__link EUR
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link.tabs-menu__link--active Всі операції
-            //- li.tabs-menu__item
-            //-   a(href="#").tabs-menu__link PLN
-            //- li.tabs-menu__item
-            //-   a(href="#").tabs-menu__link CZK
-            //- li.tabs-menu__item
-            //-   a(href="#").tabs-menu__link USD
-            //- li.tabs-menu__item
-            //-   a(href="#").tabs-menu__link EUR
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link Рекрутація
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link Кешбек
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link Партнерська програма
-            li.tabs-menu__item
-              a(href="#").tabs-menu__link Інше
+        .operations__tabs-menu-wrapper
+          a(href="#currency-dropdown-block" data-dropdown-block-trigger).dropdown-toggle.operations__dropdown-toggle Валюта
+          .dropdown-block.operations__dropdown-block#currency-dropdown-block
+            .dropdown-menu
+              ul.dropdown-menu__list
+                li.dropdown-menu__item
+                  a(href="#").dropdown-menu__link PLN
+                li.dropdown-menu__item
+                  a(href="#").dropdown-menu__link CZK
+                li.dropdown-menu__item
+                  a(href="#").dropdown-menu__link USD
+                li.dropdown-menu__item
+                  a(href="#").dropdown-menu__link EUR
+          .tabs-menu.tabs-menu--operations-types.operations__tabs-menu
+            ul.tabs-menu__list
+              //- li.tabs-menu__item
+              //-   //- a(href="#").tabs-menu__link Валюта
+              //-   a(href="#currency-dropdown-block" data-dropdown-block-trigger).dropdown-toggle Валюта
+              //-   .dropdown-block.tabs-menu__dropdown-block#currency-dropdown-block
+              //-     .dropdown-menu
+              //-       ul.dropdown-menu__list
+              //-         li.dropdown-menu__item
+              //-           a(href="#").dropdown-menu__link PLN
+              //-         li.dropdown-menu__item
+              //-           a(href="#").dropdown-menu__link CZK
+              //-         li.dropdown-menu__item
+              //-           a(href="#").dropdown-menu__link USD
+              //-         li.dropdown-menu__item
+              //-           a(href="#").dropdown-menu__link EUR
+              li.tabs-menu__item
+                a(href="#").tabs-menu__link.tabs-menu__link--active Всі операції
+              //- li.tabs-menu__item
+              //-   a(href="#").tabs-menu__link PLN
+              //- li.tabs-menu__item
+              //-   a(href="#").tabs-menu__link CZK
+              //- li.tabs-menu__item
+              //-   a(href="#").tabs-menu__link USD
+              //- li.tabs-menu__item
+              //-   a(href="#").tabs-menu__link EUR
+              li.tabs-menu__item
+                a(href="#").tabs-menu__link Рекрутація
+              li.tabs-menu__item
+                a(href="#").tabs-menu__link Кешбек
+              li.tabs-menu__item
+                a(href="#").tabs-menu__link Партнерська програма
+              li.tabs-menu__item
+                a(href="#").tabs-menu__link Інше
         .form-search-box.tabs-menu__form-search-box
           input(type="text" name="search" placeholder="Пошук…").form-search.form-search-box__input
           button(type="button").form-search-box__clear-btn

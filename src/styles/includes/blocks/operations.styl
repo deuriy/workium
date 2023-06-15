@@ -1,5 +1,6 @@
 .operations
 	&__header
+		position relative
 		display grid
 		// grid-template-columns repeat(2, auto)
 		// grid-template-columns auto 1fr auto
@@ -15,6 +16,14 @@
 		@media $xs
 			gap 7px
 			margin-bottom 14px
+	
+	// &__currency-dropdown-block
+	// 	position absolute
+	// 	top 36px
+	// 	left 206px
+		
+	// 	@media $1440-
+	// 		left 0
 		
 	&__caption
 		font-weight 500
@@ -22,6 +31,18 @@
 		
 		@media $xs
 			font-size 20px
+	
+	&__tabs-menu-wrapper
+		position relative
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content start
+		align-items center
+		gap 19px
+	
+	&__dropdown-block
+		position absolute
+		top 100%
 	
 	&__tabs-menu
 		@media $xs
