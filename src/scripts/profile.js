@@ -120,7 +120,7 @@ $(function () {
     e.preventDefault();
 	});
 
-	$('.client-card__additional-item--copy').click(function(e) {
+	$('[data-additional-item-copy]').click(function(e) {
     let $clientAdditionalText = $(this).closest('.client-card__additional').find('.client-card__additional-text');
 
     if (!$clientAdditionalText.length) return;
