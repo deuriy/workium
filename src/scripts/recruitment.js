@@ -1,13 +1,18 @@
 import $ from "jquery";
 
 $(function () {
-  $('.client-card__additional-toggle-btn').click(function(e) {
-  	$(this).toggleClass('toggle-btn--opened').closest('.client-card').find('.client-card__additional').slideToggle();
+  $('[data-additional-toggle]').click(function(e) {
+    let $clientCard = $(this).closest('.client-card');
+    let $toggleBtn = $clientCard.find('.toggle-btn');
+    let $clientCardAdditional = $clientCard.find('.client-card__additional');
 
-  	if ($(this).hasClass('toggle-btn--opened')) {
-  		$(this).text('Приховати');
+  	$toggleBtn.toggleClass('toggle-btn--opened');
+    $clientCardAdditional.slideToggle();
+
+  	if ($toggleBtn.hasClass('toggle-btn--opened')) {
+  		$toggleBtn.text('Приховати');
   	} else {
-  		$(this).text('Додатково');
+  		$toggleBtn.text('Додатково');
   	}
 
   	e.preventDefault();
