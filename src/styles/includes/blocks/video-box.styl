@@ -1,15 +1,18 @@
 .video-box
-	&__inner
-		display inline-grid
-		grid-template-columns 100%
+	display inline-grid
+	grid-template-columns 100%
 	
-	&__video,
-	&__inner::after
+	&::after,
+	&__video
 		grid-area 1 / 1 / 2 / 2
+		
+	&::after
+		content ""
+		background linear-gradient(180deg, rgba(15, 24, 42, 0) 77.14%, rgba(15, 24, 42, 0.7) 100%)
 	
 	&__video
 		max-width 100%
-		
-	&__inner::after
-		content ""
-		background linear-gradient(180deg, rgba(15, 24, 42, 0) 77.14%, rgba(15, 24, 42, 0.7) 100%)
+	
+	&--person
+		height 420px
+		align-content center
