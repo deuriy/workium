@@ -1,5 +1,6 @@
 import $ from "jquery";
 import PerfectScrollbar from 'perfect-scrollbar';
+import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
 function copyText(input) {
 	input.select();
@@ -69,6 +70,13 @@ $(function () {
 		wheelPropagation: true,
 		minScrollbarLength: 20
 	});
+
+	Fancybox.bind(".user-profile-popup-link", {
+    dragToClose: false,
+    mainClass: 'fancybox--user-profile-popup',
+    // showClass: 'f-slideInUp',
+    // hideClass: 'f-slideOutDown'
+  });
 
 	$('.user-menu__link').each(function(index, link) {
 		let linkHref = $(link).attr('href');
