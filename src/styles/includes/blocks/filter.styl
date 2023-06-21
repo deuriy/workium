@@ -1,0 +1,51 @@
+.filter
+	display grid
+	grid-template-columns 100%
+	gap 13px
+	
+	@media $xxs
+		gap 12px
+	
+	&__top,
+	&__bottom
+		display grid
+		gap 12px
+		justify-content space-between
+		
+	&__top
+		grid-template-columns 17% 17% 17% 11% 10% auto
+		align-items start
+		
+		@media $mdMinus
+			grid-template-columns repeat(3, 1fr)
+		
+		@media $xs
+			grid-template-columns repeat(2, 1fr)
+		
+		@media $xxs
+			grid-template-columns 100%
+	
+	&__item
+		&--buttons
+			display grid
+			grid-template-columns repeat(2, auto)
+			align-items center
+			gap 12px
+		
+	&__bottom
+		grid-template-columns repeat(2, auto)
+		align-items start
+		
+		@media $xs
+			grid-template-columns 100%
+		
+		@media $xxs
+			display grid
+			grid-template-columns repeat(2, auto)
+			align-items center
+			gap 4px
+			margin-right -16px
+	
+	&__clear-link
+		margin-top 0.6em
+		margin-right 0.8em

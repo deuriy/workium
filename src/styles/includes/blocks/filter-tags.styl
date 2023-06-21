@@ -1,0 +1,21 @@
+.filter-tags
+	&__list
+		list-style none
+		display flex
+		flex-wrap wrap
+		gap 7px
+		
+		@media $xxs
+			gap 6px
+	
+	&--job-filter
+		@media $xxs
+			height 50px
+			overflow hidden
+		
+		.filter-tags__list
+			@media $xxs
+				height 60px
+				padding 1px 16px 1px 1px
+				flex-wrap nowrap
+				overflow auto

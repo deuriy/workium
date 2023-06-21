@@ -1,0 +1,133 @@
+.additional-filters	
+	&__header
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items center
+		gap 20px
+		padding 24px 20px 24px 50px
+		
+		@media (max-width: 991px)
+			padding 24px 20px 24px 30px
+			
+		@media $xs
+			padding 15px 20px
+		
+		@media $xxs
+			grid-template-columns auto 1fr auto
+			gap 6px
+			padding 15px 16px 10px 10px
+	
+	&__title
+		font-weight 600
+		font-size 24px
+		line-height 1.25
+		font-family var(--graphik-lcg)
+		
+		@media $xxs
+			font-size 21px
+			line-height 1.2857
+	
+	&__close-btn
+		margin-top -13px
+		
+		@media $xs
+			margin-top 0
+	
+	&__body
+		max-height calc(100vh - 196px)
+		padding 7px 35px 30px 50px
+		overflow auto
+		
+		@media (max-width: 991px)
+			padding-left 30px
+		
+		@media $xs
+			max-height calc(100vh - 168px)
+			padding 7px 20px 20px
+		
+		@media $xxs
+			max-height calc(100vh - 134px)
+			padding-top 25px
+			padding-right 0
+			padding-left 0
+	
+	&__items
+		display grid
+		grid-template-columns 100%
+		gap 22px
+		margin-bottom 24px
+		padding-right 16px
+		padding-bottom 30px
+		padding-left 16px
+		border-bottom 1px solid #DFE2E6
+	
+	&__label
+		margin-bottom 4px
+	
+	&__checkboxes-groups
+		display grid
+		grid-template-columns repeat(3, 1fr)
+		gap 58px 35px
+		
+		@media (max-width: 991px)
+			gap 40px 20px
+		
+		@media $xs
+			grid-template-columns repeat(2, 1fr)
+			gap 30px 20px
+		
+		@media $xxs
+			grid-template-columns 100%
+			gap 24px
+	
+	&__checkboxes-group,
+	&__radiobtns-group
+		@media $xxs
+			padding-right 16px
+			padding-bottom 24px
+			padding-left 16px
+			border-bottom 1px solid #DFE2E6
+			
+			&:last-child
+				padding-bottom 0
+				border-bottom none
+	
+	&__checkboxes-group
+		&--id-2
+			order 0
+			
+		&--id-6
+			order 1
+			
+		&--id-11
+			order 2
+			
+		&--id-3
+			order 3
+			
+		&--id-4
+			order 4
+			
+		&--id-7
+			order 5
+			
+		&--id-12
+			order 6
+			
+		&--id-10
+			order 7
+			
+		&--id-5
+			order 8
+	
+	&__footer
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content end
+		align-items center
+		gap 32px
+		padding 16px
+		
+		@media $xxs
+			grid-template-columns 100%

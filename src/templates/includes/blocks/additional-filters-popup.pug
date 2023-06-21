@@ -1,0 +1,356 @@
+.fancybox-popup.fancybox-popup--additional-filters#additional-filters-popup(style="display:none;")
+  form(action="").additional-filters
+    .additional-filters__header
+      button(type="button" data-fancybox-close).btn-back.hidden-xxsPlus.additional-filters__btn-back
+      h2.additional-filters__title Фільтри
+      a(href="javascript:;" data-orig-tabindex="undefined" tabindex="-1").link.link--success.link--clear-filter.hidden-xxsPlus Скинути фільтри
+    .additional-filters__body
+      .additional-filters__items.hidden-xxsPlus
+        .addtional-filters__item
+          label(for="countries_mob").form-label.form-label--bolder.additional-filters__label Країна
+          select(name="countries" autocomplete="off" data-orig-tabindex="undefined" tabindex="-1").form-select.form-select--filter#countries_mob
+            option(value="") Усі країни
+            option(value="poland") Польща
+            option(value="czech") Чехія
+        .addtional-filters__item
+          label(for="cities_mob").form-label.form-label--bolder.additional-filters__label Місто
+          select(name="cities" autocomplete="off" data-orig-tabindex="undefined" tabindex="-1").form-select.form-select--filter#cities_mob
+            option(value="") Усі міста
+            option(value="city_1") Місто 1
+            option(value="city_2") Місто 2
+            option(value="city_3") Місто 3
+            option(value="city_4") Місто 4
+        .addtional-filters__item
+          label.form-label.form-label--bolder.additional-filters__label Дохід
+          input(type="number" name="income_from" min="0" placeholder="Дохід від, грн" data-orig-tabindex="undefined" tabindex="-1").form-text.form-text--filter
+      .additional-filters__checkboxes-groups
+        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-2
+          h3.checkboxes-group__title Тип документів
+          ul.checkboxes-group__list
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[poland_visa_180_days]" value="poland_visa_180_days" type="checkbox" checked).checkbox__input#FilterItem3
+                label(for="FilterItem3").checkbox__label Польська робоча віза 180 днів
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[poland_visa_365_days]" value="poland_visa_365_days" type="checkbox").checkbox__input#FilterItem4
+                label(for="FilterItem4").checkbox__label Польська робоча віза 365 днів
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[czech_visa_90_days]" value="czech_visa_90_days" type="checkbox").checkbox__input#FilterItem5
+                label(for="FilterItem5").checkbox__label Чеська робоча віза 90 днів
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[without_visa]" value="without_visa" type="checkbox").checkbox__input#FilterItem6
+                label(for="FilterItem6").checkbox__label БЕЗ ВІЗ (біометричний паспорт)
+        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-3
+          h3.checkboxes-group__title Кому підходить
+          ul.checkboxes-group__list
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[men]" value="men" type="checkbox").checkbox__input#FilterItem7
+                label(for="FilterItem7").checkbox__label Чоловікам
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[women]" value="women" type="checkbox").checkbox__input#FilterItem8
+                label(for="FilterItem8").checkbox__label Жінкам
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[couples]" value="couples" type="checkbox").checkbox__input#FilterItem9
+                label(for="FilterItem9").checkbox__label Сімейним парам
+        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-4
+          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Знання мови
+          ul.radiobtns-group__list
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[4]" value="" type="radio" checked).radiobtn__input.radiobtn__input--job-filter.selected-default#FilterItem10
+                label(for="FilterItem10").radiobtn__label Не вказано
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[4]" value="lang_required" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem11
+                label(for="FilterItem11").radiobtn__label Потрібно
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[4]" value="lang_not_required" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem12
+                label(for="FilterItem12").radiobtn__label Не потрібно
+        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-5
+          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Досвід роботи
+          ul.radiobtns-group__list
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[5]" value="" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem13
+                label(for="FilterItem13").radiobtn__label Не вказано
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[5]" value="experience_required" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem14
+                label(for="FilterItem14").radiobtn__label Потрібен
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[5]" value="experience_not_required" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem15
+                label(for="FilterItem15").radiobtn__label Не потрібен
+        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-6
+          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Житло
+          ul.radiobtns-group__list
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[6]" value="" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem16
+                label(for="FilterItem16").radiobtn__label Немає значення
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[6]" value="housing_provided" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem17
+                label(for="FilterItem17").radiobtn__label Надається
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[6]" value="housing_not_provided" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem18
+                label(for="FilterItem18").radiobtn__label Не надається
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[6]" value="housing_compensated" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem19
+                label(for="FilterItem19").radiobtn__label Частково компенсується
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[6]" value="housing_help" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem20
+                label(for="FilterItem20").radiobtn__label Допомога з пошуком
+        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-7
+          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Харчування
+          ul.radiobtns-group__list
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[7]" value="" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem21
+                label(for="FilterItem21").radiobtn__label Немає значення
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[7]" value="food_provided" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem22
+                label(for="FilterItem22").radiobtn__label Надається
+            li.radiobtns-group__item
+              .radiobtn
+                input(name="filters[7]" value="food_not_provided" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem23
+                label(for="FilterItem23").radiobtn__label Не надається
+        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-12.checkboxes-group--three-columns.checkboxes-group--ten-rows
+          h3.checkboxes-group__title Професія
+          ul.checkboxes-group__list
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[loader]" value="loader" type="checkbox").checkbox__input#FilterItem101
+                label(for="FilterItem101").checkbox__label Вантажник
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[lawyer]" value="lawyer" type="checkbox").checkbox__input#FilterItem137
+                label(for="FilterItem137").checkbox__label Юрист
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[wreath_weaving]" value="wreath_weaving" type="checkbox").checkbox__input#FilterItem136
+                label(for="FilterItem136").checkbox__label Плетіння вінків
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[packer]" value="packer" type="checkbox").checkbox__input#FilterItem135
+                label(for="FilterItem135").checkbox__label Пакувальник
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[beautician]" value="beautician" type="checkbox").checkbox__input#FilterItem134
+                label(for="FilterItem134").checkbox__label Косметолог
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[housekeeper]" value="housekeeper" type="checkbox").checkbox__input#FilterItem133
+                label(for="FilterItem133").checkbox__label Домробітниця
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[driller]" value="driller" type="checkbox").checkbox__input#FilterItem132
+                label(for="FilterItem132").checkbox__label Бурильник
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[fittingsman]" value="fittingsman" type="checkbox").checkbox__input#FilterItem131
+                label(for="FilterItem131").checkbox__label Арматурщик
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[pharmacist]" value="pharmacist" type="checkbox").checkbox__input#FilterItem130
+                label(for="FilterItem130").checkbox__label Фармацевт
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[general_worker]" value="general_worker" type="checkbox").checkbox__input#FilterItem129
+                label(for="FilterItem129").checkbox__label Різноробочий
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[bartender]" value="bartender" type="checkbox").checkbox__input#FilterItem128
+                label(for="FilterItem128").checkbox__label Бармен
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[joiner]" value="joiner" type="checkbox").checkbox__input#FilterItem127
+                label(for="FilterItem127").checkbox__label Столяр
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[turner]" value="turner" type="checkbox").checkbox__input#FilterItem126
+                label(for="FilterItem126").checkbox__label Токар
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[engineer]" value="engineer" type="checkbox").checkbox__input#FilterItem125
+                label(for="FilterItem125").checkbox__label Інженер
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[programmer]" value="programmer" type="checkbox").checkbox__input#FilterItem124
+                label(for="FilterItem124").checkbox__label Програміст
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[guard]" value="guard" type="checkbox").checkbox__input#FilterItem123
+                label(for="FilterItem123").checkbox__label Охоронець
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[guide]" value="guide" type="checkbox").checkbox__input#FilterItem122
+                label(for="FilterItem122").checkbox__label Гід
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[animator]" value="animator" type="checkbox").checkbox__input#FilterItem121
+                label(for="FilterItem121").checkbox__label Аніматор
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[trainer]" value="trainer" type="checkbox").checkbox__input#FilterItem120
+                label(for="FilterItem120").checkbox__label Тренер
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[plumbing]" value="plumbing" type="checkbox").checkbox__input#FilterItem119
+                label(for="FilterItem119").checkbox__label Сантехнік
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[maid]" value="maid" type="checkbox").checkbox__input#FilterItem118
+                label(for="FilterItem118").checkbox__label Покоївка
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[builder]" value="builder" type="checkbox").checkbox__input#FilterItem117
+                label(for="FilterItem117").checkbox__label Будівельник
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[seamstress]" value="seamstress" type="checkbox").checkbox__input#FilterItem116
+                label(for="FilterItem116").checkbox__label Швачка
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[dancer]" value="dancer" type="checkbox").checkbox__input#FilterItem115
+                label(for="FilterItem115").checkbox__label Танцюрист
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[musician]" value="musician" type="checkbox").checkbox__input#FilterItem114
+                label(for="FilterItem114").checkbox__label Музикант
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[tractor_driver]" value="tractor_driver" type="checkbox").checkbox__input#FilterItem113
+                label(for="FilterItem113").checkbox__label Тракторист
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[massage]" value="massage" type="checkbox").checkbox__input#FilterItem112
+                label(for="FilterItem112").checkbox__label Массажист
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[nanny]" value="nanny" type="checkbox").checkbox__input#FilterItem111
+                label(for="FilterItem111").checkbox__label Няня
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[nurse]" value="nurse" type="checkbox").checkbox__input#FilterItem110
+                label(for="FilterItem110").checkbox__label Медсестра
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[caretaker]" value="caretaker" type="checkbox").checkbox__input#FilterItem109
+                label(for="FilterItem109").checkbox__label Догляд
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[doctor]" value="doctor" type="checkbox").checkbox__input#FilterItem108
+                label(for="FilterItem108").checkbox__label Лікар
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[trucker]" value="trucker" type="checkbox").checkbox__input#FilterItem107
+                label(for="FilterItem107").checkbox__label Далекобійник
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[cook]" value="cook" type="checkbox").checkbox__input#FilterItem106
+                label(for="FilterItem106").checkbox__label Повар
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[electrician]" value="electrician" type="checkbox").checkbox__input#FilterItem105
+                label(for="FilterItem105").checkbox__label Електрик
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[welder]" value="welder" type="checkbox").checkbox__input#FilterItem104
+                label(for="FilterItem104").checkbox__label Зварювальник
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[driver]" value="driver" type="checkbox").checkbox__input#FilterItem103
+                label(for="FilterItem103").checkbox__label Водій
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[installer]" value="installer" type="checkbox").checkbox__input#FilterItem147
+                label(for="FilterItem147").checkbox__label Монтажник
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[cleaning]" value="cleaning" type="checkbox").checkbox__input#FilterItem151
+                label(for="FilterItem151").checkbox__label Прибирання
+        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-11
+          h3.checkboxes-group__title Сезон
+          ul.checkboxes-group__list
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[spring]" value="spring" type="checkbox").checkbox__input#FilterItem100
+                label(for="FilterItem100").checkbox__label Весна
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[winter]" value="winter" type="checkbox").checkbox__input#FilterItem99
+                label(for="FilterItem99").checkbox__label Зима
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[autumn]" value="autumn" type="checkbox").checkbox__input#FilterItem98
+                label(for="FilterItem98").checkbox__label Осінь
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[summer]" value="summer" type="checkbox").checkbox__input#FilterItem97
+                label(for="FilterItem97").checkbox__label Літо
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[seasonal]" value="seasonal" type="checkbox").checkbox__input#FilterItem102
+                label(for="FilterItem102").checkbox__label Cезонна
+        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-10.checkboxes-group--three-columns.checkboxes-group--three-rows
+          h3.checkboxes-group__title Місце роботи
+          ul.checkboxes-group__list
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[farm]" value="farm" type="checkbox").checkbox__input#FilterItem96
+                label(for="FilterItem96").checkbox__label на фермі
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[plant]" value="plant" type="checkbox").checkbox__input#FilterItem95
+                label(for="FilterItem95").checkbox__label на заводі
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[powersaw_bench]" value="powersaw_bench" type="checkbox").checkbox__input#FilterItem146
+                label(for="FilterItem146").checkbox__label на пилорамі
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[rail]" value="rail" type="checkbox").checkbox__input#FilterItem145
+                label(for="FilterItem145").checkbox__label на залізниці
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[agriculture]" value="agriculture" type="checkbox").checkbox__input#FilterItem144
+                label(for="FilterItem144").checkbox__label сільське господарство
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[meat_factory]" value="meat_factory" type="checkbox").checkbox__input#FilterItem143
+                label(for="FilterItem143").checkbox__label на м'ясокомбінаті
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[store]" value="store" type="checkbox").checkbox__input#FilterItem142
+                label(for="FilterItem142").checkbox__label на складах
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[construction]" value="construction" type="checkbox").checkbox__input#FilterItem141
+                label(for="FilterItem141").checkbox__label на будівництві
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[hotel]" value="hotel" type="checkbox").checkbox__input#FilterItem140
+                label(for="FilterItem140").checkbox__label в готелі
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[greenhouse]" value="greenhouse" type="checkbox").checkbox__input#FilterItem139
+                label(for="FilterItem139").checkbox__label на теплицях
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[factory]" value="factory" type="checkbox").checkbox__input#FilterItem138
+                label(for="FilterItem138").checkbox__label на фабриці
+    .additional-filters__footer
+      a(href="javascript:;").link.link--success.link--clear-filter.hidden-xxs Скинути фільтри
+      button(type="button" data-fancybox-close).btn-success.additional-filters__submit-btn Показати #[span.btn-success__count 258] вакансій

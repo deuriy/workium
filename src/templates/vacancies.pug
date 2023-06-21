@@ -6,6 +6,48 @@ block vars
 block content
   .vacancies
     h1.page-title.vacancies__title Вакансії
+    .filter.vacancies__filter
+      .filter__top
+        .filter__item
+          input(type="search" name="query" placeholder="Назва вакансії...").form-text.form-text--filter-search
+        .filter__item.hidden-xxs
+          select(name="countries" autocomplete="off").form-select.form-select--filter#countries
+            option(value="") Усі країни
+            option(value="poland") Польща
+            option(value="czech") Чехія
+        .filter__item.hidden-xxs
+          select(name="cities").form-select.form-select--filter#cities
+            option(value="") Усі міста
+            option(value="city_1") Місто 1
+            option(value="city_2") Місто 2
+            option(value="city_3") Місто 3
+            option(value="city_4") Місто 4
+        .filter__item.hidden-xxs
+          input(type="number" name="income_from" placeholder="Дохід від, грн").form-text.form-text--filter
+        .filter__item.hidden-xxs
+          select(name="currency").form-select.form-select--filter#currency
+            option(value="") Валюти
+            option(value="uah") UAH
+            option(value="pln") PLN
+            option(value="eur") EUR
+        .filter__item.filter__item--buttons.hidden-xxs
+          button(type="button" data-fancybox data-src="#additional-filters-popup").btn-white.btn-white--filter.additional-filters-popup-link Фільтри
+          button(type="button").btn-success.filter__search-btn Знайти
+      .filter__bottom
+        button(type="button" data-fancybox data-src="#additional-filters-popup").btn-white.btn-white--filter.hidden-xxsPlus.additional-filters-popup-link Фільтри
+        .filter-tags.filter-tags--job-filter
+          ul.filter-tags__list
+            li.filter-tags__item
+              button(type="button").filter-tag Без досвіду
+            li.filter-tags__item
+              button(type="button").filter-tag Спеціаліст
+            li.filter-tags__item
+              button(type="button").filter-tag Чоловіки
+            li.filter-tags__item
+              button(type="button").filter-tag Жінки
+            li.filter-tags__item
+              button(type="button").filter-tag Сімейні пари
+        a(href="javascript:;").clear-link.filter__clear-link.hidden-xxs Скинути фільтри
     .vacancy-cards.vacancies__cards
       .vacancy-card.vacancy-cards__item
         .vacancy-card__header
@@ -445,4 +487,6 @@ block content
               .salary.promo-block__salary #[span.salary__value 800 zl] винагорода
               .promo-block__footer
                 a(href="/vacancy.html" target="_blank").more-link.more-link--full-width.promo-block__more-link Детальніше
+                
+  include ./includes/blocks/additional-filters-popup
   script(src="/js/vacancies.js")

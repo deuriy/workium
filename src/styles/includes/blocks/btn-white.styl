@@ -1,0 +1,36 @@
+.btn-white
+	display inline-grid
+	justify-content center
+	padding 0.857143em 1.7143em
+	border 1px solid #DFE2E6
+	border-radius 0.75em
+	background var(--light)
+	color var(--dark)
+	font-weight 400
+	font-size 14px
+	line-height 1.7143
+	font-family var(--graphik-lcg)
+	white-space nowrap
+	text-decoration none
+	cursor pointer
+	@extend .transition
+	
+	&--filter
+		position relative
+		grid-template-columns auto 1fr
+		padding 0.7861em 1.7143em
+		align-items center
+		gap 0.671em
+		
+		&::before
+			content ""
+			width 18px
+			height 18px
+			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 18'%3E%3Cpath stroke='%231EB200' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M7.5 3h9.75M7.5 3a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m0 0H.75M7.5 15h9.75M7.5 15a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m0 0H.75M13.5 9h3.75M13.5 9a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0m0 0H.75'/%3E%3C/svg%3E") center no-repeat
+		
+		&:focus
+			outline none
+			// border-color #707A8C
+		
+		@media $xxs
+			padding 11px 11px 11px 14px

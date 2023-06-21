@@ -1,0 +1,44 @@
+.btn-success
+	display inline-flex
+	justify-content center
+	padding 0.6875em 2.375em
+	border none
+	outline none
+	border-radius 0.75em
+	background var(--success)
+	color var(--light)
+	font-weight 600
+	font-size 16px
+	line-height 1.625
+	font-family var(--graphik-lcg)
+	white-space nowrap
+	text-decoration none
+	cursor pointer
+	@extend .transition
+	
+	&__count
+		margin-right 3px
+		margin-left 3px
+	
+	&:hover
+		opacity 0.8
+	
+	&--full-width
+		width 100%
+	
+	&--price-box
+		padding-top 0.6875em
+		padding-bottom 0.6875em
+	
+	&--review-form
+		padding 0.688em 2em
+		
+		@media $xxs
+			width 100%
+	
+	&--contacts-popup
+		padding-right 1.5em
+		padding-left 1.5em
+		
+		@media $xxs
+			width 100%

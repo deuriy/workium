@@ -1,0 +1,26 @@
+.filter-tag
+	box-sizing border-box
+	display inline-flex
+	height 2.7143em
+	padding 0.5em 1.14286em
+	border 1px solid #DFE2E6
+	outline 1px solid transparent
+	border-radius 0.857143em
+	font-size 14px
+	line-height 1.7143
+	font-family var(--graphik-lcg)
+	background var(--light)
+	white-space nowrap
+	cursor pointer
+	@extend .transition
+	
+	@media $xxs
+		height 3.42857143em
+		padding 0.857143em
+	
+	&:not(.filter-tag--selected):hover
+		border-color var(--success)
+		
+	&--selected
+		border-color var(--success)
+		outline-color var(--success)
