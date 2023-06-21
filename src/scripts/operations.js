@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
     mainClass: 'fancybox--payment-systems-popup',
   });
 
+  const banksListPS = new PerfectScrollbar('.banks-list--popup', {
+    wheelSpeed: 2,
+    wheelPropagation: true,
+    minScrollbarLength: 20
+  });
+
   $('.bank__input').change(function(event) {
     let $bank = $(this).closest('.bank');
 
