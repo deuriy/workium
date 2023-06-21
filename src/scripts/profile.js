@@ -71,6 +71,12 @@ $(function () {
 		minScrollbarLength: 20
 	});
 
+	const banksListPS = new PerfectScrollbar('.banks-list--popup', {
+		wheelSpeed: 2,
+		wheelPropagation: true,
+		minScrollbarLength: 20
+	});
+
 	Fancybox.bind(".user-profile-popup-link", {
     dragToClose: false,
     mainClass: 'fancybox--user-profile-popup',
