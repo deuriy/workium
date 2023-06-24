@@ -2,50 +2,6 @@ import $ from "jquery";
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
-function copyText(input) {
-	input.select();
-  input.setSelectionRange(0, 99999);
-
-  document.execCommand("copy");
-}
-
-function getCookie(name) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-function setCookie(name, value, options = {}) {
-  options = {
-    path: '/',
-    ...options
-  };
-
-  if (options.expires instanceof Date) {
-    options.expires = options.expires.toUTCString();
-  }
-
-  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-
-  for (let optionKey in options) {
-    updatedCookie += "; " + optionKey;
-    let optionValue = options[optionKey];
-    if (optionValue !== true) {
-      updatedCookie += "=" + optionValue;
-    }
-  }
-
-  document.cookie = updatedCookie;
-}
-
-function copyInputText (targetElem) {
-  targetElem.select();
-  targetElem.setSelectionRange(0, 99999);
-
-  document.execCommand("copy");
-}
-
 $(function () {
 	let hideProfileCookie = getCookie('hideProfile');
 
@@ -117,7 +73,7 @@ $(function () {
   	let $tooltip = $(this).find('.contact-phones__tooltip');
   	let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
 
-  	copyInputText($contactPhoneFormText[0]);
+  	copyText($contactPhoneFormText[0]);
   	$contactPhoneFormText.remove();
 
 		$tooltip.addClass('tooltip--visible');
@@ -138,7 +94,7 @@ $(function () {
   	let $tooltip = $(this).find('.client-card__additional-item-tooltip');
   	let $clientAdditionalTextarea = $clientAdditionalText.next('.client-card__additional-textarea');
 
-  	copyInputText($clientAdditionalTextarea[0]);
+  	copyText($clientAdditionalTextarea[0]);
   	$clientAdditionalTextarea.remove();
 
 		$tooltip.addClass('tooltip--visible');
@@ -148,6 +104,7 @@ $(function () {
 
     e.preventDefault();
 	});
+	
 
 	$('[data-bookmark]').click(function(e) {
 		e.preventDefault();

@@ -38,6 +38,43 @@ function runConfetti() {
   });
 }
 
+function copyText(input) {
+  input.select();
+  input.setSelectionRange(0, 99999);
+
+  document.execCommand("copy");
+}
+
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options = {}) {
+  options = {
+    path: '/',
+    ...options
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
 $(function () {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -53,6 +90,7 @@ $(function () {
     on: {
       reveal: (fancybox, slide) => {
         console.log(slide);
+
         if (slide.src === '#authorization-popup') {
           let activeTabNumber = slide.activeTabNumber !== undefined ? slide.activeTabNumber : 1;
           let $activeTabLink = $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`);
@@ -90,6 +128,57 @@ $(function () {
         }
       }
     }
+  });
+
+  // Copy URL
+  document.addEventListener('click', function (e) {
+    let copyURL = e.target.closest('[data-action="copyURL"]');
+
+    if (!copyURL) return;
+
+    let newURL = new URL(window.location.href);
+
+    if (newURL.searchParams.has('share')) {
+      newURL.searchParams.delete('share');
+    }
+
+    let copyLinkInput = document.createElement('input');
+    copyLinkInput.type = 'text';
+
+    copyLinkInput.value = newURL;
+    copyURL.after(copyLinkInput);
+    copyText(copyLinkInput);
+    copyLinkInput.remove();
+
+    let copyURLText = copyURL.querySelector('.action-menu__link-text');
+    copyURL.classList.add('action-menu__link--success');
+    copyURLText.textContent = 'Скопійовано!';
+
+    setTimeout(() => {
+      copyURL.classList.remove('action-menu__link--success');
+      copyURLText.textContent = 'Скопіювати посилання';
+
+      Fancybox.close();
+    }, 800);
+
+    e.preventDefault();
+  });
+
+  // Share for Android/IOS
+  document.addEventListener('click', function (e) {
+    let shareLink = e.target.closest('[data-action="share"]');
+
+    if (!shareLink) return;
+
+    console.log('Share!');
+
+    let text = document.querySelector('title').textContent;
+
+    navigator.share({
+      title: '',
+      text,
+      url: location.href
+    });
   });
 
   $('.authorization-form__password-toggle').click(function(e) {    

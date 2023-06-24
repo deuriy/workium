@@ -1,0 +1,12 @@
+.fancybox-popup.fancybox-popup--share#share-popup(style="display: none;")
+  h3.fancybox-popup__title Поділитись
+  .action-menu
+    ul.action-menu__list
+      li.action-menu__item
+        a(href="javascript:;" data-action="share").action-menu__link
+          include ../svg/share
+          span.action-menu__link-text Поділитися з друзями
+      li.action-menu__item
+        a(href="javascript:;" data-action="copyURL").action-menu__link
+          include ../svg/copy
+          span.action-menu__link-text Скопіювати посилання

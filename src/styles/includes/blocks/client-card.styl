@@ -29,6 +29,7 @@
 		background linear-gradient(90deg, #D2DCFC 0%, #D7EAFC 100%)
 		
 		@media $xxs
+			grid-template-columns 100%
 			padding 12px 16px
 		
 		// @media $xs
@@ -80,7 +81,12 @@
 		grid-template-columns repeat(2, auto)
 		align-items center
 		gap 10px
-		margin-right -14px
+		
+		@media $smPlus
+			margin-right -14px
+		
+		@media $xxs
+			justify-content start
 	
 	&__id,
 	&__comment
