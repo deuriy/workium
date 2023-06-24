@@ -1,6 +1,7 @@
 import $ from "jquery";
 import Swiper from 'swiper';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
+import PerfectScrollbar from 'perfect-scrollbar';
 
 document.addEventListener('DOMContentLoaded', function () {
 	const walletsSwiper = new Swiper('.wallets-swiper', {
@@ -15,11 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
     mainClass: 'fancybox--payment-systems-popup',
   });
 
-  const banksListPS = new PerfectScrollbar('.banks-list--popup', {
-    wheelSpeed: 2,
-    wheelPropagation: true,
-    minScrollbarLength: 20
-  });
+  let banksListPopup = document.querySelector('.banks-list--popup');
+  if (banksListPopup) {
+    const banksListPS = new PerfectScrollbar(banksListPopup, {
+      wheelSpeed: 2,
+      wheelPropagation: true,
+      minScrollbarLength: 20
+    });
+  }
 
   $('.bank__input').change(function(event) {
     let $bank = $(this).closest('.bank');
