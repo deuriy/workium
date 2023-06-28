@@ -16,6 +16,12 @@
 	text-decoration none
 	@extend .transition
 	
+	&:hover
+		background darken(#229ED9, 15%)
+	
+	&__messenger
+		font-size 15px
+	
 	&--telegram
 		grid-template-columns repeat(2, auto)
 		align-items center
@@ -50,13 +56,17 @@
 			height 16px
 	
 	&--telegram-contact-box-support
-		gap 10px
-		padding-top 11px
-		padding-bottom 11px
-		padding-left 6px
+		gap 0 19px
+		padding-top 5px
+		padding-right 23px
+		padding-bottom 5px
+		// padding-left 6px
+		padding-left 15px
 		border-radius 8px
-		font-size 14px
+		font-size 11px
+		line-height normal
 		
 		&::before
+			grid-row 1 / 3
 			width 15px
 			height 12px

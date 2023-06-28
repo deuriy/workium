@@ -91,32 +91,5 @@
             img(src="/img/user_menu/settings.svg" alt="Налаштування").user-menu__icon
             span.user-menu__item-text Налаштування
     .user-sidebar__footer
-      .dropdown-block.dropdown-block--support.dropdown-block--origin-bottom-left.user-sidebar__dropdown-support-block#support-block
-        .contact-box.contact-box--support
-          h3.contact-box__title З радістю відповімо на ваші запитання!
-          .contact-phones.contact-phones--support.contact-box__phones
-            //- .tooltip.tooltip--phone-copied.contact-phones__tooltip Скопійовано!
-            ul.contact-phones__list
-              li.contact-phones__item
-                a(href="#").phone.phone--with-icon +48 732 222 356
-                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
-                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-              li.contact-phones__item
-                a(href="#").phone.phone--with-icon +380 68 099 03 02
-                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
-                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-              li.contact-phones__item
-                a(href="#").phone.phone--with-icon +380 68 099 04 03
-                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
-                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-              li.contact-phones__item
-                a(href="#").phone.phone--with-icon +380 68 099 05 04
-                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
-                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-          .contact-buttons.contact-buttons--support.contact-box__buttons
-            ul.contact-buttons__list
-              li.contact-buttons__item
-                a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-contact-box-support Написати у Viber
-              li.contact-buttons__item
-                a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-contact-box-support Написати в Telegram
+      include ./support-block
       a(href="#support-block" data-dropdown-block-trigger).support-link Підтримка онлайн
