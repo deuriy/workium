@@ -1,0 +1,51 @@
+.icon-menu
+	position fixed
+	right 0
+	bottom 0
+	left 0
+	z-index 1000
+	background #111829
+	color var(--light)
+	filter drop-shadow(0 0 4px rgba(0, 0, 0, 0.1))
+	
+	&__list
+		list-style none
+		display flex
+		align-items center
+	
+	&__item
+		&:first-child
+			.icon-menu__link
+				padding-left 22px
+		
+		&--avatar
+			margin-left 10px
+	
+	&__link
+		position relative
+		display grid
+		grid-template-columns 100%
+		place-items center
+		gap 1px
+		height 50px
+		padding 7px 20px
+		font-weight 400
+		color var(--light)
+		text-decoration none
+		@extend .transition
+		
+		&:hover,
+		&--active
+			background #2A364D
+	
+	&__icon
+		width 21px
+	
+	&__count
+		position absolute
+		top 3px
+		right 21px
+	
+	&__item-text
+		font-weight 500
+		font-size 10px

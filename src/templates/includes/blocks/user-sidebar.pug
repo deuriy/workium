@@ -1,40 +1,20 @@
 .user-sidebar.user-sidebar--profile-shown
   .user-sidebar__inner
-    .dropdown-block.dropdown-block--origin-top-left.user-sidebar__dropdown-block#user-dropdown-menu
-      input(type="text" readonly value="https://website.com?i=wmj7drft").dropdown-block__copy-input#copy-link-input
-      .dropdown-menu
-        ul.dropdown-menu__list
-          li.dropdown-menu__item
-            a(href="#").dropdown-menu__link.dropdown-menu__link--has-icon.dropdown-menu__link--hide-profile
-              .dropdown-menu__icon-wrapper
-                img(src="/img/context_menu/hide_profile.svg" alt="Приховати профіль" width="20").dropdown-menu__icon
-              span.dropdown-menu__link-title Приховати профіль
-          li.dropdown-menu__item
-            a(href="#copy-link-input").dropdown-menu__link.dropdown-menu__link--has-icon.dropdown-menu__link--copy-link
-              .dropdown-menu__icon-wrapper
-                img(src="/img/context_menu/link.svg" alt="Приховати профіль" width="22").dropdown-menu__icon
-              span.dropdown-menu__link-title Партнерське посилання
-          li.dropdown-menu__item
-            a(href="/settings.html").dropdown-menu__link.dropdown-menu__link--has-icon
-              .dropdown-menu__icon-wrapper
-                img(src="/img/context_menu/settings.svg" alt="Приховати профіль" width="19").dropdown-menu__icon
-              span.dropdown-menu__link-title Налаштування
-          li.dropdown-menu__item
-            a(href="#").dropdown-menu__link.dropdown-menu__link--has-icon
-              .dropdown-menu__icon-wrapper
-                img(src="/img/context_menu/logout.svg" alt="Приховати профіль" width="16").dropdown-menu__icon
-              span.dropdown-menu__link-title Вийти
+    include ./user-dropdown-menu
+
     .user-sidebar__top.hidden-smMinus
       a(href="/").user-sidebar__logo
         img(src="/img/logo.svg" title="Workium").user-sidebar__logo-img
       a(href="#user-dropdown-menu" data-dropdown-block-trigger).user-sidebar__user-avatar-link.user-sidebar__user-avatar-link--profile-shown
         img(src="/img/user_sidebar_avatar.png" alt="sadwolf27").user-avatar.user-avatar--small
+
         //- img(src="/img/user_avatar.png" alt="sadwolf27")
     //- .user-info.user-sidebar__user-info
     //-   .user-info__top
     //-     a(href="/user.html").username.user-info__username sadwolf27
     //-     a(href="/logout").logout-link.user-info__logout-link
     //-   .user-balance.user-info__balance 5257,45 грн
+    
     .user-sidebar__user-info-wrapper
       .user-info
         img(src="/img/user_sidebar_avatar.png" alt="Sobat Jariyah").user-avatar.user-info__avatar
@@ -42,54 +22,11 @@
           a(href="/user.html").username.user-info__username Sobat Jariyah
           .user-label.user-info__user-label Впливовість: 0
         a(href="#user-dropdown-menu" data-dropdown-block-trigger).dots-link
-    .user-menu.user-sidebar__user-menu
-      ul.user-menu__list
-        li.user-menu__item
-          a(href="/vacancies.html").user-menu__link
-            img(src="/img/user_menu/vacancies.svg" alt="Вакансії").user-menu__icon
-            span.user-menu__item-text Вакансії
-        li.user-menu__item
-          a(href="/recruitment.html").user-menu__link.user-menu__link--has-count
-            img(src="/img/user_menu/recruitment.svg" alt="Рекрутація").user-menu__icon
-            span.user-menu__item-text Клієнти
-            span.count.user-menu__count 3
-        li.user-menu__item
-          a(href="/docs.html").user-menu__link
-            img(src="/img/user_menu/documents.svg" alt="Документи").user-menu__icon
-            span.user-menu__item-text Документи
-        li.user-menu__item
-          a(href="/operations.html").user-menu__link
-            img(src="/img/user_menu/balance.svg" alt="Баланс та операції").user-menu__icon
-            span.user-menu__item-text Баланс та операції
-        li.user-menu__item
-          a(href="/affiliate.html").user-menu__link
-            img(src="/img/user_menu/affiliate.svg" alt="Партнерська програма").user-menu__icon
-            span.user-menu__item-text Партнерська програма
-        li.user-menu__item
-          a(href="/save.html").user-menu__link
-            img(src="/img/user_menu/save.svg" alt="Збереження").user-menu__icon.user-menu__icon--save
-            span.user-menu__item-text Збереження
-        li.user-menu__item
-          a(href="/awards.html").user-menu__link.user-menu__link--has-count
-            img(src="/img/user_menu/achievements.svg" alt="Досягнення").user-menu__icon
-            span.user-menu__item-text Досягнення
-            span.count.user-menu__count 3
-        li.user-menu__item
-          a(href="/verification.html").user-menu__link
-            img(src="/img/user_menu/verification.svg" alt="Верифікація").user-menu__icon
-            span.user-menu__item-text Верифікація
-        li.user-menu__item
-          a(href="/black_list.html").user-menu__link
-            img(src="/img/user_menu/black_list.svg" alt="Чорний список").user-menu__icon
-            span.user-menu__item-text Чорний список
-        li.user-menu__item
-          a(href="/ideas.html").user-menu__link
-            img(src="/img/user_menu/ideas.svg" alt="Ідеї та пропозиції").user-menu__icon
-            span.user-menu__item-text Ідеї та пропозиції
-        li.user-menu__item
-          a(href="/settings.html").user-menu__link
-            img(src="/img/user_menu/settings.svg" alt="Налаштування").user-menu__icon
-            span.user-menu__item-text Налаштування
+
+    include ./user-menu
+
     .user-sidebar__footer
+
       include ./support-block
+
       a(href="#support-block" data-dropdown-block-trigger).support-link Підтримка онлайн
