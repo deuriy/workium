@@ -67,8 +67,16 @@ $(function () {
 	Fancybox.bind(".user-profile-popup-link", {
     dragToClose: false,
     mainClass: 'fancybox--user-profile-popup',
-    // showClass: 'f-slideInUp',
-    // hideClass: 'f-slideOutDown'
+
+    on: {
+      reveal: (fancybox, slide) => {
+        if (currentFancybox) {
+          currentFancybox.close();
+        }
+
+        currentFancybox = fancybox;
+      }
+    }
   });
 
 	$('.user-menu__link').each(function(index, link) {

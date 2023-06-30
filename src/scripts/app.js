@@ -100,6 +100,21 @@ $(function () {
     }
   });
 
+  Fancybox.bind(".user-profile-popup-link", {
+    dragToClose: false,
+    mainClass: 'fancybox--user-profile-popup',
+
+    on: {
+      reveal: (fancybox, slide) => {
+        if (currentFancybox) {
+          currentFancybox.close();
+        }
+
+        currentFancybox = fancybox;
+      }
+    }
+  });
+
   // Copy URL
   document.addEventListener('click', function (e) {
     let copyURL = e.target.closest('[data-action="copyURL"]');
