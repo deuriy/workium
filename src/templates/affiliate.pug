@@ -50,10 +50,12 @@ block content
             li.tabs-menu__item.tabs__item
               a(href="#").tabs-menu__link Документи
       .partners-tabs__content
-        .tabs__content(style="display: block;")
+        .tabs__content
           .partners-table-wrapper
             .partners-table-wrapper__description
               p В таблиці нижче відображаються усі користувачі, які перейшли по вашому партнерському посиланню та зареєструвались. Нейромережа WORKIUM миттєво та безпомилково відслідковує усі реєстрації не залежно від того, з якого розділу чи сторінки була здійснена дія. Користувачі залишаються у вашій команді назавжди.
+            .partners-table-wrapper__more-link-wrapper.hidden-smPlus
+              a(href="#").toggle-link.partners-table-wrapper__more-link Читати далі
             table.partners-table.affiliate-program__partners-table.hidden-xs
               //- caption.partners-table__caption Ваші партнери:
               thead.partners-table__thead
@@ -76,7 +78,7 @@ block content
                       .partner-info__name Андрій
                   td.partners-table__td.partners-table__td--influence-and-awards
                     .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--small
+                      .influence-rating.influence-rating--partners-table
                         .influence-rating__rating 0
                       .partners-table__award-img-wrapper
                         img(src="/img/award2.svg" alt="").partners-table__award-img
@@ -96,7 +98,7 @@ block content
                       .partner-info__name Андрій
                   td.partners-table__td.partners-table__td--influence-and-awards
                     .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--small
+                      .influence-rating.influence-rating--partners-table
                         .influence-rating__rating 0
                       .partners-table__award-img-wrapper
                         img(src="/img/award2.svg" alt="").partners-table__award-img
@@ -116,7 +118,7 @@ block content
                       .partner-info__name Андрій
                   td.partners-table__td.partners-table__td--influence-and-awards
                     .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--small
+                      .influence-rating.influence-rating--partners-table
                         .influence-rating__rating 0
                       .partners-table__award-img-wrapper
                         img(src="/img/award2.svg" alt="").partners-table__award-img
@@ -136,7 +138,7 @@ block content
                       .partner-info__name Андрій
                   td.partners-table__td.partners-table__td--influence-and-awards
                     .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--small
+                      .influence-rating.influence-rating--partners-table
                         .influence-rating__rating 0
                       .partners-table__award-img-wrapper
                         img(src="/img/award2.svg" alt="").partners-table__award-img
@@ -150,55 +152,121 @@ block content
               thead.partners-table__thead
                 tr.partners-table__row
                   th.partners-table__th.partners-table__th--email-and-id Ім'я
-                  th.partners-table__th.partners-table__th--profit-and-date Винагорода (3%)
+                  th.partners-table__th.partners-table__th--profit-and-awards Прибуток
               tbody.partners-table__body
                 tr.partners-table__row
                   td.partners-table__td
                     //- .partners-table__email
-                    .partner-info.partner-info--mobile
+                    .partner-info.partner-info--mobile.partners-table__info
                       img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
+                      .partner-info__name Андрій
+                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partners-table__no-operations Операцій немає
                     //- .partners-table__id ID: 39974294
                     //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
+                  td.partners-table__td.partners-table__td--profit-and-awards
+                    .partners-table__profit 2658,67 ZŁ
+                    .partners-table__influence-and-awards
+                      .influence-rating.influence-rating--partners-table-mobile
+                        .influence-rating__rating 0
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
                     //- .partners-table__date 5.01.2023 о 20:14
                     //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+                    //- .partners-table__no-operations Операцій немає
+                tr.partners-table__row
+                  td.partners-table__td
+                    //- .partners-table__email
+                    .partner-info.partner-info--mobile.partners-table__info
+                      img(src="/img/andrew.png" alt="").partner-info__img
+                      .partner-info__name Андрій
+                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    a(href="/operations.html").toggle-link Переглянути операції
+                    //- .partners-table__id ID: 39974294
+                    //- .partners-table__date 5.01.2023 о 20:14
+                  td.partners-table__td.partners-table__td--profit-and-awards
+                    .partners-table__profit 2658,67 ZŁ
+                    .partners-table__influence-and-awards
+                      .influence-rating.influence-rating--partners-table-mobile
+                        .influence-rating__rating 0
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
+                    //- .partners-table__date 5.01.2023 о 20:14
+                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+                    //- .partners-table__no-operations Операцій немає
+                tr.partners-table__row
+                  td.partners-table__td
+                    //- .partners-table__email
+                    .partner-info.partner-info--mobile.partners-table__info
+                      img(src="/img/andrew.png" alt="").partner-info__img
+                      .partner-info__name Андрій
+                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
                     .partners-table__no-operations Операцій немає
+                    //- .partners-table__id ID: 39974294
+                    //- .partners-table__date 5.01.2023 о 20:14
+                  td.partners-table__td.partners-table__td--profit-and-awards
+                    .partners-table__profit 2658,67 ZŁ
+                    .partners-table__influence-and-awards
+                      .influence-rating.influence-rating--partners-table-mobile
+                        .influence-rating__rating 0
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
+                    //- .partners-table__date 5.01.2023 о 20:14
+                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+                    //- .partners-table__no-operations Операцій немає
                 tr.partners-table__row
                   td.partners-table__td
                     //- .partners-table__email
-                    .partner-info.partner-info--mobile
+                    .partner-info.partner-info--mobile.partners-table__info
                       img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 52334797
+                      .partner-info__name Андрій
+                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    a(href="/operations.html").toggle-link Переглянути операції
+                    //- .partners-table__id ID: 39974294
                     //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
+                  td.partners-table__td.partners-table__td--profit-and-awards
+                    .partners-table__profit 2658,67 ZŁ
+                    .partners-table__influence-and-awards
+                      .influence-rating.influence-rating--partners-table-mobile
+                        .influence-rating__rating 0
+                      .partners-table__award-img-wrapper
+                        img(src="/img/award2.svg" alt="").partners-table__award-img
                     //- .partners-table__date 5.01.2023 о 20:14
-                    a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 52334797
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+                    //- .partners-table__no-operations Операцій немає
+
+                //- tr.partners-table__row
+                //-   td.partners-table__td
+                //-     //- .partners-table__email
+                //-     .partner-info.partner-info--mobile
+                //-       img(src="/img/andrew.png" alt="").partner-info__img
+                //-       .partner-info__name Андрій
+                //-       .partner-info__date 5.01.2023 о 20:14
+                //-     //- .partners-table__id ID: 52334797
+                //-     //- .partners-table__date 5.01.2023 о 20:14
+                //-   td.partners-table__td.partners-table__td--profit-and-awards
+                //-     .partners-table__profit 2658,67 ZŁ
+                //-     //- .partners-table__date 5.01.2023 о 20:14
+                //-     a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+                //- tr.partners-table__row
+                //-   td.partners-table__td
+                //-     //- .partners-table__email
+                //-     .partner-info.partner-info--mobile
+                //-       img(src="/img/andrew.png" alt="").partner-info__img
+                //-       .partner-info__name Андрій
+                //-       .partner-info__date 5.01.2023 о 20:14
+                //-     //- .partners-table__id ID: 52334797
+                //-     //- .partners-table__date 5.01.2023 о 20:14
+                //-   td.partners-table__td.partners-table__td--profit-and-awards
+                //-     .partners-table__profit 2658,67 ZŁ
+                //-     //- .partners-table__date 5.01.2023 о 20:14
+                //-     a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
         .tabs__content
           .partners-table-wrapper
             .partners-table-wrapper__description
               p В таблиці нижче відображаються всі користувачі, які перейшли по вашому партнерському посиланню та забронювались на одну із вакансій без реєстрації на WORKIUM. Незважаючи на це, нейромережа WORKIUM миттєво відслідкує усі замовлення та в повному розмірі автоматично нарахує вам партнерську винагороду.
+            .partners-table-wrapper__more-link-wrapper.hidden-smPlus
+              a(href="#").toggle-link.partners-table-wrapper__more-link Читати далі
             table.partners-table.partners-table--recruitment.affiliate-program__partners-table.hidden-xs
               //- caption.partners-table__caption Ваші партнери:
               thead.partners-table__thead
@@ -229,7 +297,7 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Заброньований
+                    .status.status--grey-bg.partners-table__status Заброньований
                 tr.partners-table__row
                   td.partners-table__td.partners-table__td--date
                     .partners-table__datetime-and-id
@@ -249,7 +317,7 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Заброньований
+                    .status.status--aqua-bg.partners-table__status Виїхав
                 tr.partners-table__row
                   td.partners-table__td.partners-table__td--date
                     .partners-table__datetime-and-id
@@ -269,7 +337,7 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Заброньований
+                    .status.partners-table__status Оформлення
                 tr.partners-table__row
                   td.partners-table__td.partners-table__td--date
                     .partners-table__datetime-and-id
@@ -289,61 +357,187 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Заброньований
-            table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
-              caption.partners-table__caption Ваші партнери:
-              thead.partners-table__thead
+                    .status.status--lilac-bg.partners-table__status Працює
                 tr.partners-table__row
-                  th.partners-table__th.partners-table__th--email-and-id Ім'я
-                  th.partners-table__th.partners-table__th--profit-and-date Прибуток
-              tbody.partners-table__body
+                  td.partners-table__td.partners-table__td--date
+                    .partners-table__datetime-and-id
+                      .partners-table__date 17:35 &nbsp;22.12.23
+                      .partners-table__id 32122
+                  td.partners-table__td.partners-table__td--name
+                    .partner-info
+                      .partner-info__name Андрій
+                  td.partners-table__td.partners-table__td--country
+                    .partners-table__country Польща
+                  td.partners-table__td.partners-table__td--vacancy
+                    .partners-table__vacancy-and-agency
+                      .partners-table__vacancy Оператор на виробництво електроніки
+                      .partners-table__agency LG Electronics  -  Smart Work
+                  td.partners-table__td.partners-table__td--remuneration
+                    .partners-table__remuneration
+                      .partners-table__zl 15 zł
+                      .partners-table__eur ~ 1.43 € (EUR)
+                  td.partners-table__td.partners-table__td--status
+                    .status.status--beige-bg.partners-table__status Відпрацював
                 tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 39974294
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                    .partners-table__no-operations Операцій немає
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 52334797
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 52334797
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-        .tabs__content
+                  td.partners-table__td.partners-table__td--date
+                    .partners-table__datetime-and-id
+                      .partners-table__date 17:35 &nbsp;22.12.23
+                      .partners-table__id 32122
+                  td.partners-table__td.partners-table__td--name
+                    .partner-info
+                      .partner-info__name Андрій
+                  td.partners-table__td.partners-table__td--country
+                    .partners-table__country Польща
+                  td.partners-table__td.partners-table__td--vacancy
+                    .partners-table__vacancy-and-agency
+                      .partners-table__vacancy Оператор на виробництво електроніки
+                      .partners-table__agency LG Electronics  -  Smart Work
+                  td.partners-table__td.partners-table__td--remuneration
+                    .partners-table__remuneration
+                      .partners-table__zl 15 zł
+                      .partners-table__eur ~ 1.43 € (EUR)
+                  td.partners-table__td.partners-table__td--status
+                    .status.status--green-bg.partners-table__status Виплата
+            .partners.partners-table-wrapper__partners.hidden-smPlus
+              .partners__titles
+                .partners__col-title Ім'я
+                .partners__col-title Винагорода (3%)
+              .partners__items
+                .partner.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__country Польща
+                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
+                    .partner__agency LG Electronics - Smart Work
+                    .status.status--grey-bg Заброньований
+                .partner.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__country Польща
+                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
+                    .partner__agency LG Electronics - Smart Work
+                    .status.status--aqua-bg Виїхав
+                .partner.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__country Польща
+                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
+                    .partner__agency LG Electronics - Smart Work
+                    .status Оформлення
+                .partner.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__country Польща
+                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
+                    .partner__agency LG Electronics - Smart Work
+                    .status.status--lilac-bg Працює
+                .partner.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__country Польща
+                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
+                    .partner__agency LG Electronics - Smart Work
+                    .status.status--beige-bg Відпрацював
+                .partner.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__country Польща
+                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
+                    .partner__agency LG Electronics - Smart Work
+                    .status.status--green-bg Виплата
+
+            //- table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
+            //-   caption.partners-table__caption Ваші партнери:
+            //-   thead.partners-table__thead
+            //-     tr.partners-table__row
+            //-       th.partners-table__th.partners-table__th--email-and-id Ім'я
+            //-       th.partners-table__th.partners-table__th--profit-and-date Винагорода (3%)
+            //-   tbody.partners-table__body
+            //-     tr.partners-table__row
+            //-       td.partners-table__td
+            //-         //- .partners-table__email
+            //-         .partner-info.partner-info--mobile
+            //-           .partner-info__name Андрій
+            //-           .partner-info__date 5.01.2023 о 20:14
+            //-         //- .partners-table__id ID: 39974294
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-       td.partners-table__td.partners-table__td--profit-and-date
+            //-         .partners-table__profit
+            //-           .partner-status 2658,67 ZŁ
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-         //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+            //-         .partners-table__no-operations Операцій немає
+            //-     tr.partners-table__row
+            //-       td.partners-table__td
+            //-         //- .partners-table__email
+            //-         .partner-info.partner-info--mobile
+            //-           img(src="/img/andrew.png" alt="").partner-info__img
+            //-           .partner-info__name alma.lawson
+            //-           .partner-info__date 5.01.2023 о 20:14
+            //-         //- .partners-table__id ID: 52334797
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-       td.partners-table__td.partners-table__td--profit-and-date
+            //-         .partners-table__profit
+            //-           .partner-status 2658,67 ZŁ
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+            //-     tr.partners-table__row
+            //-       td.partners-table__td
+            //-         //- .partners-table__email
+            //-         .partner-info.partner-info--mobile
+            //-           img(src="/img/andrew.png" alt="").partner-info__img
+            //-           .partner-info__name alma.lawson
+            //-           .partner-info__date 5.01.2023 о 20:14
+            //-         //- .partners-table__id ID: 52334797
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-       td.partners-table__td.partners-table__td--profit-and-date
+            //-         .partners-table__profit
+            //-           .partner-status 2658,67 ZŁ
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+
+        .tabs__content(style="display: block;")
           .partners-table-wrapper
             .partners-table-wrapper__description
               p В таблиці нижче відображаються всі користувачі, які перейшли по вашому партнерському посиланню та замовили будь-які документи не зареєструвавшись. Незважаючи на це, нейромережа WORKIUM миттєво відслідкує усі здійснені замовлення та в повному розмірі автоматично нарахує вам партнерську винагороду.
+            .partners-table-wrapper__more-link-wrapper.hidden-smPlus
+              a(href="#").toggle-link.partners-table-wrapper__more-link Читати далі
             table.partners-table.partners-table--documents.affiliate-program__partners-table.hidden-xs
               //- caption.partners-table__caption Ваші партнери:
               thead.partners-table__thead
@@ -372,7 +566,7 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Прийнято в роботу
+                    .status.status--grey-bg.partners-table__status Прийнято в роботу
                 tr.partners-table__row
                   td.partners-table__td.partners-table__td--date
                     .partners-table__datetime-and-id
@@ -390,7 +584,7 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Прийнято в роботу
+                    .status.status--aqua-bg.partners-table__status На опрацюванні
                 tr.partners-table__row
                   td.partners-table__td.partners-table__td--date
                     .partners-table__datetime-and-id
@@ -408,7 +602,7 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Прийнято в роботу
+                    .status.partners-table__status Готово
                 tr.partners-table__row
                   td.partners-table__td.partners-table__td--date
                     .partners-table__datetime-and-id
@@ -426,56 +620,140 @@ block content
                       .partners-table__zl 15 zł
                       .partners-table__eur ~ 1.43 € (EUR)
                   td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Прийнято в роботу
-            table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
-              caption.partners-table__caption Ваші партнери:
-              thead.partners-table__thead
+                    .status.status--beige-bg.partners-table__status Відправлено
                 tr.partners-table__row
-                  th.partners-table__th.partners-table__th--email-and-id Ім'я
-                  th.partners-table__th.partners-table__th--profit-and-date Прибуток
-              tbody.partners-table__body
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 39974294
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                    .partners-table__no-operations Операцій немає
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 52334797
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name alma.lawson
-                      .partner-info__date 5.01.2023 о 20:14
-                    //- .partners-table__id ID: 52334797
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-date
-                    .partners-table__profit
-                      .partner-status 2658,67 ZŁ
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-        .tabs__content fmreomoeg
+                  td.partners-table__td.partners-table__td--date
+                    .partners-table__datetime-and-id
+                      .partners-table__date 17:35 &nbsp;22.12.23
+                      .partners-table__id 32122
+                  td.partners-table__td.partners-table__td--name
+                    .partner-info
+                      .partner-info__name Андрій
+                  td.partners-table__td.partners-table__td--country
+                    .partners-table__country Польща
+                  td.partners-table__td.partners-table__td--vacancy
+                    .partners-table__document-type Пакет для відкриття візи
+                  td.partners-table__td.partners-table__td--remuneration
+                    .partners-table__remuneration
+                      .partners-table__zl 15 zł
+                      .partners-table__eur ~ 1.43 € (EUR)
+                  td.partners-table__td.partners-table__td--status
+                    .status.status--green-bg.partners-table__status Виплата
+
+            .partners.partners-table-wrapper__partners.hidden-smPlus
+              .partners__titles
+                .partners__col-title Ім'я
+                .partners__col-title Винагорода (3%)
+              .partners__items
+                .partner.partner--document.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__document Пакет для відкриття візи
+                    .partner__country Польща
+                    .status.status--grey-bg Прийнято в роботу
+                .partner.partner--document.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__document Пакет для відкриття візи
+                    .partner__country Польща
+                    .status.status--aqua-bg На опрацюванні
+                .partner.partner--document.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__document Пакет для відкриття візи
+                    .partner__country Польща
+                    .status Готово
+                .partner.partner--document.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__document Пакет для відкриття візи
+                    .partner__country Польща
+                    .status.status--beige-bg Відправлено
+                .partner.partner--document.partners__item
+                  .partner__header
+                    .partner__data
+                      .partner__name Андрій
+                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
+                    .partner__remuneration
+                      .partner__zl 1500 zł
+                      .partner__eur ~ 1.43 € (EUR)
+                  .partner__body
+                    .partner__document Пакет для відкриття візи
+                    .partner__country Польща
+                    .status.status--green-bg Виплата
+
+            //- table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
+            //-   caption.partners-table__caption Ваші партнери:
+            //-   thead.partners-table__thead
+            //-     tr.partners-table__row
+            //-       th.partners-table__th.partners-table__th--email-and-id Ім'я
+            //-       th.partners-table__th.partners-table__th--profit-and-date Прибуток
+            //-   tbody.partners-table__body
+            //-     tr.partners-table__row
+            //-       td.partners-table__td
+            //-         //- .partners-table__email
+            //-         .partner-info.partner-info--mobile
+            //-           img(src="/img/andrew.png" alt="").partner-info__img
+            //-           .partner-info__name alma.lawson
+            //-           .partner-info__date 5.01.2023 о 20:14
+            //-         //- .partners-table__id ID: 39974294
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-       td.partners-table__td.partners-table__td--profit-and-date
+            //-         .partners-table__profit
+            //-           .partner-status 2658,67 ZŁ
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-         //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+            //-         .partners-table__no-operations Операцій немає
+            //-     tr.partners-table__row
+            //-       td.partners-table__td
+            //-         //- .partners-table__email
+            //-         .partner-info.partner-info--mobile
+            //-           img(src="/img/andrew.png" alt="").partner-info__img
+            //-           .partner-info__name alma.lawson
+            //-           .partner-info__date 5.01.2023 о 20:14
+            //-         //- .partners-table__id ID: 52334797
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-       td.partners-table__td.partners-table__td--profit-and-date
+            //-         .partners-table__profit
+            //-           .partner-status 2658,67 ZŁ
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+            //-     tr.partners-table__row
+            //-       td.partners-table__td
+            //-         //- .partners-table__email
+            //-         .partner-info.partner-info--mobile
+            //-           img(src="/img/andrew.png" alt="").partner-info__img
+            //-           .partner-info__name alma.lawson
+            //-           .partner-info__date 5.01.2023 о 20:14
+            //-         //- .partners-table__id ID: 52334797
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-       td.partners-table__td.partners-table__td--profit-and-date
+            //-         .partners-table__profit
+            //-           .partner-status 2658,67 ZŁ
+            //-         //- .partners-table__date 5.01.2023 о 20:14
+            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
   script(src="/js/affiliate.js")

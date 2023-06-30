@@ -14,14 +14,24 @@
 		@media $xs
 			width 20px
 	
-	&__date
+	&__name
+		font-size 16px
+		line-height 1.625
+	
+	&__date,
+	&__datetime-and-id
 		font-size 13px
 		line-height 22px
 		color var(--grey)
 	
 	&--mobile
-		gap 3px 10px
+		// gap 3px 10px
+		gap 0 8px
 		
 		.partner-info__img
 			grid-row 1 / 3
-			width 46px
+			// width 46px
+			width 32px
+		
+		.partner-info__name
+			margin-bottom -4px

@@ -15,4 +15,21 @@ document.addEventListener('DOMContentLoaded', function () {
 		
 		e.preventDefault();
 	});
+
+	document.addEventListener('click', function (e) {
+		let partnersTableWrapperMoreLink = e.target.closest('.partners-table-wrapper__more-link');
+
+		if (!partnersTableWrapperMoreLink) return;
+
+		let partnersTableWrapperDesc = partnersTableWrapperMoreLink.closest('.partners-table-wrapper').querySelector('.partners-table-wrapper__description');
+		partnersTableWrapperDesc.classList.toggle('partners-table-wrapper__description--full');
+
+		if (partnersTableWrapperMoreLink.textContent === 'Приховати') {
+			partnersTableWrapperMoreLink.textContent = 'Читати далі';
+		} else {
+			partnersTableWrapperMoreLink.textContent = 'Приховати';
+		}
+		
+		e.preventDefault();
+	});
 });

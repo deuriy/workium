@@ -1,0 +1,32 @@
+.partners
+	border-radius 12px
+	background var(--light)
+	
+	&__titles
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items center
+		gap 10px
+		margin 0 16px 2px
+		padding 12px 0
+		border-bottom 1px solid #DFE1ED
+		// background var(--light)
+		color #989DB2
+		font-weight 600
+		font-size 13px
+		line-height 22px
+	
+	// &__titles,
+	// &__items
+	// 	margin-right -17px
+	// 	margin-left -17px
+	
+	&__items
+		display grid
+		grid-template-columns 100%
+		gap 10px
+	
+	&__item
+		&:nth-child(even)
+			background #FAFAFA

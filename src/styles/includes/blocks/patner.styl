@@ -1,0 +1,43 @@
+.partner
+	padding 14px 16px
+	background var(--light)
+	font-size 16px
+	
+	&__header
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items center
+		gap 10px
+		margin-bottom 10px
+	
+	&__datetime-and-id,
+	&__eur,
+	&__agency
+		font-size 13px
+		line-height 22px
+		color var(--grey)
+	
+	&__remuneration
+		text-align right
+	
+	&__vacancy
+		white-space nowrap
+		text-overflow ellipsis
+		overflow hidden
+		
+		// display -webkit-box
+		// -webkit-line-clamp 1
+		// -webkit-box-orient vertical
+		// overflow hidden
+		// text-overflow ellipsis
+	
+	&__agency
+		margin-bottom 8px
+	
+	&--document
+		.partner__country
+			margin-bottom 5px
+			font-size 13px
+			line-height 22px
+			color var(--grey)

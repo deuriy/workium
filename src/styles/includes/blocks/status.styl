@@ -10,4 +10,30 @@
 		width 128px
 		height 6px
 		border-radius 2px
-		background #5247FA
+		// background #5247FA
+		background linear-gradient(90deg, #5340FF 0%, #40A0FF 100%)
+		
+		@media $xs
+			width 100%
+			height 4px
+			margin-top -2px
+	
+	&--grey-bg
+		&::after
+			background linear-gradient(90deg, #5b5e84 0%, #a4a9d2 100%)
+	
+	&--aqua-bg
+		&::after
+			background linear-gradient(90deg, #1a6aa7 0%, #79cbde 100%)
+			
+	&--beige-bg
+		&::after
+			background linear-gradient(90deg, #cb6a1b 0%, #e6cc92 100%)
+	
+	&--green-bg
+		&::after
+			background linear-gradient(90deg, #00a422 0%, #93d323 100%)
+			
+	&--lilac-bg
+		&::after
+			background linear-gradient(90deg, #6248cf 0%, #819cff 100%)
