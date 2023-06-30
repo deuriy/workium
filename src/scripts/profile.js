@@ -2,6 +2,13 @@ import $ from "jquery";
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
+function copyText(input) {
+  input.select();
+  input.setSelectionRange(0, 99999);
+
+  document.execCommand("copy");
+}
+
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

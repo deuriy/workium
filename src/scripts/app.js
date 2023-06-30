@@ -151,6 +151,22 @@ $(function () {
     });
   });
 
+  $('.user-label--copy-partner-link').click(function(e) {
+    let $copyLinkInput = $($(this).attr('href'));
+
+    copyText($copyLinkInput[0]);
+
+    console.log($copyLinkInput[0]);
+
+    $(this).text('Посилання скопійовано!');
+
+    setTimeout(() => {
+      $(this).text('Скопіювати партнерське посилання');
+    }, 2000);
+
+    e.preventDefault();
+  });
+
   $('.authorization-form__password-toggle').click(function(e) {    
     let $formText = $(this).parent().find('.form-text');
     $formText.get(0).type = $formText.get(0).type === 'password' ? 'text' : 'password';

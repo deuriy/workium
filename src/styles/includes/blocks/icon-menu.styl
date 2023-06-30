@@ -12,17 +12,26 @@
 		list-style none
 		display flex
 		align-items center
+		justify-content space-between
+		overflow auto
 	
 	&__item
+		flex-grow 1
+		
 		&:first-child
 			.icon-menu__link
 				padding-left 22px
 		
-		&--avatar
-			flex-shrink 0
-			margin-left 10px
+		&:last-child
+			.icon-menu__avatar-link
+				padding-right 22px
+		
+		// &--avatar
+		// 	flex-shrink 0
+		// 	margin-left 10px
 	
-	&__link
+	&__link,
+	&__avatar-link
 		position relative
 		display grid
 		grid-template-columns 100%
@@ -33,6 +42,8 @@
 		font-weight 400
 		color var(--light)
 		text-decoration none
+		
+	&__link
 		@extend .transition
 		
 		&:hover,
