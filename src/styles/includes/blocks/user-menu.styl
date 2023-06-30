@@ -36,3 +36,29 @@
 	&__count
 		margin-bottom -2px
 		margin-left -3px
+	
+	&--mobile-profile
+		.user-menu__list
+			display grid
+			grid-template-columns repeat(2, 1fr)
+			gap 10px 11px
+		
+		.user-menu__item
+			margin-bottom 0
+			font-size 12px
+			line-height 1
+		
+		.user-menu__link
+			gap 5px
+			height 36px
+			padding 3px 8px 3px 11px
+			border 1px solid transparent
+			background var(--accent-light)
+			
+			&:hover,
+			&--active
+				background var(--black)
+				border-color #5041F5
+		
+		.user-menu__icon
+			max-height 15px
