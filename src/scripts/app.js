@@ -115,6 +115,18 @@ $(function () {
     }
   });
 
+  $('.user-profile-popup-link').click(function(e) {
+    let fancyboxSlide = Fancybox.getSlide();
+
+    if (fancyboxSlide) {
+      if ($(this).attr('href') === fancyboxSlide.src) {
+        setTimeout(() => {
+          Fancybox.close();
+        }, 0);
+      }
+    }
+  });
+
   // Copy URL
   document.addEventListener('click', function (e) {
     let copyURL = e.target.closest('[data-action="copyURL"]');
