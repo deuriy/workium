@@ -4,24 +4,86 @@
 		display flex
 		flex-wrap wrap
 		align-items center
-		gap 12px 36px
+		// gap 12px 36px
+		// gap 12px 44px
+		gap 12px 22px
 		
 		@media $xs
 			column-gap 34px
 	
 	&__item
-		&--submenu
-			display grid
-			grid-template-columns 1fr auto
-			align-items center
-			gap 7px
+		&--has-submenu
+			position relative
 			
-			&::after
-				content ""
-				width 6px
-				height 4px
-				background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='4' fill='none' viewBox='0 0 6 4'%3E%3Cpath fill='%230F182A' d='M3 4 0 0h6L3 4Z'/%3E%3C/svg%3E") 0 0 no-repeat
+			.main-menu__link
+				display grid
+				grid-template-columns 1fr auto
+				align-items center
+				gap 7px
+				
+				&::after
+					content ""
+					width 6px
+					height 4px
+					background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='4' fill='none' viewBox='0 0 6 4'%3E%3Cpath fill='%230F182A' d='M3 4 0 0h6L3 4Z'/%3E%3C/svg%3E") 0 0 no-repeat
+			
+			&:hover
+				.main-menu__submenu
+					top calc(100% + 10px)
+					opacity 1
+					visibility visible
+		
+		&--has-child
+			position relative
+			
+			&:hover
+				.dropdown-block
+					top calc(100% + 20px)
+					opacity 1
+					visibility visible
 	
-	&__link
+	&__link,
+	&__submenu-link
 		color var(--accent)
 		text-decoration none
+		@extend .transition
+		
+		&:hover
+			background rgb(241 243 250)
+	
+	&__link
+		padding 10px
+		border-radius 8px
+	
+	&__submenu
+		position absolute
+		top calc(100% + 20px)
+		right 0
+		width 258px
+		padding 5px 0
+		border 1px solid var(--grey-medium)
+		border-radius 6px
+		background var(--light)
+		transform translateX(50%)
+		opacity 0
+		visibility hidden
+		@extend .transition
+	
+	&__submenu-list
+		list-style none
+	
+	&__submenu-link
+		display block
+		padding 6px 23px
+		
+		&:hover
+			background #F4F4FB
+	
+	.dropdown-block
+		position absolute
+		top calc(100% + 30px)
+		right 19px
+		transform translateX(50%)
+		opacity 0
+		visibility hidden
+		@extend .transition

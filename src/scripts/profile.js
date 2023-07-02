@@ -119,24 +119,6 @@ $(function () {
     }, 2000);
 	});
 
-	$('.contact-phones--support .contact-phones__item').click(function(e) {
-		let $phone = $(this).find('.phone');
-    $phone.after(`<input type="text" class="contact-phones__phone-form-text" value="${$phone.text().replaceAll(' ', '')}" />`);
-
-  	let $tooltip = $(this).find('.contact-phones__tooltip');
-  	let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
-
-  	copyText($contactPhoneFormText[0]);
-  	$contactPhoneFormText.remove();
-
-		$tooltip.addClass('tooltip--visible');
-    setTimeout(() => {
-    	$tooltip.removeClass('tooltip--visible');
-    }, 1500);
-
-    e.preventDefault();
-	});
-
 	$('[data-additional-item-copy]').click(function(e) {
     let $clientAdditionalText = $(this).closest('.client-card__additional').find('.client-card__additional-text');
 
@@ -171,24 +153,6 @@ $(function () {
 		$(this).find('.more-link').removeClass('more-link--hover more-link--full-width-hover');
 	});
 
-
-	// Show/hide dropdown block
-	$('[data-dropdown-block-trigger]').click(function(e) {
-    let $dropdownBlock = $($(this).attr('href'));
-    $dropdownBlock.toggleClass('dropdown-block--visible');
-
-    e.preventDefault();
-  });
-
-  $(document).click(function(e) {
-    if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('[data-dropdown-block-trigger]').length) {
-      $('.dropdown-block--visible').removeClass('dropdown-block--visible');
-    }
-  });
-
-  $('.dropdown-toggle').click(function(e) {
-  	e.preventDefault();
-  });
 
   $('.dropdown-menu__link--copy-link').click(function(e) {
   	let $copyLinkInput = $($(this).attr('href'));
