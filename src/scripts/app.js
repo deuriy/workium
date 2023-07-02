@@ -93,7 +93,7 @@ $(function () {
       },
 
       done: (fancybox, slide) => {
-        if (slide.src.includes('award-popup')) {
+        if (slide.src.includes('award-popup') && slide.src != '#leader-award-popup') {
           runConfetti();
         }
       }
