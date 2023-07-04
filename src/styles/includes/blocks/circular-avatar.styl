@@ -1,14 +1,14 @@
 .circular-avatar
-	// width 84px
+	display grid
+	grid-template-columns 100%
 	width 110px
-	padding 5px
-	border 2px solid #333742
-	border-width 2px
-	// border-style solid
-	// border-image linear-gradient(90deg, #ffc10d, #ef881d)
-	border-radius 50%
+	
+	&__circle-progressbar,
+	&__img
+		grid-area 1 / 1 / 2 / 2
 	
 	&__img
-		width 100%
+		width 93px
+		margin 9px
 		vertical-align middle
 		border-radius 50%

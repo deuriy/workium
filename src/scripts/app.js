@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
+import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
 
 var count = 200;
 var defaults = {
@@ -246,5 +247,16 @@ $(function () {
     }, 1500);
 
     e.preventDefault();
+  });
+
+  $('.circle-progressbar').circleProgress({
+    startAngle: -1.55,
+    value: 0.06,
+    thickness: 2,
+    size: 110,
+    fill: {
+      gradient: ["#ffc10d", "#ef881d"]
+    },
+    emptyFill: "#333742"
   });
 });
