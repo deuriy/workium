@@ -1,4 +1,13 @@
 .main-menu
+	.dropdown-block
+		position absolute
+		top calc(100% + 30px)
+		right 19px
+		transform translateX(50%)
+		opacity 0
+		visibility hidden
+		@extend .transition
+		
 	&__list
 		list-style none
 		display flex
@@ -26,10 +35,24 @@
 					width 6px
 					height 4px
 					background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='4' fill='none' viewBox='0 0 6 4'%3E%3Cpath fill='%230F182A' d='M3 4 0 0h6L3 4Z'/%3E%3C/svg%3E") 0 0 no-repeat
+					pointer-events none
 			
 			&:hover
 				.main-menu__submenu
 					top calc(100% + 10px)
+					opacity 1
+					visibility visible
+		
+		&--has-submenu-to-top
+			.main-menu__link
+				
+				&::after
+					transform rotate(180deg)
+					
+			&:hover
+				.main-menu__submenu
+					top auto
+					bottom calc(100% + 10px)
 					opacity 1
 					visibility visible
 		
@@ -41,6 +64,16 @@
 					top calc(100% + 20px)
 					opacity 1
 					visibility visible
+		
+		&--has-child-to-top
+			.dropdown-block
+				top auto
+				bottom 0
+			
+			&:hover
+				.dropdown-block
+					top auto
+					bottom calc(100% + 20px)
 	
 	&__link,
 	&__submenu-link
@@ -57,6 +90,7 @@
 	
 	&__submenu
 		position absolute
+		// z-index 10
 		top calc(100% + 20px)
 		right 0
 		width 258px
@@ -68,6 +102,10 @@
 		opacity 0
 		visibility hidden
 		@extend .transition
+		
+		&--to-top
+			top auto
+			bottom 0
 	
 	&__submenu-list
 		list-style none
@@ -78,12 +116,3 @@
 		
 		&:hover
 			background #F4F4FB
-	
-	.dropdown-block
-		position absolute
-		top calc(100% + 30px)
-		right 19px
-		transform translateX(50%)
-		opacity 0
-		visibility hidden
-		@extend .transition
