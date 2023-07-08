@@ -60,7 +60,7 @@ $(function () {
 
 	const userSidebarMenuPS = new PerfectScrollbar('.user-sidebar__user-menu', {
 		wheelSpeed: 2,
-		wheelPropagation: true,
+		wheelPropagation: false,
 		minScrollbarLength: 20
 	});
 
