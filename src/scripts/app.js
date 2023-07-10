@@ -258,6 +258,19 @@ $(function () {
     e.preventDefault();
   });
 
+  $('.selected-item__remove-link').click(function(event) {
+    event.preventDefault();
+
+    $(this).closest('.selected-item').remove();
+  });
+
+  $('.additional-filters__clear-btn').click(function(event) {
+    event.preventDefault();
+
+    $(this).parent().find('.selected-items__item').remove();
+    $(this).hide();
+  });
+
   $('.circle-progressbar').circleProgress({
     startAngle: -1.55,
     value: 0.06,

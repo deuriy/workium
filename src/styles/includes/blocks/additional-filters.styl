@@ -1,11 +1,19 @@
-.additional-filters	
+.additional-filters
 	&__header
+		border-top-right-radius 16px
+		border-top-left-radius 16px
+		background #FAFBFD
+		
+	&__header-top
 		display grid
-		grid-template-columns repeat(2, auto)
-		justify-content space-between
+		// grid-template-columns repeat(2, auto)
+		grid-template-columns auto 1fr auto
+		// justify-content space-between
 		align-items center
-		gap 20px
-		padding 24px 20px 24px 50px
+		// gap 20px
+		gap 28px
+		// padding 24px 20px 24px 50px
+		padding 16px 20px 12px 50px
 		
 		@media (max-width: 991px)
 			padding 24px 20px 24px 30px
@@ -28,15 +36,33 @@
 			font-size 21px
 			line-height 1.2857
 	
+	&__form-items
+		display grid
+		// grid-template-columns repeat(3, auto)
+		grid-template-columns 210px 140px 140px
+		justify-content start
+		gap 23px
+	
 	&__close-btn
 		margin-top -13px
 		
 		@media $xs
 			margin-top 0
 	
+	&__header-bottom
+		display grid
+		grid-template-columns 1fr auto
+		// align-items start
+		align-items center
+		gap 15px
+		// padding 0 13px 10px
+		padding 0 28px 10px 13px
+	
 	&__body
-		max-height calc(100vh - 196px)
-		padding 7px 35px 30px 50px
+		// max-height calc(100vh - 196px)
+		// max-height calc(100vh - 240px)
+		max-height none
+		padding 25px 35px 30px 50px
 		overflow auto
 		
 		@media (max-width: 991px)
@@ -67,7 +93,8 @@
 	
 	&__checkboxes-groups
 		display grid
-		grid-template-columns repeat(3, 1fr)
+		// grid-template-columns repeat(3, 1fr)
+		grid-template-columns 1fr 28% 28%
 		gap 58px 35px
 		
 		@media (max-width: 991px)
@@ -75,6 +102,7 @@
 		
 		@media $xs
 			grid-template-columns repeat(2, 1fr)
+			// grid-template-columns repeat(2, auto)
 			gap 30px 20px
 		
 		@media $xxs
@@ -129,6 +157,9 @@
 		align-items center
 		gap 32px
 		padding 16px
+		border-bottom-right-radius 16px
+		border-bottom-left-radius 16px
+		background #FAFBFD
 		
 		@media $xxs
 			grid-template-columns 100%
