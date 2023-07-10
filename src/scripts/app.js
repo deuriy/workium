@@ -219,8 +219,17 @@ $(function () {
 
   // Show/hide dropdown block
   $('[data-dropdown-block-trigger]').click(function(e) {
+    let $currentVisibleDropdownBlock = $('.dropdown-block--visible');
+    // console.log($currentVisibleDropdownBlock);
+    
     let $dropdownBlock = $($(this).attr('href'));
-    $dropdownBlock.toggleClass('dropdown-block--visible');
+
+    if ($currentVisibleDropdownBlock != $dropdownBlock) {
+      $currentVisibleDropdownBlock.removeClass('dropdown-block--visible');
+      // console.log('No!');
+    }
+    
+    $dropdownBlock.addClass('dropdown-block--visible');
 
     e.preventDefault();
   });
