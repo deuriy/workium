@@ -1,14 +1,15 @@
 .fancybox-popup.fancybox-popup--user-profile#user-profile-popup(style="display: none;")
 	input(type="text" readonly value="https://website.com?i=wmj7drft").dropdown-block__copy-input#copy-link-input-mobile
-	.mobile-user-profile
-		h3.mobile-user-profile__title Профіль
-		.mobile-user-profile__user-info
-			.circular-avatar.mobile-user-profile__avatar
+	.mobile-user-popup
+		.mobile-user-popup__header
+			h3.mobile-user-popup__title Профіль
+		.mobile-user-popup__user-info
+			.circular-avatar.mobile-user-popup__avatar
 				.circle-progressbar.circular-avatar__circle-progressbar
 				img(src="/img/user_sidebar_avatar.png" alt="Sobat Jariyah").circular-avatar__img
-			.mobile-user-profile__username.mobile-user-profile__username--online Sobat Jariyah
-			.mobile-user-profile__id ID: 788833
-		.user-labels.mobile-user-profile__user-labels
+			.mobile-user-popup__username.mobile-user-popup__username--online Sobat Jariyah
+			.mobile-user-popup__id ID: 788833
+		.user-labels.mobile-user-popup__user-labels
 			.user-label.user-label--mobile.user-label--influence.user-labels__item.user-labels__item--2col Впливовість: 0
 			.user-label.user-label--mobile.user-label--awards.user-labels__item.user-labels__item--2col
 				.award-block.award-block--user-label.user-label__award-block 1
@@ -22,5 +23,5 @@
 			a(href="#copy-link-input-mobile").user-label.user-label--mobile.user-label--copy-partner-link.user-labels__item.user-labels__item--4col Скопіювати партнерське посилання
 			a(href="/settings.html").user-label.user-label--mobile.user-label--settings.user-labels__item.user-labels__item--2col Налаштування
 			a(href="#").user-label.user-label--mobile.user-label--logout.user-labels__item.user-labels__item--2col Вийти
-		.mobile-user-profile__close-btn-wrapper
-			button(type="button" data-fancybox-close).user-label.user-label--close-btn.mobile-user-profile__close-btn Закрити вікно
+		.mobile-user-popup__close-btn-wrapper
+			button(type="button" data-fancybox-close).user-label.user-label--close-btn.mobile-user-popup__close-btn Закрити вікно

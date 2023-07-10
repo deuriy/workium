@@ -1,7 +1,8 @@
 .fancybox-popup.fancybox-popup--user-profile#profile-menu-popup(style="display: none;")
-	.mobile-user-profile.mobile-user-profile--menu
-		h3.mobile-user-profile__title Розділи
-		.user-menu.user-menu--mobile-profile.mobile-user-profile__user-menu
+	.mobile-user-popup.mobile-user-popup--menu
+		.mobile-user-popup__header.mobile-user-popup__header--menu
+			h3.mobile-user-popup__title Розділи
+		.user-menu.user-menu--mobile-profile.mobile-user-popup__user-menu
 			ul.user-menu__list
 				li.user-menu__item
 					a(href="/vacancies.html").user-menu__link
@@ -55,5 +56,5 @@
 					a(href="#support-block" data-dropdown-block-trigger).user-menu__link
 						img(src="/img/head_phones_service_icon.svg" alt="Онлайн підтримка").user-menu__icon
 						span.user-menu__item-text Онлайн підтримка
-		.mobile-user-profile__close-btn-wrapper
-			button(type="button" data-fancybox-close).user-label.user-label--close-btn.mobile-user-profile__close-btn Закрити вікно
+		.mobile-user-popup__close-btn-wrapper
+			button(type="button" data-fancybox-close).user-label.user-label--close-btn.mobile-user-popup__close-btn Закрити вікно

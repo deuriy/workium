@@ -240,7 +240,7 @@ $(function () {
     }
   });
 
-  $('.contact-phones--support .contact-phones__item').click(function(e) {
+  $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item').click(function(e) {
     let $phone = $(this).find('.phone');
     $phone.after(`<input type="text" class="contact-phones__phone-form-text" value="${$phone.text().replaceAll(' ', '')}" />`);
 
