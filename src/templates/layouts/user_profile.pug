@@ -20,6 +20,13 @@ html(lang="uk")
       include ../includes/blocks/mobile-support-popup-extended
       include ../includes/blocks/profile-menu-popup
       include ../includes/blocks/mobile-user-profile
+      include ../includes/blocks/closed-save-section
+      include ../includes/blocks/closed-affiliate-program
+      include ../includes/blocks/closed-achievements
+      include ../includes/blocks/closed-balance
+      include ../includes/blocks/closed-verification
+      include ../includes/blocks/closed-black-list
+      include ../includes/blocks/closed-settings
       
       .user-profile(class=userProfileClasses)
         include ../includes/blocks/user-sidebar
@@ -27,6 +34,8 @@ html(lang="uk")
         .user-profile__main
           .user-profile__main-inner
             block content
+
+      include ../includes/blocks/authorization-popup
 
     include ../includes/blocks/icon-menu
 
