@@ -51,7 +51,6 @@
 		
 		&--has-submenu-to-top
 			.main-menu__link
-				
 				&::after
 					transform rotate(180deg)
 					
@@ -83,6 +82,9 @@
 				top auto
 				bottom calc(100% + 40px)
 				// bottom 0
+				
+				@media $xs
+					display none
 			
 			&:hover
 				.main-menu__dropdown-block-wrapper
@@ -120,6 +122,9 @@
 		opacity 0
 		visibility hidden
 		@extend .transition
+		
+		@media $xs
+			display none
 		
 		&--to-top
 			top auto
