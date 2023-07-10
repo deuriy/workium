@@ -1,12 +1,17 @@
 .main-menu
-	.dropdown-block
+	&__dropdown-block-wrapper
 		position absolute
-		top calc(100% + 30px)
+		top calc(100% + 40px)
 		right 19px
 		transform translateX(50%)
 		opacity 0
 		visibility hidden
 		@extend .transition
+	
+	.dropdown-block
+		opacity 0
+		visibility hidden
+		transform none
 		
 	&__list
 		list-style none
@@ -39,7 +44,8 @@
 			
 			&:hover
 				.main-menu__submenu
-					top calc(100% + 10px)
+					// top calc(100% + 10px)
+					top calc(100%)
 					opacity 1
 					visibility visible
 		
@@ -52,7 +58,8 @@
 			&:hover
 				.main-menu__submenu
 					top auto
-					bottom calc(100% + 10px)
+					// bottom calc(100% + 10px)
+					bottom calc(100%)
 					opacity 1
 					visibility visible
 		
@@ -60,21 +67,29 @@
 			position relative
 			
 			&:hover
+				.main-menu__dropdown-block-wrapper
+					// top calc(100% + 20px)
+					top calc(100%)
+					padding-top 20px
+					opacity 1
+					visibility visible
+				
 				.dropdown-block
-					top calc(100% + 20px)
 					opacity 1
 					visibility visible
 		
 		&--has-child-to-top
-			.dropdown-block
+			.main-menu__dropdown-block-wrapper
 				top auto
 				bottom calc(100% + 40px)
 				// bottom 0
 			
 			&:hover
-				.dropdown-block
+				.main-menu__dropdown-block-wrapper
 					top auto
-					bottom calc(100% + 20px)
+					// bottom calc(100% + 20px)
+					bottom calc(100%)
+					padding-bottom 20px
 	
 	&__link,
 	&__submenu-link
@@ -96,10 +111,11 @@
 		right 0
 		// width 258px
 		width 300px
-		padding 5px 0
-		border 1px solid var(--grey-medium)
-		border-radius 6px
-		background var(--light)
+		// padding 5px 0
+		padding-top 10px
+		// border 1px solid var(--grey-medium)
+		// border-radius 6px
+		// background var(--light)
 		transform translateX(50%)
 		opacity 0
 		visibility hidden
@@ -109,9 +125,15 @@
 			top auto
 			// bottom 0
 			bottom calc(100% + 20px)
+			padding-top 0
+			padding-bottom 10px
 	
 	&__submenu-list
 		list-style none
+		padding 5px 0
+		border 1px solid var(--grey-medium)
+		border-radius 6px
+		background var(--light)
 	
 	&__submenu-link
 		display block
