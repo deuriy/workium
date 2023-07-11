@@ -40,7 +40,7 @@
 			margin-bottom 12px
 			// padding-bottom 14px
 			// padding 0 15px
-			border-bottom 1px solid var(--grey-medium)
+			// border-bottom 1px solid var(--grey-medium)
 		
 		// @media $xxs
 		// 	margin-bottom 16px
@@ -56,6 +56,38 @@
 		color var(--text-color)
 		font-size 13px
 		line-height 22px
+		text-decoration none
+		
+		@media $xs
+			position relative
+			// display inline-grid
+			// grid-template-columns auto auto
+			// justify-items start
+			
+			&::after
+				content ""
+				position absolute
+				top 1px
+				right 0
+				width 16px
+				height 22px
+				background var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath fill='%23666B80' d='M8 11 5 7h6l-3 4Z'/%3E%3C/svg%3E") center no-repeat
+				transform rotate(180deg)
+		
+			&--truncated
+				// display -webkit-box
+				// -webkit-line-clamp 1
+				// -webkit-box-orient vertical
+				// overflow hidden
+				// text-overflow ellipsis
+					
+				white-space nowrap
+				overflow hidden
+				// text-overflow ellipsis
+				
+				&::after
+					top 0
+					transform none
 	
 	&__specifications
 		display grid
@@ -149,3 +181,9 @@
 		.vacancy-card__header
 			@media $xs
 				padding 0 15px
+				border-bottom 1px solid var(--grey-medium)
+		
+		.vacancy-card__address
+			@media $xs
+				&::after
+					display none

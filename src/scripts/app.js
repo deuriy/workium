@@ -271,6 +271,12 @@ $(function () {
     $(this).hide();
   });
 
+  $('.vacancy-card__address').click(function(event) {
+    $(this).toggleClass('vacancy-card__address--truncated');
+
+    event.preventDefault();
+  });
+
   $('.circle-progressbar').circleProgress({
     startAngle: -1.55,
     value: 0.06,
