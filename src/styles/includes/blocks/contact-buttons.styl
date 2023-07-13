@@ -47,12 +47,21 @@
 				grid-template-columns repeat(2, 256px)
 				gap 36px
 	
-	&--support
-		// width 198px
-		// width 215px
-		width 310px
-		
+	&--support,
+	&--mobile-support
 		.contact-buttons__list
 			grid-template-columns repeat(2, auto)
 			// gap 17px
 			gap 21px
+	
+	&--support
+		// width 198px
+		// width 215px
+		width 310px
+	
+	&--mobile-support
+		width 320px
+		
+		.contact-buttons__list
+			justify-content start
+			gap 24px
