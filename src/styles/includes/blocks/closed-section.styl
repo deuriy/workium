@@ -17,6 +17,18 @@
 	&__icon
 		width 62px
 	
+	&__avatar
+		// display grid
+		// place-content center
+		width 154px
+		height 154px
+		margin-bottom 27px
+		border 20px solid rgb(36	45 64)
+		border-radius 50%
+	
+	&__avatar-img
+		width 100%
+	
 	&__title
 		margin-bottom 29px
 		font-weight 600
@@ -30,18 +42,25 @@
 		& > p + p
 			margin-top 25px
 	
-	&--verification
-		padding-bottom 53px
-		
-		.closed-section__icon-wrapper
-			margin-bottom 28px
-			
+	&--verification,
+	&--user-profile
 		.closed-section__text
-			width 390px
-			margin-right auto
-			margin-left auto
 			font-size 16.5px
 			line-height 1.15
 			
 			& > p + p
 				margin-top 22px
+	
+	&--verification
+		padding-bottom 53px
+		
+		.closed-section__icon-wrapper
+			margin-bottom 28px
+	
+	&--user-profile
+		padding-top 56px
+		padding-bottom 108px
+		
+		.closed-section__title
+			margin-bottom 39px
+			font-size 25px
