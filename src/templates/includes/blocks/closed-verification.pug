@@ -1,15 +1,17 @@
-.fancybox-popup.fancybox-popup--user-profile#closed-verification(style="display: none;")
-	.mobile-user-popup
+.fancybox-popup.fancybox-popup--user-profile.fancybox-popup--closed-verification#closed-verification(style="display: none;")
+	.mobile-user-popup.mobile-user-popup--closed-verification
 		.mobile-user-popup__header.mobile-user-popup__header--closed-section
-			a(href="#profile-menu-popup").user-profile-popup-link.mobile-user-popup__btn-back
-			h3.mobile-user-popup__title.mobile-user-popup__title--closed-section Повернутись
-		.closed-section
+			a(href="#profile-menu-popup").user-profile-popup-link.btn-back.btn-back--white.btn-back--mobile-popup.btn-back--closed-verification Повернутись
+			//- a(href="#profile-menu-popup").user-profile-popup-link.mobile-user-popup__btn-back
+			//- h3.mobile-user-popup__title.mobile-user-popup__title--closed-section Повернутись
+		.closed-section.closed-section--verification
 			.closed-section__icon-wrapper
 				img(src="/img/user_menu/verification.svg" alt="Verification").closed-section__icon
+			h3.closed-section__title Верифікація
 			.closed-section__text
 				p Верифікація особистого профілю захищає акаунт та відкриває доступ до усіх можливих функцій нейромережі.
 				p Для доступу до розділу - #[br]увійдіть або зареєструйтесь.
 				p Це швидко та безкоштовно!
 		.mobile-user-popup__buttons.mobile-user-popup__buttons--closed-section
-			a(href="#authorization-popup" data-active-tab-number="2").fancybox-popup-toggle.user-label.user-label--btn.user-label--btn-closed-section.mobile-user-popup__btn Увійти
+			a(href="#authorization-popup" data-active-tab-number="2").fancybox-popup-toggle.user-label.user-label--btn.user-label--btn-closed-section.user-label--btn-closed-verification.mobile-user-popup__btn Увійти
 			a(href="#authorization-popup").fancybox-popup-toggle.btn-default.btn-default--closed-section.mobile-user-popup__btn Зареєструватись

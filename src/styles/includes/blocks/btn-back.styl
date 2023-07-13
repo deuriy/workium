@@ -1,8 +1,38 @@
 .btn-back
+	// display inline-flex
+	// width 20px
+	// height 20px
+	// border none
+	// outline none
+	// background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 14'%3E%3Cpath stroke='%231F2126' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M7 1 1 7l6 6'/%3E%3C/svg%3E") center / 8px no-repeat
+	// cursor pointer
 	display inline-flex
-	width 20px
-	height 20px
+	align-items center
+	gap 14px
 	border none
 	outline none
-	background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 14'%3E%3Cpath stroke='%231F2126' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M7 1 1 7l6 6'/%3E%3C/svg%3E") center / 8px no-repeat
+	background none
+	color var(--accent)
+	font-size 21px
 	cursor pointer
+	text-decoration none
+	
+	&::before
+		content ""
+		// display inline-flex
+		width 20px
+		height 20px
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 14'%3E%3Cpath stroke='%231F2126' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M7 1 1 7l6 6'/%3E%3C/svg%3E") center / 8px no-repeat
+	
+	&--white
+		color var(--light)
+		
+		&::before
+			background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 14'%3E%3Cpath stroke='%23FFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M7 1 1 7l6 6'/%3E%3C/svg%3E")
+	
+	&--mobile-popup
+		&::before
+			background-size 10px
+	
+	&--closed-verification
+		font-size 17px
