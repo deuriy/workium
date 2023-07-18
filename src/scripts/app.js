@@ -239,16 +239,13 @@ $(function () {
     }
 
     if ($dropdownBlock.hasClass('dropdown-block--submenu-right-bottom')) {
-      // let coords = getCoords($(this)[0]);
       let coords = $(this)[0].getBoundingClientRect();
 
       console.log(coords);
-      console.log($dropdownBlock.outerHeight());
 
       $dropdownBlock.css({
         right: `-${coords.right + 20}px`,
-        // top: `${coords.top}px`
-        top: `${coords.top - $dropdownBlock.outerHeight() + $(this).outerHeight()}px`
+        top: `${coords.top - $dropdownBlock.outerHeight() + coords.height}px`
       })
     }
     
