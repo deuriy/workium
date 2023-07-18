@@ -5,12 +5,11 @@
         button(type="button" data-fancybox-close).btn-back.hidden-xxsPlus.additional-filters__btn-back
         h2.additional-filters__title Фільтри
         .additional-filters__form-items
-          input(type="search" name="query" placeholder="Пошук по фільтру...").form-text.form-text--filter-search
+          input(type="search" name="search_filter" placeholder="Пошук по фільтру...").form-text.form-text--filter-search
           select(name="filter_countries" autocomplete="off").form-select.form-select--filter#filter_countries
-            option(value="") Усі країни
             option(value="poland") Польща
             option(value="czech") Чехія
-          select(name="filter_cities").form-select.form-select--filter#filter_cities
+          select(name="filter_cities" multiple).form-select.form-select--filter#filter_cities
             option(value="") Усі міста
             option(value="city_1") Місто 1
             option(value="city_2") Місто 2
@@ -20,55 +19,55 @@
       .additional-filters__header-bottom
         .selected-items
           ul.selected-items__list
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-            li.selected-items__item
-              .selected-item
-                .selected-item__value Обробка овоч
-                a(href="#").selected-item__remove-link
-        a(href="javascript:;").btn-beige.additional-filters__clear-btn Скинути фільтри
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+            //- li.selected-items__item
+            //-   .selected-item
+            //-     .selected-item__value Обробка овоч
+            //-     a(href="#").selected-item__remove-link
+        a(href="javascript:;").btn-beige.additional-filters__clear-btn.hidden Скинути фільтри
     .additional-filters__body
       .additional-filters__items.hidden-xxsPlus
         .addtional-filters__item
