@@ -46,6 +46,17 @@ function copyText(input) {
   document.execCommand("copy");
 }
 
+// function getCoords(elem) {
+//   let box = elem.getBoundingClientRect();
+
+//   return {
+//     top: box.top + window.pageYOffset,
+//     right: box.right + window.pageXOffset,
+//     bottom: box.bottom + window.pageYOffset,
+//     left: box.left + window.pageXOffset
+//   };
+// }
+
 $(function () {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -225,6 +236,20 @@ $(function () {
 
     if ($currentVisibleDropdownBlock.length) {
       $currentVisibleDropdownBlock.removeClass('dropdown-block--visible');
+    }
+
+    if ($dropdownBlock.hasClass('dropdown-block--submenu-right-bottom')) {
+      // let coords = getCoords($(this)[0]);
+      let coords = $(this)[0].getBoundingClientRect();
+
+      console.log(coords);
+      console.log($dropdownBlock.outerHeight());
+
+      $dropdownBlock.css({
+        right: `-${coords.right + 20}px`,
+        // top: `${coords.top}px`
+        top: `${coords.top - $dropdownBlock.outerHeight() + $(this).outerHeight()}px`
+      })
     }
     
     $dropdownBlock.toggleClass('dropdown-block--visible');
