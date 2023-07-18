@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    //- meta(name='description' content='')
+    title Workium
+    link(href="/img/favicon.png", rel="icon", type="image/png")
+    link(href="/css/vendor.css", rel="stylesheet")
+    link(href="/css/styles.css", rel="stylesheet")
+    script(src="/js/vendor.js", defer="")
+    script(src="/js/app.js", defer="")
+  body
+    .wrapper.wrapper--homepage
+      block content
+
+    block page_bottom
