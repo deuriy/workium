@@ -1,0 +1,37 @@
+.main-menu
+	ul.main-menu__list
+		li.main-menu__item
+			a(href="/vacancies.html").main-menu__link Вакансії
+		li.main-menu__item
+			a(href="/docs.html").main-menu__link Документи
+		li.main-menu__item.main-menu__item--has-submenu
+			a(href="/other.html").main-menu__link Інше
+			.main-menu__submenu
+				ul.main-menu__submenu-list
+					li.main-menu__submenu-item
+						a(href="#").main-menu__submenu-link Про нейромережу WORKIUM
+					li.main-menu__submenu-item
+						a(href="#").main-menu__submenu-link Працівникам
+					li.main-menu__submenu-item
+						a(href="#").main-menu__submenu-link Рекрутерам
+					li.main-menu__submenu-item
+						a(href="#").main-menu__submenu-link Партнерська програма
+					li.main-menu__submenu-item
+						a(href="#").main-menu__submenu-link Агенціям та роботодавцям
+					li.main-menu__submenu-item
+						a(href="#").main-menu__submenu-link Операційним партнерам
+						
+					//- li.main-menu__submenu-item
+					//- 	a(href="#").main-menu__submenu-link.main-menu__submenu-link--hide-profile Приховати профіль
+					//- li.main-menu__submenu-item
+					//- 	a(href="#copy-link-input").main-menu__submenu-link.main-menu__submenu-link--copy-link Партнерське посилання
+					//- li.main-menu__submenu-item
+					//- 	a(href="/settings.html").main-menu__submenu-link Налаштування
+					//- li.main-menu__submenu-item
+					//- 	a(href="/logout.html").main-menu__submenu-link Вийти
+		li.main-menu__item.main-menu__item--has-child
+			a(href="javascript:;").main-menu__link Контакти
+			.main-menu__dropdown-block-wrapper
+				include ./support-block
+		li.main-menu__item
+			a(href="#authorization-popup" data-active-tab-number="2").main-menu__link.fancybox-popup-toggle Увійти

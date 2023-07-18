@@ -50,26 +50,9 @@
 		margin-bottom -2px
 		margin-left -3px
 	
-	&--mobile-profile
-		.user-menu__list
-			display grid
-			grid-template-columns repeat(2, 1fr)
-			// gap 10px 11px
-			gap 13px 15px
-		
-		.user-menu__item
-			margin-bottom 0
-			// font-size 12px
-			font-size 16px
-			line-height 1
-		
+	&--mobile-profile,
+	&--mobile-submenu-profile		
 		.user-menu__link
-			// gap 5px
-			gap 10px
-			// height 36px
-			height 48px
-			// padding 3px 8px 3px 11px
-			padding 4px 8px 4px 19px
 			border 1px solid transparent
 			background var(--accent-light)
 			
@@ -90,7 +73,35 @@
 					left 140px
 					border-radius 50%
 					background #38CA16
+	
+	&--mobile-profile
+		.user-menu__list
+			display grid
+			grid-template-columns repeat(2, 1fr)
+			// gap 10px 11px
+			gap 13px 15px
 		
-		// .user-menu__icon
-			// max-height 15px
-			// max-height 18px
+		.user-menu__item
+			margin-bottom 0
+			// font-size 12px
+			font-size 16px
+			line-height 1
+		
+		.user-menu__link
+			gap 10px
+			height 48px
+			padding 4px 8px 4px 19px
+	
+	&--mobile-submenu-profile
+		.user-menu__item
+			margin-bottom 21px
+			font-size 18px
+			
+			&:last-child
+				margin-bottom 0
+			
+		.user-menu__link
+			grid-template-columns 100%
+			padding-top 11px
+			padding-bottom 11px
+			text-align center
