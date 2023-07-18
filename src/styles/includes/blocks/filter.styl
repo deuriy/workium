@@ -16,6 +16,9 @@
 		grid-template-columns 17% 17% 17% 11% 10% auto
 		align-items start
 		
+		@media $xlMinus
+			grid-template-columns 16% 16% 15% 11% 10% auto
+		
 		@media $mdMinus
 			grid-template-columns repeat(3, 1fr)
 		
@@ -49,3 +52,7 @@
 	&__clear-link
 		margin-top 0.6em
 		margin-right 0.8em
+	
+	&__clear-btn
+		margin-top 2px
+		margin-right 26px
