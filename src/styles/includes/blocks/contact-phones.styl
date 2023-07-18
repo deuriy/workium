@@ -3,13 +3,15 @@
 		
 	&__list
 		list-style none
+		display inline-grid
+		grid-template-columns 100%
 	
 	&__item
 		position relative
-		display grid
-		grid-template-columns 1fr auto
-		align-items center
-		margin-right 13px
+		// display grid
+		// grid-template-columns 1fr auto
+		// align-items center
+		// margin-right 13px
 		// gap 5px
 		
 		& + .contact-phones__item
@@ -25,6 +27,9 @@
 		&:nth-child(2)
 			.contact-phones__tooltip
 				top -28px
+		
+		&--right
+			text-align right
 	
 	&__tooltip
 		position absolute
@@ -46,12 +51,26 @@
 	
 	&--support,
 	&--mobile-support
-		.contact-phones__item + .contact-phones__item
-			margin-top 15px
+		.contact-phones__list
+			display grid
+			
+		.contact-phones__item
+			display grid
+			justify-content space-between
+			align-items center
+			margin-right 13px
+			
+			& + .contact-phones__item
+				margin-top 15px
+	
+	&--support
+		.contact-phones__item
+			grid-template-columns 240px auto
 	
 	&--mobile-support
 		width 353px
 		max-width 100%
 		
 		.contact-phones__item
+			grid-template-columns 258px auto
 			margin-right 7px
