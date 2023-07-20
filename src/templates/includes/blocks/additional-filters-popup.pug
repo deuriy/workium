@@ -17,7 +17,7 @@
             option(value="city_4") Місто 4
         a(href="javascript:;" data-orig-tabindex="undefined" tabindex="-1").link.link--success.link--clear-filter.hidden-xxsPlus Скинути фільтри
       .additional-filters__header-bottom
-        .selected-items
+        .selected-items.additional-filters__selected-items
           ul.selected-items__list
             //- li.selected-items__item
             //-   .selected-item
@@ -67,7 +67,7 @@
             //-   .selected-item
             //-     .selected-item__value Обробка овоч
             //-     a(href="#").selected-item__remove-link
-        a(href="javascript:;").btn-beige.additional-filters__clear-btn.hidden Скинути фільтри
+        a(href="javascript:;" style="display: none;").btn-beige.additional-filters__clear-btn Скинути фільтри
     .additional-filters__body
       .additional-filters__items.hidden-xxsPlus
         .addtional-filters__item
@@ -93,7 +93,7 @@
           ul.checkboxes-group__list
             li.checkboxes-group__item
               .checkbox
-                input(name="filters[poland_visa_180_days]" value="poland_visa_180_days" type="checkbox" checked).checkbox__input#FilterItem3
+                input(name="filters[poland_visa_180_days]" value="poland_visa_180_days" type="checkbox").checkbox__input#FilterItem3
                 label(for="FilterItem3").checkbox__label Польська робоча віза 180 днів
             li.checkboxes-group__item
               .checkbox
@@ -123,7 +123,7 @@
                 input(name="filters[couples]" value="couples" type="checkbox").checkbox__input#FilterItem9
                 label(for="FilterItem9").checkbox__label Сімейним парам
         .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-4
-          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Знання мови
+          h3.radiobtns-group__title Знання мови
           ul.radiobtns-group__list
             li.radiobtns-group__item
               .radiobtn
@@ -138,7 +138,7 @@
                 input(name="filters[4]" value="lang_not_required" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem12
                 label(for="FilterItem12").radiobtn__label Не потрібно
         .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-5
-          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Досвід роботи
+          h3.radiobtns-group__title Досвід роботи
           ul.radiobtns-group__list
             li.radiobtns-group__item
               .radiobtn
@@ -153,7 +153,7 @@
                 input(name="filters[5]" value="experience_not_required" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem15
                 label(for="FilterItem15").radiobtn__label Не потрібен
         .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-6
-          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Житло
+          h3.radiobtns-group__title Житло
           ul.radiobtns-group__list
             li.radiobtns-group__item
               .radiobtn
@@ -176,7 +176,7 @@
                 input(name="filters[6]" value="housing_help" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem20
                 label(for="FilterItem20").radiobtn__label Допомога з пошуком
         .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-7
-          h3(onclick="toggleRadiobtnsGroup(this)").radiobtns-group__title Харчування
+          h3.radiobtns-group__title Харчування
           ul.radiobtns-group__list
             li.radiobtns-group__item
               .radiobtn

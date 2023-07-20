@@ -284,13 +284,6 @@ $(function () {
     $(this).closest('.selected-item').remove();
   });
 
-  $('.additional-filters__clear-btn').click(function(event) {
-    event.preventDefault();
-
-    $(this).parent().find('.selected-items__item').remove();
-    $(this).hide();
-  });
-
   $('.vacancy-card__address').click(function(event) {
     $(this).toggleClass('vacancy-card__address--truncated');
 
