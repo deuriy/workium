@@ -198,8 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let $allCheckboxes = $additionalFilters.find('.checkbox__input');
     let $allNonCheckedRadio = $additionalFilters.find(`.radiobtn__input[value=""]`);
 
-    console.log($allNonCheckedRadio);
-
     $allCheckboxes.prop('checked', false);
     $allNonCheckedRadio.prop('checked', true);
 
