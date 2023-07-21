@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-$(function () {
+$(() => {
   $('[data-additional-toggle]').click(function(e) {
     let $clientCard = $(this).closest('.client-card');
     let $toggleBtn = $clientCard.find('.toggle-btn');

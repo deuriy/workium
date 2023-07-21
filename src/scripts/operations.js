@@ -3,7 +3,7 @@ import Swiper from 'swiper';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 
-document.addEventListener('DOMContentLoaded', function () {
+$(() => {
 	const walletsSwiper = new Swiper('.wallets-swiper', {
     // loop: true,
     slidesPerView: 'auto',

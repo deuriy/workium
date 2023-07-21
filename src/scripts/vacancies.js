@@ -1,8 +1,218 @@
 import $ from "jquery";
 import Swiper, { Pagination } from 'swiper';
+import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
+import multi from "multi.js/dist/multi-es6.min.js";
 
-document.addEventListener('DOMContentLoaded', function () {
+// console.log(multi);
+
+// function formatStateResult(state) {
+//   if (!state.element || !state.element.dataset.icon) {
+//     return state.text;
+//   }
+
+//   console.log(state.element);
+
+//   let $state = $(
+//     `<span class="Select_iconWrapper"><img src="${state.element.dataset.icon}" class="Select_icon" /><span class="Select_text">${state.text}</span></span>`
+//   );
+
+//   return $state;
+// }
+
+// function formatStateSelection(state) {
+//   if (!state.element || !state.element.dataset.icon) {
+//     return state.text;
+//   }
+
+//   console.log(state.element);
+
+//   let $state = $(
+//     `<span class="Select_iconWrapper"><img src="${state.element.dataset.icon}" class="Select_icon" /></span>`
+//   );
+
+//   return $state;
+// }
+
+$(() => {
+  select2($);
+  // multi($);
+
+  // $('#cities-select').multi();
+
+  let citiesSelect = document.querySelector(".cities-select");
+  multi(citiesSelect, {
+    // 'non_selected_header': 'All options',
+    // 'selected_header': 'Selected options',
+    "search_placeholder": "Введіть назву міста…",
+    "hide_empty_groups": true
+  });
+
+  $('.dropdown-block--cities-select .multi-wrapper .search-input').wrapAll('<div class="multi-wrapper__header"></div>');
+  $('.dropdown-block--cities-select .multi-wrapper .non-selected-wrapper, .dropdown-block--cities-select .multi-wrapper .selected-wrapper').wrapAll('<div class="multi-wrapper__body"></div>');
+
+  $('.dropdown-block--cities-select .multi-wrapper__header').append(`
+      <div class="multi-wrapper__label-wrapper">
+        <div class="multi-wrapper__label">Обрані міста</div>
+        <a href="#" class="btn-beige btn-beige--filter multi-wrapper__clear-btn">Очистити</a>
+      </div>`
+  );
+
+  $('.dropdown-block--cities-select .multi-wrapper').addClass('multi-wrapper--default');
+  $('.dropdown-block--cities-select .multi-wrapper').append(`
+      <div class="multi-wrapper__footer">
+        <button type="button" class="btn-grey btn-grey--multi-wrapper multi-wrapper__apply-btn">Застосувати</button>
+      </div>`
+  );
+
+  $('.dropdown-block--cities-select .multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
+
+  $(document).on('click', 'a.item', function(event) {
+    if ($('.dropdown-block--cities-select .selected-wrapper .selected').length) {
+      $('.multi-wrapper').removeClass('multi-wrapper--default multi-wrapper--empty');
+    } else {
+      $('.multi-wrapper').addClass('multi-wrapper--empty');
+    }
+
+    setTimeout(() => {
+      $('.dropdown-block--cities-select').addClass('dropdown-block--visible');
+    });
+  });
+
+  $('.dropdown-block--cities-select .multi-wrapper__clear-btn').click(function(e) {
+    console.log($('#cities-select option:selected'));
+
+    $('#cities-select option:selected').prop('selected', false);
+    $('#cities-select').trigger('change');
+    console.log($('#cities-select option:selected'));
+
+    $('.dropdown-block--cities-select .selected-wrapper .item').remove();
+    $('.dropdown-block--cities-select .non-selected-wrapper .item.selected').removeClass('selected');
+    $('.multi-wrapper').addClass('multi-wrapper--empty');
+
+    e.preventDefault();
+  });
+
+  $('.dropdown-block--cities-select .multi-wrapper__apply-btn').click(function(event) {
+    $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
+  });
+
+  $(document).on('click', function(e) {
+    if ($('.dropdown-block--cities-select').hasClass('dropdown-block--visible')) {
+      console.log(e);
+    }
+  });
+
+
+  // let $citiesSelect = $('.cities-select').select2({
+  //   // dropdownCssClass: ':all:',
+  //   // selectionCssClass: ':all:',
+  //   placeholder: 'Пошук...',
+  //   theme: 'cities-select',
+  //   closeOnSelect: false,
+  //   multiple: true,
+  //   // allowClear: true,
+  //   dropdownAutoWidth: true,
+  //   // selectOnClose: true,
+  //   // templateResult: formatStateResult,
+  //   // templateSelection: formatStateSelection,
+  //   // dropdownAutoWidth: true,
+  //   minimumResultsForSearch: -1
+  // });
+
+  $('.filter__cities-select-toggle').click(function(e) {
+    console.log('mfewfw');
+
+    setTimeout(() => {
+      console.log($('.dropdown-block--cities-select .search-input'));
+      $('.dropdown-block--cities-select .search-input').focus();
+    });
+
+    // setTimeout(() => {
+    //   if (!$citiesSelect.select2('isOpen')) {
+    //     $citiesSelect.select2('open');
+    //   } else {
+    //     $citiesSelect.select2('close');
+    //   }
+    // });
+    // $citiesSelect.select2('open');
+    // console.log($citiesSelect.select2('isOpen'));
+
+  //   e.preventDefault();
+  });
+
+  // $citiesSelect.on('select2:selecting', function (e) {
+
+  //   // $('.select2-selection__choice').remove();
+
+  //   // setTimeout(() => {
+  //   //   $('.select2-selection__choice').remove();
+  //   // });
+  //   // console.log(e);
+  //   // let $selectResults = $('.select2-results');
+  //   // let $selectSearchDropdown = $('.select2-search--dropdown');
+
+  //   // $selectSearchDropdown.append('<div>Обрані міста</div>');
+  //   // $selectResults.append('<div class="select2-results__selected">Выбранные результаты</div>');
+
+  //   // console.log($selectResults);
+  //   // console.log('before open');
+  // });
+
+  // $citiesSelect.one('select2:open', function (e) {
+  //   // console.log(e);
+  //   let $selectResults = $('.select2-results');
+  //   let $selectSearchDropdown = $('.select2-search--dropdown');
+  //   let $selectDropdown = $('.select2-dropdown');
+
+  //   $selectSearchDropdown.append('<div>Обрані міста</div>');
+  //   $selectResults.append('<div class="select2-results__selected">Выбранные результаты</div>');
+  //   $selectDropdown.append('<div class="select2-dropdown__btn-wrapper"><button type="button" class="select2-dropdown__apply-btn">Застосувати</button></div>');
+
+  //   // console.log($selectResults);
+  //   // console.log('before open');
+  // });
+
+  // $citiesSelect.on('select2:closing', function (e) {
+  //   console.log(e.params.args);
+  //   // e.preventDefault();
+  // });
+
+  // $citiesSelect.on('select2:selecting', function (e) {
+  //   console.log(e.params.args);
+  //   console.log('selecting');
+  //   // e.preventDefault();
+  // });
+
+  // let selectedCities = [];
+
+  // $(document).on('click', '.select2-container--cities-select .select2-dropdown__apply-btn', function(e) {
+  //   // console.log('kdkddk');
+  //   $citiesSelect.select2('close');
+  //   console.log($citiesSelect.select2('data'));
+
+  //   e.preventDefault();
+  // });
+
+  // $(document).on('click', '.select2-selection--multiple', function(event) {
+  //   $citiesSelect.select2('open');
+  //   console.log('!!!!');
+  // });
+
+  // $citiesSelect.select2('open');
+
+  // $('.cities-select')
+
+  $('.tags-select').select2({
+    dropdownCssClass: ':all:',
+    selectionCssClass: ':all:',
+    theme: 'tags-select',
+    // templateResult: formatStateResult,
+    // templateSelection: formatStateSelection,
+    // dropdownAutoWidth: true,
+    minimumResultsForSearch: -1
+  });
+
   Fancybox.bind(".additional-filters-popup-link", {
     dragToClose: false,
     mainClass: 'fancybox--additional-filters-popup',
@@ -12,36 +222,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  document.addEventListener('click', function (e) {
-    let filterTag = e.target.closest('.filter-tag');
+  $('.filter-tag').click(function(event) {
+    $(this).toggleClass('filter-tag--selected');
 
-    if (!filterTag) return;
-
-    filterTag.classList.toggle('filter-tag--selected');
+    event.preventDefault();
   });
 
-  document.addEventListener('click', function (e) {
-    let checkboxesGroupTitle = e.target.closest('.checkboxes-group__title');
-
-    if (!checkboxesGroupTitle) return;
-
-    let checkboxesGroup = checkboxesGroupTitle.closest('.checkboxes-group');
-
-    if (!checkboxesGroup) return;
-
-    checkboxesGroup.classList.toggle('checkboxes-group--closed');
+  $('.checkboxes-group__title').click(function(event) {
+    $(this).closest('.checkboxes-group').toggleClass('checkboxes-group--closed');
   });
 
-  document.addEventListener('click', function (e) {
-    let radioBtnsGroupTitle = e.target.closest('.radiobtns-group__title');
-
-    if (!radioBtnsGroupTitle) return;
-
-    let radioBtnsGroup = radioBtnsGroupTitle.closest('.radiobtns-group');
-
-    if (!radioBtnsGroup) return;
-
-    radioBtnsGroup.classList.toggle('radiobtns-group--closed');
+  $('.radiobtns-group__title').click(function(event) {
+    $(this).closest('.radiobtns-group').toggleClass('radiobtns-group--closed');
   });
 
   if (document.documentElement.clientWidth < 768) {
@@ -192,6 +384,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // Clear button
   $('.additional-filters__clear-btn').click(function(event) {
     let $additionalFilters = $(this).closest('.additional-filters');
     let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
@@ -209,7 +402,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     event.preventDefault();
   });
-
-  // Clear button
-  // $('')
 });

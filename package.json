@@ -45,8 +45,10 @@
     "gulp-touch-fd": "^2.0.0",
     "jquery": "^3.6.4",
     "jquery-circle-progress": "^1.2.2",
+    "multi.js": "^0.5.3",
     "perfect-scrollbar": "^1.5.5",
     "postcss": "^8.3.11",
+    "select2": "^4.1.0-rc.0",
     "stylus-supremacy": "^2.15.0",
     "yargs": "^17.2.1"
   },

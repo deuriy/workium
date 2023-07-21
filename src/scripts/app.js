@@ -57,7 +57,7 @@ function copyText(input) {
 //   };
 // }
 
-$(function () {
+$(() => {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 
@@ -71,8 +71,6 @@ $(function () {
 
     on: {
       reveal: (fancybox, slide) => {
-        console.log(slide);
-
         if (slide.src === '#authorization-popup') {
           let activeTabNumber = slide.activeTabNumber !== undefined ? slide.activeTabNumber : 1;
           let $activeTabLink = $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`);
@@ -179,8 +177,6 @@ $(function () {
 
     if (!shareLink) return;
 
-    console.log('Share!');
-
     let text = document.querySelector('title').textContent;
 
     navigator.share({
@@ -194,9 +190,6 @@ $(function () {
     let $copyLinkInput = $($(this).attr('href'));
 
     copyText($copyLinkInput[0]);
-
-    console.log($copyLinkInput[0]);
-
     $(this).text('Посилання скопійовано!');
 
     setTimeout(() => {
@@ -241,12 +234,19 @@ $(function () {
     if ($dropdownBlock.hasClass('dropdown-block--submenu-right-bottom')) {
       let coords = $(this)[0].getBoundingClientRect();
 
-      console.log(coords);
-
       $dropdownBlock.css({
         right: `-${coords.right + 20}px`,
         top: `${coords.top - $dropdownBlock.outerHeight() + coords.height}px`
-      })
+      });
+    } else if ($dropdownBlock.hasClass('dropdown-block--bottom')) {
+      let coords = $(this)[0].getBoundingClientRect();
+
+      console.log(coords);
+
+      $dropdownBlock.css({
+        left: `${coords.left}px`,
+        top: `${coords.top + coords.height + 6}px`
+      });
     }
     
     $dropdownBlock.toggleClass('dropdown-block--visible');
@@ -254,11 +254,18 @@ $(function () {
     e.preventDefault();
   });
 
-  $(document).click(function(e) {
-    if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('[data-dropdown-block-trigger]').length) {
-      $('.dropdown-block--visible').removeClass('dropdown-block--visible');
-    }
-  });
+  // $(document).click(function(e) {
+  //   let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
+  //   let $visibleDropdownBlock = $('.dropdown-block--visible');
+  //   let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
+
+  //   // console.log(!$isDropdownBlock.hasClass('dropdown-block--cities-select'));
+  //   // console.log($isDropdownBlock.length);
+
+  //   if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
+  //     $('.dropdown-block--visible').removeClass('dropdown-block--visible');
+  //   }
+  // });
 
   $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item').click(function(e) {
     let $phone = $(this).find('.phone');
@@ -278,16 +285,16 @@ $(function () {
     e.preventDefault();
   });
 
-  $('.selected-item__remove-link').click(function(event) {
-    event.preventDefault();
+  $('.selected-item__remove-link').click(function(e) {
+    e.preventDefault();
 
     $(this).closest('.selected-item').remove();
   });
 
-  $('.vacancy-card__address').click(function(event) {
+  $('.vacancy-card__address').click(function(e) {
     $(this).toggleClass('vacancy-card__address--truncated');
 
-    event.preventDefault();
+    e.preventDefault();
   });
 
   $('.circle-progressbar').circleProgress({

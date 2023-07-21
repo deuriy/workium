@@ -1,20 +1,17 @@
-document.addEventListener('DOMContentLoaded', function () {
-	document.addEventListener('click', function (e) {
-		let articleMoreBtn = e.target.closest('.article-box__more-btn');
+import $ from "jquery";
 
-		if (!articleMoreBtn) return;
+$(() => {
+	$('.article-box__more-btn').click(function(event) {
+		let $articleBoxContent = $(this).closest('.article-box').find('.article-box__content');
 
-		let articleBoxContent = articleMoreBtn.closest('.article-box').querySelector('.article-box__content');
-		// articleBoxContent.classList.toggle('article-box__text--truncated');
-
-		if (articleBoxContent.style.display !== 'none') {
-			articleMoreBtn.textContent = 'Читати статтю';
-			articleBoxContent.style.display = 'none';
+		if ($articleBoxContent.is(':visible')) {
+			$(this).text('Читати статтю');
+			$articleBoxContent.hide();
 		} else {
-			articleMoreBtn.textContent = 'Згорнути статтю';
-			articleBoxContent.style.display = '';
+			$(this).text('Згорнути статтю');
+			$articleBoxContent.show();
 		}
-		
-		e.preventDefault();
+
+		event.preventDefault();
 	});
 });

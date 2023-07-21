@@ -1,7 +1,7 @@
 import $ from "jquery";
 import Swiper, { Navigation, Pagination } from 'swiper';
 
-$(function () {
+$(() => {
   const vacancyImagesSwiper = new Swiper('.vacancy-images-swiper__swiper', {
     modules: [Navigation],
     // loop: true,

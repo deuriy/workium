@@ -39,7 +39,7 @@ function setCookie(name, value, options = {}) {
   document.cookie = updatedCookie;
 }
 
-$(function () {
+$(() => {
 	let hideProfileCookie = getCookie('hideProfile');
 
 	let $userSidebar = $('.user-sidebar');

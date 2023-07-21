@@ -1,7 +1,7 @@
 import $ from "jquery";
 import Swiper, { Navigation } from 'swiper';
 
-$(function () {
+$(() => {
   const peopleSwiper = new Swiper('.people-swiper', {
     modules: [Navigation],
     loop: true,

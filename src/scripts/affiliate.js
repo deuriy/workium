@@ -1,35 +1,22 @@
-document.addEventListener('DOMContentLoaded', function () {
-	document.addEventListener('click', function (e) {
-		let affiliateMoreLink = e.target.closest('.affiliate-info__more-link');
+import $ from "jquery";
 
-		if (!affiliateMoreLink) return;
+function toggleMoreLink ($link) {
+	let linkText = $link.text() === 'Приховати' ? 'Читати далі' : 'Приховати';
+	$link.text(linkText);
+}
 
-		let affiliateInfoText = affiliateMoreLink.closest('.affiliate-info').querySelector('.affiliate-info__text');
-		affiliateInfoText.classList.toggle('affiliate-info__text--truncated');
+$(() => {
+	$('.affiliate-info__more-link').click(function(e) {
+		$(this).closest('.affiliate-info').find('.affiliate-info__text').toggleClass('affiliate-info__text--truncated');
 
-		if (affiliateMoreLink.textContent === 'Приховати') {
-			affiliateMoreLink.textContent = 'Читати далі';
-		} else {
-			affiliateMoreLink.textContent = 'Приховати';
-		}
-		
+		toggleMoreLink($(this));
 		e.preventDefault();
 	});
 
-	document.addEventListener('click', function (e) {
-		let partnersTableWrapperMoreLink = e.target.closest('.partners-table-wrapper__more-link');
+	$('.partners-table-wrapper__more-link').click(function(e) {
+		$(this).closest('.partners-table-wrapper').find('.partners-table-wrapper__description').toggleClass('partners-table-wrapper__description--full');
 
-		if (!partnersTableWrapperMoreLink) return;
-
-		let partnersTableWrapperDesc = partnersTableWrapperMoreLink.closest('.partners-table-wrapper').querySelector('.partners-table-wrapper__description');
-		partnersTableWrapperDesc.classList.toggle('partners-table-wrapper__description--full');
-
-		if (partnersTableWrapperMoreLink.textContent === 'Приховати') {
-			partnersTableWrapperMoreLink.textContent = 'Читати далі';
-		} else {
-			partnersTableWrapperMoreLink.textContent = 'Приховати';
-		}
-		
+		toggleMoreLink($(this));
 		e.preventDefault();
 	});
 });

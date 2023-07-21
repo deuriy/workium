@@ -1,0 +1,117 @@
+.multi-wrapper
+	width 560px
+	max-width 100%
+	
+	.search-input
+		width 100%
+		height 36px
+		// padding-right 10px
+		padding-right 15px
+		padding-left 35px
+		border 1px solid var(--input-border-color)
+		outline none
+		border-radius 6px
+		font-weight 500
+		font-size 14px
+		font-family var(--base-font)
+		// color var(--dark)
+		color var(--accent)
+		background var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2379828f' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m19 19-5.197-5.197m0 0A7.5 7.5 0 1 0 3.196 3.196a7.5 7.5 0 0 0 10.607 10.607Z'/%3E%3C/svg%3E") 11px center/15px no-repeat
+		
+		+placeholder()
+			color var(--grey)
+	
+	.non-selected-wrapper,
+	.selected-wrapper
+		max-height 230px
+		overflow auto
+		
+		.item
+			display block
+			padding 7px 19px
+			cursor pointer
+			@extend .transition
+		
+			&:hover
+				background #F4F4FB
+	
+	.non-selected-wrapper
+		padding 4px 0
+		
+		.item
+			&.selected
+				opacity 0.4
+		
+	.selected-wrapper
+		padding 4px 0 4px 18px
+		
+		.item
+			&.selected
+				display grid
+				grid-template-columns 1fr auto
+				align-items center
+				
+				&::after
+					content ""
+					width 20px
+					height 20px
+					background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M21.652 3.211a.747.747 0 0 0-1.061 0L9.41 14.34a.744.744 0 0 1-1.062 0L3.449 9.351a.743.743 0 0 0-1.062 0L.222 11.297a.751.751 0 0 0 .001 1.07l4.94 5.184c.292.296.771.776 1.062 1.07l2.124 2.141a.751.751 0 0 0 1.062 0l14.366-14.34a.762.762 0 0 0 0-1.071l-2.125-2.14z' clip-rule='evenodd' fill='%235340ff'/%3E%3C/svg%3E") center no-repeat
+				
+				&:hover::after
+					background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' data-name='Layer 1' viewBox='0 0 200 200'%3E%3Cpath d='m114 100 49-49a9.9 9.9 0 0 0-14-14l-49 49-49-49a9.9 9.9 0 0 0-14 14l49 49-49 49a9.9 9.9 0 0 0 14 14l49-49 49 49a9.9 9.9 0 0 0 14-14Z' fill='%23cb4f00'/%3E%3C/svg%3E")
+				
+	&__header
+		display grid
+		// grid-template-columns repeat(2, 1fr)
+		grid-template-columns 1.2fr 1fr
+		gap 23px
+		// padding 13px 10px
+		padding 7px 10px
+		background #f5f5fc
+	
+	&__label-wrapper
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		align-items center
+		gap 10px
+	
+	&__label
+		font-size 13px
+		color #596275
+	
+	&__body
+		display grid
+		grid-template-columns repeat(2, 1fr)
+	
+	&__no-results
+		display none
+		place-content center
+		color #B6B8C2
+	
+	&__footer
+		// padding 15px 20px
+		padding 23px 20px
+		text-align center
+	
+	&--default
+		width 210px
+		
+		.multi-wrapper__header,
+		.multi-wrapper__body
+			grid-template-columns 100%
+		
+		.multi-wrapper__label-wrapper
+			display none
+	
+	&--empty
+		.multi-wrapper__label-wrapper
+			grid-template-columns 100%
+			justify-items center
+			
+		.selected-wrapper,
+		.multi-wrapper__clear-btn
+			display none
+			
+		.multi-wrapper__no-results
+			display grid
