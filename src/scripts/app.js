@@ -46,16 +46,16 @@ function copyText(input) {
   document.execCommand("copy");
 }
 
-// function getCoords(elem) {
-//   let box = elem.getBoundingClientRect();
+function getCoords(elem) {
+  let box = elem.getBoundingClientRect();
 
-//   return {
-//     top: box.top + window.pageYOffset,
-//     right: box.right + window.pageXOffset,
-//     bottom: box.bottom + window.pageYOffset,
-//     left: box.left + window.pageXOffset
-//   };
-// }
+  return {
+    top: box.top + window.pageYOffset,
+    right: box.right + window.pageXOffset,
+    bottom: box.bottom + window.pageYOffset,
+    left: box.left + window.pageXOffset
+  };
+}
 
 $(() => {
   let vh = window.innerHeight * 0.01;
@@ -239,7 +239,8 @@ $(() => {
         top: `${coords.top - $dropdownBlock.outerHeight() + coords.height}px`
       });
     } else if ($dropdownBlock.hasClass('dropdown-block--bottom')) {
-      let coords = $(this)[0].getBoundingClientRect();
+      // let coords = $(this)[0].getBoundingClientRect();
+      let coords = getCoords($(this)[0]);
 
       console.log(coords);
 
@@ -254,18 +255,18 @@ $(() => {
     e.preventDefault();
   });
 
-  // $(document).click(function(e) {
-  //   let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
-  //   let $visibleDropdownBlock = $('.dropdown-block--visible');
-  //   let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
+  $(document).click(function(e) {
+    let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
+    let $visibleDropdownBlock = $('.dropdown-block--visible');
+    let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
 
-  //   // console.log(!$isDropdownBlock.hasClass('dropdown-block--cities-select'));
-  //   // console.log($isDropdownBlock.length);
+    // console.log(!$isDropdownBlock.hasClass('dropdown-block--cities-select'));
+    // console.log($isDropdownBlock.length);
 
-  //   if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
-  //     $('.dropdown-block--visible').removeClass('dropdown-block--visible');
-  //   }
-  // });
+    if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
+      $('.dropdown-block--visible').removeClass('dropdown-block--visible');
+    }
+  });
 
   $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item').click(function(e) {
     let $phone = $(this).find('.phone');

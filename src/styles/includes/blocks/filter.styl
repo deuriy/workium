@@ -1,7 +1,8 @@
 .filter
 	display grid
 	grid-template-columns 100%
-	gap 13px
+	// gap 13px
+	gap 11px
 	
 	@media $xxs
 		gap 12px
@@ -13,11 +14,17 @@
 		justify-content space-between
 		
 	&__top
-		grid-template-columns 17% 17% 17% 11% 10% auto
+		// grid-template-columns 17% 17% 17% 11% 10% auto
+		// grid-template-columns 17% 10.7% 17.6% 11% 10% auto
+		grid-template-columns 17% 10.7% 17.6% 9.9% 11% 6% auto
+		justify-content start
 		align-items start
 		
 		@media $xlMinus
-			grid-template-columns 16% 16% 15% 11% 10% auto
+			// grid-template-columns 16% 16% 15% 11% 10% 6% auto
+			// grid-template-columns 17% 10.7% 17.6% 9.9% 11% 6% auto
+			grid-template-columns 14% 13% 13% 11% 10% 7% auto
+			justify-content space-between
 		
 		@media $mdMinus
 			grid-template-columns repeat(3, 1fr)
@@ -36,8 +43,11 @@
 			gap 12px
 		
 	&__bottom
-		grid-template-columns repeat(2, auto)
-		align-items start
+		// grid-template-columns repeat(2, auto)
+		grid-template-columns auto 1fr auto
+		align-items center
+		// align-items start
+		gap 18px
 		
 		@media $xs
 			grid-template-columns 100%
@@ -55,7 +65,21 @@
 	
 	&__clear-btn
 		margin-top 2px
-		margin-right 26px
+		// margin-right 26px
+		margin-right 18px
 	
 	&__cities-select
 		width 100%
+	
+	&__selects
+		display grid
+		grid-template-columns repeat(2, auto)
+		// gap 20px
+		gap 13px
+		margin-top 3px
+	
+	&__experience-select
+		width 120px
+	
+	&__sex-select
+		width 128px

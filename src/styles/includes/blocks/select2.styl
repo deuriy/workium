@@ -1,20 +1,52 @@
 .select2-container		
-	&--cities-select		
-		// .select2-selection--multiple
-		// 	white-space nowrap
+	// &--cities-select		
+	// 	// .select2-selection--multiple
+	// 	// 	white-space nowrap
 			
-		// 	.select2-selection__rendered
-		// 		display none
+	// 	// 	.select2-selection__rendered
+	// 	// 		display none
 		
-		.select2-search
-			display grid
-			grid-template-columns repeat(2, 1fr)
-			background #f5f5fd
+	// 	.select2-search
+	// 		display grid
+	// 		grid-template-columns repeat(2, 1fr)
+	// 		background #f5f5fd
 			
-		.select2-results
+	// 	.select2-results
+	// 		display grid
+	// 		grid-template-columns repeat(2, 1fr)
+	
+	&--tags-select
+		.select2-selection--single
 			display grid
-			grid-template-columns repeat(2, 1fr)
+			// place-content center
+			align-items center
+			height 38px
+			border 1px solid #dfe2e6
+			border-radius 12px
+			background var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 8'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 1 6 6 6-6'/%3E%3C/svg%3E") right 9px center / 14px no-repeat
+			
+			.select2-selection__rendered
+				padding-left 12px
+				font-size 12px
+				color var(--grey)
+			
+			.select2-selection__arrow
+				display none
+		
+		.select2-dropdown
+			padding 5px 7px
+			border none
+			border-radius 7px
+		
+		.select2-results
+			&__option
+				font-size 14px
+				@extend .transition
+				
+				&--highlighted
+					background #F4F4FB
+		
 
-.select2-dropdown		
-	&__btn-wrapper
-		text-align center
+// .select2-dropdown		
+// 	&__btn-wrapper
+// 		text-align center

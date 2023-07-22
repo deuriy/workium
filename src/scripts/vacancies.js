@@ -126,7 +126,7 @@ $(() => {
     setTimeout(() => {
       console.log($('.dropdown-block--cities-select .search-input'));
       $('.dropdown-block--cities-select .search-input').focus();
-    });
+    }, 20);
 
     // setTimeout(() => {
     //   if (!$citiesSelect.select2('isOpen')) {
@@ -139,6 +139,12 @@ $(() => {
     // console.log($citiesSelect.select2('isOpen'));
 
   //   e.preventDefault();
+  });
+
+  $('.filter__clear-btn').click(function(e) {
+    $(this).closest('.filter').find('.selected-items__item').remove();
+
+    e.preventDefault();
   });
 
   // $citiesSelect.on('select2:selecting', function (e) {
@@ -203,13 +209,23 @@ $(() => {
 
   // $('.cities-select')
 
+  // $('.tags-select').select2({
+  //   dropdownCssClass: ':all:',
+  //   selectionCssClass: ':all:',
+  //   theme: 'tags-select',
+  //   // templateResult: formatStateResult,
+  //   // templateSelection: formatStateSelection,
+  //   dropdownAutoWidth: true,
+  //   minimumResultsForSearch: -1
+  // });
+  
   $('.tags-select').select2({
     dropdownCssClass: ':all:',
     selectionCssClass: ':all:',
     theme: 'tags-select',
     // templateResult: formatStateResult,
     // templateSelection: formatStateSelection,
-    // dropdownAutoWidth: true,
+    dropdownAutoWidth: true,
     minimumResultsForSearch: -1
   });
 
@@ -251,6 +267,12 @@ $(() => {
   	  },
     });
   }
+
+  $('.filter .selected-item__remove-link').click(function(e) {
+    $(this).closest('.selected-items__item').remove();
+
+    e.preventDefault();
+  });
 
   // Search in filter
   $('input[name="search_filter"]').on('input', function(event) {
