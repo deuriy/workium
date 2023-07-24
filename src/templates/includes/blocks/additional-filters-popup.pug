@@ -5,68 +5,37 @@
         button(type="button" data-fancybox-close).btn-back.hidden-xxsPlus.additional-filters__btn-back
         h2.additional-filters__title Фільтри
         .additional-filters__form-items
-          input(type="search" name="search_filter" placeholder="Пошук по фільтру...").form-text.form-text--filter-search
-          select(name="filter_countries" autocomplete="off").form-select.form-select--filter#filter_countries
-            option(value="poland") Польща
-            option(value="czech") Чехія
-          select(name="filter_cities" multiple).form-select.form-select--filter#filter_cities
-            option(value="") Усі міста
-            option(value="city_1") Місто 1
-            option(value="city_2") Місто 2
-            option(value="city_3") Місто 3
-            option(value="city_4") Місто 4
+          .additional-filters__form-item
+            input(type="search" name="search_filter" placeholder="Пошук по фільтру...").form-text.form-text--filter-search
+          .additional-filters__form-item
+            select(name="filter_countries" autocomplete="off").form-select.form-select--filter#filter_countries
+              option(value="poland") Польща
+              option(value="czech") Чехія
+          .additional-filters__form-item
+            a(href="#additional-filter-cities-dropdown-block" data-dropdown-block-trigger).select-toggle.filter__cities-select-toggle Усі міста
+            .dropdown-block.dropdown-block--cities-select.additional-filters__cities-dropdown-block#additional-filter-cities-dropdown-block
+              select(name="filter_cities" multiple).cities-select.filter__cities-select#additional-filter-cities-select
+                //- option
+                option(value="filter_city_1") Місто 1
+                option(value="filter_city_2") Місто 2
+                option(value="filter_city_3") Місто 3
+                option(value="filter_city_4") Місто 4
+                option(value="filter_city_5") Місто 5
+                option(value="filter_city_6") Місто 6
+                option(value="filter_city_7") Місто 7
+                option(value="filter_city_8") Місто 8
+                option(value="filter_city_9") Місто 9
+                option(value="filter_city_10") Місто 10
+            //- select(name="filter_cities" multiple).form-select.form-select--filter#filter_cities
+            //-   option(value="") Усі міста
+            //-   option(value="city_1") Місто 1
+            //-   option(value="city_2") Місто 2
+            //-   option(value="city_3") Місто 3
+            //-   option(value="city_4") Місто 4
         a(href="javascript:;" data-orig-tabindex="undefined" tabindex="-1").link.link--success.link--clear-filter.hidden-xxsPlus Скинути фільтри
       .additional-filters__header-bottom
         .selected-items.additional-filters__selected-items
           ul.selected-items__list
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
-            //- li.selected-items__item
-            //-   .selected-item
-            //-     .selected-item__value Обробка овоч
-            //-     a(href="#").selected-item__remove-link
         a(href="javascript:;" style="display: none;").btn-beige.additional-filters__clear-btn Скинути фільтри
     .additional-filters__body
       .additional-filters__items.hidden-xxsPlus

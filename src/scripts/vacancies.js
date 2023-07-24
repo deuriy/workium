@@ -40,32 +40,63 @@ $(() => {
 
   // $('#cities-select').multi();
 
-  let citiesSelect = document.querySelector(".cities-select");
-  multi(citiesSelect, {
-    // 'non_selected_header': 'All options',
-    // 'selected_header': 'Selected options',
-    "search_placeholder": "Введіть назву міста…",
-    "hide_empty_groups": true
+  let citiesSelects = document.querySelectorAll(".cities-select");
+  citiesSelects.forEach(select => {
+    multi(select, {
+      // 'non_selected_header': 'All options',
+      // 'selected_header': 'Selected options',
+      "search_placeholder": "Введіть назву міста…",
+      "hide_empty_groups": true
+    });
   });
 
-  $('.dropdown-block--cities-select .multi-wrapper .search-input').wrapAll('<div class="multi-wrapper__header"></div>');
-  $('.dropdown-block--cities-select .multi-wrapper .non-selected-wrapper, .dropdown-block--cities-select .multi-wrapper .selected-wrapper').wrapAll('<div class="multi-wrapper__body"></div>');
+  // let citiesSelect = document.querySelector(".cities-select");
+  // multi(citiesSelect, {
+  //   // 'non_selected_header': 'All options',
+  //   // 'selected_header': 'Selected options',
+  //   "search_placeholder": "Введіть назву міста…",
+  //   "hide_empty_groups": true
+  // });
 
-  $('.dropdown-block--cities-select .multi-wrapper__header').append(`
-      <div class="multi-wrapper__label-wrapper">
-        <div class="multi-wrapper__label">Обрані міста</div>
-        <a href="#" class="btn-beige btn-beige--filter multi-wrapper__clear-btn">Очистити</a>
-      </div>`
-  );
+  $('.dropdown-block--cities-select').each(function(index, el) {
+    $(el).find('.multi-wrapper .search-input').wrap('<div class="multi-wrapper__header"></div>');
+    $(el).find('.multi-wrapper .non-selected-wrapper, .multi-wrapper .selected-wrapper').wrapAll('<div class="multi-wrapper__body"></div>');
 
-  $('.dropdown-block--cities-select .multi-wrapper').addClass('multi-wrapper--default');
-  $('.dropdown-block--cities-select .multi-wrapper').append(`
-      <div class="multi-wrapper__footer">
-        <button type="button" class="btn-grey btn-grey--multi-wrapper multi-wrapper__apply-btn">Застосувати</button>
-      </div>`
-  );
+    $(el).find('.multi-wrapper__header').append(`
+        <div class="multi-wrapper__label-wrapper">
+          <div class="multi-wrapper__label">Обрані міста</div>
+          <a href="#" class="btn-beige btn-beige--filter multi-wrapper__clear-btn">Очистити</a>
+        </div>`
+    );
 
-  $('.dropdown-block--cities-select .multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
+    $(el).find('.multi-wrapper').addClass('multi-wrapper--default');
+    $(el).find('.multi-wrapper').append(`
+        <div class="multi-wrapper__footer">
+          <button type="button" class="btn-grey btn-grey--multi-wrapper multi-wrapper__apply-btn">Застосувати</button>
+        </div>`
+    );
+
+    $(el).find('.multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
+  });
+
+  // $('.dropdown-block--cities-select .multi-wrapper .search-input').wrap('<div class="multi-wrapper__header"></div>');
+  // $('.dropdown-block--cities-select .multi-wrapper .non-selected-wrapper, .dropdown-block--cities-select .multi-wrapper .selected-wrapper').wrap('<div class="multi-wrapper__body"></div>');
+
+  // $('.dropdown-block--cities-select .multi-wrapper__header').append(`
+  //     <div class="multi-wrapper__label-wrapper">
+  //       <div class="multi-wrapper__label">Обрані міста</div>
+  //       <a href="#" class="btn-beige btn-beige--filter multi-wrapper__clear-btn">Очистити</a>
+  //     </div>`
+  // );
+
+  // $('.dropdown-block--cities-select .multi-wrapper').addClass('multi-wrapper--default');
+  // $('.dropdown-block--cities-select .multi-wrapper').append(`
+  //     <div class="multi-wrapper__footer">
+  //       <button type="button" class="btn-grey btn-grey--multi-wrapper multi-wrapper__apply-btn">Застосувати</button>
+  //     </div>`
+  // );
+
+  // $('.dropdown-block--cities-select .multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
 
   $(document).on('click', 'a.item', function(event) {
     if ($('.dropdown-block--cities-select .selected-wrapper .selected').length) {
@@ -80,11 +111,9 @@ $(() => {
   });
 
   $('.dropdown-block--cities-select .multi-wrapper__clear-btn').click(function(e) {
-    console.log($('#cities-select option:selected'));
 
     $('#cities-select option:selected').prop('selected', false);
     $('#cities-select').trigger('change');
-    console.log($('#cities-select option:selected'));
 
     $('.dropdown-block--cities-select .selected-wrapper .item').remove();
     $('.dropdown-block--cities-select .non-selected-wrapper .item.selected').removeClass('selected');
@@ -120,25 +149,16 @@ $(() => {
   //   minimumResultsForSearch: -1
   // });
 
-  $('.filter__cities-select-toggle').click(function(e) {
-    console.log('mfewfw');
-
+  $(document).on('click', '.filter__cities-select-toggle', function(e) {
     setTimeout(() => {
-      console.log($('.dropdown-block--cities-select .search-input'));
-      $('.dropdown-block--cities-select .search-input').focus();
-    }, 20);
+      $('#cities-dropdown-block .search-input').focus();
+    }, 100);
+  });
 
-    // setTimeout(() => {
-    //   if (!$citiesSelect.select2('isOpen')) {
-    //     $citiesSelect.select2('open');
-    //   } else {
-    //     $citiesSelect.select2('close');
-    //   }
-    // });
-    // $citiesSelect.select2('open');
-    // console.log($citiesSelect.select2('isOpen'));
-
-  //   e.preventDefault();
+  $(document).on('click', '.filter__filter-cities-select-toggle', function(e) {
+    setTimeout(() => {
+      $('#filter-cities-dropdown-block .search-input').focus();
+    }, 100);
   });
 
   $('.filter__clear-btn').click(function(e) {
@@ -218,7 +238,7 @@ $(() => {
   //   dropdownAutoWidth: true,
   //   minimumResultsForSearch: -1
   // });
-  
+
   $('.tags-select').select2({
     dropdownCssClass: ':all:',
     selectionCssClass: ':all:',
@@ -229,14 +249,14 @@ $(() => {
     minimumResultsForSearch: -1
   });
 
-  Fancybox.bind(".additional-filters-popup-link", {
-    dragToClose: false,
-    mainClass: 'fancybox--additional-filters-popup',
+  // Fancybox.bind(".additional-filters-popup-link", {
+  //   dragToClose: false,
+  //   mainClass: 'fancybox--additional-filters-popup',
 
-    tpl: {
-      closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
-    }
-  });
+  //   tpl: {
+  //     closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+  //   }
+  // });
 
   $('.filter-tag').click(function(event) {
     $(this).toggleClass('filter-tag--selected');

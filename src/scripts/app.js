@@ -125,6 +125,21 @@ $(() => {
     }
   });
 
+  Fancybox.bind(".additional-filters-popup-link", {
+    dragToClose: false,
+    mainClass: 'fancybox--additional-filters-popup',
+
+    on: {
+      reveal: (fancybox, slide) => {
+        // console.log('Reveal!');
+      }
+    },
+
+    tpl: {
+      closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+    }
+  });
+
   $('.user-profile-popup-link').click(function(e) {
     let fancyboxSlide = Fancybox.getSlide();
 
@@ -222,7 +237,7 @@ $(() => {
   });
 
   // Show/hide dropdown block
-  $('[data-dropdown-block-trigger]').click(function(e) {
+  $(document).on('click', '[data-dropdown-block-trigger]', function(e) {
     let blockID = $(this).attr('href').substring(1);
     let $currentVisibleDropdownBlock = $(`.dropdown-block--visible:not([id="${blockID}"])`);    
     let $dropdownBlock = $($(this).attr('href'));
@@ -239,10 +254,12 @@ $(() => {
         top: `${coords.top - $dropdownBlock.outerHeight() + coords.height}px`
       });
     } else if ($dropdownBlock.hasClass('dropdown-block--bottom')) {
-      // let coords = $(this)[0].getBoundingClientRect();
       let coords = getCoords($(this)[0]);
+      // let coords2 = $(this)[0].getBoundingClientRect();
 
-      console.log(coords);
+      // console.log(coords);
+      
+      console.log($(this));
 
       $dropdownBlock.css({
         left: `${coords.left}px`,
