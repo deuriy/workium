@@ -79,25 +79,6 @@ $(() => {
     $(el).find('.multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
   });
 
-  // $('.dropdown-block--cities-select .multi-wrapper .search-input').wrap('<div class="multi-wrapper__header"></div>');
-  // $('.dropdown-block--cities-select .multi-wrapper .non-selected-wrapper, .dropdown-block--cities-select .multi-wrapper .selected-wrapper').wrap('<div class="multi-wrapper__body"></div>');
-
-  // $('.dropdown-block--cities-select .multi-wrapper__header').append(`
-  //     <div class="multi-wrapper__label-wrapper">
-  //       <div class="multi-wrapper__label">Обрані міста</div>
-  //       <a href="#" class="btn-beige btn-beige--filter multi-wrapper__clear-btn">Очистити</a>
-  //     </div>`
-  // );
-
-  // $('.dropdown-block--cities-select .multi-wrapper').addClass('multi-wrapper--default');
-  // $('.dropdown-block--cities-select .multi-wrapper').append(`
-  //     <div class="multi-wrapper__footer">
-  //       <button type="button" class="btn-grey btn-grey--multi-wrapper multi-wrapper__apply-btn">Застосувати</button>
-  //     </div>`
-  // );
-
-  // $('.dropdown-block--cities-select .multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
-
   $(document).on('click', 'a.item', function(event) {
     if ($('.dropdown-block--cities-select .selected-wrapper .selected').length) {
       $('.multi-wrapper').removeClass('multi-wrapper--default multi-wrapper--empty');
@@ -123,12 +104,31 @@ $(() => {
   });
 
   $('.dropdown-block--cities-select .multi-wrapper__apply-btn').click(function(event) {
-    $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
+    let $dropdownBlock = $(this).closest('.dropdown-block');
+    let $selectedCities = $dropdownBlock.find('.selected-wrapper .item.selected');
+
+    $dropdownBlock.removeClass('dropdown-block--visible');
+
+    if ($selectedCities.length) {
+      let $dropdownBlockID = $dropdownBlock.attr('id');
+      let $selectToggle = $(`.select-toggle[href="#${$dropdownBlockID}"]`);
+      let selectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
+
+      $selectToggle.html(selectToggleText);
+
+      // console.log($selectToggle);
+    }
+    
+    // console.log();
   });
 
   $(document).on('click', function(e) {
     if ($('.dropdown-block--cities-select').hasClass('dropdown-block--visible')) {
-      console.log(e);
+      if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('a.item').length) {
+        let $visibleDropdownBlock = $('.dropdown-block--cities-select.dropdown-block--visible');
+
+        $visibleDropdownBlock.find('.multi-wrapper__clear-btn').click();
+      }
     }
   });
 
