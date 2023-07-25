@@ -187,7 +187,7 @@ $(() => {
         $selectToggle.html(selectToggleText);
 
         if (!$selectedCities.length) {
-          $dropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
+          $visibleDropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
         }
       }
     }
