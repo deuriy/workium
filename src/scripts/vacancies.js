@@ -230,6 +230,12 @@ $(() => {
     e.preventDefault();
   });
 
+  $('.filter__clear-btn').click(function(e) {
+    $(this).closest('.filter').find('.selected-items__item').remove();
+
+    e.preventDefault();
+  });
+
   // $citiesSelect.on('select2:selecting', function (e) {
 
   //   // $('.select2-selection__choice').remove();
@@ -386,24 +392,24 @@ $(() => {
     let $searchValueSelectedItem = $selectedItemsList.find('.selected-items__item--search-value');
     let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
 
-    if (searchValue !== '') {
-      if (!$searchValueSelectedItem.length) {
+    // if (searchValue !== '') {
+    //   if (!$searchValueSelectedItem.length) {
 
-        $selectedItemsList.prepend(`
-          <li class="selected-items__item selected-items__item--search-value">
-            <div class="selected-item">
-              <div class="selected-item__value">${searchValue}</div>
-              <a href="#" class="selected-item__remove-link"></a>
-            </div>
-          </li>`);
-      } else {
-        $searchValueSelectedItem.find('.selected-item__value').text(searchValue);
-      }
-    } else {
-      $searchValueSelectedItem.remove();
-    }
+    //     $selectedItemsList.prepend(`
+    //       <li class="selected-items__item selected-items__item--search-value">
+    //         <div class="selected-item">
+    //           <div class="selected-item__value">${searchValue}</div>
+    //           <a href="#" class="selected-item__remove-link"></a>
+    //         </div>
+    //       </li>`);
+    //   } else {
+    //     $searchValueSelectedItem.find('.selected-item__value').text(searchValue);
+    //   }
+    // } else {
+    //   $searchValueSelectedItem.remove();
+    // }
 
-    if ($additionalFilters.find('.selected-items__item').length) {
+    if (searchValue) {
       $clearBtn.show();
     } else {
       $clearBtn.hide();
