@@ -163,10 +163,12 @@ $(() => {
 
     if ($selectedCities.length) {
       selectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
+      $selectToggle.addClass('select-toggle--selected');
     } else {
-      setTimeout(() => {
+      // setTimeout(() => {
         $dropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
-      });
+        $selectToggle.removeClass('select-toggle--selected');
+      // });
     }
 
     $selectToggle.html(selectToggleText);
@@ -188,6 +190,8 @@ $(() => {
 
         if (!$selectedCities.length) {
           $visibleDropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
+        } else {
+          $selectToggle.removeClass('select-toggle--selected');
         }
       }
     }
@@ -395,8 +399,8 @@ $(() => {
   $('input[name="search_filter"]').on('input', function(event) {
     let searchValue = $(this).val().toLowerCase().trim();
     let $additionalFilters = $(this).closest('.additional-filters');
-    let $selectedItemsList = $additionalFilters.find('.additional-filters__selected-items .selected-items__list');
-    let $searchValueSelectedItem = $selectedItemsList.find('.selected-items__item--search-value');
+    // let $selectedItemsList = $additionalFilters.find('.additional-filters__selected-items .selected-items__list');
+    // let $searchValueSelectedItem = $selectedItemsList.find('.selected-items__item--search-value');
     let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
 
     // if (searchValue !== '') {
@@ -429,12 +433,14 @@ $(() => {
     let $additionalFilters = $selectedItemParent.closest('.additional-filters');
     let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
 
-    if ($selectedItemParent.hasClass('selected-items__item--search-value')) {
-      let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
+    // if ($selectedItemParent.hasClass('selected-items__item--search-value')) {
+    //   let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
 
-      $additionalFilters.find('.form-text--filter-search').val('');
-      $additionalFiltersGroups.show();
-    } else if ($selectedItemParent.data('name') !== undefined && $selectedItemParent.data('value') !== undefined) {
+    //   $additionalFilters.find('.form-text--filter-search').val('');
+    //   $additionalFiltersGroups.show();
+    // }
+
+    if ($selectedItemParent.data('name') !== undefined && $selectedItemParent.data('value') !== undefined) {
       let selectedItemName = $selectedItemParent.data('name');
 
       if ($selectedItemParent.data('type') === 'checkbox') {
