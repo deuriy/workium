@@ -225,16 +225,23 @@ $(() => {
   });
 
   $('.filter__clear-btn').click(function(e) {
-    $(this).closest('.filter').find('.selected-items__item').remove();
+    let $filter = $(this).closest('.filter');
+    let $tagsSelects = $filter.find('select.tags-select');
+    let $selectedItems = $filter.find('.selected-items__item');
 
-    e.preventDefault();
+    $tagsSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+    $selectedItems.remove();
+
+    $tagsSelects.each(function(index, el) {
+      $(el).val('').trigger('change');
+    });
   });
 
-  $('.filter__clear-btn').click(function(e) {
-    $(this).closest('.filter').find('.selected-items__item').remove();
+  // $('.filter__clear-btn').click(function(e) {
+  //   $(this).closest('.filter').find('.selected-items__item').remove();
 
-    e.preventDefault();
-  });
+  //   e.preventDefault();
+  // });
 
   // $citiesSelect.on('select2:selecting', function (e) {
 
@@ -511,6 +518,6 @@ $(() => {
     $(this).hide();
     $additionalFiltersGroups.show();
 
-    event.preventDefault();
+    // event.preventDefault();
   });
 });
