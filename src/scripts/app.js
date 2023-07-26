@@ -129,12 +129,6 @@ $(() => {
     dragToClose: false,
     mainClass: 'fancybox--additional-filters-popup',
 
-    on: {
-      reveal: (fancybox, slide) => {
-        // console.log('Reveal!');
-      }
-    },
-
     tpl: {
       closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
     }
@@ -255,11 +249,6 @@ $(() => {
       });
     } else if ($dropdownBlock.hasClass('dropdown-block--bottom')) {
       let coords = getCoords($(this)[0]);
-      // let coords2 = $(this)[0].getBoundingClientRect();
-
-      // console.log(coords);
-      
-      console.log($(this));
 
       $dropdownBlock.css({
         left: `${coords.left}px`,
@@ -276,9 +265,6 @@ $(() => {
     let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
     let $visibleDropdownBlock = $('.dropdown-block--visible');
     let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
-
-    // console.log(!$isDropdownBlock.hasClass('dropdown-block--cities-select'));
-    // console.log($isDropdownBlock.length);
 
     if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
       $('.dropdown-block--visible').removeClass('dropdown-block--visible');
