@@ -324,7 +324,7 @@ $(() => {
     }
   });
 
-  // Clear button
+  // Clear additional filters
   $('.additional-filters__clear-btn').click(function(event) {
     let $additionalFilters = $(this).closest('.additional-filters');
     let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
@@ -339,7 +339,9 @@ $(() => {
 
     $(this).hide();
     $additionalFiltersGroups.show();
+  });
 
-    // event.preventDefault();
+  $('.additional-filters__clear-filter-btn').click(function(event) {
+    $('.additional-filters__clear-btn').click();
   });
 });
