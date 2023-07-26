@@ -4,56 +4,18 @@ import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import multi from "multi.js/dist/multi-es6.min.js";
 
-// console.log(multi);
-
-// function formatStateResult(state) {
-//   if (!state.element || !state.element.dataset.icon) {
-//     return state.text;
-//   }
-
-//   console.log(state.element);
-
-//   let $state = $(
-//     `<span class="Select_iconWrapper"><img src="${state.element.dataset.icon}" class="Select_icon" /><span class="Select_text">${state.text}</span></span>`
-//   );
-
-//   return $state;
-// }
-
-// function formatStateSelection(state) {
-//   if (!state.element || !state.element.dataset.icon) {
-//     return state.text;
-//   }
-
-//   console.log(state.element);
-
-//   let $state = $(
-//     `<span class="Select_iconWrapper"><img src="${state.element.dataset.icon}" class="Select_icon" /></span>`
-//   );
-
-//   return $state;
-// }
-
 $(() => {
   select2($);
-  // multi($);
 
   let $tagsSelects = $('.tags-select').select2({
     dropdownCssClass: ':all:',
     selectionCssClass: ':all:',
     theme: 'tags-select',
-    // templateResult: formatStateResult,
-    // templateSelection: formatStateSelection,
     dropdownAutoWidth: true,
     minimumResultsForSearch: -1
   });
 
-  // console.log($tagsSelects);
-
   $tagsSelects.each(function(index, el) {
-    // console.log($(el));
-    // console.log($(el).select2('val'));
-
     $(el).on('select2:select', function (e) {
       let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
 
@@ -71,41 +33,16 @@ $(() => {
             break;
         }
       }
-
-      // switch ($(el).attr('name')) {
-      //   case 'experience':
-      //     // statements_1
-      //     break;
-      //   case 'sex':
-      //     // statements_1
-      //     break;
-      // }
     });
-
-    // $(el).change(function(event) {
-    //   /* Act on the event */
-    // });
   });
-
-  // $('#cities-select').multi();
 
   let citiesSelects = document.querySelectorAll(".cities-select");
   citiesSelects.forEach(select => {
     multi(select, {
-      // 'non_selected_header': 'All options',
-      // 'selected_header': 'Selected options',
       "search_placeholder": "Введіть назву міста…",
       "hide_empty_groups": true
     });
   });
-
-  // let citiesSelect = document.querySelector(".cities-select");
-  // multi(citiesSelect, {
-  //   // 'non_selected_header': 'All options',
-  //   // 'selected_header': 'Selected options',
-  //   "search_placeholder": "Введіть назву міста…",
-  //   "hide_empty_groups": true
-  // });
 
   $('.dropdown-block--cities-select').each(function(index, el) {
     $(el).find('.multi-wrapper .search-input').wrap('<div class="multi-wrapper__header"></div>');
@@ -165,15 +102,11 @@ $(() => {
       selectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
       $selectToggle.addClass('select-toggle--selected');
     } else {
-      // setTimeout(() => {
-        $dropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
-        $selectToggle.removeClass('select-toggle--selected');
-      // });
+      $dropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
+      $selectToggle.removeClass('select-toggle--selected');
     }
 
     $selectToggle.html(selectToggleText);
-
-    console.log(selectToggleText);
   });
 
   $(document).on('click', function(e) {
@@ -198,24 +131,6 @@ $(() => {
   });
 
 
-
-
-  // let $citiesSelect = $('.cities-select').select2({
-  //   // dropdownCssClass: ':all:',
-  //   // selectionCssClass: ':all:',
-  //   placeholder: 'Пошук...',
-  //   theme: 'cities-select',
-  //   closeOnSelect: false,
-  //   multiple: true,
-  //   // allowClear: true,
-  //   dropdownAutoWidth: true,
-  //   // selectOnClose: true,
-  //   // templateResult: formatStateResult,
-  //   // templateSelection: formatStateSelection,
-  //   // dropdownAutoWidth: true,
-  //   minimumResultsForSearch: -1
-  // });
-
   $(document).on('click', '.filter__cities-select-toggle', function(e) {
     setTimeout(() => {
       $('#cities-dropdown-block .search-input').focus();
@@ -231,100 +146,20 @@ $(() => {
   $('.filter__clear-btn').click(function(e) {
     let $filter = $(this).closest('.filter');
     let $tagsSelects = $filter.find('select.tags-select');
-    let $selectedItems = $filter.find('.selected-items__item');
+    let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
 
     $tagsSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
-    $selectedItems.remove();
-
     $tagsSelects.each(function(index, el) {
       $(el).val('').trigger('change');
     });
+
+    $additionalFiltersClearBtn.click()
   });
 
-  // $('.filter__clear-btn').click(function(e) {
-  //   $(this).closest('.filter').find('.selected-items__item').remove();
-
-  //   e.preventDefault();
-  // });
-
-  // $citiesSelect.on('select2:selecting', function (e) {
-
-  //   // $('.select2-selection__choice').remove();
-
-  //   // setTimeout(() => {
-  //   //   $('.select2-selection__choice').remove();
-  //   // });
-  //   // console.log(e);
-  //   // let $selectResults = $('.select2-results');
-  //   // let $selectSearchDropdown = $('.select2-search--dropdown');
-
-  //   // $selectSearchDropdown.append('<div>Обрані міста</div>');
-  //   // $selectResults.append('<div class="select2-results__selected">Выбранные результаты</div>');
-
-  //   // console.log($selectResults);
-  //   // console.log('before open');
-  // });
-
-  // $citiesSelect.one('select2:open', function (e) {
-  //   // console.log(e);
-  //   let $selectResults = $('.select2-results');
-  //   let $selectSearchDropdown = $('.select2-search--dropdown');
-  //   let $selectDropdown = $('.select2-dropdown');
-
-  //   $selectSearchDropdown.append('<div>Обрані міста</div>');
-  //   $selectResults.append('<div class="select2-results__selected">Выбранные результаты</div>');
-  //   $selectDropdown.append('<div class="select2-dropdown__btn-wrapper"><button type="button" class="select2-dropdown__apply-btn">Застосувати</button></div>');
-
-  //   // console.log($selectResults);
-  //   // console.log('before open');
-  // });
-
-  // $citiesSelect.on('select2:closing', function (e) {
-  //   console.log(e.params.args);
-  //   // e.preventDefault();
-  // });
-
-  // $citiesSelect.on('select2:selecting', function (e) {
-  //   console.log(e.params.args);
-  //   console.log('selecting');
-  //   // e.preventDefault();
-  // });
-
-  // let selectedCities = [];
-
-  // $(document).on('click', '.select2-container--cities-select .select2-dropdown__apply-btn', function(e) {
-  //   // console.log('kdkddk');
-  //   $citiesSelect.select2('close');
-  //   console.log($citiesSelect.select2('data'));
-
-  //   e.preventDefault();
-  // });
-
-  // $(document).on('click', '.select2-selection--multiple', function(event) {
-  //   $citiesSelect.select2('open');
-  //   console.log('!!!!');
-  // });
-
-  // $citiesSelect.select2('open');
-
-  // $('.cities-select')
-
   // $('.tags-select').select2({
   //   dropdownCssClass: ':all:',
   //   selectionCssClass: ':all:',
   //   theme: 'tags-select',
-  //   // templateResult: formatStateResult,
-  //   // templateSelection: formatStateSelection,
-  //   dropdownAutoWidth: true,
-  //   minimumResultsForSearch: -1
-  // });
-
-  // $('.tags-select').select2({
-  //   dropdownCssClass: ':all:',
-  //   selectionCssClass: ':all:',
-  //   theme: 'tags-select',
-  //   // templateResult: formatStateResult,
-  //   // templateSelection: formatStateSelection,
   //   dropdownAutoWidth: true,
   //   minimumResultsForSearch: -1
   // });
@@ -368,8 +203,12 @@ $(() => {
     });
   }
 
-  $('.filter .selected-item__remove-link').click(function(e) {
-    $(this).closest('.selected-items__item').remove();
+  $(document).on('click', '.filter .selected-item__remove-link', function(e) {
+    let $selectedItem = $(this).closest('.selected-items__item');
+    let $otherSelectedItem = $(`.additional-filters .selected-items__item[data-name="${$selectedItem.data('name')}"][data-value="${$selectedItem.data('value')}"]`);
+
+    $selectedItem.remove();
+    $otherSelectedItem.find('.selected-item__remove-link').click();
 
     e.preventDefault();
   });
@@ -380,9 +219,8 @@ $(() => {
     let $additionalFilters = $(this).closest('.additional-filters');
     let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
 
-    Array.from($additionalFiltersGroups).forEach( group => {
+    $additionalFiltersGroups.each( (index, group) => {
       let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
-
       let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label')).map(label => {
         return $(label).text().toLowerCase();
       });
@@ -398,27 +236,7 @@ $(() => {
   // Adding selected items on search by filter
   $('input[name="search_filter"]').on('input', function(event) {
     let searchValue = $(this).val().toLowerCase().trim();
-    let $additionalFilters = $(this).closest('.additional-filters');
-    // let $selectedItemsList = $additionalFilters.find('.additional-filters__selected-items .selected-items__list');
-    // let $searchValueSelectedItem = $selectedItemsList.find('.selected-items__item--search-value');
-    let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
-
-    // if (searchValue !== '') {
-    //   if (!$searchValueSelectedItem.length) {
-
-    //     $selectedItemsList.prepend(`
-    //       <li class="selected-items__item selected-items__item--search-value">
-    //         <div class="selected-item">
-    //           <div class="selected-item__value">${searchValue}</div>
-    //           <a href="#" class="selected-item__remove-link"></a>
-    //         </div>
-    //       </li>`);
-    //   } else {
-    //     $searchValueSelectedItem.find('.selected-item__value').text(searchValue);
-    //   }
-    // } else {
-    //   $searchValueSelectedItem.remove();
-    // }
+    let $clearBtn = $('.additional-filters__clear-btn');
 
     if (searchValue) {
       $clearBtn.show();
@@ -433,21 +251,19 @@ $(() => {
     let $additionalFilters = $selectedItemParent.closest('.additional-filters');
     let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
 
-    // if ($selectedItemParent.hasClass('selected-items__item--search-value')) {
-    //   let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
-
-    //   $additionalFilters.find('.form-text--filter-search').val('');
-    //   $additionalFiltersGroups.show();
-    // }
-
     if ($selectedItemParent.data('name') !== undefined && $selectedItemParent.data('value') !== undefined) {
       let selectedItemName = $selectedItemParent.data('name');
 
       if ($selectedItemParent.data('type') === 'checkbox') {
+
         let selectedItemValue = $selectedItemParent.data('value');
         let $selectedCheckbox = $additionalFilters.find(`.checkbox__input[name="${selectedItemName}"][value="${selectedItemValue}"]`);
 
         $selectedCheckbox.prop("checked", false);
+
+        let $otherSelectedItem = $(`.filter .selected-items__item[data-name="${selectedItemName}"][data-value="${selectedItemValue}"]`);
+        $otherSelectedItem.remove();
+
       } else if ($selectedItemParent.data('type') === 'radio') {
         let $nonCheckedRadio = $additionalFilters.find(`.radiobtn__input[name="${selectedItemName}"][value=""]`);
         $nonCheckedRadio.prop('checked', true);
@@ -469,8 +285,8 @@ $(() => {
   $('.additional-filters .checkbox__input, .additional-filters .radiobtn__input').click(function(event) {
     let labelText = $(this).parent().find('label').text();
     let $additionalFilters = $(this).closest('.additional-filters');
-    let $selectedItemsList = $additionalFilters.find('.additional-filters__selected-items .selected-items__list');
-    let $selectedCheckboxItem = $additionalFilters.find(`.selected-items__item[data-name="${$(this).attr('name')}"][data-value="${$(this).val()}"]`);
+    let $selectedItemsList = $('.selected-items__list');
+    let $selectedItem = $(`.selected-items__item[data-name="${$(this).attr('name')}"][data-value="${$(this).val()}"]`);
     let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
 
     if ($(this).is(':checkbox')) {
@@ -483,14 +299,14 @@ $(() => {
             </div>
           </li>`);
       } else {
-        $selectedCheckboxItem.remove();
+        $selectedItem.remove();
       }
     } else if ($(this).is(':radio')) {
       let groupTitle = $(this).closest('.radiobtns-group').find('.radiobtns-group__title').text();
-      let $otherSelectedCheckboxes = $additionalFilters.find(`.selected-items__item[data-name="${$(this).attr('name')}"]`).not(`[data-value="${$(this).val()}"]`);
-      $otherSelectedCheckboxes.remove();
+      let $otherSelectedItems = $(`.selected-items__item[data-name="${$(this).attr('name')}"]`).not(`[data-value="${$(this).val()}"]`);
+      $otherSelectedItems.remove();
 
-      if (!$selectedCheckboxItem.length && $(this).val() !== '') {
+      if (!$selectedItem.length && $(this).val() !== '') {
         $selectedItemsList.append(`
           <li class="selected-items__item" data-type="radio" data-name="${$(this).attr('name')}" data-value="${$(this).val()}">
             <div class="selected-item">
@@ -519,7 +335,7 @@ $(() => {
     $allNonCheckedRadio.prop('checked', true);
 
     $additionalFilters.find('.form-text--filter-search').val('');
-    $additionalFilters.find('.selected-items__item').remove();
+    $('.selected-items__item').remove();
 
     $(this).hide();
     $additionalFiltersGroups.show();
