@@ -238,11 +238,7 @@ $(() => {
     let searchValue = $(this).val().toLowerCase().trim();
     let $clearBtn = $('.additional-filters__clear-btn');
 
-    if (searchValue) {
-      $clearBtn.show();
-    } else {
-      $clearBtn.hide();
-    }
+    searchValue ? $clearBtn.show() : $clearBtn.hide();
   });
 
   // Removing selected items
@@ -271,12 +267,7 @@ $(() => {
     }
 
     $selectedItemParent.remove();
-
-    if ($additionalFilters.find('.selected-items__item').length) {
-      $clearBtn.show();
-    } else {
-      $clearBtn.hide();
-    }
+    $additionalFilters.find('.selected-items__item').length ? $clearBtn.show() : $clearBtn.hide();
 
     event.preventDefault();
   });
@@ -317,11 +308,7 @@ $(() => {
       }
     }
 
-    if ($additionalFilters.find('.selected-items__item').length) {
-      $clearBtn.show();
-    } else {
-      $clearBtn.hide();
-    }
+    $additionalFilters.find('.selected-items__item').length ? $clearBtn.show() : $clearBtn.hide();
   });
 
   // Clear additional filters
