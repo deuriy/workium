@@ -65,7 +65,28 @@ $(() => {
     $(el).find('.multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
   });
 
-  $(document).on('click', 'a.item', function(event) {
+  $(document).on('click', 'a.item', function(e) {
+    // setTimeout(() => {
+      // let $multiWrapperBody = $(this).closest('.multi-wrapper__body');
+      // let $citiesDropdownBlock = $('.dropdown-block--cities-select.dropdown-block--visible');
+      // let $dropdownBlockID = $citiesDropdownBlock.attr('id');
+      // let $selectToggle = $(`.select-toggle[href="#${$dropdownBlockID}"]`);
+      // let $selectedCities = $citiesDropdownBlock.find('.selected-wrapper .selected');
+
+      // $selectToggle.attr('data-selected-cities', 'my-value');
+
+      // $(this).show();
+
+      // console.log($selectToggle);
+      // console.log($selectedCities);
+      // console.log($multiWrapperBody);
+      // console.log($(this).parent());
+
+      // console.log($(e.target).parents('.multi-wrapper'));
+      // console.log($selectedCities);
+    // });
+    
+
     if ($('.dropdown-block--cities-select .selected-wrapper .selected').length) {
       $('.multi-wrapper').removeClass('multi-wrapper--default multi-wrapper--empty');
     } else {
@@ -78,7 +99,6 @@ $(() => {
   });
 
   $('.dropdown-block--cities-select .multi-wrapper__clear-btn').click(function(e) {
-
     $('#cities-select option:selected').prop('selected', false);
     $('#cities-select').trigger('change');
 
@@ -107,7 +127,12 @@ $(() => {
     }
 
     $selectToggle.html(selectToggleText);
+
+    console.log($selectedCities.map((index, element) => $(element).attr('multi-index')));
+    $selectToggle.attr('data-selected-cities', $selectedCities.map((index, element) => $(element).attr('multi-index')).toArray());
+    console.log($selectToggle.data('selected-cities'));
   });
+
 
   $(document).on('click', function(e) {
     if ($('.dropdown-block--cities-select').hasClass('dropdown-block--visible')) {
@@ -126,6 +151,22 @@ $(() => {
         } else {
           $selectToggle.removeClass('select-toggle--selected');
         }
+
+        // let $prevSelectedCitiesIDs = $selectToggle.attr('data-selected-cities');
+        // // console.log($prevSelectedCitiesIDs);
+        // if ($prevSelectedCitiesIDs === '') return;
+
+        // $prevSelectedCitiesIDs = $prevSelectedCitiesIDs.split(',');
+
+        // $.each($prevSelectedCitiesIDs, function( index, value ) {
+        //   // console.log(value);
+        //   // console.log( $visibleDropdownBlock.find(`.non-selected-wrapper .item[multi-index="${value}"]`) );
+        //   $visibleDropdownBlock.find(`.non-selected-wrapper .item[multi-index="${value}"]`).click();
+        //   setTimeout(() => {
+        //     console.log($('#cities-select option:selected'));
+        //   });
+          
+        // });
       }
     }
   });
