@@ -1,7 +1,7 @@
 extends layouts/user_profile
 
 block content
-  .affiliate-page
+  .affiliate-page.affiliate-page--2col
     .affiliate-page__aside
       .article-menu.affiliate-page__menu
         ul.article-menu__list
@@ -33,9 +33,9 @@ block content
               li.select-menu__item
                 a(href="#").select-menu__link Працівникам
               li.select-menu__item
-                a(href="#").select-menu__link Рекрутерам
+                a(href="/recruitment.html").select-menu__link Рекрутерам
               li.select-menu__item
-                a(href="#").select-menu__link Партнерська програма
+                a(href="/partners.html").select-menu__link Партнерська програма
               li.select-menu__item
                 a(href="#").select-menu__link Агенціям та роботодавцям
               li.select-menu__item
@@ -264,30 +264,30 @@ block content
                 li.contact-buttons__item
                   a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-contact-box-support Написати в #[span.btn-lightblue__messenger Telegram]
         .dropdown-block.dropdown-block--top.dropdown-block--social-groups#social-groups
-          .social-groups-block
-            h3.social-groups-block__title Список популярних FaceBook груп:
-            .social-groups-block__items
-              .fb-group.social-groups-block__item
+          .social-groups
+            h3.social-groups__title Список популярних FaceBook груп:
+            .social-groups__items
+              .fb-group.social-groups__item
                 a(href="https://www.facebook.com/groups/209206389413491/" target="_blank").fb-group__link ЧОРНИЙ СПИСОК ПРОДАВЦІВ
                 button(type="button").copy-btn.copy-btn--small.copy-btn--grey.fb-group__copy-btn
                 .tooltip.tooltip--copied.tooltip--grey-bg.fb-group__tooltip Скопійовано!
-              .fb-group.social-groups-block__item
+              .fb-group.social-groups__item
                 a(href="https://www.facebook.com/groups/209206389413491/" target="_blank").fb-group__link Чорний список шахраїв(продавців,покупців) фейсбука та Украіни
                 button(type="button").copy-btn.copy-btn--small.copy-btn--grey.fb-group__copy-btn
                 .tooltip.tooltip--copied.tooltip--grey-bg.fb-group__tooltip Скопійовано!
-              .fb-group.social-groups-block__item
+              .fb-group.social-groups__item
                 a(href="https://www.facebook.com/groups/209206389413491/" target="_blank").fb-group__link Чорна Мітка. Шахраї. Список аfеристів в мережі . РЕЗЕРВНА ГРУПА.
                 button(type="button").copy-btn.copy-btn--small.copy-btn--grey.fb-group__copy-btn
                 .tooltip.tooltip--copied.tooltip--grey-bg.fb-group__tooltip Скопійовано!
-              .fb-group.social-groups-block__item
+              .fb-group.social-groups__item
                 a(href="https://www.facebook.com/groups/209206389413491/" target="_blank").fb-group__link Черный список сотрудников. Черный список работников
                 button(type="button").copy-btn.copy-btn--small.copy-btn--grey.fb-group__copy-btn
                 .tooltip.tooltip--copied.tooltip--grey-bg.fb-group__tooltip Скопійовано!
-              .fb-group.social-groups-block__item
+              .fb-group.social-groups__item
                 a(href="https://www.facebook.com/groups/209206389413491/" target="_blank").fb-group__link Совет другу в Польше/Порада другу в Польщі
                 button(type="button").copy-btn.copy-btn--small.copy-btn--grey.fb-group__copy-btn
                 .tooltip.tooltip--copied.tooltip--grey-bg.fb-group__tooltip Скопійовано!
-              .fb-group.social-groups-block__item
+              .fb-group.social-groups__item
                 a(href="https://www.facebook.com/groups/209206389413491/" target="_blank").fb-group__link Чорний список України Аферисти Недобросовісні покупці/клієнти
                 button(type="button").copy-btn.copy-btn--small.copy-btn--grey.fb-group__copy-btn
                 .tooltip.tooltip--copied.tooltip--grey-bg.fb-group__tooltip Скопійовано!
