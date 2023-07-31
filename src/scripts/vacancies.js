@@ -254,6 +254,29 @@ $(() => {
     e.preventDefault();
   });
 
+  $('input[name="vacancy_name"]').on('input', function(event) {
+    let $filter = $(this).closest('.filter');
+    let $clearBtn = $filter.find('.filter__clear-btn');
+
+    $(this).val().trim() !== '' ? $clearBtn.show() : $clearBtn.hide();
+    // let searchValue = $(this).val().toLowerCase().trim();
+    // let $additionalFilters = $(this).closest('.additional-filters');
+    // let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
+
+    // $additionalFiltersGroups.each( (index, group) => {
+    //   let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
+    //   let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label')).map(label => {
+    //     return $(label).text().toLowerCase();
+    //   });
+
+    //   if (groupTitle.includes(searchValue) || checkboxesLabels.find(label => label.includes(searchValue))) {
+    //     $(group).show();
+    //   } else {
+    //     $(group).hide();
+    //   }
+    // });
+  });
+
   // Search in filter
   $('input[name="search_filter"]').on('input', function(event) {
     let searchValue = $(this).val().toLowerCase().trim();
