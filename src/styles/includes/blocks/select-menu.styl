@@ -1,0 +1,38 @@
+.select-menu
+	position relative
+	
+	&__selected
+		padding 8px 40px 8px 20px
+		border 1px solid #dfe2e6
+		border-radius 12px
+		background var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 8'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 1 6 6 6-6'/%3E%3C/svg%3E") calc(100% - 1em) center/.857143em no-repeat
+		cursor pointer
+	
+	&__dropdown
+		position absolute
+		top 100%
+		right 0
+		width 300px
+		padding-top 7px
+		opacity 0
+		visibility hidden
+		@extend .transition
+		
+	&__list
+		list-style none
+		padding 5px 0
+		border 1px solid var(--grey-medium)
+		border-radius 6px
+		background var(--light)
+	
+	&__link
+		display block
+		padding 6px 23px
+		color var(--accent)
+		text-decoration none
+		@extend .transition
+	
+	&--opened
+		.select-menu__dropdown
+			opacity 1
+			visibility visible

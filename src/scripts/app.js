@@ -134,6 +134,72 @@ $(() => {
     }
   });
 
+  // Select menu
+  $('.select-menu').click(function(e) {
+    $(this).toggleClass('select-menu--opened');
+  });
+
+  $(document).click(function(e) {
+    let $selectMenuSelected = e.target.closest('.select-menu__selected');
+    let $selectMenuDropdown = e.target.closest('.select-menu__dropdown');
+
+    if (!$selectMenuSelected && !$selectMenuDropdown) {
+      $('.select-menu--opened').removeClass('select-menu--opened');
+    }
+  });
+
+  // Article menu
+  // $('.article-menu__link').click(function(e) {
+  //   let $articleMenu = $(this).closest('.article-menu');
+  //   let $activeLink = $articleMenu.find('.article-menu__link--active');
+
+  //   if ($activeLink != $(this)) {
+  //     $activeLink.removeClass('article-menu__link--active');
+  //     $(this).addClass('article-menu__link--active');
+  //   }
+
+  //   // e.preventDefault();
+  // });
+
+  let options = {
+    // rootMargin: '0px',
+    threshold: 0.25
+  };
+
+  const handleIntersection = function(entries, observer) {
+    /* Content excerpted, show below */
+    // console.log(entries);
+
+    entries.map((entry) => {
+      console.log(entry.target.id, entry.intersectionRatio);
+      // console.log();
+
+      if (entry.isIntersecting) {
+       // console.log('Yes');
+       // console.log(entry);
+       // console.log(entry.target.id);
+
+       let headingID = entry.target.id;
+
+       if (headingID !== '') {
+         let $targetLink = $(`.article-menu__link[href^="#${headingID}"]`);
+
+         // $targetLink[0].scrollIntoView();
+
+         $targetLink.addClass('article-menu__link--active').parent().siblings('.article-menu__item').find('.article-menu__link--active').removeClass('article-menu__link--active');
+       }
+
+       // $(`.table-contents__link[href^="${}"]`)
+      }
+    });
+  };
+
+  const headingObserver = new IntersectionObserver(handleIntersection, options);
+
+  let articleHeadings = document.querySelectorAll('.affiliate-page__content > h2');
+  articleHeadings.forEach(block => headingObserver.observe(block));
+
+
   $('.user-profile-popup-link').click(function(e) {
     let fancyboxSlide = Fancybox.getSlide();
 
@@ -263,7 +329,7 @@ $(() => {
 
   $(document).click(function(e) {
     let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
-    let $visibleDropdownBlock = $('.dropdown-block--visible');
+    // let $visibleDropdownBlock = $('.dropdown-block--visible');
     let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
 
     if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {

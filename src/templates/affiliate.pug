@@ -1,759 +1,266 @@
 extends layouts/user_profile
 
 block content
-  .affiliate-program
-    h1.page-title.affiliate-program__title Партнерська програма
-    .affiliate-program__text
-      p Використовуючи ваше унікальне бонусне посилання, яке розміщене нижче, ви можете запрошувати необмежену кількість користувачів. Вам необхідно зробити – скопіювати її та відправити своїм друзям і знайомим. Після того, як вони пройдуть по ній і зареєструються на сервісі – ви миттєво побачите їх у себе в команді.
-    .affiliate-info.affiliate-program__info
-      .affiliate-info__img-wrapper
-        img(src="/img/partners.jpg" alt="").affiliate-info__img
-      .affiliate-info__text-wrapper
-        h3.affiliate-info__title #[span.affiliate-info__title-sum 1000 zł] за кожного запрошеного користувача! Гарантовано!
-        .affiliate-info__text.affiliate-info__text--truncated
-          p Отримуйте 1000 zł за кожного користувача, який зареєструється по вашому партнерському посиланні.
-          p Зареєструвавшись один раз - користувач назавжди залишається у вашій команді та не зможе її покинути навіть при власному бажанні. Далі, при кожному зарахуванні винагороди за відпрацювання кандидатів - ви також миттєво будете отримувати #[strong 3%] від тієї суми, яка була зарахована на баланс запрошеного вами користувача. Так буде продовжуватись до тих пір, поки сумарно ви не отримаєте #[strong 1000 zł].
-          p Зверніть увагу, що кошти, які ви будете отримувати в якості винагороди - нараховуються вам додатково і не віднімаються з балансу запрошеного вами користувача. До прикладу, якщо рекрутер, який зареєструвався по вашому партнерському посиланню, працевлаштував трьох людей на вакансію яка передбачала винагороду в розмірі 500 zł, то по відпрацюванню цих трьох кандидатів рекрутер миттєво та автоматично отримає на свій баланс 1500 zł. Одночасно із цим, ви автоматично отримаєте 45 zł (що складає 3% від 1500 zł) на свій баланс.
-          p Нейромережа WORKIUM не обмежує ваші можливості, тому ви можете запросити стільки користувачів - скільки зможете! І з кожного із них ви будете отримувати прибуток. Таким чином, отримувати пасивний дохід в розмірі 5,000 - 15,000 zł запрошуючи в команду рекрутерів - більше ніж реально!
-          p Ви можете використовувати будь-які способи розповсюдження вашого партнерського посилання, які не порушують чинного законодавства. Пам’ятайте, що з кожним днем про WORKIUM дізнаються сотні рекрутерів, тому не втрачайте свій час і почніть залучати нових партнерів в свою команду прямо зараз, інакше завтра, можливо, вони дізнаються про WORKIUM від когось іншого!
-        .affiliate-info__more-link-wrapper
-          a(href="#").toggle-link.affiliate-info__more-link Читати далі
-    .bonus-info.affiliate-program__bonus-info
-      .bonus-link.bonus-info__bonus-link
-        h4.bonus-link__title Ваше бонус посилання:
-        .copy-link
-          input(type="text" readonly value="https://website.com?i=wmj7drft").copy-link__input
-          button(type="button").copy-btn.copy-link__btn
-          .tooltip.tooltip--copied.copy-link__tooltip Скопійовано!
-      .bonus-statistic
-        .bonus-statistic-item
-          h4.bonus-statistic-item__title Сумарно кліків
-          .bonus-statistic-item__value.bonus-statistic-item__value--total-clicks 1
-        .bonus-statistic-item
-          h4.bonus-statistic-item__title Унікальних кліків
-          .bonus-statistic-item__value.bonus-statistic-item__value--unique-clicks 1
-        .bonus-statistic-item
-          h4.bonus-statistic-item__title Реєстрацій
-          .bonus-statistic-item__value.bonus-statistic-item__value--registration 1
-        .bonus-statistic-item
-          h4.bonus-statistic-item__title Зароблено в сумі
-          .bonus-statistic-item__value.bonus-statistic-item__value--total-earned 0 ZŁ
-    .tabs.partners-tabs
-      .partners-tabs__header
-        h3.partners-tabs__title Запрошені партнери та замовлення
-        .tabs-menu.tabs-menu--light-bg-mob.tabs-menu--partners.partners-tabs__tabs-menu
-          ul.tabs-menu__list.tabs__list
-            li.tabs-menu__item.tabs__item
-              a(href="#").tabs-menu__link.tabs-menu__link--active Команда
-            li.tabs-menu__item.tabs__item
-              a(href="#").tabs-menu__link Рекрутація
-            li.tabs-menu__item.tabs__item
-              a(href="#").tabs-menu__link Документи
-      .partners-tabs__content
-        .tabs__content
-          .partners-table-wrapper
-            .partners-table-wrapper__description
-              p В таблиці нижче відображаються усі користувачі, які перейшли по вашому партнерському посиланню та зареєструвались. Нейромережа WORKIUM миттєво та безпомилково відслідковує усі реєстрації не залежно від того, з якого розділу чи сторінки була здійснена дія. Користувачі залишаються у вашій команді назавжди.
-            .partners-table-wrapper__more-link-wrapper.hidden-smPlus
-              a(href="#").toggle-link.partners-table-wrapper__more-link Читати далі
-            table.partners-table.affiliate-program__partners-table.hidden-xs
-              //- caption.partners-table__caption Ваші партнери:
-              thead.partners-table__thead
-                tr.partners-table__row
-                  th.partners-table__th.partners-table__th--date Час, дата та ID
-                  th.partners-table__th.partners-table__th--name Ім'я
-                  th.partners-table__th.partners-table__th--influence-and-awards Впливовість та нагороди
-                  th.partners-table__th.partners-table__th--profit Прибуток
-                  th.partners-table__th.partners-table__th--currency Валюта
-                  th.partners-table__th.partners-table__th--history Історія операцій
-              tbody.partners-table__body
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--influence-and-awards
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                        span.partners-table__award-number 1
-                  td.partners-table__td.partners-table__td--profit 2658,67
-                  td.partners-table__td.partners-table__td--currency ZŁ
-                  td.partners-table__td.partners-table__td--history
-                    .partners-table__no-operations Операцій немає
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--influence-and-awards
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                        span.partners-table__award-number 1
-                  td.partners-table__td.partners-table__td--profit 2658,67
-                  td.partners-table__td.partners-table__td--currency ZŁ
-                  td.partners-table__td.partners-table__td--history
-                    a(href="/operations.html").btn-lightgrey.partners-table__view-btn Переглянути операції
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--influence-and-awards
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                        span.partners-table__award-number 1
-                  td.partners-table__td.partners-table__td--profit 2658,67
-                  td.partners-table__td.partners-table__td--currency ZŁ
-                  td.partners-table__td.partners-table__td--history
-                    .partners-table__no-operations Операцій немає
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--influence-and-awards
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                        span.partners-table__award-number 1
-                  td.partners-table__td.partners-table__td--profit 2658,67
-                  td.partners-table__td.partners-table__td--currency ZŁ
-                  td.partners-table__td.partners-table__td--history
-                    a(href="/operations.html").btn-lightgrey.partners-table__view-btn Переглянути операції
-            table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
-              caption.partners-table__caption Ваші партнери:
-              thead.partners-table__thead
-                tr.partners-table__row
-                  th.partners-table__th.partners-table__th--email-and-id Ім'я
-                  th.partners-table__th.partners-table__th--profit-and-awards Прибуток
-              tbody.partners-table__body
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile.partners-table__info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partners-table__no-operations Операцій немає
-                    //- .partners-table__id ID: 39974294
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-awards
-                    .partners-table__profit 2658,67 ZŁ
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table-mobile
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                    //- .partners-table__no-operations Операцій немає
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile.partners-table__info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    a(href="/operations.html").toggle-link Переглянути операції
-                    //- .partners-table__id ID: 39974294
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-awards
-                    .partners-table__profit 2658,67 ZŁ
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table-mobile
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                    //- .partners-table__no-operations Операцій немає
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile.partners-table__info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partners-table__no-operations Операцій немає
-                    //- .partners-table__id ID: 39974294
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-awards
-                    .partners-table__profit 2658,67 ZŁ
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table-mobile
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                    //- .partners-table__no-operations Операцій немає
-                tr.partners-table__row
-                  td.partners-table__td
-                    //- .partners-table__email
-                    .partner-info.partner-info--mobile.partners-table__info
-                      img(src="/img/andrew.png" alt="").partner-info__img
-                      .partner-info__name Андрій
-                      .partner-info__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    a(href="/operations.html").toggle-link Переглянути операції
-                    //- .partners-table__id ID: 39974294
-                    //- .partners-table__date 5.01.2023 о 20:14
-                  td.partners-table__td.partners-table__td--profit-and-awards
-                    .partners-table__profit 2658,67 ZŁ
-                    .partners-table__influence-and-awards
-                      .influence-rating.influence-rating--partners-table-mobile
-                        .influence-rating__rating 0
-                      .partners-table__award-img-wrapper
-                        img(src="/img/award2.svg" alt="").partners-table__award-img
-                    //- .partners-table__date 5.01.2023 о 20:14
-                    //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                    //- .partners-table__no-operations Операцій немає
-
-                //- tr.partners-table__row
-                //-   td.partners-table__td
-                //-     //- .partners-table__email
-                //-     .partner-info.partner-info--mobile
-                //-       img(src="/img/andrew.png" alt="").partner-info__img
-                //-       .partner-info__name Андрій
-                //-       .partner-info__date 5.01.2023 о 20:14
-                //-     //- .partners-table__id ID: 52334797
-                //-     //- .partners-table__date 5.01.2023 о 20:14
-                //-   td.partners-table__td.partners-table__td--profit-and-awards
-                //-     .partners-table__profit 2658,67 ZŁ
-                //-     //- .partners-table__date 5.01.2023 о 20:14
-                //-     a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-                //- tr.partners-table__row
-                //-   td.partners-table__td
-                //-     //- .partners-table__email
-                //-     .partner-info.partner-info--mobile
-                //-       img(src="/img/andrew.png" alt="").partner-info__img
-                //-       .partner-info__name Андрій
-                //-       .partner-info__date 5.01.2023 о 20:14
-                //-     //- .partners-table__id ID: 52334797
-                //-     //- .partners-table__date 5.01.2023 о 20:14
-                //-   td.partners-table__td.partners-table__td--profit-and-awards
-                //-     .partners-table__profit 2658,67 ZŁ
-                //-     //- .partners-table__date 5.01.2023 о 20:14
-                //-     a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-        .tabs__content
-          .partners-table-wrapper
-            .partners-table-wrapper__description
-              p В таблиці нижче відображаються всі користувачі, які перейшли по вашому партнерському посиланню та забронювались на одну із вакансій без реєстрації на WORKIUM. Незважаючи на це, нейромережа WORKIUM миттєво відслідкує усі замовлення та в повному розмірі автоматично нарахує вам партнерську винагороду.
-            .partners-table-wrapper__more-link-wrapper.hidden-smPlus
-              a(href="#").toggle-link.partners-table-wrapper__more-link Читати далі
-            table.partners-table.partners-table--recruitment.affiliate-program__partners-table.hidden-xs
-              //- caption.partners-table__caption Ваші партнери:
-              thead.partners-table__thead
-                tr.partners-table__row
-                  th.partners-table__th.partners-table__th--date Час, дата та ID
-                  th.partners-table__th.partners-table__th--name Ім'я
-                  th.partners-table__th.partners-table__th--country Країна
-                  th.partners-table__th.partners-table__th--vacancy Вакансія, підприємство та агенція
-                  th.partners-table__th.partners-table__th--remuneration Винагорода (3%)
-                  th.partners-table__th.partners-table__th--status Статус
-              tbody.partners-table__body
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__vacancy-and-agency
-                      .partners-table__vacancy Оператор на виробництво електроніки
-                      .partners-table__agency LG Electronics  -  Smart Work
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--grey-bg.partners-table__status Заброньований
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__vacancy-and-agency
-                      .partners-table__vacancy Оператор на виробництво електроніки
-                      .partners-table__agency LG Electronics  -  Smart Work
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--aqua-bg.partners-table__status Виїхав
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__vacancy-and-agency
-                      .partners-table__vacancy Оператор на виробництво електроніки
-                      .partners-table__agency LG Electronics  -  Smart Work
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Оформлення
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__vacancy-and-agency
-                      .partners-table__vacancy Оператор на виробництво електроніки
-                      .partners-table__agency LG Electronics  -  Smart Work
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--lilac-bg.partners-table__status Працює
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__vacancy-and-agency
-                      .partners-table__vacancy Оператор на виробництво електроніки
-                      .partners-table__agency LG Electronics  -  Smart Work
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--beige-bg.partners-table__status Відпрацював
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__vacancy-and-agency
-                      .partners-table__vacancy Оператор на виробництво електроніки
-                      .partners-table__agency LG Electronics  -  Smart Work
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--green-bg.partners-table__status Виплата
-            .partners.partners-table-wrapper__partners.hidden-smPlus
-              .partners__titles
-                .partners__col-title Ім'я
-                .partners__col-title Винагорода (3%)
-              .partners__items
-                .partner.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__country Польща
-                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
-                    .partner__agency LG Electronics - Smart Work
-                    .status.status--grey-bg Заброньований
-                .partner.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__country Польща
-                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
-                    .partner__agency LG Electronics - Smart Work
-                    .status.status--aqua-bg Виїхав
-                .partner.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__country Польща
-                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
-                    .partner__agency LG Electronics - Smart Work
-                    .status Оформлення
-                .partner.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__country Польща
-                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
-                    .partner__agency LG Electronics - Smart Work
-                    .status.status--lilac-bg Працює
-                .partner.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__country Польща
-                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
-                    .partner__agency LG Electronics - Smart Work
-                    .status.status--beige-bg Відпрацював
-                .partner.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__country Польща
-                    .partner__vacancy Оператор на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки на виробництво електроніки
-                    .partner__agency LG Electronics - Smart Work
-                    .status.status--green-bg Виплата
-
-            //- table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
-            //-   caption.partners-table__caption Ваші партнери:
-            //-   thead.partners-table__thead
-            //-     tr.partners-table__row
-            //-       th.partners-table__th.partners-table__th--email-and-id Ім'я
-            //-       th.partners-table__th.partners-table__th--profit-and-date Винагорода (3%)
-            //-   tbody.partners-table__body
-            //-     tr.partners-table__row
-            //-       td.partners-table__td
-            //-         //- .partners-table__email
-            //-         .partner-info.partner-info--mobile
-            //-           .partner-info__name Андрій
-            //-           .partner-info__date 5.01.2023 о 20:14
-            //-         //- .partners-table__id ID: 39974294
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-       td.partners-table__td.partners-table__td--profit-and-date
-            //-         .partners-table__profit
-            //-           .partner-status 2658,67 ZŁ
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-         //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-            //-         .partners-table__no-operations Операцій немає
-            //-     tr.partners-table__row
-            //-       td.partners-table__td
-            //-         //- .partners-table__email
-            //-         .partner-info.partner-info--mobile
-            //-           img(src="/img/andrew.png" alt="").partner-info__img
-            //-           .partner-info__name alma.lawson
-            //-           .partner-info__date 5.01.2023 о 20:14
-            //-         //- .partners-table__id ID: 52334797
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-       td.partners-table__td.partners-table__td--profit-and-date
-            //-         .partners-table__profit
-            //-           .partner-status 2658,67 ZŁ
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-            //-     tr.partners-table__row
-            //-       td.partners-table__td
-            //-         //- .partners-table__email
-            //-         .partner-info.partner-info--mobile
-            //-           img(src="/img/andrew.png" alt="").partner-info__img
-            //-           .partner-info__name alma.lawson
-            //-           .partner-info__date 5.01.2023 о 20:14
-            //-         //- .partners-table__id ID: 52334797
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-       td.partners-table__td.partners-table__td--profit-and-date
-            //-         .partners-table__profit
-            //-           .partner-status 2658,67 ZŁ
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-
-        .tabs__content(style="display: block;")
-          .partners-table-wrapper
-            .partners-table-wrapper__description
-              p В таблиці нижче відображаються всі користувачі, які перейшли по вашому партнерському посиланню та замовили будь-які документи не зареєструвавшись. Незважаючи на це, нейромережа WORKIUM миттєво відслідкує усі здійснені замовлення та в повному розмірі автоматично нарахує вам партнерську винагороду.
-            .partners-table-wrapper__more-link-wrapper.hidden-smPlus
-              a(href="#").toggle-link.partners-table-wrapper__more-link Читати далі
-            table.partners-table.partners-table--documents.affiliate-program__partners-table.hidden-xs
-              //- caption.partners-table__caption Ваші партнери:
-              thead.partners-table__thead
-                tr.partners-table__row
-                  th.partners-table__th.partners-table__th--date Час, дата та ID
-                  th.partners-table__th.partners-table__th--name Ім'я
-                  th.partners-table__th.partners-table__th--country Країна
-                  th.partners-table__th.partners-table__th--document-type Тип документу
-                  th.partners-table__th.partners-table__th--remuneration Винагорода (3%)
-                  th.partners-table__th.partners-table__th--status Статус
-              tbody.partners-table__body
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__document-type Пакет для відкриття візи
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--grey-bg.partners-table__status Прийнято в роботу
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__document-type Пакет для відкриття візи
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--aqua-bg.partners-table__status На опрацюванні
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__document-type Пакет для відкриття візи
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.partners-table__status Готово
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__document-type Пакет для відкриття візи
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--beige-bg.partners-table__status Відправлено
-                tr.partners-table__row
-                  td.partners-table__td.partners-table__td--date
-                    .partners-table__datetime-and-id
-                      .partners-table__date 17:35 &nbsp;22.12.23
-                      .partners-table__id 32122
-                  td.partners-table__td.partners-table__td--name
-                    .partner-info
-                      .partner-info__name Андрій
-                  td.partners-table__td.partners-table__td--country
-                    .partners-table__country Польща
-                  td.partners-table__td.partners-table__td--vacancy
-                    .partners-table__document-type Пакет для відкриття візи
-                  td.partners-table__td.partners-table__td--remuneration
-                    .partners-table__remuneration
-                      .partners-table__zl 15 zł
-                      .partners-table__eur ~ 1.43 € (EUR)
-                  td.partners-table__td.partners-table__td--status
-                    .status.status--green-bg.partners-table__status Виплата
-
-            .partners.partners-table-wrapper__partners.hidden-smPlus
-              .partners__titles
-                .partners__col-title Ім'я
-                .partners__col-title Винагорода (3%)
-              .partners__items
-                .partner.partner--document.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__document Пакет для відкриття візи
-                    .partner__country Польща
-                    .status.status--grey-bg Прийнято в роботу
-                .partner.partner--document.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__document Пакет для відкриття візи
-                    .partner__country Польща
-                    .status.status--aqua-bg На опрацюванні
-                .partner.partner--document.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__document Пакет для відкриття візи
-                    .partner__country Польща
-                    .status Готово
-                .partner.partner--document.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__document Пакет для відкриття візи
-                    .partner__country Польща
-                    .status.status--beige-bg Відправлено
-                .partner.partner--document.partners__item
-                  .partner__header
-                    .partner__data
-                      .partner__name Андрій
-                      .partner__datetime-and-id 17:35 &nbsp;22.12.23 &nbsp;ID: 39974294
-                    .partner__remuneration
-                      .partner__zl 1500 zł
-                      .partner__eur ~ 1.43 € (EUR)
-                  .partner__body
-                    .partner__document Пакет для відкриття візи
-                    .partner__country Польща
-                    .status.status--green-bg Виплата
-
-            //- table.partners-table.partners-table--mobile.affiliate-program__partners-table.hidden-smPlus
-            //-   caption.partners-table__caption Ваші партнери:
-            //-   thead.partners-table__thead
-            //-     tr.partners-table__row
-            //-       th.partners-table__th.partners-table__th--email-and-id Ім'я
-            //-       th.partners-table__th.partners-table__th--profit-and-date Прибуток
-            //-   tbody.partners-table__body
-            //-     tr.partners-table__row
-            //-       td.partners-table__td
-            //-         //- .partners-table__email
-            //-         .partner-info.partner-info--mobile
-            //-           img(src="/img/andrew.png" alt="").partner-info__img
-            //-           .partner-info__name alma.lawson
-            //-           .partner-info__date 5.01.2023 о 20:14
-            //-         //- .partners-table__id ID: 39974294
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-       td.partners-table__td.partners-table__td--profit-and-date
-            //-         .partners-table__profit
-            //-           .partner-status 2658,67 ZŁ
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-         //- a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-            //-         .partners-table__no-operations Операцій немає
-            //-     tr.partners-table__row
-            //-       td.partners-table__td
-            //-         //- .partners-table__email
-            //-         .partner-info.partner-info--mobile
-            //-           img(src="/img/andrew.png" alt="").partner-info__img
-            //-           .partner-info__name alma.lawson
-            //-           .partner-info__date 5.01.2023 о 20:14
-            //-         //- .partners-table__id ID: 52334797
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-       td.partners-table__td.partners-table__td--profit-and-date
-            //-         .partners-table__profit
-            //-           .partner-status 2658,67 ZŁ
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
-            //-     tr.partners-table__row
-            //-       td.partners-table__td
-            //-         //- .partners-table__email
-            //-         .partner-info.partner-info--mobile
-            //-           img(src="/img/andrew.png" alt="").partner-info__img
-            //-           .partner-info__name alma.lawson
-            //-           .partner-info__date 5.01.2023 о 20:14
-            //-         //- .partners-table__id ID: 52334797
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-       td.partners-table__td.partners-table__td--profit-and-date
-            //-         .partners-table__profit
-            //-           .partner-status 2658,67 ZŁ
-            //-         //- .partners-table__date 5.01.2023 о 20:14
-            //-         a(href="#").btn-lightgrey.partners-table__more-btn Детальніше
+  .affiliate-page
+    .affiliate-page__aside
+      .article-menu.affiliate-page__menu
+        ul.article-menu__list
+          li.article-menu__item
+            a(href="#heading-1").article-menu__link.article-menu__link--active Заробляйте, не продаючи!
+          li.article-menu__item
+            a(href="#heading-2").article-menu__link Чому мені всі будуть вдячні?
+          li.article-menu__item
+            a(href="#heading-3").article-menu__link Скільки ви будете заробляти
+          li.article-menu__item
+            a(href="#heading-4").article-menu__link Переваги та недоліки партнерського заробітку
+          li.article-menu__item
+            a(href="#heading-5").article-menu__link Відгуки про партнерську програму
+          li.article-menu__item
+            a(href="#heading-6").article-menu__link З чого розпочати?
+          li.article-menu__item
+            a(href="#heading-7").article-menu__link Де шукати партнерів, щоб відразу був результат?
+          li.article-menu__item
+            a(href="#heading-8").article-menu__link Відповіді на запитання
+    .affiliate-page__content-wrapper
+      .affiliate-page__header
+        h1.page-title.affiliate-page__title Партнерська програма
+        .select-menu.affiliate-page__select-menu
+          .select-menu__selected Партнерська програма
+          .select-menu__dropdown
+            ul.select-menu__list
+              li.select-menu__item
+                a(href="#").select-menu__link Про нейромережу WORKIUM
+              li.select-menu__item
+                a(href="#").select-menu__link Працівникам
+              li.select-menu__item
+                a(href="#").select-menu__link Рекрутерам
+              li.select-menu__item
+                a(href="#").select-menu__link Партнерська програма
+              li.select-menu__item
+                a(href="#").select-menu__link Агенціям та роботодавцям
+              li.select-menu__item
+                a(href="#").select-menu__link Операційним партнерам
+      .affiliate-page__content
+        p В двох словах про те, чому ви гарантовано закохаєтесь в партнерську програму WORKIUM! Лише факти і нічого зайвого.
+        h2#heading-1 Заробляйте, нічого не продаючи!
+        p Рекомендуйте офіційні вакансії або виготовлення документів своїм друзям, знайомим або просто усім бажаючим поїхати на роботу і отримуйте за це щедру винагороду. 
+        p Вам не потрібно нічого продавати та брати кошти. Ваша рекомендація для усіх без вийнятку - безкоштовна! Винагороду за свою пораду ви отримуєте від WORKIUM на власний баланс!
+        p Також, ви нічим не ризикуєте! Завдяки тому, що партнерська програма побудована на базі штучного інтелекту від WORKIUM - ви можете завжди бути впевненими в тому, що будь-яка вакансія, яка представлена на сайті вже пройшла багатофакторну перевірку. Те ж саме стосується виготовлення документів - цей процес захищається 100% гарантією.
+        p Саме тому, всі люди, яким ви порекомендуєте WORKUM, в першу чергу будуть вдячні саме вам, тому що вони отримають доступ до безкоштовних, офіційних та перевірених вакансій за які отримають щедру винагороду, а також зможуть не просто виготовити будь-які документи зі 100% гарантією, а ще й отримати за це гарний кешбек!
+        p Тому - діліться та рекомендуйте нейромережу WORKIUM усім без вийнятку! Це безпечно, офіційно, досить прибутково.
+        h2#heading-2 Чому мені будуть безмежно вдячні всі, кому я розповім про WORKIUM?
+        p WORKIUM - єдина в світі нейромережа, яка виплачує кошти. А ще - ми безповоротно змінили сферу працевлаштування! Ось дивіться:
+        p Якщо раніше, коли ви звертались до будь-якого роботодавця, агенції чи посередника, всі вони #[strong вами] завжди старались закрити найбільш #[strong проблемні] та #[strong термінові] вакансії, на яких завжди була недостача працівників через постійні звільнення. І для того, щоб максимально швидко заповнити робочі місця - дуже часто рекрутери та менеджери були змушені обманювати, тільки б ви приїхали саме до них на роботу. Причиною цьому є те, що в кожної агенції підписані контракти з підприємствами, яких вони обслуговують, і в яких через нестачу працівників, в більшості випадків, передбачені великі штрафи. Тому, між варіантом постійно сплачувати штрафи та трішки обманути кандидата - зазвичай більшість, на жаль, обирає другий варіант.
+        p І саме тому, в більшості людей сфера працевлаштування асоціюється з обманом, жахливою роботою та неповагою до людей, які приїхали працювати.
+        p Нейромережа WORKIUM була створена для того, щоб повністю зламати існуючу систему роботи в сфері працевлаштування і побудувати новий, абсолютно прозорий механізм працевлаштування, який на всі 100% задовільнить працівників та роботодавців. #[br]І у нас це вийшло відразу - ще в перший рік нашої роботи.
+        p Саме тому, абсолютно всі люди, яким ви розповісте про WORKIUM - безмежно будуть вам вдячні, тому що ними більше не будуть закривати проблемі та складні вакансі, а вони #[strong самі] зможуть обрати ту роботу, яка найбільше їм підійде по заданим критеріям.
+        p Також, після відпрацювання деякого терміну (в кожної вакансії він індивідуальний і відразу вказується разом із винагородою) - працівник отримає щедру винагороду на власний баланс у WORKIUM, після чого зможе зняти кошти найбільш зручним для себе способом, наприклад, на звичайну банківську картку. Кошти виплачуються миттєво. Зверніть увагу, що ця винагорода - це додаткові кошти, які вам виплачує не роботодавець чи підприємство, а нейромережа WORKIUM і які ніяким чином не стосуються вашої заробітної плати. Тобто це абсолютно окрема винагорода для вас за те, що ви обрали одну із вакансій на WORKIUM.
+        p Якщо ж працівнику буде потрібно виготовити будь-які документи або продовжити свою легальність за кордоном - він отримає 100% захист та гарантію на виготовлення безпосередньо від WORKIUM, а також йому миттво буде нарахований кешбек у розмірі 10% від суми вартості послуги виготовлення документів.
+        p Тому, абсолютно всі люди, яким ви розповісте про WORKIUM - отримають доступ до тисяч безкоштовних вакансій з #[span.hidden можливістю самостійного вибору місця праці, виготовлення будь-яких документів з гарантією за кращою ціною та нарахування винагороди і кешбеку! І за це вони будуть безмежно вам вдячні, тому що збережуть собі час та нерви!]
+        p.hidden Пам’ятайте, що коли ви рекомендуєте або просто розповідаєте про WORKIUM - в першу чергу ви допомагаєте не собі, а людям! Діліться добром, робіть добро!
+        h2#heading-3 Порахуємо, скільки ви будете заробляти
+        p Партнерська програма працює досить просто: кожен користувач, якому ви розповіли про WORKIUM - отримає винагороду за відпрацювання на обраній вакансії (розмір винагороди та термін відпрацювання вказаний в описі кожної вакансії) та 10% кешбек від суми документів, яких він обрав для виготовлення. 
+        p #[strong Заробіток на партнерській програмі] - це коли ви всього лише ділитесь з друзями, знайомими або іншими інтернет-користувачам своїм власним партнерським посиланням і не берете жодної участі в будь-яких наступних діях. Тобто, ви не консультуєте, не підбираєте вакансії і не здійснюєте будь-яких інших операцій окрім того, що один раз надіслали своє партнерське посилання.
+        p При такому типі роботи, з #[strong кожної] людини, якій ви розповіли про WORKIUM, ви будете отримувати #[strong 3%] від винагороди за відпрацювання та #[strong 3%] від нарахованого кешбеку за виготовлення документів. Сумарно ви можете отримати до #[strong 1000 zł] (що становить приблизно 225 євро) за кожного користувача.
+        p На практиці це працює так: 
+        p До прикладу, ви розповіли про WORKIUM десятьом своїм знайомим і поділились з ними власним унікальним партнерським посиланням. На цьому ваша робота успішно завершена, ніяких дій після цього вам виконувати не потрібно. Нейромережа WORKIUM назавжди зафіксує ваше посилання і безпомилково ідентифікує ваших друзів, навіть якщо вони відразу закриють сторінку зареєструвавшись. Більше того, у випадку, якщо ваші друзі вирішать поїхати на роботу навіть через пів року - нейромережа всеодно ідентифікує їх як ваших парнерів. В цьому безперечна особливість та унікальність нейромережі WORKIUM, яка забути про різні дрібні технічні та інші проблеми та сконцентруватись виключно на партнерському заробітку.
+        p Повернемось до десятьох знайомих, з якими ви поділились партнерським посиланням. Уявимо, що, в результаті, 5 з них поїхали на роботу з винагородою 500 zł, ще 3 поїхало на роботу з винагородою 450 zł, а двоє поїхали вакансії для спеціалістів (зварювальник, механік та інші) з винагодою 1200 zł. Припустимо, що термін відпрацювання по всім вакансіям однаковий і становить 30 днів.
+        p Таким чином, через 30 днів з моменту початку роботи кожного з ваших знайомих, ви отримаєте #[strong 3%] від суми їх відпрацювань. Тобто:
+        p (5*500 zł + 3*450 zł + 2*1200 zł) * 3% = #[strong 6250 zł]  * 3% = #[strong 187.5 zł] (що в перерахунку становить приблизно #[strong 42 євро] або #[strong 1735 гривень)] - і це всього за 10 осіб, з якими ви поділились власним посиланям.
+        p А якщо уявити, що ви поділились власним партнерським посиланям, не з тільки зі своїми найближчими друзями та знайомими, а розіслали його усім контактам та друзям в усіх месенджерах та створили stories чи опублікували допис в усіх соціальних мережах, якими ви користуєтесь. Таким чином, кількість отримувачів буде становити не 10 осіб, а 500 чи навіть 1000 осіб (в залежності від того, скільки увас друзів, контактів чи підписників). 
+        p Відповідно, навіть якщо вони не відразу, а через деякий час, підберуть собі вакансію на WORKIUM чи замовлять документи - ваш заробіток може бути в декілька десятків більшим, при цьому від вас так само ніяких додаткових дій вимагатись не буде. Тобто, заробіток буде #[strong значно більшим], а ваш час витрачений залишиться практично #[strong без змін].
+        p Що стосується #[strong кешбеку] за замовлення будь-яких документів - з кожного користувача ви будете отримувати #[strong 3% винагороди] від вартості усіх замовлених документів.
+        p Також дуже приємним моментом є те, що ваша партнерська винагорода нараховується вам додатково та окремо від нарахувань для ваших партнерів. Тобто, люди, яким ви розповіли про WORKIUM, отримують винагороду та кешбек в повному обсязі, без будь-яких вирахувань. Тому, партнерська програма - це взаємовигідна співпраця, яка приносить вам не тільки щедрий та пасивний заробіток, а й щирі подяки від людей, з якими ви поділились інформацією про нейромережу WORKIUM.
+        p #[strong Зверніть увагу], що кількість людей, яким ви розповісте про WORKIUM - #[strong необмежена] для усіх типів заробітку! Тому, чи більше людей дізнається від вас про WORKIUM - тим більшим буде ваш прибуток.
+        h2#heading-4 Переваги та недоліки партнерського заробітку
+        h3.affiliate-page__advantages-title Переваги партнерського заробітку:
+        p Найбільшою перевагою даного типу заробітку є можливість необмеженого масштабування та збільшення свого прибутку #[strong без збільшення] часу, який на це витрачається.
+        p Тобто, щоб збільшити прибуток - вам достатньо всього лише поділитись власним партнерським посиланням з якомога більшою кількістю людей. Більше ніяких додаткових дій від вас не вимагається. Тобто, ні консультувати, ні бронювати, ні підбирати вакансіїї вам не потрібно. Ви вже виконали свою роботу поділившись посиланням, а для всього іншого існує команда підтримки WORKIUM, яка надасть відповіді на всі запитання та безкоштовно допоможе людям, які перейшли по вашому посиланню.
+        p Тому, заробляти за допомогою партнерської програми - максимально #[strong швидко] та #[strong просто]. 
+        p #[strong Швидко], тому що часова різниця між тим, що ви відправите партнерська посилання 50 людям та 150 людям - не буде сутєво відрізнятись, а прибуток може бути значно більшим!
+        p #[strong Просто], тому що після надсиланя свого партнерського посилання - від вас не вимамагається будь-яких інших дій. За рахунок цього можна необмежено збільшувати власний прибуток, витрачаючи практично однаковий власний час.
+        p Також завдяки унікальній системі побуди та розпізнавання посилань - абсолютно кожне не посиланя у WORKIUM є партнерським. Тобто, знаходячись в особистому кабінеті, яке б посилання ви не скопіювали (на пряму вакансію, будь-який інший розділ сайту, на сторінку з уже веденими фільтрами по вакансіях чи навіть на контактну інформацію) - в ньому будуть зашифровані ваші дані. Завдяки цьому ви можете будути стратегію роботи з WORKIUM максимально гнучко та креативно і максимально персоналізовано надавати посилання, що максимально збільшить зацікавленість у людей і, як наслідок, принесе вам значно більший партнерський прибуток.
+        p Крім цього, партнерський заробіток є досить #[strong ефективним]. Будь-який користувач, який зареєструється по вашому посилання - назавжди залишиться у вас в команді і буде приносити вам прибуток навіть якщо після цього він буде переходити по іншим партнерським посилання. Що ж стосується користувачів, які перейшли по вашому посилання та не зареєструвались - завдяки тому, що нейромережа WORKIUM використовує систему, яка дозволяє відслідковувати посилання після закриття браузера та безпомилково ідентифікувати людей навіть через великий проміжок часу - ви можете бути впевненими в тому, що ваші дії принесуть максимальний результат який, в свою чергу, перетвориться в приємний заробіток. А зважаючи на максимальну деталізацію розділу «Партнерська програма» - ви завжди зможете відслідкувати дії, статуси та операції по кожному користувачу. Тому, заробляти з партнерською програмою WORKIUM завжди буде не тільки просто та прибутково, а ще й максимально прозоро!
+        p Також, ви можете одночасно заробляти за допомогою інших програм заробітку, наприклад рекрутерської. Комбінувати типи заробітків у WORKIUM завжди було і буде дозволено! 
+        p А ще у WORKIUM немає жодних обмежень! Це означає, що один і той самий користувач зможе приносити вам необмережу кількість раз прибутку з кожної своєї дії. Навіть якщо ваш партнер буде постійно змінювати вакансії або виготовляти документи для себе та своїх друзів чи виконувати інші дії, за які у WORKIUM передбачена винагорода чи кешбек  - ви кожного разу миттєво за це буде отримувати партнерську винагороду не залежно від кількості таких дій. Так триватиме до тих пір, поки сумарно прибуток від цього користувача не досягне 1000 zł (або іншої суми в еквіваленті).
+        p Ми піклуємось про те, щоб ваш заробіток був максимально великим тому створили для цього неймовірні можливості!
+        h3.affiliate-page__disadvantages-title Недоліки партнерського заробітку:
+        p Недоліком партнерського типу заробітку можна вважати значно нижчий розмір винагороди, в порівнянні з рекрутаційним типом заробітку. До прикладу, рекрутаційний тип заробітку передбачає отримання винагороди за відпрацювання в #[strong повному] обсязі, а за замовлення документів нараховується кешбек у розмірі #[strong 10%]. Таким чином, рекрутаційний тип заробітку дозволяє отримувати значно більший прибуток за однакову кількість працевлаштованих кандидатів, проте, для якісної роботи, вимагає додаткових дій, таких як підбір вакансій та консультування. Детальніше про рекрутаційний тип заробітку #[a(href="#") описано тут].
+        p Ще одним недоліком партнерського заробітку є гнучкі дії користувачів. До прикладу, якщо користувач, перейшовши по вашому посиланню, зареєструвався у WORKIUM - ви можете бути впевненими в тому, що він завжди, при будь-яких умовах, залишиться у вас в команді. Більше того, навіть коли користувач не зареєструється, а через деякий час зайде на WORKIUM вже не по вашому, а по прямому посиланню - WORKIUM, завдяки власній системі ідентифікації, безпомилково зарахує винагороду від цього користувача саме вам.
+        p Проте, якщо користувач не зареєструється у WORKIUM та змінить пристрій, з якого перейде у WORKIUM вже не по вашому посиланню, а, наприклад, напряму ввівши веб-сайт - для нейромережі це буде означати новий вид ідентифікації.
+        p Тобто, WORKIUM безпомилково ідентифікує користувачів без реєстрації як ваших партнерів, навіть якщо вони закрили браузер не здійснивши реєстрацію або коли перейшли у WORKIUM через досить тривалий час (до прикладу, через декілька місяців). Проте, при зміні пристрою або браузеру - ці умови працювати не будуть.
+        p Також, партнерська програма у WORKIUM за принципом останнього переходу. Це означає, що якщо ваш знайомий або людина, з якою ви поділилась власним посиланням, через деякий час перейде по посиланню від іншого партнера (наприклад, Андрія) - система в подальшому буде ідентифікувати його як партнера Андія до моменту, поки не буде знову здійснено перехід по #[strong будь-якому вашому] посиланню.
+        p Тому, дуже важливо слідкувати за тим, щоб користувачі, які перейшли по вашому посиланню - відразу зареєструвались, тому що після реєстрації людина назавжди гарантовано залишається закріпленою за вами!
+        p Якщо ж такої змоги у вас немає тому що, до прикладу, ви залишили посилання на власній сторінці чи групі в соціальній мережі або на різних форумах, сайтах чи групах в месенджерах - старайтесь час від часу повторно його публікувати. Навіть якщо користувачі до цього вже перейшли по посиланню від іншого партнера WORKIUM і не зареєструвались в нейромережі - перейшовши по вашому посиланню система закріпить їх за вами і, відповідно, в подальшому винагорода також зарахується саме вам.
+        p Особливо часто потрібно актуалізувати своє посилання шляхом повторної та багаторазової публікації в різних групах соціальних мереж або месенджерів, де ви вже бачили посилання від інших партнерів. Пам’ятайте про правило останнього переходу і старайтесь щоб ваше посилання якомога частіше привертало увагу інших користувачів. Це збільшить вірогідність того, що по ньому повторно перейдуть і прибуток буде зарахований саме вам!
+        h3.affiliate-page__result-title Підсумок:
+        p Партнерський тип заробітку - ідеальний інструмент для усіх, хто хоче швидко, просто та без будьяких вкладень почати заробляти. Він не вимагає жодних знань та досвіду. Працювати та заробляти за допомогою партнерської програми WORKIUM може кожен бажаючий не залежно від статі, віку, національності чи географічного положення.
+        p Завдяки власній інноваційній системі ідентифікації - нейромережа WORKIUM безпомилково зарахує вам винагороду навіть тоді, коли користувач не зареєструвався в системі і перейшов повторно у WORKIUM через досить довгий час.
+        p Якщо ж більшість ваших користувачів зареєструється після переходу по вашому посиланню - тоді для вас взагалі ніяких недоліків не існує, тому що ви будете впевнені, що кожен запрошений вами користувач назавжди залишиться у вашій команді і винагорода від нього буде зарахована саме вам не залежно від будь-яких інших факторів.
+        p А зважаючи на те, що абсолютно кожне посилання у WORKIUM є партнерським, ви можете гнучко надавати посилання на окремі потрібні вакансії та розділи, що максимально збільшить зацікавленість у людей і, як наслідок, принесе вам значно більший партнерський прибуток.
+        p За допомогою деталізованого розділу «Партнерська програма» у власному кабінеті ви завжди будете відслідковувати будь-які зміни в статусах та користувачах і аналізувати та планувати свій прибуток.
+        p Завдяки партнерській програмі від WORKIUM - ви відразу почнете заробляти, тому що робота з WORKIUM не вимагає якихось змін і не потребує багато вільного часу, але натомість гарантовано дарує приємний додатковий заробіток.
+        p А ще це чесно, офіційно та дуже просто!
+        p Обирайте партнерський тип заробітку, якщо бажаєте отримати пасивний дохід та збільшити заробіток практично не витрачаючи вільний час. А ще, цей тип заробітку особливо підійде для тих людей, в яких є багато друзів, знайомих та присутня можливість поділитись власним партнерським посиланням WORKIUM з великою кількістю користувачів.
+        p Якщо ж ви надаєте перевагу консультаціям та підбору вакансій - розгляньте #[a(href="/recruitment.html") рекрутаційний тип заробітку].
+        p Основною перевагою та місією нейромережі WORKIUM є забезпечення максимально комфортних умов для усіх користувачів без вийнятку, тому ви завжди можете експериментувати та поєднувати різні типи заробітку та обирати для себе той, який найбільше вам підходить або завжди працювати з усіма моделями.
+        p Працюйте так, як вам зручно, а WORKIUM подбає про ваш комфорт та прибуток!
+        h2#heading-5 Відео відгуки про партнерську програму
+        p Декілька відгуків про партнерську програму від людей, які раніше ніколи не займались працевлаштуванням.
+        p Переконайтесь самі, наскільки просто та, головне, прибутково заробляти разом із партнерською програмою #[br]WORKIUM!
+        .people-swiper-container.affiliate-page__swiper-container
+          .people-swiper.swiper
+            .swiper-wrapper
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/7.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/7.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Максим
+                      .person__position Рекрутер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/3.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/3.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Юлія
+                      .person__position Працівник-рекрутер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/2.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/2.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Віктор
+                      .person__position Партнер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/1.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/1.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Ліна
+                      .person__position Рекрутер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/4.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/6.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Ліля
+                      .person__position Рекрутер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/5.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/4.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Олексій
+                      .person__position Рекрутер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/8.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/8.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Марія
+                      .person__position Рекрутер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/6.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/5.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Арсеній
+                      .person__position Рекрутер
+                    span.play-icon.person__icon
+              .swiper-slide.people-swiper__slide
+                a(href="/video/reviews/9.mp4" data-fancybox="video-reviews").person.people-swiper__person
+                  .video-box.video-box--person.person__video-box
+                    video(autoplay muted loop playsinline).video-box__video
+                      source(src="/video/reviews/previews/9.mp4" type="video/mp4")
+                  .person__info
+                    .person__text-wrapper
+                      .person__name Юлія
+                      .person__position Партнер
+                    span.play-icon.person__icon
+          button(type="button").swiper-btn.swiper-btn--prev.people-swiper-container__prev.hidden-xs
+          button(type="button").swiper-btn.swiper-btn--next.people-swiper-container__next.hidden-xs
+        p Без вкладень, обов’язкових знань та досвіду. Просто спробуйте, і у вас обов’язково все вдасться! #[br]В будь-якому разі - ви нічого не втрачаєте!
+        h2#heading-6 Я хочу працювати та заробляти! З чого розпочати?
+        p Все дуже просто!
+        p #[a(href="#authorization-popup").fancybox-popup-toggle Зареєструйтесь] або #[a(href="#authorization-popup" data-active-tab-number="2").fancybox-popup-toggle увійдіть] до особистого кабінету - це абсолютно безкоштовно та не займе більше 50 секунд вашого часу.
+        p Після цього перейдіть до розділу #[a(href="/partners.html") Партнерська програма] та скопіюйте унікальне партнерське посилання. По замовчуванню - посилання буде направляти на розділ «Вакансії». Якщо ви хочете направляти людей на інші розділи - просто скопіюте звичайний способом посилання на ту сторінку чи розділ, на який ви хочете щоб був здійснений перехід. Нагадуємо, що завдяки унікальній системі побудови посилань - абсолютно всі посилання на WORKIUM є партнерськими. Тому, ви зможете надсилати потенційний партнерам посилання на ті розділи, документи чи вакансії - які найбільше їх можуть зацікавити.
+        p Розсилайте якомога більшій кількості людей ваші партнерські посилання. Пам’ятайте, що WORKIUM розвивається шаленими темпами і сотні людей кожного дня дізнаються та приєднуються до нейромережі. Тому, покваптесь розповісти про WORKIUM друзям, знайомим чи просто інтернет користувачам перш ніж вони дізнаються про WORKIUM від когось іншого та приєднаються до його команди. Пам’ятайте, що чим більше людей дізнаються про WORKIUM саме від вас - тим більшим буде ваш прибуток!
+        h2#heading-7 Де шукати партнерів, щоб відразу був результат?
+        p Ми хочемо щоб кожен процес був максимально ефективним і якомога швидше приносив результат! Саме тому поділимось з вами секретною та максимально дієвою інформацією про те, де найефективніше шукати потенційних партнерів. Ось найефективніші способи:
+        p #[strong Групи у FaceBook]
+        p Якщо у вас немає особистої сторінки в соціальній мережі FaceBook - рекомендуємо його створити, тому що там до сьогоднішнього дня активно розвиваються сотні груп, в яких, сумарно, декілька мільйонів потенційних кандидатів, які шукають перевірену та офіційну роботу за кордоном.
+        p Перш за все - вам потрібно вступити в найбільш популярні та активні групи. Це безкоштовно. Ми піклуємось про ваш комфорт та ефективність і не хочемо щоб ви навіть даремно витрачали час на пошуки, тому заздалегідь підготували для вас #[a(href="#") список найактивніших груп].
+        p Звичайно, список не є повним, проте цей список ви можете використовувати як основу для початку роботи і одночасно з цим шукати інші активні тематичні групи.
+        p Після того, як ви доєднаєтесь до груп - створіть допис з інформацією про WORKIUM, в якому повідомте про унікальні переваги, які отримають люди, якщо поїдуть на роботу через WORKIUM. Зважаючи на те, що WORKIUM - єдина нейромережа, яка оплачує за ваше відпрацювання - переконати людей приєднатись до WORKIUM (і автоматично стати вашими партнерами) буде дуже просто!
+        p Також велику довіру у всіх користувачів викликає можливість додатково задати запитання та обговорити незрозумілі речі, тому опубліковані контакти для зв’язку - це не обов’язкова, але досить дієва річ, яка спонукає людей перейти саме по вашому партнерському посиланню.
+        p #[strong Допис, stories та повідомлення усім контактам, друзям та знайомим]
+        p Практично у кожно з нас є сторінка в одній або декількох соціальних мережах. Опублікуйте допис, в якому розмістіть фото, відео або просто текст з інформацією про WORKIUM та про переваги, які він надає. Обов’язково розмістіть власне партнерське посилання, щоб відразу отримати якомога більше переходів та реєстрацій. Для того, щоб збільшити кількість переглядів - додатково продублюйте інформацію та посилання у stories.
+        p Після цього поділіться інформацією з друзями, знайомими та іншими контактами в месенджерах, якими ви користуєтесь. Ви можете зробити це за допомогою прямого надсилання кожному контакту окремо або створивши групу та доєднавши до неї усіх своїх знайомих, щоб відразу дати відповіді на можливі запитання. Таким чином, за досить короткий час ви отримаєте велику кількість зацікавлених потенційних партнерів, які не просто приєднаються у вашу команду, а й, цілком ймовірно, будуть ділитись та надсилати ваш допис своїм друзям та знайомим, тим самим значно збільшуючи вашу майбутню команду та прибуток.
+        p #[strong Відео в Tik Tok, Instagram, YouTube, FaceBook та інші медіа мережі]
+        p В наш час найбільшу популярність набирають відео ролики. Запишіть коротке відео на 30-60 секунд в якому розкажіть про те, що тепер можна не просто безпечно поїхати на перевірену та офіційну роботу за кордоном, а й отримати за це хорошу винагороду завдяки нейромережі WORKIUM. У відео поділіться своїми емоціями та максимально розкажіть деталі, щоб люди, які шукають роботу, відразу змогли перейти за вашим партнерським посиланням (не забудьте опублікувати його в описі під відео) та підібрати собі вакансію або замовити документи.
+        p Рекомендуємо записати та опублікувати декілька різних відео. Одне із них обов’язково набере значно більше переглядів ніж інші. Саме так працюють алгоритми соціальних мереж. Пам’ятайте, що для того щоб зацікавити глядача - відео повинно відразу починатись із основної ідеї, яка привертає увагу. Також, часто можна використовувати гучний заголовок. Глядачі надають перевагу, коли у відео є автор, проте іноді популярними стають відеоролики, в яких обличчя автора немає, а показується запис екрану з телефону або комп’ютера з інструкцією про те, як все працює. Глядачі обожнюють дивитись короткі (від 60 секунд до декількох хвилин), цікаві, змістовні та корисні відео.
+        p В першу чергу рекомендуємо публікувати відео в #[strong Tik Tok]. Саме ця соціальна мережа найбільше просуває відео ролики навіть з щойно зареєстрованих облікованих записів, тобто від користувачів, які нещодавно приєднались. #[br]Після цього рекомендуємо опублікувати відео в інші соціальні мережі.
+        p Зверніть увагу, що для того щоб ваше відео побачило якомога більше людей - рекомендуємо в описі використовувати хештеги. Ось #[a(href="#") список найпопулярніших].
+        p #[strong Робота з коментарями в Tik Tok, YouTube, Instagram, FaceBook та інших соціальних мережах]
+        p Цей спосіб просування власного партнерського посилання працює досить просто. Все, що вам необхідно зробити, це знайти публічних та відомих блогерів, які активно ведуть свої канали або сторінки у вищевказаних соціальних мережах в тематиці «працевлаштування за кордоном» або схожій. Далі, підписатись на них, щоб не пропускати нових відео і, відразу ж, написати декілька коментарів під останніми відео, в яких розповісти про нейромережу WORKIUM та її унікальні можливості та розмістити своє партнерське посилання. Також, рекомендуємо проаналізувати усі коментарі під останніми відео та відповісти на питання тих людей, які цікавляться роботою за кордоном або схожими питаннями. Якщо є можливість - ви додатково можете написати цим людям в особисті повідомлення. 
+        p Пам’ятайте, що перш за все, ваша ціль - допомогти людям! Допоможіть усім навколо дізнатись, що тепер можна не просто їхати на перевірену та офіційну роботу за кордоном або замовляти документи з гарантією, а ще й отримувати за це хорошу винагороду або приємний кешбек! Тому, слідкуйте за тим, щоб ваша допомога не перетворювалась на спам-повідомлення з ціллю набрати якомога більше партнерів. Зазвичай, такі методи не завжди дають потрібний результат. В першу чергу людям потрібна якість, а тільки потім кількість.
+        p До речі, цей спосіб чудово працює також і з коментарями в групах у месенджерах, наприклад Telegram, Viber та інших.
+        p Команда WORKIUM піклується про ваc та ваш особистий час, тому підготували для вас #[a(href="#") список із деякими відомими блогерами] в тематиці «Робота за кордоном».
+        p #[strong Платне просування]
+        p Багато користувачів WORKIUM, кількість користувачів в команді яких перевищує декілька тисяч партнерів, просували своє партнерське посилання завдяки платним публікаціям. Причиною цьому стала невелика кількість друзів та знайомих у соціальних мережах та в контактах у месенджерах.
+        p Завдяки платній рекламі в групах у месенджерах та соціальних мережах або спеціальній таргетованій, банерній та іншій рекламі в Google, YouTube, FaceBook, Instagram та інших майданчиках - їм вдалось за декілька днів сформувати команду в декілька сотень користувачів, які пратикчно відразу почали приносити пасивний дохід.
+        p Платне просування - це потужний інструмент, який за короткий час може допомогти вам прорекламувати своє партнерське посилання та отримати безліч партнерів в свою команду. Проте, зверніть увагу, що цей спосіб не є безкоштовним, тому рекомендуємо обдумати це рішення перед використанням.
+        h2#heading-8 Відповіді на запитання
+        p Залишитись запитання? З радістю відповімо!
+        .contact-box.contact-box--affiliate-support.affiliate-page__contact-box
+          .contact-phones.contact-phones--affiliate-support.contact-box__phones
+            ul.contact-phones__list
+              li.contact-phones__item.contact-phones__item--right
+                a(href="#").phone.phone--with-icon +48 226 02 00 90
+                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
+                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+              li.contact-phones__item
+                a(href="#").phone.phone--with-icon +38 096 787 00 90
+                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
+                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+              li.contact-phones__item
+                a(href="#").phone.phone--with-icon +38 073 787 00 90
+                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
+                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+              li.contact-phones__item
+                a(href="#").phone.phone--with-icon +38 095 787 00 90
+                button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
+                .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+          .contact-box__buttons-wrapper
+            a(href="#").call-btn.contact-box__call-btn Зателефонувати вам?
+            .contact-buttons.contact-buttons--support.contact-box__buttons
+              ul.contact-buttons__list
+                li.contact-buttons__item
+                  a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-contact-box-support Написати у #[span.btn-purple__messenger Viber]
+                li.contact-buttons__item
+                  a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-contact-box-support Написати в #[span.btn-lightblue__messenger Telegram]
   script(src="/js/affiliate.js")

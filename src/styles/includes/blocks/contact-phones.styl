@@ -50,7 +50,8 @@
 	// 	margin auto
 	
 	&--support,
-	&--mobile-support
+	&--mobile-support,
+	&--affiliate-support
 		.contact-phones__list
 			display grid
 			
@@ -63,7 +64,8 @@
 			& + .contact-phones__item
 				margin-top 15px
 	
-	&--support
+	&--support,
+	&--affiliate-support
 		.contact-phones__item
 			grid-template-columns 240px auto
 	
@@ -74,3 +76,7 @@
 		.contact-phones__item
 			grid-template-columns 258px auto
 			margin-right 7px
+	
+	&--affiliate-support
+		width 336px
+		max-width 100%

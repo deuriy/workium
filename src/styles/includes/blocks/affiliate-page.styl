@@ -1,0 +1,91 @@
+.affiliate-page
+	display grid
+	grid-template-columns auto 1fr
+	// gap 22px
+	gap 6px
+	
+	&__menu
+		position sticky
+		top 10px
+		margin-top 190px
+		margin-left -15px
+	
+	&__header
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
+		gap 20px
+		margin-bottom 40px
+		margin-left 23px
+	
+	&__select-menu
+		width 278px
+		max-width 100%
+	
+	&__content-wrapper
+		min-width 0
+	
+	&__content
+		padding 45px 35px 45px 27px
+		border-radius 13px
+		background var(--light)
+		
+		& > p
+			margin-bottom 15px
+			line-height normal
+			
+			a
+				color #229ED9
+				
+				&:hover
+					text-decoration none
+		
+		& > h2
+			display inline-flex
+			margin-top 21px
+			margin-bottom 21px
+			margin-left -27px
+			padding 5px 39px 5px 26px
+			border-top-right-radius 10px
+			border-bottom-right-radius 10px
+			background #F4F5FC
+			font-weight 600
+			font-size 22px
+	
+	&__advantages-title,
+	&__disadvantages-title,
+	&__result-title
+		display grid
+		grid-template-columns auto 1fr
+		align-items center
+		gap 12px
+		margin-bottom 15px
+		font-size 15px
+		
+		&::before
+			content ""
+			width 18px
+			height 18px
+			background-position center
+			background-repeat no-repeat
+	
+	&__advantages-title
+		&::before
+			background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm96 280h-72v72c0 13.2-10.8 24-23.1 24-14.1 0-24.9-10.8-24.9-24v-72h-72c-13.2 0-24-10.8-24-24s10.8-24 24-24h72v-72c0-13.2 10.8-24 24-24s24 10.8 24 24v72h72c13.2 0 24 10.8 24 24s-10.8 24-24 24z' fill='%232ba30f'/%3E%3C/svg%3E")
+	
+	&__disadvantages-title
+		&::before
+			background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1792 1792'%3E%3Cpath d='M1344 960V832q0-26-19-45t-45-19H512q-26 0-45 19t-19 45v128q0 26 19 45t45 19h768q26 0 45-19t19-45zm320-64q0 209-103 385.5T1281.5 1561 896 1664t-385.5-103T231 1281.5 128 896t103-385.5T510.5 231 896 128t385.5 103T1561 510.5 1664 896z' fill='%23d70808'/%3E%3C/svg%3E")
+	
+	&__result-title
+		&::before
+			background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath fill='%235340ff' d='M8 23c0 8.838 7.164 16 16 16s16-7.162 16-16c0-8.836-7.164-16-16-16S8 14.164 8 23Zm13.474 7.002-2.968-2.971-3.006-3.013 2.968-2.971 3.013 3.008L29.532 16l2.968 2.971-11.026 11.031Z'/%3E%3C/g%3E%3C/svg%3E")
+			background-size 25px auto
+	
+	&__swiper-container
+		margin-top 37px
+		margin-bottom 48px
+	
+	&__contact-box
+		margin-top 42px
+			

@@ -1,0 +1,26 @@
+.article-menu
+	// width 200px
+	width 230px
+	
+	&__list
+		list-style none
+		display grid
+		grid-template-columns 100%
+		gap 14px
+		
+	&__link
+		display block
+		padding 5px 14px
+		border-radius 9px
+		font-size 14px
+		line-height normal
+		color #6E6E80
+		text-decoration none
+		@extend .transition
+		
+		&:hover,
+		&--active
+			color var(--accent)
+		
+		&--active
+			background-image linear-gradient(to right, #e7e7fc, #f2f3fc)
