@@ -7,7 +7,7 @@ form(action="").filter.vacancies__filter
       //-   option(value="") Усі країни
       //-   option(value="poland") Польща
       //-   option(value="czech") Чехія
-      select(name="countries" autocomplete="off").form-select.form-select--filter.form-select--countries#countries
+      select(name="countries" autocomplete="off").filter-select.filter__countries-select#countries
         option(value="poland") Польща
         option(value="czech") Чехія
     .filter__item.hidden-xxs
@@ -37,7 +37,11 @@ form(action="").filter.vacancies__filter
     .filter__item.hidden-xxs
       input(type="number" name="remuneration" placeholder="Винагорода від").form-text.form-text--filter
     .filter__item.hidden-xxs
-      select(name="currency").form-select.form-select--filter#currency
+      //- select(name="currency").form-select.form-select--filter#currency
+      //-   option(value="pln") PLN
+      //-   option(value="uah") UAH
+      //-   option(value="eur") EUR
+      select(name="currency").filter-select.filter__currencies-select#currency
         option(value="pln") PLN
         option(value="uah") UAH
         option(value="eur") EUR
@@ -47,12 +51,12 @@ form(action="").filter.vacancies__filter
       button(type="button").btn-default.btn-default--filter.filter__search-btn Знайти
   .filter__bottom
     button(type="button" data-fancybox data-src="#additional-filters-popup").btn-white.btn-white--filter.hidden-xxsPlus.additional-filters-popup-link Фільтри
-    .filter__selects
-      select(name="experience").tags-select.filter__experience-select
+    .filter__tags-selects
+      select(name="experience").filter-select.filter-select--tags.filter__experience-select
         option(value="" data-placeholder="Досвід") Всі варіанти
         option(value="none") Без досвіду
         option(value="specialist") Спеціаліст
-      select(name="sex").tags-select.filter__sex-select
+      select(name="sex").filter-select.filter-select--tags.filter__sex-select
         option(value="" data-placeholder="Стать") Всі варіанти
         option(value="men") Чоловіки
         option(value="women") Жінки

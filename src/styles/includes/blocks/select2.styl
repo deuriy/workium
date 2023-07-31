@@ -1,18 +1,21 @@
 .select2-container	
-	&--tags-select
+	&--filter-select
 		.select2-selection--single
 			display grid
 			// place-content center
 			align-items center
 			// height 38px
-			height 40px
+			// height 40px
+			height 48px
 			border 1px solid #dfe2e6
 			border-radius 12px
 			background var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 8'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 1 6 6 6-6'/%3E%3C/svg%3E") right 9px center / 14px no-repeat
 			
 			.select2-selection__rendered
+				padding-right 30px
 				padding-left 12px
-				font-size 12px
+				// font-size 12px
+				font-size 14px
 				color var(--grey)
 			
 			.select2-selection__arrow

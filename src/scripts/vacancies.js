@@ -4,23 +4,70 @@ import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import multi from "multi.js/dist/multi-es6.min.js";
 
+function isFilterFilled() {
+  let $textFields = $('.filter .form-text');
+  let $select2Selections = $('.filter .select2-selection.filter-select');
+  let $citiesSelectToggle = $('.filter__cities-select-toggle');
+
+  console.log($select2Selections);
+
+  for (const input of $textFields) {
+    if ($(input).val() !== '') {
+      return true;
+    }
+  }
+
+  for (const selection of $select2Selections) {
+    if ($(selection).hasClass('select2-selection--selected')) {
+      return true;
+    }
+  }
+
+  if ($citiesSelectToggle.text() !== 'Усі міста') {
+    return true;
+  }
+
+  return false;
+}
+
+function checkFilterFill() {
+  let $clearBtn = $('.filter__clear-btn');
+
+  isFilterFilled() ? $clearBtn.show() : $clearBtn.hide();
+}
+
 $(() => {
   select2($);
 
-  let $tagsSelects = $('.tags-select').select2({
+  let $filterSelects = $('.filter-select').select2({
     dropdownCssClass: ':all:',
     selectionCssClass: ':all:',
-    theme: 'tags-select',
+    theme: 'filter-select',
     dropdownAutoWidth: true,
     minimumResultsForSearch: -1
   });
 
-  $tagsSelects.each(function(index, el) {
-    $(el).on('select2:select', function (e) {
-      let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
+  $filterSelects.each(function(index, el) {
+    let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
+
+    switch ($(el).attr('name')) {
+      case 'experience':
+        $select2Selection.find('.select2-selection__rendered').text('Досвід');
+        break;
+      case 'sex':
+        $select2Selection.find('.select2-selection__rendered').text('Стать');
+        break;
+    }
+
+    $(el).on('change', function (e) {
+      console.log('Select2:select!');
 
       if ($(el).select2('val') !== '') {
-        $select2Selection.addClass('select2-selection--selected');
+        if (!($(el).attr('name') === 'countries' && $(el).val() === 'poland') && !($(el).attr('name') === 'currency' && $(el).val() === 'pln')) {
+          $select2Selection.addClass('select2-selection--selected');
+        } else {
+          $select2Selection.removeClass('select2-selection--selected');
+        }
       } else {
         $select2Selection.removeClass('select2-selection--selected');
 
@@ -33,6 +80,8 @@ $(() => {
             break;
         }
       }
+
+      checkFilterFill();
     });
   });
 
@@ -131,6 +180,8 @@ $(() => {
     console.log($selectedCities.map((index, element) => $(element).attr('multi-index')));
     $selectToggle.attr('data-selected-cities', $selectedCities.map((index, element) => $(element).attr('multi-index')).toArray());
     console.log($selectToggle.data('selected-cities'));
+
+    checkFilterFill();
   });
 
 
@@ -186,15 +237,35 @@ $(() => {
 
   $('.filter__clear-btn').click(function(e) {
     let $filter = $(this).closest('.filter');
-    let $tagsSelects = $filter.find('select.tags-select');
+    let $filterSelects = $filter.find('.filter-select');
     let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
 
-    $tagsSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
-    $tagsSelects.each(function(index, el) {
-      $(el).val('').trigger('change');
+    let $multiWrapperClearBtn = $('.dropdown-block--cities-select .multi-wrapper__clear-btn');
+    let $citiesSelectToggle = $filter.find('.filter__cities-select-toggle');
+    let citiesSelectToggleText = $citiesSelectToggle.data('default-placeholder');
+
+    $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+    $filterSelects.each(function(index, el) {
+      let value = '';
+
+      if ($(el).hasClass('filter__countries-select')) {
+        value = 'poland';
+      } else if ($(el).hasClass('filter__currencies-select')) {
+        value = 'pln';
+      }
+
+      $(el).val(value).trigger('change');
     });
 
-    $additionalFiltersClearBtn.click()
+    $additionalFiltersClearBtn.click();
+
+    $multiWrapperClearBtn.click();
+    $('.filter__cities-dropdown-block .multi-wrapper').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
+
+    $citiesSelectToggle.html(citiesSelectToggleText);
+    $citiesSelectToggle.removeClass('select-toggle--selected');
+
+    $(this).hide();
   });
 
   // $('.tags-select').select2({
@@ -254,27 +325,22 @@ $(() => {
     e.preventDefault();
   });
 
-  $('input[name="vacancy_name"]').on('input', function(event) {
-    let $filter = $(this).closest('.filter');
-    let $clearBtn = $filter.find('.filter__clear-btn');
+  // $('.filter .form-text[type="number"]').on('input', function(e) {
+    // let charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
+    // let charStr = String.fromCharCode(charCode);
 
-    $(this).val().trim() !== '' ? $clearBtn.show() : $clearBtn.hide();
-    // let searchValue = $(this).val().toLowerCase().trim();
-    // let $additionalFilters = $(this).closest('.additional-filters');
-    // let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
+    // console.log('kddkkdkdk');
+    // console.log(charStr);
 
-    // $additionalFiltersGroups.each( (index, group) => {
-    //   let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
-    //   let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label')).map(label => {
-    //     return $(label).text().toLowerCase();
-    //   });
+    // this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
 
-    //   if (groupTitle.includes(searchValue) || checkboxesLabels.find(label => label.includes(searchValue))) {
-    //     $(group).show();
-    //   } else {
-    //     $(group).hide();
-    //   }
-    // });
+    // if (!charStr.match(/^[0-9]+$/)) {
+      // e.preventDefault();    
+    // }
+  // });
+
+  $('.filter .form-text').on('input', function(e) {
+    checkFilterFill();
   });
 
   // Search in filter
