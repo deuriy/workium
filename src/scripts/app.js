@@ -315,10 +315,19 @@ $(() => {
       });
     } else if ($dropdownBlock.hasClass('dropdown-block--bottom')) {
       let coords = getCoords($(this)[0]);
+      // console.log(coords);
 
       $dropdownBlock.css({
         left: `${coords.left}px`,
-        top: `${coords.top + coords.height + 6}px`
+        top: `${coords.top + $(this).outerHeight(true) + 6}px`
+      });
+    } else if ($dropdownBlock.hasClass('dropdown-block--top')) {
+      let coords = getCoords($(this)[0]);
+      // console.log(coords);
+
+      $dropdownBlock.css({
+        left: `${coords.left}px`,
+        top: `${coords.top - $dropdownBlock.outerHeight(true) - 6}px`
       });
     }
     
@@ -353,6 +362,23 @@ $(() => {
     }, 1500);
 
     e.preventDefault();
+  });
+
+  $('.fb-group__copy-btn').click(function(e) {
+    let $groupLink = $(this).prev('.fb-group__link');
+    console.log($groupLink);
+    $groupLink.after(`<input type="text" class="fb-group__url" value="${$groupLink.attr('href')}" />`);
+
+    let $tooltip = $(this).next('.fb-group__tooltip');
+    let $groupLinkURL = $groupLink.next('.fb-group__url');
+
+    copyText($groupLinkURL[0]);
+    $groupLinkURL.remove();
+
+    $tooltip.addClass('tooltip--visible');
+    setTimeout(() => {
+      $tooltip.removeClass('tooltip--visible');
+    }, 1500);
   });
 
   $('.selected-item__remove-link').click(function(e) {
