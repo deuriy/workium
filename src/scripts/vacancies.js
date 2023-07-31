@@ -2,6 +2,7 @@ import $ from "jquery";
 import Swiper, { Pagination } from 'swiper';
 import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
+import PerfectScrollbar from 'perfect-scrollbar';
 import multi from "multi.js/dist/multi-es6.min.js";
 
 function isFilterFilled() {
@@ -92,6 +93,25 @@ $(() => {
       "hide_empty_groups": true
     });
   });
+
+  $('.multi-wrapper .non-selected-wrapper, .multi-wrapper .selected-wrapper').each(function(index, el) {
+    console.log(el);
+
+    new PerfectScrollbar(el, {
+      wheelSpeed: 2,
+      wheelPropagation: false,
+      minScrollbarLength: 20,
+      suppressScrollX: true
+    });
+  });
+
+  // const userSidebarMenuPS = new PerfectScrollbar('.user-sidebar__user-menu', {
+  //   wheelSpeed: 2,
+  //   wheelPropagation: false,
+  //   minScrollbarLength: 20
+  // });
+
+  // console.log($('.multi-wrapper');
 
   $('.dropdown-block--cities-select').each(function(index, el) {
     $(el).find('.multi-wrapper .search-input').wrap('<div class="multi-wrapper__header"></div>');
@@ -198,6 +218,7 @@ $(() => {
         $selectToggle.html(selectToggleText);
 
         if (!$selectedCities.length) {
+          // console.log('!!!!');
           $visibleDropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
         } else {
           $selectToggle.removeClass('select-toggle--selected');
