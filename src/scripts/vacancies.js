@@ -63,8 +63,12 @@ $(() => {
     $(el).on('change', function (e) {
       console.log('Select2:select!');
 
+      // if ($(el).hasClass('additional-filters__countries-select')) return;
+
+      // console.log(el);
+
       if ($(el).select2('val') !== '') {
-        if (!($(el).attr('name') === 'countries' && $(el).val() === 'poland') && !($(el).attr('name') === 'currency' && $(el).val() === 'pln')) {
+        if (!(($(el).attr('name') === 'countries' || $(el).attr('name') === 'filter_countries') && $(el).val() === 'poland') && !($(el).attr('name') === 'currency' && $(el).val() === 'pln')) {
           $select2Selection.addClass('select2-selection--selected');
         } else {
           $select2Selection.removeClass('select2-selection--selected');
@@ -282,7 +286,6 @@ $(() => {
 
     $multiWrapperClearBtn.click();
     $('.filter__cities-dropdown-block .multi-wrapper').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
-
     $citiesSelectToggle.html(citiesSelectToggleText);
     $citiesSelectToggle.removeClass('select-toggle--selected');
 
@@ -480,6 +483,29 @@ $(() => {
   });
 
   $('.additional-filters__clear-filter-btn').click(function(event) {
+    let $filter = $(this).closest('.additional-filters');
+    let $filterSelects = $filter.find('.filter-select');
+
+    let $multiWrapperClearBtn = $('.dropdown-block--cities-select .multi-wrapper__clear-btn');
+    let $citiesSelectToggle = $filter.find('.additional-filters__cities-select-toggle');
+    let citiesSelectToggleText = $citiesSelectToggle.data('default-placeholder');
+
+    $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+    $filterSelects.each(function(index, el) {
+      let value = '';
+
+      if ($(el).hasClass('additional-filters__countries-select')) {
+        value = 'poland';
+      }
+
+      $(el).val(value).trigger('change');
+    });
+
     $('.additional-filters__clear-btn').click();
+
+    $multiWrapperClearBtn.click();
+    $('.additional-filters__cities-dropdown-block .multi-wrapper').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
+    $citiesSelectToggle.html(citiesSelectToggleText);
+    $citiesSelectToggle.removeClass('select-toggle--selected');
   });
 });
