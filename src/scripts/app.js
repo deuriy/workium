@@ -314,7 +314,9 @@ $(() => {
         top: `${coords.top - $dropdownBlock.outerHeight() + coords.height}px`
       });
     } else if ($dropdownBlock.hasClass('dropdown-block--bottom')) {
-      let coords = getCoords($(this)[0]);
+      // let coords = getCoords($(this)[0]);
+      // let coords = $(this)[0].getBoundingClientRect();
+      let coords = $dropdownBlock.hasClass('dropdown-block--bottom-fixed') ? $(this)[0].getBoundingClientRect() : getCoords($(this)[0]);
       // console.log(coords);
 
       $dropdownBlock.css({
