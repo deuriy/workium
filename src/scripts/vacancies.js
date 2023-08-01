@@ -61,14 +61,8 @@ $(() => {
     }
 
     $(el).on('change', function (e) {
-      console.log('Select2:select!');
-
-      // if ($(el).hasClass('additional-filters__countries-select')) return;
-
-      // console.log(el);
-
-      if ($(el).select2('val') !== '') {
-        if (!(($(el).attr('name') === 'countries' || $(el).attr('name') === 'filter_countries') && $(el).val() === 'poland') && !($(el).attr('name') === 'currency' && $(el).val() === 'pln')) {
+      if ($(this).select2('val') !== '') {
+        if (!(($(this).attr('name') === 'countries' || $(this).attr('name') === 'filter_countries') && $(this).val() === 'poland') && !($(this).attr('name') === 'currency' && $(this).val() === 'pln')) {
           $select2Selection.addClass('select2-selection--selected');
         } else {
           $select2Selection.removeClass('select2-selection--selected');
@@ -76,7 +70,7 @@ $(() => {
       } else {
         $select2Selection.removeClass('select2-selection--selected');
 
-        switch ($(el).attr('name')) {
+        switch ($(this).attr('name')) {
           case 'experience':
             $select2Selection.find('.select2-selection__rendered').text('Досвід');
             break;
@@ -99,8 +93,6 @@ $(() => {
   });
 
   $('.multi-wrapper .non-selected-wrapper, .multi-wrapper .selected-wrapper').each(function(index, el) {
-    console.log(el);
-
     new PerfectScrollbar(el, {
       wheelSpeed: 2,
       wheelPropagation: false,
@@ -108,14 +100,6 @@ $(() => {
       suppressScrollX: true
     });
   });
-
-  // const userSidebarMenuPS = new PerfectScrollbar('.user-sidebar__user-menu', {
-  //   wheelSpeed: 2,
-  //   wheelPropagation: false,
-  //   minScrollbarLength: 20
-  // });
-
-  // console.log($('.multi-wrapper');
 
   $('.dropdown-block--cities-select').each(function(index, el) {
     $(el).find('.multi-wrapper .search-input').wrap('<div class="multi-wrapper__header"></div>');
@@ -201,9 +185,9 @@ $(() => {
 
     $selectToggle.html(selectToggleText);
 
-    console.log($selectedCities.map((index, element) => $(element).attr('multi-index')));
+    // console.log($selectedCities.map((index, element) => $(element).attr('multi-index')));
     $selectToggle.attr('data-selected-cities', $selectedCities.map((index, element) => $(element).attr('multi-index')).toArray());
-    console.log($selectToggle.data('selected-cities'));
+    // console.log($selectToggle.data('selected-cities'));
 
     checkFilterFill();
   });
