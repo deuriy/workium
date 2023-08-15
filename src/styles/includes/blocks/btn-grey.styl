@@ -14,6 +14,7 @@
 	white-space nowrap
 	cursor pointer
 	text-decoration none
+	@extend .transition
 	
 	&--withdrawal-form,
 	&--authorization-form
@@ -32,6 +33,13 @@
 		padding 6px 30px
 		border-radius 8px
 		font-size 14px
+	
+	&--mobile-filter
+		border-radius 12px
+		font-size 18px
+		
+		&:hover
+			background darken(#f2f2f5, 5%)
 	
 	// &:hover
 	// 	background var(--purple)
