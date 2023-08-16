@@ -68,6 +68,7 @@ $(() => {
 	Fancybox.bind(".fancybox-popup-toggle", {
 	  dragToClose: false,
 	  mainClass: 'fancybox--popup',
+    placeFocusBack: false,
 
     on: {
       reveal: (fancybox, slide) => {

@@ -72,9 +72,17 @@
 		width 800px
 		max-width 100%
 		
+		@media $xs
+			grid-template-columns 100%
+			justify-items center
+		
 		.contact-box__buttons-wrapper
 			order -1
 			margin-top 14px
+			
+			@media $xs
+				order 0
+				text-align left
 		
 		.contact-box__call-btn
 			margin-left 11px

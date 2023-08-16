@@ -2,7 +2,7 @@ extends layouts/user_profile
 
 block content
   .affiliate-page.affiliate-page--2col
-    .affiliate-page__aside
+    .affiliate-page__aside.hidden-mdMinus
       .article-menu.affiliate-page__menu
         ul.article-menu__list
           li.article-menu__item
@@ -23,7 +23,7 @@ block content
             a(href="#heading-8").article-menu__link Відповіді на запитання
     .affiliate-page__content-wrapper
       .affiliate-page__header
-        h1.page-title.affiliate-page__title Партнерська програма
+        h1.page-title.page-title--affiliate.affiliate-page__title Партнерська програма
         .select-menu.affiliate-page__select-menu
           .select-menu__selected Партнерська програма
           .select-menu__dropdown
@@ -40,6 +40,25 @@ block content
                 a(href="#").select-menu__link Агенціям та роботодавцям
               li.select-menu__item
                 a(href="#").select-menu__link Операційним партнерам
+      .article-menu.affiliate-page__menu.hidden-lg.hidden-xs
+        ul.article-menu__list
+          li.article-menu__item
+            a(href="#heading-1").article-menu__link.article-menu__link--active Заробляйте, не продаючи!
+          li.article-menu__item
+            a(href="#heading-2").article-menu__link Чому мені всі будуть вдячні?
+          li.article-menu__item
+            a(href="#heading-3").article-menu__link Скільки ви будете заробляти
+          li.article-menu__item
+            a(href="#heading-4").article-menu__link Переваги та недоліки партнерського заробітку
+          li.article-menu__item
+            a(href="#heading-5").article-menu__link Відгуки про партнерську програму
+          li.article-menu__item
+            a(href="#heading-6").article-menu__link З чого розпочати?
+          li.article-menu__item
+            a(href="#heading-7").article-menu__link Де шукати партнерів, щоб відразу був результат?
+          li.article-menu__item
+            a(href="#heading-8").article-menu__link Відповіді на запитання
+      a(href="#article-menu-popup").more-link.more-link--affiliate.fancybox-popup-toggle.hidden-md Зміст
       .affiliate-page__content
         p В двох словах про те, чому ви гарантовано закохаєтесь в партнерську програму WORKIUM! Лише факти і нічого зайвого.
         h2#heading-1 Заробляйте, нічого не продаючи!
@@ -56,8 +75,8 @@ block content
         p Саме тому, абсолютно всі люди, яким ви розповісте про WORKIUM - безмежно будуть вам вдячні, тому що ними більше не будуть закривати проблемі та складні вакансі, а вони #[strong самі] зможуть обрати ту роботу, яка найбільше їм підійде по заданим критеріям.
         p Також, після відпрацювання деякого терміну (в кожної вакансії він індивідуальний і відразу вказується разом із винагородою) - працівник отримає щедру винагороду на власний баланс у WORKIUM, після чого зможе зняти кошти найбільш зручним для себе способом, наприклад, на звичайну банківську картку. Кошти виплачуються миттєво. Зверніть увагу, що ця винагорода - це додаткові кошти, які вам виплачує не роботодавець чи підприємство, а нейромережа WORKIUM і які ніяким чином не стосуються вашої заробітної плати. Тобто це абсолютно окрема винагорода для вас за те, що ви обрали одну із вакансій на WORKIUM.
         p Якщо ж працівнику буде потрібно виготовити будь-які документи або продовжити свою легальність за кордоном - він отримає 100% захист та гарантію на виготовлення безпосередньо від WORKIUM, а також йому миттво буде нарахований кешбек у розмірі 10% від суми вартості послуги виготовлення документів.
-        p Тому, абсолютно всі люди, яким ви розповісте про WORKIUM - отримають доступ до тисяч безкоштовних вакансій з #[span.hidden можливістю самостійного вибору місця праці, виготовлення будь-яких документів з гарантією за кращою ціною та нарахування винагороди і кешбеку! І за це вони будуть безмежно вам вдячні, тому що збережуть собі час та нерви!]
-        p.hidden Пам’ятайте, що коли ви рекомендуєте або просто розповідаєте про WORKIUM - в першу чергу ви допомагаєте не собі, а людям! Діліться добром, робіть добро!
+        p Тому, абсолютно всі люди, яким ви розповісте про WORKIUM - отримають доступ до тисяч безкоштовних вакансій з можливістю самостійного вибору місця праці, виготовлення будь-яких документів з гарантією за кращою ціною та нарахування винагороди і кешбеку! І за це вони будуть безмежно вам вдячні, тому що збережуть собі час та нерви!
+        p Пам’ятайте, що коли ви рекомендуєте або просто розповідаєте про WORKIUM - в першу чергу ви допомагаєте не собі, а людям! Діліться добром, робіть добро!
         h2#heading-3 Порахуємо, скільки ви будете заробляти
         p Партнерська програма працює досить просто: кожен користувач, якому ви розповіли про WORKIUM - отримає винагороду за відпрацювання на обраній вакансії (розмір винагороди та термін відпрацювання вказаний в описі кожної вакансії) та 10% кешбек від суми документів, яких він обрав для виготовлення. 
         p #[strong Заробіток на партнерській програмі] - це коли ви всього лише ділитесь з друзями, знайомими або іншими інтернет-користувачам своїм власним партнерським посиланням і не берете жодної участі в будь-яких наступних діях. Тобто, ви не консультуєте, не підбираєте вакансії і не здійснюєте будь-яких інших операцій окрім того, що один раз надіслали своє партнерське посилання.
@@ -257,7 +276,7 @@ block content
                 .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
           .contact-box__buttons-wrapper
             a(href="#").call-btn.contact-box__call-btn Зателефонувати вам?
-            .contact-buttons.contact-buttons--support.contact-box__buttons
+            .contact-buttons.contact-buttons--support.contact-buttons--affiliate-support.contact-box__buttons
               ul.contact-buttons__list
                 li.contact-buttons__item
                   a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-contact-box-support Написати у #[span.btn-purple__messenger Viber]
@@ -291,4 +310,5 @@ block content
                 a(href="https://www.facebook.com/groups/209206389413491/" target="_blank").fb-group__link Чорний список України Аферисти Недобросовісні покупці/клієнти
                 button(type="button").copy-btn.copy-btn--small.copy-btn--grey.fb-group__copy-btn
                 .tooltip.tooltip--copied.tooltip--grey-bg.fb-group__tooltip Скопійовано!
+  include ./includes/blocks/article-menu-popup
   script(src="/js/affiliate.js")
