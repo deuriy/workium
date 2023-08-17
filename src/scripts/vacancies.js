@@ -310,7 +310,7 @@ $(() => {
   if (document.documentElement.clientWidth < 768) {
   	const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
       modules: [Pagination],
-      loop: true,
+      // loop: true,
       slidesPerView: 'auto',
       centeredSlides: true,
       spaceBetween: 8,
