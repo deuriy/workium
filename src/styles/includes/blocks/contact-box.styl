@@ -12,6 +12,21 @@
 			margin-bottom 17px
 			font-size 24px
 	
+	&__text
+		display grid
+		grid-template-columns auto 1fr
+		align-items center
+		gap 18px
+		margin-bottom 40px
+		margin-left -1px
+		font-size 16px
+		
+		&::before
+			content ""
+			width 28px
+			height 28px
+			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg data-name='Layer 2'%3E%3Cpath d='M14.18 22H9.76A2.72 2.72 0 0 1 7 19.33v-1.66A2.72 2.72 0 0 1 9.76 15h2.65a.73.73 0 0 0 .77-.67v-1.66a.73.73 0 0 0-.77-.67H8a1 1 0 0 1 0-2h4.41a2.72 2.72 0 0 1 2.77 2.67v1.66A2.72 2.72 0 0 1 12.41 17H9.76a.72.72 0 0 0-.76.67v1.66a.72.72 0 0 0 .76.67h4.42a1 1 0 0 1 0 2ZM23 17h-4.41a2.72 2.72 0 0 1-2.77-2.67V11a1 1 0 0 1 2 0v3.33a.73.73 0 0 0 .77.67H22v-4a1 1 0 0 1 2 0v5a1 1 0 0 1-1 1Z' fill='%2338ca16'/%3E%3Cpath fill='%2338ca16' d='M23 22a1 1 0 0 1-1-1V11a1 1 0 0 1 2 0v10a1 1 0 0 1-1 1Z'/%3E%3Cpath d='M16 30a14 14 0 1 1 6.46-26.42 1 1 0 1 1-.92 1.77A12 12 0 1 0 28 16a12 12 0 0 0-1.85-6.4 1 1 0 1 1 1.7-1.06A14 14 0 0 1 16 30Z' fill='%2338ca16'/%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat
+	
 	&__phones
 		margin-bottom 32px
 		
@@ -32,7 +47,8 @@
 	
 	&--support
 		.contact-box__title
-			margin-bottom 34px
+			// margin-bottom 34px
+			margin-bottom 13px
 			font-weight 500
 			font-size 16px
 		
@@ -47,7 +63,8 @@
 		
 		.contact-box__title
 			// margin-bottom 40px
-			margin-bottom 44px
+			// margin-bottom 44px
+			margin-bottom 13px
 			font-weight 500
 			font-size 17px
 		
