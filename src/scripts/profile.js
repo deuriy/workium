@@ -41,14 +41,16 @@ function setCookie(name, value, options = {}) {
 
 $(() => {
 	let hideProfileCookie = getCookie('hideProfile');
+	let hideProfileQuoteCookie = getCookie('hideProfileQuote');
 
 	let $userSidebar = $('.user-sidebar');
 	let $userAvatarLink = $('.user-sidebar__user-avatar-link');
   let $userInfoWrapper = $('.user-sidebar__user-info-wrapper');
   let $menuLinkHideProfile = $('.dropdown-menu__link--hide-profile');
+  let $userSidebarQuote = $('.user-sidebar__quote');
 
 	if (hideProfileCookie === 'yes') {
-		$userSidebar.addClass('user-sidebar')
+		// $userSidebar.addClass('user-sidebar')
 		$userSidebar.removeClass('user-sidebar--profile-shown');
 		$userAvatarLink.removeClass('user-sidebar__user-avatar-link--profile-shown');
 
@@ -56,6 +58,13 @@ $(() => {
   	$menuLinkHideProfile.find('.dropdown-menu__icon').attr('src', '/img/context_menu/show_profile.svg');
 
   	$userInfoWrapper.hide();
+	}
+
+	if (hideProfileQuoteCookie === 'yes') {
+		$userSidebar.removeClass('user-sidebar--quote-shown');
+		$userAvatarLink.removeClass('user-sidebar__user-avatar-link--quote-shown');
+
+		$userSidebarQuote.hide();
 	}
 
 	const userSidebarMenuPS = new PerfectScrollbar('.user-sidebar__user-menu', {

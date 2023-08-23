@@ -1,4 +1,4 @@
-.user-sidebar.user-sidebar--profile-shown
+.user-sidebar.user-sidebar--profile-shown.user-sidebar--quote-shown
   .user-sidebar__inner
     include ./user-dropdown-menu
 
@@ -14,6 +14,11 @@
     //-     a(href="/user.html").username.user-info__username sadwolf27
     //-     a(href="/logout").logout-link.user-info__logout-link
     //-   .user-balance.user-info__balance 5257,45 грн
+
+    .quote.user-sidebar__quote
+      button(type="button").quote__close-btn
+      .quote__text
+        p Нейромережа для сфери працевлаштування, яка виплачує кошти
 
     .user-sidebar__user-info-wrapper
       .user-info

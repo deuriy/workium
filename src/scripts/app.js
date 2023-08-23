@@ -57,6 +57,36 @@ function getCoords(elem) {
   };
 }
 
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function setCookie(name, value, options = {}) {
+  options = {
+    path: '/',
+    ...options
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
 $(() => {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -452,5 +482,20 @@ $(() => {
       gradient: ["#ffc10d", "#ef881d"]
     },
     emptyFill: "#333742"
+  });
+
+  $('.quote__close-btn').click(function(e) {
+    let $quote = $(this).closest('.quote');
+    $quote.slideUp();
+
+    if ($quote.hasClass('user-sidebar__quote')) {
+      let $userSidebar = $('.user-sidebar');
+      let $userAvatarLink = $('.user-sidebar__user-avatar-link');
+
+      $userSidebar.removeClass('user-sidebar--quote-shown');
+      $userAvatarLink.removeClass('user-sidebar__user-avatar-link--quote-shown');
+
+      setCookie('hideProfileQuote', 'yes', {'max-age': 3153600000});
+    }
   });
 });

@@ -1,0 +1,30 @@
+.quote
+	position relative
+	padding 12px 20px 12px 12px
+	border-radius 12px
+	background #2A364C
+	
+	&::before
+		content ""
+		position absolute
+		top -8px
+		left 20px
+		width 10px
+		height 8px
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 8'%3E%3Cpath fill='%232A364C' d='m5 0 5 8H0l5-8Z'/%3E%3C/svg%3E") center / cover no-repeat
+	
+	&__close-btn
+		position absolute
+		top 8px
+		right 8px
+		width 16px
+		height 16px
+		border none
+		outline none
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 10'%3E%3Cpath stroke='%23676F80' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m1 9 8-8M1 1l8 8'/%3E%3C/svg%3E") center / 8px no-repeat
+		cursor pointer
+	
+	&__text
+		font-size 12px
+		line-height 1.5
+		color var(--light)
