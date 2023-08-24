@@ -7,9 +7,26 @@
 	box-shadow 0 0 24px rgba(0, 0, 0, 0.15)
 	color var(--accent)
 	font-size 13px
+	text-align left
 	opacity 0
 	visibility hidden
 	@extend .transition
+	
+	&__title
+		margin-bottom 8px
+		font-weight 600
+		font-size 13px
+		line-height 1.5
+	
+	&__close-btn
+		width 16px
+		height 16px
+		margin-top -2px
+		margin-right -2px
+		border none
+		outline none
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23676F80' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m4 12 8-8M4 4l8 8'/%3E%3C/svg%3E") center / cover no-repeat
+		cursor pointer
 	
 	&--copied
 		padding-left 35px
@@ -19,6 +36,27 @@
 		box-shadow none
 		border-radius 8px
 		background-color #eeeff3
+	
+	&--extended
+		display grid
+		grid-template-columns 1fr auto
+		gap 4px
+		width 240px
+		padding 10px 12px
+		border-radius 12px
+		background #2A364C
+		color #FFF
+		font-size 12px
+		
+		&::before
+			content ""
+			position absolute
+			top 50%
+			transform translateY(-50%)
+			left -8px
+			width 8px
+			height 10px
+			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 10'%3E%3Cpath fill='%232A364C' d='m0 5 8-5v10L0 5Z'/%3E%3C/svg%3E") center no-repeat
 	
 	// &--phone-copied
 	// 	padding-right 5px

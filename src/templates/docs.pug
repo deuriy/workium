@@ -14,11 +14,16 @@ block content
       .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.tabs-menu--center-desktop.docs-page__tabs-menu
         ul.tabs-menu__list.tabs__list
           li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link.tabs-menu__link--active Польща
+            a(href="#").tabs-menu__link Польща
           li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link Чехія
+            a(href="#").tabs-menu__link.tabs-menu__link--active Послуги
           li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link Інші країни
+            a(href="#").tabs-menu__link Страхування
+          li.tabs-menu__item.tabs__item
+            a(href="#").tabs-menu__link Логістика
+          li.tabs-menu__item.tabs__item
+            a(href="#").tabs-menu__link Легалізація
+      .tabs__content
       .tabs__content(style="display: block")
         .services
           .service-box.services__item
@@ -26,17 +31,37 @@ block content
             h3.service-box__title Пакет документів для відкриття візи
             .service-box__description
               p Легальне запрошення, заповнена анкета, акредитований #[br.hidden-1440-]страховий поліс та стартовий пакет мобільного оператора.
+            .price.service-box__price 1000 UAH
+            .hint.service-box__hint
+              .hint__text можливо частинами
+              .tooltip.tooltip--extended.hint__tooltip
+                .tooltip__text-wrapper
+                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                button(type="button").tooltip__close-btn
+            .cashback.service-box__cashback
+              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum 100 UAH]
             a(href="#").btn-action.service-box__order-btn Замовити пакет документів
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
+            //- .service-box__footer
+            //-   a(href="#").more-link.more-link--dark Детальніше
           .service-box.services__item
             .service-box__country PL
             h3.service-box__title Страхування (20+ типів)
             .service-box__description
               p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
-            a(href="#").btn-action.service-box__order-btn Замовити послуги страхування
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
+            .price.service-box__price 1000 UAH
+            .hint.service-box__hint
+              .hint__text можливо частинами
+              .tooltip.tooltip--extended.hint__tooltip
+                .tooltip__text-wrapper
+                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                button(type="button").tooltip__close-btn
+            .cashback.service-box__cashback
+              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum 100 UAH]
+            a(href="#").btn-action.service-box__order-btn Замовити пакет документів
+            //- .service-box__footer
+            //-   a(href="#").more-link.more-link--dark Детальніше
           .service-box.services__item
             .service-box__country PL
             h3.service-box__title Логістичні послуги

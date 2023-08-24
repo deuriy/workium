@@ -498,4 +498,25 @@ $(() => {
       setCookie('hideProfileQuote', 'yes', {'max-age': 3153600000});
     }
   });
+
+  $('.hint__text').click(function(e) {
+    let $hint = $(this).closest('.hint');
+
+    $hint.find('.hint__tooltip').toggleClass('tooltip--visible');
+  });
+
+  $('.tooltip__close-btn').click(function(e) {
+    e.preventDefault();
+
+    $(this).closest('.tooltip').removeClass('tooltip--visible');
+  });
+
+  $(document).click(function(e) {
+    let $isTooltip = $(e.target).closest('.tooltip--visible');
+    let $tooltipTrigger = $(e.target).closest('.hint');
+
+    if (!$isTooltip.length && !$tooltipTrigger.length) {
+      $('.tooltip--visible').removeClass('tooltip--visible');
+    }
+  });
 });
