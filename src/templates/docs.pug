@@ -41,7 +41,7 @@ block content
                 button(type="button").tooltip__close-btn
             .cashback.service-box__cashback
               .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum 100 UAH]
-            a(href="#").btn-action.service-box__order-btn Замовити пакет документів
+            a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
             //- .service-box__footer
             //-   a(href="#").more-link.more-link--dark Детальніше
           .service-box.services__item
@@ -220,4 +220,5 @@ block content
     //-       a(href="#").btn-purple.btn-purple--viber Написати у Viber
     //-     li.contact-buttons__item
     //-       a(href="#").btn-lightblue.btn-lightblue--telegram Написати в Telegram
+  include ./includes/blocks/order-service-popup
   script(src="/js/docs.js")

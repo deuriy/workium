@@ -82,12 +82,15 @@
 	&--no-back-btn
 		padding-top 40px
 	
-	&--affiliate-support
+	&--affiliate-support,
+	&--order-service
 		display grid
 		grid-template-columns repeat(2, 1fr)
+		max-width 100%
+	
+	&--affiliate-support
 		gap 25px
 		width 800px
-		max-width 100%
 		
 		@media $xs
 			grid-template-columns 100%
@@ -105,4 +108,22 @@
 			margin-left 11px
 		
 		.contact-box__phones
+			margin-bottom 0
+	
+	&--order-service
+		justify-items center
+		
+		@media $xs
+			grid-template-columns 100%
+			gap 24px
+		
+		.contact-box__buttons-wrapper
+			margin-top -6px
+		
+		.contact-box__call-btn
+			margin-bottom 12px
+			margin-left 0
+		
+		.contact-box__phones
+			margin-right 33px
 			margin-bottom 0
