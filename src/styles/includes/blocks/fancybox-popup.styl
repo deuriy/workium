@@ -86,6 +86,12 @@
 	&__btn
 		width 100%
 	
+	&__show-contacts-btn
+		margin-top -14px
+		
+		@media $xs
+			margin-top 9px
+	
 	&--wide
 		text-align center
 		
@@ -242,7 +248,9 @@
 		@media $xs
 			padding-bottom 8px
 	
-	&--order-service
+	&--order-service,
+	&--book-vacancy,
+	&--employment
 		@media $xs
 			overflow auto
 			border-radius 0
@@ -282,7 +290,8 @@
 				margin-bottom 15px
 				
 			& > p + p
-				margin-top 10px
+				// margin-top 10px
+				margin-top 12px
 	
 	&--tooltip-popup
 		padding 24px 32px
@@ -308,3 +317,25 @@
 			
 			& > p + p
 				margin-top 16px
+	
+	&--employment
+		@media $smPlus
+			width 720px
+		
+		.fancybox-popup__img-wrapper
+			margin-bottom 25px
+			
+			@media $xs
+				margin-bottom 24px
+		
+		.fancybox-popup__img
+			width auto
+			
+			@media $xs
+				width 266px
+			
+		.fancybox-popup__text
+			width 640px
+			
+			a
+				color #5340FF

@@ -1,4 +1,4 @@
-extends layouts/user_profile
+extends layouts/vacancy
 
 block vars
   - userProfileClasses = 'user-profile--vacancies';
@@ -178,16 +178,31 @@ block content
                 a(href="#").more-link.more-link--full-width.promo-block__more-link Детальніше
         h2.vacancy-card__title Оператор на виробництво електроніки
         .vacancy-card__white-box
-        .vacancy-card__btn-wrapper
+        .vacancy-card__btn-wrapper.hidden-xs
           a(href="#book-vacancy-popup").fancybox-wide-popup-toggle.btn-default.btn-default--arrow Безкоштовно забронювати вакансію
-    .agency-fee
-      .agency-fee__img-wrapper
-        img(src="/img/globe.png" alt="").agency-fee__img
-      .agency-fee__text-wrapper
-        h3.agency-fee__title Ви заробляєте більше на 150 zł
-        .agency-fee__text
-          p Винагорода агенції #[strong Smart Work] по даній вакансії становить #[strong 300 zł.] Нагорода від #[strong WORKIUM] по цій же вакансій становить #[strong 450 zł.]
-          p Тобто, обираючи працевлаштування через нейромережу WORKIUM - ви заробляєте більше на 150 zł і отримуєте кваліфіковану підтримку та захист, а також гарантію виплати коштів у розмірі 450 zł зручним для вас способом!
-          p Тому, яку б ви вакансію не обрали - якщо працевлаштування відбувається через WORKIUM - ви гарантовано отримаєте повний захист та значно більшу винагороду (від 30% до 200%) ніж при зверненні до підприємства або агенції напряму!
+    .vacancy-page__infoblocks
+      .infoblock.vacancy-page__infoblock
+        .infoblock__img-wrapper
+          img(src="/img/smart_work.png" alt="").infoblock__img
+        .infoblock__text-wrapper
+          h3.infoblock__title Зв'язок з роботодавцем
+          .infoblock__text.infoblock__text--truncated
+            p Залишились запитання стосовно роботи на вакансії #[strong Оператор Процесів]? Зв'яжіться з роботодавцем #[strong Smart Work], який працевлаштовує на цю вакансію, та дізнайтесь всі деталі напряму, без обману та посередників. Пам'ятайте, що для отримання винагороди - ви обов'язково повинні бути працевлаштованими через WORKIUM.
+          a(href="#employment-smart-work-popup").fancybox-wide-popup-toggle.btn-grey.btn-grey--infoblock.infoblock__btn Зв'язатись з Smart Work
+          .infoblock__more-link-wrapper
+            a(href="#").toggle-link.toggle-link--agency-fee.infoblock__more-link.hidden-smPlus Детальніше
+      .infoblock.vacancy-page__infoblock
+        .infoblock__img-wrapper
+          img(src="/img/agency_fee_wallet.png" alt="").infoblock__img
+        .infoblock__text-wrapper
+          h3.infoblock__title Ви заробляєте більше на 150 zł
+          .infoblock__text.infoblock__text--truncated
+            p Винагорода агенції #[strong Fast Service] по даній вакансії становить #[strong 0 - 0 zł.] Винагорода від #[strong WORKIUM] по цій же вакансій становить #[strong 450 zł.]
+            p Тобто, за наявності ліцензії, зовнішньо-економічного договору та сплати податків ви можете спробувати працювати з роботодавцем напряму, проте обираючи працевлаштування через нейромережу WORKIUM - ви позбуваєтесь будь-яких складнощів та вимог, заробляєте більше на 150 zł і отримуєте кваліфіковану підтримку та захист, а також гарантію виплати коштів у розмірі 450 zł зручним для вас способом!
+            p Тому, яку б ви вакансію не обрали, працевлаштовуватись через WORKIUM завжди буде простіше, безпечніше та значно вигідніше ніж при зверненні до підприємства або агенції напряму!
+          .infoblock__more-link-wrapper
+            a(href="#").toggle-link.toggle-link--agency-fee.infoblock__more-link.hidden-smPlus Детальніше
+
+  include ./includes/blocks/employment-smart-work-popup
   include ./includes/blocks/book-vacancy-popup
   script(src="/js/vacancy.js")

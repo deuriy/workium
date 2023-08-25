@@ -1,6 +1,13 @@
 import $ from "jquery";
 import Swiper, { Navigation, Pagination } from 'swiper';
 
+function toggleMoreLink ($link) {
+  let linkText = $link.text() === 'Приховати' ? 'Детальніше' : 'Приховати';
+  $link.text(linkText);
+
+  $link.toggleClass('toggle-link--expanded');
+}
+
 $(() => {
   const vacancyImagesSwiper = new Swiper('.vacancy-images-swiper__swiper', {
     modules: [Navigation],
@@ -47,5 +54,27 @@ $(() => {
       // clickable: true
     },
   });
+
+  $('.infoblock__more-link').click(function(e) {
+    $(this).closest('.infoblock').find('.infoblock__text').toggleClass('infoblock__text--truncated');
+
+    toggleMoreLink($(this));
+    e.preventDefault();
+  });
+
+  $('.btn-grey--bookmark').click(function(e) {
+    e.preventDefault();
+
+    $(this).toggleClass('btn-grey--bookmark-fill');
+  });
+
+  // $('.fancybox-popup__show-contacts-btn').click(function(e) {
+  //   console.log('mowmefmw');
+
+  //   let $fancyboxPopup = $(this).closest('.fancybox-popup');
+
+  //   $(this).slideUp();
+  //   $fancyboxPopup.find('.fancybox-popup__contact-box').slideDown();
+  // });
 
 });

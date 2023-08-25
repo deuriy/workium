@@ -119,6 +119,10 @@ $(() => {
     //   closeButton: '<button data-fancybox-close class="fancybox-close-button" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" id="Icons" viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 12 12A12.013 12.013 0 0 0 12 0Zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1-10 10Z" fill="currentColor"/><path d="M16.707 7.293a1 1 0 0 0-1.414 0L12 10.586 8.707 7.293a1 1 0 1 0-1.414 1.414L10.586 12l-3.293 3.293a1 1 0 1 0 1.414 1.414L12 13.414l3.293 3.293a1 1 0 0 0 1.414-1.414L13.414 12l3.293-3.293a1 1 0 0 0 0-1.414Z" fill="currentColor"/></svg></button>'
     // }
 	});
+
+  let showContactsTimer = null,
+      timeLeftTimer = null,
+      timeLeft = 7;
   
   Fancybox.bind(".fancybox-wide-popup-toggle", {
     dragToClose: false,
@@ -136,6 +140,28 @@ $(() => {
       done: (fancybox, slide) => {
         if (slide.src.includes('award-popup') && slide.src != '#leader-award-popup') {
           runConfetti();
+        } else if (slide.src.includes('employment-smart-work-popup')) {
+          // let $showContactsBtn = $(slide.contentEl).find('.fancybox-popup__show-contacts-btn');
+
+          showContactsTimer = setTimeout(() => {
+            let $showContactsBtn = $('#employment-smart-work-popup .fancybox-popup__show-contacts-btn');
+            $showContactsBtn.removeClass('btn-grey btn-grey--employment-popup').addClass('btn-default btn-default--employment-popup');
+
+            $showContactsBtn.text('Показати контакти');
+
+            $showContactsBtn.click(function(e) {
+              $(this).hide();
+              $('#employment-smart-work-popup').find('.fancybox-popup__contact-box').show();
+            });
+          }, 7000);
+
+          timeLeftTimer = setInterval(() => {
+            timeLeft--;
+
+            if (!timeLeft) clearInterval(timeLeftTimer);
+
+            $('#employment-smart-work-popup .fancybox-popup__show-contacts-btn .btn-grey__time-left').text(timeLeft);
+          }, 1000);
         }
       }
     }

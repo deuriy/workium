@@ -1,0 +1,72 @@
+.infoblock
+	display grid
+	// grid-template-columns 100px 1fr
+	grid-template-columns auto 1fr
+	align-items center
+	gap 32px
+	padding 32px
+	border 1px solid #dfe1ed
+	border-radius 10px
+	background var(--light)
+	
+	@media $xs
+		grid-template-columns 100%
+		justify-items center
+		gap 15px
+		padding 24px
+	
+	// &__img-wrapper
+	// 	display grid
+	// 	grid-template-columns 100%
+	// 	place-items center
+		// background #F0F1F4
+	
+	&__img
+		vertical-align middle
+		// max-width none
+	
+	// &__text-wrapper
+	// 	padding 27px 40px 20px
+		
+	// 	@media $xs
+	// 		padding 20px 25px
+	
+	&__title
+		// margin-bottom 18px
+		margin-bottom 13px
+		font-weight 600
+		font-size 20px
+		line-height 1.2
+		
+		@media $xs
+			margin-bottom 8px
+			font-size 16px
+			line-height 1.625
+	
+	&__text
+		color #595D72
+		font-size 14px
+		line-height 1.428571428571429
+		// line-height normal
+		
+		& > p
+			& + p
+				margin-top 8px
+				// margin-top 16px
+		
+		&--truncated
+			@media $xs
+				display -webkit-box
+				-webkit-line-clamp 4
+				-webkit-box-orient vertical
+				overflow hidden
+				text-overflow ellipsis
+				
+				& > p
+					display inline
+	
+	&__btn
+		margin-top 16px
+	
+	&__more-link
+		margin-top 9px
