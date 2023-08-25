@@ -1,6 +1,7 @@
 .tabs
 	&__menu-wrapper
-		display flex
+		display grid
+		grid-template-columns repeat(2, auto)
 		align-items center
 		justify-content center
 		gap 20px
@@ -10,7 +11,9 @@
 			margin-bottom 30px
 		
 		@media $xs
-			margin-bottom 25px
+			grid-template-columns 100%
+			gap 0
+			margin-bottom 18px
 	
 	&__dropdown-wrapper
 		position relative
