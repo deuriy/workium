@@ -1,3 +1,28 @@
-.tabs			
+.tabs
+	&__menu-wrapper
+		display flex
+		align-items center
+		justify-content center
+		gap 20px
+		margin-bottom 40px
+		
+		@media $smMinus
+			margin-bottom 30px
+		
+		@media $xs
+			margin-bottom 25px
+	
+	&__dropdown-wrapper
+		position relative
+		
+	&__dropdown-toggle
+		@media $xs
+			margin-top 6px
+	
+	&__dropdown-block
+		position absolute
+		top calc(100% + 5px)
+		left 0
+		
 	&__content
 		display none

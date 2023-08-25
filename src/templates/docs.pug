@@ -11,18 +11,26 @@ block content
         .page-header__text
           p #[span.semibold WORKIUM Документи] - це більше 100 видів документів та понад 1000 пропозицій від роботодавців Польщі, Чехії та інших країн світу.
     .tabs.docs-page__tabs
-      .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.tabs-menu--center-desktop.docs-page__tabs-menu
-        ul.tabs-menu__list.tabs__list
-          li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link Польща
-          li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link.tabs-menu__link--active Послуги
-          li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link Страхування
-          li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link Логістика
-          li.tabs-menu__item.tabs__item
-            a(href="#").tabs-menu__link Легалізація
+      .tabs__menu-wrapper
+        .tabs__dropdown-wrapper
+          a(href="#currency-dropdown-block" data-dropdown-block-trigger).dropdown-toggle.tabs__dropdown-toggle Польща
+          .dropdown-block.tabs__dropdown-block#currency-dropdown-block
+            .dropdown-menu
+              ul.dropdown-menu__list
+                li.dropdown-menu__item
+                  a(href="#").dropdown-menu__link Польща
+                li.dropdown-menu__item
+                  a(href="#").dropdown-menu__link Чехія
+        .tabs-menu.tabs-menu--has-count.tabs-menu--light-bg-mob.tabs-menu--center-desktop.docs-page__tabs-menu
+          ul.tabs-menu__list
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link.tabs-menu__link--active Послуги
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link Страхування
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link Логістика
+            li.tabs-menu__item.tabs__item
+              a(href="#").tabs-menu__link Легалізація
       .tabs__content
       .tabs__content(style="display: block")
         .services
@@ -58,7 +66,7 @@ block content
             h3.service-box__title Страхування (20+ типів)
             .service-box__description
               p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
-            .price.service-box__price 1000 UAH
+            .price.service-box__price 1500 UAH
             .hint.service-box__hint.hidden-xs
               .hint__text можливо частинами
               .tooltip.tooltip--extended.hint__tooltip
@@ -75,7 +83,7 @@ block content
                     p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
                     p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
                 button(type="button").tooltip__close-btn
-            a(href="#").btn-action.service-box__order-btn Замовити пакет документів
+            a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
             //- .service-box__footer
             //-   a(href="#").more-link.more-link--dark Детальніше
           .service-box.services__item
@@ -83,17 +91,57 @@ block content
             h3.service-box__title Логістичні послуги
             .service-box__description
               p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
-            a(href="#").btn-action.service-box__order-btn Замовити логістичні послуги
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
+            .price.service-box__price 1900 UAH
+            a(href="#tooltip-popup").fancybox-popup-toggle.hint.service-box__hint.hidden-smPlus
+              .hint__text можливо частинами
+            .hint.service-box__hint.hidden-xs
+              .hint__text можливо частинами
+              .tooltip.tooltip--extended.hint__tooltip
+                .tooltip__text-wrapper
+                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                button(type="button").tooltip__close-btn
+            .cashback.service-box__cashback
+              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum.hidden-xs 100 UAH] #[a(href="#cashback-tooltip-popup").fancybox-popup-toggle.cashback__sum.hidden-smPlus 100 UAH]
+              .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
+                .tooltip__text-wrapper
+                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                  .tooltip__text
+                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+                button(type="button").tooltip__close-btn
+            a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
+            //- a(href="#").btn-action.service-box__order-btn Замовити логістичні послуги
+            //- .service-box__footer
+            //-   a(href="#").more-link.more-link--dark Детальніше
           .service-box.services__item
             .service-box__country PL
             h3.service-box__title Легалізація в Польщі
             .service-box__description
               p Карти побиту та інші типи легалізації на території Польщі.#[br.hidden-1440-] Безкоштовна консультація та індивідуальний підхід до кожного.
-            a(href="#").btn-action.service-box__order-btn Замовити послуги із легалізації
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
+            .price.service-box__price 1000 UAH
+            a(href="#tooltip-popup").fancybox-popup-toggle.hint.service-box__hint.hidden-smPlus
+              .hint__text можливо частинами
+            .hint.service-box__hint.hidden-xs
+              .hint__text можливо частинами
+              .tooltip.tooltip--extended.hint__tooltip
+                .tooltip__text-wrapper
+                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                button(type="button").tooltip__close-btn
+            .cashback.service-box__cashback
+              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum.hidden-xs 100 UAH] #[a(href="#cashback-tooltip-popup").fancybox-popup-toggle.cashback__sum.hidden-smPlus 100 UAH]
+              .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
+                .tooltip__text-wrapper
+                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                  .tooltip__text
+                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+                button(type="button").tooltip__close-btn
+            a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
+            //- a(href="#").btn-action.service-box__order-btn Замовити послуги із легалізації
+            //- .service-box__footer
+            //-   a(href="#").more-link.more-link--dark Детальніше
       .tabs__content
         .services
           .service-box.services__item
