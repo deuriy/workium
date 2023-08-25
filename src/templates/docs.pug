@@ -32,7 +32,9 @@ block content
             .service-box__description
               p Легальне запрошення, заповнена анкета, акредитований #[br.hidden-1440-]страховий поліс та стартовий пакет мобільного оператора.
             .price.service-box__price 1000 UAH
-            .hint.service-box__hint
+            a(href="#tooltip-popup").fancybox-popup-toggle.hint.service-box__hint.hidden-smPlus
+              .hint__text можливо частинами
+            .hint.service-box__hint.hidden-xs
               .hint__text можливо частинами
               .tooltip.tooltip--extended.hint__tooltip
                 .tooltip__text-wrapper
@@ -40,7 +42,14 @@ block content
                   .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
                 button(type="button").tooltip__close-btn
             .cashback.service-box__cashback
-              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum 100 UAH]
+              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum.hidden-xs 100 UAH] #[a(href="#cashback-tooltip-popup").fancybox-popup-toggle.cashback__sum.hidden-smPlus 100 UAH]
+              .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
+                .tooltip__text-wrapper
+                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                  .tooltip__text
+                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+                button(type="button").tooltip__close-btn
             a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
             //- .service-box__footer
             //-   a(href="#").more-link.more-link--dark Детальніше
@@ -50,7 +59,7 @@ block content
             .service-box__description
               p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
             .price.service-box__price 1000 UAH
-            .hint.service-box__hint
+            .hint.service-box__hint.hidden-xs
               .hint__text можливо частинами
               .tooltip.tooltip--extended.hint__tooltip
                 .tooltip__text-wrapper
@@ -59,6 +68,13 @@ block content
                 button(type="button").tooltip__close-btn
             .cashback.service-box__cashback
               .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum 100 UAH]
+              .tooltip.tooltip--extended.cashback__tooltip
+                .tooltip__text-wrapper
+                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                  .tooltip__text
+                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+                button(type="button").tooltip__close-btn
             a(href="#").btn-action.service-box__order-btn Замовити пакет документів
             //- .service-box__footer
             //-   a(href="#").more-link.more-link--dark Детальніше
@@ -220,5 +236,22 @@ block content
     //-       a(href="#").btn-purple.btn-purple--viber Написати у Viber
     //-     li.contact-buttons__item
     //-       a(href="#").btn-lightblue.btn-lightblue--telegram Написати в Telegram
+
+  .fancybox-popup.fancybox-popup--tooltip-popup#tooltip-popup(style="display: none;")
+    .payment-label.fancybox-popup__label Оплата частинами
+    h3.fancybox-popup__title Замовляйте вигідно, навіть немаючи повної суми!
+    .fancybox-popup__text
+      p Перший платіж 1000 UAH. Решту 750 UAH – по виконанні. 0% комісій та переплат.
+    a(href="#order-service-popup").btn-action.btn-action--tooltip-popup.fancybox-popup__btn.fancybox-wide-popup-toggle Замовити пакет документів для відкриття візи (PL)
+
+  .fancybox-popup.fancybox-popup--tooltip-popup#cashback-tooltip-popup(style="display: none;")
+    .cashback.cashback--tooltip-popup.fancybox-popup__label
+      .cashback__text Повертаємо кешбек
+    h3.fancybox-popup__title Гарантовано повернемо кошти на ваш баланс!
+    .fancybox-popup__text
+      p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+      p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+    a(href="#order-service-popup").btn-action.btn-action--tooltip-popup.fancybox-popup__btn.fancybox-wide-popup-toggle Замовити пакет документів для відкриття візи (PL)
+
   include ./includes/blocks/order-service-popup
   script(src="/js/docs.js")

@@ -1,4 +1,5 @@
 .cashback
+	position relative
 	display inline-grid
 	grid-template-columns auto 1fr
 	align-items center
@@ -7,6 +8,8 @@
 	font-weight 600
 	font-size 14px
 	line-height 1.428571428571429
+	text-decoration none
+	overflow hidden
 	
 	&::before
 		content ""
@@ -16,3 +19,27 @@
 	
 	&__sum
 		border-bottom 1px dashed #70AD22
+		cursor pointer
+		text-decoration none
+		color #70AD22
+		@extend .transition
+		
+		&:hover
+			border-bottom-color transparent
+	
+	&__tooltip
+		position absolute
+		top 50%
+		transform translateY(-50%)
+		left 100%
+		
+		&.tooltip--visible
+			left calc(100% + 14px)
+	
+	&--tooltip-visible
+		overflow visible
+	
+	&--tooltip-popup
+		gap 8px
+		font-size 16px
+		line-height 1.5

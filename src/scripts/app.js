@@ -499,24 +499,79 @@ $(() => {
     }
   });
 
+  // $('.hint').click(function(e) {
+  //   e.preventDefault();
+  // });
+
   $('.hint__text').click(function(e) {
     let $hint = $(this).closest('.hint');
+    let $tooltip = $hint.find('.hint__tooltip');
+    let $visibleTooltip = $('.tooltip--visible');
 
-    $hint.find('.hint__tooltip').toggleClass('tooltip--visible');
+    if ($visibleTooltip[0] != $tooltip[0]) {
+      $visibleTooltip.find('.tooltip__close-btn').click();
+    }
+
+    $hint.toggleClass('hint--tooltip-visible');
+    $tooltip.toggleClass('tooltip--visible');
   });
+
+  // $('.hint__text').click(function(e) {
+  //   let $hint = $(this).closest('.hint');
+  //   let $tooltip = $hint.find('.hint__tooltip');
+  //   // let tooltipCoords = $tooltip[0].getBoundingClientRect();
+
+  //   $hint.toggleClass('hint--tooltip-visible');
+
+  //   // console.log($(window).width());
+  //   // console.log(tooltipCoords);
+
+  //   // console.log($(window).width() < tooltipCoords.right);
+
+  //   // if ($(window).width() < tooltipCoords.right) {
+  //   //   console.log('Bottom');
+  //   //   $tooltip.addClass('hint__tooltip--bottom');
+  //   // } else {
+  //   //   console.log('Right');
+  //   //   $tooltip.addClass('hint__tooltip--right');
+  //   // }
+
+  //   $tooltip.toggleClass('tooltip--visible');
+  //   // console.log
+  // });
 
   $('.tooltip__close-btn').click(function(e) {
     e.preventDefault();
 
-    $(this).closest('.tooltip').removeClass('tooltip--visible');
+    let $tooltip = $(this).closest('.tooltip');
+
+    $tooltip.removeClass('tooltip--visible');
+    $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
+    $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
   });
 
   $(document).click(function(e) {
     let $isTooltip = $(e.target).closest('.tooltip--visible');
-    let $tooltipTrigger = $(e.target).closest('.hint');
+    let $hintTooltipTrigger = $(e.target).closest('.hint');
+    let $cashbackTooltipTrigger = $(e.target).closest('.cashback');
 
-    if (!$isTooltip.length && !$tooltipTrigger.length) {
+    if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
       $('.tooltip--visible').removeClass('tooltip--visible');
+      $('.tooltip').closest('.hint').removeClass('hint--tooltip-visible');
+      $('.tooltip').closest('.cashback').removeClass('cashback--tooltip-visible');
     }
+  });
+
+  $('.cashback__sum').click(function(e) {
+    let $cashback = $(this).closest('.cashback');
+    let $tooltip = $cashback.find('.cashback__tooltip');
+    let $visibleTooltip = $('.tooltip--visible');
+
+    if ($visibleTooltip[0] != $tooltip[0]) {
+      $visibleTooltip.find('.tooltip__close-btn').click();
+    }
+
+    $cashback.toggleClass('cashback--tooltip-visible');
+    $tooltip.toggleClass('tooltip--visible');
   });
 });

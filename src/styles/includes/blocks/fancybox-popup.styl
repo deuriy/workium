@@ -9,6 +9,9 @@
 		width 460px
 		max-width 100%
 		border-radius 24px
+	
+	&__label
+		margin-bottom 20px
 		
 	&__title
 		margin-bottom 16px
@@ -79,6 +82,9 @@
 	
 	&__action-btns
 		margin-top 25px
+	
+	&__btn
+		width 100%
 	
 	&--wide
 		text-align center
@@ -274,3 +280,28 @@
 			
 			@media $xs
 				margin-bottom 15px
+	
+	&--tooltip-popup
+		padding 24px 32px
+		border-top-right-radius 16px
+		border-top-left-radius 16px
+		
+		&.fancybox-popup.fancybox__content
+			button.f-button.is-close-btn
+				top 16px
+		
+		.fancybox-popup__title
+			margin-bottom 18px
+			padding-right 0
+			font-weight 600
+			font-size 20px
+			line-height 1.4
+		
+		.fancybox-popup__text
+			margin-bottom 26px
+			color #666B80
+			font-size 16px
+			line-height 1.5
+			
+			& > p + p
+				margin-top 16px
