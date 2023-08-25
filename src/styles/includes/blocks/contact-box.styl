@@ -83,7 +83,8 @@
 		padding-top 40px
 	
 	&--affiliate-support,
-	&--order-service
+	&--order-service,
+	&--book-vacancy
 		display grid
 		grid-template-columns repeat(2, 1fr)
 		max-width 100%
@@ -110,7 +111,8 @@
 		.contact-box__phones
 			margin-bottom 0
 	
-	&--order-service
+	&--order-service,
+	&--book-vacancy
 		justify-items center
 		
 		@media $xs
@@ -131,3 +133,18 @@
 			
 			@media $xs
 				margin-right auto
+	
+	&--book-vacancy
+		@media $xs
+			.contact-box__buttons-wrapper
+				display grid
+				grid-template-columns 100%
+				order -1
+				margin-top 0
+			
+			.contact-box__buttons
+				order -1
+			
+			.contact-box__call-btn
+				margin-top 12px
+				margin-bottom 0

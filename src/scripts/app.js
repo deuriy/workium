@@ -426,12 +426,14 @@ $(() => {
     }
   });
 
-  $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item').click(function(e) {
+  $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item').click(function(e) {
     let $phone = $(this).find('.phone');
     $phone.after(`<input type="text" class="contact-phones__phone-form-text" value="${$phone.text().replaceAll(' ', '')}" />`);
 
     let $tooltip = $(this).find('.contact-phones__tooltip');
     let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
+
+    console.log($tooltip);
 
     copyText($contactPhoneFormText[0]);
     $contactPhoneFormText.remove();
@@ -556,7 +558,7 @@ $(() => {
     let $cashbackTooltipTrigger = $(e.target).closest('.cashback');
 
     if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
-      $('.tooltip--visible').removeClass('tooltip--visible');
+      $isTooltip.removeClass('tooltip--visible');
       $('.tooltip').closest('.hint').removeClass('hint--tooltip-visible');
       $('.tooltip').closest('.cashback').removeClass('cashback--tooltip-visible');
     }
