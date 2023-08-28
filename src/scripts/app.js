@@ -603,10 +603,20 @@ $(() => {
     $tooltip.toggleClass('tooltip--visible');
   });
 
+  // Article chapters
   $('.article-chapters__title').click(function(e) {
     let $articleChapters = $(this).closest('.article-chapters');
 
     $articleChapters.toggleClass('article-chapters--collapsed');
     $articleChapters.find('.article-chapters__list').slideToggle();
+  });
+
+  $('.article-chapters__link[href*="#"]').click(function() {
+    let elementClick = $(this).attr("href");
+    let $heading = elementClick.substr(elementClick.indexOf("#"));
+    let destination = $($heading).offset().top;
+
+    $('html, body').animate( { scrollTop: destination - $('.mobile-header').outerHeight() }, 500 );
+    // return false;
   });
 });
