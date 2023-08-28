@@ -602,4 +602,11 @@ $(() => {
     $cashback.toggleClass('cashback--tooltip-visible');
     $tooltip.toggleClass('tooltip--visible');
   });
+
+  $('.article-chapters__title').click(function(e) {
+    let $articleChapters = $(this).closest('.article-chapters');
+
+    $articleChapters.toggleClass('article-chapters--collapsed');
+    $articleChapters.find('.article-chapters__list').slideToggle();
+  });
 });
