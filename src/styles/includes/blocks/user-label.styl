@@ -19,6 +19,9 @@
 	&__number
 		// font-size 16px
 		font-size 22px
+		
+		@media $425-
+			font-size 19px
 	
 	&--mobile
 		// gap 6px
@@ -29,6 +32,11 @@
 		// font-size 12px
 		// font-size 16.6px
 		font-size 16px
+		
+		@media $425-
+			gap 8px
+			padding 8px 14px
+			font-size 14px
 	
 	&--influence,
 	&--awards,
@@ -50,6 +58,10 @@
 	&--awards
 		gap 10px
 		padding 10px 9px 10px 22px
+		
+		@media $425-
+			gap 7px
+			padding 7px 7px 10px 15px
 	
 	&--affiliate
 		&::before
@@ -69,6 +81,12 @@
 		padding-bottom 8px
 		// font-size 10px
 		font-size 15px
+		
+		@media $425-
+			gap 6px
+			padding-top 3px
+			padding-bottom 6px
+			font-size 13px
 	
 	&--copy-partner-link
 		padding-left 15px

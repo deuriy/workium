@@ -505,7 +505,7 @@ $(() => {
     startAngle: -1.55,
     value: 0.06,
     thickness: 2,
-    size: 110,
+    size: $(window).width() < 426 ? 90 : 110,
     fill: {
       gradient: ["#ffc10d", "#ef881d"]
     },

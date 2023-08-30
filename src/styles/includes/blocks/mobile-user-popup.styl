@@ -7,11 +7,17 @@
 		grid-template-columns 100%
 		margin 0 18px 6px
 		
+		@media $425-
+			margin-bottom 15px
+		
 		&--menu
 			margin-bottom 38px
 		
 		&--submenu
 			margin 0 10px 52px
+			
+			@media $425-
+				margin-bottom 25px
 		
 		&--support
 			grid-template-columns repeat(2, auto)
@@ -58,6 +64,10 @@
 		font-size 24px
 		line-height normal
 		
+		@media $425-
+			margin-left 0
+			font-size 20px
+		
 		&--online
 			display grid
 			grid-template-columns auto auto
@@ -78,6 +88,11 @@
 		margin-left 7px
 		color #797D87
 		font-size 15px
+		
+		@media $425-
+			margin-bottom 24px
+			margin-left 0
+			font-size 13px
 	
 	&__user-labels
 		margin-bottom 32px
@@ -88,6 +103,9 @@
 	&__user-submenu
 		// margin 0 37px 50px
 		margin 0 37px 32px
+		
+		@media $425-
+			margin 0 20px 30px
 	
 	&__contact-box
 		// margin-bottom 57px
