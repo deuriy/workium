@@ -5,6 +5,9 @@
 	padding 52px 0 53px
 	text-align center
 	
+	@media $xxs
+		padding 20px 0
+	
 	&__icon-wrapper
 		display grid
 		place-content center
@@ -13,9 +16,17 @@
 		margin-bottom 28px
 		border-radius 50%
 		background #222D42
+		
+		@media $xxs
+			width 120px
+			height 120px
+			margin-bottom 20px
 	
 	&__icon
 		width 62px
+		
+		@media $xxs
+			width 42px
 	
 	&__avatar
 		// display grid
@@ -33,6 +44,10 @@
 		margin-bottom 29px
 		font-weight 600
 		font-size 24px
+		
+		@media $xxs
+			margin-bottom 16px
+			font-size 20px
 	
 	&__text
 		padding 0 10px
@@ -41,8 +56,14 @@
 		font-size 16.5px
 		line-height 1.5
 		
+		@media $xxs
+			font-size 14px
+		
 		& > p + p
 			margin-top 22px
+			
+			@media $xxs
+				margin-top 18px
 	
 	&--user-profile
 		padding-top 56px
