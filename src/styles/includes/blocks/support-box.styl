@@ -1,0 +1,42 @@
+.support-box
+	&__icon-wrapper
+		width 48px
+		height 48px
+		padding 1px
+		margin 0 auto 15px
+		border-radius 108px
+		border 1px solid var(--black, #0F182A)
+		background radial-gradient(96.88% 96.88% at 79.10% 9.26%, #86F219 0%, #278016 100%)
+		box-shadow 0 0 40px 0 rgba(51, 179, 36, 0.50)
+	
+	&__title
+		margin-bottom 32px
+		font-weight 500
+		font-size 24px
+		line-height normal
+		text-align center
+	
+	&__btns,
+	&__phones
+		list-style none
+	
+	&__btns-item
+		display grid
+		grid-template-columns 100%
+		
+		& + .support-box__btns-item
+			margin-top 16px
+	
+	&__btns
+		margin-bottom 32px
+	
+	&__phones
+		display grid
+		grid-template-columns repeat(2, 1fr)
+		gap 8px 18px
+	
+	&__phone
+		color #989DB2
+		font-size 16px
+		line-height normal
+		text-decoration none

@@ -3,35 +3,54 @@
 		.mobile-user-popup__header.mobile-user-popup__header--support
 			img(src="/img/head_phones_service_icon.svg" alt="").mobile-user-popup__icon
 			h3.mobile-user-popup__title.mobile-user-popup__title--support Підтримка онлайн
-		.contact-box.contact-box--support-popup.mobile-user-popup__contact-box
-			h3.contact-box__title З радістю відповімо на ваші запитання!
-			.contact-box__text Працюємо 24/7 та без вихідних!
-			.contact-phones.contact-phones--mobile-support.contact-box__phones
-				ul.contact-phones__list
-					li.contact-phones__item.contact-phones__item--right
-						a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +48 226 02 00 90
-						button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
-						.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-					li.contact-phones__item
-						a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +38 096 787 00 90
-						button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
-						.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-					li.contact-phones__item
-						a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +38 073 787 00 90
-						button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
-						.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-					li.contact-phones__item
-						a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +38 095 787 00 90
-						button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
-						.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
-			.contact-box__call-btn-wrapper
-				a(href="#").call-btn.call-btn--dark-bg.call-btn--mobile-support.contact-box__call-btn Зателефонувати вам?
-			.contact-buttons.contact-buttons--mobile-support.contact-box__buttons
-				ul.contact-buttons__list
-					li.contact-buttons__item
-						a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-support-popup Написати у #[span.btn-purple__messenger Viber]
-					li.contact-buttons__item
-						a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-support-popup Написати в #[span.btn-lightblue__messenger Telegram]
+		.support-box.mobile-user-popup__support-box
+			.support-box__icon-wrapper
+				img(src="/img/clock.svg" alt="").support-box__icon
+			h3.support-box__title Працюємо 24/7 та без вихідних
+			ul.support-box__btns
+				li.support-box__btns-item
+					a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-support-box Написати в Telegram
+				li.support-box__btns-item
+					a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-support-box Написати у Viber
+			ul.support-box__phones
+				li.support-box__phones-item
+					a(href="tel:+48226020090").support-box__phone +48 226 02 00 90
+				li.support-box__phones-item
+					a(href="tel:+380737870090").support-box__phone +38 073 787 00 90
+				li.support-box__phones-item
+					a(href="tel:+380967870090").support-box__phone +38 096 787 00 90
+				li.support-box__phones-item
+					a(href="tel:+380957870090").support-box__phone +38 095 787 00 90
+		//- .contact-box.contact-box--support-popup.mobile-user-popup__contact-box
+		//- 	h3.contact-box__title З радістю відповімо на ваші запитання!
+		//- 	.contact-box__text Працюємо 24/7 та без вихідних!
+		//- 	.contact-phones.contact-phones--mobile-support.contact-box__phones
+		//- 		ul.contact-phones__list
+		//- 			li.contact-phones__item.contact-phones__item--right
+		//- 				a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +48 226 02 00 90
+		//- 				button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
+		//- 				.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+		//- 			li.contact-phones__item
+		//- 				a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +38 096 787 00 90
+		//- 				button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
+		//- 				.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+		//- 			li.contact-phones__item
+		//- 				a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +38 073 787 00 90
+		//- 				button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
+		//- 				.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+		//- 			li.contact-phones__item
+		//- 				a(href="#").phone.phone--white.phone--with-icon.phone--mobile-support +38 095 787 00 90
+		//- 				button(type="button").copy-btn.copy-btn--small.copy-btn--white.contact-phones__copy-btn
+		//- 				.tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
+		//- 	.contact-box__call-btn-wrapper
+		//- 		a(href="#").call-btn.call-btn--dark-bg.call-btn--mobile-support.contact-box__call-btn Зателефонувати вам?
+		//- 	.contact-buttons.contact-buttons--mobile-support.contact-box__buttons
+		//- 		ul.contact-buttons__list
+		//- 			li.contact-buttons__item
+		//- 				a(href="#").btn-purple.btn-purple--viber.btn-purple--viber-support-popup Написати у #[span.btn-purple__messenger Viber]
+		//- 			li.contact-buttons__item
+		//- 				a(href="#").btn-lightblue.btn-lightblue--telegram.btn-lightblue--telegram-support-popup Написати в #[span.btn-lightblue__messenger Telegram]
+
 		.mobile-user-popup__buttons
 			button(type="button" data-src="#profile-menu-popup").user-profile-popup-link.user-label.user-label--back-btn.mobile-user-popup__back-btn Повернутись
 			//- button(type="button" data-fancybox-close).user-label.user-label--btn.mobile-user-popup__btn Закрити вікно
