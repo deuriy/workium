@@ -93,7 +93,14 @@ $(() => {
 	$('.user-menu__link').each(function(index, link) {
 		let linkHref = $(link).attr('href');
 
-		if (window.location.pathname == linkHref) {
+		console.log(window.location.pathname, linkHref);
+		console.log(linkHref.includes(window.location.pathname));
+
+		// if (window.location.pathname == linkHref) {
+		// 	$(link).addClass('user-menu__link--active');
+		// }
+		
+		if (linkHref.includes(window.location.pathname)) {
 			$(link).addClass('user-menu__link--active');
 		}
 	});
