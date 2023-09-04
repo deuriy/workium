@@ -475,7 +475,7 @@ $(() => {
   $('.fb-group__copy-btn').click(function(e) {
     let $groupLink = $(this).prev('.fb-group__link');
     // console.log($groupLink);
-    
+
     $groupLink.after(`<input type="text" class="fb-group__url" value="${$groupLink.attr('href')}" />`);
 
     let $tooltip = $(this).next('.fb-group__tooltip');
@@ -612,12 +612,31 @@ $(() => {
     $articleChapters.find('.article-chapters__list').slideToggle();
   });
 
-  $('.article-chapters__link[href*="#"]').click(function() {
+  $('.article-chapters__link[href*="#"]').click(function(e) {
     let elementClick = $(this).attr("href");
     let $heading = elementClick.substr(elementClick.indexOf("#"));
     let destination = $($heading).offset().top;
+    let scrollTop = destination - $('.mobile-header').outerHeight();
 
-    $('html, body').animate( { scrollTop: destination - $('.mobile-header').outerHeight() }, 500 );
+    // document.documentElement.scrollTop = 300;
+
+    // window.scrollTo(0, scrollTop) // first value for left offset, second value for top offset
+
+    // console.log(scrollTop);
+
+    // if (navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {
+    //   window.scrollTo(0, scrollTop) // first value for left offset, second value for top offset
+    // }
+    // else {
+    $('.wrapper').animate( {
+      scrollTop: scrollTop
+    }, 500, () => {
+      // $('html, body').clearQueue();
+    } );
+    // }
+
     // return false;
+
+    // e.preventDefault();
   });
 });
