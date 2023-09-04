@@ -21,6 +21,7 @@ $(() => {
 
     breakpoints: {
       768: {
+        slidesPerView: 3,
         spaceBetween: 16,
         centeredSlides: false
       },
