@@ -617,26 +617,18 @@ $(() => {
     let $heading = elementClick.substr(elementClick.indexOf("#"));
     let destination = $($heading).offset().top;
     let scrollTop = destination - $('.mobile-header').outerHeight();
+    // let scrollTop = destination;
 
-    // document.documentElement.scrollTop = 300;
+    let $container = $(window).width() < 768 ? $('.wrapper') : $('html, body');
 
-    // window.scrollTo(0, scrollTop) // first value for left offset, second value for top offset
+    console.log(destination, scrollTop);
 
-    // console.log(scrollTop);
+    // window.scrollTo(0, scrollTop);
 
-    // if (navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)) {
-    //   window.scrollTo(0, scrollTop) // first value for left offset, second value for top offset
-    // }
-    // else {
-    $('.wrapper').animate( {
+    $container.animate( {
       scrollTop: scrollTop
-    }, 500, () => {
-      // $('html, body').clearQueue();
-    } );
-    // }
+    }, 500 );
 
-    // return false;
-
-    // e.preventDefault();
+    return false;
   });
 });
