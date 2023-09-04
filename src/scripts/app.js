@@ -210,7 +210,7 @@ $(() => {
 
   // // Article menu
   $(window).on('scroll', function(e) {
-    console.log('Scroll!');
+    // console.log('Scroll!');
 
     // console.log($articleHeadings[0].getBoundingClientRect());
     $articleHeadings.each(function(index, el) {
@@ -474,7 +474,8 @@ $(() => {
 
   $('.fb-group__copy-btn').click(function(e) {
     let $groupLink = $(this).prev('.fb-group__link');
-    console.log($groupLink);
+    // console.log($groupLink);
+    
     $groupLink.after(`<input type="text" class="fb-group__url" value="${$groupLink.attr('href')}" />`);
 
     let $tooltip = $(this).next('.fb-group__tooltip');
