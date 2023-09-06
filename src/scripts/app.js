@@ -617,13 +617,7 @@ $(() => {
     let $heading = elementClick.substr(elementClick.indexOf("#"));
     let destination = $($heading).offset().top;
     let scrollTop = destination - $('.mobile-header').outerHeight();
-    // let scrollTop = destination;
-
     let $container = $(window).width() < 768 ? $('.wrapper') : $('html, body');
-
-    console.log(destination, scrollTop);
-
-    // window.scrollTo(0, scrollTop);
 
     $container.animate( {
       scrollTop: scrollTop
