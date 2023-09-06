@@ -10,6 +10,7 @@ function isFilterFilled() {
   let $select2Selections = $('.filter .select2-selection.filter-select');
   let $citiesSelectToggle = $('.filter__cities-select-toggle');
 
+  console.log($textFields);
   console.log($select2Selections);
 
   for (const input of $textFields) {
@@ -349,7 +350,7 @@ $(() => {
     // }
   // });
 
-  $('.filter .form-text').on('input', function(e) {
+  $('.filter .form-text:not([type="search"])').on('input', function(e) {
     checkFilterFill();
   });
 
@@ -373,13 +374,13 @@ $(() => {
     });
   });
 
-  // Adding selected items on search by filter
-  $('input[name="search_filter"]').on('input', function(event) {
-    let searchValue = $(this).val().toLowerCase().trim();
-    let $clearBtn = $('.additional-filters__clear-btn');
+  // Show/hide clear button on search by filter
+  // $('input[name="search_filter"]').on('input', function(event) {
+  //   let searchValue = $(this).val().toLowerCase().trim();
+  //   let $clearBtn = $('.additional-filters__clear-btn');
 
-    searchValue ? $clearBtn.show() : $clearBtn.hide();
-  });
+  //   searchValue ? $clearBtn.show() : $clearBtn.hide();
+  // });
 
   // Removing selected items
   $(document).on('click', '.additional-filters .selected-item__remove-link', function(event) {
