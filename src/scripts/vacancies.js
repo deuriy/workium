@@ -142,6 +142,8 @@ $(() => {
       // console.log($(e.target).parents('.multi-wrapper'));
       // console.log($selectedCities);
     // });
+
+    console.log('item click!!');
     
 
     if ($('.dropdown-block--cities-select .selected-wrapper .selected').length) {

@@ -33,9 +33,11 @@ form(action="").filter.vacancies__filter
       //-   option(value="city_3") Місто 3
       //-   option(value="city_4") Місто 4
     .filter__item.hidden-xxs
-      input(type="number" name="salary" placeholder="Зарплата від").form-text.form-text--filter
+      input(type="number" name="salary" placeholder="Зарплата").form-text.form-text--filter
     .filter__item.hidden-xxs
-      input(type="number" name="remuneration" placeholder="Винагорода від").form-text.form-text--filter
+      input(type="number" name="remuneration" placeholder="Винагорода").form-text.form-text--filter
+    .filter__item.hidden-xxs
+      input(type="number" name="term" placeholder="Термін").form-text.form-text--filter
     .filter__item.hidden-xxs
       //- select(name="currency").form-select.form-select--filter#currency
       //-   option(value="pln") PLN
@@ -52,10 +54,10 @@ form(action="").filter.vacancies__filter
   .filter__bottom
     button(type="button" data-fancybox data-src="#additional-filters-popup").btn-white.btn-white--filter.hidden-xxsPlus.additional-filters-popup-link Фільтри
     .filter__tags-selects
-      select(name="experience").filter-select.filter-select--mob-large.filter-select--tags.filter__experience-select
-        option(value="" data-placeholder="Досвід") Всі варіанти
-        option(value="none") Без досвіду
-        option(value="specialist") Спеціаліст
+      //- select(name="experience").filter-select.filter-select--mob-large.filter-select--tags.filter__experience-select
+      //-   option(value="" data-placeholder="Досвід") Всі варіанти
+      //-   option(value="none") Без досвіду
+      //-   option(value="specialist") Спеціаліст
       select(name="experience").filter-select.filter-select--tags.filter__experience-select
         option(value="" data-placeholder="Досвід") Всі варіанти
         option(value="none") Без досвіду
