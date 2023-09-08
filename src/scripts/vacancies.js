@@ -38,6 +38,36 @@ function checkFilterFill() {
   isFilterFilled() ? $clearBtn.show() : $clearBtn.hide();
 }
 
+function changeFiltersBodyMaxHeight (selectedItemsLength) {
+  // console.log(selectedItemsLength);
+
+  let $additionalFiltersHeaderBottom = $('.additional-filters__header-bottom');
+  let $additionalFiltersBody = $('.additional-filters__body');
+
+  if (selectedItemsLength) {
+    // $additionalFiltersBody.css('max-height', `calc(100vh - (${270 + $additionalFiltersHeaderBottom.height()}px)`);
+    $additionalFiltersBody.css('max-height', `calc(${473 - $additionalFiltersHeaderBottom.height()}px)`);
+  } else {
+    $additionalFiltersBody.css('max-height', '');
+  }
+
+  console.log($additionalFiltersHeaderBottom);
+}
+
+function setVisibilitySelectedMoreItem (selectedItemsLength) {
+  let $additionalFiltersSelectedItems = $('.additional-filters__selected-items');
+  let $additionalFiltersSelectedMoreItem = $additionalFiltersSelectedItems.find('.selected-items__more-item');
+  let moreItemsCount = selectedItemsLength - 11;
+
+  if (selectedItemsLength > 11) {
+    $additionalFiltersSelectedMoreItem.removeClass('hidden');
+  } else {
+    $additionalFiltersSelectedMoreItem.addClass('hidden');
+  }
+
+  $additionalFiltersSelectedMoreItem.find('.more-btn__count').text(`+${moreItemsCount}`);
+}
+
 $(() => {
   select2($);
 
@@ -408,8 +438,11 @@ $(() => {
     }
 
     $selectedItemParent.remove();
-    $additionalFilters.find('.selected-items__item').length ? $clearBtn.show() : $clearBtn.hide();
 
+    let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+    selectedItemsLength ? $clearBtn.show() : $clearBtn.hide();
+
+    setVisibilitySelectedMoreItem(selectedItemsLength);
     event.preventDefault();
   });
 
@@ -420,6 +453,8 @@ $(() => {
     let $selectedItemsList = $('.selected-items__list');
     let $selectedItem = $(`.selected-items__item[data-name="${$(this).attr('name')}"][data-value="${$(this).val()}"]`);
     let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+
+    // console.log('Check!!');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
@@ -449,7 +484,11 @@ $(() => {
       }
     }
 
-    $additionalFilters.find('.selected-items__item').length ? $clearBtn.show() : $clearBtn.hide();
+    let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+    selectedItemsLength ? $clearBtn.show() : $clearBtn.hide();
+
+    setVisibilitySelectedMoreItem(selectedItemsLength);
+    changeFiltersBodyMaxHeight(selectedItemsLength);
   });
 
   // Clear additional filters
@@ -467,6 +506,9 @@ $(() => {
 
     $(this).hide();
     $additionalFiltersGroups.show();
+
+    setVisibilitySelectedMoreItem(0);
+    changeFiltersBodyMaxHeight(0);
   });
 
   $('.additional-filters__clear-filter-btn').click(function(event) {
@@ -494,5 +536,19 @@ $(() => {
     $('.additional-filters__cities-dropdown-block .multi-wrapper').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
     $citiesSelectToggle.html(citiesSelectToggleText);
     $citiesSelectToggle.removeClass('select-toggle--selected');
+  });
+
+  $('.selected-items__more-btn').click(function(event) {
+    let $selectedItems = $(this).closest('.selected-items');
+
+    $(this).toggleClass('more-btn--active');
+
+    if ($(this).hasClass('more-btn--active')) {
+      $(this).find('.more-btn__text').text('Приховати');
+    } else {
+      $(this).find('.more-btn__text').text('Ще');
+    }
+
+    $selectedItems.toggleClass('selected-items--expanded');
   });
 });

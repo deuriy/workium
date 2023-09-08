@@ -1,20 +1,45 @@
 .selected-items
 	&__list
 		list-style none
-		display grid
+		
+		display flex
+		flex-wrap wrap
+		
+		// display grid
+		// grid-template-columns repeat(auto-fill, minmax(130px, 1fr))
+		
 		// grid-template-columns repeat(6, 1fr)
 		// grid-template-columns repeat(auto-fit, minmax(130px, 1fr))
-		grid-template-columns repeat(auto-fill, minmax(130px, 1fr))
 		// grid-template-columns repeat(6, 143px)
 		// display flex
 		// flex-wrap wrap
 		// gap 5px
+		
 		gap 9px 5px
 	
+	&__item
+		width 143px
+		
+		&:nth-child(n+13)
+			display none
+	
+	&__more-item
+		position relative
+		right 3px
+		order 200
+		margin-left auto
+	
 	.selected-item
-		width 100%
+		display grid
+		// width 100%
 	
 	&--filter
 		.selected-items__list
 			// gap 5px
 			gap 4px 3px
+		
+		// .selected-items__item
+	
+	&--expanded
+		.selected-items__item:nth-child(n+13)
+			display block
