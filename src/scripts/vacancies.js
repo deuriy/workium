@@ -5,7 +5,7 @@ import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 import multi from "multi.js/dist/multi-es6.min.js";
 
-function isFilterFilled() {
+function isFilterChanged() {
   let $textFields = $('.filter .form-text');
   let $select2Selections = $('.filter .select2-selection.filter-select');
   let $citiesSelectToggle = $('.filter__cities-select-toggle');
@@ -35,7 +35,7 @@ function isFilterFilled() {
 function checkFilterFill() {
   let $clearBtn = $('.filter__clear-btn');
 
-  isFilterFilled() ? $clearBtn.show() : $clearBtn.hide();
+  isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
 }
 
 function changeFiltersBodyMaxHeight (selectedItemsLength) {
@@ -93,7 +93,7 @@ $(() => {
 
     $(el).on('change', function (e) {
       if ($(this).select2('val') !== '') {
-        if (!(($(this).attr('name') === 'countries' || $(this).attr('name') === 'filter_countries') && $(this).val() === 'poland') && !($(this).attr('name') === 'currency' && $(this).val() === 'pln')) {
+        if ($(this).attr('name') !== 'countries' && $(this).attr('name') !== 'filter_countries' && $(this).attr('name') !== 'currency') {
           $select2Selection.addClass('select2-selection--selected');
         } else {
           $select2Selection.removeClass('select2-selection--selected');
