@@ -155,6 +155,16 @@ $(() => {
 
   let selectedCitiesIdx = [];
 
+  function removeItemFromArray (array, value) {
+    let index = array.indexOf(value);
+
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+
+    return array;
+  }
+
   $(document).on('click', 'a.item', function(e) {
     // setTimeout(() => {
       // let $multiWrapperBody = $(this).closest('.multi-wrapper__body');
@@ -176,28 +186,7 @@ $(() => {
       // console.log($selectedCities);
     // });
 
-    console.log('item click!!');
-    console.log(e.target);
-
-    let value = e.target.dataset.value;
-    selectedCitiesIdx.push(value);
-
-    // console.log(selectedCitiesIdx);
-
-    // console.log($(this).closest('.multi-wrapper'));
-
     let selectedItemsWrapper = document.querySelector('.dropdown-block--cities-select.dropdown-block--visible .selected-wrapper');
-    // let selectedItems = Array.from($selectedItemsWrapper.find('.item.selected'));
-    // let $currentSelectedItem = Array.from($selectedItemsWrapper.find(`.item.selected[data-value="${value}"]`));
-
-    // $selectedItemsWrapper.append($currentSelectedItem);
-
-    // selectedItems.reverse();
-    // $selectedItemsWrapper.append()
-
-    // console.log(selectedItems);
-    // $selectedItemsWrapper.append(selectedItems);
-
 
     if ($('.dropdown-block--cities-select .selected-wrapper .selected').length) {
       $('.multi-wrapper').removeClass('multi-wrapper--default multi-wrapper--empty');
@@ -206,12 +195,21 @@ $(() => {
     }
 
     // Change selected items order
-    setTimeout(() => {
-      selectedCitiesIdx.forEach(id => {
-        let item = selectedItemsWrapper.querySelector(`.item.selected[data-value="${id}"]`);
-        selectedItemsWrapper.append(item);
+    let elem = e.target;
+
+    if (elem.classList.contains('selected')) {
+      selectedCitiesIdx = removeItemFromArray(selectedCitiesIdx, elem.dataset.value);
+      
+    } else {
+      selectedCitiesIdx.push(elem.dataset.value);
+
+      setTimeout(() => {
+        selectedCitiesIdx.forEach(id => {
+          let item = selectedItemsWrapper.querySelector(`.item.selected[data-value="${id}"]`);
+          selectedItemsWrapper.append(item);
+        });
       });
-    });
+    }
 
     setTimeout(() => {
       $('.dropdown-block--cities-select').addClass('dropdown-block--visible');
@@ -225,6 +223,8 @@ $(() => {
     $('.dropdown-block--cities-select .selected-wrapper .item').remove();
     $('.dropdown-block--cities-select .non-selected-wrapper .item.selected').removeClass('selected');
     $('.multi-wrapper').addClass('multi-wrapper--empty');
+
+    selectedCitiesIdx = [];
 
     e.preventDefault();
   });
