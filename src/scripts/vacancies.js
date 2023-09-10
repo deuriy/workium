@@ -153,6 +153,8 @@ $(() => {
     $(el).find('.multi-wrapper__body').append('<div class="multi-wrapper__no-results">У вас ще немає обраних міст...</div>');
   });
 
+  let selectedCitiesIdx = [];
+
   $(document).on('click', 'a.item', function(e) {
     // setTimeout(() => {
       // let $multiWrapperBody = $(this).closest('.multi-wrapper__body');
@@ -175,13 +177,41 @@ $(() => {
     // });
 
     console.log('item click!!');
-    
+    console.log(e.target);
+
+    let value = e.target.dataset.value;
+    selectedCitiesIdx.push(value);
+
+    // console.log(selectedCitiesIdx);
+
+    // console.log($(this).closest('.multi-wrapper'));
+
+    let selectedItemsWrapper = document.querySelector('.dropdown-block--cities-select.dropdown-block--visible .selected-wrapper');
+    // let selectedItems = Array.from($selectedItemsWrapper.find('.item.selected'));
+    // let $currentSelectedItem = Array.from($selectedItemsWrapper.find(`.item.selected[data-value="${value}"]`));
+
+    // $selectedItemsWrapper.append($currentSelectedItem);
+
+    // selectedItems.reverse();
+    // $selectedItemsWrapper.append()
+
+    // console.log(selectedItems);
+    // $selectedItemsWrapper.append(selectedItems);
+
 
     if ($('.dropdown-block--cities-select .selected-wrapper .selected').length) {
       $('.multi-wrapper').removeClass('multi-wrapper--default multi-wrapper--empty');
     } else {
       $('.multi-wrapper').addClass('multi-wrapper--empty');
     }
+
+    // Change selected items order
+    setTimeout(() => {
+      selectedCitiesIdx.forEach(id => {
+        let item = selectedItemsWrapper.querySelector(`.item.selected[data-value="${id}"]`);
+        selectedItemsWrapper.append(item);
+      });
+    });
 
     setTimeout(() => {
       $('.dropdown-block--cities-select').addClass('dropdown-block--visible');
