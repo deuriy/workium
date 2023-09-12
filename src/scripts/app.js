@@ -584,7 +584,7 @@ $(() => {
     let $hintTooltipTrigger = $(e.target).closest('.hint');
     let $cashbackTooltipTrigger = $(e.target).closest('.cashback');
 
-    console.log($isTooltip);
+    // console.log($isTooltip);
 
     if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
       $('.tooltip--visible').removeClass('tooltip--visible');
