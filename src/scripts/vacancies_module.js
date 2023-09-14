@@ -4,18 +4,10 @@ import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 
-// import multiselect "./jquery.multi-select.js";
-// import multi from "multi.js/dist/multi-es6.min.js";
-
-// console.log(multis);
-
 function isFilterChanged() {
   let $textFields = $('.filter .form-text');
   let $select2Selections = $('.filter .select2-selection.filter-select');
   let $citiesSelectToggle = $('.filter__cities-select-toggle');
-
-  // console.log($textFields);
-  // console.log($select2Selections);
 
   for (const input of $textFields) {
     if ($(input).val() !== '') {
@@ -43,19 +35,14 @@ function checkFilterFill() {
 }
 
 function changeFiltersBodyMaxHeight (selectedItemsLength) {
-  // console.log(selectedItemsLength);
-
   let $additionalFiltersHeaderBottom = $('.additional-filters__header-bottom');
   let $additionalFiltersBody = $('.additional-filters__body');
 
   if (selectedItemsLength) {
-    // $additionalFiltersBody.css('max-height', `calc(100vh - (${270 + $additionalFiltersHeaderBottom.height()}px)`);
     $additionalFiltersBody.css('max-height', `calc(${473 - $additionalFiltersHeaderBottom.height()}px)`);
   } else {
     $additionalFiltersBody.css('max-height', '');
   }
-
-  console.log($additionalFiltersHeaderBottom);
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
@@ -70,6 +57,53 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
   }
 
   $additionalFiltersSelectedMoreItem.find('.more-btn__count').text(`+${moreItemsCount}`);
+}
+
+function clearFilter () {
+  // let $filter = $(this).closest('.filter');
+  let $filterSelects = $('.filter .filter-select, .additional-filters .filter-select');
+  let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
+  let $allCheckboxes = $('.additional-filters .checkbox__input');
+  let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
+
+  let $clearBtn = $(`.filter__clear-btn`);
+  let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
+
+  $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+  $filterSelects.each(function(index, el) {
+    let value = '';
+
+    if ($(el).hasClass('filter__countries-select') || $(el).hasClass('additional-filters__countries-select')) {
+      value = 'poland';
+    } else if ($(el).hasClass('filter__currencies-select')) {
+      value = 'pln';
+    }
+
+    $(el).val(value).trigger('change');
+  });
+
+  $clearBtn.hide();
+  $additionalFiltersClearBtn.hide();
+
+  $allCheckboxes.prop('checked', false);
+  $allNonCheckedRadio.prop('checked', true);
+
+  // $additionalFilters.find('.form-text--filter-search').val('');
+  $('.selected-items__item').remove();
+  $additionalFiltersGroups.show();
+
+  setVisibilitySelectedMoreItem(0);
+  changeFiltersBodyMaxHeight(0);
+}
+
+function removeItemFromArray (array, value) {
+  let index = array.indexOf(value);
+
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+
+  return array;
 }
 
 $(() => {
@@ -100,7 +134,7 @@ $(() => {
 
     $(el).on('change', function (e) {
       if ($(this).select2('val') !== '') {
-        if ($(this).attr('name') !== 'countries' && $(this).attr('name') !== 'filter_countries' && $(this).attr('name') !== 'currency') {
+        if ($(this).attr('name') !== 'countries' && $(this).attr('name') !== 'currency') {
           $select2Selection.addClass('select2-selection--selected');
         } else {
           $select2Selection.removeClass('select2-selection--selected');
@@ -165,16 +199,6 @@ $(() => {
 
   // let selectedCitiesIdx = [];
 
-  function removeItemFromArray (array, value) {
-    let index = array.indexOf(value);
-
-    if (index > -1) {
-      array.splice(index, 1);
-    }
-
-    return array;
-  }
-
   // $(document).on('click', 'a.item', function(e) {
   //   // setTimeout(() => {
   //     // let $multiWrapperBody = $(this).closest('.multi-wrapper__body');
@@ -237,34 +261,34 @@ $(() => {
   //   e.preventDefault();
   // });
 
-  $('.dropdown-block--cities-select .multi-wrapper__apply-btn').click(function(event) {
-    let $dropdownBlock = $(this).closest('.dropdown-block');
-    let $selectedCities = $dropdownBlock.find('.selected-wrapper .item.selected');
-    let $dropdownBlockID = $dropdownBlock.attr('id');
-    let $selectToggle = $(`.select-toggle[href="#${$dropdownBlockID}"]`);
-    let selectToggleText = $selectToggle.data('default-placeholder');
+  // $('.dropdown-block--cities-select .multi-wrapper__apply-btn').click(function(event) {
+  //   let $dropdownBlock = $(this).closest('.dropdown-block');
+  //   let $selectedCities = $dropdownBlock.find('.selected-wrapper .item.selected');
+  //   let $dropdownBlockID = $dropdownBlock.attr('id');
+  //   let $selectToggle = $(`.select-toggle[href="#${$dropdownBlockID}"]`);
+  //   let selectToggleText = $selectToggle.data('default-placeholder');
 
-    $dropdownBlock.removeClass('dropdown-block--visible');
+  //   $dropdownBlock.removeClass('dropdown-block--visible');
 
-    if ($selectedCities.length) {
-      selectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
-      $selectToggle.addClass('select-toggle--selected');
-    } else {
-      $dropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
-      $selectToggle.removeClass('select-toggle--selected');
-    }
+  //   if ($selectedCities.length) {
+  //     selectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
+  //     $selectToggle.addClass('select-toggle--selected');
+  //   } else {
+  //     $dropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
+  //     $selectToggle.removeClass('select-toggle--selected');
+  //   }
 
-    $selectToggle.html(selectToggleText);
+  //   $selectToggle.html(selectToggleText);
 
-    // console.log($selectedCities.map((index, element) => $(element).attr('multi-index')));
-    $selectToggle.attr('data-selected-cities', $selectedCities.map((index, element) => $(element).attr('multi-index')).toArray());
-    // console.log($selectToggle.data('selected-cities'));
+  //   // console.log($selectedCities.map((index, element) => $(element).attr('multi-index')));
+  //   $selectToggle.attr('data-selected-cities', $selectedCities.map((index, element) => $(element).attr('multi-index')).toArray());
+  //   // console.log($selectToggle.data('selected-cities'));
 
-    selectedCitiesIdx = currentSelectedCitiesIdx;
-    currentSelectedCitiesIdx = [];
+  //   selectedCitiesIdx = currentSelectedCitiesIdx;
+  //   currentSelectedCitiesIdx = [];
 
-    checkFilterFill();
-  });
+  //   checkFilterFill();
+  // });
 
 
   // $(document).on('click', function(e) {
@@ -346,37 +370,37 @@ $(() => {
     });
   });
 
-  $('.filter__clear-btn').click(function(e) {
-    let $filter = $(this).closest('.filter');
-    let $filterSelects = $filter.find('.filter-select');
-    let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
+  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn').click(clearFilter);
 
-    let $multiWrapperClearBtn = $('.dropdown-block--cities-select .multi-wrapper__clear-btn');
-    let $citiesSelectToggle = $filter.find('.filter__cities-select-toggle');
-    let citiesSelectToggleText = $citiesSelectToggle.data('default-placeholder');
+  // Clear additional filters
+  // $('.additional-filters__clear-btn').click(clearFilter);
 
-    $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
-    $filterSelects.each(function(index, el) {
-      let value = '';
+  // $('.additional-filters__clear-filter-btn').click(function(event) {
+  //   let $filter = $(this).closest('.additional-filters');
+  //   let $filterSelects = $filter.find('.filter-select');
 
-      if ($(el).hasClass('filter__countries-select')) {
-        value = 'poland';
-      } else if ($(el).hasClass('filter__currencies-select')) {
-        value = 'pln';
-      }
+  //   let $multiWrapperClearBtn = $('.dropdown-block--cities-select .multi-wrapper__clear-btn');
+  //   let $citiesSelectToggle = $filter.find('.additional-filters__cities-select-toggle');
+  //   let citiesSelectToggleText = $citiesSelectToggle.data('default-placeholder');
 
-      $(el).val(value).trigger('change');
-    });
+  //   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+  //   $filterSelects.each(function(index, el) {
+  //     let value = '';
 
-    $additionalFiltersClearBtn.click();
+  //     if ($(el).hasClass('additional-filters__countries-select')) {
+  //       value = 'poland';
+  //     }
 
-    $multiWrapperClearBtn.click();
-    $('.filter__cities-dropdown-block .multi-wrapper').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
-    $citiesSelectToggle.html(citiesSelectToggleText);
-    $citiesSelectToggle.removeClass('select-toggle--selected');
+  //     $(el).val(value).trigger('change');
+  //   });
 
-    $(this).hide();
-  });
+  //   $('.additional-filters__clear-btn').click();
+
+  //   $multiWrapperClearBtn.click();
+  //   $('.additional-filters__cities-dropdown-block .multi-wrapper').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
+  //   $citiesSelectToggle.html(citiesSelectToggleText);
+  //   $citiesSelectToggle.removeClass('select-toggle--selected');
+  // });
 
   // $('.tags-select').select2({
   //   dropdownCssClass: ':all:',
@@ -485,7 +509,8 @@ $(() => {
   $(document).on('click', '.additional-filters .selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
     let $additionalFilters = $selectedItemParent.closest('.additional-filters');
-    let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+    let $clearBtn = $('.filter__clear-btn');
+    let $additionalClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
 
     if ($selectedItemParent.data('name') !== undefined && $selectedItemParent.data('value') !== undefined) {
       let selectedItemName = $selectedItemParent.data('name');
@@ -509,7 +534,16 @@ $(() => {
     $selectedItemParent.remove();
 
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
-    selectedItemsLength ? $clearBtn.show() : $clearBtn.hide();
+
+    if (selectedItemsLength) {
+      $clearBtn.show();
+      $additionalClearBtn.show();
+    } else {
+      $clearBtn.hide();
+      $additionalClearBtn.hide();
+    }
+
+    // selectedItemsLength ? $additionalClearBtn.show() : $additionalClearBtn.hide();
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
     event.preventDefault();
@@ -521,7 +555,8 @@ $(() => {
     let $additionalFilters = $(this).closest('.additional-filters');
     let $selectedItemsList = $('.selected-items__list');
     let $selectedItem = $(`.selected-items__item[data-name="${$(this).attr('name')}"][data-value="${$(this).val()}"]`);
-    let $clearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+    let $clearBtn = $('.filter__clear-btn');
+    let $additionalClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
 
     // console.log('Check!!');
 
@@ -554,57 +589,19 @@ $(() => {
     }
 
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
-    selectedItemsLength ? $clearBtn.show() : $clearBtn.hide();
+
+    if (selectedItemsLength) {
+      $clearBtn.show();
+      $additionalClearBtn.show();
+    } else {
+      $clearBtn.hide();
+      $additionalClearBtn.hide();
+    }
+
+    // selectedItemsLength ? $additionalClearBtn.show() : $additionalClearBtn.hide();
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
     changeFiltersBodyMaxHeight(selectedItemsLength);
-  });
-
-  // Clear additional filters
-  $('.additional-filters__clear-btn').click(function(event) {
-    let $additionalFilters = $(this).closest('.additional-filters');
-    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
-    let $allCheckboxes = $additionalFilters.find('.checkbox__input');
-    let $allNonCheckedRadio = $additionalFilters.find(`.radiobtn__input[value=""]`);
-
-    $allCheckboxes.prop('checked', false);
-    $allNonCheckedRadio.prop('checked', true);
-
-    $additionalFilters.find('.form-text--filter-search').val('');
-    $('.selected-items__item').remove();
-
-    $(this).hide();
-    $additionalFiltersGroups.show();
-
-    setVisibilitySelectedMoreItem(0);
-    changeFiltersBodyMaxHeight(0);
-  });
-
-  $('.additional-filters__clear-filter-btn').click(function(event) {
-    let $filter = $(this).closest('.additional-filters');
-    let $filterSelects = $filter.find('.filter-select');
-
-    let $multiWrapperClearBtn = $('.dropdown-block--cities-select .multi-wrapper__clear-btn');
-    let $citiesSelectToggle = $filter.find('.additional-filters__cities-select-toggle');
-    let citiesSelectToggleText = $citiesSelectToggle.data('default-placeholder');
-
-    $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
-    $filterSelects.each(function(index, el) {
-      let value = '';
-
-      if ($(el).hasClass('additional-filters__countries-select')) {
-        value = 'poland';
-      }
-
-      $(el).val(value).trigger('change');
-    });
-
-    $('.additional-filters__clear-btn').click();
-
-    $multiWrapperClearBtn.click();
-    $('.additional-filters__cities-dropdown-block .multi-wrapper').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
-    $citiesSelectToggle.html(citiesSelectToggleText);
-    $citiesSelectToggle.removeClass('select-toggle--selected');
   });
 
   $('.selected-items__more-btn').click(function(event) {

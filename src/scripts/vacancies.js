@@ -8,9 +8,6 @@ function isFilterChanged() {
   let $select2Selections = $('.filter .select2-selection.filter-select');
   let $citiesSelectToggle = $('.filter__cities-select-toggle');
 
-  // console.log($textFields);
-  // console.log($select2Selections);
-
   for (const input of $textFields) {
     if ($(input).val() !== '') {
       return true;
@@ -41,17 +38,14 @@ function removeItemFromArray (array, value) {
 
   if (index > -1) {
     array.splice(index, 1);
-    // console.log('Yes!');
   }
-
-  // console.log(array);
 
   return array;
 }
 
-const compareArrays = (a, b) => {
-  return JSON.stringify(a) === JSON.stringify(b);
-};
+// const compareArrays = (a, b) => {
+//   return JSON.stringify(a) === JSON.stringify(b);
+// };
 
 $(() => {
   $(".cities-select").each((index, el) => {
@@ -90,7 +84,10 @@ $(() => {
         });
 
         $('.ms-selection__clear-btn').click(function(event) {
-          $(this).closest('.dropdown-block').find('.cities-select').multiSelect('deselect_all');
+          let $dropdownBlock = $(this).closest('.dropdown-block');
+          $dropdownBlock.find('.cities-select').multiSelect('deselect_all');
+          $dropdownBlock.find('.ms-container').addClass('ms-container--empty');
+
           currentSelectedCitiesIds = [];
 
           event.preventDefault();
@@ -98,68 +95,78 @@ $(() => {
 
         $('.ms-container__apply-btn').click(function(event) {
           selectedCitiesIds = [...currentSelectedCitiesIds];
-          // currentSelectedCitiesIds = [];
 
           let $dropdownBlock = $(this).closest('.dropdown-block');
           let $selectedCities = $dropdownBlock.find('.ms-selection .ms-selected');
-          let $dropdownBlockID = $dropdownBlock.attr('id');
-          let $selectToggle = $(`.select-toggle[href="#${$dropdownBlockID}"]`);
-          let selectToggleText = $selectToggle.data('default-placeholder');
+          let $citiesSelectToggles = $(`.filter__cities-select-toggle, .additional-filters__cities-select-toggle`);
 
           $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
 
-          if ($selectedCities.length) {
-            selectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
-            $selectToggle.addClass('select-toggle--selected');
-          } else {
-            // $dropdownBlock.find('.multi-wrapper--empty').removeClass('multi-wrapper--empty').addClass('multi-wrapper--default');
-            $selectToggle.removeClass('select-toggle--selected');
-          }
+          console.log(selectedCitiesIds);
 
-          // console.log($dropdownBlock);
+          $citiesSelectToggles.each(function(index, el) {
+            let citiesSelectToggleText = $(el).data('default-placeholder');
 
-          $selectToggle.html(selectToggleText);
+            if ($selectedCities.length) {
+              citiesSelectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
+              $(el).addClass('select-toggle--selected');
+            } else {
+              $dropdownBlock.find('.ms-container--empty').removeClass('ms-container--empty').addClass('ms-container--default');
+              $(el).removeClass('select-toggle--selected');
+            }
 
-          // console.log(selectedCitiesIds);
-          // console.log(currentSelectedCitiesIds);
+            $('.cities-select').multiSelect('deselect_all');
+            selectedCitiesIds.forEach(id => {
+              $('.cities-select').multiSelect('select', id);
+            });
+
+            $(el).html(citiesSelectToggleText);
+          });
+
+          checkFilterFill();
         });
       },
 
       afterSelect: function(values) {
-        // console.log("Select value: " + values);
-        // console.log(this);
-
-        currentSelectedCitiesIds.push(values[0]);
-        // console.log(currentSelectedCitiesIds);
+        if (!currentSelectedCitiesIds.includes(values[0])) {
+          currentSelectedCitiesIds.push(values[0]);
+        }
 
         if (currentSelectedCitiesIds.length) {
           this.$container.removeClass('ms-container--default ms-container--empty');
-
-          // this.options.cssClass = '';
-          // $(el).multiSelect('refresh');
         } else {
           this.$container.addClass('ms-container--empty');
         }
       },
 
       afterDeselect: function(values) {
-        // console.log(values);
-
-        // currentSelectedCitiesIds = selectedCitiesIds;
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
-        // console.log(currentSelectedCitiesIds);
+
+        console.log(currentSelectedCitiesIds);
 
         if (currentSelectedCitiesIds.length) {
           this.$container.removeClass('ms-container--default ms-container--empty');
-
-          // this.options.cssClass = '';
-          // $(el).multiSelect('refresh');
         } else {
           this.$container.addClass('ms-container--empty');
         }
       }
     });
   });
+
+  function clearCitiesSelect () {
+    let $citiesSelectToggles = $('.filter__cities-select-toggle, .additional-filters__cities-select-toggle');
+    $citiesSelectToggles.each(function(index, el) {
+      let citiesSelectToggleText = $(el).data('default-placeholder');
+
+      $('#cities-select').multiSelect('deselect_all');
+      $('#additional-filter-cities-select').multiSelect('deselect_all');
+
+      $(el).html(citiesSelectToggleText);
+      $(el).removeClass('select-toggle--selected');
+    });
+  }
+
+  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn').click(clearCitiesSelect);
 
   $(document).on('click', function(e) {
     if ($('.dropdown-block--cities-select').hasClass('dropdown-block--visible')) {
@@ -177,9 +184,4 @@ $(() => {
       }
     }
   });
-
-  // $('.ms-selectable__search-input').on('input', function(event) {
-    
-  //   /* Act on the event */
-  // });
 });
