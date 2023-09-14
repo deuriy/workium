@@ -111,7 +111,7 @@ $(() => {
               citiesSelectToggleText = $selectedCities.length === 1 ? $selectedCities[0].textContent : $selectedCities[0].textContent + `<span class="count count--info-bg count--selected-cities select-toggle__count">+${$selectedCities.length - 1}</span>`;
               $(el).addClass('select-toggle--selected');
             } else {
-              $dropdownBlock.find('.ms-container--empty').removeClass('ms-container--empty').addClass('ms-container--default');
+              $('.dropdown-block--cities-select .ms-container--empty').removeClass('ms-container--empty').addClass('ms-container--default');
               $(el).removeClass('select-toggle--selected');
             }
 
