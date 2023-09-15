@@ -541,8 +541,15 @@ $(() => {
       $visibleTooltip.find('.tooltip__close-btn').click();
     }
 
-    $hint.toggleClass('hint--tooltip-visible');
     $tooltip.toggleClass('tooltip--visible');
+
+    if ($hint.hasClass('hint--tooltip-visible')) {
+      setTimeout(() => {
+        $hint.removeClass('hint--tooltip-visible');
+      }, 300);
+    } else {
+      $hint.addClass('hint--tooltip-visible');
+    }
   });
 
   // $('.hint__text').click(function(e) {
@@ -575,8 +582,11 @@ $(() => {
     let $tooltip = $(this).closest('.tooltip');
 
     $tooltip.removeClass('tooltip--visible');
-    $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
-    $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
+
+    setTimeout(() => {
+      $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
+      $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
+    }, 300);
   });
 
   $(document).click(function(e) {
@@ -587,9 +597,14 @@ $(() => {
     // console.log($isTooltip);
 
     if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
+      console.log('!!!!');
+
       $('.tooltip--visible').removeClass('tooltip--visible');
-      $('.tooltip').closest('.hint').removeClass('hint--tooltip-visible');
-      $('.tooltip').closest('.cashback').removeClass('cashback--tooltip-visible');
+
+      setTimeout(() => {
+        $('.tooltip').closest('.hint').removeClass('hint--tooltip-visible');
+        $('.tooltip').closest('.cashback').removeClass('cashback--tooltip-visible');
+      }, 300);
     }
   });
 
@@ -602,8 +617,16 @@ $(() => {
       $visibleTooltip.find('.tooltip__close-btn').click();
     }
 
-    $cashback.toggleClass('cashback--tooltip-visible');
     $tooltip.toggleClass('tooltip--visible');
+
+    if ($cashback.hasClass('cashback--tooltip-visible')) {
+      setTimeout(() => {
+        $cashback.removeClass('cashback--tooltip-visible');
+      }, 300);
+    } else {
+      $cashback.addClass('cashback--tooltip-visible');
+    }
+
   });
 
   // Article chapters
