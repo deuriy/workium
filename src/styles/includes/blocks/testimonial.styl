@@ -1,26 +1,55 @@
 .testimonial
+	display grid
+	grid-template auto 1fr / 100%
+	
 	@media $xs
 		width 312px
 		
 	&__logo
+		z-index 1
 		margin-bottom -56px
 		text-align center
 		
-		@media $xs
-			margin-bottom -45px
+		// @media $xs
+		// 	margin-bottom -45px
 	
 	&__logo-img
 		width 112px
 		vertical-align middle
 		
-		@media $xs
-			width 90px
+		// @media $xs
+		// 	width 90px
 	
-	&__text
-		padding 79px 24px 32px 64px
-		background var(--grey-light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='20' fill='none' viewBox='0 0 24 20'%3E%3Cpath fill='%23989DB3' d='M2.267 17.6C.933 16.133.133 14.533.133 11.867c0-4.667 3.334-8.8 8-10.934l1.2 1.734c-4.4 2.4-5.333 5.466-5.6 7.466.667-.4 1.6-.533 2.534-.4 2.4.267 4.266 2.134 4.266 4.667 0 1.2-.533 2.4-1.333 3.333-.933.934-2 1.334-3.333 1.334-1.467 0-2.8-.667-3.6-1.467Zm13.333 0c-1.333-1.467-2.133-3.067-2.133-5.733 0-4.667 3.333-8.8 8-10.934l1.2 1.734c-4.4 2.4-5.334 5.466-5.6 7.466.666-.4 1.6-.533 2.533-.4 2.4.267 4.267 2.134 4.267 4.667 0 1.2-.534 2.4-1.334 3.333-.8.934-2 1.334-3.333 1.334-1.467 0-2.8-.667-3.6-1.467Z'/%3E%3C/svg%3E") 28px 83px no-repeat
+	&__text-wrapper
+		display grid
+		grid-template auto 1fr auto / 100%
+		padding 63px 24px 24px 24px
+		// padding 24px
+		background var(--grey-light)
 		border-radius 16px
 		
 		@media $xs
-			padding 68px 26px 25px
+			// padding 68px 26px 25px
 			background-image none
+	
+	&__website
+		margin-bottom 7px
+		color #989DB2
+		font-size 15px
+		line-height 1.6
+		text-align center
+	
+	&__text
+		// margin-bottom 41px
+		margin-bottom 16px
+		padding-top 1px
+		padding-left 39px
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='20' fill='none' viewBox='0 0 24 20'%3E%3Cpath fill='%23989DB3' d='M2.267 17.6C.933 16.133.133 14.533.133 11.867c0-4.667 3.334-8.8 8-10.934l1.2 1.734c-4.4 2.4-5.333 5.466-5.6 7.466.667-.4 1.6-.533 2.534-.4 2.4.267 4.266 2.134 4.266 4.667 0 1.2-.533 2.4-1.333 3.333-.933.934-2 1.334-3.333 1.334-1.467 0-2.8-.667-3.6-1.467Zm13.333 0c-1.333-1.467-2.133-3.067-2.133-5.733 0-4.667 3.333-8.8 8-10.934l1.2 1.734c-4.4 2.4-5.334 5.466-5.6 7.466.666-.4 1.6-.533 2.533-.4 2.4.267 4.267 2.134 4.267 4.667 0 1.2-.534 2.4-1.334 3.333-.8.934-2 1.334-3.333 1.334-1.467 0-2.8-.667-3.6-1.467Z'/%3E%3C/svg%3E") 3px 0 no-repeat
+		
+		@media $xs
+			margin-bottom 12px
+			padding-left 0
+			background none
+	
+	&__btn-wrapper
+		text-align center
