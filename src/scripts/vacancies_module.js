@@ -144,13 +144,17 @@ $(() => {
           $select2Selection.removeClass('select2-selection--selected');
         }
 
-        // console.log(e);
-
         switch (name) {
           case 'countries':
-            // $(`.additional-filters .radiobtn__input[value="${value}"]`).click();
-            // $('.additional-filters select[name="countries"]').val(value);
-            // $('.additional-filters select[name="countries"]').trigger('change');
+            if (e.params === undefined || e.params.calledFromCode === undefined) {
+              $('select[name="countries"]').val(value).trigger({
+                type: 'change',
+                params: {
+                  calledFromCode: true
+                }
+              });
+            }
+            
             break;
           case 'experience':
             // console.log(value);
@@ -171,9 +175,6 @@ $(() => {
         $select2Selection.removeClass('select2-selection--selected');
 
         switch (name) {
-          case 'countries':
-
-            break;
           case 'experience':
             $select2Selection.find('.select2-selection__rendered').text('Досвід');
 
