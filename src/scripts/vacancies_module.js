@@ -154,7 +154,7 @@ $(() => {
                 }
               });
             }
-            
+
             break;
           case 'experience':
             // console.log(value);
@@ -318,13 +318,31 @@ $(() => {
           let $otherSelectedItem = $(`.filter .selected-items__item[data-name="${name}"][data-value="${value}"]`);
           $otherSelectedItem.remove();
 
+          if (['filters[men]', 'filters[women]', 'filters[couples]'].includes(name)) {
+            $('.filter__sex-select').val('').trigger({
+              type: 'change',
+              params: {
+                calledFromCode: true
+              }
+            });
+          }
+
           break;
         case 'radio':
           let $nonCheckedRadio = $additionalFilters.find(`.radiobtn__input[name="${name}"][value=""]`);
           $nonCheckedRadio.prop('checked', true);
 
+          if (['filters[5]'].includes(name)) {
+            $('.filter__experience-select').val('').trigger({
+              type: 'change',
+              params: {
+                calledFromCode: true
+              }
+            });
+          }
+
           break;
-      }
+      }      
     }
 
     $selectedItemParent.remove();
@@ -401,8 +419,6 @@ $(() => {
           calledFromCode: true
         }
       });
-
-      // $('.filter__experience-select').val(value).trigger('change');
     }
 
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
