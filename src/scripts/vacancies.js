@@ -34,16 +34,8 @@ function checkFilterFill() {
 }
 
 function clearCitiesSelect () {
-  let $citiesSelectToggles = $('.filter__cities-select-toggle, .additional-filters__cities-select-toggle');
-  $citiesSelectToggles.each(function(index, el) {
-    let citiesSelectToggleText = $(el).data('default-placeholder');
-
-    $('#cities-select').multiSelect('deselect_all');
-    $('#additional-filter-cities-select').multiSelect('deselect_all');
-
-    $(el).html(citiesSelectToggleText);
-    $(el).removeClass('select-toggle--selected');
-  });
+  $('.dropdown-block--cities-select .ms-selection__clear-btn').click();
+  $('.dropdown-block--cities-select .ms-container__apply-btn').click();
 }
 
 function removeItemFromArray (array, value) {

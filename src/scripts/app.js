@@ -597,8 +597,6 @@ $(() => {
     // console.log($isTooltip);
 
     if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
-      console.log('!!!!');
-
       $('.tooltip--visible').removeClass('tooltip--visible');
 
       setTimeout(() => {
