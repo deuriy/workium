@@ -66,6 +66,7 @@ function clearFilter () {
   let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
   let $clearBtn = $(`.filter__clear-btn`);
   let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
+  let $additionalFiltersClearLink = $('.additional-filters__clear-link');
 
   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
   $filterSelects.each(function(index, el) {
@@ -82,6 +83,7 @@ function clearFilter () {
 
   $clearBtn.hide();
   $additionalFiltersClearBtn.hide();
+  $additionalFiltersClearLink.hide();
 
   $allCheckboxes.prop('checked', false);
   $allNonCheckedRadio.prop('checked', true);
@@ -112,14 +114,35 @@ $(() => {
 
   let selectedCitiesIdx = [];
   let currentSelectedCitiesIdx = [];
+  let $filterSelects = $();
 
-  let $filterSelects = $('.filter-select').select2({
-    dropdownCssClass: ':all:',
-    selectionCssClass: ':all:',
-    theme: 'filter-select',
-    dropdownAutoWidth: true,
-    minimumResultsForSearch: -1
+  $('.filter-select').each(function(index, el) {
+    if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
+      let $item = $(el).select2({
+        dropdownCssClass: ':all:',
+        selectionCssClass: ':all:',
+        theme: 'filter-select',
+        dropdownAutoWidth: true,
+        minimumResultsForSearch: -1
+      });
+
+      $filterSelects = $filterSelects.add($item);
+    }
   });
+
+  // if ($(window).width() > 575 || ($(window).width() < 576 && )) {
+
+  // }
+
+  // let $filterSelects = $('.filter-select').select2({
+  //   dropdownCssClass: ':all:',
+  //   selectionCssClass: ':all:',
+  //   theme: 'filter-select',
+  //   dropdownAutoWidth: true,
+  //   minimumResultsForSearch: -1
+  // });
+
+  // console.log($filterSelects);
 
   $filterSelects.each(function(index, el) {
     let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
@@ -157,8 +180,6 @@ $(() => {
 
             break;
           case 'experience':
-            // console.log(value);
-            // console.log($(`.additional-filters .radiobtn__input[value="${value}"]`));
             if (e.params === undefined || e.params.calledFromCode === undefined) {
               $(`.additional-filters .radiobtn__input[value="${value}"]`).click();
             }
@@ -207,7 +228,7 @@ $(() => {
     });
   });
 
-  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn').click(clearFilter);
+  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearFilter);
 
 
   $('.filter-tag').click(function(event) {
@@ -216,13 +237,13 @@ $(() => {
     event.preventDefault();
   });
 
-  $('.checkboxes-group__title').click(function(event) {
-    $(this).closest('.checkboxes-group').toggleClass('checkboxes-group--closed');
-  });
+  // $('.checkboxes-group__title').click(function(event) {
+  //   $(this).closest('.checkboxes-group').toggleClass('checkboxes-group--closed');
+  // });
 
-  $('.radiobtns-group__title').click(function(event) {
-    $(this).closest('.radiobtns-group').toggleClass('radiobtns-group--closed');
-  });
+  // $('.radiobtns-group__title').click(function(event) {
+  //   $(this).closest('.radiobtns-group').toggleClass('radiobtns-group--closed');
+  // });
 
   if (document.documentElement.clientWidth < 768) {
   	const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
@@ -301,9 +322,11 @@ $(() => {
   // Removing selected items
   $(document).on('click', '.additional-filters .selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
+    let $selectedItems = $selectedItemParent.closest('.selected-items');
     let $additionalFilters = $selectedItemParent.closest('.additional-filters');
     let $clearBtn = $('.filter__clear-btn');
-    let $additionalClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+    let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+    let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
 
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
@@ -350,11 +373,15 @@ $(() => {
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
 
     if (selectedItemsLength) {
+      $selectedItems.show();
       $clearBtn.show();
-      $additionalClearBtn.show();
+      $additionalFiltersClearBtn.show();
+      $additionalFiltersClearLink.show();
     } else {
+      $selectedItems.hide();
       $clearBtn.hide();
-      $additionalClearBtn.hide();
+      $additionalFiltersClearBtn.hide();
+      $additionalFiltersClearLink.hide();
     }
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
@@ -367,14 +394,15 @@ $(() => {
     let value = $(this).val();
     let labelText = $(this).parent().find('label').text();
     let $additionalFilters = $(this).closest('.additional-filters');
-    let $selectedItemsList = $('.selected-items__list');
+    let $selectedItems = $('.selected-items--filter-params');
     let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
     let $clearBtn = $('.filter__clear-btn');
-    let $additionalClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+    let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+    let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
-        $selectedItemsList.append(`
+        $selectedItems.find('.selected-items__list').append(`
           <li class="selected-items__item" data-type="checkbox" data-name="${name}" data-value="${value}">
             <div class="selected-item">
               <div class="selected-item__value">${labelText}</div>
@@ -383,7 +411,7 @@ $(() => {
           </li>`);
 
         if (['filters[men]', 'filters[women]', 'filters[couples]'].includes(name)) {
-          $('.selected-items--filter').find(`.selected-items__item[data-name="${name}"]`).remove();
+          $('.selected-items--main-filter').find(`.selected-items__item[data-name="${name}"]`).remove();
           $('.filter__sex-select').val(value).trigger({
             type: 'change',
             params: {
@@ -400,7 +428,7 @@ $(() => {
       $otherSelectedItems.remove();
 
       if (!$selectedItem.length && value !== '') {
-        $selectedItemsList.append(`
+        $selectedItems.find('.selected-items__list').append(`
           <li class="selected-items__item" data-type="radio" data-name="${name}" data-value="${value}">
             <div class="selected-item">
               <div class="selected-item__value"><strong>${groupTitle}:</strong> ${labelText}</div>
@@ -409,7 +437,7 @@ $(() => {
           </li>`);
 
         if (['filters[5]'].includes(name)) {
-          $('.selected-items--filter').find(`.selected-items__item[data-name="${name}"]`).remove();
+          $('.selected-items--main-filter').find(`.selected-items__item[data-name="${name}"]`).remove();
         }
       }
 
@@ -424,11 +452,15 @@ $(() => {
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
 
     if (selectedItemsLength) {
+      $selectedItems.show();
       $clearBtn.show();
-      $additionalClearBtn.show();
+      $additionalFiltersClearBtn.show();
+      $additionalFiltersClearLink.show();
     } else {
+      $selectedItems.hide();
       $clearBtn.hide();
-      $additionalClearBtn.hide();
+      $additionalFiltersClearBtn.hide();
+      $additionalFiltersClearLink.hide();
     }
 
     setVisibilitySelectedMoreItem(selectedItemsLength);

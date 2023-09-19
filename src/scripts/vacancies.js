@@ -36,6 +36,9 @@ function checkFilterFill() {
 function clearCitiesSelect () {
   $('.dropdown-block--cities-select .ms-selection__clear-btn').click();
   $('.dropdown-block--cities-select .ms-container__apply-btn').click();
+
+  $('.selected-items--cities .selected-items__clear-btn').click();
+  $('.cities-filter__apply-btn').click();
 }
 
 function removeItemFromArray (array, value) {
@@ -63,6 +66,9 @@ $(() => {
         let $selectableItems = that.$selectableUl.children().toArray();
         let psArr = [];
 
+        // console.log('$selectableItems');
+        // console.log($selectableItems);
+
         that.$selectionContainer.append('<div class="ms-selection__no-results">У вас ще немає обраних міст...</div>');
         that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-grey btn-grey--multi-select ms-container__apply-btn">Застосувати</button></div>');
 
@@ -75,8 +81,8 @@ $(() => {
           }));
         });
 
-        console.log(this.$selectableUl);
-        console.log(psArr);
+        // console.log(this.$selectableUl);
+        // console.log(psArr);
 
         $searchInput.on('input', function(event) {
           let value = $(this).val().toLowerCase().trim();
@@ -119,7 +125,7 @@ $(() => {
 
           $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
 
-          console.log(selectedCitiesIds);
+          // console.log(selectedCitiesIds);
 
           $citiesSelectToggles.each(function(index, el) {
             let citiesSelectToggleText = $(el).data('default-placeholder');
@@ -159,7 +165,7 @@ $(() => {
       afterDeselect: function(values) {
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
 
-        console.log(currentSelectedCitiesIds);
+        // console.log(currentSelectedCitiesIds);
 
         if (currentSelectedCitiesIds.length) {
           this.$container.removeClass('ms-container--default ms-container--empty');
@@ -170,7 +176,7 @@ $(() => {
     });
   });
 
-  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn').click(clearCitiesSelect);
+  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearCitiesSelect);
 
   $(document).on('click', function(e) {
     if ($('.dropdown-block--cities-select').hasClass('dropdown-block--visible')) {
@@ -187,5 +193,153 @@ $(() => {
         }
       }
     }
+  });
+
+  let oldScrollY = 0;
+  let $wrapper = $('.wrapper');
+  let $btnFilter = $('.btn-filter');
+
+  $wrapper.scroll(function(event) {
+    let scrolled = $wrapper.scrollTop();
+    let dY = scrolled - oldScrollY;
+
+    if (scrolled > 170) {
+      $btnFilter.removeClass('btn-filter--invisible');
+    } else {
+      $btnFilter.addClass('btn-filter--invisible');
+    }
+    
+    oldScrollY = scrolled;
+  });
+
+  $('.cities-filter__search-input').on('input', function(event) {
+    let $citiesFilter = $(this).closest('.cities-filter');
+    let $clearSearchBtn = $citiesFilter.find('.cities-filter__clear-search-btn');
+    let $checkboxesGroupItems = $citiesFilter.find('.checkboxes-group__item')
+    let value = $(this).val().toLowerCase().trim();
+
+    console.log('input!!');
+
+    $checkboxesGroupItems.each((index, item) => {
+      if (!$(item).text().toLowerCase().trim().includes(value)) {
+        $(item).hide();
+      } else {
+        $(item).show();
+      }
+    });
+
+    value ? $clearSearchBtn.show() : $clearSearchBtn.hide();
+
+    // psArr[0].update();
+  });
+
+  $('.cities-filter__clear-search-btn').click(function(event) {
+    $(this).hide();
+
+    $('.cities-filter__search-input').val('').trigger('input').focus();
+  });
+
+  $('.checkboxes-group--cities .checkbox__input').change(function(event) {
+    let name = $(this).attr('name');
+    let value = $(this).val();
+    let labelText = $(this).parent().find('label').text();
+    let $selectedItems = $('.selected-items--cities');
+    let $selectedItem = $selectedItems.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+    let $clearBtn = $selectedItems.find('.selected-items__clear-btn');
+
+    if ($(this).is(':checkbox')) {
+      if ($(this).is(':checked')) {
+        $selectedItems.find('.selected-items__list').append(`
+          <li class="selected-items__item" data-name="${name}" data-value="${value}">
+            <div class="selected-item selected-item--city">
+              <div class="selected-item__value">${labelText}</div>
+              <a href="#" class="selected-item__remove-link"></a>
+            </div>
+          </li>`);
+
+        if (!currentSelectedCitiesIds.includes(value)) {
+          currentSelectedCitiesIds.push(value);
+        }
+      } else {
+        $selectedItem.remove();
+
+        currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+      }
+    }
+
+    let selectedItemsLength = $('.selected-items--cities .selected-items__item').length;
+
+    if (selectedItemsLength) {
+      $selectedItems.show();
+      $clearBtn.show();
+    } else {
+      $selectedItems.hide();
+      $clearBtn.hide();
+    }
+
+    // changeFiltersBodyMaxHeight(selectedItemsLength);
+  });
+
+  $(document).on('click', '.selected-item--city .selected-item__remove-link', function(event) {
+    let $selectedItemParent = $(this).closest('.selected-items__item');
+    let $selectedItems = $selectedItemParent.closest('.selected-items');
+
+    let name = $selectedItemParent.data('name');
+    let value = $selectedItemParent.data('value');
+
+    let $selectedCheckbox = $(`.checkboxes-group--cities .checkbox__input[name="${name}"][value="${value}"]`);
+    $selectedCheckbox.prop("checked", false);
+
+    $selectedItemParent.remove();
+    currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+
+    let selectedItemsLength = $selectedItems.find('.selected-items__item').length;
+
+    if (selectedItemsLength) {
+      $selectedItems.show();
+    } else {
+      $selectedItems.hide();
+    }
+
+    event.preventDefault();
+  });
+
+  $('.selected-items--cities .selected-items__clear-btn').click(function(event) {
+    let $citiesFilter = $(this).closest('.cities-filter');
+
+    $(this).closest('.selected-items').find('.selected-item__remove-link').click();
+  });
+
+  $('.cities-filter__btn-back').click(function(event) {
+    $('.selected-items--cities .selected-items__clear-btn').click();
+
+    selectedCitiesIds.forEach(id => {
+      $(`.checkboxes-group--cities .checkbox__input[value="${id}"]`).click();
+    });
+
+    currentSelectedCitiesIds = [...selectedCitiesIds];
+  });
+
+  $('.cities-filter__apply-btn').click(function(event) {
+    selectedCitiesIds = [...currentSelectedCitiesIds];
+
+    let $citiesBtn = $('.additional-filters__cities-btn');
+    let $citiesBtnText = $citiesBtn.find('.btn-white__text');
+    let $citiesBtnCount = $citiesBtn.find('.count');
+    let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+
+    if (!$checkedLabels.length) {
+      $citiesBtnText.text($citiesBtn.data('placeholder'));
+      $citiesBtnCount.hide()
+    } else if ($checkedLabels.length == 1) {
+      $citiesBtnText.text($($checkedLabels[0]).text());
+      $citiesBtnCount.hide();
+    } else {
+      $citiesBtnText.text($($checkedLabels[0]).text());
+      $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
+      $citiesBtnCount.show();
+    }
+
+    console.log($checkedLabels);
   });
 });

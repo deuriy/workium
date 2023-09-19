@@ -16,9 +16,17 @@
 		// gap 5px
 		
 		gap 9px 5px
+		
+		@media $xxs
+			gap 8px
 	
 	&__item
 		width 143px
+		
+		@media $xxs
+			width auto
+			flex-basis calc(50% - 4px)
+			// width 160px
 		
 		&:nth-child(n+13)
 			display none
@@ -29,11 +37,20 @@
 		order 200
 		margin-left auto
 	
+	&__clear-btn
+		width 32px
+		height 32px
+		border none
+		outline none
+		border-radius 50%
+		background #F0F4FA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23989DB3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M2.667 13.333 13.333 2.667m-10.666 0 10.666 10.666'/%3E%3C/svg%3E") center / 16px no-repeat
+		cursor pointer
+	
 	.selected-item
 		display grid
 		// width 100%
 	
-	&--filter
+	&--main-filter
 		.selected-items__list
 			// gap 5px
 			gap 4px 3px
@@ -43,3 +60,9 @@
 	&--expanded
 		.selected-items__item:nth-child(n+13)
 			display block
+	
+	&--cities
+		.selected-items__item
+			@media $xxs
+				width auto
+				flex-basis auto

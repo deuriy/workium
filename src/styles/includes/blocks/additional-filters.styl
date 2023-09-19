@@ -4,11 +4,22 @@
 	height 647px
 	max-height 100vh
 	
+	@media $xxs
+		height 100vh
+	
 	&__header
 		padding-bottom 10px
 		border-top-right-radius 16px
 		border-top-left-radius 16px
 		background #FAFBFD
+		
+		@media $xs
+			border-top-right-radius 0
+			border-top-left-radius 0
+			background #F0F4FA
+		
+		@media $xxs
+			padding-bottom 15px
 		
 	&__header-top
 		display grid
@@ -28,9 +39,18 @@
 			padding 15px 20px
 		
 		@media $xxs
-			grid-template-columns auto 1fr auto
+			// grid-template-columns auto 1fr auto
+			position relative
+			grid-template-columns 100%
 			gap 6px
-			padding 15px 16px 10px 10px
+			// padding 17px 37px 17px 22px
+			padding 17px 37px 13px 22px
+	
+	&__btn-back
+		@media $xxs
+			position absolute
+			top 16px
+			left 16px
 	
 	&__title
 		font-weight 600
@@ -38,9 +58,28 @@
 		line-height 1.25
 		// font-family var(--graphik-lcg)
 		
-		@media $xxs
-			font-size 21px
-			line-height 1.2857
+		@media $xs
+			font-size 16px
+			line-height 1.625
+			text-align center
+		
+		// @media $xxs
+		// 	font-size 21px
+		// 	line-height 1.2857
+	
+	&__clear-link
+		position absolute
+		top 22px
+		right 16px
+		border none
+		background none
+		outline none
+		font-weight 500
+		font-size 14px
+		font-family var(--base-font)
+		text-decoration none
+		color #5340FF
+		cursor pointer
 	
 	&__form-items
 		display grid
@@ -48,6 +87,10 @@
 		grid-template-columns 210px 140px 140px
 		justify-content start
 		gap 23px
+		
+		@media $xs
+			grid-template-columns repeat(2, 1fr)
+			gap 8px
 	
 	&__close-btn
 		margin-top -13px
@@ -65,6 +108,18 @@
 		// padding 0 13px 10px
 		// padding 0 28px 10px 13px
 		padding 0 28px 0 13px
+		
+		@media $xs
+			grid-template-columns 100%
+			padding 0 16px
+		
+		@media $xxs
+			gap 16px
+			// gap 0
+	
+	&__selected-items
+		@media $xxs
+			order -1
 	
 	&__body
 		// max-height calc(100vh - 196px)
@@ -84,7 +139,8 @@
 		
 		@media $xxs
 			max-height calc(100vh - 134px)
-			padding-top 25px
+			padding-top 18px
+			// padding-top 25px
 			padding-right 0
 			padding-left 0
 	
@@ -100,6 +156,12 @@
 	
 	&__form-item
 		position relative
+		
+		@media $xs
+			display grid
+			
+			&--two-col-xs
+				grid-column 1 / 3
 	
 	&__cities-dropdown-block
 		position absolute
@@ -108,6 +170,9 @@
 	
 	&__countries-select
 		width 140px
+		
+		@media $xs
+			width 100%
 	
 	&__label
 		margin-bottom 4px
@@ -133,8 +198,10 @@
 	&__checkboxes-group,
 	&__radiobtns-group
 		@media $xxs
-			padding-right 16px
-			padding-bottom 24px
+			// padding-right 16px
+			padding-right 10px
+			// padding-bottom 24px
+			padding-bottom 28px
 			padding-left 16px
 			border-bottom 1px solid #DFE2E6
 			
@@ -184,3 +251,4 @@
 		
 		@media $xxs
 			grid-template-columns 100%
+			background #FFF

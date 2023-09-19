@@ -8,7 +8,8 @@
 	background var(--user-profile-bg)
 	
 	@media $xxs
-		gap 12px
+		gap 9px
+		// gap 12px
 	
 	&__top,
 	&__bottom
@@ -61,12 +62,15 @@
 		
 		@media $xs
 			grid-template-columns 100%
+			// grid-template-columns repeat(2, 1fr)
 		
 		@media $xxs
 			display grid
-			grid-template-columns repeat(2, auto)
+			// grid-template-columns repeat(2, auto)
+			grid-template-columns repeat(2, 1fr)
 			align-items center
-			gap 4px
+			// gap 4px
+			gap 8px
 			// margin-right -16px
 	
 	&__clear-link
@@ -96,9 +100,19 @@
 		// gap 20px
 		gap 13px
 		margin-top 3px
+		
+		@media $xxs
+			grid-template-columns 100%
+			margin-top 0
 	
 	&__experience-select
 		width 120px
+		
+		@media $xxs
+			width 100%
 	
 	&__sex-select
 		width 128px
+		
+		@media $xxs
+			width 100%

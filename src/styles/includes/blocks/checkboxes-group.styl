@@ -7,6 +7,9 @@
 		// font-family var(--graphik-lcg)
 		@extend .transition
 		
+		@media $xxs
+			font-size 17px
+		
 		&::after
 			@extend .transition
 		
@@ -17,14 +20,16 @@
 			align-items center
 			// justify-content space-between
 			gap 15px
-			cursor pointer
+			// cursor pointer
 			
 			&::after
-				content ""
-				width 14px
-				height 8px
-				background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 8'%3E%3Cpath stroke='%231F2126' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 7 6-6 6 6'/%3E%3C/svg%3E") 0 0 no-repeat
-				transform rotate(180deg)
+				display none
+				
+				// content ""
+				// width 14px
+				// height 8px
+				// background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 8'%3E%3Cpath stroke='%231F2126' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 7 6-6 6 6'/%3E%3C/svg%3E") 0 0 no-repeat
+				// transform rotate(180deg)
 	
 	&__list
 		list-style none
@@ -38,7 +43,8 @@
 		
 		@media $xxs
 			gap 16px
-			max-height 200px
+			// gap 18px
+			// max-height 200px
 			overflow auto
 	
 	&--three-columns
@@ -88,3 +94,11 @@
 		.checkboxes-group__list
 			@media $xxs
 				max-height 0
+	
+	&--cities
+		.checkboxes-group__list
+			@media $xxs
+				// max-height calc(100vh - 215px)
+				max-height none
+				gap 24px
+				// max-height 400px
