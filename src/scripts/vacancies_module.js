@@ -91,6 +91,8 @@ function clearFilter () {
   $('.selected-items__item').remove();
   $additionalFiltersGroups.show();
 
+  $('.selected-items--filter-params').hide();
+
   setVisibilitySelectedMoreItem(0);
   changeFiltersBodyMaxHeight(0);
 }

@@ -1,0 +1,27 @@
+.breadcrumbs
+	&__list
+		list-style none
+		display flex
+		align-items center
+		gap 8px
+	
+	&__item
+		font-weight 400
+		font-size 12px
+		color #989DB2
+		
+		&::after
+			content "/"
+			margin-left 8px
+		
+		&:last-child::after
+			display none
+		
+		&:not(:first-child)
+			white-space nowrap
+			text-overflow ellipsis
+			overflow hidden
+	
+	&__link
+		color #989DB2
+		text-decoration none
