@@ -23,19 +23,29 @@
 		max-width 100%
 		padding 16px 15px
 	
-	&__country
-		// margin-bottom 22px
+	&__country-wrapper
+		display grid
+		grid-template-columns 100%
+		justify-items end
+		justify-self stretch
+		text-align right
+		min-height 32px
 		margin-bottom 8px
-		justify-self end
-		padding 4px 7px
-		border-radius 8px
-		background #F0F4FA
 		
 		@media $1440-
 			margin-bottom 15px
 		
 		@media $mdMinus
 			margin-bottom 10px
+	
+	&__country
+		// margin-bottom 22px
+		// justify-self end
+		padding 4px 7px
+		border-radius 8px
+		background #F0F4FA
+		
+		@media $mdMinus
 			font-size 14px
 	
 	&__title
