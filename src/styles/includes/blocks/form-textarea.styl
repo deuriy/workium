@@ -1,0 +1,22 @@
+.form-textarea
+	width 100%
+	height 96px
+	padding 12px
+	border 1px solid var(--input-border-color)
+	outline none
+	border-radius 6px
+	font-weight 500
+	font-size 16px
+	line-height 1.6
+	font-family var(--base-font)
+	color var(--dark)
+	resize none
+	@extend .transition
+	
+	+placeholder()
+		color var(--grey)
+	
+	&--add-employer
+		border-color var(--grey-medium)
+		border-radius 12px
+		font-size 15px

@@ -68,6 +68,14 @@ $(() => {
     $(this).toggleClass('btn-grey--bookmark-fill');
   });
 
+  $('.vacancy-info__bookmark-icon').click(function(event) {
+    $('.vacancy-footer__bookmark-btn').toggleClass('btn-grey--bookmark-fill');
+  });
+
+  $('.vacancy-footer__bookmark-btn').click(function(event) {
+    $('.vacancy-info__bookmark-icon').toggleClass('bookmark-icon--fill');
+  });
+
   // $('.fancybox-popup__show-contacts-btn').click(function(e) {
   //   console.log('mowmefmw');
 

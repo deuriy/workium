@@ -5,7 +5,11 @@ block vars
 
 block content
   .vacancies
-    h1.page-title.vacancies__title Вакансії
+    .vacancies__header
+      .vacancies__title-wrapper
+        h1.page-title.vacancies__title Вакансії
+        .vacancies__count 1762
+      button(type="button" data-fancybox data-src="#add-employer-popup").btn-grey3.btn-grey3--small.fancybox-wide-popup-toggle Добавити роботодавця
     include ./includes/blocks/filter
     .vacancy-cards.vacancies__cards
       .vacancy-card.vacancy-cards__item
@@ -460,6 +464,8 @@ block content
                 
   include ./includes/blocks/additional-filters-popup
   include ./includes/blocks/cities-popup
+  include ./includes/blocks/add-employer-popup
+  include ./includes/blocks/add-employer-success-popup
 
   button(type="button" data-fancybox data-src="#additional-filters-popup").btn-filter.btn-filter--right-bottom.btn-filter--invisible.additional-filters-popup-link
     span.count.count--info-bg.count--filter-btn 99

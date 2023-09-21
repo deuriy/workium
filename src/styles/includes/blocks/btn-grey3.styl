@@ -14,8 +14,16 @@
 	white-space nowrap
 	cursor pointer
 	text-decoration none
+	@extend .transition
+	
+	&:hover
+		// background darken(#DFE1ED, 6%) 
+		background #CDCFDD
 	
 	// @media $xs
 	// 	padding-right 50px
 	// 	padding-left 50px
 	// 	font-size 15px
+	
+	&--small
+		font-size 14px

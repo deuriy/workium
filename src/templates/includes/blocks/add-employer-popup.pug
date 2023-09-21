@@ -1,0 +1,14 @@
+.fancybox-popup.fancybox-popup--wide.fancybox-popup--add-employer#add-employer-popup(style="display: none;")
+  .fancybox-popup__img-wrapper
+    img(src="/img/add_employer_img.png" alt="Додавання роботодавця").fancybox-popup__img
+  h2.fancybox-popup__title Додавання роботодавця
+  .fancybox-popup__text
+    p Додайте дані про роботодавця і нейромережа WORKIUM автоматично перевірить його на наявність реальних відгуків та проаналізує вакансії, винагороду, умови праці та загальну легальність діяльності, яка здійснюється роботодавцем.
+  form(action="").add-employer
+    .add-employer__items
+      .add-employer__item
+        input(type="text" name="employer_name" placeholder="Назва роботодавця, агенції чи підприємства").form-text.form-text--add-employer
+      .add-employer__item
+        textarea(name="employer_info" placeholder="Додаткова інформація про роботодавця та контакти для зв'язку, якщо вони у вас присутні").form-textarea.form-textarea--add-employer
+    .add-employer__actions
+      button(type="button" data-fancybox data-src="#add-employer-success-popup").btn-default.btn-default--add-employer.fancybox-wide-popup-toggle Добавити роботодавця

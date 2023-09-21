@@ -1,10 +1,10 @@
 .fancybox
-	// &__slide
-	// 	padding-top 0 !important
+	&__slide
+		padding-top 0 !important
 		
-	// 	&::before,
-	// 	&::after
-	// 		display none
+		&::before,
+		&::after
+			display none
 			
 	&--popup,
 	&--wide-popup,
@@ -58,6 +58,9 @@
 		.fancybox__content
 			@media $smPlus
 				padding 31px 20px
+			
+			&.fancybox-popup--add-employer
+				padding 40px
 	
 	// &--payment-systems-popup
 	// 	--fancybox-bg: rgba(0, 0, 0, 0)

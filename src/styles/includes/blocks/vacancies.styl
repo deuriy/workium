@@ -1,10 +1,25 @@
 .vacancies
-	&__title
+	&__header
 		// margin-bottom 32px
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content start
+		align-items center
+		gap 26px
 		margin-bottom 20px
 		
 		@media $xs
 			margin-bottom 3px
+	
+	&__title-wrapper
+		display grid
+		grid-template-columns repeat(2, auto)
+		align-items start
+		gap 5px
+	
+	&__count
+		margin-top -3px
+		font-size 14px
 	
 	&__filter
 		// margin-bottom 40px
