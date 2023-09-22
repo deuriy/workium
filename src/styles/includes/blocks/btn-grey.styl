@@ -65,13 +65,26 @@
 		font-size 16px
 		line-height 1.5
 	
+	&--copy,
+	&--copied,
 	&--bookmark
-		width 44px
-		height 44px
+		// width 44px
+		width 48px
+		// height 44px
+		height 48px
 		padding 11px
 		border-radius 12px
-		background #F0F4FA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 280'%3E%3Cpath fill='none' d='M-1-1h582v402H-1z'/%3E%3Cpath d='M185.16-.556H30.84C13.787-.556.13 13.256.13 30.31l-.155 246.913L108 230.926l108.025 46.296V30.31c0-17.053-13.812-30.865-30.865-30.865zm0 231.482L108 197.36l-77.16 33.565V30.309h154.32v200.617z' fill='%23989DB2'/%3E%3C/svg%3E") center / 16px no-repeat
+		background-color #F0F4FA
 		transition none
+	
+	&--copy
+		background #F0F4FA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cg stroke='%235340FF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' clip-path='url(%23a)'%3E%3Cpath d='M16.667 6.667H8.333c-.92 0-1.666.746-1.666 1.666v8.334c0 .92.746 1.666 1.666 1.666h8.334c.92 0 1.666-.746 1.666-1.666V8.333c0-.92-.746-1.666-1.666-1.666Z'/%3E%3Cpath d='M3.333 13.333c-.916 0-1.666-.75-1.666-1.666V3.333c0-.916.75-1.666 1.666-1.666h8.334c.916 0 1.666.75 1.666 1.666'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h20v20H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E") center / 20px no-repeat
+	
+	&--copied
+		background #F0F4FA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%235340FF' stroke-width='2' d='m16.516 8.935-5.456 5.767-2.964-2.804'/%3E%3Cpath stroke='%235340FF' stroke-width='2' d='M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z'/%3E%3C/svg%3E") center / 24px no-repeat
+	
+	&--bookmark
+		background #F0F4FA url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 280'%3E%3Cpath fill='none' d='M-1-1h582v402H-1z'/%3E%3Cpath d='M185.16-.556H30.84C13.787-.556.13 13.256.13 30.31l-.155 246.913L108 230.926l108.025 46.296V30.31c0-17.053-13.812-30.865-30.865-30.865zm0 231.482L108 197.36l-77.16 33.565V30.309h154.32v200.617z' fill='%23989DB2'/%3E%3C/svg%3E") center / 16px no-repeat
 		
 	&--bookmark-fill
 		background-color rgba(226, 144, 42, .15)
