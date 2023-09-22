@@ -13,6 +13,9 @@
 	resize none
 	@extend .transition
 	
+	@media $xs
+		height 134px
+	
 	+placeholder()
 		color var(--grey)
 	
@@ -20,3 +23,6 @@
 		border-color var(--grey-medium)
 		border-radius 12px
 		font-size 15px
+		
+		@media $xs
+			line-height 22px

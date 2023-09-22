@@ -85,6 +85,11 @@
 	
 	&__btn-wrapper
 		margin-top 32px
+		
+		@media $xs
+			display grid
+			grid-template-columns 100%
+			margin-top 24px
 	
 	&__btn
 		width 100%
@@ -350,9 +355,20 @@
 			a
 				color #5340FF
 	
-	&--add-employer		
+	&--add-employer
+		@media $xs
+			overflow auto
+			border-radius 0
+			
 		.fancybox-popup__img-wrapper
 			margin-bottom 20px
+			
+			@media $xs
+				margin-bottom 16px
+		
+		.fancybox-popup__img
+			@media $xs
+				width 184px
 			
 		.fancybox-popup__title
 			margin-bottom 14px
@@ -366,3 +382,13 @@
 			
 			& > p + p
 				margin-top 8px
+		
+	&.fancybox__content
+		button.f-button.is-close-btn
+			@media $xs
+				top 7px
+				right 7px
+				--f-button-svg-width 24px
+				--f-button-svg-height 24px
+				--f-button-width 42px
+				--f-button-height 42px

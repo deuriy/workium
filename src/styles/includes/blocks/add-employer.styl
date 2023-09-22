@@ -2,5 +2,13 @@
 	&__items
 		margin-bottom 30px
 		
+		@media $xs
+			margin-bottom 22px
+		
 	&__item + .add-employer__item
 		margin-top 12px
+	
+	&__actions
+		@media $xs
+			display grid
+			grid-template-columns 100%
