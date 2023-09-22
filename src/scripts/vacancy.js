@@ -77,6 +77,10 @@ $(() => {
         // clickable: true
       },
     });
+
+    if (promoBlocksSwiper.slides.length === 1) {
+      $(promoBlocksSwiper.pagination.el).hide();
+    }
   }
 
   $('.infoblock__more-link').click(function(e) {

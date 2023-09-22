@@ -97,9 +97,9 @@ function clearFilter () {
   changeFiltersBodyMaxHeight(0);
 }
 
-function changeFilterParam () {
-  // body... 
-}
+// function changeFilterParam () {
+//   // body... 
+// }
 
 function removeItemFromArray (array, value) {
   let index = array.indexOf(value);
@@ -247,7 +247,7 @@ $(() => {
   //   $(this).closest('.radiobtns-group').toggleClass('radiobtns-group--closed');
   // });
 
-  if (document.documentElement.clientWidth < 768) {
+  if ($(window).width() < 768) {
   	const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
       modules: [Pagination],
       // loop: true,
@@ -260,6 +260,12 @@ $(() => {
   	    bulletActiveClass: 'swiper-pagination-bullet--active',
   	    // clickable: true
   	  },
+    });
+
+    promoBlocksSwiper.forEach(swiper => {
+      if (swiper.slides.length === 1) {
+        $(swiper.pagination.el).hide();
+      }
     });
   }
 
