@@ -555,25 +555,25 @@ $(() => {
   //   e.preventDefault();
   // });
 
-  $('.hint__text').click(function(e) {
-    let $hint = $(this).closest('.hint');
-    let $tooltip = $hint.find('.hint__tooltip');
-    let $visibleTooltip = $('.tooltip--visible');
+  // $('.hint__text').click(function(e) {
+  //   let $hint = $(this).closest('.hint');
+  //   let $tooltip = $hint.find('.hint__tooltip');
+  //   let $visibleTooltip = $('.tooltip--visible');
 
-    if ($visibleTooltip[0] != $tooltip[0]) {
-      $visibleTooltip.find('.tooltip__close-btn').click();
-    }
+  //   if ($visibleTooltip[0] != $tooltip[0]) {
+  //     $visibleTooltip.find('.tooltip__close-btn').click();
+  //   }
 
-    $tooltip.toggleClass('tooltip--visible');
+  //   $tooltip.toggleClass('tooltip--visible');
 
-    if ($hint.hasClass('hint--tooltip-visible')) {
-      setTimeout(() => {
-        $hint.removeClass('hint--tooltip-visible');
-      }, 300);
-    } else {
-      $hint.addClass('hint--tooltip-visible');
-    }
-  });
+  //   if ($hint.hasClass('hint--tooltip-visible')) {
+  //     setTimeout(() => {
+  //       $hint.removeClass('hint--tooltip-visible');
+  //     }, 300);
+  //   } else {
+  //     $hint.addClass('hint--tooltip-visible');
+  //   }
+  // });
 
   // $('.hint__text').click(function(e) {
   //   let $hint = $(this).closest('.hint');
@@ -612,42 +612,55 @@ $(() => {
     }, 300);
   });
 
-  $(document).click(function(e) {
-    let $isTooltip = $(e.target).closest('.tooltip--visible');
-    let $hintTooltipTrigger = $(e.target).closest('.hint');
-    let $cashbackTooltipTrigger = $(e.target).closest('.cashback');
+  // $(document).click(function(e) {
+  //   let $isTooltip = $(e.target).closest('.tooltip--visible');
+  //   let $hintTooltipTrigger = $(e.target).closest('.hint');
+  //   let $cashbackTooltipTrigger = $(e.target).closest('.cashback');
 
-    // console.log($isTooltip);
+  //   // console.log($isTooltip);
 
-    if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
-      $('.tooltip--visible').removeClass('tooltip--visible');
+  //   if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
+  //     $('.tooltip--visible').removeClass('tooltip--visible');
 
-      setTimeout(() => {
-        $('.tooltip').closest('.hint').removeClass('hint--tooltip-visible');
-        $('.tooltip').closest('.cashback').removeClass('cashback--tooltip-visible');
-      }, 300);
-    }
+  //     setTimeout(() => {
+  //       $('.tooltip').closest('.hint').removeClass('hint--tooltip-visible');
+  //       $('.tooltip').closest('.cashback').removeClass('cashback--tooltip-visible');
+  //     }, 300);
+  //   }
+  // });
+
+  // $('.cashback__sum').click(function(e) {
+  //   let $cashback = $(this).closest('.cashback');
+  //   let $tooltip = $cashback.find('.cashback__tooltip');
+  //   let $visibleTooltip = $('.tooltip--visible');
+
+  //   if ($visibleTooltip[0] != $tooltip[0]) {
+  //     $visibleTooltip.find('.tooltip__close-btn').click();
+  //   }
+
+  //   $tooltip.toggleClass('tooltip--visible');
+
+  //   if ($cashback.hasClass('cashback--tooltip-visible')) {
+  //     setTimeout(() => {
+  //       $cashback.removeClass('cashback--tooltip-visible');
+  //     }, 300);
+  //   } else {
+  //     $cashback.addClass('cashback--tooltip-visible');
+  //   }
+
+  // });
+
+  $('.hint__text').mouseover(function(event) {
+    let $hint = $(this).closest('.hint');
+    $hint.addClass('hint--tooltip-visible');
   });
 
-  $('.cashback__sum').click(function(e) {
-    let $cashback = $(this).closest('.cashback');
-    let $tooltip = $cashback.find('.cashback__tooltip');
-    let $visibleTooltip = $('.tooltip--visible');
+  $('.hint__text').mouseout(function(event) {
+    let $hint = $(this).closest('.hint');
 
-    if ($visibleTooltip[0] != $tooltip[0]) {
-      $visibleTooltip.find('.tooltip__close-btn').click();
-    }
-
-    $tooltip.toggleClass('tooltip--visible');
-
-    if ($cashback.hasClass('cashback--tooltip-visible')) {
-      setTimeout(() => {
-        $cashback.removeClass('cashback--tooltip-visible');
-      }, 300);
-    } else {
-      $cashback.addClass('cashback--tooltip-visible');
-    }
-
+    setTimeout(() => {
+      $hint.removeClass('hint--tooltip-visible');
+    }, 2000);
   });
 
   // Article chapters

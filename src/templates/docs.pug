@@ -45,20 +45,24 @@ block content
               .hint__text можливо частинами
             .hint.service-box__hint.hidden-xs
               .hint__text можливо частинами
-              .tooltip.tooltip--extended.hint__tooltip
-                .tooltip__text-wrapper
-                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
-                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
-                button(type="button").tooltip__close-btn
+                .tooltip.tooltip--extended.hint__tooltip
+                  .tooltip__text-wrapper
+                    h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                    .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                  //- button(type="button").tooltip__close-btn
             .cashback.service-box__cashback
-              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum.hidden-xs 100 UAH] #[a(href="#cashback-tooltip-popup").fancybox-popup-toggle.cashback__sum.hidden-smPlus 100 UAH]
-              .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
-                .tooltip__text-wrapper
-                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
-                  .tooltip__text
-                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
-                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
-                button(type="button").tooltip__close-btn
+              .cashback__text
+                .
+                  Повертаємо на ваш баланс: 
+                span.cashback__sum.hidden-xs 100 UAH
+                  .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
+                    .tooltip__text-wrapper
+                      h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                      .tooltip__text
+                        p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                        p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+                    //- button(type="button").tooltip__close-btn
+                a(href="#cashback-tooltip-popup").fancybox-popup-toggle.cashback__sum.hidden-smPlus 100 UAH
             a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
             //- .service-box__footer
             //-   a(href="#").more-link.more-link--dark Детальніше

@@ -488,4 +488,14 @@ $(() => {
 
     $selectedItems.toggleClass('selected-items--expanded');
   });
+
+  // $('.specification').mouseover(function(event) {
+  //   // console.log('Ovr!!');
+  //   $(this).find('.specification__tooltip').addClass('tooltip--visible');
+  // });
+  
+  // $('.specification').mouseout(function(event) {
+  //   // console.log('Ovr!!');
+  //   $(this).find('.specification__tooltip').removeClass('tooltip--visible');
+  // });
 });

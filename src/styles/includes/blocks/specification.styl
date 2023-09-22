@@ -1,4 +1,6 @@
 .specification
+	position relative
+	
 	&__title
 		color var(--grey)
 		font-size 13px
@@ -26,6 +28,22 @@
 				white-space nowrap
 				text-overflow ellipsis
 				overflow hidden
+	
+	&__tooltip
+		position absolute
+		z-index 10
+		top calc(100% - 10px)
+		right 0
+		
+		// &:hover
+		// 	opacity 1
+		// 	visibility visible
+	
+	&:hover
+		.specification__tooltip
+			top 100%
+			opacity 1
+			visibility visible
 	
 	&--large
 		// .specification__title
