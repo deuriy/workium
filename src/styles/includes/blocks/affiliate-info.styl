@@ -1,8 +1,12 @@
 .affiliate-info
 	display grid
 	grid-template-columns auto 1fr
-	gap 25px
-	padding 32px 20px 21px
+	// gap 25px
+	gap 38px
+	align-items center
+	// padding 32px 20px 21px
+	// padding 22px 20px 21px
+	padding 0 31px 0 7px
 	border-radius 10px
 	background var(--light)
 	
@@ -12,16 +16,27 @@
 		padding 20px
 	
 	&__img-wrapper
-		margin-top 3px
+		// margin-top 3px
+		// margin-top -20px
+		// margin-bottom -10px
+		margin-top 2px
 		
 		@media $xs
 			text-align center
+	
+	&__img
+		vertical-align middle
+	
+	&__text-wrapper
+		padding-top 20px
+		padding-bottom 15px
 	
 	&__title
 		// margin-bottom 14px
 		// font-weight 500
 		// font-weight 600
-		margin-bottom 22px
+		// margin-bottom 22px
+		margin-bottom 15px
 		font-size 25px
 		line-height normal
 		// font-size 22px
@@ -48,7 +63,8 @@
 			// margin-bottom 19px
 			margin-bottom 18px
 			// line-height 1.2
-			line-height normal
+			// line-height normal
+			line-height 19px
 			
 			@media $xs
 				margin-bottom 16px
@@ -68,7 +84,8 @@
 					display inline
 	
 	&__more-link-wrapper
-		margin-top 20px
+		// margin-top 20px
+		margin-top 5px
 		margin-right 15px
 		text-align right
 		
@@ -76,6 +93,6 @@
 			margin-top 15px
 			margin-right 10px
 	
-	// &__more-link
-	// 	text-decoration none
-	// 	color #4B97F9
+	&__more-link
+		text-decoration none
+		color #4B97F9
