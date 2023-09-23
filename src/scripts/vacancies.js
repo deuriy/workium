@@ -55,7 +55,7 @@ $(() => {
   $(".cities-select").each((index, el) => {
     $(el).multiSelect({
       selectableHeader: '<div class="ms-selectable__header"><div class="ms-selectable__search-input-box"><input type="search" name="ms_search" class="ms-selectable__search-input" placeholder="Введіть назву міста…" title="Введіть назву міста…" /><button type="button" class="ms-selectable__clear-search-btn" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button></div></div>',
-      selectionHeader: '<div class="ms-selection__header"><div class="ms-selection__label">Обрані міста</div><a href="#" class="btn-beige btn-beige--filter ms-selection__clear-btn">Очистити</a></div>',
+      selectionHeader: '<div class="ms-selection__header"><div class="ms-selection__label">Обрані міста</div><a href="#" class="btn-beige btn-beige--filter ms-selection__clear-btn" style="display: none;">Очистити</a></div>',
       keepOrder: true,
       cssClass: 'ms-container--default',
 
@@ -63,6 +63,8 @@ $(() => {
         let that = this;
         let $searchInput = that.$container.find('.ms-selectable__search-input');
         let $clearSearchBtn = that.$container.find('.ms-selectable__clear-search-btn');
+        // let $clearBtn = that.$container.find('.ms-selection__clear-btn');
+        // console.log($clearBtn);
         let $selectableItems = that.$selectableUl.children().toArray();
         let psArr = [];
 
@@ -118,6 +120,7 @@ $(() => {
           $dropdownBlock.find('.ms-container').addClass('ms-container--empty');
 
           currentSelectedCitiesIds = [];
+          $(this).hide();
 
           event.preventDefault();
         });
@@ -157,25 +160,36 @@ $(() => {
       },
 
       afterSelect: function(values) {
+        let $clearBtn = this.$container.find('.ms-selection__clear-btn');
+        console.log($clearBtn);
+        // console.log(this);
+
         if (!currentSelectedCitiesIds.includes(values[0])) {
           currentSelectedCitiesIds.push(values[0]);
         }
 
         if (currentSelectedCitiesIds.length) {
+          $clearBtn.show();
           this.$container.removeClass('ms-container--default ms-container--empty');
         } else {
+          $clearBtn.hide();
           this.$container.addClass('ms-container--empty');
         }
       },
 
       afterDeselect: function(values) {
+        let $clearBtn = this.$container.find('.ms-selection__clear-btn');
+        console.log($clearBtn);
+        
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
 
         // console.log(currentSelectedCitiesIds);
 
         if (currentSelectedCitiesIds.length) {
+          $clearBtn.show();
           this.$container.removeClass('ms-container--default ms-container--empty');
         } else {
+          $clearBtn.hide();
           this.$container.addClass('ms-container--empty');
         }
       }
