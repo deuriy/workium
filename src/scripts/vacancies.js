@@ -95,7 +95,13 @@ $(() => {
             }
           });
 
-          value ? $clearSearchBtn.show() : $clearSearchBtn.hide();
+          if (value) {
+            $clearSearchBtn.show();
+            $searchInput.addClass('ms-selectable__search-input--not-empty');
+          } else {
+            $clearSearchBtn.hide();
+            $searchInput.removeClass('ms-selectable__search-input--not-empty');
+          }
 
           psArr[0].update();
         });
