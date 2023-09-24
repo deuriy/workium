@@ -59,10 +59,10 @@ $(() => {
       keepOrder: true,
       cssClass: 'ms-container--default',
 
-      afterInit: function (ms) {
+      afterInit: function (container) {
         let that = this;
-        let $searchInput = that.$container.find('.ms-selectable__search-input');
-        let $clearSearchBtn = that.$container.find('.ms-selectable__clear-search-btn');
+        let $searchInput = container.find('.ms-selectable__search-input');
+        let $clearSearchBtn = container.find('.ms-selectable__clear-search-btn');
         // let $clearBtn = that.$container.find('.ms-selection__clear-btn');
         // console.log($clearBtn);
         let $selectableItems = that.$selectableUl.children().toArray();
@@ -81,6 +81,18 @@ $(() => {
             minScrollbarLength: 20,
             suppressScrollX: true
           }));
+        });
+
+        $selectableItems.forEach(el => {
+          // console.log();
+          let $title = $(el).find('span');
+          let description = $(el).data('description');
+          
+          $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
+
+          if (description !== undefined) {
+            $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
+          }
         });
 
         // console.log(this.$selectableUl);
@@ -180,7 +192,7 @@ $(() => {
       afterDeselect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
         console.log($clearBtn);
-        
+
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
 
         // console.log(currentSelectedCitiesIds);
