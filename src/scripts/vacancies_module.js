@@ -94,7 +94,10 @@ function clearFilter () {
   $('.selected-items--filter-params').hide();
 
   setVisibilitySelectedMoreItem(0);
-  changeFiltersBodyMaxHeight(0);
+
+  if ($(window).width() > 767) {
+    changeFiltersBodyMaxHeight(0);
+  }
 }
 
 // function changeFilterParam () {
@@ -472,7 +475,10 @@ $(() => {
     }
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
-    changeFiltersBodyMaxHeight(selectedItemsLength);
+
+    if ($(window).width() > 767) {
+      changeFiltersBodyMaxHeight(selectedItemsLength);
+    }
   });
 
   $('.selected-items__more-btn').click(function(event) {
