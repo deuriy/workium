@@ -66,6 +66,7 @@ $(() => {
         // let $clearBtn = that.$container.find('.ms-selection__clear-btn');
         // console.log($clearBtn);
         let $selectableItems = that.$selectableUl.children().toArray();
+        let $selectionItems = that.$selectionUl.children().toArray();
         let psArr = [];
 
         // console.log('$selectableItems');
@@ -81,6 +82,20 @@ $(() => {
             minScrollbarLength: 20,
             suppressScrollX: true
           }));
+        });
+
+        // console.log($selectionItems);
+
+        $selectionItems.forEach(el => {
+          // console.log();
+          let $title = $(el).find('span');
+          let description = $(el).data('description');
+
+          $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
+
+          if (description !== undefined) {
+            $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
+          }
         });
 
         $selectableItems.forEach(el => {
