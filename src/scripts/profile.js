@@ -146,7 +146,7 @@ $(() => {
 
     if (!$clientAdditionalText.length) return;
 
-    $clientAdditionalText.after(`<textarea class="client-card__additional-textarea">${$clientAdditionalText.text()}</textarea`);
+    $clientAdditionalText.after(`<textarea class="client-card__additional-textarea">${$clientAdditionalText.text().trim()}</textarea>`);
 
   	let $tooltip = $(this).find('.client-card__additional-item-tooltip');
   	let $clientAdditionalTextarea = $clientAdditionalText.next('.client-card__additional-textarea');
