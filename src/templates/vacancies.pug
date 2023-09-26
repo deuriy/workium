@@ -10,6 +10,15 @@ block content
         h1.page-title.vacancies__title Вакансії
         .vacancies__count 1762
       button(type="button" data-fancybox data-src="#add-employer-popup").btn-grey3.btn-grey3--small.fancybox-wide-popup-toggle Додати роботодавця
+    .verified-vacancies.vacancies__verified-box
+      button(type="button").verified-vacancies__close-btn
+      .verified-vacancies__img-wrapper
+        img(src="/img/verified_vacancies.png" alt="").verified-vacancies__img
+      .verified-vacancies__text-wrapper
+        h3.verified-vacancies__title Перевірені вакансії, за які ви отримуєте винагороду!
+        .verified-vacancies__text
+          p Вітаємо в нейромережі WORKIUM! Всі вакансії тут на 100% легальні та офіційні, а ще тут зовсім немає обману та розміщені всі контакти для прямого зв'язку з роботодавцями, щоб ви могли без посередників запитати все, що стосується вашої майбутньої роботи!
+          p Крім цього ви гарантовано отримаєте щедру винагороду тільки за те, що працевлаштуєтесь на вибрану вами вакансію через WORKIUM - нейромережу майбутнього, яке вже настало! &nbsp;#[a(href="") Детальніше]
     include ./includes/blocks/filter
     .vacancy-cards.vacancies__cards
       .vacancy-card.vacancy-cards__item

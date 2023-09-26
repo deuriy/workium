@@ -1,0 +1,58 @@
+.verified-vacancies
+	position relative
+	display grid
+	grid-template-columns auto 1fr
+	align-items center
+	gap 32px
+	padding 31px 41px 31px 31px
+	border-radius 12px
+	border 1px solid #DFE1ED
+	background #FFF
+	
+	@media $smMinus
+		gap 25px
+		padding 20px 40px 20px 20px
+	
+	@media $xs
+		grid-template-columns 100%
+		padding-right 20px
+	
+	&__close-btn
+		position absolute
+		top 12px
+		right 12px
+		width 24px
+		height 24px
+		border none
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23989DB3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1.333 14.667 14.667 1.333m-13.334 0 13.334 13.334'/%3E%3C/svg%3E") center / 16px no-repeat
+		cursor pointer
+	
+	&__img-wrapper
+		padding-top 10px
+		
+		@media $xs
+			text-align center
+	
+	&__title
+		margin-bottom 16px
+		font-weight 600
+		font-size 24px
+		line-height 1.25
+		
+		@media $smMinus
+			margin-bottom 14px
+			font-size 22px
+		
+		@media $xs
+			font-size 20px
+	
+	&__text
+		color #474c60
+		
+		a
+			color #5340FF
+			font-weight 600
+			text-decoration none
+		
+		& > p + p
+			margin-top 8px
