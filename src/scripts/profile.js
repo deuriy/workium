@@ -240,4 +240,10 @@ $(() => {
   	$(this).removeClass('form-search-box__clear-btn--visible');
   	$(this).prev('.form-search-box__input').val('');
   });
+
+  $('.verified-vacancies__close-btn').click(function(event) {
+  	$(this).closest('.verified-vacancies').slideUp();
+
+  	setCookie('hideVerifiedVacancies', 'yes', {'max-age': 3153600000});
+  });
 });
