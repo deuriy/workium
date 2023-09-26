@@ -10,7 +10,18 @@ $(() => {
 		} else {
 			$(this).text('Згорнути статтю');
 			$articleBoxContent.show();
-		}
+
+			let destination = $articleBoxContent.offset().top;
+	    let scrollTop = destination - $('.mobile-header').outerHeight();
+	    // let scrollTop = destination;
+	    let $container = $(window).width() < 768 ? $('.wrapper') : $('html, body');
+
+	    console.log($articleBoxContent);
+
+	    $container.animate( {
+	      scrollTop: scrollTop
+	    }, 500 );
+		}		
 
 		event.preventDefault();
 	});
