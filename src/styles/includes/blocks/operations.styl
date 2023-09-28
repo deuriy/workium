@@ -27,10 +27,22 @@
 	&__tabs-menu-wrapper
 		position relative
 		display grid
-		grid-template-columns repeat(2, auto)
+		// grid-template-columns repeat(2, auto)
+		// grid-template-columns 108px 1fr
+		grid-template-columns auto 1fr
 		justify-content start
-		align-items center
+		// align-items center
+		align-items start
 		gap 19px
+		
+		@media $xs
+			gap 9px
+	
+	&__currencies-select
+		width 105px
+		
+		@media $xs
+			margin-top 6px
 	
 	&__dropdown-block
 		position absolute

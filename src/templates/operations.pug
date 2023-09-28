@@ -49,18 +49,24 @@ block content
       .operations__header
         h3.operations__caption Історія операцій
         .operations__tabs-menu-wrapper
-          a(href="#currency-dropdown-block" data-dropdown-block-trigger).dropdown-toggle.operations__dropdown-toggle Валюта
-          .dropdown-block.operations__dropdown-block#currency-dropdown-block
-            .dropdown-menu
-              ul.dropdown-menu__list
-                li.dropdown-menu__item
-                  a(href="#").dropdown-menu__link PLN
-                li.dropdown-menu__item
-                  a(href="#").dropdown-menu__link CZK
-                li.dropdown-menu__item
-                  a(href="#").dropdown-menu__link USD
-                li.dropdown-menu__item
-                  a(href="#").dropdown-menu__link EUR
+          select(name="currencies" autocomplete="off").dropdown-select.operations__currencies-select#currencies
+            option(value="pln") PLN
+            option(value="czk") CZK
+            option(value="usd") USD
+            option(value="eur") EUR
+
+          //- a(href="#currency-dropdown-block" data-dropdown-block-trigger).dropdown-toggle.operations__dropdown-toggle Валюта
+          //- .dropdown-block.operations__dropdown-block#currency-dropdown-block
+          //-   .dropdown-menu
+          //-     ul.dropdown-menu__list
+          //-       li.dropdown-menu__item
+          //-         a(href="#").dropdown-menu__link PLN
+          //-       li.dropdown-menu__item
+          //-         a(href="#").dropdown-menu__link CZK
+          //-       li.dropdown-menu__item
+          //-         a(href="#").dropdown-menu__link USD
+          //-       li.dropdown-menu__item
+          //-         a(href="#").dropdown-menu__link EUR
           .tabs-menu.tabs-menu--operations-types.operations__tabs-menu
             ul.tabs-menu__list
               //- li.tabs-menu__item
