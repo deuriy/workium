@@ -23,9 +23,7 @@ $(() => {
     dropdownCssClass: ':all:',
     selectionCssClass: ':all:',
     theme: 'dropdown-select',
-    // dropdownAutoWidth: true,
-    dropdownAutoWidth : true,
-    width: 'auto'
+    dropdownAutoWidth: true,
     minimumResultsForSearch: -1
   });
 

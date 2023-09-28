@@ -138,7 +138,9 @@ $(() => {
       },
 
       done: (fancybox, slide) => {
-        if (slide.src.includes('award-popup') && slide.src != '#leader-award-popup') {
+        // console.log(slide);
+
+        if (!slide.contentEl.classList.contains('fancybox-popup--award-dark-bg')) {
           runConfetti();
         } else if (slide.src.includes('employment-smart-work-popup')) {
           // let $showContactsBtn = $(slide.contentEl).find('.fancybox-popup__show-contacts-btn');
