@@ -358,7 +358,9 @@
 			a
 				color #5340FF
 	
-	&--add-employer
+	&--add-employer,
+	&--successfull-payment,
+	&--error-payment
 		@media $xs
 			overflow auto
 			border-radius 0
@@ -385,6 +387,29 @@
 			
 			& > p + p
 				margin-top 8px
+	
+	&--successfull-payment,
+	&--error-payment
+		.fancybox-popup__title
+			margin-bottom 16px
+			
+		.fancybox-popup__text
+			width 520px
+			max-width 100%
+			margin-right auto
+			margin-left auto
+			text-align center
+	
+	&--error-payment
+		.fancybox-popup__buttons
+			width 471px
+			max-width 100%
+			margin 32px auto 0
+			grid-template-columns repeat(2, 1fr)
+			gap 12px
+			
+			@media $xxs
+				grid-template-columns 100%
 		
 	&.fancybox__content
 		button.f-button.is-close-btn

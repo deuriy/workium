@@ -3,6 +3,8 @@ extends layouts/user_profile_guest
 block content
   .operations-page.operations-page--withdrawal-funds
     h1.page-title.operations-page__title Баланс
+    button(type="button" data-fancybox data-src="#successfull-payment-popup").btn-grey3.btn-grey3--small.fancybox-wide-popup-toggle Попап успіху
+    button(type="button" data-fancybox data-src="#error-payment-popup").btn-grey3.btn-grey3--small.fancybox-wide-popup-toggle Попап помилки
     .wallets.operations-page__wallets
       .wallet.wallet--active.wallets__item
         .wallet__currency PLN
@@ -329,3 +331,6 @@ block content
             .withdrawal-form__actions
               button(type="submit").btn-default.btn-default--withdrawal-form Зняти кошти
               button(type="reset").btn-grey Скасувати
+
+  include ./includes/blocks/successfull-payment-popup
+  include ./includes/blocks/error-payment-popup
