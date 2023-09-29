@@ -30,7 +30,7 @@ $(() => {
 
   const testimonialsSwiper = new Swiper('.testimonials-swiper', {
     modules: [Navigation],
-    // loop: true,
+    loop: true,
     slidesPerView: 'auto',
     // centeredSlides: true,
     spaceBetween: 8,
@@ -43,11 +43,13 @@ $(() => {
 
     breakpoints: {
       768: {
+        loop: false,
         slidesPerView: 3,
         spaceBetween: 16,
         centeredSlides: false,
       },
       1024: {
+        loop: false,
         slidesPerView: 3,
         spaceBetween: 32,
         centeredSlides: false,
