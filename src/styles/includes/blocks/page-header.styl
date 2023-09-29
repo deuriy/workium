@@ -1,63 +1,103 @@
-.page-header	
+.page-header
+	display grid
+	// grid-template-columns auto 1fr
+	grid-template-columns repeat(2, 1fr)
+	gap 34px
+	align-items center
+	padding 32px 30px
+	border-radius 16px
+	background var(--light)
+	
+	@media $mdMinus
+		gap 20px
+		padding 24px 20px
+	
+	@media $xs
+		grid-template-columns 100%
+		gap 18px
+		padding 20px 16px
+	
 	&__img-wrapper
-		padding 34px 0 7px
-		border-top-right-radius 8px
-		border-top-left-radius 8px
-		background #ECEEFA
+		// padding 34px 0 7px
+		// border-top-right-radius 8px
+		// border-top-left-radius 8px
+		// background #ECEEFA
+		padding-right 28px
 		text-align center
 		
-		@media $1440-
-			padding 20px 0 5px
+		@media $mdMinus
+			padding-right 0
+		
+		// @media $1440-
+		// 	padding 20px 0 5px
 	
 	&__img
+		width 450px
 		vertical-align middle
 		
-		@media $1440-
-			max-height 280px
+		// @media $1440-
+		// 	max-height 280px
 		
-		@media $mdMinus
-			max-height 240px
+		// @media $mdMinus
+		// 	max-height 240px
 		
-		@media $xs
-			max-height 200px
+		// @media $xs
+		// 	max-height 200px
 	
 	&__text-wrapper
-		padding 50px 30px 46px
-		border-bottom-right-radius 8px
-		border-bottom-left-radius 8px
-		background var(--light)
-		text-align center
+		@media $xs
+			display grid
+			grid-template-columns 100%
+		// 	padding-top 17px
+		// padding 50px 30px 46px
+		// padding 50px 17px 46px
+		// border-bottom-right-radius 8px
+		// border-bottom-left-radius 8px
+		// background var(--light)
+		// text-align center
 		
-		@media $1440-
-			padding 40px 20px
+		// @media $1440-
+		// 	padding 40px 20px
 		
-		@media $mdMinus
-			padding 25px 15px
+		// @media $mdMinus
+		// 	padding 25px 15px
 	
-	&__title
-		margin-bottom 40px
-		font-weight 600
-		font-size 20px
-		line-height normal
+	// &__title
+	// 	margin-bottom 40px
+	// 	font-weight 600
+	// 	font-size 20px
+	// 	line-height normal
 		
-		@media $1440-
-			margin-bottom 25px
-			font-size 19px
+	// 	@media $1440-
+	// 		margin-bottom 25px
+	// 		font-size 19px
 		
-		@media $smMinus
-			font-size 18px
+	// 	@media $smMinus
+	// 		font-size 18px
+		
+	// 	@media $xs
+	// 		margin-bottom 20px
+	// 		font-size 17px
+	
+	&__conditions
+		margin-bottom 24px
 		
 		@media $xs
-			margin-bottom 20px
-			font-size 17px
+			margin-top 16px
+			margin-bottom 0
 	
 	&__text
 		font-weight 500
-		font-size 16px
+		font-size 15px
+		line-height 1.6
 		
-		@media $1440-
-			width 620px
-			max-width 100%
-			margin-right auto
-			margin-left auto
-			font-size 15px
+		@media $xs
+			order -1
+		// font-size 16px
+		
+		// @media $1440-
+		// 	width 620px
+		// 	max-width 100%
+		// 	margin-right auto
+		// 	margin-left auto
+		// 	font-size 15px

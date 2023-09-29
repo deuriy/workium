@@ -2,14 +2,28 @@ extends layouts/user_profile
 
 block content
   .docs-page
-    h1.page-title.docs-page__title Документи
+    h1.page-title.docs-page__title.hidden-xs Документи
     .page-header.docs-page__header
       .page-header__img-wrapper
         img(src="/img/folder.png" alt="Документи").page-header__img
       .page-header__text-wrapper
-        h2.page-header__title Виготовлення будь-яких документів зі #[span.highlighted-text 100% гарантією] від WORKIUM!
+        //- h2.page-header__title Виготовлення будь-яких документів зі #[span.highlighted-text 100% гарантією] від WORKIUM!
+        .conditions.page-header__conditions
+          ul.conditions__list
+            li.conditions__item
+              h3.conditions__item-title.conditions__item-title--green 100% гарантія
+              .conditions__item-text
+                p на виготовлення будь-яких документів від WORKIUM!
+            li.conditions__item
+              h3.conditions__item-title.conditions__item-title--blue 10% кешбеку
+              .conditions__item-text
+                p від суми замовлення ви миттєво отримаєте на власний баланс
+            li.conditions__item
+              h3.conditions__item-title.conditions__item-title--brown 30% від суми
+              .conditions__item-text
+                p кешбеку друзів, коли порекомендуєте їм WORKIUM
         .page-header__text
-          p #[span.semibold WORKIUM Документи] - це більше 100 видів документів та понад 1000 пропозицій від роботодавців Польщі, Чехії та інших країн світу.
+          p #[strong WORKIUM Документи] – це більше 100 видів послуг і понад 1000 пропозицій від роботодавців Польщі, Чехії та інших країн світу.
     .tabs.docs-page__tabs
       .tabs__menu-wrapper
         .tabs__dropdown-wrapper
