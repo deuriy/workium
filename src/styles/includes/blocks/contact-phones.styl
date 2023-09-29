@@ -90,3 +90,24 @@
 			grid-template-columns 1fr auto
 			align-items center
 			gap 12px
+	
+	&--two-col
+		.contact-phones__list
+			display grid
+			grid-template-columns repeat(2, auto)
+			gap 12px 24px
+			
+			@media $xs
+				gap 10px 16px
+			
+			@media $xxs
+				display inline-grid
+				grid-template-columns 100%
+		
+		.contact-phones__item
+			& + .contact-phones__item
+				margin-top 0
+	
+	&--center
+		.contact-phones__list
+			justify-content center

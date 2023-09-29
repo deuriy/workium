@@ -32,7 +32,7 @@ $(() => {
     modules: [Navigation],
     // loop: true,
     slidesPerView: 'auto',
-    centeredSlides: true,
+    // centeredSlides: true,
     spaceBetween: 8,
 
     navigation: {

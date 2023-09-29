@@ -79,3 +79,18 @@
 		
 		.contact-buttons__list
 			gap 12px
+	
+	&--contact-section
+		width 100%
+		
+		.contact-buttons__list
+			display grid
+			grid-template-columns repeat(2, 258px)
+			justify-content center
+			gap 24px
+			
+			@media $xs
+				gap 16px
+			
+			@media $xxs
+				grid-template-columns 100%
