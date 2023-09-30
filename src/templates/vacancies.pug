@@ -9,16 +9,19 @@ block content
       .vacancies__title-wrapper
         h1.page-title.vacancies__title Вакансії
         .vacancies__count 1762
-      button(type="button" data-fancybox data-src="#add-employer-popup").btn-grey3.btn-grey3--small.fancybox-wide-popup-toggle Додати роботодавця
+      button(type="button" data-fancybox data-src="#add-employer-popup").btn-grey3.btn-grey3--small.fancybox-wide-popup-toggle
+        span.hidden-xxs Додати роботодавця
+        <svg class="hidden-xxsPlus" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4.5V19.5M19.5 12H4.5" stroke="#666B80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     .verified-vacancies.vacancies__verified-box
       button(type="button").verified-vacancies__close-btn
       .verified-vacancies__img-wrapper
         img(src="/img/verified_vacancies.png" alt="").verified-vacancies__img
-      .verified-vacancies__text-wrapper
-        h3.verified-vacancies__title Перевірені вакансії, за які ви отримуєте винагороду!
-        .verified-vacancies__text
-          p Вітаємо в нейромережі WORKIUM! Всі вакансії тут на 100% легальні та офіційні, а ще тут зовсім немає обману та розміщені всі контакти для прямого зв'язку з роботодавцями, щоб ви могли без посередників запитати все, що стосується вашої майбутньої роботи!
-          p Крім цього ви гарантовано отримаєте щедру винагороду тільки за те, що працевлаштуєтесь на вибрану вами вакансію через WORKIUM - нейромережу майбутнього, яке вже настало! &nbsp;#[a(href="") Детальніше]
+      h3.verified-vacancies__title Перевірені вакансії, за які ви отримуєте винагороду!
+      .verified-vacancies__text
+        p Вітаємо в нейромережі WORKIUM! Всі вакансії тут на 100% легальні та офіційні, а ще тут зовсім немає обману#[span.hidden-xxs та розміщені всі контакти для прямого зв'язку з роботодавцями, щоб ви могли без посередників запитати все, що стосується вашої майбутньої роботи!]#[span.hidden-xxsPlus . Крім цього ви гарантовано отримаєте щедру винагороду тільки за те, що працевлаштуєтесь на вибрану вами вакансію через WORKIUM - нейромережу майбутнього, яке вже настало! &nbsp;#[a(href="") Детальніше]]
+        p.hidden-xxs Крім цього ви гарантовано отримаєте щедру винагороду тільки за те, що працевлаштуєтесь на вибрану вами вакансію через WORKIUM - нейромережу майбутнього, яке вже настало! &nbsp;#[a(href="") Детальніше]
     include ./includes/blocks/filter
     .vacancy-cards.vacancies__cards
       .vacancy-card.vacancy-cards__item

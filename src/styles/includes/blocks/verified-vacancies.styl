@@ -3,19 +3,24 @@
 	display grid
 	grid-template-columns auto 1fr
 	align-items center
-	gap 32px
+	column-gap 32px
 	padding 31px 41px 31px 31px
 	border-radius 12px
 	border 1px solid #DFE1ED
 	background #FFF
 	
 	@media $smMinus
-		gap 25px
+		column-gap 25px
 		padding 20px 40px 20px 20px
 	
 	@media $xs
-		grid-template-columns 100%
+		// grid-template-columns 100%
+		align-items start
 		padding-right 20px
+	
+	@media $xxs
+		gap 4px 16px
+		padding 15px
 	
 	&__close-btn
 		position absolute
@@ -26,12 +31,20 @@
 		border none
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23989DB3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1.333 14.667 14.667 1.333m-13.334 0 13.334 13.334'/%3E%3C/svg%3E") center / 16px no-repeat
 		cursor pointer
+		
+		@media $xs
+			top 14px
+			right 10px
+			background-size 18px
 	
 	&__img-wrapper
+		grid-row 1 / 3
 		padding-top 10px
 		
 		@media $xs
-			text-align center
+			grid-row auto
+			width 64px
+			padding-top 0
 	
 	&__title
 		margin-bottom 16px
@@ -44,10 +57,20 @@
 			font-size 22px
 		
 		@media $xs
+			margin-bottom 0
 			font-size 20px
+		
+		@media $xxs
+			margin-top 3px
+			padding-right 20px
+			font-size 17px
+			line-height 1.294117647058824
 	
 	&__text
 		color #474c60
+		
+		@media $xs
+			grid-column 1 / 3
 		
 		a
 			color #5340FF
