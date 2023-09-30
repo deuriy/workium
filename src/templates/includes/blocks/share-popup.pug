@@ -1,12 +1,39 @@
 .fancybox-popup.fancybox-popup--share#share-popup(style="display: none;")
   h3.fancybox-popup__title Поділитись
-  .action-menu
-    ul.action-menu__list
-      li.action-menu__item
-        a(href="javascript:;" data-action="share").action-menu__link
-          include ../svg/share
-          span.action-menu__link-text Поділитися з друзями
-      li.action-menu__item
-        a(href="javascript:;" data-action="copyURL").action-menu__link
-          include ../svg/copy
-          span.action-menu__link-text Скопіювати посилання
+  .share-btns
+    ul.share-btns__list
+      li.share-btns__item
+        a(href="javascript:;" data-action="share").share-btns__link
+          .btn-default.btn-default--rounded
+            img(src="/img/users.svg" alt="").share-btns__icon
+          .share-btns__item-text Поділитися з друзями
+      li.share-btns__item
+        a(href="javascript:;" data-action="copyURL").share-btns__link
+          .btn-default.btn-default--rounded
+            img(src="/img/link.svg" alt="").share-btns__icon
+          .share-btns__item-text Скопіювати посилання
+  .fancybox-popup__text
+    p.semibold Не втрачайте вигоду! ⚠️
+    p Зараз ви хочете поділитись загальним посиланням, яке не включає бонуси. Тому можна зробити краще!
+    p Увійдіть або зареєструйтесь в два кліка та постійно отримуйте пасивний дохід просто рекомендуючи нейромережу WORKIUM точно так само, як ви це робите зараз.
+  .auth-btns.fancybox-popup__auth-btns
+    button(type="button" data-src="#authorization-popup" data-active-tab-number="2").btn-grey2.btn-grey2--fancybox-popup.fancybox-popup-toggle Вхід
+    button(type="button" data-src="#authorization-popup").btn-grey2.btn-grey2--fancybox-popup.fancybox-popup-toggle Реєстрація
+
+.fancybox-popup.fancybox-popup--share#share-popup-guest(style="display: none;")
+  h3.fancybox-popup__title Поділитись
+  .share-btns
+    ul.share-btns__list
+      li.share-btns__item
+        a(href="javascript:;" data-action="share").share-btns__link
+          .btn-default.btn-default--rounded
+            img(src="/img/users.svg" alt="").share-btns__icon
+          .share-btns__item-text Поділитися з друзями
+      li.share-btns__item
+        a(href="javascript:;" data-action="copyURL").share-btns__link
+          .btn-default.btn-default--rounded
+            img(src="/img/link.svg" alt="").share-btns__icon
+          .share-btns__item-text Скопіювати посилання
+  .fancybox-popup__text
+    p.semibold Дякуємо за активність! 👏🏻
+    p Абсолютно всі посилання у нейромережі WORKIUM є партнерськими, тому якою б сторінкою чи розділом ви не поділилися б – будьте впевнені, що користувач гарантовано буде зарахований до вашої команди, а ви отримаєте винагороду за кожне його відпрацювання та кешбек за замовлення!

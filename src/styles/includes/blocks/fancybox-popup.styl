@@ -257,12 +257,36 @@
 			border-radius 0
 	
 	&--share
+		border-top-right-radius 16px
+		border-top-left-radius 16px
+		
+		.fancybox-popup__title
+			font-weight 600
+			font-size 20px
+			line-height 1.4
+			
+		.fancybox-popup__text
+			margin 14px -16px 0
+			padding 16px
+			border-top 1px solid #DFE1ED
+			color #666B80
+			font-weight 400
+			line-height 1.466666666666667
+			
+			& > p + p
+				margin-top 8px
+		
+		.fancybox-popup__auth-btns
+			margin-bottom 24px
+			
 		@media $xs
-			padding-bottom 8px
+			// padding-bottom 8px
+			padding-bottom 0
 			
 	&--filter-element
 		@media $xs
-			padding-bottom 8px
+			// padding-bottom 8px
+			padding-bottom 0
 	
 	&--order-service,
 	&--book-vacancy,

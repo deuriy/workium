@@ -361,15 +361,18 @@ $(() => {
     copyText(copyLinkInput);
     copyLinkInput.remove();
 
-    let copyURLText = copyURL.querySelector('.action-menu__link-text');
-    copyURL.classList.add('action-menu__link--success');
+    let copyURLText = copyURL.querySelector('.share-btns__item-text');
+    let copyURLIcon = copyURL.querySelector('.share-btns__icon');
+    // copyURL.classList.add('action-menu__link--success');
     copyURLText.textContent = 'Скопійовано!';
+    copyURLIcon.setAttribute('src', '/img/context_menu/checked_ok_white.svg');
 
     setTimeout(() => {
-      copyURL.classList.remove('action-menu__link--success');
+      // copyURL.classList.remove('action-menu__link--success');
       copyURLText.textContent = 'Скопіювати посилання';
+      copyURLIcon.setAttribute('src', '/img/link.svg');
 
-      Fancybox.close();
+      // Fancybox.close();
     }, 800);
 
     e.preventDefault();
