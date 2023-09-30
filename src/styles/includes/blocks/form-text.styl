@@ -40,6 +40,12 @@
 		padding-left 42px
 		background var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m19 19-5.197-5.197m0 0A7.5 7.5 0 1 0 3.196 3.196a7.5 7.5 0 0 0 10.607 10.607Z'/%3E%3C/svg%3E") 15px center / 20px no-repeat
 		
+		&::-webkit-search-decoration,
+		&::-webkit-search-cancel-button,
+		&::-webkit-search-results-button,
+		&::-webkit-search-results-decoration
+			-webkit-appearance none
+		
 		+placeholder()
 			color: #A1A7B2
 		
