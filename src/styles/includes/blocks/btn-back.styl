@@ -32,10 +32,22 @@
 	
 	&--mobile-popup
 		&::before
-			background-size 10px
+			width 24px
+			height 24px
+			background-size 11px
+			
+			@media $425-
+				width 20px
+				height 20px
+				background-size 10px
 	
 	&--small
-		font-size 17px
+		gap 17px
+		font-size 20px
+		
+		@media $425-
+			gap 14px
+			font-size 17px
 	
 	&--mobile-filters
 		&::before

@@ -6,6 +6,9 @@
 	text-align center
 	
 	@media $xxs
+		padding 34px 0 25px
+		
+	@media $425-
 		padding 20px 0
 	
 	&__icon-wrapper
@@ -18,14 +21,21 @@
 		background #222D42
 		
 		@media $xxs
+			width 146px
+			height 146px
+			margin-bottom 20px
+		
+		@media $425-
 			width 120px
 			height 120px
-			margin-bottom 20px
 	
 	&__icon
 		width 62px
 		
 		@media $xxs
+			width 50px
+			
+		@media $425-
 			width 42px
 	
 	&__avatar
@@ -46,6 +56,10 @@
 		font-size 24px
 		
 		@media $xxs
+			margin-bottom 20px
+			font-size 24px
+		
+		@media $425-
 			margin-bottom 16px
 			font-size 20px
 	
@@ -60,12 +74,18 @@
 			color #FFF
 		
 		@media $xxs
+			font-size 17px
+			
+		@media $425-
 			font-size 14px
 		
 		& > p + p
 			margin-top 22px
 			
 			@media $xxs
+				margin-top 20px
+				
+			@media $425-
 				margin-top 18px
 	
 	&--user-profile
