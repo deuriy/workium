@@ -248,12 +248,14 @@
 			border-radius 16px
 		
 		@media $xs
-			height 100vh
+			// height 100vh
+			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
 	
 	&--cities
 		@media $xs
-			height 100vh
+			// height 100vh
+			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
 	
 	&--share
