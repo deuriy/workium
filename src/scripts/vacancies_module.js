@@ -226,8 +226,10 @@ $(() => {
 
   document.addEventListener("vacanciesLoaded", function(event) {
     if ($(window).width() < 768) {
+
+      console.log(document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)'));
       
-      document.querySelectorAll('.promo-blocks-swiper').forEach(item => {
+      document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
         const promoBlocksSwiper = new Swiper(item, {
           modules: [Pagination],
           // loop: true,
@@ -242,7 +244,7 @@ $(() => {
           },
         });
 
-        console.log(promoBlocksSwiper);
+        // console.log(event.detail.response);
 
         if (promoBlocksSwiper.slides.length === 1) {
           $(promoBlocksSwiper.pagination.el).hide();
@@ -250,6 +252,23 @@ $(() => {
       });
     }
   });
+
+  // const config = {
+  //   attributes: true,
+  //   childList: true,
+  //   subtree: true
+  // };
+
+  // const observeCallback = function(mutationsList, observer) {
+  //   for (let mutation of mutationsList) {
+  //     if (mutation.type === 'childList') {
+  //       console.log(mutation);
+  //     }
+  //   }
+  // };
+
+  // const observer = new MutationObserver(observeCallback);
+  // observer.observe(document, config);
 
   $(document).on('click', '.filter .selected-item__remove-link', function(e) {
     let $selectedItem = $(this).closest('.selected-items__item');
