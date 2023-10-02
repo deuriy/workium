@@ -22,8 +22,12 @@
 		&--support
 			grid-template-columns repeat(2, auto)
 			justify-content start
-			gap 17px
-			margin 7px 6px 20px
+			gap 20px
+			margin 12px 10px 20px
+			
+			@media $425-
+				gap 17px
+				margin 7px 6px 20px
 		
 		&--closed-section
 			margin-top 4px
@@ -34,6 +38,12 @@
 				margin-right 50px
 				margin-left 10px
 	
+	&__icon
+		width 33px
+		
+		@media $425-
+			width 28px
+	
 	&__title
 		font-weight 500
 		font-size 24px
@@ -42,17 +52,26 @@
 			display grid
 			grid-template-columns 1fr auto
 			gap 3px
-			margin-top -5px
-			font-size 20px
+			margin-top -7px
+			font-size 24px
 			white-space nowrap
+			
+			@media $425-
+				margin-top -5px
+				font-size 20px
 			
 			&::after
 				content ""
-				width 8px
-				height 8px
-				margin-top 5px
+				width 9px
+				height 9px
+				margin-top 7px
 				border-radius 50%
 				background #38CA16
+				
+				@media $425-
+					width 8px
+					height 8px
+					margin-top 5px
 		
 		&--closed-section
 			font-size 21px
@@ -133,4 +152,7 @@
 				margin 0 10px
 	
 	&__support-box
-		margin 35px 8px
+		margin 43px 12px
+		
+		@media $425-
+			margin 35px 8px
