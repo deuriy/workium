@@ -556,133 +556,27 @@ $(() => {
     }
   });
 
-  // $('.hint').click(function(e) {
+  // $('.tooltip__close-btn').click(function(e) {
   //   e.preventDefault();
-  // });
 
-  // $('.hint__text').click(function(e) {
-  //   let $hint = $(this).closest('.hint');
-  //   let $tooltip = $hint.find('.hint__tooltip');
-  //   let $visibleTooltip = $('.tooltip--visible');
+  //   let $tooltip = $(this).closest('.tooltip');
 
-  //   if ($visibleTooltip[0] != $tooltip[0]) {
-  //     $visibleTooltip.find('.tooltip__close-btn').click();
-  //   }
-
-  //   $tooltip.toggleClass('tooltip--visible');
-
-  //   if ($hint.hasClass('hint--tooltip-visible')) {
-  //     setTimeout(() => {
-  //       $hint.removeClass('hint--tooltip-visible');
-  //     }, 300);
-  //   } else {
-  //     $hint.addClass('hint--tooltip-visible');
-  //   }
-  // });
-
-  // $('.hint__text').click(function(e) {
-  //   let $hint = $(this).closest('.hint');
-  //   let $tooltip = $hint.find('.hint__tooltip');
-  //   // let tooltipCoords = $tooltip[0].getBoundingClientRect();
-
-  //   $hint.toggleClass('hint--tooltip-visible');
-
-  //   // console.log($(window).width());
-  //   // console.log(tooltipCoords);
-
-  //   // console.log($(window).width() < tooltipCoords.right);
-
-  //   // if ($(window).width() < tooltipCoords.right) {
-  //   //   console.log('Bottom');
-  //   //   $tooltip.addClass('hint__tooltip--bottom');
-  //   // } else {
-  //   //   console.log('Right');
-  //   //   $tooltip.addClass('hint__tooltip--right');
-  //   // }
-
-  //   $tooltip.toggleClass('tooltip--visible');
-  //   // console.log
-  // });
-
-  $('.tooltip__close-btn').click(function(e) {
-    e.preventDefault();
-
-    let $tooltip = $(this).closest('.tooltip');
-
-    $tooltip.removeClass('tooltip--visible');
-
-    setTimeout(() => {
-      $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
-      $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
-    }, 300);
-  });
-
-  // $(document).click(function(e) {
-  //   let $isTooltip = $(e.target).closest('.tooltip--visible');
-  //   let $hintTooltipTrigger = $(e.target).closest('.hint');
-  //   let $cashbackTooltipTrigger = $(e.target).closest('.cashback');
-
-  //   // console.log($isTooltip);
-
-  //   if (!$isTooltip.length && !$hintTooltipTrigger.length && !$cashbackTooltipTrigger.length) {
-  //     $('.tooltip--visible').removeClass('tooltip--visible');
-
-  //     setTimeout(() => {
-  //       $('.tooltip').closest('.hint').removeClass('hint--tooltip-visible');
-  //       $('.tooltip').closest('.cashback').removeClass('cashback--tooltip-visible');
-  //     }, 300);
-  //   }
-  // });
-
-  // $('.cashback__sum').click(function(e) {
-  //   let $cashback = $(this).closest('.cashback');
-  //   let $tooltip = $cashback.find('.cashback__tooltip');
-  //   let $visibleTooltip = $('.tooltip--visible');
-
-  //   if ($visibleTooltip[0] != $tooltip[0]) {
-  //     $visibleTooltip.find('.tooltip__close-btn').click();
-  //   }
-
-  //   $tooltip.toggleClass('tooltip--visible');
-
-  //   if ($cashback.hasClass('cashback--tooltip-visible')) {
-  //     setTimeout(() => {
-  //       $cashback.removeClass('cashback--tooltip-visible');
-  //     }, 300);
-  //   } else {
-  //     $cashback.addClass('cashback--tooltip-visible');
-  //   }
-
-  // });
-
-  // $('.hint__text').mouseover(function(event) {
-  //   let $hint = $(this).closest('.hint');
-  //   $hint.addClass('hint--tooltip-visible');
-  // });
-
-  // $('.hint__text').mouseout(function(event) {
-  //   let $hint = $(this).closest('.hint');
+  //   $tooltip.removeClass('tooltip--visible');
 
   //   setTimeout(() => {
-  //     $hint.removeClass('hint--tooltip-visible');
-  //   }, 2000);
+  //     $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
+  //     $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
+  //   }, 300);
   // });
 
-  $('[data-tooltip]').mouseover(function(event) {
-    // let $visibleTooltip = $('.tooltip--visible');
+  $(document).on('mouseover', '[data-tooltip]', function(event) {
     let $tooltip = $(this).find('.tooltip');
-
-    // $visibleTooltip.removeClass('tooltip--visible');
     $tooltip.addClass('tooltip--visible');
   });
 
-  $('[data-tooltip]').mouseout(function(event) {
+  $(document).on('mouseout', '[data-tooltip]', function(event) {
     let $tooltip = $(this).find('.tooltip');
-    // $tooltip.Class('tooltip--visible');
-
-    // setTimeout(() => {
-      $tooltip.removeClass('tooltip--visible');
-    // }, 500);
+    $tooltip.removeClass('tooltip--visible');
   });
 
   // Article chapters
