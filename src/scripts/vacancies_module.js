@@ -39,7 +39,7 @@ function changeFiltersBodyMaxHeight (selectedItemsLength) {
   let $additionalFiltersBody = $('.additional-filters__body');
 
   if (selectedItemsLength) {
-    $additionalFiltersBody.css('max-height', `calc(${473 - $additionalFiltersHeaderBottom.height()}px)`);
+    $additionalFiltersBody.css('max-height', `calc(100% - ${$additionalFiltersHeaderBottom.height()}px)`);
   } else {
     $additionalFiltersBody.css('max-height', '');
   }
@@ -103,9 +103,9 @@ function clearFilter () {
 
   setVisibilitySelectedMoreItem(0);
 
-  if ($(window).width() > 767) {
-    changeFiltersBodyMaxHeight(0);
-  }
+  // if ($(window).width() > 767) {
+  //   changeFiltersBodyMaxHeight(0);
+  // }
 }
 
 function removeItemFromArray (array, value) {
@@ -463,9 +463,9 @@ $(() => {
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
 
-    if ($(window).width() > 767) {
-      changeFiltersBodyMaxHeight(selectedItemsLength);
-    }
+    // if ($(window).width() > 767) {
+    //   changeFiltersBodyMaxHeight(selectedItemsLength);
+    // }
   });
 
   $('.selected-items__more-btn').click(function(event) {
