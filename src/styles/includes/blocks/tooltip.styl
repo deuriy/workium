@@ -46,6 +46,11 @@
 		background-color #eeeff3
 	
 	&--extended
+		position absolute
+		z-index 100
+		top 50%
+		transform translateY(-50%)
+		left 100%
 		display grid
 		grid-template-columns 1fr auto
 		gap 4px
@@ -65,14 +70,43 @@
 			width 8px
 			height 10px
 			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 10'%3E%3Cpath fill='%232A364C' d='m0 5 8-5v10L0 5Z'/%3E%3C/svg%3E") center no-repeat
+		
+		&.tooltip--visible
+			left calc(100% + 14px)
 	
-	&--extended-top
+	&--extended-bottom
+		top calc(100% - 10px)
+		left -35%
+		// margin-left 25%
+		transform none
+		// transform translateX(-25%)
+		
 		&::before
 			top -8px
 			right 0
 			left 0
 			margin auto
-			transform rotate(90deg) 
+			transform rotate(90deg)
+		
+		&.tooltip--visible
+			top 100%
+			left -35%
+			
+	&--extended-left
+		right 100%
+		left auto
+		
+		&::before
+			// top -8px
+			margin-top -8px
+			right -8px
+			left auto
+			// margin auto
+			transform rotate(180deg)
+		
+		&.tooltip--visible
+			left auto
+			right calc(100% + 14px)
 	
 	// &--phone-copied
 	// 	padding-right 5px

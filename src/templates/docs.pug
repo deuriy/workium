@@ -58,7 +58,7 @@ block content
             a(href="#tooltip-popup").fancybox-popup-toggle.hint.service-box__hint.hidden-smPlus
               .hint__text можливо частинами
             .hint.service-box__hint.hidden-xs
-              .hint__text можливо частинами
+              .hint__text(data-tooltip) можливо частинами
                 .tooltip.tooltip--extended.hint__tooltip
                   .tooltip__text-wrapper
                     h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
@@ -68,7 +68,7 @@ block content
               .cashback__text
                 .
                   Повертаємо на ваш баланс: 
-                span.cashback__sum.hidden-xs 100 UAH
+                span.cashback__sum.hidden-xs(data-tooltip) 100 UAH
                   .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
                     .tooltip__text-wrapper
                       h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
@@ -88,21 +88,24 @@ block content
               p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
             .price.service-box__price 1500 UAH
             .hint.service-box__hint.hidden-xs
-              .hint__text можливо частинами
-              .tooltip.tooltip--extended.hint__tooltip
-                .tooltip__text-wrapper
-                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
-                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
-                button(type="button").tooltip__close-btn
+              .hint__text(data-tooltip) можливо частинами
+                .tooltip.tooltip--extended.tooltip--extended-left.hint__tooltip
+                  .tooltip__text-wrapper
+                    h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                    .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                  //- button(type="button").tooltip__close-btn
             .cashback.service-box__cashback
-              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum 100 UAH]
-              .tooltip.tooltip--extended.cashback__tooltip
-                .tooltip__text-wrapper
-                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
-                  .tooltip__text
-                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
-                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
-                button(type="button").tooltip__close-btn
+              .cashback__text
+                .
+                  Повертаємо на ваш баланс: 
+                span.cashback__sum.hidden-xs(data-tooltip) 100 UAH
+                  .tooltip.tooltip--extended.tooltip--extended-left.cashback__tooltip.hidden-xs
+                    .tooltip__text-wrapper
+                      h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                      .tooltip__text
+                        p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                        p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+                  //- button(type="button").tooltip__close-btn
             a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
             //- .service-box__footer
             //-   a(href="#").more-link.more-link--dark Детальніше
@@ -116,21 +119,23 @@ block content
             a(href="#tooltip-popup").fancybox-popup-toggle.hint.service-box__hint.hidden-smPlus
               .hint__text можливо частинами
             .hint.service-box__hint.hidden-xs
-              .hint__text можливо частинами
-              .tooltip.tooltip--extended.hint__tooltip
-                .tooltip__text-wrapper
-                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
-                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
-                button(type="button").tooltip__close-btn
+              .hint__text(data-tooltip) можливо частинами
+                .tooltip.tooltip--extended.hint__tooltip
+                  .tooltip__text-wrapper
+                    h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                    .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                  //- button(type="button").tooltip__close-btn
             .cashback.service-box__cashback
-              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum.hidden-xs 100 UAH] #[a(href="#cashback-tooltip-popup").fancybox-popup-toggle.cashback__sum.hidden-smPlus 100 UAH]
-              .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
-                .tooltip__text-wrapper
-                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
-                  .tooltip__text
-                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
-                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
-                button(type="button").tooltip__close-btn
+              .cashback__text
+                .
+                  Повертаємо на ваш баланс: 
+                span.cashback__sum.hidden-xs(data-tooltip) 100 UAH
+                  .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
+                    .tooltip__text-wrapper
+                      h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                      .tooltip__text
+                        p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                        p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
             a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
             //- a(href="#").btn-action.service-box__order-btn Замовити логістичні послуги
             //- .service-box__footer
@@ -145,101 +150,104 @@ block content
             a(href="#tooltip-popup").fancybox-popup-toggle.hint.service-box__hint.hidden-smPlus
               .hint__text можливо частинами
             .hint.service-box__hint.hidden-xs
-              .hint__text можливо частинами
-              .tooltip.tooltip--extended.hint__tooltip
-                .tooltip__text-wrapper
-                  h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
-                  .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
-                button(type="button").tooltip__close-btn
+              .hint__text(data-tooltip) можливо частинами
+                .tooltip.tooltip--extended.tooltip--extended-left.hint__tooltip
+                  .tooltip__text-wrapper
+                    h4.tooltip__title Замовляйте вигідно, навіть немаючи повної суми!
+                    .tooltip__text Перший платіж #[strong 1000 UAH]. Решту #[strong 750 UAH] – по виконанні. #[strong 0%] комісій та переплат.
+                  //- button(type="button").tooltip__close-btn
             .cashback.service-box__cashback
-              .cashback__text Повертаємо на ваш баланс: #[span.cashback__sum.hidden-xs 100 UAH] #[a(href="#cashback-tooltip-popup").fancybox-popup-toggle.cashback__sum.hidden-smPlus 100 UAH]
-              .tooltip.tooltip--extended.cashback__tooltip.hidden-xs
-                .tooltip__text-wrapper
-                  h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
-                  .tooltip__text
-                    p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
-                    p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
-                button(type="button").tooltip__close-btn
+              .cashback__text
+                .
+                  Повертаємо на ваш баланс: 
+                span.cashback__sum.hidden-xs(data-tooltip) 100 UAH
+                  .tooltip.tooltip--extended.tooltip--extended-left.cashback__tooltip.hidden-xs
+                    .tooltip__text-wrapper
+                      h4.tooltip__title Гарантовано повернемо кошти на ваш баланс!
+                      .tooltip__text
+                        p Кошти у розмірі #[strong 100 UAH] повернуться на ваш баланс у нейромережі WORKIUM відразу після успішного виконання замовлення.
+                        p Після цього ви зможете їх миттєво вивести зручним для вас способом або використати для оплати наступних замовлень.
+                //- button(type="button").tooltip__close-btn
             a(href="#order-service-popup").btn-action.service-box__order-btn.fancybox-wide-popup-toggle Замовити пакет документів
             //- a(href="#").btn-action.service-box__order-btn Замовити послуги із легалізації
             //- .service-box__footer
             //-   a(href="#").more-link.more-link--dark Детальніше
-      .tabs__content
-        .services
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Пакет документів для відкриття візи
-            .service-box__description
-              p Легальне запрошення, заповнена анкета, акредитований #[br.hidden-1440-]страховий поліс та стартовий пакет мобільного оператора.
-            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити пакет документів
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Страхування (20+ типів)
-            .service-box__description
-              p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
-            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити послуги страхування
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Логістичні послуги
-            .service-box__description
-              p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
-            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити логістичні послуги
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Легалізація в Чехії
-            .service-box__description
-              p Карти побиту та інші типи легалізації на території Чехії.#[br.hidden-1440-] Безкоштовна консультація та індивідуальний підхід до кожного.
-            a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити послуги із легалізації
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
-      .tabs__content
-        .services
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Пакет документів для відкриття візи
-            .service-box__description
-              p Легальне запрошення, заповнена анкета, акредитований #[br.hidden-1440-]страховий поліс та стартовий пакет мобільного оператора.
-            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити пакет документів
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Страхування (20+ типів)
-            .service-box__description
-              p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
-            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити послуги страхування
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Логістичні послуги
-            .service-box__description
-              p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
-            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити логістичні послуги
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
-          .service-box.services__item
-            .service-box__country-wrapper
-              .service-box__country PL
-            h3.service-box__title Легалізація в інших країнах
-            .service-box__description
-              p Різні види легалізації в країнах ЄС і не тільки.#[br.hidden-1440-] Безкоштовна консультація та індивідуальний підхід до кожного.
-            a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити послуги із легалізації
-            .service-box__footer
-              a(href="#").more-link.more-link--dark Детальніше
+      //- .tabs__content
+      //-   .services
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Пакет документів для відкриття візи
+      //-       .service-box__description
+      //-         p Легальне запрошення, заповнена анкета, акредитований #[br.hidden-1440-]страховий поліс та стартовий пакет мобільного оператора.
+      //-       a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити пакет документів
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Страхування (20+ типів)
+      //-       .service-box__description
+      //-         p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
+      //-       a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити послуги страхування
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Логістичні послуги
+      //-       .service-box__description
+      //-         p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
+      //-       a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити логістичні послуги
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Легалізація в Чехії
+      //-       .service-box__description
+      //-         p Карти побиту та інші типи легалізації на території Чехії.#[br.hidden-1440-] Безкоштовна консультація та індивідуальний підхід до кожного.
+      //-       a(href="#").btn-action.btn-action--czech.service-box__order-btn Замовити послуги із легалізації
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
+      //- .tabs__content
+      //-   .services
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Пакет документів для відкриття візи
+      //-       .service-box__description
+      //-         p Легальне запрошення, заповнена анкета, акредитований #[br.hidden-1440-]страховий поліс та стартовий пакет мобільного оператора.
+      //-       a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити пакет документів
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Страхування (20+ типів)
+      //-       .service-box__description
+      //-         p Зелена карта, страховий поліс для відкриття візи та виїзду за кордон, а також більше ніж 20 інших типів страхових акредитованих полісів.
+      //-       a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити послуги страхування
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Логістичні послуги
+      //-       .service-box__description
+      //-         p Безкоштовне бронювання автобусних, залізнодорожних та авіа квитків, а також більше 10 інших логістичних послуг.
+      //-       a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити логістичні послуги
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
+      //-     .service-box.services__item
+      //-       .service-box__country-wrapper
+      //-         .service-box__country PL
+      //-       h3.service-box__title Легалізація в інших країнах
+      //-       .service-box__description
+      //-         p Різні види легалізації в країнах ЄС і не тільки.#[br.hidden-1440-] Безкоштовна консультація та індивідуальний підхід до кожного.
+      //-       a(href="#").btn-action.btn-action--other.service-box__order-btn Замовити послуги із легалізації
+      //-       .service-box__footer
+      //-         a(href="#").more-link.more-link--dark Детальніше
     .articles-boxes.docs-page__articles
       .article-box.articles-boxes__item
         h3.article-box__title Замовляй документи з гарантією або рекомендуй друзям та отримуй #[span.highlighted-text.highlighted-text--beige 10% винагороди!]

@@ -655,17 +655,34 @@ $(() => {
 
   // });
 
-  $('.hint__text').mouseover(function(event) {
-    let $hint = $(this).closest('.hint');
-    $hint.addClass('hint--tooltip-visible');
+  // $('.hint__text').mouseover(function(event) {
+  //   let $hint = $(this).closest('.hint');
+  //   $hint.addClass('hint--tooltip-visible');
+  // });
+
+  // $('.hint__text').mouseout(function(event) {
+  //   let $hint = $(this).closest('.hint');
+
+  //   setTimeout(() => {
+  //     $hint.removeClass('hint--tooltip-visible');
+  //   }, 2000);
+  // });
+
+  $('[data-tooltip]').mouseover(function(event) {
+    // let $visibleTooltip = $('.tooltip--visible');
+    let $tooltip = $(this).find('.tooltip');
+
+    // $visibleTooltip.removeClass('tooltip--visible');
+    $tooltip.addClass('tooltip--visible');
   });
 
-  $('.hint__text').mouseout(function(event) {
-    let $hint = $(this).closest('.hint');
+  $('[data-tooltip]').mouseout(function(event) {
+    let $tooltip = $(this).find('.tooltip');
+    // $tooltip.Class('tooltip--visible');
 
-    setTimeout(() => {
-      $hint.removeClass('hint--tooltip-visible');
-    }, 2000);
+    // setTimeout(() => {
+      $tooltip.removeClass('tooltip--visible');
+    // }, 500);
   });
 
   // Article chapters
