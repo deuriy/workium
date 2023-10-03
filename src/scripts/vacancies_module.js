@@ -436,15 +436,15 @@ $(() => {
 
         if (['filters[5]'].includes(name)) {
           $('.selected-items--main-filter').find(`.selected-items__item[data-name="${name}"]`).remove();
+
+          $('.filter__experience-select').val(value).trigger({
+            type: 'change',
+            params: {
+              calledFromCode: true
+            }
+          });
         }
       }
-
-      $('.filter__experience-select').val(value).trigger({
-        type: 'change',
-        params: {
-          calledFromCode: true
-        }
-      });
     }
 
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
