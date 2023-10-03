@@ -12,7 +12,8 @@
 	@extend .transition
 	
 	@media $xs
-		width 280px
+		// width 280px
+		width 294px
 		max-width 100%
 		box-shadow 0 0 24px rgba(0, 0, 0, 0.2)
 	
@@ -89,6 +90,10 @@
 		background #020202
 		color var(--light)
 		font-size 13px
+		
+		@media $xs
+			margin-top 8px
+			margin-right 0
 	
 	&--active
 		// box-shadow 0 0 18px rgba(0, 0, 0, .4)

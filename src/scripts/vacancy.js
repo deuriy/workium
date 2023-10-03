@@ -64,11 +64,13 @@ $(() => {
   });
 
   if ($(window).width() < 768) {
+    let slidesCount = $('.promo-blocks-swiper .swiper-slide').length;
+
     const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
       modules: [Pagination],
       // loop: true,
       slidesPerView: 'auto',
-      centeredSlides: true,
+      centeredSlides: slidesCount < 2,
       spaceBetween: 8,
 
       pagination: {

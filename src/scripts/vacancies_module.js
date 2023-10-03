@@ -237,15 +237,15 @@ $(() => {
 
   document.addEventListener("vacanciesLoaded", function(event) {
     if ($(window).width() < 768) {
-
-      // console.log(document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)'));
       
       document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
+        let slidesCount = $(item).find('.swiper-slide').length;
+
         const promoBlocksSwiper = new Swiper(item, {
           modules: [Pagination],
           // loop: true,
           slidesPerView: 'auto',
-          centeredSlides: true,
+          centeredSlides: slidesCount < 2,
           spaceBetween: 8,
 
           pagination: {

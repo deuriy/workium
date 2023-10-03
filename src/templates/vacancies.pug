@@ -490,7 +490,9 @@ block content
   include ./includes/blocks/add-employer-success-popup
 
   button(type="button" data-fancybox data-src="#additional-filters-popup").btn-filter.btn-filter--right-bottom.btn-filter--invisible.additional-filters-popup-link
-    span.count.count--info-bg.count--filter-btn 99
+    .
+      Фільтр
+    span.count.count--info-bg.count--filter-btn(style="display: none;") 99
 
 block page_bottom
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js")
