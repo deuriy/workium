@@ -182,13 +182,13 @@ $(() => {
             $(el).html(citiesSelectToggleText);
           });
 
-          // checkFilterFill();
+          checkFilterFill();
         });
       },
 
       afterSelect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
-        console.log($clearBtn);
+        // console.log($clearBtn);
         // console.log(this);
 
         if (!currentSelectedCitiesIds.includes(values[0])) {
@@ -206,7 +206,7 @@ $(() => {
 
       afterDeselect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
-        console.log($clearBtn);
+        // console.log($clearBtn);
 
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
 
@@ -223,7 +223,7 @@ $(() => {
     });
   });
 
-  // $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearCitiesSelect);
+  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearCitiesSelect);
 
   $(document).on('click', function(e) {
     if ($('.dropdown-block--cities-select').hasClass('dropdown-block--visible')) {
@@ -265,7 +265,7 @@ $(() => {
     let $checkboxesGroupItems = $citiesFilter.find('.checkboxes-group__item')
     let value = $(this).val().toLowerCase().trim();
 
-    console.log('input!!');
+    // console.log('input!!');
 
     $checkboxesGroupItems.each((index, item) => {
       if (!$(item).text().toLowerCase().trim().includes(value)) {
@@ -387,6 +387,6 @@ $(() => {
       $citiesBtnCount.show();
     }
 
-    console.log($checkedLabels);
+    // console.log($checkedLabels);
   });
 });

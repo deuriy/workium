@@ -60,7 +60,7 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
 }
 
 function clearFilter () {
-  let $filterSelects = $('.filter .filter-select, .additional-filters .filter-select');
+  let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
   let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
   let $allCheckboxes = $('.additional-filters .checkbox__input');
   let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
@@ -68,17 +68,25 @@ function clearFilter () {
   let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
   let $additionalFiltersClearLink = $('.additional-filters__clear-link');
 
+  console.log($filterSelects);
+
   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
   $filterSelects.each(function(index, el) {
     let value = '';
 
-    if ($(el).hasClass('filter__countries-select') || $(el).hasClass('additional-filters__countries-select')) {
-      value = 'poland';
-    } else if ($(el).hasClass('filter__currencies-select')) {
+    // console.log($(el).attr('name'));
+
+    // if ($(el).hasClass('filter__countries-select') || $(el).hasClass('additional-filters__countries-select')) {
+    //   value = 'poland';
+    // }
+
+    if ($(el).hasClass('filter__currencies-select')) {
       value = 'pln';
     }
 
-    $(el).val(value).trigger('change');
+    if ($(el).attr('name') !== 'countries') {
+      $(el).val(value).trigger('change');
+    }
   });
 
   $clearBtn.hide();
@@ -147,9 +155,12 @@ $(() => {
       let name = $(this).attr('name');
       let value = $(this).select2('val');
 
+      // console.log($(this));
+
       if (value !== '') {
         if (name !== 'countries' && name !== 'currency') {
           $select2Selection.addClass('select2-selection--selected');
+          checkFilterFill();
         } else {
           $select2Selection.removeClass('select2-selection--selected');
         }
@@ -202,7 +213,7 @@ $(() => {
         }
       }
 
-      checkFilterFill();
+      // checkFilterFill();
     });
   });
 
@@ -227,7 +238,7 @@ $(() => {
   document.addEventListener("vacanciesLoaded", function(event) {
     if ($(window).width() < 768) {
 
-      console.log(document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)'));
+      // console.log(document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)'));
       
       document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
         const promoBlocksSwiper = new Swiper(item, {
