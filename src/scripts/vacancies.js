@@ -156,7 +156,7 @@ $(() => {
           selectedCitiesIds = [...currentSelectedCitiesIds];
 
           let $dropdownBlock = $(this).closest('.dropdown-block');
-          let $selectedCities = $dropdownBlock.find('.ms-selection .ms-selected');
+          let $selectedCities = $dropdownBlock.find('.ms-selection .ms-selected span');
           let $citiesSelectToggles = $(`.filter__cities-select-toggle, .additional-filters__cities-select-toggle`);
 
           $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
@@ -182,7 +182,7 @@ $(() => {
             $(el).html(citiesSelectToggleText);
           });
 
-          checkFilterFill();
+          // checkFilterFill();
         });
       },
 
@@ -223,7 +223,7 @@ $(() => {
     });
   });
 
-  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearCitiesSelect);
+  // $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearCitiesSelect);
 
   $(document).on('click', function(e) {
     if ($('.dropdown-block--cities-select').hasClass('dropdown-block--visible')) {
