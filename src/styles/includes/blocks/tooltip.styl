@@ -73,11 +73,34 @@
 		
 		&.tooltip--visible
 			left calc(100% + 14px)
+		
+		@media $xs
+			display none
+	
+	&--extended-top
+		// top -14px
+		top auto
+		// right 0
+		bottom calc(100% + 20px)
+		left 50%
+		// margin auto
+		transform translateX(-50%)
+		
+		&::before
+			top calc(100% - 1px)
+			right 0
+			left 0
+			margin auto
+			transform rotate(-90deg)
+		
+		&.tooltip--visible
+			bottom calc(100% + 10px)
+			left 50%
 	
 	&--extended-bottom
 		top calc(100% - 10px)
-		left -35%
-		transform none
+		left 50%
+		transform translateX(-50%)
 		
 		&::before
 			top -8px
@@ -88,7 +111,7 @@
 		
 		&.tooltip--visible
 			top 100%
-			left -35%
+			left 50%
 			
 	&--extended-left
 		right 100%

@@ -27,18 +27,34 @@ block content
           button(type="button").copy-btn.copy-link__btn
           .tooltip.tooltip--copied.copy-link__tooltip Скопійовано!
       .bonus-statistic
-        .bonus-statistic-item
+        .bonus-statistic-item(data-tooltip)
           h4.bonus-statistic-item__title Сумарно кліків
           .bonus-statistic-item__value.bonus-statistic-item__value--total-clicks 1
-        .bonus-statistic-item
+          .tooltip.tooltip--extended.tooltip--extended-top
+            .tooltip__text-wrapper
+              h4.tooltip__title Загальна кількість переходів
+              .tooltip__text Загальна кількість переходів (кліків) по усіх ваших партнерських посиланнях. Завдяки цьому показнику ви будете знати загальну суму переходів по вашим партнерським посиланням. Перехід буде зараховуватись до статистики кожен раз, коли користувач буде переходити по будь-якому із ваших посилань, навіть якщо перехід буде здійснено повторно.
+        .bonus-statistic-item(data-tooltip)
           h4.bonus-statistic-item__title Унікальних кліків
           .bonus-statistic-item__value.bonus-statistic-item__value--unique-clicks 1
-        .bonus-statistic-item
+          .tooltip.tooltip--extended.tooltip--extended-top
+            .tooltip__text-wrapper
+              h4.tooltip__title Унікальні переходи
+              .tooltip__text Унікальні переходи - це переходи (кліки), які враховуються тільки один раз від одного користувача або пристрою. Завдяки цьому показнику ви будете знати скільки сумарно різних людей перейшло по вашим посиланням.
+        .bonus-statistic-item(data-tooltip)
           h4.bonus-statistic-item__title Реєстрацій
           .bonus-statistic-item__value.bonus-statistic-item__value--registration 1
-        .bonus-statistic-item
+          .tooltip.tooltip--extended.tooltip--extended-top
+            .tooltip__text-wrapper
+              h4.tooltip__title Зареєстровані партнери
+              .tooltip__text Кількість користувачів, які перейшли по будь-якому із ваших партнерських посилань та зареєструватись в нейромережі WORKIUM. Ці користувачі назавжди залишаться у вас в команді, а ви будете постійно отримати партнерську винагороду за кожне їх відпрацювання чи замовлення документів.
+        .bonus-statistic-item(data-tooltip)
           h4.bonus-statistic-item__title Зароблено в сумі
           .bonus-statistic-item__value.bonus-statistic-item__value--total-earned 0 ZŁ
+          .tooltip.tooltip--extended.tooltip--extended-top
+            .tooltip__text-wrapper
+              h4.tooltip__title Загальний прибуток
+              .tooltip__text Загальна сума вашого особистого прибутку. Враховуються начислення від усіх партнерів за весь час. У випадку, якщо нарахування були в різних валютах - для перегляду статистики автоматично буде здійснена конвертація до єдиної валюти, яка відображається.
     .tabs.partners-tabs
       .partners-tabs__header
         h3.partners-tabs__title Запрошені партнери та замовлення
