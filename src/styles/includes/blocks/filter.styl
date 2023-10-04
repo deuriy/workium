@@ -41,11 +41,14 @@
 		@media $xs
 			grid-template-columns repeat(2, 1fr)
 		
-		@media $xxs
-			grid-template-columns 100%
+		// @media $xxs
+		// 	grid-template-columns 100%
 	
 	&__item
 		position relative
+		
+		@media $xxs
+			display grid
 		
 		&--buttons
 			display grid
