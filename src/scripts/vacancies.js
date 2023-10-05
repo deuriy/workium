@@ -29,8 +29,10 @@ function isFilterChanged() {
 
 function checkFilterFill() {
   let $clearBtn = $('.filter__clear-btn');
+  let $additionalClearBtn = $('.additional-filters__clear-btn');
 
   isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
+  isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
 }
 
 function clearCitiesSelect () {
