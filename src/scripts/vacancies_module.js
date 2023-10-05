@@ -17,9 +17,14 @@ function isFilterChanged() {
 
   for (const selection of $select2Selections) {
     if ($(selection).hasClass('select2-selection--selected')) {
+      console.log('Yes!');
+      console.log($(selection));
+
       return true;
     }
   }
+
+  // console.log('Here!');
 
   if ($citiesSelectToggle.text() !== 'Усі міста') {
     return true;
@@ -156,11 +161,12 @@ $(() => {
       let value = $(this).select2('val');
 
       // console.log($(this));
+      console.log('Change!');
 
       if (value !== '') {
         if (name !== 'countries' && name !== 'currency') {
           $select2Selection.addClass('select2-selection--selected');
-          checkFilterFill();
+          // checkFilterFill();
         } else {
           $select2Selection.removeClass('select2-selection--selected');
         }
@@ -196,6 +202,7 @@ $(() => {
         switch (name) {
           case 'experience':
             $select2Selection.find('.select2-selection__rendered').text('Досвід');
+            $('.filter__experience-select.select2-selection--selected').removeClass('select2-selection--selected');
 
             if (e.params === undefined || e.params.calledFromCode === undefined) {
               $(`.additional-filters .radiobtn__input[value="${value}"]`).click();
@@ -204,6 +211,7 @@ $(() => {
             break;
           case 'sex':
             $select2Selection.find('.select2-selection__rendered').text('Стать');
+            $('.filter__sex-select.select2-selection--selected').removeClass('select2-selection--selected');
 
             if (e.params === undefined || e.params.calledFromCode === undefined) {
               $(`.additional-filters .checkbox__input[value="${value}"]`).click();
@@ -211,6 +219,11 @@ $(() => {
 
             break;
         }
+      }
+
+      if (name !== 'countries' && name !== 'currency') {
+        // console.log('!!!!');
+        checkFilterFill();
       }
 
       // checkFilterFill();
