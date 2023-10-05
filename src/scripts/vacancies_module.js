@@ -7,25 +7,53 @@ import PerfectScrollbar from 'perfect-scrollbar';
 function isFilterChanged() {
   let $textFields = $('.filter .form-text');
   let $select2Selections = $('.filter .select2-selection.filter-select');
-  let $citiesSelectToggle = $('.filter__cities-select-toggle');
+  let $citiesSelectToggle = $('.filter__cities-select-toggle .select-toggle__label');
+  let $sexSelectToggle = $('.filter__sex-select-toggle .select-toggle__label');
+  let result = false;
 
   for (const input of $textFields) {
     if ($(input).val() !== '') {
-      return true;
+      result = true;
     }
   }
+
+  // console.log('!!!');
 
   for (const selection of $select2Selections) {
     if ($(selection).hasClass('select2-selection--selected')) {
-      return true;
+      result = true;
     }
   }
 
-  if ($citiesSelectToggle.text() !== 'Усі міста') {
-    return true;
-  }
+  // console.log($citiesSelectToggle);
 
-  return false;
+  $citiesSelectToggle.each(function(index, el) {
+    // console.log($(el).text().trim());
+
+    if ($(el).text().trim() !== 'Усі міста') {
+      result = true;
+    }
+  });
+
+  // if ($citiesSelectToggle.text().trim() !== 'Усі міста') {
+  //   return true;
+  // }
+
+  // console.log($sexSelectToggle);
+
+  $sexSelectToggle.each(function(index, el) {
+    // console.log($(el).text().trim());
+
+    if ($(el).text().trim() !== 'Стать') {
+      result = true;
+    }
+  });
+
+  // if ($sexSelectToggle.text().trim() !== 'Стать') {
+  //   return true;
+  // }
+
+  return result;
 }
 
 function checkFilterFill() {
@@ -102,7 +130,7 @@ function clearFilter () {
   $('.selected-items__item').remove();
   $additionalFiltersGroups.show();
 
-  $('.selected-items--filter-params').hide();
+  // $('.selected-items--filter-params').hide();
 
   setVisibilitySelectedMoreItem(0);
 
@@ -427,7 +455,12 @@ $(() => {
           </li>`);
 
         if (['filters[men]', 'filters[women]', 'filters[couples]'].includes(name)) {
-          $('.selected-items--main-filter').find(`.selected-items__item[data-name="${name}"]`).remove();
+          // $('.selected-items--main-filter').find(`.selected-items__item[data-name="${name}"]`).remove();
+
+          // if ($(window).width() < 768) {
+            $('.selected-items').find(`.selected-items__item[data-name="${name}"]`).remove();
+          // }
+
           $('.filter__sex-select').val(value).trigger({
             type: 'change',
             params: {

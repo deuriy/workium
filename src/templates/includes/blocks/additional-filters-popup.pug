@@ -59,13 +59,21 @@
           .additional-filters__form-item.hidden-xxsPlus
             button(type="button" data-fancybox data-src="#cities-popup" data-placeholder="Місто").btn-white.btn-white--cities.btn-white--more.additional-filters__cities-btn.additional-filters-popup-link
               span.btn-white__text Micтo
-              span.count.count--info-bg.count--selected-cities(style="display: none;") 0
+              span.count.count--info-bg.count--multiselect(style="display: none;") 0
           .additional-filters__form-item.hidden-xxsPlus
-            select(name="sex").filter-select.filter-select--tags.additional-filters__sex-select
-              option(value="" data-placeholder="Стать") Всі варіанти
-              option(value="men") Чоловіки
-              option(value="women") Жінки
-              option(value="couples") Сімейні пари
+            a(href="#additional-sex-dropdown-block" data-dropdown-block-trigger data-default-placeholder="Стать").select-toggle.filter__sex-select-toggle
+              span.select-toggle__label Стать
+            .dropdown-block.dropdown-block--sex-select.dropdown-block--align-right-xs#additional-sex-dropdown-block
+              select(name="sex" multiple).sex-select.filter__sex-select#sex-select3
+                //- option(value="" data-placeholder="Стать") Всі варіанти
+                option(value="men") Чоловіки
+                option(value="women") Жінки
+                option(value="couples") Сімейні пари
+            //- select(name="sex").filter-select.filter-select--tags.additional-filters__sex-select
+            //-   option(value="" data-placeholder="Стать") Всі варіанти
+            //-   option(value="men") Чоловіки
+            //-   option(value="women") Жінки
+            //-   option(value="couples") Сімейні пари
           //- .additional-filters__form-item.hidden-xxsPlus.hidden-xxs
           //-   select(name="experience").filter-select.filter-select--tags.filter__experience-select
           //-     option(value="" data-placeholder="Досвід") Всі варіанти

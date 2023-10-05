@@ -54,7 +54,8 @@
 		width 420px
 		padding 25px 38px 38px
 	
-	&--cities-select
+	&--cities-select,
+	&--sex-select
 		position absolute
 		// top 100%
 		top calc(100% + 6px)
@@ -73,3 +74,8 @@
 	&--services
 		@media $xs
 			width 100%
+	
+	&--align-right-xs
+		@media $xs
+			right 0
+			left auto

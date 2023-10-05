@@ -23,6 +23,38 @@
   &--empty
     .ms-selection__no-results
       display grid
+  
+  &--short
+    .ms-selectable
+      min-height 0
+      
+    .ms-selection
+      display none
+    
+    .ms-elem-selectable
+      display grid
+      grid-template-columns auto 1fr
+      align-items center
+      gap 16px
+      
+      &::before
+        content ""
+        width 24px
+        height 24px
+        border-radius 4px
+        border 1px solid #DFE1ED
+        background #FFF
+        @extend .transition
+      
+      &.ms-selected
+        display grid !important
+        
+        &::before
+          // background #5340FF
+          background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%235340FF' rx='4'/%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 12 3.5 4L18 7'/%3E%3C/svg%3E") no-repeat
+          
+    .ms-container__footer
+      padding 5px 20px 17px
 
 .ms-selectable,
 .ms-selection

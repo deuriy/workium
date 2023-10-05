@@ -9,7 +9,8 @@ form(action="").filter.vacancies__filter
         option(value="poland") Польща
         option(value="czech") Чехія
     .filter__item.hidden-xxs
-      a(href="#cities-dropdown-block" data-dropdown-block-trigger data-default-placeholder="Усі міста").select-toggle.filter__cities-select-toggle Усі міста
+      a(href="#cities-dropdown-block" data-dropdown-block-trigger data-default-placeholder="Усі міста").select-toggle.filter__cities-select-toggle
+        .select-toggle__label Усі міста
       .dropdown-block.dropdown-block--cities-select#cities-dropdown-block
         select(name="cities" multiple).cities-select.filter__cities-select#cities-select
           //- option
@@ -34,16 +35,27 @@ form(action="").filter.vacancies__filter
       label(for="remuneration").filter__label Відпрацювання
       input(type="number" name="term" placeholder="До… (дні)").form-text.form-text--filter
     .filter__item.hidden-xxs
-      select(name="sex").filter-select.filter-select--tags.filter__sex-select
-        option(value="" data-placeholder="Стать") Всі варіанти
-        option(value="men") Чоловіки
-        option(value="women") Жінки
-        option(value="couples") Сімейні пари
+      a(href="#sex-dropdown-block" data-dropdown-block-trigger data-default-placeholder="Стать").select-toggle.filter__sex-select-toggle
+        span.select-toggle__label Стать
+      .dropdown-block.dropdown-block--align-right-xs.dropdown-block--sex-select#sex-dropdown-block
+        select(name="sex" multiple).sex-select.filter__sex-select#sex-select
+          //- option(value="" data-placeholder="Стать") Всі варіанти
+          option(value="men") Чоловіки
+          option(value="women") Жінки
+          option(value="couples") Сімейні пари
+
+      //- select(name="sex").filter-select.filter-select--tags.filter__sex-select
+      //-   option(value="" data-placeholder="Стать") Всі варіанти
+      //-   option(value="men") Чоловіки
+      //-   option(value="women") Жінки
+      //-   option(value="couples") Сімейні пари
+
     //- .filter__item.hidden-xxs
     //-   select(name="currency").filter-select.filter__currencies-select#currency
     //-     option(value="pln") PLN
     //-     option(value="uah") UAH
     //-     option(value="eur") EUR
+
     .filter__item.filter__item--buttons.hidden-xxs
       button(type="button" data-fancybox data-src="#additional-filters-popup").btn-white.btn-white--filter.additional-filters-popup-link Фільтри
         span.count.count--info-bg.btn-white__count.hidden 0
@@ -54,20 +66,32 @@ form(action="").filter.vacancies__filter
       select(name="countries" autocomplete="off").filter-select.filter__countries-select#countries1
         option(value="poland") Польща
         option(value="czech") Чехія
-    .filter__tags-selects.hidden-xxsPlus
+    //- .filter__tags-selects.hidden-xxsPlus
+    .filter__item.hidden-xxsPlus
       //- select(name="experience").filter-select.filter-select--mob-large.filter-select--tags.filter__experience-select
       //-   option(value="" data-placeholder="Досвід") Всі варіанти
       //-   option(value="none") Без досвіду
       //-   option(value="specialist") Спеціаліст
+
       //- select(name="experience").filter-select.filter-select--tags.filter__experience-select.hidden-xs
       //-   option(value="" data-placeholder="Досвід") Всі варіанти
       //-   option(value="none") Без досвіду
       //-   option(value="specialist") Спеціаліст
-      select(name="sex").filter-select.filter-select--tags.filter__sex-select
-        option(value="" data-placeholder="Стать") Всі варіанти
-        option(value="men") Чоловіки
-        option(value="women") Жінки
-        option(value="couples") Сімейні пари
+
+      //- select(name="sex").filter-select.filter-select--tags.filter__sex-select
+      //-   option(value="" data-placeholder="Стать") Всі варіанти
+      //-   option(value="men") Чоловіки
+      //-   option(value="women") Жінки
+      //-   option(value="couples") Сімейні пари
+
+      a(href="#sex-dropdown-block2" data-dropdown-block-trigger data-default-placeholder="Стать").select-toggle.filter__sex-select-toggle
+        span.select-toggle__label Стать
+      .dropdown-block.dropdown-block--align-right-xs.dropdown-block--sex-select#sex-dropdown-block2
+        select(name="sex" multiple).sex-select.filter__sex-select#sex-select2
+          //- option(value="" data-placeholder="Стать") Всі варіанти
+          option(value="men") Чоловіки
+          option(value="women") Жінки
+          option(value="couples") Сімейні пари
     .selected-items.selected-items--filter-params.selected-items--main-filter.filter__selected-items.hidden-xs
       ul.selected-items__list
         li.selected-items__more-item.hidden
