@@ -17,14 +17,9 @@ function isFilterChanged() {
 
   for (const selection of $select2Selections) {
     if ($(selection).hasClass('select2-selection--selected')) {
-      console.log('Yes!');
-      console.log($(selection));
-
       return true;
     }
   }
-
-  // console.log('Here!');
 
   if ($citiesSelectToggle.text() !== 'Усі міста') {
     return true;
@@ -35,8 +30,10 @@ function isFilterChanged() {
 
 function checkFilterFill() {
   let $clearBtn = $('.filter__clear-btn');
+  let $additionalClearBtn = $('.additional-filters__clear-btn');
 
   isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
+  isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
 }
 
 function changeFiltersBodyMaxHeight (selectedItemsLength) {
@@ -73,7 +70,7 @@ function clearFilter () {
   let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
   let $additionalFiltersClearLink = $('.additional-filters__clear-link');
 
-  console.log($filterSelects);
+  // console.log($filterSelects);
 
   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
   $filterSelects.each(function(index, el) {
@@ -161,7 +158,7 @@ $(() => {
       let value = $(this).select2('val');
 
       // console.log($(this));
-      console.log('Change!');
+      // console.log('Change!');
 
       if (value !== '') {
         if (name !== 'countries' && name !== 'currency') {
@@ -191,6 +188,12 @@ $(() => {
             break;
           case 'sex':
             if (e.params === undefined || e.params.calledFromCode === undefined) {
+              let sexValues = ['men', 'women', 'couples'];
+
+              sexValues.forEach(item => {
+                $(`.additional-filters .selected-items__item[data-value="${item}"] .selected-item__remove-link`).click();
+              });
+              
               $(`.additional-filters .checkbox__input[value="${value}"]`).click();
             }
 
@@ -214,7 +217,11 @@ $(() => {
             $('.filter__sex-select.select2-selection--selected').removeClass('select2-selection--selected');
 
             if (e.params === undefined || e.params.calledFromCode === undefined) {
-              $(`.additional-filters .checkbox__input[value="${value}"]`).click();
+              let sexValues = ['men', 'women', 'couples'];
+
+              sexValues.forEach(item => {
+                $(`.additional-filters .selected-items__item[data-value="${item}"] .selected-item__remove-link`).click();
+              });
             }
 
             break;
@@ -222,11 +229,8 @@ $(() => {
       }
 
       if (name !== 'countries' && name !== 'currency') {
-        // console.log('!!!!');
         checkFilterFill();
       }
-
-      // checkFilterFill();
     });
   });
 
