@@ -291,7 +291,7 @@ $(() => {
   $('.checkboxes-group--cities .checkbox__input').change(function(event) {
     let name = $(this).attr('name');
     let value = $(this).val();
-    let labelText = $(this).parent().find('label').text();
+    let labelText = $(this).parent().find('.checkbox__title').text();
     let $selectedItems = $('.selected-items--cities');
     let $selectedItem = $selectedItems.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
     let $clearBtn = $selectedItems.find('.selected-items__clear-btn');
