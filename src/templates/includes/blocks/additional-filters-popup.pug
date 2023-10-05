@@ -35,8 +35,8 @@
         button(type="reset" style="display: none;").additional-filters__clear-link.hidden-xxsPlus Скинути
       .additional-filters__header-bottom
         .additional-filters__form-items.hidden-smPlus
-          .additional-filters__form-item.additional-filters__form-item--two-col-xs
-            input(type="search" name="search_filter" placeholder="Пошук по фільтру...").form-text.form-text--filter-search
+          .additional-filters__form-item
+            input(type="search" name="search_filter" placeholder="Пошук...").form-text.form-text--filter-search
           .additional-filters__form-item
             select(name="countries" autocomplete="off").filter-select.additional-filters__countries-select#countries2
               option(value="poland") Польща
@@ -61,12 +61,18 @@
               span.btn-white__text Micтo
               span.count.count--info-bg.count--selected-cities(style="display: none;") 0
           .additional-filters__form-item.hidden-xxsPlus
-            select(name="experience").filter-select.filter-select--tags.filter__experience-select
-              option(value="" data-placeholder="Досвід") Всі варіанти
-              option(value="none") Без досвіду
-              option(value="specialist") Спеціаліст
-          .additional-filters__form-item.hidden-xxsPlus
-            input(type="number" name="income_from" min="0" placeholder="Дохід від, грн").form-text.form-text--filter
+            select(name="sex").filter-select.filter-select--tags.additional-filters__sex-select
+              option(value="" data-placeholder="Стать") Всі варіанти
+              option(value="men") Чоловіки
+              option(value="women") Жінки
+              option(value="couples") Сімейні пари
+          //- .additional-filters__form-item.hidden-xxsPlus.hidden-xxs
+          //-   select(name="experience").filter-select.filter-select--tags.filter__experience-select
+          //-     option(value="" data-placeholder="Досвід") Всі варіанти
+          //-     option(value="none") Без досвіду
+          //-     option(value="specialist") Спеціаліст
+          //- .additional-filters__form-item.hidden-xxsPlus.hidden-xxs
+          //-   input(type="number" name="income_from" min="0" placeholder="Дохід від, грн").form-text.form-text--filter
         .selected-items.selected-items--filter-params.additional-filters__selected-items(style="display: none;")
           ul.selected-items__list
             li.selected-items__more-item.hidden
