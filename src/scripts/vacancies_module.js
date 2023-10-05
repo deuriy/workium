@@ -48,17 +48,18 @@ function changeFiltersBodyMaxHeight (selectedItemsLength) {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
-  let $additionalFiltersSelectedItems = $('.additional-filters__selected-items');
-  let $additionalFiltersSelectedMoreItem = $additionalFiltersSelectedItems.find('.selected-items__more-item');
-  let moreItemsCount = selectedItemsLength - 11;
+  $('.selected-items').each(function(index, item) {
+    let $moreItem = $(item).find('.selected-items__more-item');
+    let moreItemsCount = selectedItemsLength - 11;
 
-  if (selectedItemsLength > 11) {
-    $additionalFiltersSelectedMoreItem.removeClass('hidden');
-  } else {
-    $additionalFiltersSelectedMoreItem.addClass('hidden');
-  }
+    if (selectedItemsLength > 11) {
+      $moreItem.removeClass('hidden');
+    } else {
+      $moreItem.addClass('hidden');
+    }
 
-  $additionalFiltersSelectedMoreItem.find('.more-btn__count').text(`+${moreItemsCount}`);
+    $moreItem.find('.more-btn__count').text(`+${moreItemsCount}`);
+  });
 }
 
 function clearFilter () {
@@ -193,7 +194,7 @@ $(() => {
               sexValues.forEach(item => {
                 $(`.additional-filters .selected-items__item[data-value="${item}"] .selected-item__remove-link`).click();
               });
-              
+
               $(`.additional-filters .checkbox__input[value="${value}"]`).click();
             }
 

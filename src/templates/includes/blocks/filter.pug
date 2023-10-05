@@ -54,7 +54,7 @@ form(action="").filter.vacancies__filter
       select(name="countries" autocomplete="off").filter-select.filter__countries-select#countries1
         option(value="poland") Польща
         option(value="czech") Чехія
-    .filter__tags-selects
+    .filter__tags-selects.hidden-xxsPlus
       //- select(name="experience").filter-select.filter-select--mob-large.filter-select--tags.filter__experience-select
       //-   option(value="" data-placeholder="Досвід") Всі варіанти
       //-   option(value="none") Без досвіду
@@ -63,13 +63,17 @@ form(action="").filter.vacancies__filter
       //-   option(value="" data-placeholder="Досвід") Всі варіанти
       //-   option(value="none") Без досвіду
       //-   option(value="specialist") Спеціаліст
-      select(name="sex").filter-select.filter-select--tags.filter__sex-select.hidden-xxsPlus
+      select(name="sex").filter-select.filter-select--tags.filter__sex-select
         option(value="" data-placeholder="Стать") Всі варіанти
         option(value="men") Чоловіки
         option(value="women") Жінки
         option(value="couples") Сімейні пари
     .selected-items.selected-items--filter-params.selected-items--main-filter.filter__selected-items.hidden-xs
       ul.selected-items__list
+        li.selected-items__more-item.hidden
+          button(type="button").more-btn.selected-items__more-btn
+            span.more-btn__text Ще
+            span.count.count--info-bg.count--more-btn.more-btn__count +3
 
     button(type="reset" style="display: none;").btn-beige.btn-beige--filter.filter__clear-btn.hidden-xs Скинути
     //- a(href="javascript:;").clear-link.filter__clear-link.hidden-xxs Скинути фільтри
