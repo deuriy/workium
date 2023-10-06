@@ -127,22 +127,7 @@
         //-       .checkbox
         //-         input(name="filters[without_visa]" value="without_visa" type="checkbox").checkbox__input#FilterItem6
         //-         label(for="FilterItem6").checkbox__label БЕЗ ВІЗ (біометричний паспорт)
-        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-3
-          h3.checkboxes-group__title Кому підходить
-          ul.checkboxes-group__list
-            li.checkboxes-group__item
-              .checkbox
-                input(name="filters[men]" value="men" type="checkbox").checkbox__input#FilterItem7
-                label(for="FilterItem7").checkbox__label Чоловікам
-            li.checkboxes-group__item
-              .checkbox
-                input(name="filters[women]" value="women" type="checkbox").checkbox__input#FilterItem8
-                label(for="FilterItem8").checkbox__label Жінкам
-            li.checkboxes-group__item
-              .checkbox
-                input(name="filters[couples]" value="couples" type="checkbox").checkbox__input#FilterItem9
-                label(for="FilterItem9").checkbox__label Сімейним парам
-        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-4
+        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--lang-knowledge
           h3.radiobtns-group__title Знання мови
           ul.radiobtns-group__list
             li.radiobtns-group__item
@@ -157,7 +142,7 @@
               .radiobtn
                 input(name="filters[4]" value="lang_not_required" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem12
                 label(for="FilterItem12").radiobtn__label Не потрібно
-        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-5
+        .radiobtns-group.additional-filters__radiobtns-group
           h3.radiobtns-group__title Досвід роботи
           ul.radiobtns-group__list
             li.radiobtns-group__item
@@ -172,7 +157,7 @@
               .radiobtn
                 input(name="filters[5]" value="none" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem15
                 label(for="FilterItem15").radiobtn__label Без досвіду
-        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-6
+        .radiobtns-group.additional-filters__radiobtns-group
           h3.radiobtns-group__title Житло
           ul.radiobtns-group__list
             li.radiobtns-group__item
@@ -195,7 +180,33 @@
               .radiobtn
                 input(name="filters[6]" value="housing_help" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem20
                 label(for="FilterItem20").radiobtn__label Допомога з пошуком
-        .radiobtns-group.additional-filters__radiobtns-group.additional-filters__radiobtns-group--id-7
+        .checkboxes-group.additional-filters__checkboxes-group
+          h3.checkboxes-group__title Кому підходить
+          ul.checkboxes-group__list
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[men]" value="men" type="checkbox").checkbox__input#FilterItem7
+                label(for="FilterItem7").checkbox__label Чоловікам
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[women]" value="women" type="checkbox").checkbox__input#FilterItem8
+                label(for="FilterItem8").checkbox__label Жінкам
+            li.checkboxes-group__item
+              .checkbox
+                input(name="filters[couples]" value="couples" type="checkbox").checkbox__input#FilterItem9
+                label(for="FilterItem9").checkbox__label Сімейним парам
+        .filter-element.additional-filters__filter-element.additional-filters__filter-element--range
+          h3.filter-element__title Вік:
+          .filter-element__content
+            .range-slider-element
+              .range-slider.range-slider-element__slider(data-from-input-id="age_from" data-to-input-id="age_to")
+                //- .tip.range-slider__tip
+                //-   .tip__text 18–32
+              .range-slider-element__items
+                input(type="number" name="age_from" value="18" min="0" max="100" id="age_from").form-text.form-text--range-slider.range-slider-element__input
+                .range-slider-element__sep -
+                input(type="number" name="age_to" value="32" min="0" max="100" id="age_to").form-text.form-text--range-slider.range-slider-element__input
+        .radiobtns-group.additional-filters__radiobtns-group
           h3.radiobtns-group__title Харчування
           ul.radiobtns-group__list
             li.radiobtns-group__item
@@ -210,7 +221,7 @@
               .radiobtn
                 input(name="filters[7]" value="food_not_provided" type="radio").radiobtn__input.radiobtn__input--job-filter#FilterItem23
                 label(for="FilterItem23").radiobtn__label Не надається
-        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-12.checkboxes-group--three-columns.checkboxes-group--ten-rows
+        .checkboxes-group.additional-filters__checkboxes-group.checkboxes-group--three-columns.checkboxes-group--ten-rows
           h3.checkboxes-group__title Професія
           ul.checkboxes-group__list
             li.checkboxes-group__item
@@ -388,7 +399,7 @@
         //-       .checkbox
         //-         input(name="filters[seasonal]" value="seasonal" type="checkbox").checkbox__input#FilterItem102
         //-         label(for="FilterItem102").checkbox__label Cезонна
-        .checkboxes-group.additional-filters__checkboxes-group.additional-filters__checkboxes-group--id-10.checkboxes-group--three-columns.checkboxes-group--three-rows
+        .checkboxes-group.additional-filters__checkboxes-group.checkboxes-group--three-columns.checkboxes-group--three-rows
           h3.checkboxes-group__title Місце роботи
           ul.checkboxes-group__list
             li.checkboxes-group__item

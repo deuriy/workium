@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
+import noUiSlider from 'nouislider';
 
 var count = 200;
 var defaults = {
@@ -600,4 +601,57 @@ $(() => {
 
     return false;
   });
+
+  // console.log(noUiSlider);
+
+  const sliders = document.querySelectorAll('.range-slider');
+
+  sliders.forEach(slider => {
+    noUiSlider.create(slider, {
+      start: [20, 80],
+      connect: true,
+      range: {
+          'min': 0,
+          'max': 100
+      },
+      // tooltips: true,
+    });
+
+    // slider.noUiSlider.on('update', function (values, handle) {
+    //   let tip = slider.querySelector('.range-slider__tip');
+    //   let noUiOrigins = slider.querySelectorAll('.noUi-origin');
+    //   let firstHandleOffset = noUiOrigins[0].style.transform;
+    //   let secondHandleOffset = noUiOrigins[1].style.transform;
+
+    //   firstHandleOffset = parseInt(firstHandleOffset.substring(firstHandleOffset.indexOf('(') + 1, firstHandleOffset.indexOf(')')));
+    //   secondHandleOffset = parseInt(secondHandleOffset.substring(secondHandleOffset.indexOf('(') + 1, secondHandleOffset.indexOf(')')));
+
+    //   let diff = secondHandleOffset - firstHandleOffset;
+    //   tip.style.marginLeft = `${diff}%`;
+
+    //   console.log(firstHandleOffset);
+    //   console.log(secondHandleOffset);
+    //   // slider.querySelector('.range-slider__tip').style.transform = 'translate(20%)';
+    //   // inputFormat.value = values[handle];
+    // });
+
+    let ageFromID = document.getElementById('age_from');
+    let ageToID = document.getElementById('age_to');
+
+    slider.noUiSlider.on('update', function (values, handle) {
+      ageFromID.value = values[0];
+      ageToID.value = values[1];
+    });
+
+    ageFromID.addEventListener('change', function () {
+      slider.noUiSlider.set([this.value, null]);
+    });
+
+    ageToID.addEventListener('change', function () {
+      slider.noUiSlider.set([null, this.value]);
+    });
+
+    // console.log(slider);
+  });
+
 });

@@ -1,0 +1,20 @@
+.tip
+	display grid
+	padding 4px 8px
+	border-radius 8px
+	background #2A364D
+	color #FFF
+	font-size 12px
+	line-height 1.66667
+	
+	&::after
+		content ""
+		grid-area 1 / 1 / 2 / 2
+		align-self end
+		width 8px
+		height 6px
+		margin 0 auto -10px
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 6'%3E%3Cpath fill='%232A364D' d='M4 6 0 0h8L4 6Z'/%3E%3C/svg%3E") no-repeat
+	
+	&__text
+		grid-area 1 / 1 / 2 / 2

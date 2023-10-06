@@ -209,7 +209,8 @@
 			gap 24px
 	
 	&__checkboxes-group,
-	&__radiobtns-group
+	&__radiobtns-group,
+	&__filter-element
 		@media $xxs
 			// padding-right 16px
 			padding-right 10px
@@ -222,33 +223,42 @@
 				padding-bottom 0
 				border-bottom none
 	
-	&__checkboxes-group
-		&--id-2
-			order 0
+	&__filter-element
+		&--range
+			order -1
+	
+	&__radiobtns-group
+		&--lang-knowledge
+			@media $xxs
+				order -2
+	
+	// &__checkboxes-group
+	// 	&--id-2
+	// 		order 0
 			
-		&--id-6
-			order 1
+	// 	&--id-6
+	// 		order 1
 			
-		&--id-11
-			order 2
+	// 	&--id-11
+	// 		order 2
 			
-		&--id-3
-			order 3
+	// 	&--id-3
+	// 		order 3
 			
-		&--id-4
-			order 4
+	// 	&--id-4
+	// 		order 4
 			
-		&--id-7
-			order 5
+	// 	&--id-7
+	// 		order 5
 			
-		&--id-12
-			order 6
+	// 	&--id-12
+	// 		order 6
 			
-		&--id-10
-			order 7
+	// 	&--id-10
+	// 		order 7
 			
-		&--id-5
-			order 8
+	// 	&--id-5
+	// 		order 8
 	
 	&__footer
 		display grid
