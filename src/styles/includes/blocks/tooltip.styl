@@ -9,6 +9,7 @@
 	font-weight 500
 	font-size 13px
 	text-align left
+	white-space normal
 	opacity 0
 	visibility hidden
 	@extend .transition
@@ -98,7 +99,8 @@
 			left 50%
 	
 	&--extended-bottom
-		top calc(100% - 10px)
+		// top calc(100% - 10px)
+		top calc(100%)
 		left 50%
 		transform translateX(-50%)
 		
@@ -110,7 +112,8 @@
 			transform rotate(90deg)
 		
 		&.tooltip--visible
-			top 100%
+			// top 100%
+			top calc(100% + 10px)
 			left 50%
 			
 	&--extended-left
