@@ -33,6 +33,35 @@ $(() => {
     }
   });
 
+  const testimonialsSwiper = new Swiper('.testimonials-swiper', {
+    modules: [Navigation],
+    loop: true,
+    slidesPerView: 'auto',
+    // centeredSlides: true,
+    spaceBetween: 8,
+
+    navigation: {
+      nextEl: '.testimonials-swiper-container__next',
+      prevEl: '.testimonials-swiper-container__prev',
+      disabledClass: 'swiper-btn--disabled'
+    },
+
+    breakpoints: {
+      768: {
+        loop: false,
+        slidesPerView: 2,
+        spaceBetween: 16,
+        centeredSlides: false,
+      },
+      1024: {
+        loop: false,
+        slidesPerView: 2,
+        spaceBetween: 32,
+        centeredSlides: false,
+      }
+    }
+  });
+
 	// $('.affiliate-info__more-link').click(function(e) {
 	// 	$(this).closest('.affiliate-info').find('.affiliate-info__text').toggleClass('affiliate-info__text--truncated');
 
