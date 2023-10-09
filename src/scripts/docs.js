@@ -47,7 +47,7 @@ $(() => {
 
 	    $container.animate( {
 	      scrollTop: scrollTop
-	    }, 500 );
+	    }, 0 );
 		}		
 
 		event.preventDefault();
