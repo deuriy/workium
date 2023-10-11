@@ -159,7 +159,25 @@
 				margin-top 12px
 				margin-bottom 0
 	
+	&--employment
+		width 670px
+		max-width 100%
+		margin-right auto
+		margin-left auto
+		
+		.contact-box__title,
+		.contact-box__phones
+			justify-self start
+		
+		.contact-box__title
+			font-weight 700
+			font-size 16px
+	
 	&--contact-section
 		.contact-box__phones
 			@media $xs
 				margin-bottom 22px
+	
+	&--has-title
+		.contact-box__title
+			grid-column 1 / 3

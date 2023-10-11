@@ -8,10 +8,11 @@
     p Це абсолютно безкоштовно та гарантує вам можливість оскаржити та висвітлити будь-які дії роботодавця, а також завдяки працевлаштуванню через WORKIUM ви додатково отримаєте винагороду за відпрацювання в розмірі 500 zł на ваш баланс.
     p Тому, звʼяжіться з роботодацем Smart Work та отримайте відповіді на всі ваші запитання стосовно обраної вакансіі, після чого здійсніть безкоштовне працевлаштування через WORKIUM.
   button(type="button").btn-grey.btn-grey--employment-popup.fancybox-popup__show-contacts-btn Показати контакти через #[span.btn-grey__time-left 7] сек
-  .contact-box.contact-box--employment.fancybox-popup__contact-box(style="display: none;")
+  .contact-box.contact-box--employment.contact-box--has-title.fancybox-popup__contact-box(style="display: none;")
+    h3.contact-box__title Контакти для звʼязку зі Smart Work:
     .contact-phones.contact-phones--order-service.contact-box__phones
       ul.contact-phones__list
-        li.contact-phones__item.contact-phones__item--right
+        li.contact-phones__item
           a(href="#").phone.phone--order-service +48 226 02 00 90
           button(type="button").copy-btn.copy-btn--small.copy-btn--grey.contact-phones__copy-btn
           .tooltip.tooltip--copied.tooltip--grey-bg.contact-phones__tooltip Скопійовано!
