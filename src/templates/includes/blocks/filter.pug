@@ -8,6 +8,11 @@ form(action="").filter.vacancies__filter
       select(name="countries" autocomplete="off").filter-select.filter__countries-select#countries
         option(value="poland") Польща
         option(value="czech") Чехія
+        option(value="slovakia") Словаччина
+        option(value="german") Німеччина
+        option(value="romania") Румунія
+        option(value="lithuania") Литва
+        option(value="holland") Голандія
     .filter__item.hidden-xxs
       a(href="#cities-dropdown-block" data-dropdown-block-trigger data-default-placeholder="Усі міста").select-toggle.filter__cities-select-toggle
         .select-toggle__label Усі міста
@@ -59,7 +64,7 @@ form(action="").filter.vacancies__filter
     .filter__item.filter__item--buttons.hidden-xxs
       button(type="button" data-fancybox data-src="#additional-filters-popup").btn-white.btn-white--filter.additional-filters-popup-link Фільтри
         span.count.count--info-bg.btn-white__count.hidden 0
-      button(type="button").btn-default.btn-default--filter.filter__search-btn Знайти
+      button(type="submit").btn-default.btn-default--filter.filter__search-btn Знайти
   .filter__bottom
     //- button(type="button" data-fancybox data-src="#additional-filters-popup").btn-white.btn-white--filter.btn-white--filter-has-count.hidden-xxsPlus.additional-filters-popup-link Фільтри #[span.count.count--info-bg.count--btn-white 99]
     .filter__item.hidden-xxsPlus

@@ -64,16 +64,16 @@ function checkFilterFill() {
   isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
 }
 
-function changeFiltersBodyMaxHeight (selectedItemsLength) {
-  let $additionalFiltersHeaderBottom = $('.additional-filters__header-bottom');
-  let $additionalFiltersBody = $('.additional-filters__body');
+// function changeFiltersBodyMaxHeight (selectedItemsLength) {
+//   let $additionalFiltersHeaderBottom = $('.additional-filters__header-bottom');
+//   let $additionalFiltersBody = $('.additional-filters__body');
 
-  if (selectedItemsLength) {
-    $additionalFiltersBody.css('max-height', `calc(100% - ${$additionalFiltersHeaderBottom.height()}px)`);
-  } else {
-    $additionalFiltersBody.css('max-height', '');
-  }
-}
+//   if (selectedItemsLength) {
+//     $additionalFiltersBody.css('max-height', `calc(100% - ${$additionalFiltersHeaderBottom.height()}px)`);
+//   } else {
+//     $additionalFiltersBody.css('max-height', '');
+//   }
+// }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
   $('.selected-items').each(function(index, item) {
@@ -531,6 +531,33 @@ $(() => {
     }
 
     $selectedItems.toggleClass('selected-items--expanded');
+  });
+
+  let countriesCases = {
+    'poland': 'polshi',
+    'czech': 'chehiyi',
+    'slovakia': 'slovachchini',
+    'german': 'nimeccyni',
+    'romania': 'rumuniyi',
+    'lithuania': 'litvi',
+    'holland': 'golandiyi',
+  };
+
+  // Creating filter URL
+  $('.filter__search-btn').on('click', function(event) {
+    event.preventDefault();
+
+    // let url = new URL();
+    let selectedCountry = $('select[name="countries"]').val();
+    let selectedCountrySlug = `vacansii-v-${countriesCases[selectedCountry]}`;
+    let selectedCities = $('select[name="cities"]').val();
+
+    // console.log(selectedCities);
+
+    window.location.href = '/vacancies/' + selectedCountrySlug;
+
+    // console.log('Submit!');
+    /* Act on the event */
   });
 
   // $('.specification').mouseover(function(event) {
