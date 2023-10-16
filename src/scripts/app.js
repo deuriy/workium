@@ -635,21 +635,21 @@ $(() => {
     //   // inputFormat.value = values[handle];
     // });
 
-    let ageFromID = document.getElementById('age_from');
-    let ageToID = document.getElementById('age_to');
+    // let ageFromID = document.getElementById('age_from');
+    // let ageToID = document.getElementById('age_to');
 
-    slider.noUiSlider.on('update', function (values, handle) {
-      ageFromID.value = values[0];
-      ageToID.value = values[1];
-    });
+    // slider.noUiSlider.on('update', function (values, handle) {
+    //   ageFromID.value = values[0];
+    //   ageToID.value = values[1];
+    // });
 
-    ageFromID.addEventListener('change', function () {
-      slider.noUiSlider.set([this.value, null]);
-    });
+    // ageFromID.addEventListener('change', function () {
+    //   slider.noUiSlider.set([this.value, null]);
+    // });
 
-    ageToID.addEventListener('change', function () {
-      slider.noUiSlider.set([null, this.value]);
-    });
+    // ageToID.addEventListener('change', function () {
+    //   slider.noUiSlider.set([null, this.value]);
+    // });
 
     // console.log(slider);
   });

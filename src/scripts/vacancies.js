@@ -100,6 +100,8 @@ function removeItemFromArray (array, value) {
 }
 
 $(() => {
+  let psArr = [];
+
   $(".cities-select").each((index, el) => {
     $(el).multiSelect({
       selectableHeader: '<div class="ms-selectable__header"><div class="ms-selectable__search-input-box"><input type="search" name="ms_search" class="ms-selectable__search-input" placeholder="Введіть назву міста…" title="Введіть назву міста…" /><button type="button" class="ms-selectable__clear-search-btn" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button></div></div>',
@@ -115,7 +117,9 @@ $(() => {
         // console.log($clearBtn);
         let $selectableItems = that.$selectableUl.children().toArray();
         let $selectionItems = that.$selectionUl.children().toArray();
-        let psArr = [];
+        // let psArr = [];
+
+        // console.log('Init!');
 
         // console.log('$selectableItems');
         // console.log($selectableItems);
@@ -163,8 +167,9 @@ $(() => {
 
         $searchInput.on('input', function(event) {
           let value = $(this).val().toLowerCase().trim();
+          let $items = $(this).closest('.ms-container').find('.ms-list .ms-elem-selectable');
 
-          $selectableItems.forEach(item => {
+          $items.each((index, item) => {
             if (!$(item).text().toLowerCase().trim().includes(value)) {
               $(item).hide();
             } else {
@@ -252,6 +257,10 @@ $(() => {
           $clearBtn.hide();
           this.$container.addClass('ms-container--empty');
         }
+
+        psArr.forEach(ps => {
+          ps.update();
+        });
       },
 
       afterDeselect: function(values) {
@@ -269,6 +278,10 @@ $(() => {
           $clearBtn.hide();
           this.$container.addClass('ms-container--empty');
         }
+
+        psArr.forEach(ps => {
+          ps.update();
+        });
       }
     });
   });
@@ -599,6 +612,33 @@ $(() => {
 
       // $('.dropdown-block--sex-select .ms-container__apply-btn').click();
     }
+  });
+
+  
+  document.addEventListener('citiesLoaded', function (e) {
+    // console.log(e.detail.data.results);
+
+    let $citiesSelects = $('select[name="cities"]');
+    let cities = e.detail.data.results;
+
+    // $citiesSelects.multiSelect('deselect_all');
+
+    clearCitiesSelect();
+
+    $citiesSelects.empty();
+    $citiesSelects.next('.ms-container').find('.ms-list').empty();
+
+    cities.forEach((item, index) => {
+      // console.log(item);
+      $citiesSelects.multiSelect('addOption', { value: item.seo_slug, text: item.text, index: index });
+    });
+
+    // console.log($citiesSelects);
+
+    // $citiesSelects.find('option').remove();
+
+    // $('select[name="cities"]').multiSelect('addOption', e.detail.data.results);
+    // $('select[name="cities"]').multiSelect('addOption', { value: 42, text: 'test 42', index: 0 });
   });
 
   // Removing selected items

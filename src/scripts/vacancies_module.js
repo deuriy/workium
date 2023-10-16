@@ -170,6 +170,8 @@ $(() => {
     }
   });
 
+  // console.log($filterSelects);
+
   $filterSelects.each(function(index, el) {
     let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
 
@@ -533,40 +535,79 @@ $(() => {
     $selectedItems.toggleClass('selected-items--expanded');
   });
 
-  let countriesCases = {
-    'poland': 'polshi',
-    'czech': 'chehiyi',
-    'slovakia': 'slovachchini',
-    'german': 'nimeccyni',
-    'romania': 'rumuniyi',
-    'lithuania': 'litvi',
-    'holland': 'golandiyi',
-  };
+  // let countriesCases = {
+  //   'poland': 'polshi',
+  //   'czech': 'chehiyi',
+  //   'slovakia': 'slovachchini',
+  //   'german': 'nimeccyni',
+  //   'romania': 'rumuniyi',
+  //   'lithuania': 'litvi',
+  //   'holland': 'golandiyi',
+  // };
 
   // Creating filter URL
   $('.filter__search-btn').on('click', function(event) {
     event.preventDefault();
 
-    // let url = new URL();
+    let url = window.location.href;
     let selectedCountry = $('select[name="countries"]').val();
-    let selectedCountrySlug = `vacansii-v-${countriesCases[selectedCountry]}`;
-    let selectedCities = $('select[name="cities"]').val();
+    // let selectedCountrySlug = `vacansii-v-${countriesCases[selectedCountry]}`;
+    let selectedCities = $('select[name="cities"]').val().join('/');
 
-    // console.log(selectedCities);
+    let $selectedCheckboxes = $('.additional-filters .checkbox__input:checked');
+    let selectedCheckboxesSlugArr = [];
+    let selectedCheckboxesSlug = '';
 
-    window.location.href = '/vacancies/' + selectedCountrySlug;
+    $selectedCheckboxes.each(function(index, el) {
+      if (el.value) {
+        selectedCheckboxesSlugArr.push(`${el.name}=${el.value}`);
+      }
+    });
 
-    // console.log('Submit!');
-    /* Act on the event */
+    selectedCheckboxesSlug = selectedCheckboxesSlugArr.join('&');
+
+    let selectedRadioBtns = $('.additional-filters .radiobtn__input:checked');
+    let selectedRadioSlugArr = [];
+    let selectedRadioSlug = '';
+
+    selectedRadioBtns.each(function(index, el) {
+      if (el.value) {
+        selectedRadioSlugArr.push(`${el.name}=${el.value}`);
+      }
+    });
+
+    selectedRadioSlug = selectedRadioSlugArr.join('&');
+
+    console.log(selectedCountry);
+    console.log(selectedCheckboxesSlug);
+
+    window.location.href = `/vacancies/${selectedCountry}/${selectedCities}/?${selectedCheckboxesSlug}&${selectedRadioSlug}`;
   });
 
-  // $('.specification').mouseover(function(event) {
-  //   // console.log('Ovr!!');
-  //   $(this).find('.specification__tooltip').addClass('tooltip--visible');
-  // });
-  
-  // $('.specification').mouseout(function(event) {
-  //   // console.log('Ovr!!');
-  //   $(this).find('.specification__tooltip').removeClass('tooltip--visible');
-  // });
+  function loadCities (countryID) {
+    $.ajax({
+      url: `/api/v1/cities?country_id=${countryID}`,
+
+      success: function(data) {
+        document.dispatchEvent(new CustomEvent("citiesLoaded", {
+          detail: { data }
+        }));
+      },
+
+      error: function(data){
+        console.log(data);
+      }
+    });
+  }
+
+  loadCities(1);
+
+  // Loading cities via AJAX
+  $('select[name="countries"]').on('change', function(event) {
+    // console.log('Change countries!!');
+    // console.log($(this).val());
+
+    // loadCities($(this).data('id'));
+    loadCities($(this).find(':selected').data('id'));
+  });
 });
