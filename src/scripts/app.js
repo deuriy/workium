@@ -611,8 +611,8 @@ $(() => {
       start: [20, 80],
       connect: true,
       range: {
-          'min': 0,
-          'max': 100
+        'min': 0,
+        'max': 100
       },
       // tooltips: true,
     });
@@ -635,21 +635,23 @@ $(() => {
     //   // inputFormat.value = values[handle];
     // });
 
-    // let ageFromID = document.getElementById('age_from');
-    // let ageToID = document.getElementById('age_to');
+    let inputFromId = slider.dataset.fromInputId;
+    let inputToId = slider.dataset.toInputId;
+    let inputFrom = document.getElementById(inputFromId);
+    let inputTo = document.getElementById(inputToId);
 
-    // slider.noUiSlider.on('update', function (values, handle) {
-    //   ageFromID.value = values[0];
-    //   ageToID.value = values[1];
-    // });
+    slider.noUiSlider.on('update', function (values, handle) {
+      inputFrom.value = values[0];
+      inputTo.value = values[1];
+    });
 
-    // ageFromID.addEventListener('change', function () {
-    //   slider.noUiSlider.set([this.value, null]);
-    // });
+    inputFrom.addEventListener('change', function () {
+      slider.noUiSlider.set([this.value, null]);
+    });
 
-    // ageToID.addEventListener('change', function () {
-    //   slider.noUiSlider.set([null, this.value]);
-    // });
+    inputTo.addEventListener('change', function () {
+      slider.noUiSlider.set([null, this.value]);
+    });
 
     // console.log(slider);
   });

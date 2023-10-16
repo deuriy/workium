@@ -58,10 +58,16 @@
 			height 24px
 			
 			@media $xxs
-				top -13px
-				right -16px
+				// top -13px
+				// right -16px
 				width 32px
 				height 32px
+				
+				&.noUi-handle-lower
+					right -31px
+				
+				&.noUi-handle-upper
+					right 0
 	
 	&.noUi-state-drag *
 		cursor pointer !important
