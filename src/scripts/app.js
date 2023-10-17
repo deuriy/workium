@@ -471,15 +471,21 @@ $(() => {
     e.preventDefault();
   });
 
-  $(document).click(function(e) {
-    let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
-    // let $visibleDropdownBlock = $('.dropdown-block--visible');
-    let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
+  $(document).on('click', '[data-dropdown-block-close]', function(event) {
+    $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
 
-    if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
-      $('.dropdown-block--visible').removeClass('dropdown-block--visible');
-    }
+    event.preventDefault();
   });
+
+  // $(document).click(function(e) {
+  //   let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
+  //   // let $visibleDropdownBlock = $('.dropdown-block--visible');
+  //   let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
+
+  //   if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
+  //     $('.dropdown-block--visible').removeClass('dropdown-block--visible');
+  //   }
+  // });
 
   $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item').click(function(e) {
     let $phone = $(this).find('.phone');
