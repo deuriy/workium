@@ -4,6 +4,8 @@ import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 
+let selectedFiltersCount = 0;
+
 function isFilterChanged() {
   let $textFields = $('.filter .form-text');
   let $select2Selections = $('.filter .select2-selection.filter-select');
@@ -96,6 +98,7 @@ function clearFilter () {
   let $allCheckboxes = $('.additional-filters .checkbox__input');
   let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
   let $clearBtn = $(`.filter__clear-btn`);
+  let $filtersBtn = $('.btn-white--filter .btn-white__count');
   let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
   let $additionalFiltersClearLink = $('.additional-filters__clear-link');
 
@@ -133,6 +136,7 @@ function clearFilter () {
   // $('.selected-items--filter-params').hide();
 
   setVisibilitySelectedMoreItem(0);
+  $filtersBtn.addClass('hidden').text(0);
 
   // if ($(window).width() > 767) {
   //   changeFiltersBodyMaxHeight(0);
@@ -417,17 +421,20 @@ $(() => {
     $selectedItemParent.remove();
 
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+    let $filtersBtn = $('.btn-white--filter .btn-white__count');
 
     if (selectedItemsLength) {
       $selectedItems.show();
       $clearBtn.show();
       $additionalFiltersClearBtn.show();
       $additionalFiltersClearLink.show();
+      $filtersBtn.removeClass('hidden').text(selectedItemsLength);
     } else {
       $selectedItems.hide();
       $clearBtn.hide();
       $additionalFiltersClearBtn.hide();
       $additionalFiltersClearLink.hide();
+      $filtersBtn.addClass('hidden').text(0);
     }
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
@@ -501,17 +508,20 @@ $(() => {
     }
 
     let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+    let $filtersBtn = $('.btn-white--filter .btn-white__count');
 
     if (selectedItemsLength) {
       $selectedItems.show();
       $clearBtn.show();
       $additionalFiltersClearBtn.show();
       $additionalFiltersClearLink.show();
+      $filtersBtn.removeClass('hidden').text(selectedItemsLength);
     } else {
       $selectedItems.hide();
       $clearBtn.hide();
       $additionalFiltersClearBtn.hide();
       $additionalFiltersClearLink.hide();
+      $filtersBtn.addClass('hidden').text(0);
     }
 
     setVisibilitySelectedMoreItem(selectedItemsLength);

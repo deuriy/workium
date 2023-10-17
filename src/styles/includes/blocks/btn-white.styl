@@ -17,9 +17,10 @@
 	@extend .transition
 	
 	&__count
-		position absolute
-		top -7px
-		right -4px
+		@media $smPlus
+			position absolute
+			top -7px
+			right -4px
 	
 	&--filter
 		grid-template-columns auto 1fr
