@@ -537,6 +537,12 @@ $(() => {
     e.preventDefault();
   });
 
+  $('.vacancy-info__specialization').click(function(e) {
+    $(this).toggleClass('vacancy-info__specialization--truncated');
+
+    e.preventDefault();
+  });
+
   $('.circle-progressbar').circleProgress({
     startAngle: -1.55,
     value: 0.06,
