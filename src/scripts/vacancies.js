@@ -638,7 +638,7 @@ $(() => {
 
     cities.forEach((item, index) => {
       // console.log(item);
-      $citiesSelects.multiSelect('addOption', { value: item.seo_slug, text: item.text, index: index });
+      $citiesSelects.multiSelect('addOption', { value: item.seo_slug || '', text: item.text || '', index: index });
 
       $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
                                       <div class="checkbox">

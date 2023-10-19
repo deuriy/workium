@@ -38,16 +38,23 @@ $(() => {
 			$(this).text('Згорнути статтю');
 			$articleBoxContent.show();
 
+			let $wrapper = $('.wrapper');
+			$wrapper.addClass('wrapper--non-fixed');
+
+	    let $container = $(window).width() < 768 ? $wrapper : $('html, body');
 			let destination = $articleBoxContent.offset().top;
 	    let scrollTop = destination - $('.mobile-header').outerHeight();
-	    // let scrollTop = destination;
-	    let $container = $(window).width() < 768 ? $('.wrapper') : $('html, body');
 
-	    console.log($articleBoxContent);
+	    $wrapper.removeClass('wrapper--non-fixed');
 
 	    $container.animate( {
 	      scrollTop: scrollTop
 	    }, 0 );
+
+
+	    // setTimeout(() => {
+	    // 	$wrapper.removeClass('wrapper--non-fixed');
+	    // }, 5000);
 		}		
 
 		event.preventDefault();
