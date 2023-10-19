@@ -477,15 +477,15 @@ $(() => {
     event.preventDefault();
   });
 
-  // $(document).click(function(e) {
-  //   let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
-  //   // let $visibleDropdownBlock = $('.dropdown-block--visible');
-  //   let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
+  $(document).click(function(e) {
+    let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
+    // let $visibleDropdownBlock = $('.dropdown-block--visible');
+    let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
 
-  //   if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
-  //     $('.dropdown-block--visible').removeClass('dropdown-block--visible');
-  //   }
-  // });
+    if (!$isDropdownBlock.length && !$dropdownBlockTrigger.length) {
+      $('.dropdown-block--visible').removeClass('dropdown-block--visible');
+    }
+  });
 
   $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item').click(function(e) {
     let $phone = $(this).find('.phone');
@@ -619,13 +619,29 @@ $(() => {
   const sliders = document.querySelectorAll('.range-slider');
 
   sliders.forEach(slider => {
+    let min = parseInt(slider.dataset.min);
+    let max = parseInt(slider.dataset.max);
+    let minValue = parseInt(slider.dataset.minValue);
+    let maxValue = parseInt(slider.dataset.maxValue);
+
     noUiSlider.create(slider, {
-      start: [20, 80],
+      start: [minValue, maxValue],
       connect: true,
       range: {
-        'min': 0,
-        'max': 100
+        'min': min,
+        'max': max
       },
+
+      format: {
+        to: function (value) {
+          return parseInt(value);
+        },
+
+        from: function (value) {
+          return parseInt(value);
+        },
+      },
+
       // tooltips: true,
     });
 
@@ -657,11 +673,11 @@ $(() => {
       inputTo.value = values[1];
     });
 
-    inputFrom.addEventListener('change', function () {
+    inputFrom.addEventListener('input', function () {
       slider.noUiSlider.set([this.value, null]);
     });
 
-    inputTo.addEventListener('change', function () {
+    inputTo.addEventListener('input', function () {
       slider.noUiSlider.set([null, this.value]);
     });
 

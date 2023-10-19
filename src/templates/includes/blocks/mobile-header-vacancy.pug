@@ -1,10 +1,14 @@
-.mobile-header.hidden-md
+.mobile-header.mobile-header--vacancy-page.hidden-md
 	//- button(type="button").menu-hamburger.mobile-header__menu-hamburger
 	//- a(href="#support-popup").user-profile-popup-link.mobile-header__support-link
 	//- 	img(src="/img/head_phones_service_icon.svg" alt="").mobile-header__support-icon
 	a(href="/vacancies.html").mobile-header__btn-back
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="none" viewBox="0 0 20 18"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.75 9H1.25m0 0 7.875 7.875M1.25 9l7.875-7.875"/></svg>
-	a(href="/")
-		img(src="/img/logo.svg")
+		span.mobile-header__btn-back-title Вакансії
+	a(href="/").mobile-header__logo
+		img(src="/img/logo.svg").mobile-header__logo-img
+	<a href="#support-popup" class="user-profile-popup-link mobile-header__support-link">
+		<img class="mobile-header__support-icon" src="/img/head_phones_service_icon.svg" alt="">
+	</a>
 	a(href="#share-popup").mobile-header__share-icon.fancybox-popup-toggle
 		img(src="/img/share_outline_icon.svg" alt="")

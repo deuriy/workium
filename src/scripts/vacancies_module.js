@@ -561,37 +561,56 @@ $(() => {
 
     let url = window.location.href;
     let selectedCountry = $('select[name="countries"]').val();
-    // let selectedCountrySlug = `vacansii-v-${countriesCases[selectedCountry]}`;
     let selectedCities = $('select[name="cities"]').val().join('/');
 
     let $selectedCheckboxes = $('.additional-filters .checkbox__input:checked');
-    let selectedCheckboxesSlugArr = [];
-    let selectedCheckboxesSlug = '';
+    let selectedCheckboxesValuesArr = [];
+    let selectedCheckboxesValues = '';
 
     $selectedCheckboxes.each(function(index, el) {
       if (el.value) {
-        selectedCheckboxesSlugArr.push(`${el.name}=${el.value}`);
+        selectedCheckboxesValuesArr.push(`${el.name}=${el.value}`);
       }
     });
 
-    selectedCheckboxesSlug = selectedCheckboxesSlugArr.join('&');
+    selectedCheckboxesValues = selectedCheckboxesValuesArr.join('&');
 
-    let selectedRadioBtns = $('.additional-filters .radiobtn__input:checked');
+    // if (selectedCheckboxesValues) {
+    //   selectedCheckboxesValues = '&' + selectedCheckboxesValues;
+    // }
+
+    let $selectedRadioBtns = $('.additional-filters .radiobtn__input:checked');
     let selectedRadioSlugArr = [];
     let selectedRadioSlug = '';
 
-    selectedRadioBtns.each(function(index, el) {
+    let $rangeSliders = $('.additional-filters .range-slider');
+    let rangeSlidersValuesArr = [];
+    let rangeSlidersValues = '';
+
+    $rangeSliders.each(function(index, el) {
+      let rangeValues = el.noUiSlider.get();
+      let resultValue = el.dataset.name + '=' + rangeValues[0] + '-' + rangeValues[1];
+
+      rangeSlidersValuesArr.push(resultValue);
+    });
+
+    rangeSlidersValues = rangeSlidersValuesArr.join('&');
+    if (rangeSlidersValues) {
+      rangeSlidersValues = '&' + rangeSlidersValues;
+    }
+
+    $selectedRadioBtns.each(function(index, el) {
       if (el.value) {
         selectedRadioSlugArr.push(`${el.name}=${el.value}`);
       }
     });
 
     selectedRadioSlug = selectedRadioSlugArr.join('&');
+    if (selectedRadioSlug) {
+      selectedRadioSlug = '&' + selectedRadioSlug;
+    }
 
-    console.log(selectedCountry);
-    console.log(selectedCheckboxesSlug);
-
-    window.location.href = `/vacancies/${selectedCountry}/${selectedCities}/?${selectedCheckboxesSlug}&${selectedRadioSlug}`;
+    window.location.href = `/vacancies/${selectedCountry}/${selectedCities}/?${selectedCheckboxesValues + selectedRadioSlug + rangeSlidersValues}`;
   });
 
   function loadCities (countryID) {
@@ -610,7 +629,8 @@ $(() => {
     });
   }
 
-  loadCities(1);
+  let selectedCountryId = $('select[name="countries"] option:selected').data('id');
+  loadCities(selectedCountryId);
 
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {

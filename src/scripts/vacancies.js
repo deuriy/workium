@@ -619,19 +619,46 @@ $(() => {
     // console.log(e.detail.data.results);
 
     let $citiesSelects = $('select[name="cities"]');
+    let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
     let cities = e.detail.data.results;
 
+    let selectedCities = $citiesSelects.data('selected-cities');
+    let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
+
     // $citiesSelects.multiSelect('deselect_all');
+
+    console.log(selectedCitiesArr);
 
     clearCitiesSelect();
 
     $citiesSelects.empty();
+    $citiesCheckboxesList.empty();
+
     $citiesSelects.next('.ms-container').find('.ms-list').empty();
 
     cities.forEach((item, index) => {
-      // console.log(item);
+      console.log(item);
       $citiesSelects.multiSelect('addOption', { value: item.seo_slug, text: item.text, index: index });
+
+      $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
+                                      <div class="checkbox">
+                                        <input class="checkbox__input" name="cities" value="${item.seo_slug}" type="checkbox" id="${item.seo_slug}">
+                                        <label class="checkbox__label checkbox__label--align-start" for="${item.seo_slug}">
+                                          <div class="checkbox__label-wrapper">
+                                            <div class="checkbox__title">${item.text}</div>
+                                            <div class="checkbox__description">${item.province}</div>
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </li>`);
     });
+
+    $citiesSelects.multiSelect('select', selectedCitiesArr);
+    selectedCitiesIds = [...selectedCitiesArr];
+    currentSelectedCitiesIds = [...selectedCitiesArr];
+
+    $('.dropdown-block--cities-select .ms-container__apply-btn').click();
+    $('.cities-filter__apply-btn').click();
 
     // console.log($citiesSelects);
 

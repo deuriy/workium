@@ -66,6 +66,7 @@
 			grid-row 2 / 3
 			// font-size 15.5px
 			font-size 13.8px
+			cursor pointer
 			
 			// display inline-grid
 			// grid-template-columns auto auto
@@ -82,14 +83,15 @@
 				transform rotate(180deg)
 		
 			&--truncated
-				// display -webkit-box
-				// -webkit-line-clamp 1
-				// -webkit-box-orient vertical
-				// overflow hidden
-				// text-overflow ellipsis
-					
-				white-space nowrap
+				display -webkit-box
+				-webkit-line-clamp 1
+				-webkit-box-orient vertical
 				overflow hidden
+				text-overflow ellipsis
+					
+				// white-space nowrap
+				// overflow hidden
+					
 				// text-overflow ellipsis
 				
 				&::after
@@ -212,11 +214,12 @@
 		.vacancy-card__header
 			@media $xs
 				padding 0 15px
-				border-bottom 1px solid var(--grey-medium)
+				// border-bottom 1px solid var(--grey-medium)
 		
 		.vacancy-card__address
 			@media $xs
-				font-size 15.5px
+				// font-size 15.5px
+				font-size 14px
 				
 				&::after
 					display none

@@ -16,6 +16,11 @@
 	cursor pointer
 	@extend .transition
 	
+	&__text
+		white-space nowrap
+		overflow hidden
+		text-overflow ellipsis
+	
 	&__count
 		@media $smPlus
 			position absolute
