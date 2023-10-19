@@ -92,6 +92,24 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
   });
 }
 
+function checkDependentFilters () {
+  let $dependentFilters = $('[data-parent-filter-id]');
+
+  $dependentFilters.each(function(index, el) {
+    let parentFilterId = $(el).data('parent-filter-id')
+    let parentFilterItemId = $(el).data('parent-filter-item-id');
+
+    let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
+    let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
+
+    if (!$parentFilterItem.is(':checked')) {
+      $(el).hide();
+    } else {
+      $(el).show();
+    }
+  });
+}
+
 function clearFilter () {
   let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
   let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
@@ -136,6 +154,7 @@ function clearFilter () {
   // $('.selected-items--filter-params').hide();
 
   setVisibilitySelectedMoreItem(0);
+  checkDependentFilters();
   $filtersBtn.addClass('hidden').text(0);
 
   // if ($(window).width() > 767) {
@@ -438,6 +457,7 @@ $(() => {
     }
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
+    checkDependentFilters();
     event.preventDefault();
   });
 
@@ -632,5 +652,10 @@ $(() => {
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {
     loadCities($(this).find(':selected').data('id'));
+  });
+
+  checkDependentFilters();
+  $('.additional-filters .checkbox__input, .additional-filters .radiobtn__input').on('change', function(event) {
+    checkDependentFilters();
   });
 });
