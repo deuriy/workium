@@ -637,7 +637,7 @@ $(() => {
     $citiesSelects.next('.ms-container').find('.ms-list').empty();
 
     cities.forEach((item, index) => {
-      console.log(item);
+      // console.log(item);
       $citiesSelects.multiSelect('addOption', { value: item.seo_slug, text: item.text, index: index });
 
       $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
@@ -655,24 +655,13 @@ $(() => {
 
     cities.forEach((item, index) => {
       let $option = $citiesSelects.find(`option[value="${item.seo_slug}"]`);
-      console.log($option);
 
       if (item.province) {
         $option.attr('data-description', item.province);
       }
-      // console.log($citiesSelects.find(`option[value="${item.seo_slug}"]`));
-      // $citiesSelects.find(`option[value="${item.seo_slug}"]`).data('description', item.province);
     });
 
     $citiesSelects.multiSelect('refresh');
-
-    // console.log($citiesSelects);
-
-    // $citiesSelects.each(function(index, select) {
-    //   $(select).find('option').each(function(index, option) {
-    //     $(option).data('description', )
-    //   });
-    // });
 
     $citiesSelects.multiSelect('select', selectedCitiesArr);
     selectedCitiesIds = [...selectedCitiesArr];
@@ -680,13 +669,6 @@ $(() => {
 
     $('.dropdown-block--cities-select .ms-container__apply-btn').click();
     $('.cities-filter__apply-btn').click();
-
-    // console.log($citiesSelects);
-
-    // $citiesSelects.find('option').remove();
-
-    // $('select[name="cities"]').multiSelect('addOption', e.detail.data.results);
-    // $('select[name="cities"]').multiSelect('addOption', { value: 42, text: 'test 42', index: 0 });
   });
 
   // Removing selected items

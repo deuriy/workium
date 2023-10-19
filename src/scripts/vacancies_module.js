@@ -545,72 +545,69 @@ $(() => {
     $selectedItems.toggleClass('selected-items--expanded');
   });
 
-  // let countriesCases = {
-  //   'poland': 'polshi',
-  //   'czech': 'chehiyi',
-  //   'slovakia': 'slovachchini',
-  //   'german': 'nimeccyni',
-  //   'romania': 'rumuniyi',
-  //   'lithuania': 'litvi',
-  //   'holland': 'golandiyi',
-  // };
-
   // Creating filter URL
   $('.filter__search-btn').on('click', function(event) {
     event.preventDefault();
 
-    let url = window.location.href;
+    let urlParamsArr = [];
+    let requestParamsArr = [];
+    let urlParams = '';
+    let requestParams = '';
+
+    // Get url params
     let selectedCountry = $('select[name="countries"]').val();
     let selectedCities = $('select[name="cities"]').val().join('/');
 
-    let $selectedCheckboxes = $('.additional-filters .checkbox__input:checked');
-    let selectedCheckboxesValuesArr = [];
-    let selectedCheckboxesValues = '';
+    urlParamsArr.push(selectedCountry, selectedCities);
 
+    let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
+    $selectedSegmentCheckboxes.each(function(index, el) {
+      if (el.value) {
+        urlParamsArr.push(el.value);
+      }
+    });
+
+    let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:checked');
+    $selectedSegmentRadioBtns.each(function(index, el) {
+      if (el.value) {
+        urlParamsArr.push(el.value);
+      }
+    });
+
+    urlParams = urlParamsArr.join('/');
+
+    // Get request params
+    let searchValue = $('input[name="vacancy_name"]').val();
+    if (searchValue) {
+      requestParamsArr.push(`search=${searchValue}`);
+    }
+
+    let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):checked');
     $selectedCheckboxes.each(function(index, el) {
       if (el.value) {
-        selectedCheckboxesValuesArr.push(`${el.name}=${el.value}`);
+        requestParamsArr.push(`${el.name}=${el.value}`);
       }
     });
 
-    selectedCheckboxesValues = selectedCheckboxesValuesArr.join('&');
-
-    // if (selectedCheckboxesValues) {
-    //   selectedCheckboxesValues = '&' + selectedCheckboxesValues;
-    // }
-
-    let $selectedRadioBtns = $('.additional-filters .radiobtn__input:checked');
-    let selectedRadioSlugArr = [];
-    let selectedRadioSlug = '';
-
-    let $rangeSliders = $('.additional-filters .range-slider');
-    let rangeSlidersValuesArr = [];
-    let rangeSlidersValues = '';
-
-    $rangeSliders.each(function(index, el) {
-      let rangeValues = el.noUiSlider.get();
-      let resultValue = el.dataset.name + '=' + rangeValues[0] + '-' + rangeValues[1];
-
-      rangeSlidersValuesArr.push(resultValue);
-    });
-
-    rangeSlidersValues = rangeSlidersValuesArr.join('&');
-    if (rangeSlidersValues) {
-      rangeSlidersValues = '&' + rangeSlidersValues;
-    }
-
+    let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):checked');
     $selectedRadioBtns.each(function(index, el) {
       if (el.value) {
-        selectedRadioSlugArr.push(`${el.name}=${el.value}`);
+        requestParamsArr.push(`${el.name}=${el.value}`);
       }
     });
 
-    selectedRadioSlug = selectedRadioSlugArr.join('&');
-    if (selectedRadioSlug) {
-      selectedRadioSlug = '&' + selectedRadioSlug;
-    }
+    let $rangeSliders = $('.additional-filters .range-slider');
+    $rangeSliders.each(function(index, el) {
+      let values = el.noUiSlider.get();
+      let name = el.dataset.name;
+      let resultValue = `${name}=${values[0]}-${values[1]}`;
 
-    window.location.href = `/vacancies/${selectedCountry}/${selectedCities}/?${selectedCheckboxesValues + selectedRadioSlug + rangeSlidersValues}`;
+      requestParamsArr.push(resultValue);
+    });
+
+    requestParams = requestParamsArr.join('&');
+
+    window.location.href = `/vacancies/${urlParams}/?${requestParams}`;
   });
 
   function loadCities (countryID) {
