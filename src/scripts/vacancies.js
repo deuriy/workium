@@ -627,7 +627,7 @@ $(() => {
 
     // $citiesSelects.multiSelect('deselect_all');
 
-    console.log(selectedCitiesArr);
+    // console.log(selectedCitiesArr);
 
     clearCitiesSelect();
 
@@ -652,6 +652,27 @@ $(() => {
                                       </div>
                                     </li>`);
     });
+
+    cities.forEach((item, index) => {
+      let $option = $citiesSelects.find(`option[value="${item.seo_slug}"]`);
+      console.log($option);
+
+      if (item.province) {
+        $option.attr('data-description', item.province);
+      }
+      // console.log($citiesSelects.find(`option[value="${item.seo_slug}"]`));
+      // $citiesSelects.find(`option[value="${item.seo_slug}"]`).data('description', item.province);
+    });
+
+    $citiesSelects.multiSelect('refresh');
+
+    // console.log($citiesSelects);
+
+    // $citiesSelects.each(function(index, select) {
+    //   $(select).find('option').each(function(index, option) {
+    //     $(option).data('description', )
+    //   });
+    // });
 
     $citiesSelects.multiSelect('select', selectedCitiesArr);
     selectedCitiesIds = [...selectedCitiesArr];

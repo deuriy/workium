@@ -634,10 +634,6 @@ $(() => {
 
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {
-    // console.log('Change countries!!');
-    // console.log($(this).val());
-
-    // loadCities($(this).data('id'));
     loadCities($(this).find(':selected').data('id'));
   });
 });
