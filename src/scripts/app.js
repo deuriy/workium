@@ -165,6 +165,10 @@ $(() => {
 
             $('#employment-smart-work-popup .fancybox-popup__show-contacts-btn .btn-grey__time-left').text(timeLeft);
           }, 1000);
+        } else if (slide.src.includes('order-service-popup')) {
+          console.log(slide);
+          $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
+          $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
         }
       }
     }
