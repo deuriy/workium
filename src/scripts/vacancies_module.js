@@ -566,7 +566,7 @@ $(() => {
   });
 
   // Creating filter URL
-  $('.filter__search-btn').on('click', function(event) {
+  $('.filter__search-btn, .additional-filters__submit-btn').on('click', function(event) {
     event.preventDefault();
 
     let urlParamsArr = [];
@@ -654,8 +654,30 @@ $(() => {
     loadCities($(this).find(':selected').data('id'));
   });
 
+  // Set current currency
+  let currencies = {
+    'robota-v-polshi': 'zł',
+    'robota-v-chehiyi': 'Kč',
+    'robota-v-rumuniyi': 'lei',
+    'robota-v-slovachchini': '€',
+    'robota-v-nimechchini': '€',
+    'robota-v-niderlandah': '€',
+    'robota-v-litvi': '€',
+  };
+
+  $('select[name="countries"]').on('change', function(event) {
+    let selectedCurrency = currencies[$(this).val()];
+
+    $('.filter input[name="salary"]').attr('placeholder', `Від… (${selectedCurrency})`);
+    $('.filter input[name="remuneration"]').attr('placeholder', `Від… (${selectedCurrency})`);
+  });
+
+  // Dependent filters
   checkDependentFilters();
   $('.additional-filters .checkbox__input, .additional-filters .radiobtn__input').on('change', function(event) {
     checkDependentFilters();
   });
+
+  // Synchronized filters
+  // $('.')
 });
