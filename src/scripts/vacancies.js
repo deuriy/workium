@@ -638,19 +638,22 @@ $(() => {
 
     cities.forEach((item, index) => {
       // console.log(item);
-      $citiesSelects.multiSelect('addOption', { value: item.seo_slug || '', text: item.text || '', index: index });
+      
+      if (item.seo_slug && item.origin) {
+        $citiesSelects.multiSelect('addOption', { value: item.seo_slug || '', text: item.origin || '', index: index });
 
-      $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
-                                      <div class="checkbox">
-                                        <input class="checkbox__input" name="cities" value="${item.seo_slug}" type="checkbox" id="${item.seo_slug}">
-                                        <label class="checkbox__label checkbox__label--align-start" for="${item.seo_slug}">
-                                          <div class="checkbox__label-wrapper">
-                                            <div class="checkbox__title">${item.text}</div>
-                                            <div class="checkbox__description">${item.province}</div>
-                                          </div>
-                                        </label>
-                                      </div>
-                                    </li>`);
+        $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
+                                        <div class="checkbox">
+                                          <input class="checkbox__input" name="cities" value="${item.seo_slug}" type="checkbox" id="${item.seo_slug}">
+                                          <label class="checkbox__label checkbox__label--align-start" for="${item.seo_slug}">
+                                            <div class="checkbox__label-wrapper">
+                                              <div class="checkbox__title">${item.origin}</div>
+                                              <div class="checkbox__description">${item.province}</div>
+                                            </div>
+                                          </label>
+                                        </div>
+                                      </li>`);
+      }
     });
 
     cities.forEach((item, index) => {
