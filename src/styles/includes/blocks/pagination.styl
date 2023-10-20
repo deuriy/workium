@@ -1,0 +1,53 @@
+.pagination
+	list-style none
+	display flex
+	flex-wrap wrap
+	justify-content center
+	
+	.page-item,
+	.page-link
+		color #666B80
+		
+	.page-item
+		font-size 15px
+		line-height 1.6
+		
+		&.active
+			.page-link
+				border-color #5340FF
+				color #5340FF
+		
+		&:first-child,
+		&:last-child,
+		&.disabled
+			.page-link:hover
+				border-color transparent
+		
+		&:first-child
+			.page-link
+				background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'%3E%3Cpath stroke='%23666B80' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M15.75 19.5 8.25 12l7.5-7.5'/%3E%3C/svg%3E") center no-repeat
+				color transparent
+				
+		&:last-child
+			.page-link
+				background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none'%3E%3Cpath stroke='%23666B80' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m8.25 4.5 7.5 7.5-7.5 7.5'/%3E%3C/svg%3E") center no-repeat
+				color transparent
+		
+		@media $xs
+			&:nth-child(n+4):nth-child(-n+10)
+				display none
+	
+	.page-link
+		display flex
+		align-items center
+		justify-content center
+		width 40px
+		height 40px
+		border 1px solid transparent
+		border-radius 33px
+		text-decoration none
+		@extend .transition
+		
+		&:hover
+			border-color #5340FF
+			color #5340FF
