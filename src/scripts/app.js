@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
-import noUiSlider from 'nouislider';
+// import noUiSlider from 'nouislider';
 
 var count = 200;
 var defaults = {
@@ -529,11 +529,13 @@ $(() => {
     }, 1500);
   });
 
-  $('.selected-item__remove-link').click(function(e) {
-    e.preventDefault();
+  // $('.selected-item__remove-link').click(function(e) {
+  //   e.preventDefault();
 
-    $(this).closest('.selected-item').remove();
-  });
+  //   console.log('2222mfoemwmfww');
+
+  //   $(this).closest('.selected-item').remove();
+  // });
 
   $('.vacancy-card__address').click(function(e) {
     $(this).toggleClass('vacancy-card__address--truncated');
@@ -616,76 +618,6 @@ $(() => {
     }, 500 );
 
     return false;
-  });
-
-  // console.log(noUiSlider);
-
-  const sliders = document.querySelectorAll('.range-slider');
-
-  sliders.forEach(slider => {
-    let min = parseInt(slider.dataset.min);
-    let max = parseInt(slider.dataset.max);
-    let minValue = parseInt(slider.dataset.minValue);
-    let maxValue = parseInt(slider.dataset.maxValue);
-
-    noUiSlider.create(slider, {
-      start: [minValue, maxValue],
-      connect: true,
-      range: {
-        'min': min,
-        'max': max
-      },
-
-      format: {
-        to: function (value) {
-          return parseInt(value);
-        },
-
-        from: function (value) {
-          return parseInt(value);
-        },
-      },
-
-      // tooltips: true,
-    });
-
-    // slider.noUiSlider.on('update', function (values, handle) {
-    //   let tip = slider.querySelector('.range-slider__tip');
-    //   let noUiOrigins = slider.querySelectorAll('.noUi-origin');
-    //   let firstHandleOffset = noUiOrigins[0].style.transform;
-    //   let secondHandleOffset = noUiOrigins[1].style.transform;
-
-    //   firstHandleOffset = parseInt(firstHandleOffset.substring(firstHandleOffset.indexOf('(') + 1, firstHandleOffset.indexOf(')')));
-    //   secondHandleOffset = parseInt(secondHandleOffset.substring(secondHandleOffset.indexOf('(') + 1, secondHandleOffset.indexOf(')')));
-
-    //   let diff = secondHandleOffset - firstHandleOffset;
-    //   tip.style.marginLeft = `${diff}%`;
-
-    //   console.log(firstHandleOffset);
-    //   console.log(secondHandleOffset);
-    //   // slider.querySelector('.range-slider__tip').style.transform = 'translate(20%)';
-    //   // inputFormat.value = values[handle];
-    // });
-
-    let inputFromId = slider.dataset.fromInputId;
-    let inputToId = slider.dataset.toInputId;
-    let inputFrom = document.getElementById(inputFromId);
-    let inputTo = document.getElementById(inputToId);
-
-    slider.noUiSlider.on('update', function (values, handle) {
-      inputFrom.value = values[0];
-      inputTo.value = values[1];
-    });
-
-    inputFrom.addEventListener('input', function () {
-      slider.noUiSlider.set([this.value, null]);
-    });
-
-    inputTo.addEventListener('input', function () {
-      slider.noUiSlider.set([null, this.value]);
-    });
-
-    // console.log(slider);
   });
 
 });

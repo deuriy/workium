@@ -3,6 +3,7 @@ import Swiper, { Pagination } from 'swiper';
 import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
+import noUiSlider from 'nouislider';
 
 let selectedFiltersCount = 0;
 
@@ -65,17 +66,6 @@ function checkFilterFill() {
   isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
   isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
 }
-
-// function changeFiltersBodyMaxHeight (selectedItemsLength) {
-//   let $additionalFiltersHeaderBottom = $('.additional-filters__header-bottom');
-//   let $additionalFiltersBody = $('.additional-filters__body');
-
-//   if (selectedItemsLength) {
-//     $additionalFiltersBody.css('max-height', `calc(100% - ${$additionalFiltersHeaderBottom.height()}px)`);
-//   } else {
-//     $additionalFiltersBody.css('max-height', '');
-//   }
-// }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
   $('.selected-items').each(function(index, item) {
@@ -156,10 +146,6 @@ function clearFilter () {
   setVisibilitySelectedMoreItem(0);
   checkDependentFilters();
   $filtersBtn.addClass('hidden').text(0);
-
-  // if ($(window).width() > 767) {
-  //   changeFiltersBodyMaxHeight(0);
-  // }
 }
 
 function removeItemFromArray (array, value) {
@@ -171,6 +157,80 @@ function removeItemFromArray (array, value) {
 
   return array;
 }
+
+function findFilterTagByValue (name, value) {
+  let $container = $('.selected-items__list');
+  let $selectedItem = $container.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+
+  return $selectedItem;
+}
+
+// function findFilterTagById (id) {
+//   let $container = $('.selected-items__list');
+//   let $selectedItem = $container.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+
+//   return $selectedItem;
+// }
+
+function createOrUpdateTag (type, name, value, labelText) {
+  let $container = $('.selected-items__list');
+  let $selectedItem = findFilterTagByValue(name, value);
+
+  if ($selectedItem.length) return;
+
+  let htmlStr = '';
+
+  if (['checkbox', 'radio'].includes(type)) {
+    htmlStr = `
+              <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
+                <div class="selected-item">
+                  <div class="selected-item__value">${labelText}</div>
+                  <a href="#" class="selected-item__remove-link"></a>
+                </div>
+              </li>`;
+  } else if (type === 'range') {
+    $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+    console.log($selectedItem);
+
+    if ($selectedItem.length) {
+      $selectedItem.remove();
+    }
+
+    htmlStr = `
+              <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
+                <div class="selected-item">
+                  <div class="selected-item__value">${labelText}</div>
+                  <a href="#" class="selected-item__remove-link"></a>
+                </div>
+              </li>`;
+  }
+
+  $container.append(htmlStr);
+}
+
+function toggleClearButtons () {
+  let $additionalFilters = $('.additional-filters');
+  let $clearBtn = $('.filter__clear-btn');
+  let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+  let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
+  let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+  let $filtersBtn = $('.btn-white--filter .btn-white__count');
+
+  if (selectedItemsLength) {
+    // $selectedItems.show();
+    $clearBtn.show();
+    $additionalFiltersClearBtn.show();
+    $additionalFiltersClearLink.show();
+    $filtersBtn.removeClass('hidden').text(selectedItemsLength);
+  } else {
+    // $selectedItems.hide();
+    $clearBtn.hide();
+    $additionalFiltersClearBtn.hide();
+    $additionalFiltersClearLink.hide();
+    $filtersBtn.addClass('hidden').text(0);
+  }
+}
+
 
 $(() => {
   select2($);
@@ -211,9 +271,6 @@ $(() => {
       let name = $(this).attr('name');
       let value = $(this).select2('val');
 
-      // console.log($(this));
-      // console.log('Change!');
-
       if (value !== '') {
         if (name !== 'countries' && name !== 'currency') {
           $select2Selection.addClass('select2-selection--selected');
@@ -240,18 +297,6 @@ $(() => {
             }
 
             break;
-          case 'sex':
-            if (e.params === undefined || e.params.calledFromCode === undefined) {
-              let sexValues = ['men', 'women', 'couples'];
-
-              sexValues.forEach(item => {
-                $(`.additional-filters .selected-items__item[data-value="${item}"] .selected-item__remove-link`).click();
-              });
-
-              $(`.additional-filters .checkbox__input[value="${value}"]`).click();
-            }
-
-            break;
         }
       } else {
         $select2Selection.removeClass('select2-selection--selected');
@@ -263,19 +308,6 @@ $(() => {
 
             if (e.params === undefined || e.params.calledFromCode === undefined) {
               $(`.additional-filters .radiobtn__input[value="${value}"]`).click();
-            }
-
-            break;
-          case 'sex':
-            $select2Selection.find('.select2-selection__rendered').text('Стать');
-            $('.filter__sex-select.select2-selection--selected').removeClass('select2-selection--selected');
-
-            if (e.params === undefined || e.params.calledFromCode === undefined) {
-              let sexValues = ['men', 'women', 'couples'];
-
-              sexValues.forEach(item => {
-                $(`.additional-filters .selected-items__item[data-value="${item}"] .selected-item__remove-link`).click();
-              });
             }
 
             break;
@@ -326,31 +358,12 @@ $(() => {
           },
         });
 
-        // console.log(event.detail.response);
-
         if (promoBlocksSwiper.slides.length === 1) {
           $(promoBlocksSwiper.pagination.el).hide();
         }
       });
     }
   });
-
-  // const config = {
-  //   attributes: true,
-  //   childList: true,
-  //   subtree: true
-  // };
-
-  // const observeCallback = function(mutationsList, observer) {
-  //   for (let mutation of mutationsList) {
-  //     if (mutation.type === 'childList') {
-  //       console.log(mutation);
-  //     }
-  //   }
-  // };
-
-  // const observer = new MutationObserver(observeCallback);
-  // observer.observe(document, config);
 
   $(document).on('click', '.filter .selected-item__remove-link', function(e) {
     let $selectedItem = $(this).closest('.selected-items__item');
@@ -362,6 +375,54 @@ $(() => {
     $otherSelectedItem.find('.selected-item__remove-link').click();
 
     e.preventDefault();
+  });
+
+  function findRangeElement () {
+    // body... 
+  }
+
+  // Removing selected items
+  $(document).on('click', '.additional-filters .selected-item__remove-link', function(event) {
+    let $selectedItemParent = $(this).closest('.selected-items__item');
+    let $additionalFilters = $selectedItemParent.closest('.additional-filters');
+    let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+
+    let name = $selectedItemParent.data('name');
+    let value = $selectedItemParent.data('value');
+    let type = $selectedItemParent.data('type');
+
+    if (![name, value].includes(undefined)) {
+      switch (type) {
+        case 'checkbox':
+          let $selectedCheckbox = $additionalFilters.find(`.checkbox__input[name="${name}"][value="${value}"]`);
+          $selectedCheckbox.prop("checked", false);
+
+          let $otherSelectedItem = $(`.filter .selected-items__item[data-name="${name}"][data-value="${value}"]`);
+          $otherSelectedItem.remove();
+
+          break;
+        case 'radio':
+          let $nonCheckedRadio = $additionalFilters.find(`.radiobtn__input[name="${name}"][value=""]`);
+          $nonCheckedRadio.prop('checked', true);
+
+          break;
+        case 'range':
+          let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
+          $rangeSlider[0].noUiSlider.set([$rangeSlider.data('min'), $rangeSlider.data('max')]);
+
+          break;
+      }      
+    }
+
+    $selectedItemParent.remove();
+
+    toggleClearButtons();
+
+    setVisibilitySelectedMoreItem(selectedItemsLength);
+
+    checkDependentFilters();
+
+    event.preventDefault();
   });
 
   $('.filter .form-text:not([type="search"])').on('input', function(e) {
@@ -388,115 +449,17 @@ $(() => {
     });
   });
 
-  // Removing selected items
-  $(document).on('click', '.additional-filters .selected-item__remove-link', function(event) {
-    let $selectedItemParent = $(this).closest('.selected-items__item');
-    let $selectedItems = $selectedItemParent.closest('.selected-items');
-    let $additionalFilters = $selectedItemParent.closest('.additional-filters');
-    let $clearBtn = $('.filter__clear-btn');
-    let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
-    let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
-
-    let name = $selectedItemParent.data('name');
-    let value = $selectedItemParent.data('value');
-    let inputType = $selectedItemParent.data('type');
-
-    if (name !== undefined && value !== undefined) {
-      switch (inputType) {
-        case 'checkbox':
-          let $selectedCheckbox = $additionalFilters.find(`.checkbox__input[name="${name}"][value="${value}"]`);
-          $selectedCheckbox.prop("checked", false);
-
-          let $otherSelectedItem = $(`.filter .selected-items__item[data-name="${name}"][data-value="${value}"]`);
-          $otherSelectedItem.remove();
-
-          if (['filters[men]', 'filters[women]', 'filters[couples]'].includes(name)) {
-            $('.filter__sex-select').val('').trigger({
-              type: 'change',
-              params: {
-                calledFromCode: true
-              }
-            });
-          }
-
-          break;
-        case 'radio':
-          let $nonCheckedRadio = $additionalFilters.find(`.radiobtn__input[name="${name}"][value=""]`);
-          $nonCheckedRadio.prop('checked', true);
-
-          if (['filters[5]'].includes(name)) {
-            $('.filter__experience-select').val('').trigger({
-              type: 'change',
-              params: {
-                calledFromCode: true
-              }
-            });
-          }
-
-          break;
-      }      
-    }
-
-    $selectedItemParent.remove();
-
-    let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
-    let $filtersBtn = $('.btn-white--filter .btn-white__count');
-
-    if (selectedItemsLength) {
-      $selectedItems.show();
-      $clearBtn.show();
-      $additionalFiltersClearBtn.show();
-      $additionalFiltersClearLink.show();
-      $filtersBtn.removeClass('hidden').text(selectedItemsLength);
-    } else {
-      $selectedItems.hide();
-      $clearBtn.hide();
-      $additionalFiltersClearBtn.hide();
-      $additionalFiltersClearLink.hide();
-      $filtersBtn.addClass('hidden').text(0);
-    }
-
-    setVisibilitySelectedMoreItem(selectedItemsLength);
-    checkDependentFilters();
-    event.preventDefault();
-  });
-
   // Adding selected checkboxes/radio buttons
   $('.additional-filters .checkbox__input, .additional-filters .radiobtn__input').click(function(event) {
     let name = $(this).attr('name');
     let value = $(this).val();
     let labelText = $(this).parent().find('label').text();
-    let $additionalFilters = $(this).closest('.additional-filters');
-    let $selectedItems = $('.selected-items--filter-params');
+    let selectedItemsLength = $('.additional-filters .selected-items__item').length;
     let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-    let $clearBtn = $('.filter__clear-btn');
-    let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
-    let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
-        $selectedItems.find('.selected-items__list').append(`
-          <li class="selected-items__item" data-type="checkbox" data-name="${name}" data-value="${value}">
-            <div class="selected-item">
-              <div class="selected-item__value">${labelText}</div>
-              <a href="#" class="selected-item__remove-link"></a>
-            </div>
-          </li>`);
-
-        if (['filters[men]', 'filters[women]', 'filters[couples]'].includes(name)) {
-          // $('.selected-items--main-filter').find(`.selected-items__item[data-name="${name}"]`).remove();
-
-          // if ($(window).width() < 768) {
-            $('.selected-items').find(`.selected-items__item[data-name="${name}"]`).remove();
-          // }
-
-          $('.filter__sex-select').val(value).trigger({
-            type: 'change',
-            params: {
-              calledFromCode: true
-            }
-          });
-        }
+        createOrUpdateTag("checkbox", name, value, labelText);
       } else {
         $selectedItem.remove();
       }
@@ -505,50 +468,16 @@ $(() => {
       let $otherSelectedItems = $(`.selected-items__item[data-name="${name}"]`).not(`[data-value="${value}"]`);
       $otherSelectedItems.remove();
 
-      if (!$selectedItem.length && value !== '') {
-        $selectedItems.find('.selected-items__list').append(`
-          <li class="selected-items__item" data-type="radio" data-name="${name}" data-value="${value}">
-            <div class="selected-item">
-              <div class="selected-item__value"><strong>${groupTitle}:</strong> ${labelText}</div>
-              <a href="#" class="selected-item__remove-link"></a>
-            </div>
-          </li>`);
-
-        if (['filters[5]'].includes(name)) {
-          $('.selected-items--main-filter').find(`.selected-items__item[data-name="${name}"]`).remove();
-
-          $('.filter__experience-select').val(value).trigger({
-            type: 'change',
-            params: {
-              calledFromCode: true
-            }
-          });
-        }
+      if (value !== '') {
+        createOrUpdateTag("radio", name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
       }
     }
 
-    let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
-    let $filtersBtn = $('.btn-white--filter .btn-white__count');
-
-    if (selectedItemsLength) {
-      $selectedItems.show();
-      $clearBtn.show();
-      $additionalFiltersClearBtn.show();
-      $additionalFiltersClearLink.show();
-      $filtersBtn.removeClass('hidden').text(selectedItemsLength);
-    } else {
-      $selectedItems.hide();
-      $clearBtn.hide();
-      $additionalFiltersClearBtn.hide();
-      $additionalFiltersClearLink.hide();
-      $filtersBtn.addClass('hidden').text(0);
-    }
+    toggleClearButtons();
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
 
-    // if ($(window).width() > 767) {
-    //   changeFiltersBodyMaxHeight(selectedItemsLength);
-    // }
+    checkDependentFilters();
   });
 
   $('.selected-items__more-btn').click(function(event) {
@@ -651,7 +580,9 @@ $(() => {
 
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {
-    loadCities($(this).find(':selected').data('id'));
+    let countryID = $(this).find(':selected').data('id');
+
+    loadCities(countryID);
   });
 
   // Set current currency
@@ -674,10 +605,175 @@ $(() => {
 
   // Dependent filters
   checkDependentFilters();
-  $('.additional-filters .checkbox__input, .additional-filters .radiobtn__input').on('change', function(event) {
+  $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function(event) {
     checkDependentFilters();
   });
 
-  // Synchronized filters
-  // $('.')
+  // Synchronized selects
+  $('select[data-sync-field]').on('change', function(event) {
+    $(this).find('option').each((index, option) => {
+      let syncFieldIDs = $(option).data('sync-field-ids');
+
+      syncFieldIDs.split(',').forEach(id => {
+        let $syncField = $(`#${id.trim()}`);
+        let type = $syncField.attr('type');
+
+        if (type === 'checkbox') {
+          let name = $syncField.attr('name');
+          let value = $syncField.attr('value');
+          let $selectedItem = findFilterTagByValue(name, value);
+          let labelText = $syncField.next('label').text();
+
+          if ($(option).is(':selected')) {
+            $syncField.prop('checked', true);
+            createOrUpdateTag("checkbox", name, value, labelText);
+          } else {
+            $syncField.prop('checked', false);
+            $selectedItem.remove();
+          }
+        }
+        
+      });
+    });
+  });
+
+  // console.log(noUiSlider);
+
+  function checkDefaultValue() {
+    $('[data-hide-default-min-value]').each(function(index, el) {
+      if ($(this).val() === $(this).attr('min')) {
+        $(this).val('');
+      }
+    });
+  }
+
+  // checkDefaultValue();
+
+  const sliders = document.querySelectorAll('.range-slider');
+
+  sliders.forEach(slider => {
+    let min = parseInt(slider.dataset.min);
+    let max = parseInt(slider.dataset.max);
+    let minValue = parseInt(slider.dataset.minValue);
+    let maxValue = parseInt(slider.dataset.maxValue);
+
+    noUiSlider.create(slider, {
+      start: [minValue, maxValue],
+      connect: true,
+      range: {
+        'min': min,
+        'max': max
+      },
+
+      format: {
+        to: function (value) {
+          return parseInt(value);
+        },
+
+        from: function (value) {
+          return parseInt(value);
+        },
+      },
+
+      // tooltips: true,
+    });
+
+    // slider.noUiSlider.on('update', function (values, handle) {
+    //   let tip = slider.querySelector('.range-slider__tip');
+    //   let noUiOrigins = slider.querySelectorAll('.noUi-origin');
+    //   let firstHandleOffset = noUiOrigins[0].style.transform;
+    //   let secondHandleOffset = noUiOrigins[1].style.transform;
+
+    //   firstHandleOffset = parseInt(firstHandleOffset.substring(firstHandleOffset.indexOf('(') + 1, firstHandleOffset.indexOf(')')));
+    //   secondHandleOffset = parseInt(secondHandleOffset.substring(secondHandleOffset.indexOf('(') + 1, secondHandleOffset.indexOf(')')));
+
+    //   let diff = secondHandleOffset - firstHandleOffset;
+    //   tip.style.marginLeft = `${diff}%`;
+
+    //   console.log(firstHandleOffset);
+    //   console.log(secondHandleOffset);
+    //   // slider.querySelector('.range-slider__tip').style.transform = 'translate(20%)';
+    //   // inputFormat.value = values[handle];
+    // });
+
+    let syncFromFieldIds = slider.dataset.syncFromFieldIds;
+    let syncToFieldIds = slider.dataset.syncToFieldIds;
+    let fieldsFrom = [];
+    let fieldsTo = [];
+
+    // console.log(syncFromFieldIds);
+    // console.log(syncToFieldIds);
+
+    syncFromFieldIds.split(',').forEach(id => {
+      let field = document.getElementById(id.trim());
+
+      if (field) {
+        fieldsFrom.push(field);
+      }
+    });
+
+    syncToFieldIds.split(',').forEach(id => {
+      let field = document.getElementById(id.trim());
+
+      if (field) {
+        fieldsTo.push(field);
+      }
+    });
+
+    slider.noUiSlider.on('update', function (values, handle) {
+      fieldsFrom.forEach(field => {
+        field.value = values[0];
+      });
+
+      fieldsTo.forEach(field => {
+        field.value = values[1];
+      });
+
+      // console.log(`minValue: ${slider.dataset.minValue}`);
+      // console.log(`values[0]: ${values[0]}`);
+      // console.log(`maxValue: ${slider.dataset.maxValue}`);
+      // console.log(`values[1]: ${values[1]}`);
+      // console.log('-----------');
+
+      if (slider.dataset.minValue != values[0] || slider.dataset.maxValue != values[1]) {
+        let name = slider.dataset.name;
+        let value = `${values[0]}-${values[1]}`
+        let label = slider.closest('.filter-element').querySelector('.filter-element__title');
+        // let labelText = `<strong>${label.textContent}:</strong> ${values[0]}-${values[1]}`;
+        let labelText = value;
+
+        createOrUpdateTag("range", name, value, labelText);
+      } else {
+        let name = slider.dataset.name;
+        let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+
+        $selectedItem.remove();
+      }
+
+      toggleClearButtons();
+    });
+
+    checkDefaultValue();
+
+    ['input', 'change'].forEach(eventName => {
+      fieldsFrom.forEach(field => {
+        field.addEventListener(eventName, function (e) {
+          // console.log(e);
+          console.log(`${eventName} from`);
+          slider.noUiSlider.set([this.value, null]);
+        });
+      });
+
+      fieldsTo.forEach(field => {
+        field.addEventListener(eventName, function (e) {
+          // console.log(e);
+          console.log(`${eventName} to`);
+          slider.noUiSlider.set([null, this.value]);
+        });
+      });
+    });
+
+    // console.log(slider);
+  });
+  
 });
