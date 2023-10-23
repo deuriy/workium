@@ -58,6 +58,29 @@ function isFilterChanged() {
   return result;
 }
 
+function toggleClearButtons () {
+  let $additionalFilters = $('.additional-filters');
+  let $clearBtn = $('.filter__clear-btn');
+  let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
+  let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
+  let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+  let $filtersBtn = $('.btn-white--filter .btn-white__count');
+
+  if (selectedItemsLength) {
+    // $selectedItems.show();
+    $clearBtn.show();
+    $additionalFiltersClearBtn.show();
+    $additionalFiltersClearLink.show();
+    $filtersBtn.removeClass('hidden').text(selectedItemsLength);
+  } else {
+    // $selectedItems.hide();
+    $clearBtn.hide();
+    $additionalFiltersClearBtn.hide();
+    $additionalFiltersClearLink.hide();
+    $filtersBtn.addClass('hidden').text(0);
+  }
+}
+
 function checkFilterFill() {
   let $clearBtn = $('.filter__clear-btn');
   let $additionalClearBtn = $('.additional-filters__clear-btn');
@@ -101,6 +124,34 @@ function removeItemFromArray (array, value) {
   }
 
   return array;
+}
+
+function changeSelectToggleTitle ($select) {
+  // $gendersSelectToggles.each(function(index, el) {
+  let $dropdown = $select.closest('.dropdown-block');
+  let dropdownId = $dropdown.attr('id');
+  let $selectToggle = $(`.select-toggle[href="#${dropdownId}"]`);
+  let selectToggleText = $selectToggle.data('default-placeholder');
+  let $selectedValues = $select.find('option:selected').map((index, el) => $(el).text());
+
+  // console.log($selectedValues);
+
+  if ($selectedValues.length) {
+    selectToggleText = $selectedValues.length === 1 ? `<span class="select-toggle__label">${$selectedValues[0]}</span>` : `<span class="select-toggle__label">${$selectedValues[0]}</span>` + `<span class="count count--info-bg count--multiselect select-toggle__count">+${$selectedValues.length - 1}</span>`;
+    $selectToggle.addClass('select-toggle--selected');
+  } else {
+    $selectToggle.removeClass('select-toggle--selected');
+  }
+
+  // $('.sex-select').multiSelect('deselect_all');
+  // selectedGendersIds.forEach(id => {
+  //   $('.sex-select').multiSelect('select', id);
+  // });
+
+  // console.log(selectToggleText);
+  // console.log($selectToggle);
+  $selectToggle.html(selectToggleText);
+  // });
 }
 
 $(() => {
@@ -157,7 +208,6 @@ $(() => {
         });
 
         $selectableItems.forEach(el => {
-          // console.log();
           let $title = $(el).find('span');
           let description = $(el).data('description');
           
@@ -167,9 +217,6 @@ $(() => {
             $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
           }
         });
-
-        // console.log(this.$selectableUl);
-        // console.log(psArr);
 
         $searchInput.on('input', function(event) {
           clearTimeout(searchCitiesTimeoutID);
@@ -240,16 +287,6 @@ $(() => {
                 }
               });
             }
-
-            // let $items = $(this).closest('.ms-container').find('.ms-list .ms-elem-selectable');
-
-            // $items.each((index, item) => {
-            //   if (!$(item).text().toLowerCase().trim().includes(searchValue)) {
-            //     $(item).hide();
-            //   } else {
-            //     $(item).show();
-            //   }
-            // });
 
             if (searchValue) {
               $clearSearchBtn.show();
@@ -389,32 +426,20 @@ $(() => {
           selectedGendersIds = [...currentSelectedGendersIds];
 
           let $dropdownBlock = $(this).closest('.dropdown-block');
-          let $selectedGenders = $dropdownBlock.find('.ms-selection .ms-selected span');
-          let $gendersSelectToggles = $(`.filter__sex-select-toggle`);
+          $dropdownBlock.removeClass('dropdown-block--visible');
 
-          $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
+          changeSelectToggleTitle(that.$element);
 
-          $gendersSelectToggles.each(function(index, el) {
-            let gendersSelectToggleText = $(el).data('default-placeholder');
-
-            if ($selectedGenders.length) {
-              gendersSelectToggleText = $selectedGenders.length === 1 ? `<span class="select-toggle__label">${$selectedGenders[0].textContent}</span>` : `<span class="select-toggle__label">${$selectedGenders[0].textContent}</span>` + `<span class="count count--info-bg count--multiselect select-toggle__count">+${$selectedGenders.length - 1}</span>`;
-              $(el).addClass('select-toggle--selected');
-            } else {
-              $(el).removeClass('select-toggle--selected');
-            }
-
-            $('.sex-select').multiSelect('deselect_all');
-            selectedGendersIds.forEach(id => {
-              $('.sex-select').multiSelect('select', id);
-            });
-
-            $(el).html(gendersSelectToggleText);
+          that.$element.multiSelect('deselect_all');
+          selectedGendersIds.forEach(id => {
+            that.$element.multiSelect('select', id);
           });
 
           checkFilterFill();
 
           that.$element[0].dispatchEvent(new Event('change'));
+
+          toggleClearButtons();
         });
 
         $($selectableItems).each(function(index, el) {
@@ -444,7 +469,7 @@ $(() => {
     });
   });
 
-  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(() => {
+  $('[data-clear-filter]').click(() => {
     clearCitiesSelect();
     clearSexSelect();
   });
@@ -498,6 +523,7 @@ $(() => {
     oldScrollY = scrolled;
   });
 
+  // Mobile cities filter
   $('.cities-filter__search-input').on('input', function(event) {
     let $citiesFilter = $(this).closest('.cities-filter');
     let $clearSearchBtn = $citiesFilter.find('.cities-filter__clear-search-btn');
@@ -623,51 +649,7 @@ $(() => {
     }
   });
 
-  // Synchronize genders select with checkboxes
-  $('.additional-filters .checkbox__input').click(function(event) {
-    let name = $(this).attr('name');
-    let value = $(this).val();
-
-    let sexValues = ['men', 'women', 'couples'];
-    let selectedValues = [];
-    let $gendersSelectToggles = $(`.filter__sex-select-toggle`);
-
-    sexValues.forEach(sexValue => {
-      let $checkbox = $(`.additional-filters .checkbox__input[value="${sexValue}"]`);
-
-      if ($checkbox.is(':checked')) {
-        selectedValues.push(sexValue);
-      }
-    });
-
-    if ($(this).is(':checkbox') && ['filters[men]', 'filters[women]', 'filters[couples]'].includes(name)) {
-      if (!$(this).is(':checked')) {
-        $('.filter__sex-select').multiSelect('deselect_all');
-      }
-
-      $('.filter__sex-select').multiSelect('select', selectedValues);
-
-      let $dropdownBlock = $('#additional-sex-dropdown-block');
-      let $selectedGenders = $dropdownBlock.find('.ms-selection .ms-selected span');
-
-      $gendersSelectToggles.each(function(index, el) {
-        let gendersSelectToggleText = $(el).data('default-placeholder');
-
-        if ($selectedGenders.length) {
-          gendersSelectToggleText = $selectedGenders.length === 1 ? `<span class="select-toggle__label">${$selectedGenders[0].textContent}</span>` : `<span class="select-toggle__label">${$selectedGenders[0].textContent}</span>` + `<span class="count count--info-bg count--multiselect select-toggle__count">+${$selectedGenders.length - 1}</span>`;
-          $(el).addClass('select-toggle--selected');
-        } else {
-          $(el).removeClass('select-toggle--selected');
-        }
-
-        $(el).html(gendersSelectToggleText);
-      });
-
-      // $('.dropdown-block--sex-select .ms-container__apply-btn').click();
-    }
-  });
-
-  
+  // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
     let $citiesSelects = $('select[name="cities"]');
     let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
@@ -720,46 +702,90 @@ $(() => {
     $('.cities-filter__apply-btn').click();
   });
 
-  // Synchronized input fields
-  $('input[data-sync-field-ids]').on('input', function(event) {
-    const me = $(this);
-    let syncFieldIDs = me.data('sync-field-ids');
+  function syncInputFields ($input) {
+    let syncFieldIDs = $input.data('sync-field-ids');
+
+    if (!syncFieldIDs) return;
 
     syncFieldIDs.split(',').forEach(id => {
       let $syncField = $(`#${id.trim()}`);
-      let nodeName = $syncField[0].nodeName.toLowerCase();
+
+      if (!$syncField.length) return;
+
+      let nodeName = $syncField.prop('tagName').toLowerCase();
 
       switch (nodeName) {
         case 'input':
           let type = $syncField.attr('type');
 
           if (['text', 'number'].includes(type)) {
-            let value = me.val();
+            let value = $input.val();
             $syncField.val(value);
             $syncField[0].dispatchEvent(new Event('change'));
           }
 
           break;
         case 'select':
-          let filterItemId = me.data('filter-item-id').toString();
 
-          if (me.is(":checked")) {
-            $syncField.multiSelect('select', filterItemId);
+          let filterItemId = $input.data('filter-item-id').toString();
 
-            if (!currentSelectedGendersIds.includes(filterItemId)) {
-              currentSelectedGendersIds.push(filterItemId);
+          console.log($input);
+
+          setTimeout(() => {
+            if ($input.is(":checked")) {
+              console.log('checked!');
+              $syncField.multiSelect('select', filterItemId);
+
+              if (!currentSelectedGendersIds.includes(filterItemId)) {
+                currentSelectedGendersIds.push(filterItemId);
+              }
+            } else {
+              console.log('unchecked!');
+              $syncField.multiSelect('deselect', filterItemId);
+              currentSelectedGendersIds = removeItemFromArray(currentSelectedGendersIds, filterItemId);
             }
-          } else {
-            $syncField.multiSelect('deselect', filterItemId);
-            currentSelectedGendersIds = removeItemFromArray(currentSelectedGendersIds, filterItemId);
-          }
 
-          selectedGendersIds = [...currentSelectedGendersIds];
+            selectedGendersIds = [...currentSelectedGendersIds];
+            changeSelectToggleTitle($syncField);
+
+            console.log('select');
+          });          
 
           break;
       }
       
     });
+  }
+
+  // Synchronized input fields
+  $('input[data-sync-field-ids]').on('input', function(event) {
+    syncInputFields($(this));
+  });
+
+  $(document).on('click', '.selected-item__remove-link', function(event) {
+    let $selectedItemParent = $(this).closest('.selected-items__item');
+    let name = $selectedItemParent.data('name');
+    let value = $selectedItemParent.data('value');
+    let type = $selectedItemParent.data('type');
+
+    console.log(type);
+
+    if (![name, value].includes(undefined)) {
+      switch (type) {
+        case 'checkbox':
+          let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
+          syncInputFields($selectedCheckbox);
+
+          break;
+        case 'radio':
+          let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
+          syncInputFields($nonCheckedRadio);
+
+          break;
+      }
+    }
+
+    event.preventDefault();
   });
 
 });

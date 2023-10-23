@@ -192,10 +192,6 @@ function createOrUpdateTag (type, name, value, labelText) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
     console.log($selectedItem);
 
-    if ($selectedItem.length) {
-      $selectedItem.remove();
-    }
-
     htmlStr = `
               <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
                 <div class="selected-item">
@@ -203,6 +199,12 @@ function createOrUpdateTag (type, name, value, labelText) {
                   <a href="#" class="selected-item__remove-link"></a>
                 </div>
               </li>`;
+
+    if ($selectedItem.length) {
+      $selectedItem.before(htmlStr);
+      $selectedItem.remove();
+      return;
+    }
   }
 
   $container.append(htmlStr);
@@ -365,62 +367,72 @@ $(() => {
     }
   });
 
-  $(document).on('click', '.filter .selected-item__remove-link', function(e) {
-    let $selectedItem = $(this).closest('.selected-items__item');
-    let name = $selectedItem.data('name');
-    let value = $selectedItem.data('value');
-    let $otherSelectedItem = $(`.additional-filters .selected-items__item[data-name="${name}"][data-value="${value}"]`);
+  // $(document).on('click', '.filter .selected-item__remove-link', function(e) {
+  //   let $selectedItem = $(this).closest('.selected-items__item');
+  //   let name = $selectedItem.data('name');
+  //   let value = $selectedItem.data('value');
+  //   let $otherSelectedItem = $(`.additional-filters .selected-items__item[data-name="${name}"][data-value="${value}"]`);
 
-    $selectedItem.remove();
-    $otherSelectedItem.find('.selected-item__remove-link').click();
+  //   $selectedItem.remove();
+  //   $otherSelectedItem.find('.selected-item__remove-link').click();
 
-    e.preventDefault();
-  });
+  //   e.preventDefault();
+  // });
 
-  function findRangeElement () {
-    // body... 
-  }
+  // function findRangeElement () {
+  //   // body... 
+  // }
+
+  // function removeFilterTag ($selectedItem) {
+    
+  // }
 
   // Removing selected items
-  $(document).on('click', '.additional-filters .selected-item__remove-link', function(event) {
+  $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
     let $additionalFilters = $selectedItemParent.closest('.additional-filters');
-    let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+    let selectedItemsLength = $('.selected-items__item').length;
 
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
     let type = $selectedItemParent.data('type');
 
+    // console.log(type);
+
     if (![name, value].includes(undefined)) {
       switch (type) {
         case 'checkbox':
-          let $selectedCheckbox = $additionalFilters.find(`.checkbox__input[name="${name}"][value="${value}"]`);
+          let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
           $selectedCheckbox.prop("checked", false);
 
-          let $otherSelectedItem = $(`.filter .selected-items__item[data-name="${name}"][data-value="${value}"]`);
+          let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
           $otherSelectedItem.remove();
 
           break;
         case 'radio':
-          let $nonCheckedRadio = $additionalFilters.find(`.radiobtn__input[name="${name}"][value=""]`);
+          let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
           $nonCheckedRadio.prop('checked', true);
+
+          console.log($nonCheckedRadio);
 
           break;
         case 'range':
           let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
-          $rangeSlider[0].noUiSlider.set([$rangeSlider.data('min'), $rangeSlider.data('max')]);
+          let min = $rangeSlider.data('min');
+          let max = $rangeSlider.data('max');
+
+          $rangeSlider[0].noUiSlider.set([min, max]);
 
           break;
-      }      
+      }
     }
 
     $selectedItemParent.remove();
 
     toggleClearButtons();
-
     setVisibilitySelectedMoreItem(selectedItemsLength);
-
     checkDependentFilters();
+    checkDefaultValue();
 
     event.preventDefault();
   });
@@ -450,12 +462,14 @@ $(() => {
   });
 
   // Adding selected checkboxes/radio buttons
-  $('.additional-filters .checkbox__input, .additional-filters .radiobtn__input').click(function(event) {
+  $('.additional-filters').find('.checkbox__input, .radiobtn__input').change(function(event) {
     let name = $(this).attr('name');
     let value = $(this).val();
     let labelText = $(this).parent().find('label').text();
-    let selectedItemsLength = $('.additional-filters .selected-items__item').length;
+    let selectedItemsLength = $('.selected-items__item').length;
     let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+
+    console.log('Checkbox trigger!!');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
@@ -466,7 +480,12 @@ $(() => {
     } else if ($(this).is(':radio')) {
       let groupTitle = $(this).closest('.radiobtns-group').find('.radiobtns-group__title').text();
       let $otherSelectedItems = $(`.selected-items__item[data-name="${name}"]`).not(`[data-value="${value}"]`);
+
+      console.log($otherSelectedItems);
+
       $otherSelectedItems.remove();
+
+      console.log(value);
 
       if (value !== '') {
         createOrUpdateTag("radio", name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
@@ -474,9 +493,7 @@ $(() => {
     }
 
     toggleClearButtons();
-
     setVisibilitySelectedMoreItem(selectedItemsLength);
-
     checkDependentFilters();
   });
 
@@ -743,12 +760,13 @@ $(() => {
         let labelText = value;
 
         createOrUpdateTag("range", name, value, labelText);
-      } else {
-        let name = slider.dataset.name;
-        let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-
-        $selectedItem.remove();
       }
+      // else {
+      //   // let name = slider.dataset.name;
+      //   // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+
+      //   // $selectedItem.remove();
+      // }
 
       toggleClearButtons();
     });
