@@ -1,0 +1,35 @@
+.no-results
+	width 792px
+	max-width 100%
+	text-align center
+	
+	&__img
+		@media $xs
+			width 98px
+	
+	&__title
+		margin-top 18px
+		font-size 20px
+		line-height 1.3
+		
+		@media $xs
+			margin-top 8px
+	
+	&__text
+		margin-top 12px
+		color #666B80
+		
+		@media $xs
+			margin-top 9px
+	
+	&__btns
+		display grid
+		grid-template-columns repeat(2, 260px)
+		justify-content center
+		gap 12px
+		margin-top 24px
+		
+		@media $xs
+			grid-template-columns 100%
+			gap 8px
+			margin-top 16px

@@ -106,6 +106,11 @@
 	&__cashback
 		font-weight 700
 	
+	&__content
+		max-height 50vh
+		overflow-y auto
+		overflow-x hidden
+	
 	&--wide
 		text-align center
 		
@@ -288,6 +293,15 @@
 		@media $xs
 			// padding-bottom 8px
 			padding-bottom 0
+	
+	&--groups
+		border-top-right-radius 16px
+		border-top-left-radius 16px
+		
+		.fancybox-popup__title
+			font-weight 600
+			font-size 20px
+			line-height 1.4
 			
 	&--filter-element
 		@media $xs

@@ -340,7 +340,11 @@ $(() => {
     event.preventDefault();
   });
 
-  document.addEventListener("vacanciesLoaded", function(event) {
+  // console.log('Test!!!!');
+
+  // document.addEventListener("vacanciesLoaded", function(event) {
+    // console.log('vacanciesLoaded');
+
     if ($(window).width() < 768) {
       
       document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
@@ -365,7 +369,7 @@ $(() => {
         }
       });
     }
-  });
+  // });
 
   // $(document).on('click', '.filter .selected-item__remove-link', function(e) {
   //   let $selectedItem = $(this).closest('.selected-items__item');
