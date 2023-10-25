@@ -4,6 +4,7 @@ import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
+// import { FilterTag } from './components/filter_tag.js';
 
 let selectedFiltersCount = 0;
 
@@ -55,6 +56,8 @@ function isFilterChanged() {
   // if ($sexSelectToggle.text().trim() !== 'Стать') {
   //   return true;
   // }
+
+  // console.log(result);
 
   return result;
 }
@@ -797,5 +800,31 @@ $(() => {
 
     // console.log(slider);
   });
+
+  checkFilterFill();
+
+  // Search input
+  $('input[name="vacancy_name"]').on('input', function(event) {
+    let value = $(this).val();
+    let $clearBtn = $(this).next('.filter__clear-search-btn');
+
+    if (value) {
+      $clearBtn.show();
+    } else {
+      $clearBtn.hide();
+    }
+  });
+
+  $('.filter__clear-search-btn').on('click', function(event) {
+    $(this).prev().val('').focus();
+    $(this).hide();
+    /* Act on the event */
+  });
+
+  // $('[data-remove-last-filter]').click(function(event) {
+  //   /* Act on the event */
+  // });
+
+  
   
 });
