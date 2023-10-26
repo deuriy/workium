@@ -154,6 +154,11 @@ function changeSelectToggleTitle ($select) {
   // });
 }
 
+function clearTextField ($input) {
+  $input.removeClass('form-text--filter-search-filled').val('');
+  $input.parent().find('[data-clear-search-input]').hide();
+}
+
 $(() => {
   let psArr = [];
 
@@ -762,6 +767,7 @@ $(() => {
     syncInputFields($(this));
   });
 
+  // Synchronizing fields when remove tag
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
     let name = $selectedItemParent.data('name');
@@ -780,6 +786,11 @@ $(() => {
         case 'radio':
           let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
           syncInputFields($nonCheckedRadio);
+
+          break;
+        case 'textfield':
+          let $input = $(`input[name="${name}"]`).val('');
+          clearTextField($input);
 
           break;
       }

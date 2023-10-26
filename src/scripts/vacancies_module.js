@@ -5,6 +5,9 @@ import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
 // import { FilterTag } from './components/filter_tag.js';
+// import { SearchInput } from './components/search_input.js';
+
+// window.customElements.define('search-input', SearchInput);
 
 let selectedFiltersCount = 0;
 
@@ -175,6 +178,27 @@ function findFilterTagByValue (name, value) {
 //   return $selectedItem;
 // }
 
+function clearTextField ($input) {
+  $input.removeClass('form-text--filter-search-filled').val('');
+  $input.parent().find('[data-clear-search-input]').hide();
+}
+
+function removeFilterTag (type, name, value) {
+  let $selectedItem;
+
+  if (['range', 'textfield'].includes(type)) {
+    $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+    console.log('first');
+  } else if (['checkbox', 'radio'].includes(type)) {
+    $selectedItem = findFilterTagByValue(name, value);
+    console.log('second');
+  }
+
+  console.log($selectedItem);
+
+  $selectedItem.remove();
+}
+
 function createOrUpdateTag (type, name, value, labelText) {
   let $container = $('.selected-items__list');
   let $selectedItem = findFilterTagByValue(name, value);
@@ -191,7 +215,7 @@ function createOrUpdateTag (type, name, value, labelText) {
                   <a href="#" class="selected-item__remove-link"></a>
                 </div>
               </li>`;
-  } else if (type === 'range') {
+  } else if (['range', 'textfield'].includes(type)) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
     console.log($selectedItem);
 
@@ -204,8 +228,15 @@ function createOrUpdateTag (type, name, value, labelText) {
               </li>`;
 
     if ($selectedItem.length) {
-      $selectedItem.before(htmlStr);
-      $selectedItem.remove();
+      $selectedItem.attr('data-type', type);
+      $selectedItem.attr('data-name', name);
+      $selectedItem.attr('data-value', value);
+      $selectedItem.find('.selected-item__value').text(labelText);
+
+      // $selectedItem.before(htmlStr);
+      // $selectedItem.remove();
+      // console.log($selectedItem);
+
       return;
     }
   }
@@ -397,12 +428,17 @@ $(() => {
   // Removing selected items
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
-    let $additionalFilters = $selectedItemParent.closest('.additional-filters');
+    // let $additionalFilters = $selectedItemParent.closest('.additional-filters');
     let selectedItemsLength = $('.selected-items__item').length;
 
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
     let type = $selectedItemParent.data('type');
+
+    if (['range', 'textfield'].includes(type)) {
+      let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+      $otherSelectedItem.remove();
+    }
 
     // console.log(type);
 
@@ -803,23 +839,40 @@ $(() => {
 
   checkFilterFill();
 
-  // Search input
-  $('input[name="vacancy_name"]').on('input', function(event) {
+  // Search input with close button
+  $('[data-search-input]').on('input', function(event) {
+    let name = $(this).attr('name');
     let value = $(this).val();
     let $clearBtn = $(this).next('.filter__clear-search-btn');
+    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
     if (value) {
       $clearBtn.show();
+      $(this).addClass('form-text--filter-search-filled');
+      createOrUpdateTag('textfield', name, value, value);
     } else {
       $clearBtn.hide();
+      $(this).removeClass('form-text--filter-search-filled');
+      removeFilterTag(type, name, value);
     }
+
   });
 
-  $('.filter__clear-search-btn').on('click', function(event) {
-    $(this).prev().val('').focus();
-    $(this).hide();
-    /* Act on the event */
+  $('[data-clear-search-input]').on('click', function(event) {
+    let $input = $(this).prev();
+    let name = $input.attr('name');
+    let value = $input.val();
+    let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
+
+    console.log(name, value, type);
+
+    clearTextField($input);
+    removeFilterTag(type, name, value);
+
+    $input.focus();
   });
+
+
 
   // $('[data-remove-last-filter]').click(function(event) {
   //   /* Act on the event */
