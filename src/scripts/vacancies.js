@@ -159,6 +159,20 @@ function clearTextField ($input) {
   $input.parent().find('[data-clear-search-input]').hide();
 }
 
+function updateDropdownItemsDescription ($items) {
+  $items.forEach(el => {
+    // console.log();
+    let $title = $(el).find('span');
+    let description = $(el).data('description');
+
+    $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
+
+    if (description !== undefined) {
+      $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
+    }
+  });
+}
+
 $(() => {
   let psArr = [];
 
@@ -200,28 +214,47 @@ $(() => {
 
         // console.log($selectionItems);
 
-        $selectionItems.forEach(el => {
-          // console.log();
-          let $title = $(el).find('span');
-          let description = $(el).data('description');
+        // function updateDropdownItemsDescription ($items) {
+        //   $items.forEach(el => {
+        //     // console.log();
+        //     let $title = $(el).find('span');
+        //     let description = $(el).data('description');
 
-          $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
+        //     $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
 
-          if (description !== undefined) {
-            $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
-          }
-        });
+        //     if (description !== undefined) {
+        //       $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
+        //     }
+        //   });
+        // }
 
-        $selectableItems.forEach(el => {
-          let $title = $(el).find('span');
-          let description = $(el).data('description');
+        console.log($selectionItems);
+
+        updateDropdownItemsDescription($selectionItems);
+        updateDropdownItemsDescription($selectableItems);
+
+        // $selectionItems.forEach(el => {
+        //   // console.log();
+        //   let $title = $(el).find('span');
+        //   let description = $(el).data('description');
+
+        //   $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
+
+        //   if (description !== undefined) {
+        //     $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
+        //   }
+        // });
+
+        // $selectableItems.forEach(el => {
+        //   let $title = $(el).find('span');
+        //   let description = $(el).data('description');
           
-          $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
+        //   $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
 
-          if (description !== undefined) {
-            $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
-          }
-        });
+        //   if (description !== undefined) {
+        //     $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
+        //   }
+        // });
 
         $searchInput.on('input', function(event) {
           clearTimeout(searchCitiesTimeoutID);
@@ -235,10 +268,12 @@ $(() => {
             url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
           }
 
+          // console.log('Input!!!');
+
           searchCitiesTimeoutID = setTimeout(() => {
             console.log(countryID);
 
-            if (searchValue.length >= 3 || !searchValue.length) {
+            // if (searchValue.length >= 3 || !searchValue.length) {
               $.ajax({
                 url: url,
 
@@ -247,6 +282,8 @@ $(() => {
                   //   detail: { data }
                   // }));
 
+                  console.log('Success!!');
+
                   let $citiesSelects = $('select[name="cities"]');
                   let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
                   let cities = data.results;
@@ -254,12 +291,14 @@ $(() => {
                   $citiesSelects.empty();
                   $citiesCheckboxesList.empty();
 
+                  console.log(cities);
+
                   $citiesSelects.next('.ms-container').find('.ms-selectable .ms-list').empty();
 
                   cities.forEach((item, index) => {
-                    // console.log(item);
+                    console.log(item);
 
-                    if (item.seo_slug && item.origin) {
+                    // if (item.seo_slug && item.origin) {
                       $citiesSelects.multiSelect('addOption', { value: item.seo_slug || '', text: item.origin || '', index: index });
 
                       $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
@@ -273,16 +312,21 @@ $(() => {
                                                         </label>
                                                       </div>
                                                     </li>`);
-                    }
+                    // }
                   });
 
                   cities.forEach((item, index) => {
                     let $option = $citiesSelects.find(`option[value="${item.seo_slug}"]`);
 
                     if (item.province) {
-                      $option.attr('data-description', item.province);
+                      $option.prop('data-description', item.province);
                     }
                   });
+
+                  console.log($selectionItems);
+
+                  updateDropdownItemsDescription($selectionItems);
+                  updateDropdownItemsDescription($selectableItems);
 
                   // console.log(cities);
                 },
@@ -291,7 +335,7 @@ $(() => {
                   console.log(data);
                 }
               });
-            }
+            // }
 
             if (searchValue) {
               $clearSearchBtn.show();
