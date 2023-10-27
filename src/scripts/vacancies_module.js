@@ -563,6 +563,8 @@ $(() => {
     let selectedCountry = $('select[name="countries"]').val();
     let selectedCities = $('select[name="cities"]').val().join('/');
 
+    console.log(selectedCountry);
+
     urlParamsArr.push(selectedCountry, selectedCities);
 
     let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
@@ -612,12 +614,12 @@ $(() => {
 
     requestParams = requestParamsArr.join('&');
 
-    window.location.href = `/vacancies/${urlParams}/?${requestParams}`;
+    // window.location.href = `/vacancies/${urlParams}/?${requestParams}`;
   });
 
   function loadCities (countryID) {
     $.ajax({
-      url: `https://workium.pl/api/v1/cities?country_id=${countryID}&term=War`,
+      url: `https://workium.pl/api/v1/cities?country_id=${countryID}`,
 
       success: function(data) {
         document.dispatchEvent(new CustomEvent("citiesLoaded", {

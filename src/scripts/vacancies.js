@@ -6,6 +6,8 @@ let currentSelectedCitiesIds = [];
 let selectedGendersIds = [];
 let currentSelectedGendersIds = [];
 
+let citySearchInputValue = '';
+
 function isFilterChanged() {
   let $textFields = $('.filter .form-text');
   let $select2Selections = $('.filter .select2-selection.filter-select');
@@ -160,10 +162,14 @@ function clearTextField ($input) {
 }
 
 function updateDropdownItemsDescription ($items) {
+  console.log('updateDropdownItemsDescription');
+
   $items.forEach(el => {
     // console.log();
     let $title = $(el).find('span');
     let description = $(el).data('description');
+
+    console.log(description);
 
     $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
 
@@ -171,6 +177,54 @@ function updateDropdownItemsDescription ($items) {
       $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
     }
   });
+}
+
+function findFilterTagByValue (name, value) {
+  let $container = $('.selected-items__list');
+  let $selectedItem = $container.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+
+  return $selectedItem;
+}
+
+function createOrUpdateTag (type, name, value, labelText) {
+  let $container = $('.selected-items__list');
+  let $selectedItem = findFilterTagByValue(name, value);
+
+  if ($selectedItem.length) return;
+
+  let htmlStr = '';
+
+  if (['checkbox', 'radio'].includes(type)) {
+    htmlStr = `
+              <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
+                <div class="selected-item">
+                  <div class="selected-item__value">${labelText}</div>
+                  <a href="#" class="selected-item__remove-link"></a>
+                </div>
+              </li>`;
+  } else if (['range', 'textfield'].includes(type)) {
+    $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+    // console.log($selectedItem);
+
+    htmlStr = `
+              <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
+                <div class="selected-item">
+                  <div class="selected-item__value">${labelText}</div>
+                  <a href="#" class="selected-item__remove-link"></a>
+                </div>
+              </li>`;
+
+    if ($selectedItem.length) {
+      $selectedItem.attr('data-type', type);
+      $selectedItem.attr('data-name', name);
+      $selectedItem.attr('data-value', value);
+      $selectedItem.find('.selected-item__value').text(labelText);
+
+      return;
+    }
+  }
+
+  $container.append(htmlStr);
 }
 
 $(() => {
@@ -193,6 +247,8 @@ $(() => {
         let $selectionItems = that.$selectionUl.children().toArray();
         let searchCitiesTimeoutID = null;
 
+        $searchInput.val(citySearchInputValue);
+
         // let psArr = [];
 
         // console.log('Init!');
@@ -212,7 +268,7 @@ $(() => {
           }));
         });
 
-        console.log($selectionItems);
+        // console.log($selectionItems);
 
         updateDropdownItemsDescription($selectionItems);
         updateDropdownItemsDescription($selectableItems);
@@ -225,6 +281,7 @@ $(() => {
           // $(this).focus();
 
           let searchValue = $(this).val().trim();
+          citySearchInputValue = searchValue;
 
           let countryID = $('select[name="countries"]').find(':selected').data('id');
           let url = `api/v1/cities?country_id=${countryID}`;
@@ -233,12 +290,12 @@ $(() => {
             url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
           }
 
-          console.log('Input222');
+          // console.log('Input222');
 
           searchCitiesTimeoutID = setTimeout(() => {
             console.log(countryID);
 
-            if (searchValue.length >= 3 || !searchValue.length) {
+            // if (searchValue.length >= 3 || !searchValue.length) {
               $.ajax({
                 url: url,
 
@@ -247,7 +304,7 @@ $(() => {
                   //   detail: { data }
                   // }));
 
-                  // console.log('Success!!');
+                  console.log('Success!!');
 
                   let $citiesSelects = $('select[name="cities"]');
                   let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
@@ -256,7 +313,7 @@ $(() => {
                   $citiesSelects.empty();
                   $citiesCheckboxesList.empty();
 
-                  console.log(cities);
+                  // console.log(cities);
 
                   $citiesSelects.next('.ms-container').find('.ms-selectable .ms-list').empty();
 
@@ -281,30 +338,58 @@ $(() => {
                   });
 
                   cities.forEach((item, index) => {
-                    let $option = $citiesSelects.find(`option[value="${item.seo_slug}"]`);
+                    let $option = $citiesSelects.find(`option[value="${item.id}"]`);
 
                     if (item.province) {
-                      $option.prop('data-description', item.province);
+                      $option.attr('data-description', item.province);
+                      console.log($option);
                     }
                   });
-
-                  // $citiesSelects.multiSelect('refresh');
 
                   // console.log('refresh!');
 
                   // console.log($selectionItems);
 
-                  updateDropdownItemsDescription($selectionItems);
-                  updateDropdownItemsDescription($selectableItems);
+                  $citiesSelects.multiSelect('refresh');
+
+                  $citiesSelects.each(function(index, el) {
+                    $selectableItems = that.$selectableUl.children().toArray();
+                    $selectionItems = that.$selectionUl.children().toArray();
+
+                    console.log($selectableItems);
+                    console.log($selectionItems);
+
+                    updateDropdownItemsDescription($selectionItems);
+                    updateDropdownItemsDescription($selectableItems);
+                  });
+
+                  // console.log($citiesSelects);
+
+                  // $selectableItems = that.$selectableUl.children().toArray();
+                  // $selectionItems = that.$selectionUl.children().toArray();
+
+                  // console.log($selectableItems);
+                  // console.log($selectableItems);
+
+                  // updateDropdownItemsDescription($selectionItems);
+                  // updateDropdownItemsDescription($selectableItems);
+
+                  setTimeout(() => {
+                    let $searchInput = $('.dropdown-block--cities-select.dropdown-block--visible .ms-selectable__search-input');
+                    console.log($searchInput);
+
+                    $searchInput.focus();
+                    console.log('Focus');
+                  }, 0);
 
                   // console.log(cities);
                 },
 
-                error: function(data){
+                error: function(data) {
                   console.log(data);
                 }
               });
-            }
+            // }
 
             if (searchValue) {
               $clearSearchBtn.show();
@@ -374,11 +459,15 @@ $(() => {
 
       afterSelect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
+        let name = this.$element.attr('name');
+        // let labelText = 
         // console.log($clearBtn);
-        // console.log(this);
+        console.log(this);
+        console.log(values)
 
         if (!currentSelectedCitiesIds.includes(values[0])) {
           currentSelectedCitiesIds.push(values[0]);
+          createOrUpdateTag('checkbox', name, values[0], values[0]);
         }
 
         if (currentSelectedCitiesIds.length) {
@@ -704,7 +793,7 @@ $(() => {
     });
 
     cities.forEach((item, index) => {
-      let $option = $citiesSelects.find(`option[value="${item.seo_slug}"]`);
+      let $option = $citiesSelects.find(`option[value="${item.id}"]`);
 
       if (item.province) {
         $option.attr('data-description', item.province);
