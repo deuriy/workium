@@ -188,13 +188,13 @@ function removeFilterTag (type, name, value) {
 
   if (['range', 'textfield'].includes(type)) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-    console.log('first');
+    // console.log('first');
   } else if (['checkbox', 'radio'].includes(type)) {
     $selectedItem = findFilterTagByValue(name, value);
-    console.log('second');
+    // console.log('second');
   }
 
-  console.log($selectedItem);
+  // console.log($selectedItem);
 
   $selectedItem.remove();
 }
@@ -217,7 +217,7 @@ function createOrUpdateTag (type, name, value, labelText) {
               </li>`;
   } else if (['range', 'textfield'].includes(type)) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-    console.log($selectedItem);
+    // console.log($selectedItem);
 
     htmlStr = `
               <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
@@ -232,10 +232,6 @@ function createOrUpdateTag (type, name, value, labelText) {
       $selectedItem.attr('data-name', name);
       $selectedItem.attr('data-value', value);
       $selectedItem.find('.selected-item__value').text(labelText);
-
-      // $selectedItem.before(htmlStr);
-      // $selectedItem.remove();
-      // console.log($selectedItem);
 
       return;
     }
@@ -621,7 +617,7 @@ $(() => {
 
   function loadCities (countryID) {
     $.ajax({
-      url: `/api/v1/cities?country_id=${countryID}`,
+      url: `https://workium.pl/api/v1/cities?country_id=${countryID}&term=War`,
 
       success: function(data) {
         document.dispatchEvent(new CustomEvent("citiesLoaded", {

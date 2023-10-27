@@ -66,6 +66,24 @@
 	&__img
 		vertical-align middle
 	
+	&__video-wrapper
+		@media $smPlus
+			display grid
+			align-content center
+			height 320px
+			border-radius 16px
+			overflow hidden
+	
+	&__video
+		@media $smPlus
+			justify-self center
+			min-width 100%
+			height 320px
+		
+		@media $xs
+			max-width 100%
+			border-radius 16px
+	
 	&__text
 		width 570px
 		max-width 100%

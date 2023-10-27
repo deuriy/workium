@@ -212,52 +212,17 @@ $(() => {
           }));
         });
 
-        // console.log($selectionItems);
-
-        // function updateDropdownItemsDescription ($items) {
-        //   $items.forEach(el => {
-        //     // console.log();
-        //     let $title = $(el).find('span');
-        //     let description = $(el).data('description');
-
-        //     $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
-
-        //     if (description !== undefined) {
-        //       $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
-        //     }
-        //   });
-        // }
-
         console.log($selectionItems);
 
         updateDropdownItemsDescription($selectionItems);
         updateDropdownItemsDescription($selectableItems);
 
-        // $selectionItems.forEach(el => {
-        //   // console.log();
-        //   let $title = $(el).find('span');
-        //   let description = $(el).data('description');
-
-        //   $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
-
-        //   if (description !== undefined) {
-        //     $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
-        //   }
-        // });
-
-        // $selectableItems.forEach(el => {
-        //   let $title = $(el).find('span');
-        //   let description = $(el).data('description');
-          
-        //   $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
-
-        //   if (description !== undefined) {
-        //     $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
-        //   }
-        // });
-
         $searchInput.on('input', function(event) {
           clearTimeout(searchCitiesTimeoutID);
+
+          // $('select[name="cities"]').multiSelect('refresh');
+          // console.log('Refresh!');
+          // $(this).focus();
 
           let searchValue = $(this).val().trim();
 
@@ -268,7 +233,7 @@ $(() => {
             url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
           }
 
-          // console.log('Input!!!');
+          console.log('Input222');
 
           searchCitiesTimeoutID = setTimeout(() => {
             console.log(countryID);
@@ -323,7 +288,11 @@ $(() => {
                     }
                   });
 
-                  console.log($selectionItems);
+                  // $citiesSelects.multiSelect('refresh');
+
+                  // console.log('refresh!');
+
+                  // console.log($selectionItems);
 
                   updateDropdownItemsDescription($selectionItems);
                   updateDropdownItemsDescription($selectableItems);
@@ -460,16 +429,18 @@ $(() => {
 
         that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-grey btn-grey--multi-select ms-container__apply-btn">Застосувати</button></div>');
 
-        $selectionItems.forEach(el => {
-          let $title = $(el).find('span');
-          let description = $(el).data('description');
+        // $selectionItems.forEach(el => {
+        //   let $title = $(el).find('span');
+        //   let description = $(el).data('description');
 
-          $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
+        //   $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
 
-          if (description !== undefined) {
-            $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
-          }
-        });
+        //   if (description !== undefined) {
+        //     $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
+        //   }
+        // });
+
+        updateDropdownItemsDescription($selectionItems);
 
         that.$container.find('.ms-container__apply-btn').click(function(event) {
           selectedGendersIds = [...currentSelectedGendersIds];
@@ -715,7 +686,7 @@ $(() => {
     $citiesSelects.next('.ms-container').find('.ms-list').empty();
 
     cities.forEach((item, index) => {
-      if (item.seo_slug && item.origin) {
+      // if (item.seo_slug && item.origin) {
         $citiesSelects.multiSelect('addOption', { value: item.seo_slug || '', text: item.origin || '', index: index });
 
         $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
@@ -729,7 +700,7 @@ $(() => {
                                           </label>
                                         </div>
                                       </li>`);
-      }
+      // }
     });
 
     cities.forEach((item, index) => {
