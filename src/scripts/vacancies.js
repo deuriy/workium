@@ -238,7 +238,7 @@ $(() => {
           searchCitiesTimeoutID = setTimeout(() => {
             console.log(countryID);
 
-            // if (searchValue.length >= 3 || !searchValue.length) {
+            if (searchValue.length >= 3 || !searchValue.length) {
               $.ajax({
                 url: url,
 
@@ -247,7 +247,7 @@ $(() => {
                   //   detail: { data }
                   // }));
 
-                  console.log('Success!!');
+                  // console.log('Success!!');
 
                   let $citiesSelects = $('select[name="cities"]');
                   let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
@@ -264,7 +264,7 @@ $(() => {
                     console.log(item);
 
                     // if (item.seo_slug && item.origin) {
-                      $citiesSelects.multiSelect('addOption', { value: item.seo_slug || '', text: item.origin || '', index: index });
+                      $citiesSelects.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
 
                       $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
                                                       <div class="checkbox">
@@ -304,7 +304,7 @@ $(() => {
                   console.log(data);
                 }
               });
-            // }
+            }
 
             if (searchValue) {
               $clearSearchBtn.show();
@@ -687,7 +687,7 @@ $(() => {
 
     cities.forEach((item, index) => {
       // if (item.seo_slug && item.origin) {
-        $citiesSelects.multiSelect('addOption', { value: item.seo_slug || '', text: item.origin || '', index: index });
+        $citiesSelects.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
 
         $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
                                         <div class="checkbox">
