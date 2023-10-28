@@ -22,12 +22,16 @@
 		
 	&__top
 		// grid-template-columns 13.44% 10.781% 13% 7.707% 7.6% 9.3% 8.9181% 1fr
-		grid-template-columns 13% 10.781% 13% 7.707% 7.6% 9.3% 9.6181% 1fr
+		// grid-template-columns 13% 10.781% 13% 7.707% 7.6% 9.3% 9.6181% 1fr
+			
+		grid-template-columns 1.3fr 1fr 1fr 1fr 1fr 1.74fr
 		justify-content start
 		align-items end
 		
 		@media $xlMinus
-			grid-template-columns 13.44% 9.681% 11% 7.707% 8% 10% 12.2181% 1fr
+			// grid-template-columns 13.44% 9.681% 11% 7.707% 8% 10% 12.2181% 1fr
+			
+			grid-template-columns 1.3fr 1fr 1fr 1fr 1fr 1.74fr
 		
 		@media $mdMinus
 			grid-template-columns repeat(3, 1fr)
@@ -123,10 +127,12 @@
 			margin-top 0
 	
 	&__experience-select
-		width 120px
+		width 100%
 		
-		@media $xxs
-			width 100%
+		// width 120px
+		
+		// @media $xxs
+		// 	width 100%
 	
 	&__sex-select
 		// width 128px

@@ -61,35 +61,33 @@ function isFilterChanged() {
 }
 
 function toggleClearButtons () {
-  let $additionalFilters = $('.additional-filters');
-  let $clearBtn = $('.filter__clear-btn');
-  let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
-  let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
-  let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
-  let $filtersBtn = $('.btn-white--filter .btn-white__count');
+  let $clearBtns = $('[data-clear-filter]');
+  let selectedItemsLength = $('.filter .selected-items__item').length;
+  let $filtersBtn = $('.btn-white--filter');
+  let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
+
+  console.log(`selectedItemsLength: ${selectedItemsLength}`);
 
   if (selectedItemsLength) {
-    // $selectedItems.show();
-    $clearBtn.show();
-    $additionalFiltersClearBtn.show();
-    $additionalFiltersClearLink.show();
-    $filtersBtn.removeClass('hidden').text(selectedItemsLength);
+    $clearBtns.show();
+    $filtersBtn.removeClass('btn-white--filter-dark-icon');
+    $filtersBtnCount.removeClass('hidden').text(selectedItemsLength);
   } else {
-    // $selectedItems.hide();
-    $clearBtn.hide();
-    $additionalFiltersClearBtn.hide();
-    $additionalFiltersClearLink.hide();
-    $filtersBtn.addClass('hidden').text(0);
+    $clearBtns.hide();
+    $filtersBtn.addClass('btn-white--filter-dark-icon');
+    $filtersBtnCount.addClass('hidden').text('');
   }
 }
 
-function checkFilterFill() {
-  let $clearBtn = $('.filter__clear-btn');
-  let $additionalClearBtn = $('.additional-filters__clear-btn');
+// function checkFilterFill() {
+//   console.log('checkFilterFill');
 
-  isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
-  isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
-}
+//   let $clearBtn = $('.filter__clear-btn');
+//   let $additionalClearBtn = $('.additional-filters__clear-btn');
+
+//   isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
+//   isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
+// }
 
 function applyChangesToSelectedCountries (argument) {
   // body... 
@@ -136,7 +134,8 @@ function changeSelectToggleTitle ($select) {
   let selectToggleText = $selectToggle.data('default-placeholder');
   let $selectedValues = $select.find('option:selected').map((index, el) => $(el).text());
 
-  // console.log($selectedValues);
+  console.log('$selectedValues');
+  console.log($selectedValues);
 
   if ($selectedValues.length) {
     selectToggleText = $selectedValues.length === 1 ? `<span class="select-toggle__label">${$selectedValues[0]}</span>` : `<span class="select-toggle__label">${$selectedValues[0]}</span>` + `<span class="count count--info-bg count--multiselect select-toggle__count">+${$selectedValues.length - 1}</span>`;
@@ -161,15 +160,15 @@ function clearTextField ($input) {
   $input.parent().find('[data-clear-search-input]').hide();
 }
 
-function updateDropdownItemsDescription ($items) {
-  console.log('updateDropdownItemsDescription');
+function updateMSItemsDescription ($items) {
+  // console.log('updateMSItemsDescription');
 
   $items.forEach(el => {
     // console.log();
     let $title = $(el).find('span');
     let description = $(el).data('description');
 
-    console.log(description);
+    // console.log(description);
 
     $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
 
@@ -192,27 +191,16 @@ function createOrUpdateTag (type, name, value, labelText) {
 
   if ($selectedItem.length) return;
 
-  let htmlStr = '';
-
-  if (['checkbox', 'radio'].includes(type)) {
-    htmlStr = `
+  let htmlStr = `
               <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
                 <div class="selected-item">
                   <div class="selected-item__value">${labelText}</div>
                   <a href="#" class="selected-item__remove-link"></a>
                 </div>
               </li>`;
-  } else if (['range', 'textfield'].includes(type)) {
+
+  if (['range', 'textfield', 'select'].includes(type)) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-    // console.log($selectedItem);
-
-    htmlStr = `
-              <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
-                <div class="selected-item">
-                  <div class="selected-item__value">${labelText}</div>
-                  <a href="#" class="selected-item__remove-link"></a>
-                </div>
-              </li>`;
 
     if ($selectedItem.length) {
       $selectedItem.attr('data-type', type);
@@ -227,20 +215,41 @@ function createOrUpdateTag (type, name, value, labelText) {
   $container.append(htmlStr);
 }
 
+function updateDropdownMultiSelectClass ($dropdown) {
+  let $selectedItems = $dropdown.find('.ms-selection .ms-selected span');
+
+  if (!$selectedItems.length) {
+    let $multiSelectContainer = $dropdown.find('.ms-container--empty');
+    $multiSelectContainer.removeClass('ms-container--empty').addClass('ms-container--default');
+  }
+}
+
+function checkFillingMSSearchInput ($input) {
+  let $clearBtn = $input.siblings('[data-ms-clear-search-input]');
+
+  if ($input.val()) {
+    $clearBtn.show();
+    $input.addClass('ms-selectable__search-input--not-empty');
+  } else {
+    $clearBtn.hide();
+    $input.removeClass('ms-selectable__search-input--not-empty');
+  }
+}
+
 $(() => {
   let psArr = [];
 
   $(".cities-select").each((index, el) => {
     $(el).multiSelect({
-      selectableHeader: '<div class="ms-selectable__header"><div class="ms-selectable__search-input-box"><input type="search" name="ms_search" class="ms-selectable__search-input" placeholder="Введіть назву міста…" title="Введіть назву міста…" /><button type="button" class="ms-selectable__clear-search-btn" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button></div></div>',
+      selectableHeader: '<div class="ms-selectable__header"><div class="ms-selectable__search-input-box"><input type="search" name="ms_search" class="ms-selectable__search-input" placeholder="Введіть назву міста…" title="Введіть назву міста…" / data-ms-search-input><button type="button" class="ms-selectable__clear-search-btn" style="display: none;" data-ms-clear-search-input><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button></div></div>',
       selectionHeader: '<div class="ms-selection__header"><div class="ms-selection__label">Обрані міста</div><a href="#" class="btn-beige btn-beige--filter ms-selection__clear-btn" style="display: none;">Очистити</a></div>',
       keepOrder: true,
       cssClass: 'ms-container--default',
 
       afterInit: function (container) {
         let that = this;
-        let $searchInput = container.find('.ms-selectable__search-input');
-        let $clearSearchBtn = container.find('.ms-selectable__clear-search-btn');
+        let $searchInput = container.find('[data-ms-search-input]');
+        let $clearSearchBtn = container.find('[data-ms-clear-search-input]');
         // let $clearBtn = that.$container.find('.ms-selection__clear-btn');
         // console.log($clearBtn);
         let $selectableItems = that.$selectableUl.children().toArray();
@@ -248,6 +257,8 @@ $(() => {
         let searchCitiesTimeoutID = null;
 
         $searchInput.val(citySearchInputValue);
+
+        checkFillingMSSearchInput($searchInput);
 
         // let psArr = [];
 
@@ -270,8 +281,8 @@ $(() => {
 
         // console.log($selectionItems);
 
-        updateDropdownItemsDescription($selectionItems);
-        updateDropdownItemsDescription($selectableItems);
+        updateMSItemsDescription($selectionItems);
+        updateMSItemsDescription($selectableItems);
 
         $searchInput.on('input', function(event) {
           clearTimeout(searchCitiesTimeoutID);
@@ -290,10 +301,10 @@ $(() => {
             url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
           }
 
-          // console.log('Input222');
+          console.log(url);
 
           searchCitiesTimeoutID = setTimeout(() => {
-            console.log(countryID);
+            // console.log(countryID);
 
             // if (searchValue.length >= 3 || !searchValue.length) {
               $.ajax({
@@ -304,19 +315,23 @@ $(() => {
                   //   detail: { data }
                   // }));
 
-                  console.log('Success!!');
+                  // console.log('Success!!');
 
                   let $citiesSelects = $('select[name="cities"]');
                   let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
                   let cities = data.results;
 
+                  let selectedCities = $citiesSelects.data('selected-cities');
+                  let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
+
+                  // Clear original select and multiselect
                   $citiesSelects.empty();
-                  $citiesCheckboxesList.empty();
-
-                  // console.log(cities);
-
                   $citiesSelects.next('.ms-container').find('.ms-selectable .ms-list').empty();
 
+                  // Clear checkboxes (mobile filter)
+                  $citiesCheckboxesList.empty();
+
+                  // Filling selects from data
                   cities.forEach((item, index) => {
                     console.log(item);
 
@@ -342,7 +357,10 @@ $(() => {
 
                     if (item.province) {
                       $option.attr('data-description', item.province);
-                      console.log($option);
+                    }
+
+                    if (item.seo_slug) {
+                      $option.attr('data-seo-slug', item.seo_slug);
                     }
                   });
 
@@ -352,15 +370,23 @@ $(() => {
 
                   $citiesSelects.multiSelect('refresh');
 
+                  console.log('selectedCitiesArr');
+                  console.log(selectedCitiesArr);
+
+                  $citiesSelects.multiSelect('select', selectedCitiesArr);
+
+                  selectedCitiesIds = [...selectedCitiesArr];
+                  currentSelectedCitiesIds = [...selectedCitiesArr];
+
                   $citiesSelects.each(function(index, el) {
                     $selectableItems = that.$selectableUl.children().toArray();
                     $selectionItems = that.$selectionUl.children().toArray();
 
-                    console.log($selectableItems);
-                    console.log($selectionItems);
+                    // console.log($selectableItems);
+                    // console.log($selectionItems);
 
-                    updateDropdownItemsDescription($selectionItems);
-                    updateDropdownItemsDescription($selectableItems);
+                    updateMSItemsDescription($selectionItems);
+                    updateMSItemsDescription($selectableItems);
                   });
 
                   // console.log($citiesSelects);
@@ -371,15 +397,15 @@ $(() => {
                   // console.log($selectableItems);
                   // console.log($selectableItems);
 
-                  // updateDropdownItemsDescription($selectionItems);
-                  // updateDropdownItemsDescription($selectableItems);
+                  // updateMSItemsDescription($selectionItems);
+                  // updateMSItemsDescription($selectableItems);
 
                   setTimeout(() => {
                     let $searchInput = $('.dropdown-block--cities-select.dropdown-block--visible .ms-selectable__search-input');
-                    console.log($searchInput);
+                    // console.log($searchInput);
 
                     $searchInput.focus();
-                    console.log('Focus');
+                    // console.log('Focus');
                   }, 0);
 
                   // console.log(cities);
@@ -391,17 +417,11 @@ $(() => {
               });
             // }
 
-            if (searchValue) {
-              $clearSearchBtn.show();
-              $searchInput.addClass('ms-selectable__search-input--not-empty');
-            } else {
-              $clearSearchBtn.hide();
-              $searchInput.removeClass('ms-selectable__search-input--not-empty');
-            }
-
             psArr[0].update();
 
           }, 500);
+
+          checkFillingMSSearchInput($searchInput);
         });
 
         $clearSearchBtn.click(function(event) {
@@ -409,8 +429,6 @@ $(() => {
 
           $searchInput.val('').trigger('input').focus();
         });
-
-        // console.log(that);
 
         that.$container.find('.ms-selection__clear-btn').click(function(event) {
           let $dropdownBlock = $(this).closest('.dropdown-block');
@@ -427,47 +445,51 @@ $(() => {
           selectedCitiesIds = [...currentSelectedCitiesIds];
 
           let $dropdownBlock = $(this).closest('.dropdown-block');
-          let $selectedCities = $dropdownBlock.find('.ms-selection .ms-selected span');
-          let $citiesSelectToggles = $(`.filter__cities-select-toggle, .additional-filters__cities-select-toggle`);
+          // let $selectedCities = $dropdownBlock.find('.ms-selection .ms-selected span');
+          // let $citiesSelectToggles = $(`.filter__cities-select-toggle, .additional-filters__cities-select-toggle`);
+          let name = that.$element.attr('name');
 
-          $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
+          $dropdownBlock.removeClass('dropdown-block--visible');
 
           // console.log(selectedCitiesIds);
 
-          $citiesSelectToggles.each(function(index, el) {
-            let citiesSelectToggleText = $(el).data('default-placeholder');
+          changeSelectToggleTitle(that.$element);
+          updateDropdownMultiSelectClass($dropdownBlock);
 
-            if ($selectedCities.length) {
-              citiesSelectToggleText = $selectedCities.length === 1 ? `<span class="select-toggle__label">${$selectedCities[0].textContent}</span>` : `<span class="select-toggle__label">${$selectedCities[0].textContent}</span>` + `<span class="count count--info-bg count--multiselect select-toggle__count">+${$selectedCities.length - 1}</span>`;
-              $(el).addClass('select-toggle--selected');
-            } else {
-              $('.dropdown-block--cities-select .ms-container--empty').removeClass('ms-container--empty').addClass('ms-container--default');
-              $(el).removeClass('select-toggle--selected');
-            }
-
-            $('.cities-select').multiSelect('deselect_all');
-            selectedCitiesIds.forEach(id => {
-              $('.cities-select').multiSelect('select', id);
-            });
-
-            $(el).html(citiesSelectToggleText);
+          that.$element.multiSelect('deselect_all');
+          that.$element.find('option').each(function(index, el) {
+            let $selectedItem = findFilterTagByValue(name, $(el).attr('value'));
+            $selectedItem.remove();
           });
 
-          checkFilterFill();
+          console.log(selectedCitiesIds);
+
+          selectedCitiesIds.forEach(id => {
+            that.$element.multiSelect('select', id);
+
+            let labelText = that.$element.find(`option[value="${id}"]`).text();
+            if (labelText) {
+              createOrUpdateTag('multiselect', name, id, labelText);
+            }
+          });
+
+          // checkFilterFill();
+          toggleClearButtons();
         });
       },
 
       afterSelect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
-        let name = this.$element.attr('name');
+        // let name = this.$element.attr('name');
         // let labelText = 
         // console.log($clearBtn);
-        console.log(this);
-        console.log(values)
+        // console.log(this);
+        // console.log(values)
 
         if (!currentSelectedCitiesIds.includes(values[0])) {
           currentSelectedCitiesIds.push(values[0]);
-          createOrUpdateTag('checkbox', name, values[0], values[0]);
+          // console.log(values);
+          // createOrUpdateTag('checkbox', name, values[0], values[0]);
         }
 
         if (currentSelectedCitiesIds.length) {
@@ -485,7 +507,12 @@ $(() => {
 
       afterDeselect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
-        // console.log($clearBtn);
+        let name = this.$element.attr('name');
+
+        // let $selectedItem = findFilterTagByValue(name, values[0]);
+
+        // console.log($selectedItem);
+        // $selectedItem.remove();
 
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
 
@@ -529,7 +556,7 @@ $(() => {
         //   }
         // });
 
-        updateDropdownItemsDescription($selectionItems);
+        updateMSItemsDescription($selectionItems);
 
         that.$container.find('.ms-container__apply-btn').click(function(event) {
           selectedGendersIds = [...currentSelectedGendersIds];
@@ -544,7 +571,7 @@ $(() => {
             that.$element.multiSelect('select', id);
           });
 
-          checkFilterFill();
+          // checkFilterFill();
 
           that.$element[0].dispatchEvent(new Event('change'));
 
@@ -767,6 +794,13 @@ $(() => {
     let selectedCities = $citiesSelects.data('selected-cities');
     let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
 
+    console.log('selectedCitiesArr');
+    console.log(selectedCitiesArr);
+
+    selectedCitiesArr.forEach(item => {
+      console.log(item);
+    });
+
     clearCitiesSelect();
 
     $citiesSelects.empty();
@@ -797,6 +831,10 @@ $(() => {
 
       if (item.province) {
         $option.attr('data-description', item.province);
+      }
+
+      if (item.seo_slug) {
+        $option.attr('data-seo-slug', item.seo_slug);
       }
     });
 
@@ -838,18 +876,18 @@ $(() => {
 
           let filterItemId = $input.data('filter-item-id').toString();
 
-          console.log($input);
+          // console.log($input);
 
           setTimeout(() => {
             if ($input.is(":checked")) {
-              console.log('checked!');
+              // console.log('checked!');
               $syncField.multiSelect('select', filterItemId);
 
               if (!currentSelectedGendersIds.includes(filterItemId)) {
                 currentSelectedGendersIds.push(filterItemId);
               }
             } else {
-              console.log('unchecked!');
+              // console.log('unchecked!');
               $syncField.multiSelect('deselect', filterItemId);
               currentSelectedGendersIds = removeItemFromArray(currentSelectedGendersIds, filterItemId);
             }
@@ -857,8 +895,8 @@ $(() => {
             selectedGendersIds = [...currentSelectedGendersIds];
             changeSelectToggleTitle($syncField);
 
-            console.log('select');
-          });          
+            // console.log('select');
+          });
 
           break;
       }
@@ -869,6 +907,7 @@ $(() => {
   // Synchronized input fields
   $('input[data-sync-field-ids]').on('input', function(event) {
     syncInputFields($(this));
+    toggleClearButtons();
   });
 
   // Synchronizing fields when remove tag
@@ -897,8 +936,28 @@ $(() => {
           clearTextField($input);
 
           break;
+
+        case 'multiselect':
+          let $multiSelect = $(`select[name="${name}"]`);
+          let $dropdownBlock = $multiSelect.closest('.dropdown-block');
+          // console.log($multiSelect);
+
+          $multiSelect.multiSelect('deselect', value.toString());
+          changeSelectToggleTitle($multiSelect);
+          updateDropdownMultiSelectClass($dropdownBlock);
+
+          currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+          selectedCitiesIds = [...currentSelectedCitiesIds];
+
+          // $multiSelect.multiSelect('refresh');
+
+          break;
       }
     }
+
+    setTimeout(() => {
+      toggleClearButtons();
+    });
 
     event.preventDefault();
   });
