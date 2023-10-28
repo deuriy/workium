@@ -7,6 +7,7 @@ let selectedGendersIds = [];
 let currentSelectedGendersIds = [];
 
 let citySearchInputValue = '';
+let searchCitiesTimeoutID = null;
 
 function isFilterChanged() {
   let $textFields = $('.filter .form-text');
@@ -134,8 +135,8 @@ function changeSelectToggleTitle ($select) {
   let selectToggleText = $selectToggle.data('default-placeholder');
   let $selectedValues = $select.find('option:selected').map((index, el) => $(el).text());
 
-  console.log('$selectedValues');
-  console.log($selectedValues);
+  // console.log('$selectedValues');
+  // console.log($selectedValues);
 
   if ($selectedValues.length) {
     selectToggleText = $selectedValues.length === 1 ? `<span class="select-toggle__label">${$selectedValues[0]}</span>` : `<span class="select-toggle__label">${$selectedValues[0]}</span>` + `<span class="count count--info-bg count--multiselect select-toggle__count">+${$selectedValues.length - 1}</span>`;
@@ -254,7 +255,6 @@ $(() => {
         // console.log($clearBtn);
         let $selectableItems = that.$selectableUl.children().toArray();
         let $selectionItems = that.$selectionUl.children().toArray();
-        let searchCitiesTimeoutID = null;
 
         $searchInput.val(citySearchInputValue);
 
@@ -318,7 +318,7 @@ $(() => {
                   // console.log('Success!!');
 
                   let $citiesSelects = $('select[name="cities"]');
-                  let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+                  // let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
                   let cities = data.results;
 
                   let selectedCities = $citiesSelects.data('selected-cities');
@@ -329,7 +329,7 @@ $(() => {
                   $citiesSelects.next('.ms-container').find('.ms-selectable .ms-list').empty();
 
                   // Clear checkboxes (mobile filter)
-                  $citiesCheckboxesList.empty();
+                  // $citiesCheckboxesList.empty();
 
                   // Filling selects from data
                   cities.forEach((item, index) => {
@@ -338,17 +338,17 @@ $(() => {
                     // if (item.seo_slug && item.origin) {
                       $citiesSelects.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
 
-                      $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
-                                                      <div class="checkbox">
-                                                        <input class="checkbox__input" name="cities" value="${item.seo_slug}" type="checkbox" id="${item.seo_slug}">
-                                                        <label class="checkbox__label checkbox__label--align-start" for="${item.seo_slug}">
-                                                          <div class="checkbox__label-wrapper">
-                                                            <div class="checkbox__title">${item.origin}</div>
-                                                            <div class="checkbox__description">${item.province}</div>
-                                                          </div>
-                                                        </label>
-                                                      </div>
-                                                    </li>`);
+                      // $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
+                      //                                 <div class="checkbox">
+                      //                                   <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="${item.seo_slug}">
+                      //                                   <label class="checkbox__label checkbox__label--align-start" for="${item.seo_slug}">
+                      //                                     <div class="checkbox__label-wrapper">
+                      //                                       <div class="checkbox__title">${item.origin}</div>
+                      //                                       <div class="checkbox__description">${item.province}</div>
+                      //                                     </div>
+                      //                                   </label>
+                      //                                 </div>
+                      //                               </li>`);
                     // }
                   });
 
@@ -445,13 +445,9 @@ $(() => {
           selectedCitiesIds = [...currentSelectedCitiesIds];
 
           let $dropdownBlock = $(this).closest('.dropdown-block');
-          // let $selectedCities = $dropdownBlock.find('.ms-selection .ms-selected span');
-          // let $citiesSelectToggles = $(`.filter__cities-select-toggle, .additional-filters__cities-select-toggle`);
           let name = that.$element.attr('name');
 
           $dropdownBlock.removeClass('dropdown-block--visible');
-
-          // console.log(selectedCitiesIds);
 
           changeSelectToggleTitle(that.$element);
           updateDropdownMultiSelectClass($dropdownBlock);
@@ -462,8 +458,6 @@ $(() => {
             $selectedItem.remove();
           });
 
-          console.log(selectedCitiesIds);
-
           selectedCitiesIds.forEach(id => {
             that.$element.multiSelect('select', id);
 
@@ -473,23 +467,15 @@ $(() => {
             }
           });
 
-          // checkFilterFill();
           toggleClearButtons();
         });
       },
 
       afterSelect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
-        // let name = this.$element.attr('name');
-        // let labelText = 
-        // console.log($clearBtn);
-        // console.log(this);
-        // console.log(values)
 
         if (!currentSelectedCitiesIds.includes(values[0])) {
           currentSelectedCitiesIds.push(values[0]);
-          // console.log(values);
-          // createOrUpdateTag('checkbox', name, values[0], values[0]);
         }
 
         if (currentSelectedCitiesIds.length) {
@@ -509,14 +495,7 @@ $(() => {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
         let name = this.$element.attr('name');
 
-        // let $selectedItem = findFilterTagByValue(name, values[0]);
-
-        // console.log($selectedItem);
-        // $selectedItem.remove();
-
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
-
-        // console.log(currentSelectedCitiesIds);
 
         if (currentSelectedCitiesIds.length) {
           $clearBtn.show();
@@ -545,17 +524,6 @@ $(() => {
 
         that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-grey btn-grey--multi-select ms-container__apply-btn">Застосувати</button></div>');
 
-        // $selectionItems.forEach(el => {
-        //   let $title = $(el).find('span');
-        //   let description = $(el).data('description');
-
-        //   $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
-
-        //   if (description !== undefined) {
-        //     $title.after(`<div class="ms-elem-selectable__description">${description}</div>`);
-        //   }
-        // });
-
         updateMSItemsDescription($selectionItems);
 
         that.$container.find('.ms-container__apply-btn').click(function(event) {
@@ -570,8 +538,6 @@ $(() => {
           selectedGendersIds.forEach(id => {
             that.$element.multiSelect('select', id);
           });
-
-          // checkFilterFill();
 
           that.$element[0].dispatchEvent(new Event('change'));
 
@@ -666,15 +632,80 @@ $(() => {
     let $checkboxesGroupItems = $citiesFilter.find('.checkboxes-group__item')
     let value = $(this).val().toLowerCase().trim();
 
-    $checkboxesGroupItems.each((index, item) => {
-      if (!$(item).text().toLowerCase().trim().includes(value)) {
-        $(item).hide();
-      } else {
-        $(item).show();
-      }
-    });
+    let searchValue = $(this).val().trim();
+    citySearchInputValue = searchValue;
 
-    value ? $clearSearchBtn.show() : $clearSearchBtn.hide();
+    let countryID = $('select[name="countries"]').find(':selected').data('id');
+    let url = `api/v1/cities?country_id=${countryID}`;
+
+    if (searchValue) {
+      url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
+    }
+
+    // console.log(url);
+
+    searchCitiesTimeoutID = setTimeout(() => {
+      $.ajax({
+        url: url,
+
+        success: function(data) {
+
+          // let $citiesSelects = $('select[name="cities"]');
+          let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+          let cities = data.results;
+
+          let selectedCities = $citiesCheckboxesList.data('selected-cities');
+          let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
+
+
+
+          // Clear checkboxes (mobile filter)
+          $citiesCheckboxesList.empty();
+
+          // Filling selects from data
+          cities.forEach((item, index) => {
+            // console.log(item);
+
+            if (item.seo_slug && item.origin) {
+
+              $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
+                                              <div class="checkbox">
+                                                <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="city_${item.id}" data-seo-slug="${item.seo_slug}"${selectedCitiesArr.includes(item.id.toString()) ? ' checked' : ''}>
+                                                <label class="checkbox__label checkbox__label--align-start" for="city_${item.id}">
+                                                  <div class="checkbox__label-wrapper">
+                                                    <div class="checkbox__title">${item.origin}</div>
+                                                    <div class="checkbox__description">${item.province}</div>
+                                                  </div>
+                                                </label>
+                                              </div>
+                                            </li>`);
+            }
+          });
+
+
+
+          selectedCitiesIds = [...selectedCitiesArr];
+          currentSelectedCitiesIds = [...selectedCitiesArr];
+        },
+
+        error: function(data) {
+          console.log(data);
+        }
+      });
+
+      psArr[0].update();
+
+    }, 500);
+
+    // $checkboxesGroupItems.each((index, item) => {
+    //   if (!$(item).text().toLowerCase().trim().includes(value)) {
+    //     $(item).hide();
+    //   } else {
+    //     $(item).show();
+    //   }
+    // });
+
+    // value ? $clearSearchBtn.show() : $clearSearchBtn.hide();
 
     // psArr[0].update();
   });
@@ -764,6 +795,12 @@ $(() => {
     currentSelectedCitiesIds = [...selectedCitiesIds];
   });
 
+  $('.cities-filter__clear-btn').on('click', function(event) {
+    let $citiesCheckboxInput = $('.checkboxes-group--cities .checkbox__input');
+    $citiesCheckboxInput.prop('checked', false);
+    $(this).hide();
+  });
+
   $('.cities-filter__apply-btn').click(function(event) {
     selectedCitiesIds = [...currentSelectedCitiesIds];
 
@@ -771,19 +808,27 @@ $(() => {
     let $citiesBtnText = $citiesBtn.find('.btn-white__text');
     let $citiesBtnCount = $citiesBtn.find('.count');
     let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+    let $clearBtn = $('.cities-filter__clear-btn');
 
     if (!$checkedLabels.length) {
       $citiesBtnText.text($citiesBtn.data('placeholder'));
-      $citiesBtnCount.hide()
+      $citiesBtnCount.hide();
+      $clearBtn.hide();
     } else if ($checkedLabels.length == 1) {
       $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
       $citiesBtnCount.hide();
+      $clearBtn.show();
     } else {
       $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
       $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
       $citiesBtnCount.show();
+      $clearBtn.show();
     }
   });
+
+  // $('.cities-filter__search-input').on('input', function(event) {
+  //   let $clearBtn = $('.cities-filter__clear-btn');
+  // });
 
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
@@ -791,15 +836,15 @@ $(() => {
     let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
     let cities = e.detail.data.results;
 
-    let selectedCities = $citiesSelects.data('selected-cities');
+    let selectedCities = $citiesSelects.attr('data-selected-cities');
     let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
 
-    console.log('selectedCitiesArr');
-    console.log(selectedCitiesArr);
+    // console.log('selectedCitiesArr');
+    // console.log(selectedCitiesArr);
 
-    selectedCitiesArr.forEach(item => {
-      console.log(item);
-    });
+    // selectedCitiesArr.forEach(item => {
+    //   console.log(item);
+    // });
 
     clearCitiesSelect();
 
@@ -812,10 +857,14 @@ $(() => {
       // if (item.seo_slug && item.origin) {
         $citiesSelects.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
 
+        console.log(selectedCitiesArr);
+        console.log(item.id);
+        console.log(selectedCitiesArr.includes(item.id.toString()));
+
         $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
                                         <div class="checkbox">
-                                          <input class="checkbox__input" name="cities" value="${item.seo_slug}" type="checkbox" id="${item.seo_slug}">
-                                          <label class="checkbox__label checkbox__label--align-start" for="${item.seo_slug}">
+                                          <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="city_${item.id}" data-seo-slug="${item.seo_slug}"${selectedCitiesArr.includes(item.id.toString()) ? ' checked' : ''}>
+                                          <label class="checkbox__label checkbox__label--align-start" for="city_${item.id}">
                                             <div class="checkbox__label-wrapper">
                                               <div class="checkbox__title">${item.origin}</div>
                                               <div class="checkbox__description">${item.province}</div>
@@ -825,6 +874,8 @@ $(() => {
                                       </li>`);
       // }
     });
+
+    console.log($citiesCheckboxesList);
 
     cities.forEach((item, index) => {
       let $option = $citiesSelects.find(`option[value="${item.id}"]`);
@@ -917,7 +968,7 @@ $(() => {
     let value = $selectedItemParent.data('value');
     let type = $selectedItemParent.data('type');
 
-    console.log(type);
+    // console.log(type);
 
     if (![name, value].includes(undefined)) {
       switch (type) {

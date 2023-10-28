@@ -279,14 +279,12 @@ $(() => {
     }
   });
 
-  // console.log($filterSelects);
-
   $filterSelects.each(function(index, el) {
     let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
     let name = $(el).attr('name');
     let $label = $select2Selection.find('.select2-selection__rendered');
 
-    console.log(name);
+    // console.log(name);
 
     if (name === 'kategoriia-pracivnika') {
       $label.text('Спеціалізація');
@@ -302,7 +300,7 @@ $(() => {
         } else {
           $select2Selection.removeClass('select2-selection--selected');
           let $selectedItem = $(`.selected-items__item[data-type="select"][data-name="${name}"]`);
-          console.log($selectedItem);
+          // console.log($selectedItem);
 
           $selectedItem.remove();
 
@@ -310,26 +308,7 @@ $(() => {
         }
       }
 
-      // if (value !== '') {
-      //   if (!['countries', 'currency'].includes(name)) {
-      //     $select2Selection.addClass('select2-selection--selected');
-      //   } else {
-      //     $select2Selection.removeClass('select2-selection--selected');
-      //   }
-      // } else {
-      //   $select2Selection.removeClass('select2-selection--selected');
-
-      //   switch (name) {
-      //     case 'kategoriia-pracivnika':
-      //       $select2Selection.find('.select2-selection__rendered').text('Спеціалізація');
-      //       $('.filter__experience-select.select2-selection--selected').removeClass('select2-selection--selected');
-
-      //       break;
-      //   }
-      // }
-
       if (!['countries', 'currency'].includes(name)) {
-        // checkFilterFill();
         toggleClearButtons();
       }
     });
@@ -410,7 +389,7 @@ $(() => {
           let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
           $nonCheckedRadio.prop('checked', true);
 
-          console.log($nonCheckedRadio);
+          // console.log($nonCheckedRadio);
 
           break;
         case 'range':
@@ -481,7 +460,7 @@ $(() => {
     let selectedItemsLength = $('.selected-items__item').length;
     let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
 
-    console.log('Checkbox trigger!!');
+    // console.log('Checkbox trigger!!');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
@@ -493,7 +472,7 @@ $(() => {
       let groupTitle = $(this).closest('.radiobtns-group').find('.radiobtns-group__title').text();
       let $otherSelectedItems = $(`.selected-items__item[data-name="${name}"]`).not(`[data-value="${value}"]`);
 
-      console.log($otherSelectedItems);
+      // console.log($otherSelectedItems);
 
       $otherSelectedItems.remove();
 
@@ -543,12 +522,12 @@ $(() => {
     let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
       return $(elem).attr('data-seo-slug');
     });
-    console.log(selectedCitiesSlugs);
+    // console.log(selectedCitiesSlugs);
 
 
     let selectedCities = Array.from(selectedCitiesSlugs).join('/');
     // let selectedCities = selectedCitiesSlugs;
-    console.log(selectedCities);
+    // console.log(selectedCities);
 
     urlParamsArr.push(selectedCountry, selectedCities);
 
@@ -598,6 +577,15 @@ $(() => {
     });
 
     requestParams = requestParamsArr.join('&');
+
+    let $lastSelectedTag = $('.selected-items__item:last-child');
+    let lastSelectedTagObj = {
+      type: $lastSelectedTag.attr('data-type'),
+      name: $lastSelectedTag.attr('data-name'),
+      value: $lastSelectedTag.attr('data-value'),
+    };
+
+    localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
 
     window.location.href = `/vacancies/${urlParams}/?${requestParams}`;
   });
@@ -803,7 +791,7 @@ $(() => {
       fieldsFrom.forEach(field => {
         field.addEventListener(eventName, function (e) {
           // console.log(e);
-          console.log(`${eventName} from`);
+          // console.log(`${eventName} from`);
           slider.noUiSlider.set([this.value, null]);
 
           setTimeout(() => {
@@ -815,7 +803,7 @@ $(() => {
       fieldsTo.forEach(field => {
         field.addEventListener(eventName, function (e) {
           // console.log(e);
-          console.log(`${eventName} to`);
+          // console.log(`${eventName} to`);
           slider.noUiSlider.set([null, this.value]);
 
           setTimeout(() => {
@@ -861,7 +849,7 @@ $(() => {
     let value = $input.val();
     let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
 
-    console.log(name, value, type);
+    // console.log(name, value, type);
 
     clearTextField($input);
     removeFilterTag(type, name, value);
@@ -870,10 +858,10 @@ $(() => {
   });
 
 
-
-  // $('[data-remove-last-filter]').click(function(event) {
-  //   /* Act on the event */
-  // });
+  $('[data-remove-last-filter]').click(function(event) {
+    let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
+    console.log(lastSelectedTagObj);
+  });
 
   
   
