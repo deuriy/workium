@@ -108,12 +108,36 @@ $(() => {
           let $activeTabLink = $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`);
 
           $activeTabLink.trigger('click');
+        } else if (slide.src.includes('tooltip-popup')) {
+          console.log(slide);
+          $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
+          $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
+          $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
+        } else if (slide.src.includes('cashback-tooltip-popup')) {
+          console.log(slide);
+          $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
+          $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
+          $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
+          $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
         }
 
         if (currentFancybox) {
           currentFancybox.close();
         }
+
       },
+
+      // done: (fancybox, slide) => {
+      //   console.log(fancybox, slide);
+
+      //   if (slide.src.includes('cashback-tooltip-popup')) {
+      //     console.log(slide);
+      //     $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
+      //     $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
+      //     $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
+      //     $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
+      //   }
+      // }
     },
 
     // tpl: {
@@ -139,7 +163,7 @@ $(() => {
       },
 
       done: (fancybox, slide) => {
-        // console.log(slide);
+        console.log(slide);
 
         if (slide.src.includes('award-') && !slide.contentEl.classList.contains('fancybox-popup--award-dark-bg')) {
           runConfetti();
