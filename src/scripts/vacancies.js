@@ -120,14 +120,52 @@ function applyChangesToSelectedCountries ($select) {
   toggleClearButtons();
 
 
-  $select.attr('data-selected-cities', selectedCitiesIds);
-  console.log($select.attr('data-selected-cities'));
+  // $select.attr('data-selected-cities', selectedCitiesIds);
+  // console.log($select.attr('data-selected-cities'));
+
 
   // console.log('applyChangesToSelectedCountries');
   // console.log('currentSelectedCitiesIds');
   // console.log(currentSelectedCitiesIds);
   // console.log('selectedCitiesIds');
   // console.log(selectedCitiesIds);
+}
+
+function applyChangesToSelectedSex ($select) {
+  selectedGendersIds = [...currentSelectedGendersIds];
+  
+  console.log(`selectedGendersIds: ${selectedGendersIds}`);
+  console.log(`currentSelectedGendersIds: ${currentSelectedGendersIds}`);
+
+  let $dropdownBlock = $select.closest('.dropdown-block');
+  let name = $select.attr('name');
+
+  changeSelectToggleTitle($select);
+  // updateDropdownMultiSelectClass($dropdownBlock);
+
+  $select.multiSelect('deselect_all');
+  $select.find('option').each(function(index, el) {
+    let $selectedItem = findFilterTagByValue(name, $(el).attr('value'));
+    $selectedItem.remove();
+  });
+
+  selectedGendersIds.forEach(id => {
+    $select.multiSelect('select', id);
+
+    let labelText = $select.find(`option[value="${id}"]`).text();
+    if (labelText) {
+      createOrUpdateTag('multiselect', name, id, labelText);
+    }
+  });
+
+  let $selectedItemsLength = $('.filter .selected-items__item').length;
+  setVisibilitySelectedMoreItem($selectedItemsLength);
+
+  toggleClearButtons();
+
+  // $select[0].dispatchEvent(new Event('change'));
+
+  // toggleClearButtons();
 }
 
 function clearCitiesSelect () {
@@ -151,6 +189,10 @@ function clearSexSelect () {
   // $('.selected-items--cities .selected-items__clear-btn').click();
 
   // $('.cities-filter__apply-btn').click();
+}
+
+function clearSpecSelect () {
+  $('.filter__experience-select').val('').trigger('change');
 }
 
 function removeItemFromArray (array, value) {
@@ -591,21 +633,12 @@ $(() => {
         updateMSItemsDescription($selectionItems);
 
         that.$container.find('.ms-container__apply-btn').click(function(event) {
-          selectedGendersIds = [...currentSelectedGendersIds];
-
           let $dropdownBlock = $(this).closest('.dropdown-block');
           $dropdownBlock.removeClass('dropdown-block--visible');
 
-          changeSelectToggleTitle(that.$element);
+          applyChangesToSelectedSex(that.$element);
 
-          that.$element.multiSelect('deselect_all');
-          selectedGendersIds.forEach(id => {
-            that.$element.multiSelect('select', id);
-          });
-
-          that.$element[0].dispatchEvent(new Event('change'));
-
-          toggleClearButtons();
+          // createOrUpdateTag()
         });
 
         $($selectableItems).each(function(index, el) {
@@ -638,6 +671,7 @@ $(() => {
   $('[data-clear-filter]').click(() => {
     clearCitiesSelect();
     clearSexSelect();
+    clearSpecSelect();
   });
 
   $(document).on('click', function(e) {
@@ -1032,6 +1066,19 @@ $(() => {
     // $('.dropdown-block--cities-select .ms-container__apply-btn').click();
     // $('.cities-filter__apply-btn').click();
   });
+
+  let $sexSelect = $(window).width() < 576 ? $('.filter__sex-select--mobile') : $('.filter__sex-select--desktop');
+
+  let selectedSex = Array.from($sexSelect.find('option:selected')).map(item => $(item).attr('value'));
+  console.log(selectedSex);
+
+  selectedGendersIds = [...selectedSex];
+  currentSelectedGendersIds = [...selectedSex];
+
+  console.log($sexSelect);
+  changeSelectToggleTitle($sexSelect);
+
+  // applyChangesToSelectedSex($sexSelect);
 
   function syncInputFields ($input) {
     let syncFieldIDs = $input.data('sync-field-ids');

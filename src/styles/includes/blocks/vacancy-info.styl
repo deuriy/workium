@@ -36,7 +36,8 @@
 		
 		@media $xs
 			display grid
-			grid-template-columns repeat(2, auto)
+			// grid-template-columns repeat(2, auto)
+			grid-template-columns auto 1fr
 			justify-content start
 			align-items start
 			gap 0 8px
@@ -55,10 +56,12 @@
 			grid-column 1 / 3
 			
 			&--two-col
-				grid-template-columns repeat(2, auto)
+				// grid-template-columns repeat(2, auto)
+				grid-template-columns auto 1fr
 				
 				.vacancy-info__specialization--truncated
 					-webkit-line-clamp 3
+					padding-right 17px
 	
 	&__vacancy-tag
 		position relative
@@ -87,6 +90,7 @@
 		margin-left -1px
 		
 		@media $xs
+			justify-self end
 			grid-area 1 / 2 / 3 / 3
 			margin-left 3px
 	
@@ -137,7 +141,8 @@
 			gap 8px 12px
 			
 			.vacancy-info__top
-				grid-template-columns repeat(3, auto)
+				// grid-template-columns repeat(3, auto)
+				grid-template-columns repeat(2, auto) 1fr
 				align-items center
 				margin-top 0
 			
@@ -157,6 +162,6 @@
 				line-height 22px
 			
 			.vacancy-info__bookmark-icon
-				grid-area auto
+				grid-area 1 / 2 / 2 / 4
 				margin-top 0
 				margin-right -4px

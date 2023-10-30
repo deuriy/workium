@@ -74,28 +74,19 @@ let selectedFiltersCount = 0;
 // }
 
 function toggleClearButtons () {
-  let $additionalFilters = $('.additional-filters');
-  let $clearBtn = $('.filter__clear-btn');
-  let $additionalFiltersClearBtn = $additionalFilters.find('.additional-filters__clear-btn');
-  let $additionalFiltersClearLink = $additionalFilters.find('.additional-filters__clear-link');
-  let selectedItemsLength = $additionalFilters.find('.selected-items__item').length;
+  let $clearBtns = $('[data-clear-filter]');
+  let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
 
   // console.log(`selectedItemsLength: ${selectedItemsLength}`);
 
   if (selectedItemsLength) {
-    // $selectedItems.show();
-    $clearBtn.show();
-    $additionalFiltersClearBtn.show();
-    $additionalFiltersClearLink.show();
+    $clearBtns.show();
     $filtersBtn.removeClass('btn-white--filter-dark-icon');
     $filtersBtnCount.removeClass('hidden').text(selectedItemsLength);
   } else {
-    // $selectedItems.hide();
-    $clearBtn.hide();
-    $additionalFiltersClearBtn.hide();
-    $additionalFiltersClearLink.hide();
+    $clearBtns.hide();
     $filtersBtn.addClass('btn-white--filter-dark-icon');
     $filtersBtnCount.addClass('hidden').text('');
   }
@@ -116,23 +107,23 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
   });
 }
 
-function checkDependentFilters () {
-  let $dependentFilters = $('[data-parent-filter-id]');
+// function checkDependentFilters () {
+//   let $dependentFilters = $('[data-parent-filter-id]');
 
-  $dependentFilters.each(function(index, el) {
-    let parentFilterId = $(el).data('parent-filter-id')
-    let parentFilterItemId = $(el).data('parent-filter-item-id');
+//   $dependentFilters.each(function(index, el) {
+//     let parentFilterId = $(el).data('parent-filter-id')
+//     let parentFilterItemId = $(el).data('parent-filter-item-id');
 
-    let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
-    let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
+//     let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
+//     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
 
-    if (!$parentFilterItem.is(':checked')) {
-      $(el).hide();
-    } else {
-      $(el).show();
-    }
-  });
-}
+//     if (!$parentFilterItem.is(':checked')) {
+//       $(el).hide();
+//     } else {
+//       $(el).show();
+//     }
+//   });
+// }
 
 function clearFilter () {
   let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
@@ -178,8 +169,13 @@ function clearFilter () {
   // $('.selected-items--filter-params').hide();
 
   setVisibilitySelectedMoreItem(0);
-  checkDependentFilters();
+  // checkDependentFilters();
+
+  // toggleClearButtons();
+
   $filtersBtn.addClass('hidden').text(0);
+  console.log($filtersBtn);
+  $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
 }
 
 function removeItemFromArray (array, value) {
@@ -328,7 +324,8 @@ $(() => {
     });
   });
 
-  $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearFilter);
+  // $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearFilter);
+  $('[data-clear-filter]').click(clearFilter);
 
 
   $('.filter-tag').click(function(event) {
@@ -421,7 +418,7 @@ $(() => {
     });
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
-    checkDependentFilters();
+    // checkDependentFilters();
     checkDefaultValue();
 
     // console.log('233323');
@@ -490,7 +487,7 @@ $(() => {
 
     toggleClearButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
-    checkDependentFilters();
+    // checkDependentFilters();
   });
 
   $('.selected-items__more-btn').click(function(event) {
@@ -508,7 +505,7 @@ $(() => {
   });
 
   // Creating filter URL
-  $('.filter__search-btn, .additional-filters__submit-btn').on('click', function(event) {
+  $('.filter__search-btn, .filter__search-btn-mobile, .additional-filters__submit-btn').on('click', function(event) {
     event.preventDefault();
 
     let urlParamsArr = [];
@@ -517,7 +514,14 @@ $(() => {
     let requestParams = '';
 
     // Get url params
-    let selectedCountry = $('select[name="countries"]').val();
+    let selectedCountry;
+
+    if ($(window).width() < 576) {
+      selectedCountry = $('select[name="countries"].filter__countries-select--mobile').val();
+    } else {
+      selectedCountry = $('select[name="countries"].filter__countries-select--desktop').val();
+    }
+
     // let selectedCitiesSlugs = $('select[name="cities"] option:selected').val().map(function(id, index) {
       // console.log(id);
       // console.log($(`select[name="cities"] option[value="${id}"]`));
@@ -530,29 +534,38 @@ $(() => {
     // });
     // console.log($('select[name="cities"] option:selected'));
 
-    let selectedCitiesIds = $('[data-selected-cities]').attr('data-selected-cities');
-    let selectedCitiesSlugs = selectedCitiesIds.split(',').map(function(id, index) {
-      return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
-    })
+
+    // let selectedCitiesIds = $('[data-selected-cities]').attr('data-selected-cities');
+    // let selectedCitiesSlugs = selectedCitiesIds.split(',').map(function(id, index) {
+    //   return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
+    // })
+
 
     // console.log($(`.selected-items__item[name="cities"]`));
     // console.log(`selectedCitiesSlugs`);
     // console.log(selectedCitiesSlugs);
 
-    selectedCitiesSlugs = [...new Set(selectedCitiesSlugs)];
+
+    // selectedCitiesSlugs = [...new Set(selectedCitiesSlugs)];
+
+
     // selectedCitiesSlugs = selectedCitiesSlugs.filter((value, index, array) => {
     //   array.indexOf(value) === index;
     // });
 
-    console.log(`selectedCitiesSlugs`);
-    console.log(selectedCitiesSlugs);
+
+    // console.log(`selectedCitiesSlugs`);
+    // console.log(selectedCitiesSlugs);
 
 
-    let selectedCities = Array.from(selectedCitiesSlugs).join('/');
+    // let selectedCities = Array.from(selectedCitiesSlugs).join('/');
+
+
     // let selectedCities = selectedCitiesSlugs;
     // console.log(selectedCities);
 
-    urlParamsArr.push(selectedCountry, selectedCities);
+    // urlParamsArr.push(selectedCountry, selectedCities);
+    urlParamsArr.push(selectedCountry);
     // urlParamsArr.push(selectedCountry);
 
     // let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
@@ -600,8 +613,14 @@ $(() => {
     //   requestParamsArr.push(resultValue);
     // });
 
+    let selectedCandidatesType;
 
-    let selectedCandidatesType = $('select[name="tip-kandidativ[]"]').val();
+    if ($(window).width() < 576) {
+      selectedCandidatesType = $('select[name="tip-kandidativ[]"].filter__sex-select--mobile').val();
+    } else {
+      selectedCandidatesType = $('select[name="tip-kandidativ[]"].filter__sex-select--desktop').val();
+    }
+
     console.log(selectedCandidatesType);
 
     let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
@@ -620,6 +639,8 @@ $(() => {
 
 
     let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
+    console.log(catWorkerValue);
+    
     if (catWorkerValue) {
       requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
     }
@@ -692,10 +713,10 @@ $(() => {
   });
 
   // Dependent filters
-  checkDependentFilters();
-  $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function(event) {
-    checkDependentFilters();
-  });
+  // checkDependentFilters();
+  // $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function(event) {
+  //   checkDependentFilters();
+  // });
 
   // Synchronized selects
   $('select[data-sync-field]').on('change', function(event) {
