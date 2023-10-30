@@ -180,26 +180,16 @@ $(() => {
               $(this).hide();
               $('#employment-smart-work-popup').find('.fancybox-popup__contact-box').show();
 
-              console.log('$showContactsBtn');
-
+              // Adding plus to phone number
               let $viberBtn = $('#employment-smart-work-popup .btn-purple--viber-order-service');
               let equalIndex = $viberBtn.attr('href').indexOf('=');
               let viberBtnValue = $viberBtn.attr('href').substring(equalIndex + 1);
 
-              console.log(viberBtnValue);
+              if (/^\d+$/.test(viberBtnValue) && $(window).width() >= 365) {
+                let viberBtnBefore = $viberBtn.attr('href').substring(0, equalIndex + 1);
+                viberBtnValue = viberBtnBefore + '+' + viberBtnValue;
 
-              if (/^\d+$/.test(viberBtnValue)) {
-                console.log('Is numbers');
-
-                if ($(window).width() > 365) {
-                  let viberBtnBefore = $viberBtn.attr('href').substring(0, equalIndex + 1);
-                  viberBtnValue = viberBtnBefore + '+' + viberBtnValue;
-
-                  $viberBtn.attr('href', viberBtnValue);
-                  console.log(viberBtnValue);
-                }
-              } else {
-                console.log('Not a number!');
+                $viberBtn.attr('href', viberBtnValue);
               }
             });
           }, 7000);
