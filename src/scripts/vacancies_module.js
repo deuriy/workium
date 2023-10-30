@@ -82,7 +82,7 @@ function toggleClearButtons () {
   let $filtersBtn = $('.btn-white--filter');
   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
 
-  console.log(`selectedItemsLength: ${selectedItemsLength}`);
+  // console.log(`selectedItemsLength: ${selectedItemsLength}`);
 
   if (selectedItemsLength) {
     // $selectedItems.show();
@@ -248,7 +248,7 @@ function createOrUpdateTag (type, name, value, labelText) {
       $selectedItem.attr('data-type', type);
       $selectedItem.attr('data-name', name);
       $selectedItem.attr('data-value', value);
-      $selectedItem.find('.selected-item__value').text(labelText);
+      $selectedItem.find('.selected-item__value').html(labelText);
 
       return;
     }
@@ -282,12 +282,17 @@ $(() => {
   $filterSelects.each(function(index, el) {
     let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
     let name = $(el).attr('name');
+    let value = $(el).select2('val');
     let $label = $select2Selection.find('.select2-selection__rendered');
 
     // console.log(name);
 
     if (name === 'kategoriia-pracivnika') {
-      $label.text('Спеціалізація');
+      if (!value) {
+        $label.text('Спеціалізація');
+      } else {
+        $select2Selection.addClass('select2-selection--selected');
+      }
     }
 
     $(el).on('change', function (e) {
@@ -296,7 +301,7 @@ $(() => {
       if (name === 'kategoriia-pracivnika') {
         if (value !== '') {
           $select2Selection.addClass('select2-selection--selected');
-          createOrUpdateTag("select", name, value, $label.text());
+          createOrUpdateTag("select", name, value, `<strong>Категорія працівника:</strong> ${$label.text()}`);
         } else {
           $select2Selection.removeClass('select2-selection--selected');
           let $selectedItem = $(`.selected-items__item[data-type="select"][data-name="${name}"]`);
@@ -518,11 +523,29 @@ $(() => {
       // console.log($(`select[name="cities"] option[value="${id}"]`));
       // return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
     // });
+    console.log(selectedCountry);
 
-    let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
-      return $(elem).attr('data-seo-slug');
-    });
+    // let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
+    //   return $(elem).attr('data-seo-slug');
+    // });
+    // console.log($('select[name="cities"] option:selected'));
+
+    let selectedCitiesIds = $('[data-selected-cities]').attr('data-selected-cities');
+    let selectedCitiesSlugs = selectedCitiesIds.split(',').map(function(id, index) {
+      return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
+    })
+
+    // console.log($(`.selected-items__item[name="cities"]`));
+    // console.log(`selectedCitiesSlugs`);
     // console.log(selectedCitiesSlugs);
+
+    selectedCitiesSlugs = [...new Set(selectedCitiesSlugs)];
+    // selectedCitiesSlugs = selectedCitiesSlugs.filter((value, index, array) => {
+    //   array.indexOf(value) === index;
+    // });
+
+    console.log(`selectedCitiesSlugs`);
+    console.log(selectedCitiesSlugs);
 
 
     let selectedCities = Array.from(selectedCitiesSlugs).join('/');
@@ -530,20 +553,21 @@ $(() => {
     // console.log(selectedCities);
 
     urlParamsArr.push(selectedCountry, selectedCities);
+    // urlParamsArr.push(selectedCountry);
 
-    let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
-    $selectedSegmentCheckboxes.each(function(index, el) {
-      if (el.value) {
-        urlParamsArr.push(el.value);
-      }
-    });
+    // let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
+    // $selectedSegmentCheckboxes.each(function(index, el) {
+    //   if (el.value) {
+    //     urlParamsArr.push(el.value);
+    //   }
+    // });
 
-    let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:checked');
-    $selectedSegmentRadioBtns.each(function(index, el) {
-      if (el.value) {
-        urlParamsArr.push(el.value);
-      }
-    });
+    // let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:checked');
+    // $selectedSegmentRadioBtns.each(function(index, el) {
+    //   if (el.value) {
+    //     urlParamsArr.push(el.value);
+    //   }
+    // });
 
     urlParams = urlParamsArr.join('/');
 
@@ -553,44 +577,77 @@ $(() => {
       requestParamsArr.push(`search=${searchValue}`);
     }
 
-    let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):checked');
-    $selectedCheckboxes.each(function(index, el) {
-      if (el.value) {
-        requestParamsArr.push(`${el.name}=${el.value}`);
-      }
+    // let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):checked');
+    // $selectedCheckboxes.each(function(index, el) {
+    //   if (el.value) {
+    //     requestParamsArr.push(`${el.name}=${el.value}`);
+    //   }
+    // });
+
+    // let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):checked');
+    // $selectedRadioBtns.each(function(index, el) {
+    //   if (el.value) {
+    //     requestParamsArr.push(`${el.name}=${el.value}`);
+    //   }
+    // });
+
+    // let $rangeSliders = $('.additional-filters .range-slider');
+    // $rangeSliders.each(function(index, el) {
+    //   let values = el.noUiSlider.get();
+    //   let name = el.dataset.name;
+    //   let resultValue = `${name}=${values[0]}-${values[1]}`;
+
+    //   requestParamsArr.push(resultValue);
+    // });
+
+
+    let selectedCandidatesType = $('select[name="tip-kandidativ[]"]').val();
+    console.log(selectedCandidatesType);
+
+    let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
+      return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
+    });
+    console.log(selectedCandidatesSlugs);
+
+    selectedCandidatesSlugs = [...new Set(selectedCandidatesSlugs)];
+    // let selectedCandidates = Array.from(selectedCandidatesSlugs).map(function(slug, index) {
+    //   return `${name}=${slug}`;
+    // });
+
+    selectedCandidatesSlugs.forEach(item => {
+      requestParamsArr.push(`tip-kandidativ[]=${item}`);
     });
 
-    let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):checked');
-    $selectedRadioBtns.each(function(index, el) {
-      if (el.value) {
-        requestParamsArr.push(`${el.name}=${el.value}`);
-      }
-    });
 
-    let $rangeSliders = $('.additional-filters .range-slider');
-    $rangeSliders.each(function(index, el) {
-      let values = el.noUiSlider.get();
-      let name = el.dataset.name;
-      let resultValue = `${name}=${values[0]}-${values[1]}`;
+    let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
+    if (catWorkerValue) {
+      requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
+    }
 
-      requestParamsArr.push(resultValue);
-    });
 
     requestParams = requestParamsArr.join('&');
 
-    let $lastSelectedTag = $('.selected-items__item:last-child');
+    if (requestParams) {
+      requestParams = '/?' + requestParams;
+    }
+
+    let $lastSelectedTag = $('.filter .selected-items__item').last();
     let lastSelectedTagObj = {
       type: $lastSelectedTag.attr('data-type'),
       name: $lastSelectedTag.attr('data-name'),
       value: $lastSelectedTag.attr('data-value'),
     };
 
-    localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
+    console.log(urlParams);
 
-    window.location.href = `/vacancies/${urlParams}/?${requestParams}`;
+    localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
+    console.log(lastSelectedTagObj);
+    console.log(`/vacancies/${urlParams}${requestParams}`);
+
+    window.location.href = `/vacancies/${urlParams}${requestParams}`;
   });
 
-  function loadCities (countryID) {
+  function loadCitiesViaAJAX (countryID) {
     $.ajax({
       url: `https://workium.pl/api/v1/cities?country_id=${countryID}`,
 
@@ -607,13 +664,13 @@ $(() => {
   }
 
   let selectedCountryId = $('select[name="countries"] option:selected').data('id');
-  loadCities(selectedCountryId);
+  loadCitiesViaAJAX(selectedCountryId);
 
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {
     let countryID = $(this).find(':selected').data('id');
 
-    loadCities(countryID);
+    loadCitiesViaAJAX(countryID);
   });
 
   // Set current currency
@@ -860,7 +917,58 @@ $(() => {
 
   $('[data-remove-last-filter]').click(function(event) {
     let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
+
+    let type = lastSelectedTagObj.type;
+    let name = lastSelectedTagObj.name;
+    let value = lastSelectedTagObj.value;
+
+    let $filterSearchBtn = $('.filter__search-btn');
+    let $selectedItem = null;
+    // console.log(lastSelectedTagObj);
+    // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+
+    console.log('data-remove-last-filter type');
+    console.log(type);
+
+    switch (type) {
+      case 'multiselect':
+      case 'checkbox':
+        // let $select = $(`select[name="${name}"]`);
+        $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+
+        // $select.multiSelect('deselect', lastSelectedTagObj.value.toString());
+
+        break;
+
+      case 'textfield':
+        // let $input = $(`input[name="${name}"]`);
+        $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+
+        // $input.val('');
+        // $selectedItem.remove();
+
+        break;
+    }
+
+    $selectedItem.find('.selected-item__remove-link').click();
+    localStorage.removeItem('lastSelectedTag');
+
+    // let $lastSelectedTag = $('.selected-items__item:last-child');
+    let $lastSelectedTag = $('.filter .selected-items__item').last();
+    lastSelectedTagObj = {
+      type: $lastSelectedTag.attr('data-type'),
+      name: $lastSelectedTag.attr('data-name'),
+      value: $lastSelectedTag.attr('data-value'),
+    };
+
+    // console.log(urlParams);
+
+    localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
     console.log(lastSelectedTagObj);
+
+    $filterSearchBtn.click();
+
+    // window.location.href = `/vacancies/${urlParams}${requestParams}`;
   });
 
   
