@@ -1,5 +1,6 @@
 import $ from "jquery";
-import Swiper, { Navigation } from 'swiper';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
 
 $(() => {
 	const peopleSwiper = new Swiper('.people-swiper', {

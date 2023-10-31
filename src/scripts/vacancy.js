@@ -1,5 +1,6 @@
 import $ from "jquery";
-import Swiper, { Navigation, Pagination } from 'swiper';
+import Swiper from 'swiper';
+import { Navigation, Pagination } from 'swiper/modules';
 
 function copyText(input) {
   input.select();

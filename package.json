@@ -54,7 +54,7 @@
   },
   "optionalDependencies": {
     "bootstrap": "5.0.1",
-    "swiper": "^9.2.0"
+    "swiper": "^11.0.3"
   },
   "jshintConfig": {
     "maxerr": 99,

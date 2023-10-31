@@ -1,5 +1,6 @@
 import $ from "jquery";
-import Swiper, { Navigation } from 'swiper';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
 
 $(() => {
   const peopleSwiper = new Swiper('.people-swiper', {
@@ -43,13 +44,11 @@ $(() => {
 
     breakpoints: {
       768: {
-        loop: false,
         slidesPerView: 3,
         spaceBetween: 16,
         centeredSlides: false,
       },
       1024: {
-        loop: false,
         slidesPerView: 3,
         spaceBetween: 32,
         centeredSlides: false,

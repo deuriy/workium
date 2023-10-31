@@ -1,5 +1,6 @@
 import $ from "jquery";
-import Swiper, { Pagination } from 'swiper';
+import Swiper from 'swiper';
+import { Pagination } from 'swiper/modules';
 import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -640,7 +641,7 @@ $(() => {
 
     let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
     console.log(catWorkerValue);
-    
+
     if (catWorkerValue) {
       requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
     }

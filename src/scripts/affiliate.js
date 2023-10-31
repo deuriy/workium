@@ -1,5 +1,6 @@
 import $ from "jquery";
-import Swiper, { Navigation } from 'swiper';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
 
 function toggleMoreLink ($link) {
 	let linkText = $link.text() === 'Приховати' ? 'Читати далі' : 'Приховати';
