@@ -103,20 +103,31 @@ $(() => {
 
     on: {
       reveal: (fancybox, slide) => {
+        console.log(slide);
+        // console.log('dmwqmdqdow');
+        console.log(slide.src.includes('cashback-tooltip-popup'));
+
         if (slide.src === '#authorization-popup') {
           let activeTabNumber = slide.activeTabNumber !== undefined ? slide.activeTabNumber : 1;
           let $activeTabLink = $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`);
 
           $activeTabLink.trigger('click');
-        } else if (slide.src.includes('tooltip-popup')) {
-          console.log(slide);
-          $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
-          $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
-          $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
         } else if (slide.src.includes('cashback-tooltip-popup')) {
           console.log(slide);
-          $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
+          console.log('2femwfeewqdmlq');
+
+          let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
+          $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
+
           $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
+          // $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
+          // $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
+        } else if (slide.src.includes('tooltip-popup')) {
+          console.log(slide);
+
+          let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
+          $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
+
           $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
           $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
         }
