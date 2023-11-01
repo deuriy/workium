@@ -5,7 +5,7 @@ import { Navigation } from 'swiper/modules';
 $(() => {
   const peopleSwiper = new Swiper('.people-swiper', {
     modules: [Navigation],
-    loop: true,
+    // loop: true,
     slidesPerView: 'auto',
     centeredSlides: true,
     spaceBetween: 8,
@@ -17,11 +17,13 @@ $(() => {
 
     breakpoints: {
       768: {
+        loop: true,
         slidesPerView: 3,
         spaceBetween: 16,
         centeredSlides: false
       },
       1024: {
+        loop: true,
         slidesPerView: 4,
         spaceBetween: 32,
         centeredSlides: false,

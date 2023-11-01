@@ -506,7 +506,7 @@ $(() => {
   });
 
   // Creating filter URL
-  $('.filter__search-btn, .filter__search-btn-mobile, .additional-filters__submit-btn').on('click', function(event) {
+  $('form[name="vacancies_filter"]').on('submit', function(event) {
     event.preventDefault();
 
     let urlParamsArr = [];
