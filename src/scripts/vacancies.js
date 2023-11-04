@@ -871,6 +871,9 @@ $(() => {
 
     // $('.selected-items--cities .selected-items__clear-btn').click();
     let $citiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
+    let $searchInput = $('.cities-filter__search-input');
+
+    $searchInput.val('').trigger('input');
 
     $citiesCheckboxes.each(function(index, checkbox) {
       console.log(selectedCitiesIds.includes($(checkbox).val()));
@@ -893,6 +896,9 @@ $(() => {
 
   $('.cities-filter__apply-btn').click(function(event) {
     selectedCitiesIds = [...currentSelectedCitiesIds];
+
+    let $searchInput = $('.cities-filter__search-input');
+    $searchInput.val('').trigger('input');
 
     setCheckedCityCheckboxesTitle();
     toggleClearCitiesButtons();
@@ -1003,6 +1009,7 @@ $(() => {
         $citiesSelect.multiSelect('addOption', { value: city.id || '', text: city.origin || '', index: index });
 
         let $option = $citiesSelect.find(`option[value="${city.id}"]`);
+        console.log(city);
 
         if (city.province) {
           $option.attr('data-description', city.province);
@@ -1012,6 +1019,9 @@ $(() => {
           $option.attr('data-seo-slug', city.seo_slug);
         }
       });
+
+      $citiesSelect.multiSelect('refresh');
+      // $citiesSelect.multiSelect('select', allSelectedCitiesIds);
 
       applyChangesToSelectedCountries($citiesSelect);
 
