@@ -75,6 +75,8 @@ let selectedFiltersCount = 0;
 // }
 
 function toggleClearButtons () {
+  // console.log('toggleClearButtons');
+
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
@@ -256,6 +258,28 @@ function createOrUpdateTag (type, name, value, labelText) {
 
 
 $(() => {
+  // Fancybox.bind(".additional-filters-popup-link", {
+  //   dragToClose: false,
+  //   mainClass: 'fancybox--additional-filters-popup',
+
+  //   tpl: {
+  //     closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+  //   },
+
+  //   on: {
+  //     close: (fancybox, event) => {
+  //       // console.log('close!!');
+  //       // console.log($(fancybox.container).find('.fancybox-popup'));
+  //       // let $fancyboxPopup = $(fancybox.container).find('.fancybox-popup');
+  //       // if ($fancyboxPopup.hasClass('fancybox-popup--cities')) {
+          
+  //       // }
+
+  //       console.log(event.target);
+  //     },
+  //   }
+  // });
+
   select2($);
 
   let selectedCitiesIdx = [];
@@ -365,7 +389,7 @@ $(() => {
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
     // let $additionalFilters = $selectedItemParent.closest('.additional-filters');
-    let selectedItemsLength = $('.selected-items__item').length;
+    let selectedItemsLength = $('.filter .selected-items__item').length;
 
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
@@ -417,6 +441,10 @@ $(() => {
     setTimeout(() => {
       toggleClearButtons();
     });
+
+    console.log('selectedItemsLength!!!!');
+    console.log($('.selected-items__item'));
+    console.log(selectedItemsLength);
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
     // checkDependentFilters();
@@ -509,18 +537,27 @@ $(() => {
   $('form[name="vacancies_filter"]').on('submit', function(event) {
     event.preventDefault();
 
+    let isMobile = $(window).width() < 576;
     let urlParamsArr = [];
     let requestParamsArr = [];
     let urlParams = '';
     let requestParams = '';
 
     // Get url params
-    let selectedCountry;
+    let selectedCountry = '',
+        selectedCitiesSlugs = [];
 
-    if ($(window).width() < 576) {
-      selectedCountry = $('select[name="countries"].filter__countries-select--mobile').val();
+    if (isMobile) {
+      selectedCountry = $('.filter__countries-select--mobile').val();
+      selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function(index, input) {
+        return $(input).attr('data-seo-slug');
+      });
     } else {
-      selectedCountry = $('select[name="countries"].filter__countries-select--desktop').val();
+      selectedCountry = $('.filter__countries-select--desktop').val();
+      selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function(index, option) {
+        console.log(option, index);
+        return $(option).attr('data-seo-slug');
+      });
     }
 
     // let selectedCitiesSlugs = $('select[name="cities"] option:selected').val().map(function(id, index) {
@@ -528,6 +565,8 @@ $(() => {
       // console.log($(`select[name="cities"] option[value="${id}"]`));
       // return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
     // });
+
+    console.log(selectedCitiesSlugs);
     console.log(selectedCountry);
 
     // let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
@@ -535,6 +574,9 @@ $(() => {
     // });
     // console.log($('select[name="cities"] option:selected'));
 
+    // if (isMobile) {
+
+    // }
 
     // let selectedCitiesIds = $('[data-selected-cities]').attr('data-selected-cities');
     // let selectedCitiesSlugs = selectedCitiesIds.split(',').map(function(id, index) {
@@ -559,14 +601,13 @@ $(() => {
     // console.log(selectedCitiesSlugs);
 
 
-    // let selectedCities = Array.from(selectedCitiesSlugs).join('/');
+    let selectedCities = Array.from(selectedCitiesSlugs).join('/');
 
 
     // let selectedCities = selectedCitiesSlugs;
     // console.log(selectedCities);
 
-    // urlParamsArr.push(selectedCountry, selectedCities);
-    urlParamsArr.push(selectedCountry);
+    urlParamsArr.push(selectedCountry, selectedCities);
     // urlParamsArr.push(selectedCountry);
 
     // let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
@@ -616,10 +657,10 @@ $(() => {
 
     let selectedCandidatesType;
 
-    if ($(window).width() < 576) {
-      selectedCandidatesType = $('select[name="tip-kandidativ[]"].filter__sex-select--mobile').val();
+    if (isMobile) {
+      selectedCandidatesType = $('.filter__sex-select--mobile').val();
     } else {
-      selectedCandidatesType = $('select[name="tip-kandidativ[]"].filter__sex-select--desktop').val();
+      selectedCandidatesType = $('.filter__sex-select--desktop').val();
     }
 
     console.log(selectedCandidatesType);
@@ -640,10 +681,22 @@ $(() => {
 
 
     let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
-    console.log(catWorkerValue);
+    // console.log(catWorkerValue);
 
     if (catWorkerValue) {
       requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
+    }
+
+    let distance;
+    
+    if (isMobile) {
+      distance = $('.filter__distance-select--mobile');
+    } else {
+      distance = $('.filter__distance-select--desktop');
+    }
+
+    if (distance.val()) {
+      requestParamsArr.push(`radius=${distance.val()}`);
     }
 
 
@@ -660,16 +713,16 @@ $(() => {
       value: $lastSelectedTag.attr('data-value'),
     };
 
-    console.log(urlParams);
+    // console.log(urlParams);
 
     localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
-    console.log(lastSelectedTagObj);
+    // console.log(lastSelectedTagObj);
     console.log(`/vacancies/${urlParams}${requestParams}`);
 
     window.location.href = `/vacancies/${urlParams}${requestParams}`;
   });
 
-  function loadCitiesViaAJAX (countryID) {
+  function loadCitiesOfSelectedCountry (countryID) {
     $.ajax({
       url: `https://workium.pl/api/v1/cities?country_id=${countryID}`,
 
@@ -686,13 +739,13 @@ $(() => {
   }
 
   let selectedCountryId = $('select[name="countries"] option:selected').data('id');
-  loadCitiesViaAJAX(selectedCountryId);
+  loadCitiesOfSelectedCountry(selectedCountryId);
 
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {
     let countryID = $(this).find(':selected').data('id');
 
-    loadCitiesViaAJAX(countryID);
+    loadCitiesOfSelectedCountry(countryID);
   });
 
   // Set current currency
@@ -937,62 +990,65 @@ $(() => {
   });
 
 
-  $('[data-remove-last-filter]').click(function(event) {
-    let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
+  // $('[data-remove-last-filter]').click(function(event) {
+  //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
 
-    let type = lastSelectedTagObj.type;
-    let name = lastSelectedTagObj.name;
-    let value = lastSelectedTagObj.value;
+  //   let type = lastSelectedTagObj.type;
+  //   let name = lastSelectedTagObj.name;
+  //   let value = lastSelectedTagObj.value;
 
-    let $filterSearchBtn = $('.filter__search-btn');
-    let $selectedItem = null;
-    // console.log(lastSelectedTagObj);
-    // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+  //   let $filterSearchBtn = $('.filter__search-btn');
+  //   let $selectedItem = null;
+  //   // console.log(lastSelectedTagObj);
+  //   // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
 
-    console.log('data-remove-last-filter type');
-    console.log(type);
+  //   console.log('data-remove-last-filter type');
+  //   console.log(type);
 
-    switch (type) {
-      case 'multiselect':
-      case 'checkbox':
-        // let $select = $(`select[name="${name}"]`);
-        $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+  //   switch (type) {
+  //     case 'multiselect':
+  //     case 'checkbox':
+  //       // let $select = $(`select[name="${name}"]`);
+  //       $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
 
-        // $select.multiSelect('deselect', lastSelectedTagObj.value.toString());
+  //       // $select.multiSelect('deselect', lastSelectedTagObj.value.toString());
 
-        break;
+  //       break;
 
-      case 'textfield':
-        // let $input = $(`input[name="${name}"]`);
-        $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+  //     case 'textfield':
+  //       // let $input = $(`input[name="${name}"]`);
+  //       $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
 
-        // $input.val('');
-        // $selectedItem.remove();
+  //       // $input.val('');
+  //       // $selectedItem.remove();
 
-        break;
-    }
+  //       break;
+  //   }
 
-    $selectedItem.find('.selected-item__remove-link').click();
-    localStorage.removeItem('lastSelectedTag');
+  //   $selectedItem.find('.selected-item__remove-link').click();
+  //   localStorage.removeItem('lastSelectedTag');
 
-    // let $lastSelectedTag = $('.selected-items__item:last-child');
-    let $lastSelectedTag = $('.filter .selected-items__item').last();
-    lastSelectedTagObj = {
-      type: $lastSelectedTag.attr('data-type'),
-      name: $lastSelectedTag.attr('data-name'),
-      value: $lastSelectedTag.attr('data-value'),
-    };
+  //   // let $lastSelectedTag = $('.selected-items__item:last-child');
+  //   let $lastSelectedTag = $('.filter .selected-items__item').last();
+  //   lastSelectedTagObj = {
+  //     type: $lastSelectedTag.attr('data-type'),
+  //     name: $lastSelectedTag.attr('data-name'),
+  //     value: $lastSelectedTag.attr('data-value'),
+  //   };
 
-    // console.log(urlParams);
+  //   // console.log(urlParams);
 
-    localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
-    console.log(lastSelectedTagObj);
+  //   localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
+  //   console.log(lastSelectedTagObj);
 
-    $filterSearchBtn.click();
+  //   $filterSearchBtn.click();
 
-    // window.location.href = `/vacancies/${urlParams}${requestParams}`;
-  });
+  //   // window.location.href = `/vacancies/${urlParams}${requestParams}`;
+  // });
 
+  // $('[data-next-vacancies-page]').on('click', function(event) {
+  //   let pageNumber = $('.pagination .page-item.active .page-link').text();
+  // });
   
   
 });

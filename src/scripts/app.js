@@ -255,7 +255,7 @@ $(() => {
       //   if (event.target.classList.contains('cities-filter__btn-back')) {
       //     console.log('Closed cities popup!');
 
-      //     $('.selected-items--cities .selected-items__clear-btn').click();
+      //     // $('.selected-items--cities .selected-items__clear-btn').click();
       //   }
       //   // console.log(fancybox);
       //   // console.log(slide);
@@ -669,7 +669,7 @@ $(() => {
 
 
   document.querySelectorAll('.vacancy-card__address--truncated').forEach(item => {
-    console.log(item.scrollHeight);
+    // console.log(item.scrollHeight);
 
     if (item.scrollHeight < 25) {
       item.classList.add('vacancy-card__address--no-arrow');
@@ -677,7 +677,7 @@ $(() => {
   });
 
   document.querySelectorAll('.vacancy-info__specialization--truncated').forEach(item => {
-    console.log(item.scrollHeight);
+    // console.log(item.scrollHeight);
 
     if (item.scrollHeight < 52) {
       item.classList.add('vacancy-info__specialization--no-arrow');

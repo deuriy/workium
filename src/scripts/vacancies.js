@@ -61,7 +61,7 @@ let searchCitiesTimeoutID = null;
 //   return result;
 // }
 
-function toggleClearButtons () {
+function toggleClearFilterButtons () {
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
@@ -96,6 +96,9 @@ function applyChangesToSelectedCountries ($select) {
   let $dropdownBlock = $select.closest('.dropdown-block');
   let name = $select.attr('name');
 
+  $select = $('.filter__cities-select--desktop');
+  // console.log($select.find('option'));
+
   changeSelectToggleTitle($select);
   updateDropdownMultiSelectClass($dropdownBlock);
 
@@ -105,35 +108,28 @@ function applyChangesToSelectedCountries ($select) {
     $selectedItem.remove();
   });
 
-  selectedCitiesIds.forEach(id => {
-    $select.multiSelect('select', id);
+  setTimeout(() => {
+    $select = $('.filter__cities-select--desktop');
 
-    let labelText = $select.find(`option[value="${id}"]`).text();
-    if (labelText) {
-      createOrUpdateTag('multiselect', name, id, labelText);
-    }
+    selectedCitiesIds.forEach(id => {
+      $select.multiSelect('select', id);
+
+      let labelText = $select.find(`option[value="${id}"]`).text();
+      if (labelText) {
+        createOrUpdateTag('multiselect', name, id, labelText);
+      }
+    });
+
+    let $selectedItemsLength = $('.filter .selected-items__item').length;
+    setVisibilitySelectedMoreItem($selectedItemsLength);
+
+    toggleClearFilterButtons();
   });
-
-  let $selectedItemsLength = $('.filter .selected-items__item').length;
-  setVisibilitySelectedMoreItem($selectedItemsLength);
-
-  toggleClearButtons();
-
-
-  // $select.attr('data-selected-cities', selectedCitiesIds);
-  // console.log($select.attr('data-selected-cities'));
-
-
-  // console.log('applyChangesToSelectedCountries');
-  // console.log('currentSelectedCitiesIds');
-  // console.log(currentSelectedCitiesIds);
-  // console.log('selectedCitiesIds');
-  // console.log(selectedCitiesIds);
 }
 
 function applyChangesToSelectedSex ($select) {
   selectedGendersIds = [...currentSelectedGendersIds];
-  
+
   console.log(`selectedGendersIds: ${selectedGendersIds}`);
   console.log(`currentSelectedGendersIds: ${currentSelectedGendersIds}`);
 
@@ -161,18 +157,18 @@ function applyChangesToSelectedSex ($select) {
   let $selectedItemsLength = $('.filter .selected-items__item').length;
   setVisibilitySelectedMoreItem($selectedItemsLength);
 
-  toggleClearButtons();
+  toggleClearFilterButtons();
 
   // $select[0].dispatchEvent(new Event('change'));
 
-  // toggleClearButtons();
+  // toggleClearFilterButtons();
 }
 
 function clearCitiesSelect () {
   $('.dropdown-block--cities-select .ms-selection__clear-btn').click();
   $('.dropdown-block--cities-select .ms-container__apply-btn').click();
 
-  $('.selected-items--cities .selected-items__clear-btn').click();
+  // $('.selected-items--cities .selected-items__clear-btn').click();
   $('.cities-filter__apply-btn').click();
 }
 
@@ -344,6 +340,54 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
   });
 }
 
+function addCityCheckbox (item, selectedCitiesArr) {
+  let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+  $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
+                                      <div class="checkbox">
+                                        <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="city_${item.id}" data-seo-slug="${item.seo_slug}"${selectedCitiesArr.includes(item.id.toString()) ? ' checked' : ''}>
+                                        <label class="checkbox__label checkbox__label--align-start" for="city_${item.id}">
+                                          <div class="checkbox__label-wrapper">
+                                            <div class="checkbox__title">${item.origin}</div>
+                                            <div class="checkbox__description">${item.province}</div>
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </li>`);
+}
+
+function setCheckedCityCheckboxesTitle () {
+  let $citiesBtn = $('.additional-filters__cities-btn');
+  let $citiesBtnText = $citiesBtn.find('.btn-white__text');
+  let $citiesBtnCount = $citiesBtn.find('.count');
+  let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+
+  // console.log(`$checkedLabels`);
+  // console.log(`${$checkedLabels}`);
+
+  if (!$checkedLabels.length) {
+    $citiesBtnText.text($citiesBtn.data('placeholder'));
+    $citiesBtnCount.hide();
+  } else if ($checkedLabels.length == 1) {
+    $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
+    $citiesBtnCount.hide();
+  } else {
+    $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
+    $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
+    $citiesBtnCount.show();
+  }
+}
+
+function toggleClearCitiesButtons () {
+  let $checkedInputs = $('.checkboxes-group--cities .checkbox__input:checked');
+  let $clearBtn = $('.cities-filter__clear-btn');
+
+  if (!$checkedInputs.length) {
+    $clearBtn.hide();
+  } else {
+    $clearBtn.show();
+  }
+}
+
 $(() => {
   let psArr = [];
 
@@ -367,18 +411,23 @@ $(() => {
 
         checkFillingMSSearchInput($searchInput);
 
-        console.log('Multiselect refresh!!!');
-        console.log('currentSelectedCitiesIds');
-        console.log(currentSelectedCitiesIds);
-        console.log('selectedCitiesIds');
-        console.log(selectedCitiesIds);
+        // console.log('Multiselect refresh!!!');
+        // console.log('currentSelectedCitiesIds');
+        // console.log(currentSelectedCitiesIds);
+        // console.log('selectedCitiesIds');
+        // console.log(selectedCitiesIds);
 
+        if (currentSelectedCitiesIds.length) {
+          // console.log('mdlqmkdlqm');
+          that.$container.removeClass('ms-container--default');
 
+          that.$container.find('.ms-selection__clear-btn').show();
+        }
 
         // let psArr = [];
 
-        console.log('Init! currentSelectedCitiesIds');
-        console.log(currentSelectedCitiesIds);
+        // console.log('Init! currentSelectedCitiesIds');
+        // console.log(currentSelectedCitiesIds);
 
         // console.log('$selectableItems');
         // console.log($selectableItems);
@@ -420,56 +469,22 @@ $(() => {
           console.log(url);
 
           searchCitiesTimeoutID = setTimeout(() => {
-            // console.log(countryID);
+            $.ajax({
+              url: url,
 
-            // if (searchValue.length >= 3 || !searchValue.length) {
-              $.ajax({
-                url: url,
+              success: function(data) {
+                let $citiesSelect = that.$element;
+                let cities = data.results;
+                let loadedCitiesIds = Array.from($citiesSelect.find('option')).map(item => item.value);
 
-                success: function(data) {
-                  // document.dispatchEvent(new CustomEvent("citiesLoaded", {
-                  //   detail: { data }
-                  // }));
+                // Filling selects from data
+                cities.forEach((item, index) => {
+                  // console.log(item);
 
-                  // console.log('Success!!');
+                  if (!loadedCitiesIds.includes(item.id)) {
+                    $citiesSelect.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
 
-                  let $citiesSelects = $('select[name="cities"]');
-                  // let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
-                  let cities = data.results;
-
-                  // let selectedCities = $citiesSelects.attr('data-initial-selected-cities');
-                  // let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
-
-                  // Clear original select and multiselect
-                  $citiesSelects.empty();
-                  $citiesSelects.next('.ms-container').find('.ms-selectable .ms-list').empty();
-
-                  // Clear checkboxes (mobile filter)
-                  // $citiesCheckboxesList.empty();
-
-                  // Filling selects from data
-                  cities.forEach((item, index) => {
-                    // console.log(item);
-
-                    // if (item.seo_slug && item.origin) {
-                      $citiesSelects.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
-
-                      // $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
-                      //                                 <div class="checkbox">
-                      //                                   <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="${item.seo_slug}">
-                      //                                   <label class="checkbox__label checkbox__label--align-start" for="${item.seo_slug}">
-                      //                                     <div class="checkbox__label-wrapper">
-                      //                                       <div class="checkbox__title">${item.origin}</div>
-                      //                                       <div class="checkbox__description">${item.province}</div>
-                      //                                     </div>
-                      //                                   </label>
-                      //                                 </div>
-                      //                               </li>`);
-                    // }
-                  });
-
-                  cities.forEach((item, index) => {
-                    let $option = $citiesSelects.find(`option[value="${item.id}"]`);
+                    let $option = $citiesSelect.find(`option[value="${item.id}"]`);
 
                     if (item.province) {
                       $option.attr('data-description', item.province);
@@ -478,72 +493,23 @@ $(() => {
                     if (item.seo_slug) {
                       $option.attr('data-seo-slug', item.seo_slug);
                     }
-                  });
+                  } else {
+                    console.log(`${item.origin} is loaded!`);
+                  }
+                });
 
-                  // console.log('refresh!');
+                $citiesSelect.multiSelect('refresh');
 
-                  // console.log($selectionItems);
+                setTimeout(() => {
+                  let $searchInput = $('.dropdown-block--cities-select.dropdown-block--visible .ms-selectable__search-input');
+                  $searchInput.focus();
+                }, 0);
+              },
 
-                  let selectedCities = $citiesSelects.attr('data-selected-cities');
-                  let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
-                  let missingCitiesIds = selectedCitiesArr.filter(cityId => !cities.includes(cityId));
-
-                  addMissingSelectedCities(missingCitiesIds);
-
-                  $citiesSelects.multiSelect('refresh');
-
-                  // console.log('selectedCitiesArr');
-                  // console.log(selectedCitiesArr);
-
-
-                  // $citiesSelects.multiSelect('select', selectedCitiesArr);
-
-                  selectedCitiesIds = [...selectedCitiesArr];
-                  currentSelectedCitiesIds = [...selectedCitiesArr];
-
-                  $citiesSelects.each(function(index, el) {
-                    $selectableItems = that.$selectableUl.children().toArray();
-                    $selectionItems = that.$selectionUl.children().toArray();
-
-                    // console.log($selectableItems);
-                    // console.log($selectionItems);
-
-                    updateMSItemsDescription($selectionItems);
-                    updateMSItemsDescription($selectableItems);
-                  });
-
-                  // console.log($citiesSelects);
-
-                  // $selectableItems = that.$selectableUl.children().toArray();
-                  // $selectionItems = that.$selectionUl.children().toArray();
-
-                  // console.log($selectableItems);
-                  // console.log($selectableItems);
-
-                  // updateMSItemsDescription($selectionItems);
-                  // updateMSItemsDescription($selectableItems);
-
-                  setTimeout(() => {
-                    let $searchInput = $('.dropdown-block--cities-select.dropdown-block--visible .ms-selectable__search-input');
-                    // console.log($searchInput);
-
-                    $searchInput.focus();
-
-                    // $citiesSelects.multiSelect('select', selectedCitiesArr);
-                    // console.log('Focus');
-                  }, 0);
-
-                  // console.log(cities);
-
-                  // console.log(`data-selected-cities`);
-                  // console.log($citiesSelects.attr('data-selected-cities'));
-                },
-
-                error: function(data) {
-                  console.log(data);
-                }
-              });
-            // }
+              error: function(data) {
+                console.log(data);
+              }
+            });
 
             psArr[0].update();
 
@@ -738,52 +704,35 @@ $(() => {
 
     if (searchValue) {
       url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
+      $clearSearchBtn.show();
+    } else {
+      $clearSearchBtn.hide();
     }
-
-    // console.log(url);
 
     searchCitiesTimeoutID = setTimeout(() => {
       $.ajax({
         url: url,
 
         success: function(data) {
-
-          // let $citiesSelects = $('select[name="cities"]');
-          let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+          let $allCitiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
           let cities = data.results;
-
-          let selectedCities = $citiesCheckboxesList.attr('data-initial-selected-cities');
-          let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
-
-
+          let allSelectedCitiesIds = [];
 
           // Clear checkboxes (mobile filter)
-          $citiesCheckboxesList.empty();
-
-          // Filling selects from data
-          cities.forEach((item, index) => {
-            // console.log(item);
-
-            if (item.seo_slug && item.origin) {
-
-              $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
-                                              <div class="checkbox">
-                                                <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="city_${item.id}" data-seo-slug="${item.seo_slug}"${selectedCitiesArr.includes(item.id.toString()) ? ' checked' : ''}>
-                                                <label class="checkbox__label checkbox__label--align-start" for="city_${item.id}">
-                                                  <div class="checkbox__label-wrapper">
-                                                    <div class="checkbox__title">${item.origin}</div>
-                                                    <div class="checkbox__description">${item.province}</div>
-                                                  </div>
-                                                </label>
-                                              </div>
-                                            </li>`);
+          $allCitiesCheckboxes.each(function(index, checkbox) {
+            if (!$(checkbox).is(':checked')) {
+              $(checkbox).closest('.checkboxes-group__item').remove();
+            } else {
+              allSelectedCitiesIds.push($(checkbox).val());
             }
           });
 
-
-
-          selectedCitiesIds = [...selectedCitiesArr];
-          currentSelectedCitiesIds = [...selectedCitiesArr];
+          // Filling checkboxes from data
+          cities.forEach((item, index) => {
+            if (!allSelectedCitiesIds.includes(item.id.toString())) {
+              addCityCheckbox(item, allSelectedCitiesIds);
+            }
+          });
         },
 
         error: function(data) {
@@ -794,18 +743,6 @@ $(() => {
       psArr[0].update();
 
     }, 500);
-
-    // $checkboxesGroupItems.each((index, item) => {
-    //   if (!$(item).text().toLowerCase().trim().includes(value)) {
-    //     $(item).hide();
-    //   } else {
-    //     $(item).show();
-    //   }
-    // });
-
-    // value ? $clearSearchBtn.show() : $clearSearchBtn.hide();
-
-    // psArr[0].update();
   });
 
   $('.cities-filter__clear-search-btn').click(function(event) {
@@ -814,44 +751,89 @@ $(() => {
     $('.cities-filter__search-input').val('').trigger('input').focus();
   });
 
-  $('.checkboxes-group--cities .checkbox__input').change(function(event) {
-    let name = $(this).attr('name');
+  $(document).on('change', '.checkboxes-group--cities .checkbox__input', function(event) {
+    // let name = $(this).attr('name');
     let value = $(this).val();
-    let labelText = $(this).parent().find('.checkbox__title').text();
-    let $selectedItems = $('.selected-items--cities');
-    let $selectedItem = $selectedItems.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-    let $clearBtn = $selectedItems.find('.selected-items__clear-btn');
+    // let labelText = $(this).parent().find('.checkbox__title').text();
+    // let $selectedItems = $('.selected-items--cities');
+    // let $selectedItem = $selectedItems.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+    // let $clearBtn = $selectedItems.find('.selected-items__clear-btn');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
-        $selectedItems.find('.selected-items__list').append(`
-          <li class="selected-items__item" data-name="${name}" data-value="${value}">
-            <div class="selected-item selected-item--city">
-              <div class="selected-item__value">${labelText}</div>
-              <a href="#" class="selected-item__remove-link"></a>
-            </div>
-          </li>`);
+        // $selectedItems.find('.selected-items__list').append(`
+        //   <li class="selected-items__item" data-name="${name}" data-value="${value}">
+        //     <div class="selected-item selected-item--city">
+        //       <div class="selected-item__value">${labelText}</div>
+        //       <a href="#" class="selected-item__remove-link"></a>
+        //     </div>
+        //   </li>`);
 
         if (!currentSelectedCitiesIds.includes(value)) {
           currentSelectedCitiesIds.push(value);
         }
       } else {
-        $selectedItem.remove();
+        // $selectedItem.remove();
 
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
       }
     }
 
-    let selectedItemsLength = $('.selected-items--cities .selected-items__item').length;
+    toggleClearCitiesButtons();
 
-    if (selectedItemsLength) {
-      $selectedItems.show();
-      $clearBtn.show();
-    } else {
-      $selectedItems.hide();
-      $clearBtn.hide();
-    }
+    // let selectedItemsLength = $('.selected-items--cities .selected-items__item').length;
+
+    // if (selectedItemsLength) {
+    //   $selectedItems.show();
+    //   $clearBtn.show();
+    // } else {
+    //   $selectedItems.hide();
+    //   $clearBtn.hide();
+    // }
   });
+
+  // $('.checkboxes-group--cities .checkbox__input').change(function(event) {
+  //   console.log('qdmwqlmqwmdlqmmdq');
+  //   // let name = $(this).attr('name');
+  //   let value = $(this).val();
+  //   // let labelText = $(this).parent().find('.checkbox__title').text();
+  //   // let $selectedItems = $('.selected-items--cities');
+  //   // let $selectedItem = $selectedItems.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+  //   // let $clearBtn = $selectedItems.find('.selected-items__clear-btn');
+
+  //   if ($(this).is(':checkbox')) {
+  //     if ($(this).is(':checked')) {
+  //       // $selectedItems.find('.selected-items__list').append(`
+  //       //   <li class="selected-items__item" data-name="${name}" data-value="${value}">
+  //       //     <div class="selected-item selected-item--city">
+  //       //       <div class="selected-item__value">${labelText}</div>
+  //       //       <a href="#" class="selected-item__remove-link"></a>
+  //       //     </div>
+  //       //   </li>`);
+
+  //       if (!currentSelectedCitiesIds.includes(value)) {
+  //         currentSelectedCitiesIds.push(value);
+  //       }
+  //     } else {
+  //       // $selectedItem.remove();
+
+  //       currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+  //     }
+  //   }
+
+  //   console.log('2ifeowfoofw');
+  //   toggleClearCitiesButtons();
+
+  //   // let selectedItemsLength = $('.selected-items--cities .selected-items__item').length;
+
+  //   // if (selectedItemsLength) {
+  //   //   $selectedItems.show();
+  //   //   $clearBtn.show();
+  //   // } else {
+  //   //   $selectedItems.hide();
+  //   //   $clearBtn.hide();
+  //   // }
+  // });
 
   $(document).on('click', '.selected-item--city .selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
@@ -883,17 +865,27 @@ $(() => {
     $(this).closest('.selected-items').find('.selected-item__remove-link').click();
   });
 
+  // Closing cities popup without saving
   $('.cities-filter__btn-back').click(function(event) {
-    $('.selected-items--cities .selected-items__clear-btn').click();
-
-    selectedCitiesIds.forEach(id => {
-      $(`.checkboxes-group--cities .checkbox__input[value="${id}"]`).click();
-    });
-
     currentSelectedCitiesIds = [...selectedCitiesIds];
+
+    // $('.selected-items--cities .selected-items__clear-btn').click();
+    let $citiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
+
+    $citiesCheckboxes.each(function(index, checkbox) {
+      console.log(selectedCitiesIds.includes($(checkbox).val()));
+
+      if (selectedCitiesIds.includes($(checkbox).val())) {
+        $(checkbox).prop('checked', true);
+      } else {
+        $(checkbox).prop('checked', false);
+      }
+    });
   });
 
   $('.cities-filter__clear-btn').on('click', function(event) {
+    currentSelectedCitiesIds = [];
+
     let $citiesCheckboxInput = $('.checkboxes-group--cities .checkbox__input');
     $citiesCheckboxInput.prop('checked', false);
     $(this).hide();
@@ -902,37 +894,16 @@ $(() => {
   $('.cities-filter__apply-btn').click(function(event) {
     selectedCitiesIds = [...currentSelectedCitiesIds];
 
-    let $citiesBtn = $('.additional-filters__cities-btn');
-    let $citiesBtnText = $citiesBtn.find('.btn-white__text');
-    let $citiesBtnCount = $citiesBtn.find('.count');
-    let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
-    let $clearBtn = $('.cities-filter__clear-btn');
-
-    if (!$checkedLabels.length) {
-      $citiesBtnText.text($citiesBtn.data('placeholder'));
-      $citiesBtnCount.hide();
-      $clearBtn.hide();
-    } else if ($checkedLabels.length == 1) {
-      $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
-      $citiesBtnCount.hide();
-      $clearBtn.show();
-    } else {
-      $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
-      $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
-      $citiesBtnCount.show();
-      $clearBtn.show();
-    }
+    setCheckedCityCheckboxesTitle();
+    toggleClearCitiesButtons();
   });
 
-  // $('.cities-filter__search-input').on('input', function(event) {
-  //   let $clearBtn = $('.cities-filter__clear-btn');
-  // });
+  function addAllSelectedCities (allSelectedCitiesIds) {
+    if (!allSelectedCitiesIds.length) return;
 
-  function addMissingSelectedCities (missingCitiesIds) {
-    if (!missingCitiesIds.length) return;
-
+    let isMobile = $(window).width() < 576;
     let cities = [];
-    let urlParams = missingCitiesIds.map(cityId => `city_ids[]=${cityId}`).join('&');
+    let urlParams = allSelectedCitiesIds.map(cityId => `city_ids[]=${cityId}`).join('&');
 
     console.log(`urlParams`);
     console.log(urlParams);
@@ -946,33 +917,42 @@ $(() => {
 
       success: function(data) {
         cities = data.results;
-        let $citiesSelects = $('select[name="cities"]');
 
-        cities.forEach((city, index) => {
-          $citiesSelects.multiSelect('addOption', { value: city.id || '', text: city.origin || '', index: index });
+        if (isMobile) {
+          cities.forEach((item, index) => {
+            addCityCheckbox(item, allSelectedCitiesIds);
+          });
 
-          let $option = $citiesSelects.find(`option[value="${city.id}"]`);
+          selectedCitiesIds = [...allSelectedCitiesIds];
+          currentSelectedCitiesIds = [...allSelectedCitiesIds];
 
-          if (city.province) {
-            $option.attr('data-description', city.province);
-          }
+          setCheckedCityCheckboxesTitle();
+          toggleClearCitiesButtons();
+        } else {
+          let $citiesSelect = $('.filter__cities-select--desktop');
 
-          if (city.seo_slug) {
-            $option.attr('data-seo-slug', city.seo_slug);
-          }
-        });
+          cities.forEach((city, index) => {
+            $citiesSelect.multiSelect('addOption', { value: city.id || '', text: city.origin || '', index: index });
 
-        $citiesSelects.multiSelect('refresh');
+            let $option = $citiesSelect.find(`option[value="${city.id}"]`);
 
-        $citiesSelects.multiSelect('select', missingCitiesIds);
+            if (city.province) {
+              $option.attr('data-description', city.province);
+            }
 
-        selectedCitiesIds = [...missingCitiesIds];
-        currentSelectedCitiesIds = [...missingCitiesIds];
+            if (city.seo_slug) {
+              $option.attr('data-seo-slug', city.seo_slug);
+            }
+          });
 
-        // $('.dropdown-block--cities-select .ms-container__apply-btn').click();
-        // $('.cities-filter__apply-btn').click();
+          $citiesSelect.multiSelect('refresh');
+          $citiesSelect.multiSelect('select', allSelectedCitiesIds);
 
-        // console.log(cities);
+          selectedCitiesIds = [...allSelectedCitiesIds];
+          currentSelectedCitiesIds = [...allSelectedCitiesIds];
+
+          applyChangesToSelectedCountries($citiesSelect);
+        }
       },
 
       error: function(data) {
@@ -983,99 +963,73 @@ $(() => {
 
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
-    let $citiesSelects = $('select[name="cities"]');
-    let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+    console.log('Country selected!');
+    
+    let isMobile = $(window).width() < 576;
     let cities = e.detail.data.results;
 
-    let selectedCities = $citiesSelects.attr('data-initial-selected-cities');
-    let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
+    if (isMobile) {
+      let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+      let selectedCities = $citiesCheckboxesList.attr('data-selected-cities');
+      let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
 
-    // console.log('selectedCitiesArr');
-    // console.log(selectedCitiesArr);
+      $citiesCheckboxesList.empty();
+      setCheckedCityCheckboxesTitle();
+      toggleClearCitiesButtons();
 
-    // selectedCitiesArr.forEach(item => {
-    //   console.log(item);
-    // });
+      let allSelectedCitiesIds = selectedCitiesArr.filter(cityId => !cities.includes(cityId));
+      addAllSelectedCities(allSelectedCitiesIds);
 
-    clearCitiesSelect();
+      cities.forEach((item, index) => {
+        if (!allSelectedCitiesIds.includes(item.id.toString())) {
+          addCityCheckbox(item, allSelectedCitiesIds);
+        }
+      });
 
-    $citiesSelects.empty();
-    $citiesCheckboxesList.empty();
+      $citiesCheckboxesList.removeAttr('data-selected-cities');
+    } else {
+      let $citiesSelect = $('.filter__cities-select--desktop');
+      let selectedCities = $citiesSelect.attr('data-selected-cities');
+      let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
 
-    $citiesSelects.next('.ms-container').find('.ms-list').empty();
+      clearCitiesSelect();
+      $citiesSelect.empty();
+      $citiesSelect.next('.ms-container').find('.ms-list').empty();
 
-    console.log(`selectedCitiesArr`);
-    console.log(selectedCitiesArr);
+      let allSelectedCitiesIds = selectedCitiesArr.filter(cityId => !cities.includes(cityId));
+      addAllSelectedCities(allSelectedCitiesIds);
 
-    let missingCitiesIds = selectedCitiesArr.filter(cityId => !cities.includes(cityId));
-    addMissingSelectedCities(missingCitiesIds);
-    // let missingCities = getCitiesByIds(missingCitiesIds);
+      cities.forEach((city, index) => {
+        $citiesSelect.multiSelect('addOption', { value: city.id || '', text: city.origin || '', index: index });
 
-    console.log(missingCitiesIds);
-    // console.log(missingCities);
+        let $option = $citiesSelect.find(`option[value="${city.id}"]`);
 
-    // selectedCitiesArr.forEach((selectedCityId, index) => {
-    //   if (cities.includes(selectedCity)) {
-    //     let 
-    //     $citiesSelects.multiSelect('addOption', { value: selectedCity.id || '', text: selectedCity.origin || '', index: index });
-    //   }
-    // })
+        if (city.province) {
+          $option.attr('data-description', city.province);
+        }
 
-    cities.forEach((item, index) => {
-      // if (item.seo_slug && item.origin) {
-        $citiesSelects.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
+        if (city.seo_slug) {
+          $option.attr('data-seo-slug', city.seo_slug);
+        }
+      });
 
+      applyChangesToSelectedCountries($citiesSelect);
 
-        $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
-                                        <div class="checkbox">
-                                          <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="city_${item.id}" data-seo-slug="${item.seo_slug}"${selectedCitiesArr.includes(item.id.toString()) ? ' checked' : ''}>
-                                          <label class="checkbox__label checkbox__label--align-start" for="city_${item.id}">
-                                            <div class="checkbox__label-wrapper">
-                                              <div class="checkbox__title">${item.origin}</div>
-                                              <div class="checkbox__description">${item.province}</div>
-                                            </div>
-                                          </label>
-                                        </div>
-                                      </li>`);
-      // }
-    });
-
-    // console.log($citiesCheckboxesList);
-
-    cities.forEach((item, index) => {
-      let $option = $citiesSelects.find(`option[value="${item.id}"]`);
-
-      if (item.province) {
-        $option.attr('data-description', item.province);
-      }
-
-      if (item.seo_slug) {
-        $option.attr('data-seo-slug', item.seo_slug);
-      }
-    });
-
-    $citiesSelects.multiSelect('refresh');
-
-    $citiesSelects.multiSelect('select', selectedCitiesArr);
-
-    selectedCitiesIds = [...selectedCitiesArr];
-    currentSelectedCitiesIds = [...selectedCitiesArr];
-
-    applyChangesToSelectedCountries($citiesSelects);
-
-    // $('.dropdown-block--cities-select .ms-container__apply-btn').click();
-    // $('.cities-filter__apply-btn').click();
+      $citiesSelect.removeAttr('data-selected-cities');
+    }
   });
 
-  let $sexSelect = $(window).width() < 576 ? $('.filter__sex-select--mobile') : $('.filter__sex-select--desktop');
+  // Initialize sex select
+  let isMobile = $(window).width() < 576;
+  let $sexSelect = isMobile ? $('.filter__sex-select--mobile') : $('.filter__sex-select--desktop');
 
   let selectedSex = Array.from($sexSelect.find('option:selected')).map(item => $(item).attr('value'));
-  console.log(selectedSex);
+  // console.log(selectedSex);
 
   selectedGendersIds = [...selectedSex];
   currentSelectedGendersIds = [...selectedSex];
 
-  console.log($sexSelect);
+  // console.log($sexSelect);
   changeSelectToggleTitle($sexSelect);
 
   // applyChangesToSelectedSex($sexSelect);
@@ -1138,7 +1092,7 @@ $(() => {
   // Synchronized input fields
   $('input[data-sync-field-ids]').on('input', function(event) {
     syncInputFields($(this));
-    toggleClearButtons();
+    toggleClearFilterButtons();
   });
 
   // Synchronizing fields when remove tag
@@ -1187,7 +1141,7 @@ $(() => {
     }
 
     setTimeout(() => {
-      toggleClearButtons();
+      toggleClearFilterButtons();
     });
 
     event.preventDefault();
