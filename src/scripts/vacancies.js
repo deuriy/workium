@@ -9,57 +9,6 @@ let currentSelectedGendersIds = [];
 let citySearchInputValue = '';
 let searchCitiesTimeoutID = null;
 
-// function isFilterChanged() {
-//   let $textFields = $('.filter .form-text');
-//   let $select2Selections = $('.filter .select2-selection.filter-select');
-//   let $citiesSelectToggle = $('.filter__cities-select-toggle .select-toggle__label');
-//   let $sexSelectToggle = $('.filter__sex-select-toggle .select-toggle__label');
-//   let result = false;
-
-//   for (const input of $textFields) {
-//     if ($(input).val() !== '') {
-//       result = true;
-//     }
-//   }
-
-//   // console.log('!!!');
-
-//   for (const selection of $select2Selections) {
-//     if ($(selection).hasClass('select2-selection--selected')) {
-//       result = true;
-//     }
-//   }
-
-//   // console.log($citiesSelectToggle);
-
-//   $citiesSelectToggle.each(function(index, el) {
-//     // console.log($(el).text().trim());
-
-//     if ($(el).text().trim() !== 'Усі міста') {
-//       result = true;
-//     }
-//   });
-
-//   // if ($citiesSelectToggle.text().trim() !== 'Усі міста') {
-//   //   return true;
-//   // }
-
-//   // console.log($sexSelectToggle);
-
-//   $sexSelectToggle.each(function(index, el) {
-//     // console.log($(el).text().trim());
-
-//     if ($(el).text().trim() !== 'Стать') {
-//       result = true;
-//     }
-//   });
-
-//   // if ($sexSelectToggle.text().trim() !== 'Стать') {
-//   //   return true;
-//   // }
-
-//   return result;
-// }
 
 function toggleClearFilterButtons () {
   let $clearBtns = $('[data-clear-filter]');
@@ -80,17 +29,7 @@ function toggleClearFilterButtons () {
   }
 }
 
-// function checkFilterFill() {
-//   console.log('checkFilterFill');
-
-//   let $clearBtn = $('.filter__clear-btn');
-//   let $additionalClearBtn = $('.additional-filters__clear-btn');
-
-//   isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
-//   isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
-// }
-
-function applyChangesToSelectedCountries ($select) {
+function applyChangesToSelectedCities ($select) {
   selectedCitiesIds = [...currentSelectedCitiesIds];
 
   let $dropdownBlock = $select.closest('.dropdown-block');
@@ -165,11 +104,36 @@ function applyChangesToSelectedSex ($select) {
 }
 
 function clearCitiesSelect () {
-  $('.dropdown-block--cities-select .ms-selection__clear-btn').click();
-  $('.dropdown-block--cities-select .ms-container__apply-btn').click();
+  // $('.dropdown-block--cities-select .ms-selection__clear-btn').click();
+
+  let $dropdownBlock = $('.dropdown-block--cities-select');
+  let $clearBtn = $dropdownBlock.find('.ms-selection__clear-btn');
+
+  $dropdownBlock.find('.cities-select').multiSelect('deselect_all');
+  $dropdownBlock.find('.cities-select').multiSelect('refresh');
+
+  $dropdownBlock.find('.ms-container').addClass('ms-container--empty');
+
+  currentSelectedCitiesIds = [];
+  $clearBtn.hide();
+
+  let $citiesSelect = $('.filter__cities-select-toggle');
+  applyChangesToSelectedCities($citiesSelect);
+
+  // $('.dropdown-block--cities-select .ms-container__apply-btn').click();
 
   // $('.selected-items--cities .selected-items__clear-btn').click();
-  $('.cities-filter__apply-btn').click();
+
+  selectedCitiesIds = [...currentSelectedCitiesIds];
+
+
+  // let $searchInput = $('.cities-filter__search-input');
+  // $searchInput.val('').trigger('input');
+
+  // setCheckedCityCheckboxesTitle();
+  // toggleClearCitiesButtons();
+
+  // $('.cities-filter__apply-btn').click();
 }
 
 function clearSexSelect () {
@@ -178,17 +142,26 @@ function clearSexSelect () {
   selectedGendersIds = [];
   currentSelectedGendersIds = [];
 
-  $('.dropdown-block--sex-select').each(function(index, el) {
-    $(el).find('.ms-container__apply-btn').click();
-  });
+  // applyChangesToSelectedSex(that.$element);
+
+  // setTimeout(() => {
+  //   createFilterUrl();
+  // });
+
+  // $('.dropdown-block--sex-select').each(function(index, el) {
+  //   $(el).find('.ms-container__apply-btn').click();
+  // });
 
   // $('.selected-items--cities .selected-items__clear-btn').click();
 
   // $('.cities-filter__apply-btn').click();
 }
 
-function clearSpecSelect () {
-  $('.filter__experience-select').val('').trigger('change');
+function clearExperinceSelect () {
+  // alert('clearExperinceSelect()');
+  // $('.filter__experience-select').val('').trigger('change');
+  $('.filter__experience-select').val('');
+  // $('select[name="kategoriia-pracivnika"]').val('');
 }
 
 function removeItemFromArray (array, value) {
@@ -388,6 +361,198 @@ function toggleClearCitiesButtons () {
   }
 }
 
+function createFilterUrl () {
+  let isMobile = $(window).width() < 576;
+  let urlParamsArr = [];
+  let requestParamsArr = [];
+  let urlParams = '';
+  let requestParams = '';
+
+  // Get url params
+  let selectedCountry = '',
+      selectedCitiesSlugs = [];
+
+  if (isMobile) {
+    selectedCountry = $('.filter__countries-select--mobile').val();
+    selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function(index, input) {
+      return $(input).attr('data-seo-slug');
+    });
+  } else {
+    selectedCountry = $('.filter__countries-select--desktop').val();
+    selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function(index, option) {
+      console.log(option, index);
+      return $(option).attr('data-seo-slug');
+    });
+  }
+
+  // let selectedCitiesSlugs = $('select[name="cities"] option:selected').val().map(function(id, index) {
+    // console.log(id);
+    // console.log($(`select[name="cities"] option[value="${id}"]`));
+    // return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
+  // });
+
+  console.log(selectedCitiesSlugs);
+  console.log(`selectedCountry`);
+  console.log(selectedCountry);
+
+  // let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
+  //   return $(elem).attr('data-seo-slug');
+  // });
+  // console.log($('select[name="cities"] option:selected'));
+
+  // if (isMobile) {
+
+  // }
+
+  // let selectedCitiesIds = $('[data-selected-cities]').attr('data-selected-cities');
+  // let selectedCitiesSlugs = selectedCitiesIds.split(',').map(function(id, index) {
+  //   return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
+  // })
+
+
+  // console.log($(`.selected-items__item[name="cities"]`));
+  // console.log(`selectedCitiesSlugs`);
+  // console.log(selectedCitiesSlugs);
+
+
+  // selectedCitiesSlugs = [...new Set(selectedCitiesSlugs)];
+
+
+  // selectedCitiesSlugs = selectedCitiesSlugs.filter((value, index, array) => {
+  //   array.indexOf(value) === index;
+  // });
+
+
+  // console.log(`selectedCitiesSlugs`);
+  // console.log(selectedCitiesSlugs);
+
+
+  let selectedCities = Array.from(selectedCitiesSlugs).join('/');
+
+
+  // let selectedCities = selectedCitiesSlugs;
+  // console.log(selectedCities);
+
+  if (selectedCountry) {
+    urlParamsArr.push(selectedCountry);
+  }
+
+  urlParamsArr.push(selectedCities);
+  // urlParamsArr.push(selectedCountry);
+
+  // let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
+  // $selectedSegmentCheckboxes.each(function(index, el) {
+  //   if (el.value) {
+  //     urlParamsArr.push(el.value);
+  //   }
+  // });
+
+  // let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:checked');
+  // $selectedSegmentRadioBtns.each(function(index, el) {
+  //   if (el.value) {
+  //     urlParamsArr.push(el.value);
+  //   }
+  // });
+
+  urlParams = urlParamsArr.join('/');
+
+  // Get request params
+  let searchValue = $('input[name="vacancy_name"]').val();
+  if (searchValue) {
+    requestParamsArr.push(`search=${searchValue}`);
+  }
+
+  // let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):checked');
+  // $selectedCheckboxes.each(function(index, el) {
+  //   if (el.value) {
+  //     requestParamsArr.push(`${el.name}=${el.value}`);
+  //   }
+  // });
+
+  // let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):checked');
+  // $selectedRadioBtns.each(function(index, el) {
+  //   if (el.value) {
+  //     requestParamsArr.push(`${el.name}=${el.value}`);
+  //   }
+  // });
+
+  // let $rangeSliders = $('.additional-filters .range-slider');
+  // $rangeSliders.each(function(index, el) {
+  //   let values = el.noUiSlider.get();
+  //   let name = el.dataset.name;
+  //   let resultValue = `${name}=${values[0]}-${values[1]}`;
+
+  //   requestParamsArr.push(resultValue);
+  // });
+
+  let selectedCandidatesType;
+
+  if (isMobile) {
+    selectedCandidatesType = $('.filter__sex-select--mobile').val();
+  } else {
+    selectedCandidatesType = $('.filter__sex-select--desktop').val();
+  }
+
+  console.log(selectedCandidatesType);
+
+  let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
+    return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
+  });
+  console.log(selectedCandidatesSlugs);
+
+  selectedCandidatesSlugs = [...new Set(selectedCandidatesSlugs)];
+  // let selectedCandidates = Array.from(selectedCandidatesSlugs).map(function(slug, index) {
+  //   return `${name}=${slug}`;
+  // });
+
+  selectedCandidatesSlugs.forEach(item => {
+    requestParamsArr.push(`tip-kandidativ[]=${item}`);
+  });
+
+
+  let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
+  // console.log(catWorkerValue);
+
+  if (catWorkerValue) {
+    requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
+  }
+
+  let distance;
+  
+  if (isMobile) {
+    distance = $('.filter__distance-select--mobile');
+  } else {
+    distance = $('.filter__distance-select--desktop');
+  }
+
+  if (distance.val()) {
+    requestParamsArr.push(`radius=${distance.val()}`);
+  }
+
+
+  requestParams = requestParamsArr.join('&');
+
+  if (requestParams) {
+    requestParams = '/?' + requestParams;
+  }
+
+  let $lastSelectedTag = $('.filter .selected-items__item').last();
+  let lastSelectedTagObj = {
+    type: $lastSelectedTag.attr('data-type'),
+    name: $lastSelectedTag.attr('data-name'),
+    value: $lastSelectedTag.attr('data-value'),
+  };
+
+  // console.log(urlParams);
+
+  localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
+  // console.log(lastSelectedTagObj);
+  console.log(`/vacancies/${urlParams}${requestParams}`);
+
+  window.location.href = `/vacancies/${urlParams}${requestParams}`;
+}
+
+
 $(() => {
   let psArr = [];
 
@@ -473,15 +638,31 @@ $(() => {
               url: url,
 
               success: function(data) {
+
                 let $citiesSelect = that.$element;
+                let $options = $citiesSelect.find('option');
                 let cities = data.results;
-                let loadedCitiesIds = Array.from($citiesSelect.find('option')).map(item => item.value);
+                let missingCitiesIds = Array.from($citiesSelect.find('option')).map(item => item.value);
+
+                // clearCitiesSelect();
+
+                console.log($options);
+                console.log('search cities');
+                console.log(cities);
+
+                $options.each(function(index, option) {
+                  if (!$(option).is(':selected')) {
+                    $(option).remove();
+                  }
+                });
+
+                // $citiesSelect.multiSelect('refresh');
 
                 // Filling selects from data
                 cities.forEach((item, index) => {
                   // console.log(item);
 
-                  if (!loadedCitiesIds.includes(item.id)) {
+                  if (!missingCitiesIds.includes(item.id)) {
                     $citiesSelect.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
 
                     let $option = $citiesSelect.find(`option[value="${item.id}"]`);
@@ -539,7 +720,12 @@ $(() => {
           let $dropdownBlock = $(this).closest('.dropdown-block');
           $dropdownBlock.removeClass('dropdown-block--visible');
 
-          applyChangesToSelectedCountries(that.$element);
+          applyChangesToSelectedCities(that.$element);
+
+          setTimeout(() => {
+            createFilterUrl();
+            // $('form[name="vacancies_filter"]').submit();
+          });
         });
       },
 
@@ -604,6 +790,10 @@ $(() => {
 
           applyChangesToSelectedSex(that.$element);
 
+          setTimeout(() => {
+            createFilterUrl();
+          });
+
           // createOrUpdateTag()
         });
 
@@ -637,7 +827,7 @@ $(() => {
   $('[data-clear-filter]').click(() => {
     clearCitiesSelect();
     clearSexSelect();
-    clearSpecSelect();
+    clearExperinceSelect();
   });
 
   $(document).on('click', function(e) {
@@ -687,6 +877,12 @@ $(() => {
     }
     
     oldScrollY = scrolled;
+  });
+
+  $('.btn-filter--scroll-top').on('click', function(event) {
+    $wrapper.animate( {
+      scrollTop: 0
+    }, 0 );
   });
 
   // Mobile cities filter
@@ -872,6 +1068,7 @@ $(() => {
     // $('.selected-items--cities .selected-items__clear-btn').click();
     let $citiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
     let $searchInput = $('.cities-filter__search-input');
+    let $citiesClearBtn = $('.cities-filter__clear-btn');
 
     $searchInput.val('').trigger('input');
 
@@ -884,6 +1081,12 @@ $(() => {
         $(checkbox).prop('checked', false);
       }
     });
+
+    if (currentSelectedCitiesIds.length) {
+      $citiesClearBtn.show();
+    } else {
+      $citiesClearBtn.hide();
+    }
   });
 
   $('.cities-filter__clear-btn').on('click', function(event) {
@@ -902,6 +1105,11 @@ $(() => {
 
     setCheckedCityCheckboxesTitle();
     toggleClearCitiesButtons();
+
+    setTimeout(() => {
+      createFilterUrl();
+      // $('form[name="vacancies_filter"]').submit();
+    });
   });
 
   function addAllSelectedCities (allSelectedCitiesIds) {
@@ -957,7 +1165,7 @@ $(() => {
           selectedCitiesIds = [...allSelectedCitiesIds];
           currentSelectedCitiesIds = [...allSelectedCitiesIds];
 
-          applyChangesToSelectedCountries($citiesSelect);
+          applyChangesToSelectedCities($citiesSelect);
         }
       },
 
@@ -970,9 +1178,13 @@ $(() => {
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
     console.log('Country selected!');
+    $('.filter__cities-select--desktop option[selected]').removeAttr('selected');
     
     let isMobile = $(window).width() < 576;
     let cities = e.detail.data.results;
+
+    console.log('cities');
+    console.log(cities);
 
     if (isMobile) {
       let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
@@ -986,13 +1198,15 @@ $(() => {
       let allSelectedCitiesIds = selectedCitiesArr.filter(cityId => !cities.includes(cityId));
       addAllSelectedCities(allSelectedCitiesIds);
 
-      cities.forEach((item, index) => {
-        if (!allSelectedCitiesIds.includes(item.id.toString())) {
-          addCityCheckbox(item, allSelectedCitiesIds);
-        }
-      });
+      setTimeout(() => {
+        cities.forEach((item, index) => {
+          if (!allSelectedCitiesIds.includes(item.id.toString())) {
+            addCityCheckbox(item, allSelectedCitiesIds);
+          }
+        });
 
-      $citiesCheckboxesList.removeAttr('data-selected-cities');
+        $citiesCheckboxesList.removeAttr('data-selected-cities');
+      }, 300);
     } else {
       let $citiesSelect = $('.filter__cities-select--desktop');
       let selectedCities = $citiesSelect.attr('data-selected-cities');
@@ -1009,7 +1223,7 @@ $(() => {
         $citiesSelect.multiSelect('addOption', { value: city.id || '', text: city.origin || '', index: index });
 
         let $option = $citiesSelect.find(`option[value="${city.id}"]`);
-        console.log(city);
+        // console.log(city);
 
         if (city.province) {
           $option.attr('data-description', city.province);
@@ -1021,9 +1235,8 @@ $(() => {
       });
 
       $citiesSelect.multiSelect('refresh');
-      // $citiesSelect.multiSelect('select', allSelectedCitiesIds);
 
-      applyChangesToSelectedCountries($citiesSelect);
+      applyChangesToSelectedCities($citiesSelect);
 
       $citiesSelect.removeAttr('data-selected-cities');
     }

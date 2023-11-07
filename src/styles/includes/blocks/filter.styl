@@ -42,6 +42,18 @@
 		
 		@media $xs
 			grid-template-columns repeat(2, 1fr)
+		
+		&--no-cities
+			grid-template-columns 1.1fr 1.1fr 1.1fr 1.1fr 1.74fr
+			
+			@media $xlMinus
+				grid-template-columns 1.1fr 1.1fr 1.1fr 1.1fr 1.74fr
+		
+			@media $mdMinus
+				grid-template-columns repeat(3, 1fr)
+			
+			@media $xs
+				grid-template-columns repeat(2, 1fr)
 	
 	&__item
 		position relative
@@ -57,7 +69,8 @@
 	
 	&__cities-item-wrapper
 		display grid
-		grid-template-columns repeat(2, auto)
+		// grid-template-columns repeat(2, auto)
+		grid-template-columns 1fr 90px
 		
 		@media $xxs
 			grid-template-columns 1fr auto

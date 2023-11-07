@@ -5,74 +5,8 @@ import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
-// import { FilterTag } from './components/filter_tag.js';
-// import { SearchInput } from './components/search_input.js';
-
-// window.customElements.define('search-input', SearchInput);
 
 let selectedFiltersCount = 0;
-
-// function isFilterChanged() {
-//   let $textFields = $('.filter .form-text');
-//   let $select2Selections = $('.filter .select2-selection.filter-select');
-//   let $citiesSelectToggle = $('.filter__cities-select-toggle .select-toggle__label');
-//   let $sexSelectToggle = $('.filter__sex-select-toggle .select-toggle__label');
-//   let result = false;
-
-//   for (const input of $textFields) {
-//     if ($(input).val() !== '') {
-//       result = true;
-//     }
-//   }
-
-//   // console.log('!!!');
-
-//   for (const selection of $select2Selections) {
-//     if ($(selection).hasClass('select2-selection--selected')) {
-//       result = true;
-//     }
-//   }
-
-//   // console.log($citiesSelectToggle);
-
-//   $citiesSelectToggle.each(function(index, el) {
-//     // console.log($(el).text().trim());
-
-//     if ($(el).text().trim() !== 'Усі міста') {
-//       result = true;
-//     }
-//   });
-
-//   // if ($citiesSelectToggle.text().trim() !== 'Усі міста') {
-//   //   return true;
-//   // }
-
-//   // console.log($sexSelectToggle);
-
-//   $sexSelectToggle.each(function(index, el) {
-//     // console.log($(el).text().trim());
-
-//     if ($(el).text().trim() !== 'Стать') {
-//       result = true;
-//     }
-//   });
-
-//   // if ($sexSelectToggle.text().trim() !== 'Стать') {
-//   //   return true;
-//   // }
-
-//   // console.log(result);
-
-//   return result;
-// }
-
-// function checkFilterFill() {
-//   let $clearBtn = $('.filter__clear-btn');
-//   let $additionalClearBtn = $('.additional-filters__clear-btn');
-
-//   isFilterChanged() ? $clearBtn.show() : $clearBtn.hide();
-//   isFilterChanged() ? $additionalClearBtn.show() : $additionalClearBtn.hide();
-// }
 
 function toggleClearButtons () {
   // console.log('toggleClearButtons');
@@ -129,16 +63,24 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
 // }
 
 function clearFilter () {
+  let $searchInput = $('[data-search-input]');
   let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
-  let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
-  let $allCheckboxes = $('.additional-filters .checkbox__input');
-  let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
+  // let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
+  // let $allCheckboxes = $('.additional-filters .checkbox__input');
+  // let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
   let $clearBtn = $(`.filter__clear-btn`);
   let $filtersBtn = $('.btn-white--filter .btn-white__count');
-  let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
-  let $additionalFiltersClearLink = $('.additional-filters__clear-link');
+  // let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
+  // let $additionalFiltersClearLink = $('.additional-filters__clear-link');
 
-  // console.log($filterSelects);
+  console.log($searchInput);
+
+  $searchInput.val('').trigger('input');
+  $searchInput.removeAttr('value');
+
+  // let countriesSelect = $('select[name="countries"]');
+
+  console.log($filterSelects);
 
   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
   $filterSelects.each(function(index, el) {
@@ -150,24 +92,29 @@ function clearFilter () {
     //   value = 'poland';
     // }
 
-    if ($(el).hasClass('filter__currencies-select')) {
-      value = 'pln';
-    }
+    // if ($(el).hasClass('filter__currencies-select')) {
+    //   value = 'pln';
+    // }
 
-    if ($(el).attr('name') !== 'countries') {
-      $(el).val(value).trigger('change');
-    }
+    // if ($(el).attr('name') !== 'countries') {
+      // $(el).val(value).trigger('change');
+      $(el).val(value);
+      // console.log($(el).find('option[selected]'));
+      $(el).find('option[selected]').removeAttr('selected');
+      $(el).trigger('change');
+    // }
   });
 
   $clearBtn.hide();
-  $additionalFiltersClearBtn.hide();
-  $additionalFiltersClearLink.hide();
 
-  $allCheckboxes.prop('checked', false);
-  $allNonCheckedRadio.prop('checked', true);
+  // $additionalFiltersClearBtn.hide();
+  // $additionalFiltersClearLink.hide();
+
+  // $allCheckboxes.prop('checked', false);
+  // $allNonCheckedRadio.prop('checked', true);
 
   $('.selected-items__item').remove();
-  $additionalFiltersGroups.show();
+  // $additionalFiltersGroups.show();
 
   // $('.selected-items--filter-params').hide();
 
@@ -177,7 +124,9 @@ function clearFilter () {
   // toggleClearButtons();
 
   $filtersBtn.addClass('hidden').text(0);
-  console.log($filtersBtn);
+
+  // console.log($filtersBtn);
+
   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
 }
 
@@ -206,7 +155,7 @@ function findFilterTagByValue (name, value) {
 // }
 
 function clearTextField ($input) {
-  $input.removeClass('form-text--filter-search-filled').val('');
+  $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
   $input.parent().find('[data-clear-search-input]').hide();
 }
 
@@ -215,13 +164,9 @@ function removeFilterTag (type, name, value) {
 
   if (['range', 'textfield'].includes(type)) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-    // console.log('first');
   } else if (['checkbox', 'radio'].includes(type)) {
     $selectedItem = findFilterTagByValue(name, value);
-    // console.log('second');
   }
-
-  // console.log($selectedItem);
 
   $selectedItem.remove();
 }
@@ -258,28 +203,6 @@ function createOrUpdateTag (type, name, value, labelText) {
 
 
 $(() => {
-  // Fancybox.bind(".additional-filters-popup-link", {
-  //   dragToClose: false,
-  //   mainClass: 'fancybox--additional-filters-popup',
-
-  //   tpl: {
-  //     closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
-  //   },
-
-  //   on: {
-  //     close: (fancybox, event) => {
-  //       // console.log('close!!');
-  //       // console.log($(fancybox.container).find('.fancybox-popup'));
-  //       // let $fancyboxPopup = $(fancybox.container).find('.fancybox-popup');
-  //       // if ($fancyboxPopup.hasClass('fancybox-popup--cities')) {
-          
-  //       // }
-
-  //       console.log(event.target);
-  //     },
-  //   }
-  // });
-
   select2($);
 
   let selectedCitiesIdx = [];
@@ -306,8 +229,6 @@ $(() => {
     let value = $(el).select2('val');
     let $label = $select2Selection.find('.select2-selection__rendered');
 
-    // console.log(name);
-
     if (name === 'kategoriia-pracivnika') {
       if (!value) {
         $label.text('Спеціалізація');
@@ -326,7 +247,6 @@ $(() => {
         } else {
           $select2Selection.removeClass('select2-selection--selected');
           let $selectedItem = $(`.selected-items__item[data-type="select"][data-name="${name}"]`);
-          // console.log($selectedItem);
 
           $selectedItem.remove();
 
@@ -334,8 +254,20 @@ $(() => {
         }
       }
 
-      if (!['countries', 'currency'].includes(name)) {
+      // if (!['countries', 'currency'].includes(name)) {
+      //   toggleClearButtons();
+      // }
+
+      if (!['currency'].includes(name)) {
         toggleClearButtons();
+      }
+
+      if (['kategoriia-pracivnika', 'distance'].includes(name)) {
+        if (value !== '') {
+          setTimeout(() => {
+            createFilterUrl();
+          });
+        }
       }
     });
   });
@@ -350,7 +282,15 @@ $(() => {
   });
 
   // $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearFilter);
-  $('[data-clear-filter]').click(clearFilter);
+
+  $('[data-clear-filter]').click(() => {
+    clearFilter();
+
+    setTimeout(() => {
+      // alert('createFilterUrl()');
+      // createFilterUrl();
+    });
+  });
 
 
   $('.filter-tag').click(function(event) {
@@ -456,8 +396,6 @@ $(() => {
   });
 
   $('.filter .form-text:not([type="search"])').on('input', function(e) {
-    // checkFilterFill();
-
     setTimeout(() => {
       toggleClearButtons();
     });
@@ -533,10 +471,7 @@ $(() => {
     $selectedItems.toggleClass('selected-items--expanded');
   });
 
-  // Creating filter URL
-  $('form[name="vacancies_filter"]').on('submit', function(event) {
-    event.preventDefault();
-
+  function createFilterUrl () {
     let isMobile = $(window).width() < 576;
     let urlParamsArr = [];
     let requestParamsArr = [];
@@ -567,6 +502,7 @@ $(() => {
     // });
 
     console.log(selectedCitiesSlugs);
+    console.log(`selectedCountry`);
     console.log(selectedCountry);
 
     // let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
@@ -607,7 +543,11 @@ $(() => {
     // let selectedCities = selectedCitiesSlugs;
     // console.log(selectedCities);
 
-    urlParamsArr.push(selectedCountry, selectedCities);
+    if (selectedCountry) {
+      urlParamsArr.push(selectedCountry);
+    }
+
+    urlParamsArr.push(selectedCities);
     // urlParamsArr.push(selectedCountry);
 
     // let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
@@ -695,7 +635,7 @@ $(() => {
       distance = $('.filter__distance-select--desktop');
     }
 
-    if (distance.val()) {
+    if (distance.val() && selectedCountry) {
       requestParamsArr.push(`radius=${distance.val()}`);
     }
 
@@ -720,6 +660,13 @@ $(() => {
     console.log(`/vacancies/${urlParams}${requestParams}`);
 
     window.location.href = `/vacancies/${urlParams}${requestParams}`;
+  }
+
+  // Creating filter URL
+  $('form[name="vacancies_filter"]').on('submit', function(event) {
+    event.preventDefault();
+
+    createFilterUrl();
   });
 
   function loadCitiesOfSelectedCountry (countryID) {
@@ -738,14 +685,28 @@ $(() => {
     });
   }
 
+  // let selectedCountryId = $('select[name="countries"] option:selected').data('id');
   let selectedCountryId = $('select[name="countries"] option:selected').data('id');
-  loadCitiesOfSelectedCountry(selectedCountryId);
+
+  console.log(`selectedCountryId: ${selectedCountryId}`);
+
+  if (selectedCountryId) {
+    loadCitiesOfSelectedCountry(selectedCountryId);
+  }
 
   // Loading cities via AJAX
+  // $('select[name="countries"]').on('change', function(event) {
   $('select[name="countries"]').on('change', function(event) {
     let countryID = $(this).find(':selected').data('id');
 
+    console.log(`countryID: ${countryID}`);
+
     loadCitiesOfSelectedCountry(countryID);
+
+    setTimeout(() => {
+      // alert('fempwwm');
+      createFilterUrl();
+    }, 1000);
   });
 
   // Set current currency
@@ -953,7 +914,6 @@ $(() => {
     // console.log(slider);
   });
 
-  // checkFilterFill();
   toggleClearButtons();
 
   // Search input with close button
@@ -961,14 +921,17 @@ $(() => {
     let name = $(this).attr('name');
     let value = $(this).val();
     let $clearBtn = $(this).next('.filter__clear-search-btn');
+    let $searchBtnMobile = $('.filter__search-btn-mobile');
     let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
     if (value) {
       $clearBtn.show();
+      $searchBtnMobile.show();
       $(this).addClass('form-text--filter-search-filled');
       createOrUpdateTag('textfield', name, value, value);
     } else {
       $clearBtn.hide();
+      $searchBtnMobile.hide();
       $(this).removeClass('form-text--filter-search-filled');
       removeFilterTag(type, name, value);
     }
@@ -987,6 +950,8 @@ $(() => {
     removeFilterTag(type, name, value);
 
     $input.focus();
+
+    createFilterUrl();
   });
 
 
