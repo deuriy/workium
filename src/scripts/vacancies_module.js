@@ -263,11 +263,9 @@ $(() => {
       }
 
       if (['kategoriia-pracivnika', 'distance'].includes(name)) {
-        if (value !== '') {
-          setTimeout(() => {
-            createFilterUrl();
-          });
-        }
+        setTimeout(() => {
+          createFilterUrl();
+        });
       }
     });
   });

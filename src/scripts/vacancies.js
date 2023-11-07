@@ -11,10 +11,18 @@ let searchCitiesTimeoutID = null;
 
 
 function toggleClearFilterButtons () {
+  console.log('toggleClearFilterButtons()');
+
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
+  let $countriesSelect = $('select[name="countries"]');
+  let selectedCountry = $countriesSelect.val();
+
+  if (selectedCountry) {
+    selectedItemsLength += 1;
+  }
 
   // console.log(`selectedItemsLength: ${selectedItemsLength}`);
 
@@ -1177,6 +1185,8 @@ $(() => {
 
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
+    // toggleClearFilterButtons();
+
     console.log('Country selected!');
     $('.filter__cities-select--desktop option[selected]').removeAttr('selected');
     
@@ -1357,6 +1367,13 @@ $(() => {
           currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
           selectedCitiesIds = [...currentSelectedCitiesIds];
 
+          console.log('selectedCitiesIds!!!!!');
+          console.log(selectedCitiesIds.length);
+
+          // if (!selectedCitiesIds.length) {
+          //   $('.filter__distance-select').next().find('.select2-selection').removeClass('filter-select--selected');
+          // }
+
           // $multiSelect.multiSelect('refresh');
 
           break;
@@ -1365,6 +1382,7 @@ $(() => {
 
     setTimeout(() => {
       toggleClearFilterButtons();
+      createFilterUrl();
     });
 
     event.preventDefault();
