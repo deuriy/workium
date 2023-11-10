@@ -538,14 +538,20 @@ $(() => {
     }
   });
 
-  $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item').click(function(e) {
+  $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item, .contact-phones--affiliate-support .contact-phones__item').click(function(e) {
+    if ($(window).width() < 768 && $(this).closest('.contact-phones--order-service')) return;
+    console.log('true');
+
+    // console.log($(this).closest('.contact-phones--order-service'));
+
     let $phone = $(this).find('.phone');
-    $phone.after(`<input type="text" class="contact-phones__phone-form-text" value="${$phone.text().replaceAll(' ', '')}" />`);
+    $phone.after(`<textarea class="contact-phones__phone-form-text">${$phone.text().replaceAll(' ', '')}</textarea>`);
 
     let $tooltip = $(this).find('.contact-phones__tooltip');
     let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
 
-    console.log($tooltip);
+    // console.log($tooltip);
+    // console.log($contactPhoneFormText);
 
     copyText($contactPhoneFormText[0]);
     $contactPhoneFormText.remove();

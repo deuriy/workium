@@ -17,6 +17,12 @@ $(() => {
   Fancybox.bind(".payment-systems-popup-link", {
     dragToClose: false,
     mainClass: 'fancybox--payment-systems-popup',
+
+    // on: {
+    //   "*": (fancybox, eventName) => {
+    //     console.log(`Fancybox eventName: ${eventName}`);
+    //   },
+    // },
   });
 
   $('.dropdown-select').select2({
@@ -36,12 +42,43 @@ $(() => {
     });
   }
 
-  $('.bank__input').change(function(event) {
-    let $bank = $(this).closest('.bank');
+  $(document).on('click', '.bank__input', function(event) {
+    console.log('Change!!');
+  });
 
-    $('.payment-systems-popup-link__name').text($bank.find('.bank__name').text());
-    $('.payment-systems-popup-link__currency').text($bank.find('.bank__currency').text());
-    $('.payment-systems-popup-link__icon').attr('src', $bank.find('.bank__icon').attr('src'));
+  // $('.bank__input').change(function(event) {
+  //   let $bank = $(this).closest('.bank');
+
+  //   console.log('yes!');
+
+  //   $('.payment-systems-popup-link__name').text($bank.find('.bank__name').text());
+  //   $('.payment-systems-popup-link__currency').text($bank.find('.bank__currency').text());
+  //   $('.payment-systems-popup-link__icon').attr('src', $bank.find('.bank__icon').attr('src'));
+
+  //   Fancybox.close();
+  // });
+
+  document.addEventListener('click', function (e) {
+    let bank = e.target.closest('.bank');
+
+    if (!bank) return;
+
+    let bankName = bank.querySelector('.bank__name');
+    let bankCurrency = bank.querySelector('.bank__currency');
+    let bankIconSvg = bank.querySelector('.bank__icon svg').cloneNode(true);
+    bankIconSvg.classList.add('payment-systems-popup-link__icon');
+
+    let activeWithdrawalTab = document.querySelector('.withdrawal-funds__content .tabs__content[style="display: block;"]');
+
+    if (!activeWithdrawalTab) return;
+    
+    let paymentSystemsPopupLinkName = activeWithdrawalTab.querySelector('.payment-systems-popup-link__name');
+    let paymentSystemsPopupLinkCurrency = activeWithdrawalTab.querySelector('.payment-systems-popup-link__currency');
+    let paymentSystemsPopupLinkIcon = activeWithdrawalTab.querySelector('.payment-systems-popup-link__icon');
+
+    paymentSystemsPopupLinkName.textContent = bankName.textContent;
+    paymentSystemsPopupLinkCurrency.textContent = bankCurrency.textContent;
+    paymentSystemsPopupLinkIcon.replaceWith(bankIconSvg);
 
     Fancybox.close();
   });
