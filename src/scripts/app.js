@@ -687,4 +687,9 @@ $(() => {
     }
   });
 
+  document.addEventListener("employerAdded", function(event) {
+    Fancybox.close();
+    Fancybox.show([{ src: "#add-employer-success-popup", type: "inline" }]);
+  });
+
 });

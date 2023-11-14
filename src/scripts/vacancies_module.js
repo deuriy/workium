@@ -2,7 +2,7 @@ import $ from "jquery";
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import select2 from 'select2';
-import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
+// import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
 
