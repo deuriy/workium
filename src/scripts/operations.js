@@ -83,3 +83,8 @@ $(() => {
     Fancybox.close();
   });
 });
+
+$(window).on('load', function () {
+  $('.operations-page__preloader-wrapper').hide();
+  $('.operations-page__withdrawal-funds').show();
+});
