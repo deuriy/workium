@@ -5,7 +5,7 @@ import { Navigation } from 'swiper/modules';
 $(() => {
   const peopleSwiper = new Swiper('.people-swiper', {
     modules: [Navigation],
-    // loop: true,
+    loop: true,
     slidesPerView: 'auto',
     centeredSlides: true,
     spaceBetween: 8,
