@@ -1,6 +1,6 @@
 let cSpeed = 3;
-let cWidth = 72;
-let cHeight = 72;
+// let cWidth = 72;
+// let cHeight = 72;
 let cTotalFrames = 28;
 let cFrameWidth = 72;
 let cImageSrc = '../img/preloader_sprites.png';
@@ -15,9 +15,9 @@ let preloader = document.getElementById('preloader');
 
 function startAnimation() {
 
-	preloader.style.backgroundImage = 'url(' + cImageSrc + ')';
-	preloader.style.width = cWidth + 'px';
-	preloader.style.height = cHeight + 'px';
+	// preloader.style.backgroundImage = 'url(' + cImageSrc + ')';
+	// preloader.style.width = cWidth + 'px';
+	// preloader.style.height = cHeight + 'px';
 
 	//FPS = Math.round(100/(maxSpeed+2-speed));
 	let FPS = Math.round(100 / cSpeed);
@@ -48,17 +48,4 @@ function stopAnimation() {
 	cPreloaderTimeout = false;
 }
 
-function imageLoader(s, fun) {
-	clearTimeout(cImageTimeout);
-	cImageTimeout = 0;
-
-	let genImage = new Image();
-	genImage.onload = function () {
-		cImageTimeout = setTimeout(fun, 0)
-	};
-
-	genImage.onerror = new Function('alert(\'Could not load the image\')');
-	genImage.src = s;
-}
-
-new imageLoader(cImageSrc, startAnimation);
+startAnimation();
