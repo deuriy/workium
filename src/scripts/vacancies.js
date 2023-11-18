@@ -369,197 +369,6 @@ function toggleClearCitiesButtons () {
   }
 }
 
-function createFilterUrl () {
-  let isMobile = $(window).width() < 576;
-  let urlParamsArr = [];
-  let requestParamsArr = [];
-  let urlParams = '';
-  let requestParams = '';
-
-  // Get url params
-  let selectedCountry = '',
-      selectedCitiesSlugs = [];
-
-  if (isMobile) {
-    selectedCountry = $('.filter__countries-select--mobile').val();
-    selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function(index, input) {
-      return $(input).attr('data-seo-slug');
-    });
-  } else {
-    selectedCountry = $('.filter__countries-select--desktop').val();
-    selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function(index, option) {
-      console.log(option, index);
-      return $(option).attr('data-seo-slug');
-    });
-  }
-
-  // let selectedCitiesSlugs = $('select[name="cities"] option:selected').val().map(function(id, index) {
-    // console.log(id);
-    // console.log($(`select[name="cities"] option[value="${id}"]`));
-    // return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
-  // });
-
-  console.log(selectedCitiesSlugs);
-  console.log(`selectedCountry`);
-  console.log(selectedCountry);
-
-  // let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
-  //   return $(elem).attr('data-seo-slug');
-  // });
-  // console.log($('select[name="cities"] option:selected'));
-
-  // if (isMobile) {
-
-  // }
-
-  // let selectedCitiesIds = $('[data-selected-cities]').attr('data-selected-cities');
-  // let selectedCitiesSlugs = selectedCitiesIds.split(',').map(function(id, index) {
-  //   return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
-  // })
-
-
-  // console.log($(`.selected-items__item[name="cities"]`));
-  // console.log(`selectedCitiesSlugs`);
-  // console.log(selectedCitiesSlugs);
-
-
-  // selectedCitiesSlugs = [...new Set(selectedCitiesSlugs)];
-
-
-  // selectedCitiesSlugs = selectedCitiesSlugs.filter((value, index, array) => {
-  //   array.indexOf(value) === index;
-  // });
-
-
-  // console.log(`selectedCitiesSlugs`);
-  // console.log(selectedCitiesSlugs);
-
-
-  let selectedCities = Array.from(selectedCitiesSlugs).join('/');
-
-
-  // let selectedCities = selectedCitiesSlugs;
-  // console.log(selectedCities);
-
-  if (selectedCountry) {
-    urlParamsArr.push(selectedCountry);
-  }
-
-  urlParamsArr.push(selectedCities);
-  // urlParamsArr.push(selectedCountry);
-
-  // let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
-  // $selectedSegmentCheckboxes.each(function(index, el) {
-  //   if (el.value) {
-  //     urlParamsArr.push(el.value);
-  //   }
-  // });
-
-  // let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:checked');
-  // $selectedSegmentRadioBtns.each(function(index, el) {
-  //   if (el.value) {
-  //     urlParamsArr.push(el.value);
-  //   }
-  // });
-
-  urlParams = urlParamsArr.join('/');
-
-  // Get request params
-  let searchValue = $('input[name="vacancy_name"]').val();
-  if (searchValue) {
-    requestParamsArr.push(`search=${searchValue}`);
-  }
-
-  // let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):checked');
-  // $selectedCheckboxes.each(function(index, el) {
-  //   if (el.value) {
-  //     requestParamsArr.push(`${el.name}=${el.value}`);
-  //   }
-  // });
-
-  // let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):checked');
-  // $selectedRadioBtns.each(function(index, el) {
-  //   if (el.value) {
-  //     requestParamsArr.push(`${el.name}=${el.value}`);
-  //   }
-  // });
-
-  // let $rangeSliders = $('.additional-filters .range-slider');
-  // $rangeSliders.each(function(index, el) {
-  //   let values = el.noUiSlider.get();
-  //   let name = el.dataset.name;
-  //   let resultValue = `${name}=${values[0]}-${values[1]}`;
-
-  //   requestParamsArr.push(resultValue);
-  // });
-
-  let selectedCandidatesType;
-
-  if (isMobile) {
-    selectedCandidatesType = $('.filter__sex-select--mobile').val();
-  } else {
-    selectedCandidatesType = $('.filter__sex-select--desktop').val();
-  }
-
-  console.log(selectedCandidatesType);
-
-  let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
-    return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
-  });
-  console.log(selectedCandidatesSlugs);
-
-  selectedCandidatesSlugs = [...new Set(selectedCandidatesSlugs)];
-  // let selectedCandidates = Array.from(selectedCandidatesSlugs).map(function(slug, index) {
-  //   return `${name}=${slug}`;
-  // });
-
-  selectedCandidatesSlugs.forEach(item => {
-    requestParamsArr.push(`tip-kandidativ[]=${item}`);
-  });
-
-
-  let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
-  // console.log(catWorkerValue);
-
-  if (catWorkerValue) {
-    requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
-  }
-
-  let distance;
-  
-  if (isMobile) {
-    distance = $('.filter__distance-select--mobile');
-  } else {
-    distance = $('.filter__distance-select--desktop');
-  }
-
-  if (distance.val()) {
-    requestParamsArr.push(`radius=${distance.val()}`);
-  }
-
-
-  requestParams = requestParamsArr.join('&');
-
-  if (requestParams) {
-    requestParams = '/?' + requestParams;
-  }
-
-  let $lastSelectedTag = $('.filter .selected-items__item').last();
-  let lastSelectedTagObj = {
-    type: $lastSelectedTag.attr('data-type'),
-    name: $lastSelectedTag.attr('data-name'),
-    value: $lastSelectedTag.attr('data-value'),
-  };
-
-  // console.log(urlParams);
-
-  localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
-  // console.log(lastSelectedTagObj);
-  console.log(`/vacancies/${urlParams}${requestParams}`);
-
-  window.location.href = `/vacancies/${urlParams}${requestParams}`;
-}
-
 
 $(() => {
   let psArr = [];
@@ -731,8 +540,8 @@ $(() => {
           applyChangesToSelectedCities(that.$element);
 
           setTimeout(() => {
-            createFilterUrl();
-            // $('form[name="vacancies_filter"]').submit();
+            // createFilterUrl();
+            document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
           });
         });
       },
@@ -799,7 +608,8 @@ $(() => {
           applyChangesToSelectedSex(that.$element);
 
           setTimeout(() => {
-            createFilterUrl();
+            // createFilterUrl();
+            document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
           });
 
           // createOrUpdateTag()
@@ -1115,8 +925,8 @@ $(() => {
     toggleClearCitiesButtons();
 
     setTimeout(() => {
-      createFilterUrl();
-      // $('form[name="vacancies_filter"]').submit();
+      // createFilterUrl();
+      document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
     });
   });
 
@@ -1382,7 +1192,8 @@ $(() => {
 
     setTimeout(() => {
       toggleClearFilterButtons();
-      createFilterUrl();
+      // createFilterUrl();
+      document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
     });
 
     event.preventDefault();

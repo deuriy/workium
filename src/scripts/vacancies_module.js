@@ -73,14 +73,7 @@ function clearFilter () {
   // let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
   // let $additionalFiltersClearLink = $('.additional-filters__clear-link');
 
-  console.log($searchInput);
-
-  $searchInput.val('').trigger('input');
-  $searchInput.removeAttr('value');
-
-  // let countriesSelect = $('select[name="countries"]');
-
-  console.log($filterSelects);
+  $searchInput.val('').trigger('input').removeAttr('value');
 
   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
   $filterSelects.each(function(index, el) {
@@ -124,8 +117,6 @@ function clearFilter () {
   // toggleClearButtons();
 
   $filtersBtn.addClass('hidden').text(0);
-
-  // console.log($filtersBtn);
 
   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
 }
@@ -284,10 +275,10 @@ $(() => {
   $('[data-clear-filter]').click(() => {
     clearFilter();
 
-    setTimeout(() => {
-      // alert('createFilterUrl()');
-      // createFilterUrl();
-    });
+    // setTimeout(() => {
+    //   // alert('createFilterUrl()');
+    //   // createFilterUrl();
+    // });
   });
 
 
@@ -499,9 +490,9 @@ $(() => {
       // return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
     // });
 
-    console.log(selectedCitiesSlugs);
-    console.log(`selectedCountry`);
-    console.log(selectedCountry);
+    // console.log(selectedCitiesSlugs);
+    // console.log(`selectedCountry`);
+    // console.log(selectedCountry);
 
     // let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
     //   return $(elem).attr('data-seo-slug');
@@ -584,14 +575,26 @@ $(() => {
     //   }
     // });
 
-    // let $rangeSliders = $('.additional-filters .range-slider');
-    // $rangeSliders.each(function(index, el) {
-    //   let values = el.noUiSlider.get();
-    //   let name = el.dataset.name;
-    //   let resultValue = `${name}=${values[0]}-${values[1]}`;
+    let $rangeSliders = $('.additional-filters .range-slider');
+    $rangeSliders.each(function(index, el) {
+      let values = el.noUiSlider.get();
+      let rangeValues = el.noUiSlider.options.range;
+      let name = el.dataset.name;
 
-    //   requestParamsArr.push(resultValue);
-    // });
+      console.log(el.noUiSlider.options);
+
+      if (rangeValues.min != values[0] || rangeValues.max != values[1]) {
+        // console.log(`startValues[0]: ${startValues[0]}`);
+        // console.log(`startValues[1]: ${startValues[1]}`);
+        // console.log(`values[0]: ${values[0]}`);
+        // console.log(`values[1]: ${values[1]}`);
+        console.log(name);
+        console.log('');
+
+        let resultValue = `${name}=${values[0]}-${values[1]}`;
+        requestParamsArr.push(resultValue);
+      }
+    });
 
     let selectedCandidatesType;
 
@@ -644,17 +647,18 @@ $(() => {
       requestParams = '/?' + requestParams;
     }
 
-    let $lastSelectedTag = $('.filter .selected-items__item').last();
-    let lastSelectedTagObj = {
-      type: $lastSelectedTag.attr('data-type'),
-      name: $lastSelectedTag.attr('data-name'),
-      value: $lastSelectedTag.attr('data-value'),
-    };
+    // let $lastSelectedTag = $('.filter .selected-items__item').last();
+    // let lastSelectedTagObj = {
+    //   type: $lastSelectedTag.attr('data-type'),
+    //   name: $lastSelectedTag.attr('data-name'),
+    //   value: $lastSelectedTag.attr('data-value'),
+    // };
 
     // console.log(urlParams);
 
-    localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
+    // localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
     // console.log(lastSelectedTagObj);
+
     console.log(`/vacancies/${urlParams}${requestParams}`);
 
     window.location.href = `/vacancies/${urlParams}${requestParams}`;
@@ -951,6 +955,8 @@ $(() => {
 
     createFilterUrl();
   });
+
+  document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', createFilterUrl);
 
 
   // $('[data-remove-last-filter]').click(function(event) {
