@@ -68,9 +68,6 @@ $(() => {
 });
 
 $(window).on('load', function () {
-
-  setTimeout(() => {
-    $('.operations-page__withdrawal-funds').show();
-    $('.operations-page__preloader-wrapper').hide();
-  }, 2000);
+  $('.operations-page__withdrawal-funds').show();
+  $('.operations-page__preloader-wrapper').hide();
 });

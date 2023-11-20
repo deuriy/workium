@@ -672,19 +672,13 @@ $(() => {
 
 
   document.querySelectorAll('.vacancy-card__address--truncated').forEach(item => {
-    // console.log(item.scrollHeight);
-
     if (item.scrollHeight < 25) {
       item.classList.add('vacancy-card__address--no-arrow');
     }
   });
 
   document.querySelectorAll('.vacancy-info__specialization--truncated').forEach(item => {
-    // console.log(item.scrollHeight);
     let height = item.closest('.vacancy-card--full') ? 69 : 52;
-
-    console.log(height);
-    console.log(item.scrollHeight);
 
     if (item.scrollHeight <= height) {
       item.classList.add('vacancy-info__specialization--no-arrow');
