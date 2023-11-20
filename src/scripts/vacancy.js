@@ -72,8 +72,6 @@ $(() => {
     });
 
     if (promoBlocksSwiper.slides.length > 1) {
-      console.log(promoBlocksSwiper);
-
       let activePromoBlock = promoBlocksSwiper.el.querySelector('.promo-block--active');
       let promoBlockIndex = $(activePromoBlock).closest('.swiper-slide').index();
 

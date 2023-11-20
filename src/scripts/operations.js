@@ -8,21 +8,20 @@ $(() => {
   select2($);
 
 	const walletsSwiper = new Swiper('.wallets-swiper', {
-    // loop: true,
     slidesPerView: 'auto',
-    // centeredSlides: true,
     spaceBetween: 23,
   });
+
+  if (walletsSwiper.slides.length > 1) {
+    let activeWallet = walletsSwiper.el.querySelector('.wallet--active');
+    let walletSlideIndex = $(activeWallet).closest('.swiper-slide').index();
+
+    walletsSwiper.slideTo(walletSlideIndex, 0);
+  }
 
   Fancybox.bind(".payment-systems-popup-link", {
     dragToClose: false,
     mainClass: 'fancybox--payment-systems-popup',
-
-    // on: {
-    //   "*": (fancybox, eventName) => {
-    //     console.log(`Fancybox eventName: ${eventName}`);
-    //   },
-    // },
   });
 
   $('.dropdown-select').select2({
@@ -41,22 +40,6 @@ $(() => {
       minScrollbarLength: 20
     });
   }
-
-  $(document).on('click', '.bank__input', function(event) {
-    console.log('Change!!');
-  });
-
-  // $('.bank__input').change(function(event) {
-  //   let $bank = $(this).closest('.bank');
-
-  //   console.log('yes!');
-
-  //   $('.payment-systems-popup-link__name').text($bank.find('.bank__name').text());
-  //   $('.payment-systems-popup-link__currency').text($bank.find('.bank__currency').text());
-  //   $('.payment-systems-popup-link__icon').attr('src', $bank.find('.bank__icon').attr('src'));
-
-  //   Fancybox.close();
-  // });
 
   document.addEventListener('click', function (e) {
     let bank = e.target.closest('.bank');
@@ -89,5 +72,5 @@ $(window).on('load', function () {
   setTimeout(() => {
     $('.operations-page__withdrawal-funds').show();
     $('.operations-page__preloader-wrapper').hide();
-  }, 0);
+  }, 2000);
 });

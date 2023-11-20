@@ -117,6 +117,21 @@
 			margin-bottom 24px
 			margin-left 0
 			font-size 13px
+		
+		&--has-own-award
+			display grid
+			grid-template-columns auto auto
+			place-items center
+			place-content center
+			gap 8px
+			
+			&::after
+				content ""
+				// grid-area 1 / 1 / 2 / 2
+				width 16px
+				height 16px
+				border-radius 50%
+				background #44a60f url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' width='24' style='enable-background:new 0 0 36 36' viewBox='0 0 36 36'%3E%3Cstyle%3E.st1%7Bfill:none;stroke:%23222a30;stroke-width:2.0101;stroke-linejoin:round;stroke-miterlimit:10%7D.st2%7Bfill:%23171715%7D.st3%7Bfill-rule:evenodd;clip-rule:evenodd;fill:%23222a30%7D%3C/style%3E%3Cg id='icons'%3E%3Cpath id='check_x5F_mark_1_' d='m12.8 28.7-9.5-9.5c-.4-.4-.4-1.1 0-1.6l1.5-1.5c.4-.4 1.1-.4 1.6 0l7.2 7.2 16-16c.4-.4 1.1-.4 1.6 0l1.5 1.5c.4.4.4 1.1 0 1.6L14.4 28.7c-.5.4-1.2.4-1.6 0z' style='fill:%23fff'/%3E%3C/g%3E%3C/svg%3E") center / 10px no-repeat
 	
 	&__user-labels
 		margin-bottom 32px

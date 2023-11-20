@@ -30,11 +30,16 @@
 	&__currency
 		font-weight 400
 	
-	&__icon
+	&__icon-wrapper
 		grid-area 1 / 2 / 3 / 3
 		width 24px
 		height 24px
 		margin-bottom 3px
+		
+		& > img,
+		& > svg
+			max-width 100%
+			height auto
 	
 	&:hover
 		border-color var(--info)

@@ -1,12 +1,12 @@
-.user-sidebar.user-sidebar--profile-shown.user-sidebar--quote-shown
+.user-sidebar.user-sidebar--profile-shown
   .user-sidebar__inner
     include ./user-dropdown-menu
 
     .user-sidebar__top.hidden-smMinus
       a(href="/").user-sidebar__logo
         img(src="/img/logo.svg" title="Workium").user-sidebar__logo-img
-      a(href="#user-dropdown-menu" data-dropdown-block-trigger).user-sidebar__user-avatar-link.user-sidebar__user-avatar-link--profile-shown
-        img(src="/img/user_sidebar_avatar.png" alt="sadwolf27").user-avatar.user-avatar--small
+      a(href="#user-dropdown-menu" data-dropdown-block-trigger).user-sidebar__user-avatar-link.user-sidebar__user-avatar-link--has-own-award.user-sidebar__user-avatar-link--profile-shown
+        img(src="/img/user_sidebar_avatar.png" alt="sadwolf27").user-avatar.user-avatar--small.user-sidebar__user-avatar
 
         //- img(src="/img/user_avatar.png" alt="sadwolf27")
     //- .user-info.user-sidebar__user-info
@@ -15,17 +15,18 @@
     //-     a(href="/logout").logout-link.user-info__logout-link
     //-   .user-balance.user-info__balance 5257,45 грн
 
-    .quote.user-sidebar__quote
+    .quote.user-sidebar__quote.hidden
       button(type="button").quote__close-btn
       .quote__text
         p Нейромережа для сфери працевлаштування, яка виплачує кошти
 
     .user-sidebar__user-info-wrapper
       .user-info
-        img(src="/img/user_sidebar_avatar.png" alt="Sobat Jariyah").user-avatar.user-info__avatar
+        .user-info__avatar-wrapper.user-info__avatar-wrapper--has-own-award
+          img(src="/img/user_sidebar_avatar.png" alt="Sobat Jariyah").user-avatar.user-info__avatar
         .user-info__text-wrapper
-          a(href="/user.html").username.user-info__username Sobat Jariyah
-          .user-label.user-label--influence.user-info__user-label Впливовість: 0
+          a(href="/user.html").username.user-info__username Андрій Марисюк
+          a(href="/influence.html").user-label.user-label--influence.user-info__user-label Впливовість: 123
         a(href="#user-dropdown-menu" data-dropdown-block-trigger).dots-link
 
     include ./user-menu
