@@ -95,9 +95,13 @@ function applyChangesToSelectedSex ($select) {
   selectedGendersIds.forEach(id => {
     $select.multiSelect('select', id);
 
-    let labelText = $select.find(`option[value="${id}"]`).text();
+    let $option = $select.find(`option[value="${id}"]`);
+    let labelText = $option.text();
+
     if (labelText) {
-      createOrUpdateTag('multiselect', name, id, labelText);
+      let value = $option.attr('data-seo-slug');
+      // createOrUpdateTag('multiselect', name, id, labelText);
+      createOrUpdateTag('checkbox', name, value, labelText);
     }
   });
 

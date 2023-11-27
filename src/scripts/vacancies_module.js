@@ -2,7 +2,6 @@ import $ from "jquery";
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import select2 from 'select2';
-// import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
 
@@ -44,30 +43,41 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
   });
 }
 
-// function checkDependentFilters () {
-//   let $dependentFilters = $('[data-parent-filter-id]');
+function checkDependentFilters () {
+  console.log('checkDependentFilters');
 
-//   $dependentFilters.each(function(index, el) {
-//     let parentFilterId = $(el).data('parent-filter-id')
-//     let parentFilterItemId = $(el).data('parent-filter-item-id');
+  let $dependentFilters = $('[data-parent-filter-id]');
 
-//     let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
-//     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
+  $dependentFilters.each(function(index, el) {
+    let parentFilterId = $(el).data('parent-filter-id')
+    let parentFilterItemId = $(el).data('parent-filter-item-id');
 
-//     if (!$parentFilterItem.is(':checked')) {
-//       $(el).hide();
-//     } else {
-//       $(el).show();
-//     }
-//   });
-// }
+    let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
+    let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
+
+    console.log($(el));
+
+    if (!$parentFilterItem.is(':checked')) {
+      $(el).hide();
+    } else {
+      $(el).show();
+    }
+  });
+}
+
+function resetRangeSlider (rangeSlider) {
+  let min = rangeSlider.dataset.min;
+  let max = rangeSlider.dataset.max;
+
+  rangeSlider.noUiSlider.set([min, max]);
+}
 
 function clearFilter () {
   let $searchInput = $('[data-search-input]');
   let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
   // let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
-  // let $allCheckboxes = $('.additional-filters .checkbox__input');
-  // let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
+  let $allCheckboxes = $('.additional-filters .checkbox__input');
+  let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
   let $clearBtn = $(`.filter__clear-btn`);
   let $filtersBtn = $('.btn-white--filter .btn-white__count');
   // let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
@@ -76,26 +86,16 @@ function clearFilter () {
   $searchInput.val('').trigger('input').removeAttr('value');
 
   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+
   $filterSelects.each(function(index, el) {
-    let value = '';
+    $(el).val('');
+    $(el).find('option[selected]').removeAttr('selected');
+    $(el).trigger('change');
+  });
 
-    // console.log($(el).attr('name'));
-
-    // if ($(el).hasClass('filter__countries-select') || $(el).hasClass('additional-filters__countries-select')) {
-    //   value = 'poland';
-    // }
-
-    // if ($(el).hasClass('filter__currencies-select')) {
-    //   value = 'pln';
-    // }
-
-    // if ($(el).attr('name') !== 'countries') {
-      // $(el).val(value).trigger('change');
-      $(el).val(value);
-      // console.log($(el).find('option[selected]'));
-      $(el).find('option[selected]').removeAttr('selected');
-      $(el).trigger('change');
-    // }
+  let $rangeSlider = $(`.range-slider`);
+  $rangeSlider.each(function(index, el) {
+    resetRangeSlider(el);
   });
 
   $clearBtn.hide();
@@ -103,8 +103,8 @@ function clearFilter () {
   // $additionalFiltersClearBtn.hide();
   // $additionalFiltersClearLink.hide();
 
-  // $allCheckboxes.prop('checked', false);
-  // $allNonCheckedRadio.prop('checked', true);
+  $allCheckboxes.prop('checked', false);
+  $allNonCheckedRadio.prop('checked', true);
 
   $('.selected-items__item').remove();
   // $additionalFiltersGroups.show();
@@ -117,7 +117,6 @@ function clearFilter () {
   // toggleClearButtons();
 
   $filtersBtn.addClass('hidden').text(0);
-
   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
 }
 
@@ -163,6 +162,8 @@ function removeFilterTag (type, name, value) {
 }
 
 function createOrUpdateTag (type, name, value, labelText) {
+  console.log('createOrUpdateTag');
+
   let $container = $('.selected-items__list');
   let $selectedItem = findFilterTagByValue(name, value);
 
@@ -229,12 +230,13 @@ $(() => {
     }
 
     $(el).on('change', function (e) {
+      // alert('Select changed!');
       let value = $(this).select2('val');
 
       if (name === 'kategoriia-pracivnika') {
         if (value !== '') {
           $select2Selection.addClass('select2-selection--selected');
-          createOrUpdateTag("select", name, value, `<strong>Категорія працівника:</strong> ${$label.text()}`);
+          // createOrUpdateTag("select", name, value, `<strong>Категорія працівника:</strong> ${$label.text()}`);
         } else {
           $select2Selection.removeClass('select2-selection--selected');
           let $selectedItem = $(`.selected-items__item[data-type="select"][data-name="${name}"]`);
@@ -243,6 +245,11 @@ $(() => {
 
           $label.text('Спеціалізація');
         }
+      }
+
+      if (name === 'countries') {
+        let $countriesSelects = $('select[name="countries"]');
+        $countriesSelects.val(value);
       }
 
       // if (!['countries', 'currency'].includes(name)) {
@@ -255,7 +262,7 @@ $(() => {
 
       if (['kategoriia-pracivnika', 'distance'].includes(name)) {
         setTimeout(() => {
-          createFilterUrl();
+          updateFilterUrl();
         });
       }
     });
@@ -276,8 +283,8 @@ $(() => {
     clearFilter();
 
     // setTimeout(() => {
-    //   // alert('createFilterUrl()');
-    //   // createFilterUrl();
+    //   // alert('updateFilterUrl()');
+    //   // updateFilterUrl();
     // });
   });
 
@@ -350,10 +357,7 @@ $(() => {
           break;
         case 'range':
           let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
-          let min = $rangeSlider.data('min');
-          let max = $rangeSlider.data('max');
-
-          $rangeSlider[0].noUiSlider.set([min, max]);
+          resetRangeSlider($rangeSlider[0]);
 
           break;
 
@@ -376,7 +380,7 @@ $(() => {
     console.log(selectedItemsLength);
 
     setVisibilitySelectedMoreItem(selectedItemsLength);
-    // checkDependentFilters();
+    checkDependentFilters();
     checkDefaultValue();
 
     // console.log('233323');
@@ -437,13 +441,26 @@ $(() => {
       console.log(value);
 
       if (value !== '') {
-        createOrUpdateTag("radio", name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
+        let type = (name === 'kategoriia-pracivnika') ? 'select' : 'radio';
+        createOrUpdateTag(type, name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
+
+        console.log('create radio tag');
+      } else {
+        console.log('remove radio tag');
+      }
+
+      if (name === 'kategoriia-pracivnika') {
+        let $employeeCategorySelect = $('select[name="kategoriia-pracivnika"]');
+
+        $employeeCategorySelect.val(value);
+        $employeeCategorySelect.find('option[selected]').removeAttr('selected');
+        $employeeCategorySelect.trigger('change');
       }
     }
 
     toggleClearButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
-    // checkDependentFilters();
+    checkDependentFilters();
   });
 
   $('.selected-items__more-btn').click(function(event) {
@@ -460,7 +477,7 @@ $(() => {
     $selectedItems.toggleClass('selected-items--expanded');
   });
 
-  function createFilterUrl () {
+  function updateFilterUrl () {
     let isMobile = $(window).width() < 576;
     let urlParamsArr = [];
     let requestParamsArr = [];
@@ -539,19 +556,19 @@ $(() => {
     urlParamsArr.push(selectedCities);
     // urlParamsArr.push(selectedCountry);
 
-    // let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:checked');
-    // $selectedSegmentCheckboxes.each(function(index, el) {
-    //   if (el.value) {
-    //     urlParamsArr.push(el.value);
-    //   }
-    // });
+    let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:not([data-exclude-field]):checked');
+    $selectedSegmentCheckboxes.each(function(index, el) {
+      if (el.value) {
+        urlParamsArr.push(el.value);
+      }
+    });
 
-    // let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:checked');
-    // $selectedSegmentRadioBtns.each(function(index, el) {
-    //   if (el.value) {
-    //     urlParamsArr.push(el.value);
-    //   }
-    // });
+    let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:not([data-exclude-field]):checked');
+    $selectedSegmentRadioBtns.each(function(index, el) {
+      if (el.value) {
+        urlParamsArr.push(el.value);
+      }
+    });
 
     urlParams = urlParamsArr.join('/');
 
@@ -561,19 +578,19 @@ $(() => {
       requestParamsArr.push(`search=${searchValue}`);
     }
 
-    // let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):checked');
-    // $selectedCheckboxes.each(function(index, el) {
-    //   if (el.value) {
-    //     requestParamsArr.push(`${el.name}=${el.value}`);
-    //   }
-    // });
+    let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):not([data-exclude-field]):checked');
+    $selectedCheckboxes.each(function(index, el) {
+      if (el.value) {
+        requestParamsArr.push(`${el.name}=${el.value}`);
+      }
+    });
 
-    // let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):checked');
-    // $selectedRadioBtns.each(function(index, el) {
-    //   if (el.value) {
-    //     requestParamsArr.push(`${el.name}=${el.value}`);
-    //   }
-    // });
+    let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):not([data-exclude-field]):checked');
+    $selectedRadioBtns.each(function(index, el) {
+      if (el.value) {
+        requestParamsArr.push(`${el.name}=${el.value}`);
+      }
+    });
 
     let $rangeSliders = $('.additional-filters .range-slider');
     $rangeSliders.each(function(index, el) {
@@ -668,10 +685,12 @@ $(() => {
   $('form[name="vacancies_filter"]').on('submit', function(event) {
     event.preventDefault();
 
-    createFilterUrl();
+    updateFilterUrl();
   });
 
   function loadCitiesOfSelectedCountry (countryID) {
+    // alert('loadCitiesOfSelectedCountry');
+
     $.ajax({
       url: `https://workium.pl/api/v1/cities?country_id=${countryID}`,
 
@@ -697,8 +716,8 @@ $(() => {
   }
 
   // Loading cities via AJAX
-  // $('select[name="countries"]').on('change', function(event) {
   $('select[name="countries"]').on('change', function(event) {
+    // alert('Countries changed!');
     let countryID = $(this).find(':selected').data('id');
 
     console.log(`countryID: ${countryID}`);
@@ -707,33 +726,33 @@ $(() => {
 
     setTimeout(() => {
       // alert('fempwwm');
-      createFilterUrl();
+      updateFilterUrl();
     }, 1000);
   });
 
   // Set current currency
-  let currencies = {
-    'robota-v-polshi': 'zł',
-    'robota-v-chehiyi': 'Kč',
-    'robota-v-rumuniyi': 'lei',
-    'robota-v-slovachchini': '€',
-    'robota-v-nimechchini': '€',
-    'robota-v-niderlandah': '€',
-    'robota-v-litvi': '€',
-  };
+  // let currencies = {
+  //   'robota-v-polshi': 'zł',
+  //   'robota-v-chehiyi': 'Kč',
+  //   'robota-v-rumuniyi': 'lei',
+  //   'robota-v-slovachchini': '€',
+  //   'robota-v-nimechchini': '€',
+  //   'robota-v-niderlandah': '€',
+  //   'robota-v-litvi': '€',
+  // };
 
-  $('select[name="countries"]').on('change', function(event) {
-    let selectedCurrency = currencies[$(this).val()];
+  // $('select[name="countries"]').on('change', function(event) {
+  //   let selectedCurrency = currencies[$(this).val()];
 
-    $('.filter input[name="salary"]').attr('placeholder', `Від… (${selectedCurrency})`);
-    $('.filter input[name="remuneration"]').attr('placeholder', `Від… (${selectedCurrency})`);
-  });
+  //   $('.filter input[name="salary"]').attr('placeholder', `Від… (${selectedCurrency})`);
+  //   $('.filter input[name="remuneration"]').attr('placeholder', `Від… (${selectedCurrency})`);
+  // });
 
   // Dependent filters
-  // checkDependentFilters();
-  // $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function(event) {
-  //   checkDependentFilters();
-  // });
+  checkDependentFilters();
+  $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function(event) {
+    checkDependentFilters();
+  });
 
   // Synchronized selects
   $('select[data-sync-field]').on('change', function(event) {
@@ -775,6 +794,25 @@ $(() => {
 
   // checkDefaultValue();
 
+  // Range slider tips
+  // slider.noUiSlider.on('update', function (values, handle) {
+  //   let tip = slider.querySelector('.range-slider__tip');
+  //   let noUiOrigins = slider.querySelectorAll('.noUi-origin');
+  //   let firstHandleOffset = noUiOrigins[0].style.transform;
+  //   let secondHandleOffset = noUiOrigins[1].style.transform;
+
+  //   firstHandleOffset = parseInt(firstHandleOffset.substring(firstHandleOffset.indexOf('(') + 1, firstHandleOffset.indexOf(')')));
+  //   secondHandleOffset = parseInt(secondHandleOffset.substring(secondHandleOffset.indexOf('(') + 1, secondHandleOffset.indexOf(')')));
+
+  //   let diff = secondHandleOffset - firstHandleOffset;
+  //   tip.style.marginLeft = `${diff}%`;
+
+  //   console.log(firstHandleOffset);
+  //   console.log(secondHandleOffset);
+  //   // slider.querySelector('.range-slider__tip').style.transform = 'translate(20%)';
+  //   // inputFormat.value = values[handle];
+  // });
+
   const sliders = document.querySelectorAll('.range-slider');
 
   sliders.forEach(slider => {
@@ -800,27 +838,7 @@ $(() => {
           return parseInt(value);
         },
       },
-
-      // tooltips: true,
     });
-
-    // slider.noUiSlider.on('update', function (values, handle) {
-    //   let tip = slider.querySelector('.range-slider__tip');
-    //   let noUiOrigins = slider.querySelectorAll('.noUi-origin');
-    //   let firstHandleOffset = noUiOrigins[0].style.transform;
-    //   let secondHandleOffset = noUiOrigins[1].style.transform;
-
-    //   firstHandleOffset = parseInt(firstHandleOffset.substring(firstHandleOffset.indexOf('(') + 1, firstHandleOffset.indexOf(')')));
-    //   secondHandleOffset = parseInt(secondHandleOffset.substring(secondHandleOffset.indexOf('(') + 1, secondHandleOffset.indexOf(')')));
-
-    //   let diff = secondHandleOffset - firstHandleOffset;
-    //   tip.style.marginLeft = `${diff}%`;
-
-    //   console.log(firstHandleOffset);
-    //   console.log(secondHandleOffset);
-    //   // slider.querySelector('.range-slider__tip').style.transform = 'translate(20%)';
-    //   // inputFormat.value = values[handle];
-    // });
 
     let syncFromFieldIds = slider.dataset.syncFromFieldIds;
     let syncToFieldIds = slider.dataset.syncToFieldIds;
@@ -861,14 +879,23 @@ $(() => {
       // console.log(`values[1]: ${values[1]}`);
       // console.log('-----------');
 
-      if (slider.dataset.minValue != values[0] || slider.dataset.maxValue != values[1]) {
-        let name = slider.dataset.name;
-        let value = `${values[0]}-${values[1]}`
+      let name = slider.dataset.name;
+      let value = `${values[0]}-${values[1]}`
+
+      if (slider.dataset.min != values[0] || slider.dataset.max != values[1]) {
         let label = slider.closest('.filter-element').querySelector('.filter-element__title');
         // let labelText = `<strong>${label.textContent}:</strong> ${values[0]}-${values[1]}`;
         let labelText = value;
 
         createOrUpdateTag("range", name, value, labelText);
+      } else {
+        let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+        $selectedItem.remove();
+
+        // console.log(name);
+        // console.log(value);
+        // console.log('Tag to remove');
+        // console.log('');
       }
       // else {
       //   // let name = slider.dataset.name;
@@ -953,10 +980,10 @@ $(() => {
 
     $input.focus();
 
-    createFilterUrl();
+    updateFilterUrl();
   });
 
-  document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', createFilterUrl);
+  document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', updateFilterUrl);
 
 
   // $('[data-remove-last-filter]').click(function(event) {
