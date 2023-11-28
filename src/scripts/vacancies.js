@@ -11,20 +11,16 @@ let searchCitiesTimeoutID = null;
 
 
 function toggleClearFilterButtons () {
-  console.log('toggleClearFilterButtons()');
-
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
-  let $countriesSelect = $('select[name="countries"]');
-  let selectedCountry = $countriesSelect.val();
+  let isMobile = $(window).width() < 576;
 
-  if (selectedCountry) {
-    selectedItemsLength += 1;
+  if (isMobile) {
+    let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+    selectedItemsLength += $checkedLabels.length;
   }
-
-  // console.log(`selectedItemsLength: ${selectedItemsLength}`);
 
   if (selectedItemsLength) {
     $clearBtns.show();
@@ -346,9 +342,6 @@ function setCheckedCityCheckboxesTitle () {
   let $citiesBtnCount = $citiesBtn.find('.count');
   let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
 
-  // console.log(`$checkedLabels`);
-  // console.log(`${$checkedLabels}`);
-
   if (!$checkedLabels.length) {
     $citiesBtnText.text($citiesBtn.data('placeholder'));
     $citiesBtnCount.hide();
@@ -360,6 +353,8 @@ function setCheckedCityCheckboxesTitle () {
     $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
     $citiesBtnCount.show();
   }
+
+  toggleClearFilterButtons();
 }
 
 function toggleClearCitiesButtons () {

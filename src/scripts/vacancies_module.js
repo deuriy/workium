@@ -7,15 +7,17 @@ import noUiSlider from 'nouislider';
 
 let selectedFiltersCount = 0;
 
-function toggleClearButtons () {
-  // console.log('toggleClearButtons');
-
+function toggleClearFilterButtons () {
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
+  let isMobile = $(window).width() < 576;
 
-  // console.log(`selectedItemsLength: ${selectedItemsLength}`);
+  if (isMobile) {
+    let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+    selectedItemsLength += $checkedLabels.length;
+  }
 
   if (selectedItemsLength) {
     $clearBtns.show();
@@ -114,7 +116,7 @@ function clearFilter () {
   setVisibilitySelectedMoreItem(0);
   // checkDependentFilters();
 
-  // toggleClearButtons();
+  // toggleClearFilterButtons();
 
   $filtersBtn.addClass('hidden').text(0);
   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
@@ -229,7 +231,7 @@ $(() => {
       }
     }
 
-    $(el).on('change', function (e) {
+    $(el).on('change', function (e, call) {
       // alert('Select changed!');
       let value = $(this).select2('val');
 
@@ -253,17 +255,19 @@ $(() => {
       }
 
       // if (!['countries', 'currency'].includes(name)) {
-      //   toggleClearButtons();
+      //   toggleClearFilterButtons();
       // }
 
       if (!['currency'].includes(name)) {
-        toggleClearButtons();
+        toggleClearFilterButtons();
       }
 
       if (['kategoriia-pracivnika', 'distance'].includes(name)) {
-        setTimeout(() => {
-          updateFilterUrl();
-        });
+        if (call !== 'fromCode') {
+          setTimeout(() => {
+            updateFilterUrl();
+          });
+        }
       }
     });
   });
@@ -372,7 +376,7 @@ $(() => {
     $selectedItemParent.remove();
 
     setTimeout(() => {
-      toggleClearButtons();
+      toggleClearFilterButtons();
     });
 
     console.log('selectedItemsLength!!!!');
@@ -390,7 +394,7 @@ $(() => {
 
   $('.filter .form-text:not([type="search"])').on('input', function(e) {
     setTimeout(() => {
-      toggleClearButtons();
+      toggleClearFilterButtons();
     });
   });
 
@@ -454,11 +458,11 @@ $(() => {
 
         $employeeCategorySelect.val(value);
         $employeeCategorySelect.find('option[selected]').removeAttr('selected');
-        $employeeCategorySelect.trigger('change');
+        $employeeCategorySelect.trigger('change', ['fromCode']);
       }
     }
 
-    toggleClearButtons();
+    toggleClearFilterButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();
   });
@@ -677,6 +681,12 @@ $(() => {
     // console.log(lastSelectedTagObj);
 
     console.log(`/vacancies/${urlParams}${requestParams}`);
+
+    let $filterSearchBtn = $('.filter__search-btn');
+    let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
+
+    $filterSearchBtn.hide();
+    $filterPreloaderWrapper.show();
 
     window.location.href = `/vacancies/${urlParams}${requestParams}`;
   }
@@ -904,7 +914,7 @@ $(() => {
       //   // $selectedItem.remove();
       // }
 
-      toggleClearButtons();
+      toggleClearFilterButtons();
     });
 
     checkDefaultValue();
@@ -917,7 +927,7 @@ $(() => {
           slider.noUiSlider.set([this.value, null]);
 
           setTimeout(() => {
-            toggleClearButtons();
+            toggleClearFilterButtons();
           });
         });
       });
@@ -929,21 +939,21 @@ $(() => {
           slider.noUiSlider.set([null, this.value]);
 
           setTimeout(() => {
-            toggleClearButtons();
+            toggleClearFilterButtons();
           });
         });
       });
 
       // setTimeout(() => {
       //   console.log('fmwmgmwmwwmg');
-      //   toggleClearButtons();
+      //   toggleClearFilterButtons();
       // });
     });
 
     // console.log(slider);
   });
 
-  toggleClearButtons();
+  toggleClearFilterButtons();
 
   // Search input with close button
   $('[data-search-input]').on('input', function(event) {
