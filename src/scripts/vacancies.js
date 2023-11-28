@@ -73,9 +73,6 @@ function applyChangesToSelectedCities ($select) {
 function applyChangesToSelectedSex ($select) {
   selectedGendersIds = [...currentSelectedGendersIds];
 
-  console.log(`selectedGendersIds: ${selectedGendersIds}`);
-  console.log(`currentSelectedGendersIds: ${currentSelectedGendersIds}`);
-
   let $dropdownBlock = $select.closest('.dropdown-block');
   let name = $select.attr('name');
 
@@ -191,11 +188,6 @@ function changeSelectToggleTitle ($select) {
     let selectToggleText = $selectToggle.data('default-placeholder');
     let $selectedValues = $(el).find('option:selected').map((index, el) => $(el).text());
 
-    // console.log('!!!!');
-
-    // console.log('$selectedValues');
-    // console.log($selectedValues);
-
     if ($selectedValues.length) {
       selectToggleText = $selectedValues.length === 1 ? `<span class="select-toggle__label">${$selectedValues[0]}</span>` : `<span class="select-toggle__label">${$selectedValues[0]}</span>` + `<span class="count count--info-bg count--multiselect select-toggle__count">+${$selectedValues.length - 1}</span>`;
       $selectToggle.addClass('select-toggle--selected');
@@ -208,8 +200,6 @@ function changeSelectToggleTitle ($select) {
     //   $('.sex-select').multiSelect('select', id);
     // });
 
-    // console.log(selectToggleText);
-    // console.log($selectToggle);
     $selectToggle.html(selectToggleText);
   });
   // });
@@ -221,14 +211,10 @@ function clearTextField ($input) {
 }
 
 function updateMSItemsDescription ($items) {
-  // console.log('updateMSItemsDescription');
-
   $items.forEach(el => {
     // console.log();
     let $title = $(el).find('span');
     let description = $(el).data('description');
-
-    // console.log(description);
 
     $title.wrapAll('<div class="ms-elem-selectable__text-wrapper"></div>');
 
@@ -283,7 +269,6 @@ function createOrUpdateTag (type, name, value, labelText) {
   }
 
   if (name === 'cities') {
-    // alert('Cities!!');
     $container.find('.selected-items__item[data-name="countries"]').after(htmlStr);
   } else {
     $container.append(htmlStr);
@@ -389,7 +374,6 @@ $(() => {
         let $searchInput = container.find('[data-ms-search-input]');
         let $clearSearchBtn = container.find('[data-ms-clear-search-input]');
         // let $clearBtn = that.$container.find('.ms-selection__clear-btn');
-        // console.log($clearBtn);
         let $selectableItems = that.$selectableUl.children().toArray();
         let $selectionItems = that.$selectionUl.children().toArray();
 
@@ -397,26 +381,13 @@ $(() => {
 
         checkFillingMSSearchInput($searchInput);
 
-        // console.log('Multiselect refresh!!!');
-        // console.log('currentSelectedCitiesIds');
-        // console.log(currentSelectedCitiesIds);
-        // console.log('selectedCitiesIds');
-        // console.log(selectedCitiesIds);
-
         if (currentSelectedCitiesIds.length) {
-          // console.log('mdlqmkdlqm');
           that.$container.removeClass('ms-container--default');
 
           that.$container.find('.ms-selection__clear-btn').show();
         }
 
         // let psArr = [];
-
-        // console.log('Init! currentSelectedCitiesIds');
-        // console.log(currentSelectedCitiesIds);
-
-        // console.log('$selectableItems');
-        // console.log($selectableItems);
 
         that.$selectionContainer.append('<div class="ms-selection__no-results">У вас ще немає обраних міст...</div>');
         that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-grey btn-grey--multi-select ms-container__apply-btn">Застосувати</button></div>');
@@ -430,8 +401,6 @@ $(() => {
           }));
         });
 
-        // console.log($selectionItems);
-
         updateMSItemsDescription($selectionItems);
         updateMSItemsDescription($selectableItems);
 
@@ -439,7 +408,6 @@ $(() => {
           clearTimeout(searchCitiesTimeoutID);
 
           // $('select[name="cities"]').multiSelect('refresh');
-          // console.log('Refresh!');
           // $(this).focus();
 
           let searchValue = $(this).val().trim();
@@ -451,8 +419,6 @@ $(() => {
           if (searchValue) {
             url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
           }
-
-          console.log(url);
 
           searchCitiesTimeoutID = setTimeout(() => {
             $.ajax({
@@ -467,10 +433,6 @@ $(() => {
 
                 // clearCitiesSelect();
 
-                console.log($options);
-                console.log('search cities');
-                console.log(cities);
-
                 $options.each(function(index, option) {
                   if (!$(option).is(':selected')) {
                     $(option).remove();
@@ -481,8 +443,6 @@ $(() => {
 
                 // Filling selects from data
                 cities.forEach((item, index) => {
-                  // console.log(item);
-
                   if (!missingCitiesIds.includes(item.id)) {
                     $citiesSelect.multiSelect('addOption', { value: item.id || '', text: item.origin || '', index: index });
 
@@ -495,8 +455,6 @@ $(() => {
                     if (item.seo_slug) {
                       $option.attr('data-seo-slug', item.seo_slug);
                     }
-                  } else {
-                    console.log(`${item.origin} is loaded!`);
                   }
                 });
 
@@ -895,8 +853,6 @@ $(() => {
     $searchInput.val('').trigger('input');
 
     $citiesCheckboxes.each(function(index, checkbox) {
-      console.log(selectedCitiesIds.includes($(checkbox).val()));
-
       if (selectedCitiesIds.includes($(checkbox).val())) {
         $(checkbox).prop('checked', true);
       } else {
@@ -941,12 +897,7 @@ $(() => {
     let cities = [];
     let urlParams = allSelectedCitiesIds.map(cityId => `city_ids[]=${cityId}`).join('&');
 
-    console.log(`urlParams`);
-    console.log(urlParams);
-
     let url = `api/v1/cities?${urlParams}`;
-
-    console.log(url);
 
     $.ajax({
       url: url,
@@ -1000,15 +951,10 @@ $(() => {
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
     // toggleClearFilterButtons();
-
-    console.log('Country selected!');
     $('.filter__cities-select--desktop option[selected]').removeAttr('selected');
     
     let isMobile = $(window).width() < 576;
     let cities = e.detail.data.results;
-
-    console.log('cities');
-    console.log(cities);
 
     if (isMobile) {
       let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
@@ -1047,7 +993,6 @@ $(() => {
         $citiesSelect.multiSelect('addOption', { value: city.id || '', text: city.origin || '', index: index });
 
         let $option = $citiesSelect.find(`option[value="${city.id}"]`);
-        // console.log(city);
 
         if (city.province) {
           $option.attr('data-description', city.province);
@@ -1071,12 +1016,10 @@ $(() => {
   let $sexSelect = isMobile ? $('.filter__sex-select--mobile') : $('.filter__sex-select--desktop');
 
   let selectedSex = Array.from($sexSelect.find('option:selected')).map(item => $(item).attr('value'));
-  // console.log(selectedSex);
 
   selectedGendersIds = [...selectedSex];
   currentSelectedGendersIds = [...selectedSex];
 
-  // console.log($sexSelect);
   changeSelectToggleTitle($sexSelect);
 
   // applyChangesToSelectedSex($sexSelect);
@@ -1108,26 +1051,20 @@ $(() => {
 
           let filterItemId = $input.data('filter-item-id').toString();
 
-          // console.log($input);
-
           setTimeout(() => {
             if ($input.is(":checked")) {
-              // console.log('checked!');
               $syncField.multiSelect('select', filterItemId);
 
               if (!currentSelectedGendersIds.includes(filterItemId)) {
                 currentSelectedGendersIds.push(filterItemId);
               }
             } else {
-              // console.log('unchecked!');
               $syncField.multiSelect('deselect', filterItemId);
               currentSelectedGendersIds = removeItemFromArray(currentSelectedGendersIds, filterItemId);
             }
 
             selectedGendersIds = [...currentSelectedGendersIds];
             changeSelectToggleTitle($syncField);
-
-            // console.log('select');
           });
 
           break;
@@ -1148,8 +1085,6 @@ $(() => {
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
     let type = $selectedItemParent.data('type');
-
-    // console.log(type);
 
     if (![name, value].includes(undefined)) {
       switch (type) {
@@ -1172,7 +1107,6 @@ $(() => {
         case 'multiselect':
           let $multiSelect = $(`select[name="${name}"]`);
           let $dropdownBlock = $multiSelect.closest('.dropdown-block');
-          // console.log($multiSelect);
 
           $multiSelect.multiSelect('deselect', value.toString());
           changeSelectToggleTitle($multiSelect);
@@ -1180,9 +1114,6 @@ $(() => {
 
           currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
           selectedCitiesIds = [...currentSelectedCitiesIds];
-
-          console.log('selectedCitiesIds!!!!!');
-          console.log(selectedCitiesIds.length);
 
           // if (!selectedCitiesIds.length) {
           //   $('.filter__distance-select').next().find('.select2-selection').removeClass('filter-select--selected');

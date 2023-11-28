@@ -379,15 +379,9 @@ $(() => {
       toggleClearFilterButtons();
     });
 
-    console.log('selectedItemsLength!!!!');
-    console.log($('.selected-items__item'));
-    console.log(selectedItemsLength);
-
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();
     checkDefaultValue();
-
-    // console.log('233323');
 
     event.preventDefault();
   });
@@ -403,6 +397,13 @@ $(() => {
     let searchValue = $(this).val().toLowerCase().trim();
     let $additionalFilters = $(this).closest('.additional-filters');
     let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
+    let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
+
+    if (searchValue) {
+      $clearSearchBtn.show();
+    } else {
+      $clearSearchBtn.hide();
+    }
 
     $additionalFiltersGroups.each( (index, group) => {
       let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
@@ -418,6 +419,12 @@ $(() => {
     });
   });
 
+  $('.additional-filters__clear-search-btn').click(function(event) {
+    $(this).hide();
+
+    $(this).siblings('.form-text--filter-search').val('').trigger('input').focus();
+  });
+
   // Adding selected checkboxes/radio buttons
   $('.additional-filters').find('.checkbox__input, .radiobtn__input').change(function(event) {
     let name = $(this).attr('name');
@@ -425,8 +432,6 @@ $(() => {
     let labelText = $(this).parent().find('label').text();
     let selectedItemsLength = $('.selected-items__item').length;
     let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-
-    // console.log('Checkbox trigger!!');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
@@ -438,19 +443,11 @@ $(() => {
       let groupTitle = $(this).closest('.radiobtns-group').find('.radiobtns-group__title').text();
       let $otherSelectedItems = $(`.selected-items__item[data-name="${name}"]`).not(`[data-value="${value}"]`);
 
-      // console.log($otherSelectedItems);
-
       $otherSelectedItems.remove();
-
-      console.log(value);
 
       if (value !== '') {
         let type = (name === 'kategoriia-pracivnika') ? 'select' : 'radio';
         createOrUpdateTag(type, name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
-
-        console.log('create radio tag');
-      } else {
-        console.log('remove radio tag');
       }
 
       if (name === 'kategoriia-pracivnika') {
@@ -500,7 +497,6 @@ $(() => {
     } else {
       selectedCountry = $('.filter__countries-select--desktop').val();
       selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function(index, option) {
-        console.log(option, index);
         return $(option).attr('data-seo-slug');
       });
     }
@@ -511,29 +507,14 @@ $(() => {
       // return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
     // });
 
-    // console.log(selectedCitiesSlugs);
-    // console.log(`selectedCountry`);
-    // console.log(selectedCountry);
-
     // let selectedCitiesSlugs = $('select[name="cities"] option:selected').map(function(index, elem) {
     //   return $(elem).attr('data-seo-slug');
     // });
-    // console.log($('select[name="cities"] option:selected'));
-
-    // if (isMobile) {
-
-    // }
 
     // let selectedCitiesIds = $('[data-selected-cities]').attr('data-selected-cities');
     // let selectedCitiesSlugs = selectedCitiesIds.split(',').map(function(id, index) {
     //   return $(`select[name="cities"] option[value="${id}"]`).attr('data-seo-slug');
     // })
-
-
-    // console.log($(`.selected-items__item[name="cities"]`));
-    // console.log(`selectedCitiesSlugs`);
-    // console.log(selectedCitiesSlugs);
-
 
     // selectedCitiesSlugs = [...new Set(selectedCitiesSlugs)];
 
@@ -543,15 +524,7 @@ $(() => {
     // });
 
 
-    // console.log(`selectedCitiesSlugs`);
-    // console.log(selectedCitiesSlugs);
-
-
     let selectedCities = Array.from(selectedCitiesSlugs).join('/');
-
-
-    // let selectedCities = selectedCitiesSlugs;
-    // console.log(selectedCities);
 
     if (selectedCountry) {
       urlParamsArr.push(selectedCountry);
@@ -605,13 +578,6 @@ $(() => {
       console.log(el.noUiSlider.options);
 
       if (rangeValues.min != values[0] || rangeValues.max != values[1]) {
-        // console.log(`startValues[0]: ${startValues[0]}`);
-        // console.log(`startValues[1]: ${startValues[1]}`);
-        // console.log(`values[0]: ${values[0]}`);
-        // console.log(`values[1]: ${values[1]}`);
-        console.log(name);
-        console.log('');
-
         let resultValue = `${name}=${values[0]}-${values[1]}`;
         requestParamsArr.push(resultValue);
       }
@@ -625,12 +591,9 @@ $(() => {
       selectedCandidatesType = $('.filter__sex-select--desktop').val();
     }
 
-    console.log(selectedCandidatesType);
-
     let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
       return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
     });
-    console.log(selectedCandidatesSlugs);
 
     selectedCandidatesSlugs = [...new Set(selectedCandidatesSlugs)];
     // let selectedCandidates = Array.from(selectedCandidatesSlugs).map(function(slug, index) {
@@ -643,8 +606,6 @@ $(() => {
 
 
     let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
-    // console.log(catWorkerValue);
-
     if (catWorkerValue) {
       requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
     }
@@ -661,7 +622,6 @@ $(() => {
       requestParamsArr.push(`radius=${distance.val()}`);
     }
 
-
     requestParams = requestParamsArr.join('&');
 
     if (requestParams) {
@@ -675,10 +635,7 @@ $(() => {
     //   value: $lastSelectedTag.attr('data-value'),
     // };
 
-    // console.log(urlParams);
-
     // localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
-    // console.log(lastSelectedTagObj);
 
     console.log(`/vacancies/${urlParams}${requestParams}`);
 
@@ -716,10 +673,7 @@ $(() => {
     });
   }
 
-  // let selectedCountryId = $('select[name="countries"] option:selected').data('id');
   let selectedCountryId = $('select[name="countries"] option:selected').data('id');
-
-  console.log(`selectedCountryId: ${selectedCountryId}`);
 
   if (selectedCountryId) {
     loadCitiesOfSelectedCountry(selectedCountryId);
@@ -727,15 +681,11 @@ $(() => {
 
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {
-    // alert('Countries changed!');
     let countryID = $(this).find(':selected').data('id');
-
-    console.log(`countryID: ${countryID}`);
 
     loadCitiesOfSelectedCountry(countryID);
 
     setTimeout(() => {
-      // alert('fempwwm');
       updateFilterUrl();
     }, 1000);
   });
@@ -792,8 +742,6 @@ $(() => {
     });
   });
 
-  // console.log(noUiSlider);
-
   function checkDefaultValue() {
     $('[data-hide-default-min-value]').each(function(index, el) {
       if ($(this).val() === $(this).attr('min')) {
@@ -817,8 +765,6 @@ $(() => {
   //   let diff = secondHandleOffset - firstHandleOffset;
   //   tip.style.marginLeft = `${diff}%`;
 
-  //   console.log(firstHandleOffset);
-  //   console.log(secondHandleOffset);
   //   // slider.querySelector('.range-slider__tip').style.transform = 'translate(20%)';
   //   // inputFormat.value = values[handle];
   // });
@@ -855,9 +801,6 @@ $(() => {
     let fieldsFrom = [];
     let fieldsTo = [];
 
-    // console.log(syncFromFieldIds);
-    // console.log(syncToFieldIds);
-
     syncFromFieldIds.split(',').forEach(id => {
       let field = document.getElementById(id.trim());
 
@@ -883,12 +826,6 @@ $(() => {
         field.value = values[1];
       });
 
-      // console.log(`minValue: ${slider.dataset.minValue}`);
-      // console.log(`values[0]: ${values[0]}`);
-      // console.log(`maxValue: ${slider.dataset.maxValue}`);
-      // console.log(`values[1]: ${values[1]}`);
-      // console.log('-----------');
-
       let name = slider.dataset.name;
       let value = `${values[0]}-${values[1]}`
 
@@ -901,11 +838,6 @@ $(() => {
       } else {
         let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
         $selectedItem.remove();
-
-        // console.log(name);
-        // console.log(value);
-        // console.log('Tag to remove');
-        // console.log('');
       }
       // else {
       //   // let name = slider.dataset.name;
@@ -922,8 +854,6 @@ $(() => {
     ['input', 'change'].forEach(eventName => {
       fieldsFrom.forEach(field => {
         field.addEventListener(eventName, function (e) {
-          // console.log(e);
-          // console.log(`${eventName} from`);
           slider.noUiSlider.set([this.value, null]);
 
           setTimeout(() => {
@@ -934,8 +864,6 @@ $(() => {
 
       fieldsTo.forEach(field => {
         field.addEventListener(eventName, function (e) {
-          // console.log(e);
-          // console.log(`${eventName} to`);
           slider.noUiSlider.set([null, this.value]);
 
           setTimeout(() => {
@@ -945,12 +873,9 @@ $(() => {
       });
 
       // setTimeout(() => {
-      //   console.log('fmwmgmwmwwmg');
       //   toggleClearFilterButtons();
       // });
     });
-
-    // console.log(slider);
   });
 
   toggleClearFilterButtons();
@@ -982,8 +907,6 @@ $(() => {
     let name = $input.attr('name');
     let value = $input.val();
     let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
-
-    // console.log(name, value, type);
 
     clearTextField($input);
     removeFilterTag(type, name, value);
