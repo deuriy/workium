@@ -282,7 +282,12 @@ function createOrUpdateTag (type, name, value, labelText) {
     }
   }
 
-  $container.append(htmlStr);
+  if (name === 'cities') {
+    // alert('Cities!!');
+    $container.find('.selected-items__item[data-name="countries"]').after(htmlStr);
+  } else {
+    $container.append(htmlStr);
+  }
 }
 
 function updateDropdownMultiSelectClass ($dropdown) {

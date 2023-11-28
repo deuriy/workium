@@ -657,7 +657,7 @@ $(() => {
       distance = $('.filter__distance-select--desktop');
     }
 
-    if (distance.val() && selectedCountry) {
+    if (distance.val() && selectedCountry && selectedCities) {
       requestParamsArr.push(`radius=${distance.val()}`);
     }
 
