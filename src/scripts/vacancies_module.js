@@ -956,26 +956,26 @@ $(() => {
   toggleClearFilterButtons();
 
   // Search input with close button
-  $('[data-search-input]').on('input', function(event) {
-    let name = $(this).attr('name');
-    let value = $(this).val();
-    let $clearBtn = $(this).next('.filter__clear-search-btn');
-    let $searchBtnMobile = $('.filter__search-btn-mobile');
-    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
+  // $('[data-search-input]').on('input', function(event) {
+  //   let name = $(this).attr('name');
+  //   let value = $(this).val();
+  //   let $clearBtn = $(this).next('.filter__clear-search-btn');
+  //   let $searchBtnMobile = $('.filter__search-btn-mobile');
+  //   let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
-    if (value) {
-      $clearBtn.show();
-      $searchBtnMobile.show();
-      $(this).addClass('form-text--filter-search-filled');
-      createOrUpdateTag('textfield', name, value, value);
-    } else {
-      $clearBtn.hide();
-      $searchBtnMobile.hide();
-      $(this).removeClass('form-text--filter-search-filled');
-      removeFilterTag(type, name, value);
-    }
+  //   if (value) {
+  //     $clearBtn.show();
+  //     $searchBtnMobile.show();
+  //     $(this).addClass('form-text--filter-search-filled');
+  //     createOrUpdateTag('textfield', name, value, value);
+  //   } else {
+  //     $clearBtn.hide();
+  //     $searchBtnMobile.hide();
+  //     $(this).removeClass('form-text--filter-search-filled');
+  //     removeFilterTag(type, name, value);
+  //   }
 
-  });
+  // });
 
   $('[data-clear-search-input]').on('click', function(event) {
     let $input = $(this).prev();
