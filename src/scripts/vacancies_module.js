@@ -12,6 +12,8 @@ function toggleClearFilterButtons () {
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
+  let $btnFilterScrollTop = $('.btn-filter--scroll-top');
+  let $btnFilterScrollTopCount = $btnFilterScrollTop.find('.btn-filter__count');
   let isMobile = $(window).width() < 576;
 
   if (isMobile) {
@@ -23,10 +25,14 @@ function toggleClearFilterButtons () {
     $clearBtns.show();
     $filtersBtn.removeClass('btn-white--filter-dark-icon');
     $filtersBtnCount.removeClass('hidden').text(selectedItemsLength);
+    $btnFilterScrollTop.addClass('btn-filter--non-zero');
+    $btnFilterScrollTopCount.removeClass('hidden').text(selectedItemsLength);
   } else {
     $clearBtns.hide();
     $filtersBtn.addClass('btn-white--filter-dark-icon');
     $filtersBtnCount.addClass('hidden').text('');
+    $btnFilterScrollTop.removeClass('btn-filter--non-zero');
+    $btnFilterScrollTopCount.addClass('hidden').text('');
   }
 }
 
@@ -396,7 +402,7 @@ $(() => {
   $('input[name="search_filter"]').on('input', function(event) {
     let searchValue = $(this).val().toLowerCase().trim();
     let $additionalFilters = $(this).closest('.additional-filters');
-    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group');
+    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range');
     let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
 
     if (searchValue) {
@@ -406,16 +412,27 @@ $(() => {
     }
 
     $additionalFiltersGroups.each( (index, group) => {
-      let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
-      let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label')).map(label => {
-        return $(label).text().toLowerCase();
-      });
+      if ($(group).hasClass('checkboxes-group') || $(group).hasClass('radiobtns-group')) {
+        let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
+        let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label')).map(label => {
+          return $(label).text().toLowerCase();
+        });
 
-      if (groupTitle.includes(searchValue) || checkboxesLabels.find(label => label.includes(searchValue))) {
-        $(group).show();
+        if (groupTitle.includes(searchValue) || checkboxesLabels.find(label => label.includes(searchValue))) {
+          $(group).removeClass('hidden');
+        } else {
+          $(group).addClass('hidden');
+        }
       } else {
-        $(group).hide();
+        let groupTitle = $(group).find('.filter-element__title').text().toLowerCase();
+
+        if (groupTitle.includes(searchValue)) {
+          $(group).removeClass('hidden');
+        } else {
+          $(group).addClass('hidden');
+        }
       }
+      
     });
   });
 
@@ -641,9 +658,13 @@ $(() => {
 
     let $filterSearchBtn = $('.filter__search-btn');
     let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
+    let $additionalFiltersSubmitBtn = $('.additional-filters__submit-btn');
+    let $additionalFiltersPreloaderWrapper = $('.additional-filters__preloader-wrapper');
 
     $filterSearchBtn.hide();
     $filterPreloaderWrapper.show();
+    $additionalFiltersSubmitBtn.hide();
+    $additionalFiltersPreloaderWrapper.show();
 
     window.location.href = `/vacancies/${urlParams}${requestParams}`;
   }
@@ -881,26 +902,26 @@ $(() => {
   toggleClearFilterButtons();
 
   // Search input with close button
-  // $('[data-search-input]').on('input', function(event) {
-  //   let name = $(this).attr('name');
-  //   let value = $(this).val();
-  //   let $clearBtn = $(this).next('.filter__clear-search-btn');
-  //   let $searchBtnMobile = $('.filter__search-btn-mobile');
-  //   let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
+  $('[data-search-input]').on('input', function(event) {
+    let name = $(this).attr('name');
+    let value = $(this).val();
+    let $clearBtn = $(this).next('.filter__clear-search-btn');
+    let $searchBtnMobile = $('.filter__search-btn-mobile');
+    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
-  //   if (value) {
-  //     $clearBtn.show();
-  //     $searchBtnMobile.show();
-  //     $(this).addClass('form-text--filter-search-filled');
-  //     createOrUpdateTag('textfield', name, value, value);
-  //   } else {
-  //     $clearBtn.hide();
-  //     $searchBtnMobile.hide();
-  //     $(this).removeClass('form-text--filter-search-filled');
-  //     removeFilterTag(type, name, value);
-  //   }
+    if (value) {
+      $clearBtn.show();
+      $searchBtnMobile.show();
+      $(this).addClass('form-text--filter-search-filled');
+      // createOrUpdateTag('textfield', name, value, value);
+    } else {
+      $clearBtn.hide();
+      $searchBtnMobile.hide();
+      $(this).removeClass('form-text--filter-search-filled');
+      // removeFilterTag(type, name, value);
+    }
 
-  // });
+  });
 
   $('[data-clear-search-input]').on('click', function(event) {
     let $input = $(this).prev();
@@ -909,11 +930,11 @@ $(() => {
     let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
 
     clearTextField($input);
-    removeFilterTag(type, name, value);
+    // removeFilterTag(type, name, value);
 
     $input.focus();
 
-    updateFilterUrl();
+    // updateFilterUrl();
   });
 
   document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', updateFilterUrl);
