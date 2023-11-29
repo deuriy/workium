@@ -37,8 +37,8 @@ function toggleClearFilterButtons () {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
-  // console.log('setVisibilitySelectedMoreItem');
-  // console.log(`selectedItemsLength: ${selectedItemsLength}`);
+  console.log('setVisibilitySelectedMoreItem');
+  console.log(`selectedItemsLength: ${selectedItemsLength}`);
 
   $('.selected-items').each(function(index, selectedItemsWrapper) {
     let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
@@ -201,7 +201,7 @@ function createOrUpdateTag (type, name, value, labelText) {
     }
   }
 
-  $container.append(htmlStr);
+  $container.find('.selected-items__more-item').before(htmlStr);
 }
 
 
@@ -450,7 +450,6 @@ $(() => {
     let name = $(this).attr('name');
     let value = $(this).val();
     let labelText = $(this).parent().find('label').text();
-    let selectedItemsLength = $('.additional-filters .selected-items__item').length;
     let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
 
     if ($(this).is(':checkbox')) {
@@ -479,6 +478,8 @@ $(() => {
       }
     }
 
+    let selectedItemsLength = $('.additional-filters .selected-items__item').length;
+    console.log(`selectedItemsLength from handler: ${selectedItemsLength}`);
     toggleClearFilterButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();
@@ -491,11 +492,12 @@ $(() => {
 
     if ($(this).hasClass('more-btn--active')) {
       $(this).find('.more-btn__text').text('Приховати');
+      $selectedItems.addClass('selected-items--expanded');
     } else {
       $(this).find('.more-btn__text').text('Ще');
+      $selectedItems.removeClass('selected-items--expanded');
     }
 
-    $selectedItems.toggleClass('selected-items--expanded');
   });
 
   function updateFilterUrl () {

@@ -271,7 +271,7 @@ function createOrUpdateTag (type, name, value, labelText) {
   if (name === 'cities') {
     $container.find('.selected-items__item[data-name="countries"]').after(htmlStr);
   } else {
-    $container.append(htmlStr);
+    $container.find('.selected-items__more-item').before(htmlStr);
   }
 }
 
@@ -297,9 +297,9 @@ function checkFillingMSSearchInput ($input) {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
-  console.log('vacancies: setVisibilitySelectedMoreItem');
-  console.log(selectedItemsLength);
-  
+  // console.log('vacancies: setVisibilitySelectedMoreItem');
+  // console.log(selectedItemsLength);
+
   $('.selected-items').each(function(index, item) {
     let $moreItem = $(item).find('.selected-items__more-item');
     let moreItemsCount = selectedItemsLength - 11;
