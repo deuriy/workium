@@ -297,6 +297,9 @@ function checkFillingMSSearchInput ($input) {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
+  console.log('vacancies: setVisibilitySelectedMoreItem');
+  console.log(selectedItemsLength);
+  
   $('.selected-items').each(function(index, item) {
     let $moreItem = $(item).find('.selected-items__more-item');
     let moreItemsCount = selectedItemsLength - 11;

@@ -37,8 +37,11 @@ function toggleClearFilterButtons () {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
-  $('.selected-items').each(function(index, item) {
-    let $moreItem = $(item).find('.selected-items__more-item');
+  // console.log('setVisibilitySelectedMoreItem');
+  // console.log(`selectedItemsLength: ${selectedItemsLength}`);
+
+  $('.selected-items').each(function(index, selectedItemsWrapper) {
+    let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
     let moreItemsCount = selectedItemsLength - 11;
 
     if (selectedItemsLength > 11) {
@@ -63,7 +66,7 @@ function checkDependentFilters () {
     let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
 
-    console.log($(el));
+    // console.log($(el));
 
     if (!$parentFilterItem.is(':checked')) {
       $(el).hide();
@@ -447,7 +450,7 @@ $(() => {
     let name = $(this).attr('name');
     let value = $(this).val();
     let labelText = $(this).parent().find('label').text();
-    let selectedItemsLength = $('.selected-items__item').length;
+    let selectedItemsLength = $('.additional-filters .selected-items__item').length;
     let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
 
     if ($(this).is(':checkbox')) {
@@ -938,6 +941,10 @@ $(() => {
   });
 
   document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', updateFilterUrl);
+
+  let additionalFiltersSelectedItemsLength = $('.additional-filters .selected-items__item').length;
+  // console.log(additionalFiltersSelectedItemsLength);
+  setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);
 
 
   // $('[data-remove-last-filter]').click(function(event) {
