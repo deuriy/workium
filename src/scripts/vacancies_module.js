@@ -337,8 +337,6 @@ $(() => {
   // Removing selected items
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
-    // let $additionalFilters = $selectedItemParent.closest('.additional-filters');
-    let selectedItemsLength = $('.filter .selected-items__item').length;
 
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
@@ -348,8 +346,6 @@ $(() => {
       let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
       $otherSelectedItem.remove();
     }
-
-    // console.log(type);
 
     if (![name, value].includes(undefined)) {
       switch (type) {
@@ -364,8 +360,6 @@ $(() => {
         case 'radio':
           let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
           $nonCheckedRadio.prop('checked', true);
-
-          // console.log($nonCheckedRadio);
 
           break;
         case 'range':
@@ -388,7 +382,9 @@ $(() => {
       toggleClearFilterButtons();
     });
 
+    let selectedItemsLength = $('.filter .selected-items__item').length;
     setVisibilitySelectedMoreItem(selectedItemsLength);
+
     checkDependentFilters();
     checkDefaultValue();
 
@@ -479,7 +475,7 @@ $(() => {
     }
 
     let selectedItemsLength = $('.additional-filters .selected-items__item').length;
-    console.log(`selectedItemsLength from handler: ${selectedItemsLength}`);
+
     toggleClearFilterButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();

@@ -1085,6 +1085,7 @@ $(() => {
   // Synchronizing fields when remove tag
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
+    let isMainFilter = !!$selectedItemParent.closest('.selected-items--main-filter').length;
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
     let type = $selectedItemParent.data('type');
@@ -1130,8 +1131,10 @@ $(() => {
 
     setTimeout(() => {
       toggleClearFilterButtons();
-      // createFilterUrl();
-      document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+
+      if (isMainFilter) {
+        document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+      }
     });
 
     event.preventDefault();
