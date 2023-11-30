@@ -843,7 +843,10 @@ $(() => {
       }
     });
 
-    slider.noUiSlider.on('update', function (values, handle) {
+    slider.noUiSlider.on('change', function (values, handle) {
+      // console.log(handle);
+      // console.log(values);
+
       fieldsFrom.forEach(field => {
         field.value = values[0];
       });
@@ -853,7 +856,7 @@ $(() => {
       });
 
       let name = slider.dataset.name;
-      let value = `${values[0]}-${values[1]}`
+      let value = `${values[0]}-${values[1]}`;
 
       if (slider.dataset.min != values[0] || slider.dataset.max != values[1]) {
         let label = slider.closest('.filter-element').querySelector('.filter-element__title');
@@ -878,9 +881,25 @@ $(() => {
     checkDefaultValue();
 
     ['input', 'change'].forEach(eventName => {
-      fieldsFrom.forEach(field => {
+      fieldsFrom.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
           slider.noUiSlider.set([this.value, null]);
+
+          console.log(`idx: ${idx}`);
+          console.log(`fieldsFrom: ${this.value}`);
+
+          let name = slider.dataset.name;
+          let value = `${this.value}-${fieldsTo[idx].value}`;
+
+          if (slider.dataset.min != this.value || slider.dataset.max != fieldsTo[idx].value) {
+            let label = slider.closest('.filter-element').querySelector('.filter-element__title');
+            let labelText = value;
+
+            createOrUpdateTag("range", name, value, labelText);
+          } else {
+            let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+            $selectedItem.remove();
+          }
 
           setTimeout(() => {
             toggleClearFilterButtons();
@@ -888,9 +907,29 @@ $(() => {
         });
       });
 
-      fieldsTo.forEach(field => {
+      fieldsTo.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
           slider.noUiSlider.set([null, this.value]);
+
+          console.log(`idx: ${idx}`);
+          console.log(`fieldsTo: ${this.value}`);
+
+          let name = slider.dataset.name;
+          let value = `${fieldsFrom[idx].value}-${this.value}`;
+
+          if (slider.dataset.min != fieldsFrom[idx].value || slider.dataset.max != this.value) {
+            let label = slider.closest('.filter-element').querySelector('.filter-element__title');
+            let labelText = value;
+
+            createOrUpdateTag("range", name, value, labelText);
+          } else {
+            let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+            $selectedItem.remove();
+          }
+
+          setTimeout(() => {
+            toggleClearFilterButtons();
+          });
 
           setTimeout(() => {
             toggleClearFilterButtons();
