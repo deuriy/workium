@@ -862,8 +862,8 @@ $(() => {
       }
     });
 
-    slider.noUiSlider.on('change', function (values, handle) {
-      console.log('noUiSlider change');
+    slider.noUiSlider.on('slide', function (values, handle) {
+      console.log('noUiSlider slide');
 
       fieldsFrom.forEach(field => {
         field.value = values[0];
@@ -898,9 +898,13 @@ $(() => {
 
     checkDefaultValue();
 
-    ['input', 'change'].forEach(eventName => {
+    ['input'].forEach(eventName => {
       fieldsFrom.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
+          console.log('fieldFrom change!');
+
+          if (!this.value) return;
+
           slider.noUiSlider.set([this.value, null]);
 
           let name = slider.dataset.name;
@@ -924,6 +928,10 @@ $(() => {
 
       fieldsTo.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
+          console.log('fieldsTo change!');
+
+          if (!this.value) return;
+
           slider.noUiSlider.set([null, this.value]);
 
           let name = slider.dataset.name;
@@ -952,6 +960,48 @@ $(() => {
       // setTimeout(() => {
       //   toggleClearFilterButtons();
       // });
+    });
+
+    fieldsFrom.forEach((field, idx) => {
+      field.addEventListener('change', function (e) {
+        let name = slider.dataset.name;
+        let fromValue = this.value;
+        let toValue = fieldsTo[idx].value;
+
+        if (this.value == '') {
+          fromValue = slider.noUiSlider.get()[0];
+        } else if (this.value < min) {
+          fromValue = min;
+        } else if (this.value > max) {
+          fromValue = max;
+        }
+
+        let value = `${fromValue}-${toValue}`;
+        this.value = fromValue;
+        slider.noUiSlider.set([fromValue, null]);
+        createOrUpdateTag("range", name, value, value);
+      });
+    });
+
+    fieldsTo.forEach((field, idx) => {
+      field.addEventListener('change', function (e) {
+        let name = slider.dataset.name;
+        let fromValue = fieldsFrom[idx].value;
+        let toValue = this.value;
+
+        if (this.value == '') {
+          toValue = slider.noUiSlider.get()[1];
+        } else if (this.value < min) {
+          toValue = min;
+        } else if (this.value > max) {
+          toValue = max;
+        }
+
+        let value = `${fromValue}-${toValue}`;
+        this.value = toValue;
+        slider.noUiSlider.set([null, toValue]);
+        createOrUpdateTag("range", name, value, value);
+      });
     });
   });
 
