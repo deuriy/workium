@@ -844,9 +844,6 @@ $(() => {
     });
 
     slider.noUiSlider.on('change', function (values, handle) {
-      // console.log(handle);
-      // console.log(values);
-
       fieldsFrom.forEach(field => {
         field.value = values[0];
       });
@@ -885,9 +882,6 @@ $(() => {
         field.addEventListener(eventName, function (e) {
           slider.noUiSlider.set([this.value, null]);
 
-          console.log(`idx: ${idx}`);
-          console.log(`fieldsFrom: ${this.value}`);
-
           let name = slider.dataset.name;
           let value = `${this.value}-${fieldsTo[idx].value}`;
 
@@ -910,9 +904,6 @@ $(() => {
       fieldsTo.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
           slider.noUiSlider.set([null, this.value]);
-
-          console.log(`idx: ${idx}`);
-          console.log(`fieldsTo: ${this.value}`);
 
           let name = slider.dataset.name;
           let value = `${fieldsFrom[idx].value}-${this.value}`;
