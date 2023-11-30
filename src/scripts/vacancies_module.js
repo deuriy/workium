@@ -337,7 +337,7 @@ $(() => {
   // Removing selected items
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
-    // let $nonCheckedRadio = null;
+    let $selectedRadio = null;
 
     let name = $selectedItemParent.data('name');
     let value = $selectedItemParent.data('value');
@@ -359,8 +359,8 @@ $(() => {
 
           break;
         case 'radio':
-          let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
-          $nonCheckedRadio.prop('checked', true);
+          $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
+          $selectedRadio.prop('checked', false);
 
           break;
         case 'range':
@@ -373,8 +373,8 @@ $(() => {
           let $select = $(`select[name="${name}"]`);
           $select.val('').trigger('change', ['fromCode']);
 
-          let $checkedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
-          $checkedRadio.prop('checked', false);
+          $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
+          $selectedRadio.prop('checked', false);
 
           break;
       }
