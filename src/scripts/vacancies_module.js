@@ -81,6 +81,25 @@ function resetRangeSlider (rangeSlider) {
   let max = rangeSlider.dataset.max;
 
   rangeSlider.noUiSlider.set([min, max]);
+
+  let syncFromFieldIds = rangeSlider.dataset.syncFromFieldIds;
+  let syncToFieldIds = rangeSlider.dataset.syncToFieldIds;
+
+  syncFromFieldIds.split(',').forEach(id => {
+    let field = document.getElementById(id.trim());
+
+    if (field) {
+      field.value = min;
+    }
+  });
+
+  syncToFieldIds.split(',').forEach(id => {
+    let field = document.getElementById(id.trim());
+
+    if (field) {
+      field.value = max;
+    }
+  });
 }
 
 function clearFilter () {
@@ -844,6 +863,8 @@ $(() => {
     });
 
     slider.noUiSlider.on('change', function (values, handle) {
+      console.log('noUiSlider change');
+
       fieldsFrom.forEach(field => {
         field.value = values[0];
       });
