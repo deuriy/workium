@@ -240,33 +240,40 @@
 				border-bottom none
 	
 	&__checkboxes-group
+		&--termin-vidpraciuvannia,
+		&--tip-kandidativ
+			@media $smPlus
+				grid-row 1 / 2
+			
 		&--gender
 			@media $xxs
 				order -2
 		
 		&--specializaciia
-			order 1
+			// order 1
 			
 			@media $smPlus
 				grid-column 1 / 4
 	
 	&__radiobtns-group
+		&--kategoriia-pracivnika
+			@media $smPlus
+				grid-row 1 / 2
+
 		&--specializaciia
 			order 1
 			
 			@media $smPlus
 				grid-column 1 / 4
 	
-	&__filter-element
-		&--range
-			@media $xxs
-				order -1
+	// &__filter-element
+	// 	&--range
+	// 		@media $xxs
+	// 			order -1
 	
 	&__footer
 		display grid
-		// grid-template-columns repeat(2, auto)
 		grid-template-columns 100%
-		// justify-content end
 		justify-content center
 		justify-items center
 		align-items center
