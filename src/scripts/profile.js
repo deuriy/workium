@@ -176,6 +176,25 @@ $(() => {
 	});
 
 
+  $('.dropdown-menu__link--copy-user-id').click(function(e) {
+  	let $copyLinkInput = $($(this).attr('href'));
+  	let defaultText = $(this).text();
+
+  	copyText($copyLinkInput[0]);
+
+  	$(this).find('.dropdown-menu__link-title').text('ID скопійовано!');
+  	$(this).addClass('dropdown-menu__link--copied-user-id');
+
+  	setTimeout(() => {
+  		$(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
+  		$(this).removeClass('dropdown-menu__link--copied-user-id');
+
+  		$(this).find('.dropdown-menu__link-title').text(defaultText);
+  	}, 2000);
+
+    e.preventDefault();
+  });
+
   $('.dropdown-menu__link--copy-link').click(function(e) {
   	let $copyLinkInput = $($(this).attr('href'));
 
