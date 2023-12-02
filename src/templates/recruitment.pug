@@ -105,9 +105,10 @@ block content
                 .status-line__item-text Відпрацював
               .status-line__item.status-line__item--payment
                 .status-line__item-text Виплата
-          .client-labels.client-card__labels
-            .client-label-filled.client-label-filled--grey-bg.client-labels__item Бронювання: 5 січ 2023
-            .client-label.client-label--grey.client-labels__item Виїзд: 2 лют 2023
+          .client-card__labels-wrapper
+            .client-labels.client-card__labels
+              .client-label-filled.client-label-filled--no-radius-right.client-label-filled--grey-bg.client-labels__item Бронювання: 5 січ 2023
+              .client-label.client-label--grey.client-labels__item Виїзд: 2 лют 2023
       .client-card.client-card--aqua-bg.client-cards__item
         .client-card__header
           .client-card__name-and-phone
@@ -193,9 +194,10 @@ block content
                 .status-line__item-text Відпрацював
               .status-line__item.status-line__item--payment
                 .status-line__item-text Виплата
-          .client-labels.client-card__labels
-            .client-label-filled.client-label-filled--aqua-bg.client-labels__item Бронювання: 5 січ 2023
-            .client-label.client-label--aqua.client-labels__item Виїзд: 2 лют 2023
+          .client-card__labels-wrapper
+            .client-labels.client-card__labels
+              .client-label-filled.client-label-filled--no-radius-right.client-label-filled--aqua-bg.client-labels__item Бронювання: 5 січ 2023
+              .client-label.client-label--aqua.client-labels__item Виїзд: 2 лют 2023
       .client-card.client-cards__item
         .client-card__header
           .client-card__name-and-phone
@@ -278,10 +280,11 @@ block content
                 .status-line__item-text Відпрацював
               .status-line__item.status-line__item--highlighted.status-line__item--payment
                 .status-line__item-text Виплата
-          .client-labels.client-card__labels
-            .client-label-filled.client-labels__item Бронювання: 5 січ 2023
-            .client-label.client-labels__item Виїзд: 2 лют 2023
-      .client-card.client-card--lilac-bg.client-cards__item
+          .client-card__labels-wrapper
+            .client-labels.client-card__labels
+              .client-label-filled.client-label-filled--no-radius-right.client-labels__item Бронювання: 5 січ 2023
+              .client-label.client-labels__item Виїзд: 2 лют 2023
+      .client-card.client-card--orange-bg.client-cards__item
         .client-card__header
           .client-card__name-and-phone
             .client-card__name Теребей Наталiя
@@ -311,7 +314,7 @@ block content
               .specification__title Бронь
               .specification__value 5 січ 2023
             .specification.client-card__specification
-              .specification__title Виїзд
+              .specification__title Приїзд
               .specification__value 28 січ 2023
             .specification.client-card__specification
               .specification__title Підприємство
@@ -325,179 +328,15 @@ block content
             .specification.client-card__specification
               .specification__title Винагорода
               .specification__value 500 зл
-          button(type="button" data-src="#client-status-popup5" data-slug="client-status-popup5").client-status.client-status--lilac-bg.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Працює
-          .fancybox-popup#client-status-popup5(style="display: none;")
-            h3.fancybox-popup__title Статус
-            .fancybox-popup__client-info
-              .fancybox-popup__client-name Теребей Наталiя Iванiвна
-              a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
-            .status-line.status-line--lilac-bg.status-line--vertical.fancybox-popup__status-line
-              .status-line__line
-                .status-line__line-fill(style="height: 66%")
-              .status-line__items
-                .status-line__item.status-line__item--payment
-                  .status-line__item-text Виплата
-                .status-line__item.status-line__item--highlighted.status-line__item--worked-out
-                  .status-line__item-text Відпрацював
-                .status-line__item.status-line__item--highlighted.status-line__item--working
-                  .status-line__item-text Працює
-                .status-line__item.status-line__item--highlighted.status-line__item--paperwork
-                  .status-line__item-text Оформлення
-                .status-line__item.status-line__item--highlighted.status-line__item--left
-                  .status-line__item-text Виїхав
-                .status-line__item.status-line__item--highlighted.status-line__item--booked
-                  .status-line__item-text Заброньований
-          .status-line.status-line--lilac-bg.client-card__status-line.hidden-xs
-            .status-line__line
-              .status-line__line-fill(style="width: 66%")
-            .status-line__items
-              .status-line__item.status-line__item--highlighted.status-line__item--booked
-                .status-line__item-text Заброньований
-              .status-line__item.status-line__item--highlighted.status-line__item--left
-                .status-line__item-text Виїхав
-              .status-line__item.status-line__item--highlighted.status-line__item--paperwork
-                .status-line__item-text Оформлення
-              .status-line__item.status-line__item--highlighted.status-line__item--working
-                .status-line__item-text Працює
-              .status-line__item.status-line__item--highlighted.status-line__item--worked-out
-                .status-line__item-text Відпрацював
-              .status-line__item.status-line__item--highlighted.status-line__item--payment
-                .status-line__item-text Виплата
-      .client-card.client-card--beige-bg.client-cards__item
-        .client-card__header
-          .client-card__name-and-phone
-            .client-card__name Теребей Наталiя
-            a(href="tel:+380987653498").client-card__phone +380987653498
-          .client-card__btn-and-icon
-            button(type="button" data-additional-toggle).toggle-btn.client-card__additional-toggle-btn Додатково
-            button(type="button" data-additional-toggle).icon-info
-          //- .client-card__id-and-comment.hidden-xxs
-          //-   .client-card__id ID: 5233479
-          //-   .client-card__comment Якийсь невеликий коментар
-        .client-card__body
-          .client-card__additional
-            .client-card__additional-label Додаткова інформація:
-            a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-smPlus Скопіювати додаткову інформацію
-              .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
-            .client-card__additional-text
-              p Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином.
-            .client-card__additional-footer
-              .client-card__additional-footer-left
-                .client-card__additional-item ID бронювання: #[span.semibold 232311]
-                .client-card__additional-item Час та дата бронювання: #[span.semibold 20:15 23.04.2023]
-              .client-card__additional-footer-right
-                a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-xs Скопіювати інформацію
-                  .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
-          .client-card__specifications.client-card__specifications--recruitment
-            .specification.client-card__specification
-              .specification__title Бронь
-              .specification__value 5 січ 2023
-            .specification.client-card__specification
-              .specification__title Виїзд
-              .specification__value 28 січ 2023
-            .specification.client-card__specification
-              .specification__title Підприємство
-              .specification__value.specification__value--company LG Electronics
-            .specification.client-card__specification
-              .specification__title Вакансія
-              .specification__value.specification__value--vacancy Склад фабрики з пошиття робочого одягу
-            .specification.client-card__specification
-              .specification__title Роботодавець
-              .specification__value Ворк Профi
-            .specification.client-card__specification
-              .specification__title Винагорода
-              .specification__value 500 зл
-          button(type="button" data-src="#client-status-popup3" data-slug="client-status-popup3").client-status.client-status--beige-bg.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Відпрацював
-          .fancybox-popup#client-status-popup3(style="display: none;")
-            h3.fancybox-popup__title Статус
-            .fancybox-popup__client-info
-              .fancybox-popup__client-name Теребей Наталiя Iванiвна
-              a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
-            .status-line.status-line--beige-bg.status-line--vertical.fancybox-popup__status-line
-              .status-line__line
-                .status-line__line-fill(style="height: 86%")
-              .status-line__items
-                .status-line__item.status-line__item--payment
-                  .status-line__item-text Виплата
-                .status-line__item.status-line__item--highlighted.status-line__item--worked-out
-                  .status-line__item-text Відпрацював
-                .status-line__item.status-line__item--highlighted.status-line__item--working
-                  .status-line__item-text Працює
-                .status-line__item.status-line__item--highlighted.status-line__item--paperwork
-                  .status-line__item-text Оформлення
-                .status-line__item.status-line__item--highlighted.status-line__item--left
-                  .status-line__item-text Виїхав
-                .status-line__item.status-line__item--highlighted.status-line__item--booked
-                  .status-line__item-text Заброньований
-          .status-line.status-line--beige-bg.client-card__status-line.hidden-xs
-            .status-line__line
-              .status-line__line-fill(style="width: 86%")
-            .status-line__items
-              .status-line__item.status-line__item--highlighted.status-line__item--booked
-                .status-line__item-text Заброньований
-              .status-line__item.status-line__item--highlighted.status-line__item--left
-                .status-line__item-text Виїхав
-              .status-line__item.status-line__item--highlighted.status-line__item--paperwork
-                .status-line__item-text Оформлення
-              .status-line__item.status-line__item--highlighted.status-line__item--working
-                .status-line__item-text Працює
-              .status-line__item.status-line__item--highlighted.status-line__item--worked-out
-                .status-line__item-text Відпрацював
-              .status-line__item.status-line__item--highlighted.status-line__item--payment
-                .status-line__item-text Виплата
-      .client-card.client-card--green-bg.client-cards__item
-        .client-card__header
-          .client-card__name-and-phone
-            .client-card__name Теребей Наталiя
-            a(href="tel:+380987653498").client-card__phone +380987653498
-          .client-card__btn-and-icon
-            button(type="button" data-additional-toggle).toggle-btn.client-card__additional-toggle-btn Додатково
-            button(type="button" data-additional-toggle).icon-info
-          //- .client-card__id-and-comment.hidden-xxs
-          //-   .client-card__id ID: 5233479
-          //-   .client-card__comment Якийсь невеликий коментар
-        .client-card__body
-          .client-card__additional
-            .client-card__additional-label Додаткова інформація:
-            a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-smPlus Скопіювати додаткову інформацію
-              .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
-            .client-card__additional-text
-              p Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином.
-            .client-card__additional-footer
-              .client-card__additional-footer-left
-                .client-card__additional-item ID бронювання: #[span.semibold 232311]
-                .client-card__additional-item Час та дата бронювання: #[span.semibold 20:15 23.04.2023]
-              .client-card__additional-footer-right
-                a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-xs Скопіювати інформацію
-                  .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
-          .client-card__specifications.client-card__specifications--recruitment
-            .specification.client-card__specification
-              .specification__title Бронь
-              .specification__value 5 січ 2023
-            .specification.client-card__specification
-              .specification__title Виїзд
-              .specification__value 28 січ 2023
-            .specification.client-card__specification
-              .specification__title Підприємство
-              .specification__value.specification__value--company LG Electronics
-            .specification.client-card__specification
-              .specification__title Вакансія
-              .specification__value.specification__value--vacancy Склад фабрики з пошиття робочого одягу
-            .specification.client-card__specification
-              .specification__title Роботодавець
-              .specification__value Ворк Профi
-            .specification.client-card__specification
-              .specification__title Винагорода
-              .specification__value 500 зл
-          button(type="button" data-src="#client-status-popup4" data-slug="client-status-popup4").client-status.client-status--green-bg.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Виплата
+          button(type="button" data-src="#client-status-popup4" data-slug="client-status-popup4").client-status.client-status--orange-bg.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Оформлення
           .fancybox-popup#client-status-popup4(style="display: none;")
             h3.fancybox-popup__title Статус
             .fancybox-popup__client-info
               .fancybox-popup__client-name Теребей Наталiя Iванiвна
               a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
-            .status-line.status-line--green-bg.status-line--vertical.fancybox-popup__status-line
+            .status-line.status-line--orange-bg.status-line--vertical.fancybox-popup__status-line
               .status-line__line
-                .status-line__line-fill(style="height: 100%")
+                .status-line__line-fill(style="height: 39.7%")
               .status-line__items
                 .status-line__item.status-line__item--payment
                   .status-line__item-text Виплата
@@ -511,9 +350,10 @@ block content
                   .status-line__item-text Виїхав
                 .status-line__item.status-line__item--highlighted.status-line__item--booked
                   .status-line__item-text Заброньований
-          .status-line.status-line--green-bg.client-card__status-line.hidden-xs
+          .status-line.status-line--orange-bg.client-card__status-line.hidden-xs
             .status-line__line
-              .status-line__line-fill(style="width: 100%")
+              .status-line__line-fill(style="width: 39.7%")
+              //- .status-line__cancel-icon(style="margin-left:39.7%")
             .status-line__items
               .status-line__item.status-line__item--highlighted.status-line__item--booked
                 .status-line__item-text Заброньований
@@ -527,4 +367,257 @@ block content
                 .status-line__item-text Відпрацював
               .status-line__item.status-line__item--highlighted.status-line__item--payment
                 .status-line__item-text Виплата
+          .client-card__labels-wrapper
+            .client-labels.client-card__labels.hidden-xs
+              .client-label-filled.client-label-filled--no-radius-right.client-label-filled--orange-bg.client-labels__item 5 січ 2023
+              .client-label.client-label--orange.client-labels__item Виїзд: 2 лют 2023
+            .client-label-filled.client-label-filled--orange-bg.client-labels__item.hidden-xs Відміна
+            .client-card__label.hidden-smPlus Скасування броні
+
+      //- .client-card.client-card--lilac-bg.client-cards__item
+      //-   .client-card__header
+      //-     .client-card__name-and-phone
+      //-       .client-card__name Теребей Наталiя
+      //-       a(href="tel:+380987653498").client-card__phone +380987653498
+      //-     .client-card__btn-and-icon
+      //-       button(type="button" data-additional-toggle).toggle-btn.client-card__additional-toggle-btn Додатково
+      //-       button(type="button" data-additional-toggle).icon-info
+      //-     //- .client-card__id-and-comment.hidden-xxs
+      //-     //-   .client-card__id ID: 5233479
+      //-     //-   .client-card__comment Якийсь невеликий коментар
+      //-   .client-card__body
+      //-     .client-card__additional
+      //-       .client-card__additional-label Додаткова інформація:
+      //-       a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-smPlus Скопіювати додаткову інформацію
+      //-         .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
+      //-       .client-card__additional-text
+      //-         p Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином.
+      //-       .client-card__additional-footer
+      //-         .client-card__additional-footer-left
+      //-           .client-card__additional-item ID бронювання: #[span.semibold 232311]
+      //-           .client-card__additional-item Час та дата бронювання: #[span.semibold 20:15 23.04.2023]
+      //-         .client-card__additional-footer-right
+      //-           a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-xs Скопіювати інформацію
+      //-             .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
+      //-     .client-card__specifications.client-card__specifications--recruitment
+      //-       .specification.client-card__specification
+      //-         .specification__title Бронь
+      //-         .specification__value 5 січ 2023
+      //-       .specification.client-card__specification
+      //-         .specification__title Виїзд
+      //-         .specification__value 28 січ 2023
+      //-       .specification.client-card__specification
+      //-         .specification__title Підприємство
+      //-         .specification__value.specification__value--company LG Electronics
+      //-       .specification.client-card__specification
+      //-         .specification__title Вакансія
+      //-         .specification__value.specification__value--vacancy Склад фабрики з пошиття робочого одягу
+      //-       .specification.client-card__specification
+      //-         .specification__title Роботодавець
+      //-         .specification__value Ворк Профi
+      //-       .specification.client-card__specification
+      //-         .specification__title Винагорода
+      //-         .specification__value 500 зл
+      //-     button(type="button" data-src="#client-status-popup5" data-slug="client-status-popup5").client-status.client-status--lilac-bg.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Працює
+      //-     .fancybox-popup#client-status-popup5(style="display: none;")
+      //-       h3.fancybox-popup__title Статус
+      //-       .fancybox-popup__client-info
+      //-         .fancybox-popup__client-name Теребей Наталiя Iванiвна
+      //-         a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+      //-       .status-line.status-line--lilac-bg.status-line--vertical.fancybox-popup__status-line
+      //-         .status-line__line
+      //-           .status-line__line-fill(style="height: 66%")
+      //-         .status-line__items
+      //-           .status-line__item.status-line__item--payment
+      //-             .status-line__item-text Виплата
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+      //-             .status-line__item-text Відпрацював
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--working
+      //-             .status-line__item-text Працює
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+      //-             .status-line__item-text Оформлення
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--left
+      //-             .status-line__item-text Виїхав
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--booked
+      //-             .status-line__item-text Заброньований
+      //-     .status-line.status-line--lilac-bg.client-card__status-line.hidden-xs
+      //-       .status-line__line
+      //-         .status-line__line-fill(style="width: 66%")
+      //-       .status-line__items
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--booked
+      //-           .status-line__item-text Заброньований
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--left
+      //-           .status-line__item-text Виїхав
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+      //-           .status-line__item-text Оформлення
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--working
+      //-           .status-line__item-text Працює
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+      //-           .status-line__item-text Відпрацював
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--payment
+      //-           .status-line__item-text Виплата
+      //- .client-card.client-card--beige-bg.client-cards__item
+      //-   .client-card__header
+      //-     .client-card__name-and-phone
+      //-       .client-card__name Теребей Наталiя
+      //-       a(href="tel:+380987653498").client-card__phone +380987653498
+      //-     .client-card__btn-and-icon
+      //-       button(type="button" data-additional-toggle).toggle-btn.client-card__additional-toggle-btn Додатково
+      //-       button(type="button" data-additional-toggle).icon-info
+      //-     //- .client-card__id-and-comment.hidden-xxs
+      //-     //-   .client-card__id ID: 5233479
+      //-     //-   .client-card__comment Якийсь невеликий коментар
+      //-   .client-card__body
+      //-     .client-card__additional
+      //-       .client-card__additional-label Додаткова інформація:
+      //-       a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-smPlus Скопіювати додаткову інформацію
+      //-         .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
+      //-       .client-card__additional-text
+      //-         p Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином.
+      //-       .client-card__additional-footer
+      //-         .client-card__additional-footer-left
+      //-           .client-card__additional-item ID бронювання: #[span.semibold 232311]
+      //-           .client-card__additional-item Час та дата бронювання: #[span.semibold 20:15 23.04.2023]
+      //-         .client-card__additional-footer-right
+      //-           a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-xs Скопіювати інформацію
+      //-             .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
+      //-     .client-card__specifications.client-card__specifications--recruitment
+      //-       .specification.client-card__specification
+      //-         .specification__title Бронь
+      //-         .specification__value 5 січ 2023
+      //-       .specification.client-card__specification
+      //-         .specification__title Виїзд
+      //-         .specification__value 28 січ 2023
+      //-       .specification.client-card__specification
+      //-         .specification__title Підприємство
+      //-         .specification__value.specification__value--company LG Electronics
+      //-       .specification.client-card__specification
+      //-         .specification__title Вакансія
+      //-         .specification__value.specification__value--vacancy Склад фабрики з пошиття робочого одягу
+      //-       .specification.client-card__specification
+      //-         .specification__title Роботодавець
+      //-         .specification__value Ворк Профi
+      //-       .specification.client-card__specification
+      //-         .specification__title Винагорода
+      //-         .specification__value 500 зл
+      //-     button(type="button" data-src="#client-status-popup3" data-slug="client-status-popup3").client-status.client-status--beige-bg.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Відпрацював
+      //-     .fancybox-popup#client-status-popup3(style="display: none;")
+      //-       h3.fancybox-popup__title Статус
+      //-       .fancybox-popup__client-info
+      //-         .fancybox-popup__client-name Теребей Наталiя Iванiвна
+      //-         a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+      //-       .status-line.status-line--beige-bg.status-line--vertical.fancybox-popup__status-line
+      //-         .status-line__line
+      //-           .status-line__line-fill(style="height: 86%")
+      //-         .status-line__items
+      //-           .status-line__item.status-line__item--payment
+      //-             .status-line__item-text Виплата
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+      //-             .status-line__item-text Відпрацював
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--working
+      //-             .status-line__item-text Працює
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+      //-             .status-line__item-text Оформлення
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--left
+      //-             .status-line__item-text Виїхав
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--booked
+      //-             .status-line__item-text Заброньований
+      //-     .status-line.status-line--beige-bg.client-card__status-line.hidden-xs
+      //-       .status-line__line
+      //-         .status-line__line-fill(style="width: 86%")
+      //-       .status-line__items
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--booked
+      //-           .status-line__item-text Заброньований
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--left
+      //-           .status-line__item-text Виїхав
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+      //-           .status-line__item-text Оформлення
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--working
+      //-           .status-line__item-text Працює
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+      //-           .status-line__item-text Відпрацював
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--payment
+      //-           .status-line__item-text Виплата
+      //- .client-card.client-card--green-bg.client-cards__item
+      //-   .client-card__header
+      //-     .client-card__name-and-phone
+      //-       .client-card__name Теребей Наталiя
+      //-       a(href="tel:+380987653498").client-card__phone +380987653498
+      //-     .client-card__btn-and-icon
+      //-       button(type="button" data-additional-toggle).toggle-btn.client-card__additional-toggle-btn Додатково
+      //-       button(type="button" data-additional-toggle).icon-info
+      //-     //- .client-card__id-and-comment.hidden-xxs
+      //-     //-   .client-card__id ID: 5233479
+      //-     //-   .client-card__comment Якийсь невеликий коментар
+      //-   .client-card__body
+      //-     .client-card__additional
+      //-       .client-card__additional-label Додаткова інформація:
+      //-       a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-smPlus Скопіювати додаткову інформацію
+      //-         .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
+      //-       .client-card__additional-text
+      //-         p Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином. Клієнт їде з малолітнім сином.
+      //-       .client-card__additional-footer
+      //-         .client-card__additional-footer-left
+      //-           .client-card__additional-item ID бронювання: #[span.semibold 232311]
+      //-           .client-card__additional-item Час та дата бронювання: #[span.semibold 20:15 23.04.2023]
+      //-         .client-card__additional-footer-right
+      //-           a(href="#" data-additional-item-copy).client-card__additional-item.client-card__additional-item--copy.hidden-xs Скопіювати інформацію
+      //-             .tooltip.tooltip--copied.client-card__additional-item-tooltip Скопійовано!
+      //-     .client-card__specifications.client-card__specifications--recruitment
+      //-       .specification.client-card__specification
+      //-         .specification__title Бронь
+      //-         .specification__value 5 січ 2023
+      //-       .specification.client-card__specification
+      //-         .specification__title Виїзд
+      //-         .specification__value 28 січ 2023
+      //-       .specification.client-card__specification
+      //-         .specification__title Підприємство
+      //-         .specification__value.specification__value--company LG Electronics
+      //-       .specification.client-card__specification
+      //-         .specification__title Вакансія
+      //-         .specification__value.specification__value--vacancy Склад фабрики з пошиття робочого одягу
+      //-       .specification.client-card__specification
+      //-         .specification__title Роботодавець
+      //-         .specification__value Ворк Профi
+      //-       .specification.client-card__specification
+      //-         .specification__title Винагорода
+      //-         .specification__value 500 зл
+      //-     button(type="button" data-src="#client-status-popup4" data-slug="client-status-popup4").client-status.client-status--green-bg.client-card__status-btn.fancybox-popup-toggle.hidden-smPlus Виплата
+      //-     .fancybox-popup#client-status-popup4(style="display: none;")
+      //-       h3.fancybox-popup__title Статус
+      //-       .fancybox-popup__client-info
+      //-         .fancybox-popup__client-name Теребей Наталiя Iванiвна
+      //-         a(href="tel:+380987653498").fancybox-popup__client-phone +380987653498
+      //-       .status-line.status-line--green-bg.status-line--vertical.fancybox-popup__status-line
+      //-         .status-line__line
+      //-           .status-line__line-fill(style="height: 100%")
+      //-         .status-line__items
+      //-           .status-line__item.status-line__item--payment
+      //-             .status-line__item-text Виплата
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+      //-             .status-line__item-text Відпрацював
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--working
+      //-             .status-line__item-text Працює
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+      //-             .status-line__item-text Оформлення
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--left
+      //-             .status-line__item-text Виїхав
+      //-           .status-line__item.status-line__item--highlighted.status-line__item--booked
+      //-             .status-line__item-text Заброньований
+      //-     .status-line.status-line--green-bg.client-card__status-line.hidden-xs
+      //-       .status-line__line
+      //-         .status-line__line-fill(style="width: 100%")
+      //-       .status-line__items
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--booked
+      //-           .status-line__item-text Заброньований
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--left
+      //-           .status-line__item-text Виїхав
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--paperwork
+      //-           .status-line__item-text Оформлення
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--working
+      //-           .status-line__item-text Працює
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--worked-out
+      //-           .status-line__item-text Відпрацював
+      //-         .status-line__item.status-line__item--highlighted.status-line__item--payment
+      //-           .status-line__item-text Виплата
   script(src="/js/recruitment.js")

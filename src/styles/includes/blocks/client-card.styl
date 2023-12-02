@@ -248,8 +248,24 @@
 	&__status-line
 		margin-right 8px
 	
-	&__labels
+	&__labels-wrapper
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content start
+		align-items center
+		gap 8px
 		margin-top 18px
+		
+		@media $xxs
+			grid-template-columns 100%
+			justify-items start
+			gap 16px
+	
+	&__label
+		color #FA7D7D
+		font-weight 600
+		font-size 15px
+		line-height 1.6
 	
 	&--grey-bg
 		.client-card__header
@@ -270,3 +286,7 @@
 	&--lilac-bg
 		.client-card__header
 			background linear-gradient(90deg, #ded9f2 0%, #dce1f5 100%)
+	
+	&--orange-bg
+		.client-card__header
+			background linear-gradient(90deg, #FA8F8F 0%, #FFBAA4 99.92%)
