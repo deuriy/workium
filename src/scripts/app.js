@@ -179,8 +179,6 @@ $(() => {
         if (slide.src.includes('award-') && !slide.contentEl.classList.contains('fancybox-popup--award-dark-bg')) {
           runConfetti();
         } else if (slide.src.includes('employment-smart-work-popup')) {
-          // let $showContactsBtn = $(slide.contentEl).find('.fancybox-popup__show-contacts-btn');
-
           showContactsTimer = setTimeout(() => {
             let $showContactsBtn = $('#employment-smart-work-popup .fancybox-popup__show-contacts-btn');
             $showContactsBtn.removeClass('btn-grey btn-grey--employment-popup').addClass('btn-default btn-default--employment-popup');
@@ -188,8 +186,14 @@ $(() => {
             $showContactsBtn.text('Показати контакти');
 
             $showContactsBtn.click(function(e) {
-              $(this).hide();
+              $(this).parent().hide();
               $('#employment-smart-work-popup').find('.fancybox-popup__contact-box').show();
+
+              let destination = $('#employment-contact-box').offset().top;
+
+              $('#employment-smart-work-popup').animate( {
+                scrollTop: destination
+              }, 500 );
 
               // Adding plus to phone number
               let $viberBtn = $('#employment-smart-work-popup .btn-purple--viber-order-service');
