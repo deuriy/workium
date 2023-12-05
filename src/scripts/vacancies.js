@@ -104,13 +104,9 @@ function applyChangesToSelectedSex ($select) {
   toggleClearFilterButtons();
 
   // $select[0].dispatchEvent(new Event('change'));
-
-  // toggleClearFilterButtons();
 }
 
 function clearCitiesSelect () {
-  // $('.dropdown-block--cities-select .ms-selection__clear-btn').click();
-
   let $dropdownBlock = $('.dropdown-block--cities-select');
   let $clearBtn = $dropdownBlock.find('.ms-selection__clear-btn');
 
@@ -125,48 +121,27 @@ function clearCitiesSelect () {
   let $citiesSelect = $('.filter__cities-select-toggle');
   applyChangesToSelectedCities($citiesSelect);
 
-  // $('.dropdown-block--cities-select .ms-container__apply-btn').click();
-
-  // $('.selected-items--cities .selected-items__clear-btn').click();
-
   selectedCitiesIds = [...currentSelectedCitiesIds];
+}
 
+function clearCitiesCheckboxes () {
+  currentSelectedCitiesIds = [];
 
-  // let $searchInput = $('.cities-filter__search-input');
-  // $searchInput.val('').trigger('input');
-
-  // setCheckedCityCheckboxesTitle();
-  // toggleClearCitiesButtons();
-
-  // $('.cities-filter__apply-btn').click();
+  let $citiesCheckboxInput = $('.checkboxes-group--cities .checkbox__input');
+  $citiesCheckboxInput.prop('checked', false);
+  $(this).hide();
 }
 
 function clearSexSelect () {
   $('.sex-select').multiSelect('deselect_all');
+  changeSelectToggleTitle($('.sex-select'));
 
   selectedGendersIds = [];
   currentSelectedGendersIds = [];
-
-  // applyChangesToSelectedSex(that.$element);
-
-  // setTimeout(() => {
-  //   createFilterUrl();
-  // });
-
-  // $('.dropdown-block--sex-select').each(function(index, el) {
-  //   $(el).find('.ms-container__apply-btn').click();
-  // });
-
-  // $('.selected-items--cities .selected-items__clear-btn').click();
-
-  // $('.cities-filter__apply-btn').click();
 }
 
 function clearExperinceSelect () {
-  // alert('clearExperinceSelect()');
-  // $('.filter__experience-select').val('').trigger('change');
   $('.filter__experience-select').val('');
-  // $('select[name="kategoriia-pracivnika"]').val('');
 }
 
 function removeItemFromArray (array, value) {
@@ -359,6 +334,132 @@ function toggleClearCitiesButtons () {
   } else {
     $clearBtn.show();
   }
+}
+
+function syncInputFields ($input) {
+  console.log('syncInputFields');
+
+  let syncFieldIDs = $input.data('sync-field-ids');
+
+  if (!syncFieldIDs) return;
+
+  syncFieldIDs.split(',').forEach(id => {
+    let $syncField = $(`#${id.trim()}`);
+
+    if (!$syncField.length) return;
+
+    let nodeName = $syncField.prop('tagName').toLowerCase();
+    console.log(`nodeName: ${nodeName}`);
+
+    switch (nodeName) {
+      case 'input':
+        let type = $syncField.attr('type');
+
+        if (['text', 'number'].includes(type)) {
+          let value = $input.val();
+          $syncField.val(value);
+          $syncField[0].dispatchEvent(new Event('change'));
+        }
+
+        break;
+      case 'select':
+        console.log('select multiSelect');
+        let filterItemId = $input.data('filter-item-id').toString();
+
+        setTimeout(() => {
+          if ($input.is(":checked")) {
+            $syncField.multiSelect('select', filterItemId);
+
+            if (!currentSelectedGendersIds.includes(filterItemId)) {
+              currentSelectedGendersIds.push(filterItemId);
+            }
+          } else {
+            $syncField.multiSelect('deselect', filterItemId);
+            currentSelectedGendersIds = removeItemFromArray(currentSelectedGendersIds, filterItemId);
+          }
+
+          console.log(`currentSelectedGendersIds: ${currentSelectedGendersIds}`);
+
+          selectedGendersIds = [...currentSelectedGendersIds];
+          changeSelectToggleTitle($syncField);
+        });
+
+        break;
+    }
+    
+  });
+}
+
+function clearTagRelatedFields ($selectedItem) {
+  let isMainFilter = !!$selectedItem.closest('.selected-items--main-filter').length;
+  let name = $selectedItem.data('name');
+  let value = $selectedItem.data('value');
+  let type = $selectedItem.data('type');
+
+  if (![name, value].includes(undefined)) {
+    switch (type) {
+      case 'checkbox':
+        let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
+        syncInputFields($selectedCheckbox);
+
+        break;
+      case 'radio':
+        let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
+        syncInputFields($nonCheckedRadio);
+
+        break;
+      case 'textfield':
+        let $input = $(`input[name="${name}"]`).val('');
+        clearTextField($input);
+
+        break;
+
+      case 'multiselect':
+        let $multiSelect = $(`select[name="${name}"]`);
+        let $dropdownBlock = $multiSelect.closest('.dropdown-block');
+
+        $multiSelect.multiSelect('deselect', value.toString());
+        changeSelectToggleTitle($multiSelect);
+        updateDropdownMultiSelectClass($dropdownBlock);
+
+        currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+        selectedCitiesIds = [...currentSelectedCitiesIds];
+
+        // if (!selectedCitiesIds.length) {
+        //   $('.filter__distance-select').next().find('.select2-selection').removeClass('filter-select--selected');
+        // }
+
+        // $multiSelect.multiSelect('refresh');
+
+        break;
+    }
+  }
+
+  setTimeout(() => {
+    toggleClearFilterButtons();
+
+    if (isMainFilter) {
+      document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+    }
+  });
+}
+
+function undoChangesToAdditionalFilters () {
+  console.log('undoChangesToAdditionalFilters 222');
+
+  let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:checked, .radiobtn__input:checked');
+
+  $selectedCheckboxesAndRadio.each(function(index, el) {
+    let name = $(el).attr('name');
+    let value = $(el).attr('value');
+    let $selectedItem = findFilterTagByValue(name, value);
+
+    clearTagRelatedFields($selectedItem);
+  });
+
+  clearSexSelect();
+
+  toggleClearFilterButtons();
 }
 
 
@@ -609,6 +710,7 @@ $(() => {
 
   $('[data-clear-filter]').click(() => {
     clearCitiesSelect();
+    clearCitiesCheckboxes();
     clearSexSelect();
     clearExperinceSelect();
   });
@@ -870,13 +972,7 @@ $(() => {
     }
   });
 
-  $('.cities-filter__clear-btn').on('click', function(event) {
-    currentSelectedCitiesIds = [];
-
-    let $citiesCheckboxInput = $('.checkboxes-group--cities .checkbox__input');
-    $citiesCheckboxInput.prop('checked', false);
-    $(this).hide();
-  });
+  $('.cities-filter__clear-btn').on('click', clearCitiesCheckboxes);
 
   $('.cities-filter__apply-btn').click(function(event) {
     selectedCitiesIds = [...currentSelectedCitiesIds];
@@ -1027,55 +1123,6 @@ $(() => {
 
   // applyChangesToSelectedSex($sexSelect);
 
-  function syncInputFields ($input) {
-    let syncFieldIDs = $input.data('sync-field-ids');
-
-    if (!syncFieldIDs) return;
-
-    syncFieldIDs.split(',').forEach(id => {
-      let $syncField = $(`#${id.trim()}`);
-
-      if (!$syncField.length) return;
-
-      let nodeName = $syncField.prop('tagName').toLowerCase();
-
-      switch (nodeName) {
-        case 'input':
-          let type = $syncField.attr('type');
-
-          if (['text', 'number'].includes(type)) {
-            let value = $input.val();
-            $syncField.val(value);
-            $syncField[0].dispatchEvent(new Event('change'));
-          }
-
-          break;
-        case 'select':
-
-          let filterItemId = $input.data('filter-item-id').toString();
-
-          setTimeout(() => {
-            if ($input.is(":checked")) {
-              $syncField.multiSelect('select', filterItemId);
-
-              if (!currentSelectedGendersIds.includes(filterItemId)) {
-                currentSelectedGendersIds.push(filterItemId);
-              }
-            } else {
-              $syncField.multiSelect('deselect', filterItemId);
-              currentSelectedGendersIds = removeItemFromArray(currentSelectedGendersIds, filterItemId);
-            }
-
-            selectedGendersIds = [...currentSelectedGendersIds];
-            changeSelectToggleTitle($syncField);
-          });
-
-          break;
-      }
-      
-    });
-  }
-
   // Synchronized input fields
   $('input[data-sync-field-ids]').on('input', function(event) {
     syncInputFields($(this));
@@ -1085,60 +1132,12 @@ $(() => {
   // Synchronizing fields when remove tag
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
-    let isMainFilter = !!$selectedItemParent.closest('.selected-items--main-filter').length;
-    let name = $selectedItemParent.data('name');
-    let value = $selectedItemParent.data('value');
-    let type = $selectedItemParent.data('type');
-
-    if (![name, value].includes(undefined)) {
-      switch (type) {
-        case 'checkbox':
-          let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
-          syncInputFields($selectedCheckbox);
-
-          break;
-        case 'radio':
-          let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
-          syncInputFields($nonCheckedRadio);
-
-          break;
-        case 'textfield':
-          let $input = $(`input[name="${name}"]`).val('');
-          clearTextField($input);
-
-          break;
-
-        case 'multiselect':
-          let $multiSelect = $(`select[name="${name}"]`);
-          let $dropdownBlock = $multiSelect.closest('.dropdown-block');
-
-          $multiSelect.multiSelect('deselect', value.toString());
-          changeSelectToggleTitle($multiSelect);
-          updateDropdownMultiSelectClass($dropdownBlock);
-
-          currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
-          selectedCitiesIds = [...currentSelectedCitiesIds];
-
-          // if (!selectedCitiesIds.length) {
-          //   $('.filter__distance-select').next().find('.select2-selection').removeClass('filter-select--selected');
-          // }
-
-          // $multiSelect.multiSelect('refresh');
-
-          break;
-      }
-    }
-
-    setTimeout(() => {
-      toggleClearFilterButtons();
-
-      if (isMainFilter) {
-        document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
-      }
-    });
+    clearTagRelatedFields($selectedItemParent);
 
     event.preventDefault();
   });
+
+  document.forms.vacancies_filter.addEventListener('undoingChangesToAdditionalFilters', undoChangesToAdditionalFilters);
 
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));

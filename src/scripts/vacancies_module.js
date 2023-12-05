@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 import select2 from 'select2';
@@ -37,8 +38,8 @@ function toggleClearFilterButtons () {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
-  console.log('setVisibilitySelectedMoreItem');
-  console.log(`selectedItemsLength: ${selectedItemsLength}`);
+  // console.log('setVisibilitySelectedMoreItem');
+  // console.log(`selectedItemsLength: ${selectedItemsLength}`);
 
   $('.selected-items').each(function(index, selectedItemsWrapper) {
     let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
@@ -55,7 +56,7 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
 }
 
 function checkDependentFilters () {
-  console.log('checkDependentFilters');
+  // console.log('checkDependentFilters');
 
   let $dependentFilters = $('[data-parent-filter-id]');
 
@@ -100,6 +101,90 @@ function resetRangeSlider (rangeSlider) {
       field.value = max;
     }
   });
+}
+
+function clearTagRelatedFields ($selectedItem) {
+  let $selectedRadio = null;
+
+  let name = $selectedItem.data('name');
+  let value = $selectedItem.data('value');
+  let type = $selectedItem.data('type');
+
+  if (['range', 'textfield', 'multiselect'].includes(type)) {
+    let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+    $otherSelectedItem.remove();
+  }
+
+  if (![name, value].includes(undefined)) {
+    switch (type) {
+      case 'checkbox':
+        let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
+        $selectedCheckbox.prop("checked", false);
+
+        let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+        $otherSelectedItem.remove();
+
+        break;
+      case 'radio':
+        $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
+        $selectedRadio.prop('checked', false);
+
+        break;
+      case 'range':
+        let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
+        resetRangeSlider($rangeSlider[0]);
+
+        break;
+
+      case 'select':
+        let $select = $(`select[name="${name}"]`);
+        $select.val('').trigger('change', ['fromCode']);
+
+        $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
+        $selectedRadio.prop('checked', false);
+
+        break;
+    }
+  }
+
+  $selectedItem.remove();
+
+  setTimeout(() => {
+    toggleClearFilterButtons();
+  });
+
+  let selectedItemsLength = $('.filter .selected-items__item').length;
+  setVisibilitySelectedMoreItem(selectedItemsLength);
+
+  checkDependentFilters();
+  // checkDefaultValue();
+}
+
+function undoChangesToAdditionalFilters () {
+  console.log('undoChangesToAdditionalFilters');
+
+  let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:checked, .radiobtn__input:checked');
+
+  $selectedCheckboxesAndRadio.each(function(index, el) {
+    let name = $(el).attr('name');
+    let value = $(el).attr('value');
+    let $selectedItem = findFilterTagByValue(name, value);
+
+    clearTagRelatedFields($selectedItem);
+  });
+
+  let $rangeSliders = $(`.range-slider`);
+  $rangeSliders.each(function(index, el) {
+    // resetRangeSlider(el);
+    let name = $(el).attr('data-name');
+    let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+
+    clearTagRelatedFields($selectedItem);
+  });
+
+  toggleClearFilterButtons();
+
+  document.forms.vacancies_filter.dispatchEvent(new CustomEvent("undoingChangesToAdditionalFilters"));
 }
 
 function clearFilter () {
@@ -167,13 +252,6 @@ function findFilterTagByValue (name, value) {
   return $selectedItem;
 }
 
-// function findFilterTagById (id) {
-//   let $container = $('.selected-items__list');
-//   let $selectedItem = $container.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-
-//   return $selectedItem;
-// }
-
 function clearTextField ($input) {
   $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
   $input.parent().find('[data-clear-search-input]').hide();
@@ -192,7 +270,7 @@ function removeFilterTag (type, name, value) {
 }
 
 function createOrUpdateTag (type, name, value, labelText) {
-  console.log('createOrUpdateTag');
+  // console.log('createOrUpdateTag');
 
   let $container = $('.selected-items__list');
   let $selectedItem = findFilterTagByValue(name, value);
@@ -226,6 +304,27 @@ function createOrUpdateTag (type, name, value, labelText) {
 
 $(() => {
   select2($);
+
+  Fancybox.bind(".additional-filters-popup-link", {
+    dragToClose: false,
+    mainClass: 'fancybox--additional-filters-popup',
+
+    tpl: {
+      closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+    },
+
+    on: {
+      reveal: (fancybox, slide) => {
+        if (slide.src === '#cities-popup') {
+          $(slide.contentEl).find('.cities-filter__search-input').focus();
+        }
+      },
+
+      close: (fancybox, event) => {
+        undoChangesToAdditionalFilters();
+      }
+    }
+  });
 
   let selectedCitiesIdx = [];
   let currentSelectedCitiesIdx = [];
@@ -356,60 +455,7 @@ $(() => {
   // Removing selected items
   $(document).on('click', '.selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
-    let $selectedRadio = null;
-
-    let name = $selectedItemParent.data('name');
-    let value = $selectedItemParent.data('value');
-    let type = $selectedItemParent.data('type');
-
-    if (['range', 'textfield', 'multiselect'].includes(type)) {
-      let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-      $otherSelectedItem.remove();
-    }
-
-    if (![name, value].includes(undefined)) {
-      switch (type) {
-        case 'checkbox':
-          let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
-          $selectedCheckbox.prop("checked", false);
-
-          let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-          $otherSelectedItem.remove();
-
-          break;
-        case 'radio':
-          $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
-          $selectedRadio.prop('checked', false);
-
-          break;
-        case 'range':
-          let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
-          resetRangeSlider($rangeSlider[0]);
-
-          break;
-
-        case 'select':
-          let $select = $(`select[name="${name}"]`);
-          $select.val('').trigger('change', ['fromCode']);
-
-          $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
-          $selectedRadio.prop('checked', false);
-
-          break;
-      }
-    }
-
-    $selectedItemParent.remove();
-
-    setTimeout(() => {
-      toggleClearFilterButtons();
-    });
-
-    let selectedItemsLength = $('.filter .selected-items__item').length;
-    setVisibilitySelectedMoreItem(selectedItemsLength);
-
-    checkDependentFilters();
-    checkDefaultValue();
+    clearTagRelatedFields($selectedItemParent);
 
     event.preventDefault();
   });
@@ -787,15 +833,13 @@ $(() => {
     });
   });
 
-  function checkDefaultValue() {
-    $('[data-hide-default-min-value]').each(function(index, el) {
-      if ($(this).val() === $(this).attr('min')) {
-        $(this).val('');
-      }
-    });
-  }
-
-  // checkDefaultValue();
+  // function checkDefaultValue() {
+  //   $('[data-hide-default-min-value]').each(function(index, el) {
+  //     if ($(this).val() === $(this).attr('min')) {
+  //       $(this).val('');
+  //     }
+  //   });
+  // }
 
   // Range slider tips
   // slider.noUiSlider.on('update', function (values, handle) {
@@ -896,7 +940,7 @@ $(() => {
       toggleClearFilterButtons();
     });
 
-    checkDefaultValue();
+    // checkDefaultValue();
 
     ['input'].forEach(eventName => {
       fieldsFrom.forEach((field, idx) => {
@@ -950,16 +994,8 @@ $(() => {
           setTimeout(() => {
             toggleClearFilterButtons();
           });
-
-          setTimeout(() => {
-            toggleClearFilterButtons();
-          });
         });
       });
-
-      // setTimeout(() => {
-      //   toggleClearFilterButtons();
-      // });
     });
 
     fieldsFrom.forEach((field, idx) => {

@@ -97,11 +97,12 @@
 		width 100%
 	
 	&__show-contacts-btn-wrapper
-		position sticky
-		bottom -32px
-		margin 0 -16px -12px
-		padding 0 0 12px
-		background var(--light)
+		@media $xs
+			position sticky
+			bottom -32px
+			margin 0 -16px -12px
+			padding 0 0 12px
+			background var(--light)
 	
 	&__show-contacts-btn
 		margin-top -14px

@@ -240,37 +240,37 @@ $(() => {
     }
   });
 
-  Fancybox.bind(".additional-filters-popup-link", {
-    dragToClose: false,
-    mainClass: 'fancybox--additional-filters-popup',
+  // Fancybox.bind(".additional-filters-popup-link", {
+  //   dragToClose: false,
+  //   mainClass: 'fancybox--additional-filters-popup',
 
-    tpl: {
-      closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
-    },
+  //   tpl: {
+  //     closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+  //   },
 
-    on: {
-      reveal: (fancybox, slide) => {
-        if (slide.src === '#cities-popup') {
-          $(slide.contentEl).find('.cities-filter__search-input').focus();
-        }
-      },
+  //   on: {
+  //     reveal: (fancybox, slide) => {
+  //       if (slide.src === '#cities-popup') {
+  //         $(slide.contentEl).find('.cities-filter__search-input').focus();
+  //       }
+  //     },
 
-      // close: (fancybox, event) => {
-      //   if (event.target.classList.contains('cities-filter__btn-back')) {
-      //     console.log('Closed cities popup!');
+  //     // close: (fancybox, event) => {
+  //     //   if (event.target.classList.contains('cities-filter__btn-back')) {
+  //     //     console.log('Closed cities popup!');
 
-      //     // $('.selected-items--cities .selected-items__clear-btn').click();
-      //   }
-      //   // console.log(fancybox);
-      //   // console.log(slide);
-      //   // console.log('Closed cities popup!');
-      //   // if (slide.src === '#cities-popup') {
-      //   //   // $(slide.contentEl).find('.cities-filter__search-input').focus();
-      //   //   console.log('Closed cities popup!');
-      //   // }
-      // },
-    }
-  });
+  //     //     // $('.selected-items--cities .selected-items__clear-btn').click();
+  //     //   }
+  //     //   // console.log(fancybox);
+  //     //   // console.log(slide);
+  //     //   // console.log('Closed cities popup!');
+  //     //   // if (slide.src === '#cities-popup') {
+  //     //   //   // $(slide.contentEl).find('.cities-filter__search-input').focus();
+  //     //   //   console.log('Closed cities popup!');
+  //     //   // }
+  //     // },
+  //   }
+  // });
 
   // Select menu
   $('.select-menu').click(function(e) {
