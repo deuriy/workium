@@ -177,9 +177,15 @@
 				margin-bottom 0
 	
 	&--contact-section
+		@media $xs
+			display grid
+			grid-template-columns 100%
+			
 		.contact-box__phones
 			@media $xs
-				margin-bottom 22px
+				order 1
+				margin-top 22px
+				margin-bottom 0
 	
 	&--has-title
 		.contact-box__title
