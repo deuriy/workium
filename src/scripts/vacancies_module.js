@@ -737,7 +737,9 @@ $(() => {
     $additionalFiltersSubmitBtn.hide();
     $additionalFiltersPreloaderWrapper.show();
 
-    window.location.href = `/vacancies/${urlParams}${requestParams}`;
+    setTimeout(() => {
+      window.location.href = `/vacancies/${urlParams}${requestParams}`;
+    }, 500);
   }
 
   // Creating filter URL
