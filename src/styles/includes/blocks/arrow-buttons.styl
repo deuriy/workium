@@ -1,0 +1,16 @@
+.arrow-buttons
+	&__list
+		list-style none
+		display grid
+		grid-template-columns repeat(3, 1fr)
+		gap 20px
+		
+		@media $smMinus
+			grid-template-columns repeat(2, 1fr)
+		
+		@media $xs
+			grid-template-columns 100%
+			gap 8px
+	
+	&__item
+		display grid
