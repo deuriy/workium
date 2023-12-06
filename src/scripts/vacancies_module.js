@@ -639,6 +639,7 @@ $(() => {
     // Get request params
     let searchValue = $('input[name="vacancy_name"]').val();
     if (searchValue) {
+      searchValue = encodeURIComponent(searchValue);
       requestParamsArr.push(`search=${searchValue}`);
     }
 
