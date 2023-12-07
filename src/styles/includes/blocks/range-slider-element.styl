@@ -6,14 +6,34 @@
 		gap 4px
 		margin-top 30px
 	
+	&__item
+		margin-top 30px
+	
 	&__sep
 		font-size 14px
 		line-height 1.71429
+	
+	&__input-wrapper
+		display grid
+		grid-template-columns 100%
+		
+		.range-slider-element__input
+			padding-right 60px
 		
 	&__input
 		-moz-appearance textfield
+		grid-area 1 / 1 / 2 / 2
 
 		&::-webkit-outer-spin-button,
 		&::-webkit-inner-spin-button
 			-webkit-appearance none
 			margin 0
+	
+	&__input-suffix
+		grid-area 1 / 1 / 2 / 2
+		align-self center
+		justify-self end
+		margin-right 12px
+		color var(--grey)
+		font-size 14px
+		line-height 1.71429

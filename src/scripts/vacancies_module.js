@@ -7,6 +7,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
 
 let selectedFiltersCount = 0;
+let $ageSwitch = $('input[name="age_switch"]');
 
 function toggleClearFilterButtons () {
   let $clearBtns = $('[data-clear-filter]');
@@ -1011,8 +1012,8 @@ $(() => {
           fromValue = slider.noUiSlider.get()[0];
         } else if (this.value < min) {
           fromValue = min;
-        } else if (this.value > max) {
-          fromValue = max;
+        } else if (this.value > toValue) {
+          fromValue = toValue;
         }
 
         let value = `${fromValue}-${toValue}`;
@@ -1030,8 +1031,8 @@ $(() => {
 
         if (this.value == '') {
           toValue = slider.noUiSlider.get()[1];
-        } else if (this.value < min) {
-          toValue = min;
+        } else if (this.value < fromValue) {
+          toValue = fromValue;
         } else if (this.value > max) {
           toValue = max;
         }
@@ -1087,6 +1088,21 @@ $(() => {
   let additionalFiltersSelectedItemsLength = $('.additional-filters .selected-items__item').length;
   // console.log(additionalFiltersSelectedItemsLength);
   setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);
+
+  // Age switch
+  $ageSwitch.change(function(event) {
+    let $filterElement = $(this).closest('.filter-element');
+    let $singleSliderElement = $filterElement.find('.range-slider-element--single');
+    let $rangeSliderElement = $filterElement.find('.range-slider-element--range');
+
+    if ($(this).is(':checked')) {
+      $singleSliderElement.hide();
+      $rangeSliderElement.show();
+    } else {
+      $singleSliderElement.show();
+      $rangeSliderElement.hide();
+    }
+  });
 
 
   // $('[data-remove-last-filter]').click(function(event) {
