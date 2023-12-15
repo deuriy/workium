@@ -706,7 +706,7 @@ $(() => {
       console.log(value);
       console.log(rangeValues);
 
-      if (name === 'age' && !$ageSwitch.is(':checked')) {
+      if (name === 'vik' && $ageSwitch.is(':checked')) {
         return;
       }
 
@@ -726,7 +726,7 @@ $(() => {
       console.log(values);
       console.log(rangeValues);
 
-      if (name === 'age' && $ageSwitch.is(':checked')) {
+      if (name === 'vik' && !$ageSwitch.is(':checked')) {
         return;
       }
 
