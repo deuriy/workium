@@ -79,29 +79,53 @@ function checkDependentFilters () {
 }
 
 function resetRangeSlider (rangeSlider) {
-  let min = rangeSlider.dataset.min;
-  let max = rangeSlider.dataset.max;
+  console.log('rangeSlider');
+  console.log(rangeSlider);
 
-  rangeSlider.noUiSlider.set([min, max]);
+  if (rangeSlider.classList.contains('range-slider--single')) {
+    let min = rangeSlider.dataset.min;
 
-  let syncFromFieldIds = rangeSlider.dataset.syncFromFieldIds;
-  let syncToFieldIds = rangeSlider.dataset.syncToFieldIds;
+    rangeSlider.noUiSlider.set(min);
 
-  syncFromFieldIds.split(',').forEach(id => {
-    let field = document.getElementById(id.trim());
+    let syncFieldIds = rangeSlider.dataset.syncFieldIds;
 
-    if (field) {
-      field.value = min;
-    }
-  });
+    syncFieldIds.split(',').forEach(id => {
+      let field = document.getElementById(id.trim());
 
-  syncToFieldIds.split(',').forEach(id => {
-    let field = document.getElementById(id.trim());
+      if (field) {
+        field.value = min;
+      }
+    });
 
-    if (field) {
-      field.value = max;
-    }
-  });
+  } else if (rangeSlider.classList.contains('range-slider--range')) {
+    let min = rangeSlider.dataset.min;
+    let max = rangeSlider.dataset.max;
+
+    rangeSlider.noUiSlider.set([min, max]);
+
+    let syncFromFieldIds = rangeSlider.dataset.syncFromFieldIds;
+    let syncToFieldIds = rangeSlider.dataset.syncToFieldIds;
+
+    syncFromFieldIds.split(',').forEach(id => {
+      let field = document.getElementById(id.trim());
+
+      if (field) {
+        field.value = min;
+      }
+    });
+
+    syncToFieldIds.split(',').forEach(id => {
+      let field = document.getElementById(id.trim());
+
+      if (field) {
+        field.value = max;
+      }
+    });
+  }
+}
+
+function resetSlider (slider) {
+  
 }
 
 function clearTagRelatedFields ($selectedItem) {
@@ -174,7 +198,7 @@ function undoChangesToAdditionalFilters () {
     clearTagRelatedFields($selectedItem);
   });
 
-  let $rangeSliders = $(`.range-slider`);
+  let $rangeSliders = $(`.range-slider--range`);
   $rangeSliders.each(function(index, el) {
     // resetRangeSlider(el);
     let name = $(el).attr('data-name');
@@ -300,6 +324,20 @@ function createOrUpdateTag (type, name, value, labelText) {
   }
 
   $container.find('.selected-items__more-item').before(htmlStr);
+}
+
+function changeCaseOfAgeLabel (age) {
+  if (isNaN(age)) return false;
+
+  let result = 'років';
+
+  if ([2, 3, 4].includes(age % 10)) {
+    result = 'роки';
+  } else if (age % 10 === 1) {
+    result = 'рік';
+  }
+
+  return result;
 }
 
 
@@ -658,11 +696,39 @@ $(() => {
       }
     });
 
-    let $rangeSliders = $('.additional-filters .range-slider');
+    let $sliders = $('.additional-filters .range-slider--single');
+    $sliders.each(function(index, el) {
+      let value = el.noUiSlider.get();
+      let rangeValues = el.noUiSlider.options.range;
+      let name = el.dataset.name;
+
+      console.log('single slider');
+      console.log(value);
+      console.log(rangeValues);
+
+      if (name === 'age' && !$ageSwitch.is(':checked')) {
+        return;
+      }
+
+      if ((rangeValues.min != value)) {
+        let resultValue = `${name}=${value}`;
+        requestParamsArr.push(resultValue);
+      }
+    });
+
+    let $rangeSliders = $('.additional-filters .range-slider--range');
     $rangeSliders.each(function(index, el) {
       let values = el.noUiSlider.get();
       let rangeValues = el.noUiSlider.options.range;
       let name = el.dataset.name;
+
+      console.log('range slider');
+      console.log(values);
+      console.log(rangeValues);
+
+      if (name === 'age' && $ageSwitch.is(':checked')) {
+        return;
+      }
 
       console.log(el.noUiSlider.options);
 
@@ -671,6 +737,9 @@ $(() => {
         requestParamsArr.push(resultValue);
       }
     });
+
+    console.log('ageSwitch');
+    // console.log($ageSwitch.is(':checked'));
 
     let selectedCandidatesType;
 
@@ -862,9 +931,132 @@ $(() => {
   //   // inputFormat.value = values[handle];
   // });
 
-  const sliders = document.querySelectorAll('.range-slider');
-
+  const sliders = document.querySelectorAll('.range-slider--single');
   sliders.forEach(slider => {
+    let min = parseInt(slider.dataset.min);
+    let max = parseInt(slider.dataset.max);
+    let startValue = parseInt(slider.dataset.startValue);
+
+    noUiSlider.create(slider, {
+      start: [startValue],
+      connect: [true, false],
+      range: {
+        'min': min,
+        'max': max
+      },
+
+      format: {
+        to: function (value) {
+          return parseInt(value);
+        },
+
+        from: function (value) {
+          return parseInt(value);
+        },
+      },
+    });
+
+    let syncFieldIds = slider.dataset.syncFieldIds;
+    let fields = [];
+    let fieldsSuffixes = [];
+
+    syncFieldIds.split(',').forEach(id => {
+      let field = document.getElementById(id.trim());
+
+      if (field) {
+        fields.push(field);
+
+        let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
+
+        if (fieldSuffix) {
+          fieldsSuffixes.push(fieldSuffix);
+        }
+      }
+    });
+
+    slider.noUiSlider.on('slide', function (values, handle) {
+      console.log('noUiSlider slide single');
+
+      fields.forEach(field => {
+        field.value = values[0];
+      });
+
+      fieldsSuffixes.forEach(fieldSuffix => {
+        fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+      });
+
+      let name = slider.dataset.name;
+      let value = values[0];
+
+      if (slider.dataset.min != values[0]) {
+        let label = slider.closest('.filter-element').querySelector('.filter-element__title');
+        let labelText = value + ' ' + changeCaseOfAgeLabel(value);
+
+        createOrUpdateTag("range", name, value, labelText);
+      } else {
+        let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+        $selectedItem.remove();
+      }
+
+      toggleClearFilterButtons();
+    });
+
+    ['input'].forEach(eventName => {
+      fields.forEach((field, idx) => {
+        field.addEventListener(eventName, function (e) {
+          console.log('field change!');
+
+          if (!this.value) return;
+
+          slider.noUiSlider.set(this.value);
+
+          let name = slider.dataset.name;
+          let value = this.value;
+
+          if (slider.dataset.min != this.value) {
+            let label = slider.closest('.filter-element').querySelector('.filter-element__title');
+            let labelText = value + ' ' + changeCaseOfAgeLabel(value);
+
+            createOrUpdateTag("range", name, value, labelText);
+          } else {
+            let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+            $selectedItem.remove();
+          }
+
+          fieldsSuffixes.forEach(fieldSuffix => {
+            fieldSuffix.textContent = changeCaseOfAgeLabel(value);
+          });
+
+          setTimeout(() => {
+            toggleClearFilterButtons();
+          });
+        });
+      });
+    });
+
+    fields.forEach((field, idx) => {
+      field.addEventListener('change', function (e) {
+        let name = slider.dataset.name;
+        let value = this.value;
+        let toValue = fields[idx].value;
+
+        if (this.value == '') {
+          value = slider.noUiSlider.get()[0];
+        } else if (this.value < min) {
+          value = min;
+        } else if (this.value > max) {
+          value = max;
+        }
+
+        this.value = value;
+        slider.noUiSlider.set(value);
+        createOrUpdateTag("range", name, value, value + ' ' + changeCaseOfAgeLabel(value));
+      });
+    });
+  });
+
+  const rangeSliders = document.querySelectorAll('.range-slider--range');
+  rangeSliders.forEach(slider => {
     let min = parseInt(slider.dataset.min);
     let max = parseInt(slider.dataset.max);
     let minValue = parseInt(slider.dataset.minValue);
@@ -893,12 +1085,20 @@ $(() => {
     let syncToFieldIds = slider.dataset.syncToFieldIds;
     let fieldsFrom = [];
     let fieldsTo = [];
+    let fieldsFromSuffixes = [];
+    let fieldsToSuffixes = [];
 
     syncFromFieldIds.split(',').forEach(id => {
       let field = document.getElementById(id.trim());
 
       if (field) {
         fieldsFrom.push(field);
+
+        let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
+
+        if (fieldSuffix) {
+          fieldsFromSuffixes.push(fieldSuffix);
+        }
       }
     });
 
@@ -907,6 +1107,12 @@ $(() => {
 
       if (field) {
         fieldsTo.push(field);
+
+        let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
+
+        if (fieldSuffix) {
+          fieldsToSuffixes.push(fieldSuffix);
+        }
       }
     });
 
@@ -921,25 +1127,27 @@ $(() => {
         field.value = values[1];
       });
 
+      fieldsFromSuffixes.forEach(fieldSuffix => {
+        fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+      });
+
+      fieldsToSuffixes.forEach(fieldSuffix => {
+        fieldSuffix.textContent = changeCaseOfAgeLabel(values[1]);
+      });
+
       let name = slider.dataset.name;
       let value = `${values[0]}-${values[1]}`;
 
       if (slider.dataset.min != values[0] || slider.dataset.max != values[1]) {
         let label = slider.closest('.filter-element').querySelector('.filter-element__title');
         // let labelText = `<strong>${label.textContent}:</strong> ${values[0]}-${values[1]}`;
-        let labelText = value;
+        let labelText = value + ' ' + changeCaseOfAgeLabel(values[1]);
 
         createOrUpdateTag("range", name, value, labelText);
       } else {
         let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
         $selectedItem.remove();
       }
-      // else {
-      //   // let name = slider.dataset.name;
-      //   // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-
-      //   // $selectedItem.remove();
-      // }
 
       toggleClearFilterButtons();
     });
@@ -960,13 +1168,17 @@ $(() => {
 
           if (slider.dataset.min != this.value || slider.dataset.max != fieldsTo[idx].value) {
             let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-            let labelText = value;
+            let labelText = value + ' ' + changeCaseOfAgeLabel(this.value);
 
             createOrUpdateTag("range", name, value, labelText);
           } else {
             let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
             $selectedItem.remove();
           }
+
+          fieldsFromSuffixes.forEach(fieldSuffix => {
+            fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+          });
 
           setTimeout(() => {
             toggleClearFilterButtons();
@@ -976,8 +1188,6 @@ $(() => {
 
       fieldsTo.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
-          console.log('fieldsTo change!');
-
           if (!this.value) return;
 
           slider.noUiSlider.set([null, this.value]);
@@ -987,13 +1197,17 @@ $(() => {
 
           if (slider.dataset.min != fieldsFrom[idx].value || slider.dataset.max != this.value) {
             let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-            let labelText = value;
+            let labelText = value + ' ' + changeCaseOfAgeLabel(this.value);
 
             createOrUpdateTag("range", name, value, labelText);
           } else {
             let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
             $selectedItem.remove();
           }
+
+          fieldsToSuffixes.forEach(fieldSuffix => {
+            fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+          });
 
           setTimeout(() => {
             toggleClearFilterButtons();
@@ -1012,14 +1226,14 @@ $(() => {
           fromValue = slider.noUiSlider.get()[0];
         } else if (this.value < min) {
           fromValue = min;
-        } else if (this.value > toValue) {
-          fromValue = toValue;
+        } else if (this.value > max) {
+          fromValue = max;
         }
 
         let value = `${fromValue}-${toValue}`;
         this.value = fromValue;
         slider.noUiSlider.set([fromValue, null]);
-        createOrUpdateTag("range", name, value, value);
+        createOrUpdateTag("range", name, value, value + ' років');
       });
     });
 
@@ -1031,8 +1245,8 @@ $(() => {
 
         if (this.value == '') {
           toValue = slider.noUiSlider.get()[1];
-        } else if (this.value < fromValue) {
-          toValue = fromValue;
+        } else if (this.value < min) {
+          toValue = min;
         } else if (this.value > max) {
           toValue = max;
         }
@@ -1040,7 +1254,7 @@ $(() => {
         let value = `${fromValue}-${toValue}`;
         this.value = toValue;
         slider.noUiSlider.set([null, toValue]);
-        createOrUpdateTag("range", name, value, value);
+        createOrUpdateTag("range", name, value, value + ' років');
       });
     });
   });
@@ -1102,6 +1316,9 @@ $(() => {
       $singleSliderElement.show();
       $rangeSliderElement.hide();
     }
+
+    let $ageSelectedItem = $('.selected-items__item[data-name="vik"][data-type="range"]');
+    $ageSelectedItem.remove();
   });
 
 
