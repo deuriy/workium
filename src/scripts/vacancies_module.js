@@ -981,16 +981,18 @@ $(() => {
         field.value = values[0];
       });
 
-      fieldsSuffixes.forEach(fieldSuffix => {
-        fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
-      });
-
       let name = slider.dataset.name;
       let value = values[0];
 
+      fieldsSuffixes.forEach(fieldSuffix => {
+        if (name === 'vik') {
+          fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+        }
+      });
+
       if (slider.dataset.min != values[0]) {
         let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-        let labelText = value + ' ' + changeCaseOfAgeLabel(value);
+        let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : value;
 
         createOrUpdateTag("range", name, value, labelText);
       } else {
@@ -1015,7 +1017,7 @@ $(() => {
 
           if (slider.dataset.min != this.value) {
             let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-            let labelText = value + ' ' + changeCaseOfAgeLabel(value);
+            let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : '';
 
             createOrUpdateTag("range", name, value, labelText);
           } else {
@@ -1024,7 +1026,9 @@ $(() => {
           }
 
           fieldsSuffixes.forEach(fieldSuffix => {
-            fieldSuffix.textContent = changeCaseOfAgeLabel(value);
+            if (name === 'vik') {
+              fieldSuffix.textContent = changeCaseOfAgeLabel(value);
+            }
           });
 
           setTimeout(() => {
@@ -1050,7 +1054,7 @@ $(() => {
 
         this.value = value;
         slider.noUiSlider.set(value);
-        createOrUpdateTag("range", name, value, value + ' ' + changeCaseOfAgeLabel(value));
+        createOrUpdateTag("range", name, value, name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : value);
       });
     });
   });
@@ -1127,21 +1131,25 @@ $(() => {
         field.value = values[1];
       });
 
+      let name = slider.dataset.name;
+      let value = `${values[0]}-${values[1]}`;
+
       fieldsFromSuffixes.forEach(fieldSuffix => {
-        fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+        if (name === 'vik') {
+          fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+        }
       });
 
       fieldsToSuffixes.forEach(fieldSuffix => {
-        fieldSuffix.textContent = changeCaseOfAgeLabel(values[1]);
+        if (name === 'vik') {
+          fieldSuffix.textContent = changeCaseOfAgeLabel(values[1]);
+        }
       });
-
-      let name = slider.dataset.name;
-      let value = `${values[0]}-${values[1]}`;
 
       if (slider.dataset.min != values[0] || slider.dataset.max != values[1]) {
         let label = slider.closest('.filter-element').querySelector('.filter-element__title');
         // let labelText = `<strong>${label.textContent}:</strong> ${values[0]}-${values[1]}`;
-        let labelText = value + ' ' + changeCaseOfAgeLabel(values[1]);
+        let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(values[1]) : value;
 
         createOrUpdateTag("range", name, value, labelText);
       } else {
@@ -1168,7 +1176,7 @@ $(() => {
 
           if (slider.dataset.min != this.value || slider.dataset.max != fieldsTo[idx].value) {
             let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-            let labelText = value + ' ' + changeCaseOfAgeLabel(this.value);
+            let labelText = name === 'vik_from' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
 
             createOrUpdateTag("range", name, value, labelText);
           } else {
@@ -1177,7 +1185,9 @@ $(() => {
           }
 
           fieldsFromSuffixes.forEach(fieldSuffix => {
-            fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+            if (name === 'vik') {
+              fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+            }
           });
 
           setTimeout(() => {
@@ -1197,7 +1207,7 @@ $(() => {
 
           if (slider.dataset.min != fieldsFrom[idx].value || slider.dataset.max != this.value) {
             let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-            let labelText = value + ' ' + changeCaseOfAgeLabel(this.value);
+            let labelText = name === 'vik_to' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
 
             createOrUpdateTag("range", name, value, labelText);
           } else {
@@ -1206,7 +1216,9 @@ $(() => {
           }
 
           fieldsToSuffixes.forEach(fieldSuffix => {
-            fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+            if (name === 'vik') {
+              fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+            }
           });
 
           setTimeout(() => {
@@ -1233,7 +1245,7 @@ $(() => {
         let value = `${fromValue}-${toValue}`;
         this.value = fromValue;
         slider.noUiSlider.set([fromValue, null]);
-        createOrUpdateTag("range", name, value, value + ' років');
+        createOrUpdateTag("range", name, value, name === 'vik_from' ? value + ' років' : value);
       });
     });
 
@@ -1254,7 +1266,7 @@ $(() => {
         let value = `${fromValue}-${toValue}`;
         this.value = toValue;
         slider.noUiSlider.set([null, toValue]);
-        createOrUpdateTag("range", name, value, value + ' років');
+        createOrUpdateTag("range", name, value, name === 'vik_to' ? value + ' років' : value);
       });
     });
   });
