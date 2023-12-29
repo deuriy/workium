@@ -517,7 +517,7 @@ $(() => {
           let searchValue = $(this).val().trim();
           citySearchInputValue = searchValue;
 
-          let countryID = $('select[name="countries"]').find(':selected').data('id');
+          let countryID = $('select[name="countries"]').find(':selected').data('entity-id');
           let url = `api/v1/cities?country_id=${countryID}`;
 
           if (searchValue) {
@@ -780,7 +780,7 @@ $(() => {
     let searchValue = $(this).val().trim();
     citySearchInputValue = searchValue;
 
-    let countryID = $('select[name="countries"]').find(':selected').data('id');
+    let countryID = $('select[name="countries"]').find(':selected').data('entity-id');
     let url = `api/v1/cities?country_id=${countryID}`;
 
     if (searchValue) {

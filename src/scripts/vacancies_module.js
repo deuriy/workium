@@ -837,7 +837,7 @@ $(() => {
     });
   }
 
-  let selectedCountryId = $('select[name="countries"] option:selected').data('id');
+  let selectedCountryId = $('select[name="countries"] option:selected').data('entity-id');
 
   if (selectedCountryId) {
     loadCitiesOfSelectedCountry(selectedCountryId);
@@ -845,7 +845,7 @@ $(() => {
 
   // Loading cities via AJAX
   $('select[name="countries"]').on('change', function(event) {
-    let countryID = $(this).find(':selected').data('id');
+    let countryID = $(this).find(':selected').data('entity-id');
 
     loadCitiesOfSelectedCountry(countryID);
 
