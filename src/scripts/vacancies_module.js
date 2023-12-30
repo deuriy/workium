@@ -124,10 +124,6 @@ function resetRangeSlider (rangeSlider) {
   }
 }
 
-function resetSlider (slider) {
-  
-}
-
 function clearTagRelatedFields ($selectedItem) {
   let $selectedRadio = null;
 
@@ -185,6 +181,23 @@ function clearTagRelatedFields ($selectedItem) {
   // checkDefaultValue();
 }
 
+function resetAgeSwitch () {
+  let $ageInput = $('input[name="vik"]');
+  let $ageInputFrom = $('input[name="vik_from"]');
+  let $ageInputTo = $('input[name="vik_to"]');
+  let $ageSlider = $('.range-slider[data-sync-field-ids="vik"]');
+  let $ageRangeSlider = $('.range-slider[data-sync-from-field-ids="vik_from"]');
+
+  $ageSwitch.prop('checked', false).trigger('change');
+
+  $ageInput.val($ageInput.attr('min'));
+  $ageInputFrom.val($ageInputFrom.attr('min'));
+  $ageInputTo.val($ageInputTo.attr('max'));
+
+  $ageSlider[0].noUiSlider.set($ageInput.attr('min'));
+  $ageRangeSlider[0].noUiSlider.set([$ageInputFrom.attr('min'), $ageInputTo.attr('max')]);
+}
+
 function undoChangesToAdditionalFilters () {
   console.log('undoChangesToAdditionalFilters');
 
@@ -206,6 +219,8 @@ function undoChangesToAdditionalFilters () {
 
     clearTagRelatedFields($selectedItem);
   });
+
+  resetAgeSwitch();
 
   toggleClearFilterButtons();
 
