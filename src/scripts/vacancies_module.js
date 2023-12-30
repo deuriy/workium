@@ -153,7 +153,10 @@ function clearTagRelatedFields ($selectedItem) {
         break;
       case 'range':
         let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
-        resetRangeSlider($rangeSlider[0]);
+        // alert($rangeSlider);
+        $rangeSlider.each(function(index, el) {
+          resetRangeSlider(el);
+        });
 
         break;
 
