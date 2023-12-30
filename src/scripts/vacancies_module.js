@@ -358,6 +358,20 @@ function changeCaseOfAgeLabel (age) {
   return result;
 }
 
+function changeCaseOfDaysLabel (days) {
+  if (isNaN(days)) return false;
+
+  let result = 'днів';
+
+  if ([2, 3, 4].includes(days % 10)) {
+    result = 'дні';
+  } else if (days % 10 === 1) {
+    result = 'день';
+  }
+
+  return result;
+}
+
 
 $(() => {
   select2($);
@@ -1155,12 +1169,16 @@ $(() => {
       fieldsFromSuffixes.forEach(fieldSuffix => {
         if (name === 'vik') {
           fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+        } else if (name === 'fiksovanii-termin') {
+          fieldSuffix.textContent = changeCaseOfDaysLabel(values[0]);
         }
       });
 
       fieldsToSuffixes.forEach(fieldSuffix => {
         if (name === 'vik') {
           fieldSuffix.textContent = changeCaseOfAgeLabel(values[1]);
+        } else if (name === 'fiksovanii-termin') {
+          fieldSuffix.textContent = changeCaseOfDaysLabel(values[1]);
         }
       });
 
