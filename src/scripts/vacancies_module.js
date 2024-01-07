@@ -397,6 +397,24 @@ $(() => {
     }
   });
 
+  if (window.location.href.includes('open-popup')) {
+    Fancybox.show(
+      [
+        {
+          src: "#additional-filters-popup"
+        }
+      ],
+      {
+        dragToClose: false,
+        mainClass: 'fancybox--additional-filters-popup',
+
+        tpl: {
+          closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+        },
+      }
+    );
+  }
+
   let selectedCitiesIdx = [];
   let currentSelectedCitiesIdx = [];
   let $filterSelects = $();
@@ -636,7 +654,7 @@ $(() => {
 
   });
 
-  function updateFilterUrl () {
+  function updateFilterUrl (changedAdditionalFilters = false) {
     let isMobile = $(window).width() < 576;
     let urlParamsArr = [];
     let requestParamsArr = [];
@@ -812,6 +830,10 @@ $(() => {
       requestParamsArr.push(`radius=${distance.val()}`);
     }
 
+    if (changedAdditionalFilters) {
+      requestParamsArr.push('open-popup=1');
+    }
+
     requestParams = requestParamsArr.join('&');
 
     if (requestParams) {
@@ -881,8 +903,10 @@ $(() => {
 
     loadCitiesOfSelectedCountry(countryID);
 
+    let changedAdditionalFilters = $(this).hasClass('additional-filters__countries-select');
+
     setTimeout(() => {
-      updateFilterUrl();
+      updateFilterUrl(changedAdditionalFilters);
     }, 1000);
   });
 
@@ -1368,7 +1392,6 @@ $(() => {
     let $ageSelectedItem = $('.selected-items__item[data-name="vik"][data-type="range"]');
     $ageSelectedItem.remove();
   });
-
 
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
