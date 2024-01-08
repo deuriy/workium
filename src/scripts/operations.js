@@ -57,7 +57,7 @@ $(() => {
     
     let paymentSystemsPopupLinkName = activeWithdrawalTab.querySelector('.payment-systems-popup-link__name');
     let paymentSystemsPopupLinkCurrency = activeWithdrawalTab.querySelector('.payment-systems-popup-link__currency');
-    let paymentSystemsPopupLinkIcon = activeWithdrawalTab.querySelector('.payment-systems-popup-link__icon');
+    let paymentSystemsPopupLinkIcon = activeWithdrawalTab.querySelector('.payment-systems-popup-link__icon-wrapper svg');
 
     paymentSystemsPopupLinkName.textContent = bankName.textContent;
     paymentSystemsPopupLinkCurrency.textContent = bankCurrency.textContent;
