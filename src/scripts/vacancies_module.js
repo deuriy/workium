@@ -39,9 +39,6 @@ function toggleClearFilterButtons () {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
-  // console.log('setVisibilitySelectedMoreItem');
-  // console.log(`selectedItemsLength: ${selectedItemsLength}`);
-
   $('.selected-items').each(function(index, selectedItemsWrapper) {
     let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
     let moreItemsCount = selectedItemsLength - 11;
@@ -57,8 +54,6 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
 }
 
 function checkDependentFilters () {
-  // console.log('checkDependentFilters');
-
   let $dependentFilters = $('[data-parent-filter-id]');
 
   $dependentFilters.each(function(index, el) {
@@ -66,11 +61,15 @@ function checkDependentFilters () {
     let parentFilterItemId = $(el).data('parent-filter-item-id');
 
     let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
+    if (!$parentFilter.length) return;
+
     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
+    if (!$parentFilterItem.length) return;
 
-    // console.log($(el));
+    let tagName = $parentFilterItem.prop('tagName').toLowerCase();
+    let compareOp = tagName === 'option' ? ':selected' : ':checked';
 
-    if (!$parentFilterItem.is(':checked')) {
+    if (!$parentFilterItem.is(compareOp)) {
       $(el).hide();
     } else {
       $(el).show();
@@ -79,9 +78,6 @@ function checkDependentFilters () {
 }
 
 function resetRangeSlider (rangeSlider) {
-  console.log('rangeSlider');
-  console.log(rangeSlider);
-
   if (rangeSlider.classList.contains('range-slider--single')) {
     let min = rangeSlider.dataset.min;
 
@@ -202,8 +198,6 @@ function resetAgeSwitch () {
 }
 
 function undoChangesToAdditionalFilters () {
-  console.log('undoChangesToAdditionalFilters');
-
   let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:checked, .radiobtn__input:checked');
 
   $selectedCheckboxesAndRadio.each(function(index, el) {
@@ -248,7 +242,7 @@ function clearFilter () {
   $filterSelects.each(function(index, el) {
     $(el).val('');
     $(el).find('option[selected]').removeAttr('selected');
-    $(el).trigger('change');
+    $(el).trigger('change', 'fromCode');
   });
 
   let $rangeSlider = $(`.range-slider`);
@@ -313,8 +307,6 @@ function removeFilterTag (type, name, value) {
 }
 
 function createOrUpdateTag (type, name, value, labelText) {
-  // console.log('createOrUpdateTag');
-
   let $container = $('.selected-items__list');
   let $selectedItem = findFilterTagByValue(name, value);
 
@@ -752,10 +744,6 @@ $(() => {
       let rangeValues = el.noUiSlider.options.range;
       let name = el.dataset.name;
 
-      console.log('single slider');
-      console.log(value);
-      console.log(rangeValues);
-
       if (name === 'vik' && $ageSwitch.is(':checked')) {
         return;
       }
@@ -772,24 +760,15 @@ $(() => {
       let rangeValues = el.noUiSlider.options.range;
       let name = el.dataset.name;
 
-      console.log('range slider');
-      console.log(values);
-      console.log(rangeValues);
-
       if (name === 'vik' && !$ageSwitch.is(':checked')) {
         return;
       }
-
-      console.log(el.noUiSlider.options);
 
       if (rangeValues.min != values[0] || rangeValues.max != values[1]) {
         let resultValue = `${name}=${values[0]}-${values[1]}`;
         requestParamsArr.push(resultValue);
       }
     });
-
-    console.log('ageSwitch');
-    // console.log($ageSwitch.is(':checked'));
 
     let selectedCandidatesType;
 
@@ -849,7 +828,7 @@ $(() => {
 
     // localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
 
-    console.log(`/vacancies/${urlParams}${requestParams}`);
+    // console.log(`/vacancies/${urlParams}${requestParams}`);
 
     let $filterSearchBtn = $('.filter__search-btn');
     let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
@@ -892,22 +871,25 @@ $(() => {
   }
 
   let selectedCountryId = $('select[name="countries"] option:selected').data('entity-id');
-
   if (selectedCountryId) {
     loadCitiesOfSelectedCountry(selectedCountryId);
   }
 
   // Loading cities via AJAX
-  $('select[name="countries"]').on('change', function(event) {
+  $('select[name="countries"]').on('change', function(event, call) {
     let countryID = $(this).find(':selected').data('entity-id');
 
     loadCitiesOfSelectedCountry(countryID);
 
-    let changedAdditionalFilters = $(this).hasClass('additional-filters__countries-select');
+    let changedAdditionalFilters = $(this).hasClass('additional-filters__countries-select') && call !== 'fromCode';
+
+    // setTimeout(() => {
+    //   updateFilterUrl(changedAdditionalFilters);
+    // }, 1000);
 
     setTimeout(() => {
       updateFilterUrl(changedAdditionalFilters);
-    }, 1000);
+    });
   });
 
   // Set current currency
@@ -1031,8 +1013,6 @@ $(() => {
     });
 
     slider.noUiSlider.on('slide', function (values, handle) {
-      console.log('noUiSlider slide single');
-
       fields.forEach(field => {
         field.value = values[0];
       });
@@ -1062,8 +1042,6 @@ $(() => {
     ['input'].forEach(eventName => {
       fields.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
-          console.log('field change!');
-
           if (!this.value) return;
 
           slider.noUiSlider.set(this.value);
@@ -1177,8 +1155,6 @@ $(() => {
     });
 
     slider.noUiSlider.on('slide', function (values, handle) {
-      console.log('noUiSlider slide');
-
       fieldsFrom.forEach(field => {
         field.value = values[0];
       });
@@ -1225,8 +1201,6 @@ $(() => {
     ['input'].forEach(eventName => {
       fieldsFrom.forEach((field, idx) => {
         field.addEventListener(eventName, function (e) {
-          console.log('fieldFrom change!');
-
           if (!this.value) return;
 
           slider.noUiSlider.set([this.value, null]);
@@ -1372,7 +1346,6 @@ $(() => {
   document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', updateFilterUrl);
 
   let additionalFiltersSelectedItemsLength = $('.additional-filters .selected-items__item').length;
-  // console.log(additionalFiltersSelectedItemsLength);
   setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);
 
   // Age switch
