@@ -840,6 +840,8 @@ $(() => {
     $additionalFiltersSubmitBtn.hide();
     $additionalFiltersPreloaderWrapper.show();
 
+    // console.log(changedAdditionalFilters);
+
     setTimeout(() => {
       window.location.href = `/vacancies/${urlParams}${requestParams}`;
     }, 500);
@@ -881,7 +883,8 @@ $(() => {
 
     loadCitiesOfSelectedCountry(countryID);
 
-    let changedAdditionalFilters = $(this).hasClass('additional-filters__countries-select') && call !== 'fromCode';
+    let isMobile = $(window).width() < 576;
+    let changedAdditionalFilters = !isMobile && $(this).hasClass('additional-filters__countries-select') && call !== 'fromCode';
 
     // setTimeout(() => {
     //   updateFilterUrl(changedAdditionalFilters);
@@ -1343,7 +1346,9 @@ $(() => {
     // updateFilterUrl();
   });
 
-  document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', updateFilterUrl);
+  document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', function (e) {
+    updateFilterUrl(false);
+  });
 
   let additionalFiltersSelectedItemsLength = $('.additional-filters .selected-items__item').length;
   setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);

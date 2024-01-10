@@ -986,6 +986,7 @@ $(() => {
     setTimeout(() => {
       // createFilterUrl();
       document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+      // $('form[name="vacancies_filter"]').trigger('updateVacanciesFilter');
     });
   });
 
