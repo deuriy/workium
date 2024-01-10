@@ -210,8 +210,7 @@ function undoChangesToAdditionalFilters () {
     clearTagRelatedFields($selectedItem);
   });
 
-  let $rangeSliders = $(`.range-slider--range`);
-  $rangeSliders.each(function(index, el) {
+  $(`.range-slider--range`).each(function(index, el) {
     // resetRangeSlider(el);
     let name = $(el).attr('data-name');
     let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
@@ -670,6 +669,8 @@ $(() => {
       selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function(index, option) {
         return $(option).attr('data-seo-slug');
       });
+
+      console.log(selectedCitiesSlugs);
     }
 
 
@@ -732,8 +733,7 @@ $(() => {
       }
     });
 
-    let $rangeSliders = $('.additional-filters .range-slider--range');
-    $rangeSliders.each(function(index, el) {
+    $('.additional-filters .range-slider--range').each(function(index, el) {
       let values = el.noUiSlider.get();
       let rangeValues = el.noUiSlider.options.range;
       let name = el.dataset.name;
@@ -750,16 +750,10 @@ $(() => {
 
     let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
 
-    // if (isMobile) {
-    //   selectedCandidatesType = $('.filter__sex-select--mobile').val();
-    // } else {
-    //   selectedCandidatesType = $('.filter__sex-select--desktop').val();
-    // }
-
     let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
       return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
     });
-    // selectedCandidatesSlugs = [...new Set(selectedCandidatesSlugs)];
+
     [...new Set(selectedCandidatesSlugs)].forEach(item => {
       requestParamsArr.push(`tip-kandidativ[]=${item}`);
     });
@@ -771,12 +765,6 @@ $(() => {
     }
 
     let distance = isMobile ? $('.filter__distance-select--mobile') : $('.filter__distance-select--desktop');
-    
-    // if (isMobile) {
-    //   distance = $('.filter__distance-select--mobile');
-    // } else {
-    //   distance = $('.filter__distance-select--desktop');
-    // }
 
     if (distance.val() && selectedCountry && selectedCities) {
       requestParamsArr.push(`radius=${distance.val()}`);
@@ -843,13 +831,13 @@ $(() => {
     let isMobile = $(window).width() < 576;
     let changedAdditionalFilters = !isMobile && $(this).hasClass('additional-filters__countries-select') && call !== 'fromCode';
 
-    // setTimeout(() => {
-    //   updateFilterUrl(changedAdditionalFilters);
-    // }, 1000);
-
     setTimeout(() => {
       updateFilterUrl(changedAdditionalFilters);
-    });
+    }, 1000);
+
+    // setTimeout(() => {
+    //   updateFilterUrl(changedAdditionalFilters);
+    // });
   });
 
   // Temp!

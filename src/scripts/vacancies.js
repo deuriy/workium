@@ -1051,7 +1051,13 @@ $(() => {
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
     // toggleClearFilterButtons();
+    console.log('Selected options before!!');
+    console.log($('.filter__cities-select--desktop option[selected]'));
+
     $('.filter__cities-select--desktop option[selected]').removeAttr('selected');
+
+    console.log('Selected options after!!');
+    console.log($('.filter__cities-select--desktop option[selected]'));
     
     let isMobile = $(window).width() < 576;
     let cities = e.detail.data.results;
