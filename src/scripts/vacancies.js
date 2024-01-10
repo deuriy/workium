@@ -272,14 +272,14 @@ function checkFillingMSSearchInput ($input) {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
-  // console.log('vacancies: setVisibilitySelectedMoreItem');
-  // console.log(selectedItemsLength);
+  let isMobile = $(window).width() < 576;
+  let visibleCount = isMobile ? 7 : 11;
 
-  $('.selected-items').each(function(index, item) {
-    let $moreItem = $(item).find('.selected-items__more-item');
-    let moreItemsCount = selectedItemsLength - 11;
+  $('.selected-items').each(function(index, selectedItemsWrapper) {
+    let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
+    let moreItemsCount = selectedItemsLength - visibleCount;
 
-    if (selectedItemsLength > 11) {
+    if (selectedItemsLength > visibleCount) {
       $moreItem.removeClass('hidden');
     } else {
       $moreItem.addClass('hidden');

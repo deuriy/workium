@@ -27,9 +27,6 @@
 			width auto
 			flex-basis calc(50% - 4px)
 			// width 160px
-		
-		&:nth-child(n+12)
-			display none
 	
 	&__more-item
 		position relative
@@ -63,6 +60,20 @@
 		.selected-items__more-item
 			// right 58px
 			right 0
+	
+	&:not(.selected-items--expanded-mob)
+		@media $xxs
+			.selected-items__item:nth-child(n+8)
+				display none
+			
+	&--expanded-mob
+		.selected-items__item:nth-child(n+8)
+			display block
+	
+	&:not(.selected-items--expanded)
+		@media $xxsPlus
+			.selected-items__item:nth-child(n+12)
+				display none
 	
 	&--expanded
 		.selected-items__item:nth-child(n+12)

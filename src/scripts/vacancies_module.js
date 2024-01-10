@@ -39,11 +39,14 @@ function toggleClearFilterButtons () {
 }
 
 function setVisibilitySelectedMoreItem (selectedItemsLength) {
+  let isMobile = $(window).width() < 576;
+  let visibleCount = isMobile ? 7 : 11;
+
   $('.selected-items').each(function(index, selectedItemsWrapper) {
     let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
-    let moreItemsCount = selectedItemsLength - 11;
+    let moreItemsCount = selectedItemsLength - visibleCount;
 
-    if (selectedItemsLength > 11) {
+    if (selectedItemsLength > visibleCount) {
       $moreItem.removeClass('hidden');
     } else {
       $moreItem.addClass('hidden');
@@ -630,16 +633,18 @@ $(() => {
   });
 
   $('.selected-items__more-btn').click(function(event) {
+    let isMobile = $(window).width() < 576;
+    let visibleClass = isMobile ? 'selected-items--expanded-mob' : 'selected-items--expanded';
     let $selectedItems = $(this).closest('.selected-items');
 
     $(this).toggleClass('more-btn--active');
 
     if ($(this).hasClass('more-btn--active')) {
       $(this).find('.more-btn__text').text('Приховати');
-      $selectedItems.addClass('selected-items--expanded');
+      $selectedItems.addClass(visibleClass);
     } else {
       $(this).find('.more-btn__text').text('Ще');
-      $selectedItems.removeClass('selected-items--expanded');
+      $selectedItems.removeClass(visibleClass);
     }
 
   });
