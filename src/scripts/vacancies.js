@@ -40,7 +40,6 @@ function applyChangesToSelectedCities ($select) {
   let name = $select.attr('name');
 
   $select = $('.filter__cities-select--desktop');
-  // console.log($select.find('option'));
 
   changeSelectToggleTitle($select);
   updateDropdownMultiSelectClass($dropdownBlock);
@@ -187,7 +186,6 @@ function clearTextField ($input) {
 
 function updateMSItemsDescription ($items) {
   $items.forEach(el => {
-    // console.log();
     let $title = $(el).find('span');
     let description = $(el).data('description');
 
@@ -337,8 +335,6 @@ function toggleClearCitiesButtons () {
 }
 
 function syncInputFields ($input) {
-  console.log('syncInputFields');
-
   let syncFieldIDs = $input.data('sync-field-ids');
 
   if (!syncFieldIDs) return;
@@ -349,7 +345,6 @@ function syncInputFields ($input) {
     if (!$syncField.length) return;
 
     let nodeName = $syncField.prop('tagName').toLowerCase();
-    console.log(`nodeName: ${nodeName}`);
 
     switch (nodeName) {
       case 'input':
@@ -363,7 +358,6 @@ function syncInputFields ($input) {
 
         break;
       case 'select':
-        console.log('select multiSelect');
         let filterItemId = $input.data('filter-item-id').toString();
 
         setTimeout(() => {
@@ -377,8 +371,6 @@ function syncInputFields ($input) {
             $syncField.multiSelect('deselect', filterItemId);
             currentSelectedGendersIds = removeItemFromArray(currentSelectedGendersIds, filterItemId);
           }
-
-          console.log(`currentSelectedGendersIds: ${currentSelectedGendersIds}`);
 
           selectedGendersIds = [...currentSelectedGendersIds];
           changeSelectToggleTitle($syncField);
@@ -445,8 +437,6 @@ function clearTagRelatedFields ($selectedItem) {
 }
 
 function undoChangesToAdditionalFilters () {
-  console.log('undoChangesToAdditionalFilters 222');
-
   let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:checked, .radiobtn__input:checked');
 
   $selectedCheckboxesAndRadio.each(function(index, el) {
@@ -874,7 +864,6 @@ $(() => {
   });
 
   // $('.checkboxes-group--cities .checkbox__input').change(function(event) {
-  //   console.log('qdmwqlmqwmdlqmmdq');
   //   // let name = $(this).attr('name');
   //   let value = $(this).val();
   //   // let labelText = $(this).parent().find('.checkbox__title').text();
@@ -902,7 +891,6 @@ $(() => {
   //     }
   //   }
 
-  //   console.log('2ifeowfoofw');
   //   toggleClearCitiesButtons();
 
   //   // let selectedItemsLength = $('.selected-items--cities .selected-items__item').length;
@@ -1051,13 +1039,8 @@ $(() => {
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
     // toggleClearFilterButtons();
-    console.log('Selected options before!!');
-    console.log($('.filter__cities-select--desktop option[selected]'));
 
     $('.filter__cities-select--desktop option[selected]').removeAttr('selected');
-
-    console.log('Selected options after!!');
-    console.log($('.filter__cities-select--desktop option[selected]'));
     
     let isMobile = $(window).width() < 576;
     let cities = e.detail.data.results;
@@ -1148,7 +1131,6 @@ $(() => {
 
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
-  //   // console.log(lastSelectedTagObj);
   //   // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
 
   //   switch (lastSelectedTagObj.type) {

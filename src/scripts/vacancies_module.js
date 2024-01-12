@@ -369,7 +369,7 @@ function changeCaseOfDaysLabel (days) {
 $(() => {
   select2($);
 
-  Fancybox.bind(".additional-filters-popup-link", {
+  let fancyboxOpts = {
     dragToClose: false,
     mainClass: 'fancybox--additional-filters-popup',
 
@@ -388,7 +388,9 @@ $(() => {
         undoChangesToAdditionalFilters();
       }
     }
-  });
+  };
+
+  Fancybox.bind(".additional-filters-popup-link", fancyboxOpts);
 
   if (window.location.href.includes('open-popup')) {
     Fancybox.show(
@@ -397,14 +399,7 @@ $(() => {
           src: "#additional-filters-popup"
         }
       ],
-      {
-        dragToClose: false,
-        mainClass: 'fancybox--additional-filters-popup',
-
-        tpl: {
-          closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
-        },
-      }
+      fancyboxOpts
     );
   }
 
@@ -669,8 +664,6 @@ $(() => {
       selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function(index, option) {
         return $(option).attr('data-seo-slug');
       });
-
-      console.log(selectedCitiesSlugs);
     }
 
 
