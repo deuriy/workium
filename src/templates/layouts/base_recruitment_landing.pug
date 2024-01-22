@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    //- meta(name='description' content='')
+    title Workium
+    link(href="/img/favicon.png", rel="icon", type="image/png")
+    link(href="/css/vendor.css", rel="stylesheet")
+    link(href="/css/styles.css", rel="stylesheet")
+    script(src="/js/vendor.js", defer="")
+    script(src="/js/app.js", defer="")
+  body
+    .wrapper.wrapper--recruitment-landing
+      include ../includes/blocks/mobile-header-light
+      include ../includes/blocks/header
+      include ../includes/blocks/mobile-user-profile
+      include ../includes/blocks/profile-menu-popup
+      include ../includes/blocks/profile-submenu-popup
+      include ../includes/blocks/mobile-support-popup
+      include ../includes/blocks/mobile-support-popup-extended
+      include ../includes/blocks/closed-save-section
+      include ../includes/blocks/closed-affiliate-program
+      include ../includes/blocks/closed-achievements
+      include ../includes/blocks/closed-balance
+      include ../includes/blocks/closed-verification
+      include ../includes/blocks/closed-black-list
+      include ../includes/blocks/closed-settings
+
+      main.main
+        block content
+
+      include ../includes/blocks/authorization-popup
+
+    block page_bottom
