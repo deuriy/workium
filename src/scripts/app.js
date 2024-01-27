@@ -694,4 +694,12 @@ $(() => {
     Fancybox.show([{ src: "#add-employer-success-popup", type: "inline" }]);
   });
 
+  $('.authorization-form__socbtns-item .social-btn').click(function(event) {
+    let $socBtnsList = $(this).closest('.authorization-form__socbtns-list');
+    let $preloaderWrapper = $socBtnsList.next('.authorization-form__preloader-wrapper');
+
+    $socBtnsList.hide();
+    $preloaderWrapper.show();
+  });
+
 });
