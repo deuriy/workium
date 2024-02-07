@@ -467,6 +467,32 @@
 			
 			@media $xxs
 				grid-template-columns 100%
+	
+	&--employer-contact-banned
+		padding-bottom 40px
+		
+		.fancybox-popup__circle-icon-wrapper
+			display grid
+			place-content center
+			width 100px
+			height 100px
+			margin 30px auto 20px
+			border-radius 50%
+			background #E15241
+		
+		.fancybox-popup__circle-icon
+			width 58px
+			
+		.fancybox-popup__title
+			margin-bottom 30px
+			font-weight 600
+			
+		.fancybox-popup__text
+			color #666B80 
+			text-align left
+			
+			& > p + p
+				margin-top 16px
 		
 	&.fancybox__content
 		button.f-button.is-close-btn
