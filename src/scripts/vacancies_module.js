@@ -1282,6 +1282,11 @@ $(() => {
 
     $input.focus();
 
+    let isMobile = $(window).width() < 576;
+    if (isMobile) {
+      updateFilterUrl();
+    }
+
     // updateFilterUrl();
   });
 
