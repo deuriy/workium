@@ -776,11 +776,19 @@ $(() => {
     let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
     let $additionalFiltersSubmitBtn = $('.additional-filters__submit-btn');
     let $additionalFiltersPreloaderWrapper = $('.additional-filters__preloader-wrapper');
+    let $vacanciesTogglePlusBtn = $('.vacancies__toggle-plus-btn');
+    let $vacanciesPreloaderWrapper = $('.vacancies__preloader-wrapper');
 
     $filterSearchBtn.hide();
     $filterPreloaderWrapper.show();
+
     $additionalFiltersSubmitBtn.hide();
     $additionalFiltersPreloaderWrapper.show();
+
+    if (isMobile) {
+      $vacanciesTogglePlusBtn.hide();
+      $vacanciesPreloaderWrapper.show();
+    }
 
     setTimeout(() => {
       window.location.href = `/vacancies/${urlParams}${requestParams}`;
@@ -1283,7 +1291,8 @@ $(() => {
     $input.focus();
 
     let isMobile = $(window).width() < 576;
-    if (isMobile) {
+    let $noResults = $('.vacancies__no-results');
+    if (isMobile && $noResults.length) {
       updateFilterUrl();
     }
 
