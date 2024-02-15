@@ -200,25 +200,39 @@ function resetAgeSwitch () {
 }
 
 function undoChangesToAdditionalFilters () {
-  let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:not([data-default-checked]):checked, .radiobtn__input:not([data-default-checked]):checked');
-
-  $selectedCheckboxesAndRadio.each(function(index, el) {
+  let $checkboxesAndRadio = $('.additional-filters').find('.checkbox__input, .radiobtn__input');
+  $checkboxesAndRadio.each(function(index, el) {
+    let type = $(el).attr('type');
     let name = $(el).attr('name');
     let value = $(el).attr('value');
+    let labelText = $(el).parent().find('label').text();
     let $selectedItem = findFilterTagByValue(name, value);
 
-    clearTagRelatedFields($selectedItem);
+    if (el.dataset.defaultChecked !== undefined) {
+      el.checked = true;
+      createOrUpdateTag(type, name, value, labelText);
+    } else {
+      el.checked = false;
+      clearTagRelatedFields($selectedItem);
+    }
   });
 
   $(`.range-slider--range`).each(function(index, el) {
     // resetRangeSlider(el);
     let name = $(el).attr('data-name');
     let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+    let $inputFrom = $(`#${el.dataset.syncFromFieldIds}`);
+    let $inputTo = $(`#${el.dataset.syncToFieldIds}`);
 
-    clearTagRelatedFields($selectedItem);
+    el.noUiSlider.set([el.dataset.minValue, el.dataset.maxValue]);
+
+    $inputFrom.val(el.dataset.minValue);
+    $inputTo.val(el.dataset.maxValue);
+
+    // clearTagRelatedFields($selectedItem);
   });
 
-  resetAgeSwitch();
+  // resetAgeSwitch();
 
   toggleClearFilterButtons();
 

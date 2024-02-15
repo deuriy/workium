@@ -437,17 +437,30 @@ function clearTagRelatedFields ($selectedItem) {
 }
 
 function undoChangesToAdditionalFilters () {
-  let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:not([data-default-checked]):checked, .radiobtn__input:not([data-default-checked]):checked');
-
-  $selectedCheckboxesAndRadio.each(function(index, el) {
+  let $checkboxesAndRadio = $('.additional-filters').find('.checkbox__input, .radiobtn__input');
+  $checkboxesAndRadio.each(function(index, el) {
+    let type = $(el).attr('type');
     let name = $(el).attr('name');
     let value = $(el).attr('value');
+    let labelText = $(el).parent().find('label').text();
     let $selectedItem = findFilterTagByValue(name, value);
 
-    clearTagRelatedFields($selectedItem);
+    if (el.dataset.defaultChecked !== undefined) {
+      el.checked = true;
+      createOrUpdateTag(type, name, value, labelText);
+    } else {
+      el.checked = false;
+      clearTagRelatedFields($selectedItem);
+    }
   });
 
-  clearSexSelect();
+  let defaultSelectedGenderIds = Array.from($('#sex-select option[data-default-selected]')).map(option => option.value);
+
+  $('.sex-select').multiSelect('deselect_all');
+  $('.sex-select').multiSelect('select', defaultSelectedGenderIds);
+  $('.sex-select').val(defaultSelectedGenderIds);
+  
+  changeSelectToggleTitle($('.sex-select'));
 
   toggleClearFilterButtons();
 }
