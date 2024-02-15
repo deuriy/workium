@@ -39,6 +39,10 @@
 		font-weight 600
 		font-size 11px
 		line-height 14px
+		
+		@media $xxs
+			max-width 270px
+			padding-right 13px
 	
 	&__list
 		list-style none
@@ -117,3 +121,11 @@
 		.checkboxes-group__list
 			@media $smPlus
 				grid-template-columns repeat(4, 1fr)
+	
+	&--misce-roboti
+		order 1
+		grid-column span 3
+		
+		.checkboxes-group__list
+			@media $smPlus
+				grid-template-columns repeat(3, 1fr)
