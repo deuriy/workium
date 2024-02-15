@@ -437,7 +437,7 @@ function clearTagRelatedFields ($selectedItem) {
 }
 
 function undoChangesToAdditionalFilters () {
-  let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:checked, .radiobtn__input:checked');
+  let $selectedCheckboxesAndRadio = $('.additional-filters').find('.checkbox__input:not([data-default-checked]):checked, .radiobtn__input:not([data-default-checked]):checked');
 
   $selectedCheckboxesAndRadio.each(function(index, el) {
     let name = $(el).attr('name');
