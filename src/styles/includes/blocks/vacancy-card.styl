@@ -22,6 +22,28 @@
 		
 		@media $xs
 			padding 15px
+		
+		&.fancybox__content
+			width 1000px
+			padding 30px 35px
+			
+			@media $xs
+				// max-height 70vh
+				max-height 100vh
+				padding 25px 20px
+				overflow auto
+			
+			& > .vacancy-card__title--main,
+			.vacancy-card__specifications,
+			.vacancy-card__promo-blocks
+				display none
+			
+			.vacancy-card__title
+				margin-left 0
+				padding-right 20px
+			
+			.vacancy-card__btns-list
+				justify-content center
 	
 	&__header
 		display grid
@@ -149,6 +171,16 @@
 			@media $xs
 				grid-column 1 / 3
 	
+	&__agency-wrapper
+		display grid
+		grid-template-columns auto 1fr
+		align-items center
+		gap 10px
+		margin-bottom 25px
+		
+		@media $xs
+			margin-bottom 20px
+	
 	&__title
 		margin-bottom 18px
 		font-weight 600
@@ -198,12 +230,24 @@
 		padding 32px 17px 32px 32px
 		background #FAFBFC
 		
+		@media $xs
+			margin 10px -20px -20px -20px
+			padding 15px 20px 15px 20px
+		
 	&__btns-list
 		list-style none
 		display flex
 		gap 10px
 		align-items center
-		// text-align center
+		
+		@media $smMinus
+			display grid
+			grid-template-columns 100%
+	
+	&__btns-item
+		@media $smMinus
+			display grid
+			grid-template-columns 100%
 	
 	&--full
 		padding 0
@@ -226,3 +270,10 @@
 				
 				&::after
 					background-color var(--user-profile-bg)
+		
+		.vacancy-card__agency-wrapper
+			display none
+		
+		.vacancy-card__btns
+			@media $xs
+				display none

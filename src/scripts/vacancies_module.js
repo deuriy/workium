@@ -9,6 +9,28 @@ import noUiSlider from 'nouislider';
 let selectedFiltersCount = 0;
 let $ageSwitch = $('input[name="age_switch"]');
 
+function copyText(input) {
+  input.select();
+  input.setSelectionRange(0, 99999);
+
+  document.execCommand("copy");
+}
+
+function copyVacancyText () {
+  let $vacancyTextWrapper = $('.vacancy-card__text-wrapper');
+  let $vacancyTitle = $vacancyTextWrapper.find('.vacancy-card__title').text().trim();
+  let $vacancyText = $vacancyTextWrapper.find('.vacancy-card__text').text().trim();
+
+  if (!$vacancyTextWrapper.length) return;
+
+  $vacancyTextWrapper.after(`<textarea class="vacancy-card__textarea">${$vacancyTitle + '\r\n' + $vacancyText}</textarea>`);
+
+  let $vacancyCardTextarea = $('.vacancy-card__textarea');
+
+  copyText($vacancyCardTextarea[0]);
+  $vacancyCardTextarea.remove();
+}
+
 function toggleClearFilterButtons () {
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
@@ -1336,6 +1358,22 @@ $(() => {
 
     let $ageSelectedItem = $('.selected-items__item[data-name="vik"][data-type="range"]');
     $ageSelectedItem.remove();
+  });
+
+  $(document).on('click', '.vacancy-card__copy-btn', function(event) {
+    copyVacancyText();
+
+    let defaultText = $(this).text();
+
+    $(this).addClass('btn-white--copied');
+    $(this).text('Текст скопійовано!');
+
+    setTimeout(() => {
+      $(this).removeClass('btn-white--copied');
+      $(this).text(defaultText);
+    }, 2000);
+
+    event.preventDefault();
   });
 
   // $('[data-remove-last-filter]').click(function(event) {

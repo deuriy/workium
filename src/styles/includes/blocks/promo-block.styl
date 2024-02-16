@@ -2,6 +2,7 @@
 	// width 286px
 	// max-width 100%
 	// padding 14px 16px
+	position relative
 	display block
 	padding 14px 16px 0
 	border-radius 12px
@@ -9,6 +10,7 @@
 	background var(--light)
 	color var(--accent)
 	text-decoration none
+	overflow hidden
 	@extend .transition
 	
 	@media $xs
@@ -90,6 +92,12 @@
 	
 	&__footer
 		text-align center
+		
+		&--has-icon
+			position relative
+			
+			.promo-block__more-link
+				padding-right 34px
 	
 	&__more-link
 		margin-right -16px
@@ -111,6 +119,29 @@
 		@media $xs
 			margin-top 8px
 			margin-right 0
+	
+	&__view-link
+		// content ""
+		position absolute
+		z-index 2
+		// right -16px
+		right -33px
+		// bottom 0
+		bottom -25px
+		// width 64px
+		// height 50px
+		width 85px
+		height 80px
+		border-top-left-radius 72px
+		background var(--user-profile-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' width='32' height='32'%3E%3Cg fill='none' stroke='%23FFF' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10' stroke-width='2'%3E%3Cpath d='M649 137.999h26v18h-14M653 155.999h-4v-14M661 156l-8 6v-6'/%3E%3C/g%3E%3Cpath d='M16 25c-4.265 0-8.301-1.807-11.367-5.088a1 1 0 0 1 1.462-1.365C8.778 21.419 12.295 23 16 23c4.763 0 9.149-2.605 11.84-7-2.69-4.395-7.077-7-11.84-7-4.938 0-9.472 2.801-12.13 7.493a1 1 0 1 1-1.74-.986C5.147 10.18 10.333 7 16 7c5.668 0 10.853 3.18 13.87 8.507a1 1 0 0 1 0 .985C26.853 21.819 21.668 25 16 25z' fill='%233e3e40'/%3E%3Cpath d='M16 21c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5zm0-8c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3z' fill='%233e3e40'/%3E%3C/svg%3E") 51% 30% / 27px no-repeat
+		@extend .transition
+		
+		// &:hover
+		// 	background-color transparent
+	
+	&:hover
+		.promo-block__view-link
+			background-color transparent
 	
 	&--active
 		// box-shadow 0 0 18px rgba(0, 0, 0, .4)

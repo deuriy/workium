@@ -104,7 +104,7 @@ $(() => {
     $('.vacancy-info__bookmark-icon').toggleClass('bookmark-icon--fill');
   });
 
-  $('.vacancy-card__copy-btn').click(function(event) {
+  $(document).on('click', '.vacancy-card__copy-btn', function(event) {
     copyVacancyText();
 
     let defaultText = $(this).text();
@@ -120,7 +120,7 @@ $(() => {
     event.preventDefault();
   });
 
-  $('.vacancy-footer__copy-btn').click(function(event) {
+  $(document).on('click', '.vacancy-footer__copy-btn', function(event) {
     copyVacancyText();
 
     $(this).addClass('btn-grey--copied');

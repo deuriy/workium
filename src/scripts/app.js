@@ -542,7 +542,7 @@ $(() => {
     }
   });
 
-  $('.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item, .contact-phones--affiliate-support .contact-phones__item').click(function(e) {
+  $(document).on('click', '.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item, .contact-phones--affiliate-support .contact-phones__item', function(e) {
     if ($(window).width() < 768 && $(this).closest('.contact-phones--order-service')) return;
 
     let $phone = $(this).find('.phone');
