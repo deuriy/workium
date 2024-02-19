@@ -1,8 +1,8 @@
 .promo-block
+	position relative
 	// width 286px
 	// max-width 100%
 	// padding 14px 16px
-	position relative
 	display block
 	padding 14px 16px 0
 	border-radius 12px
@@ -10,7 +10,6 @@
 	background var(--light)
 	color var(--accent)
 	text-decoration none
-	overflow hidden
 	@extend .transition
 	
 	@media $xs
@@ -92,12 +91,6 @@
 	
 	&__footer
 		text-align center
-		
-		&--has-icon
-			position relative
-			
-			.promo-block__more-link
-				padding-right 34px
 	
 	&__more-link
 		margin-right -16px
@@ -162,3 +155,12 @@
 		
 		.promo-block__footer
 			margin-bottom -15px
+	
+	&--has-icon
+		overflow hidden
+		
+		.promo-block__footer
+			position relative
+			
+		.promo-block__more-link
+			padding-right 34px

@@ -24,14 +24,19 @@
 			padding 15px
 		
 		&.fancybox__content
+			// width 1000px
 			width 1000px
+			max-width 100%
 			padding 30px 35px
 			
 			@media $xs
 				// max-height 70vh
 				max-height 100vh
-				padding 25px 20px
-				overflow auto
+				padding 25px 20px 160px 20px
+				border-bottom-right-radius 0
+				border-bottom-left-radius 0
+				overflow-y auto
+				// overflow hidden
 			
 			& > .vacancy-card__title--main,
 			.vacancy-card__specifications,
@@ -41,6 +46,17 @@
 			.vacancy-card__title
 				margin-left 0
 				padding-right 20px
+			
+			.vacancy-card__btns
+				@media $xs
+					position fixed
+					right 0
+					bottom 0
+					left 0
+					margin 0
+					// margin 20px 0 0 0
+					// padding 0
+					// background transparent 
 			
 			.vacancy-card__btns-list
 				justify-content center
