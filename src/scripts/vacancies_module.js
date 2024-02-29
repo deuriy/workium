@@ -16,14 +16,22 @@ function copyText(input) {
   document.execCommand("copy");
 }
 
-function copyVacancyText () {
+function copyVacancyText (isMultiVacancy = true) {
   let $vacancyTextWrapper = $('.vacancy-card__text-wrapper');
-  let $vacancyTitle = $vacancyTextWrapper.find('.vacancy-card__title').text().trim();
-  let $vacancyText = $vacancyTextWrapper.find('.vacancy-card__text').text().trim();
+  let vacancyTitle = $vacancyTextWrapper.find('.vacancy-card__title').text().trim();
+  let vacancyText = $vacancyTextWrapper.find('.vacancy-card__text').text().trim();
+  let vacancyBefore = "";
 
   if (!$vacancyTextWrapper.length) return;
 
-  $vacancyTextWrapper.after(`<textarea class="vacancy-card__textarea">${$vacancyTitle + '\r\n' + $vacancyText}</textarea>`);
+  if (!isMultiVacancy) {
+    let vacancyCategory = $('.vacancy-card__category').text().trim();
+    let companyName = $('.vacancy-card__company-name').text().trim();
+
+    vacancyBefore = vacancyCategory + ' ' + companyName + '\r\n';
+  }
+
+  $vacancyTextWrapper.after(`<textarea class="vacancy-card__textarea">${vacancyBefore + vacancyTitle + '\r\n' + vacancyText}</textarea>`);
 
   let $vacancyCardTextarea = $('.vacancy-card__textarea');
 
@@ -1361,7 +1369,7 @@ $(() => {
   });
 
   $(document).on('click', '.vacancy-card__copy-btn', function(event) {
-    copyVacancyText();
+    copyVacancyText(this.hasAttribute('data-multi-vacancy'));
 
     let defaultText = $(this).text();
 
@@ -1371,6 +1379,22 @@ $(() => {
     setTimeout(() => {
       $(this).removeClass('btn-white--copied');
       $(this).text(defaultText);
+    }, 2000);
+
+    event.preventDefault();
+  });
+
+  $(document).on('click', '.vacancy-card__copy-btn-mobile', function(event) {
+    copyVacancyText(this.hasAttribute('data-multi-vacancy'));
+
+    let $tooltip = $(this).find('.btn-grey__tooltip');
+
+    $tooltip.addClass('tooltip--visible');
+    $(this).addClass('btn-grey--copied');
+
+    setTimeout(() => {
+      $tooltip.removeClass('tooltip--visible');
+      $(this).removeClass('btn-grey--copied');
     }, 2000);
 
     event.preventDefault();

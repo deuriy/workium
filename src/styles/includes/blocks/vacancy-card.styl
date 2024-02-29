@@ -38,6 +38,22 @@
 				overflow-y auto
 				// overflow hidden
 			
+			.f-button.is-close-btn
+				position fixed
+				
+				&:active:not([disabled])
+					background-color transparent
+			
+			.vacancy-card__agency-wrapper
+				@media $xs
+					position sticky
+					z-index 1
+					top -25px
+					// min-height 50px
+					margin-bottom 10px
+					padding 10px 0
+					background var(--light)
+			
 			& > .vacancy-card__title--main,
 			.vacancy-card__specifications,
 			.vacancy-card__promo-blocks
@@ -64,6 +80,10 @@
 			
 			.vacancy-card__btns-list
 				justify-content center
+	
+	&__company-name,
+	&__category
+		display none
 	
 	&__header
 		display grid
@@ -260,9 +280,12 @@
 		gap 10px
 		align-items center
 		
-		@media $smMinus
-			display grid
-			grid-template-columns 100%
+		@media $smPlus
+			flex-wrap wrap
+		
+		// @media $smMinus
+		// 	display grid
+		// 	grid-template-columns 100%
 	
 	&__btns-item
 		@media $smMinus
