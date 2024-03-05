@@ -786,6 +786,7 @@ $(() => {
     });
 
     let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
+    console.log(`selectedCandidatesType: ${selectedCandidatesType}`);
 
     let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
       return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
@@ -793,6 +794,19 @@ $(() => {
 
     [...new Set(selectedCandidatesSlugs)].forEach(item => {
       requestParamsArr.push(`tip-kandidativ[]=${item}`);
+    });
+
+
+    let selectedVacanciesRelevance = $('.filter__relevance-select').val();
+    console.log(`selectedVacanciesRelevance: ${selectedVacanciesRelevance}`);
+    // console.log($('.filter__relevance-select option:selected'));
+
+    let selectedVacanciesRelevancesSlugs = selectedVacanciesRelevance.map(function(value, index) {
+      return $(`select[name="aktualnіst[]"] option[value="${value}"]`).attr('data-seo-slug');
+    });
+
+    [...new Set(selectedVacanciesRelevancesSlugs)].forEach(item => {
+      requestParamsArr.push(`aktualnіst[]=${item}`);
     });
 
 
@@ -836,6 +850,7 @@ $(() => {
 
     setTimeout(() => {
       window.location.href = `/vacancies/${urlParams}${requestParams}`;
+      // console.log(`/vacancies/${urlParams}${requestParams}`);
     }, 500);
   }
 

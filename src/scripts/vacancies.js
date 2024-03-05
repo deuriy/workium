@@ -6,6 +6,9 @@ let currentSelectedCitiesIds = [];
 let selectedGendersIds = [];
 let currentSelectedGendersIds = [];
 
+let selectedVacanciesRelevancesIds = [];
+let currentSelectedVacanciesRelevancesIds = [];
+
 let citySearchInputValue = '';
 let searchCitiesTimeoutID = null;
 
@@ -105,6 +108,42 @@ function applyChangesToSelectedSex ($select) {
   // $select[0].dispatchEvent(new Event('change'));
 }
 
+function applyChangesToSelectedVacanciesRelevance ($select) {
+  selectedVacanciesRelevancesIds = [...currentSelectedVacanciesRelevancesIds];
+
+  let $dropdownBlock = $select.closest('.dropdown-block');
+  let name = $select.attr('name');
+
+  changeSelectToggleTitle($select);
+  // updateDropdownMultiSelectClass($dropdownBlock);
+
+  $select.multiSelect('deselect_all');
+  $select.find('option').each(function(index, el) {
+    let $selectedItem = findFilterTagByValue(name, $(el).attr('value'));
+    $selectedItem.remove();
+  });
+
+  selectedVacanciesRelevancesIds.forEach(id => {
+    $select.multiSelect('select', id);
+
+    let $option = $select.find(`option[value="${id}"]`);
+    let labelText = $option.text();
+
+    if (labelText) {
+      let value = $option.attr('data-seo-slug');
+      // createOrUpdateTag('multiselect', name, id, labelText);
+      createOrUpdateTag('checkbox', name, value, labelText);
+    }
+  });
+
+  let $selectedItemsLength = $('.filter .selected-items__item').length;
+  setVisibilitySelectedMoreItem($selectedItemsLength);
+
+  toggleClearFilterButtons();
+
+  // $select[0].dispatchEvent(new Event('change'));
+}
+
 function clearCitiesSelect () {
   let $dropdownBlock = $('.dropdown-block--cities-select');
   let $clearBtn = $dropdownBlock.find('.ms-selection__clear-btn');
@@ -137,6 +176,14 @@ function clearSexSelect () {
 
   selectedGendersIds = [];
   currentSelectedGendersIds = [];
+}
+
+function clearVacanciesRelevancesSelect () {
+  $('.relevance-select').multiSelect('deselect_all');
+  changeSelectToggleTitle($('.relevance-select'));
+
+  selectedVacanciesRelevancesIds = [];
+  currentSelectedVacanciesRelevancesIds = [];
 }
 
 function clearExperinceSelect () {
@@ -462,6 +509,15 @@ function undoChangesToAdditionalFilters () {
   
   changeSelectToggleTitle($('.sex-select'));
 
+
+  let defaultSelectedVacanciesRelevancesIds = Array.from($('#relevance-select option[data-default-selected]')).map(option => option.value);
+
+  $('.relevance-select').multiSelect('deselect_all');
+  $('.relevance-select').multiSelect('select', defaultSelectedVacanciesRelevancesIds);
+  $('.relevance-select').val(defaultSelectedVacanciesRelevancesIds);
+  
+  changeSelectToggleTitle($('.relevance-select'));
+
   toggleClearFilterButtons();
 }
 
@@ -711,10 +767,66 @@ $(() => {
     });
   });
 
+  $(".relevance-select").each((index, el) => {
+    $(el).multiSelect({
+      keepOrder: true,
+      cssClass: 'ms-container--default ms-container--short',
+
+      afterInit: function (container) {
+        let that = this;
+        let $selectableItems = that.$selectableUl.children().toArray();
+        let $selectionItems = that.$selectionUl.children().toArray();
+
+        that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-grey btn-grey--multi-select ms-container__apply-btn">Застосувати</button></div>');
+
+        updateMSItemsDescription($selectionItems);
+
+        that.$container.find('.ms-container__apply-btn').click(function(event) {
+          let $dropdownBlock = $(this).closest('.dropdown-block');
+          $dropdownBlock.removeClass('dropdown-block--visible');
+
+          applyChangesToSelectedVacanciesRelevance(that.$element);
+
+          setTimeout(() => {
+            // createFilterUrl();
+            document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+          });
+
+          // createOrUpdateTag()
+        });
+
+        $($selectableItems).each(function(index, el) {
+          $(el).click(function(event) {
+            if (($(el).hasClass('ms-selected'))) {
+              setTimeout(() => {
+                let lastIndexID = $(el).attr('id').indexOf("-");
+                let selectedItemID = $(el).attr('id').substring(0, lastIndexID);
+                let $selectionWrapper = $(el).closest('.ms-container').find('.ms-selection');
+
+                $selectionWrapper.find(`li[id^="${selectedItemID}"]`).click();
+              });
+            }
+          });
+        });
+      },
+
+      afterSelect: function(values) {
+        if (!currentSelectedVacanciesRelevancesIds.includes(values[0])) {
+          currentSelectedVacanciesRelevancesIds.push(values[0]);
+        }
+      },
+
+      afterDeselect: function(values) {
+        currentSelectedVacanciesRelevancesIds = removeItemFromArray(currentSelectedVacanciesRelevancesIds, values[0]);
+      }
+    });
+  });
+
   $('[data-clear-filter]').click(() => {
     clearCitiesSelect();
     clearCitiesCheckboxes();
     clearSexSelect();
+    clearVacanciesRelevancesSelect();
     clearExperinceSelect();
   });
 
@@ -745,6 +857,21 @@ $(() => {
 
         if (!selectedGendersIds.length) {
           $('#ms-sex-select, #ms-additional-filter-sex-select').addClass('ms-container--default');
+        }
+      }
+    }
+
+    if ($('.dropdown-block--relevance-select').hasClass('dropdown-block--visible')) {
+      if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('a.item').length) {
+        $('.relevance-select').multiSelect('deselect_all');
+        selectedVacanciesRelevancesIds.forEach(id => {
+          $('.relevance-select').multiSelect('select', id);
+        });
+
+        currentSelectedVacanciesRelevancesIds = [...selectedVacanciesRelevancesIds];
+
+        if (!selectedVacanciesRelevancesIds.length) {
+          $('#ms-relevance-select, #ms-additional-filter-relevance-select').addClass('ms-container--default');
         }
       }
     }
@@ -1123,6 +1250,15 @@ $(() => {
   currentSelectedGendersIds = [...selectedSex];
 
   changeSelectToggleTitle($sexSelect);
+
+
+  let $relevanceSelect = $('.filter__relevance-select');
+  let selectedVacanciesRelevances = Array.from($relevanceSelect.find('option:selected')).map(item => $(item).attr('value'));
+
+  selectedVacanciesRelevancesIds = [...selectedVacanciesRelevances];
+  currentSelectedVacanciesRelevancesIds = [...selectedVacanciesRelevances];
+
+  changeSelectToggleTitle($relevanceSelect);
 
   // applyChangesToSelectedSex($sexSelect);
 
