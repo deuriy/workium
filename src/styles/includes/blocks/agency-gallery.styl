@@ -1,0 +1,54 @@
+.agency-gallery
+  &__title
+    margin-bottom 16px
+    font-weight 600 
+    font-size 24px
+    line-height 1.25
+  
+  &__tabs-menu
+    margin-bottom 24px
+  
+  &__list-wrapper
+    @media $xs
+      height 120px
+      margin-right -15px
+      margin-left -15px
+      overflow hidden
+    
+  &__list
+    list-style none
+    display flex
+    flex-wrap wrap
+    gap 12px
+    
+    @media $xs
+      height 130px
+      flex-wrap nowrap
+      gap 8px
+      padding-right 15px
+      padding-left 15px
+      overflow auto
+  
+  &__item
+    @media $xs
+      flex-shrink 0
+      
+    &:nth-child(n+11)
+      display none
+  
+  &__item-link
+    display grid
+  
+  &__item-img
+    width 88px
+    border-radius 8px
+    
+    @media $xs
+      width 120px
+  
+  &__hide-link
+    margin-top 12px
+  
+  &--full
+    .agency-gallery__item:nth-child(n+11)
+      display block

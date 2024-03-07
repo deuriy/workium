@@ -153,4 +153,22 @@ $(() => {
   //   $fancyboxPopup.find('.fancybox-popup__contact-box').slideDown();
   // });
 
+  $('.agency-gallery__more-item-link').click(function(event) {
+    event.preventDefault();
+
+    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
+    $agencyGalleryTab.addClass('agency-gallery--full');
+    $agencyGalleryTab.find('.agency-gallery__hide-link').show();
+    $(this).hide();
+  });
+
+  $('.agency-gallery__hide-link').click(function(event) {
+    event.preventDefault();
+
+    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
+    $agencyGalleryTab.removeClass('agency-gallery--full');
+    $agencyGalleryTab.find('.agency-gallery__more-item-link').show();
+    $(this).hide();
+  });
+
 });
