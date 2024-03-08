@@ -39,20 +39,27 @@
 				// overflow hidden
 			
 			.f-button.is-close-btn
-				position fixed
+				display none
+				// // @media $xs
+				// // 	position fixed
 				
-				&:active:not([disabled])
-					background-color transparent
+				// &:active:not([disabled])
+				// 	background-color transparent
 			
 			.vacancy-card__agency-wrapper
+				position sticky
+				z-index 1
+				top -4px
+				// min-height 50px
+				margin-bottom 10px
+				padding 10px 0
+				background var(--light)
+				
 				@media $xs
-					position sticky
-					z-index 1
 					top -25px
-					// min-height 50px
-					margin-bottom 10px
-					padding 10px 0
-					background var(--light)
+			
+			.vacancy-card__close-btn
+				display block
 			
 			& > .vacancy-card__title--main,
 			.vacancy-card__specifications,
@@ -83,8 +90,17 @@
 				justify-content center
 	
 	&__company-name,
-	&__category
+	&__category,
+	&__close-btn
 		display none
+	
+	&__close-btn
+		width 34px
+		height 34px
+		border none
+		outline none
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Cpath stroke='%23989DB3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1.333 14.667 14.668 1.333m-13.333 0 13.333 13.334'/%3E%3C/svg%3E") center / 18px no-repeat
+		cursor pointer
 	
 	&__header
 		display grid
@@ -214,7 +230,7 @@
 	
 	&__agency-wrapper
 		display grid
-		grid-template-columns auto 1fr
+		grid-template-columns auto 1fr auto
 		align-items center
 		gap 10px
 		margin-bottom 25px
