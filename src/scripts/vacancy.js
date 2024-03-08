@@ -153,7 +153,7 @@ $(() => {
   //   $fancyboxPopup.find('.fancybox-popup__contact-box').slideDown();
   // });
 
-  $('.agency-gallery__more-item-link').click(function(event) {
+  $(document).on('click', '.agency-gallery__more-item-link', function(event) {
     event.preventDefault();
 
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
@@ -162,7 +162,7 @@ $(() => {
     $(this).hide();
   });
 
-  $('.agency-gallery__hide-link').click(function(event) {
+  $(document).on('click', '.agency-gallery__hide-link', function(event) {
     event.preventDefault();
 
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');

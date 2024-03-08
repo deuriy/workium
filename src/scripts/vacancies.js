@@ -1276,6 +1276,24 @@ $(() => {
     event.preventDefault();
   });
 
+  $(document).on('click', '.agency-gallery__more-item-link', function(event) {
+    event.preventDefault();
+
+    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
+    $agencyGalleryTab.addClass('agency-gallery--full');
+    $agencyGalleryTab.find('.agency-gallery__hide-link').show();
+    $(this).hide();
+  });
+
+  $(document).on('click', '.agency-gallery__hide-link', function(event) {
+    event.preventDefault();
+
+    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
+    $agencyGalleryTab.removeClass('agency-gallery--full');
+    $agencyGalleryTab.find('.agency-gallery__more-item-link').show();
+    $(this).hide();
+  });
+
   document.forms.vacancies_filter.addEventListener('undoingChangesToAdditionalFilters', undoChangesToAdditionalFilters);
 
   // $('[data-remove-last-filter]').click(function(event) {
