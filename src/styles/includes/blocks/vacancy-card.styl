@@ -27,12 +27,15 @@
 			// width 1000px
 			width 1000px
 			max-width 100%
-			padding 30px 35px
+			// padding 30px 35px
+			padding 10px 35px 30px
 			
 			@media $xs
 				// max-height 70vh
 				max-height 100vh
-				padding 25px 20px 160px 20px
+				// padding 25px 20px 160px 20px
+				// padding 5px 20px 160px 20px
+				padding 0 20px
 				border-bottom-right-radius 0
 				border-bottom-left-radius 0
 				overflow-y auto
@@ -50,21 +53,19 @@
 				position sticky
 				z-index 1
 				top -4px
-				// min-height 50px
 				margin-bottom 10px
 				padding 10px 0
 				background var(--light)
 				
 				@media $xs
-					top -25px
+					top 0
 			
 			.vacancy-card__close-btn
 				display block
 			
 			& > .vacancy-card__title--main,
 			.vacancy-card__specifications,
-			.vacancy-card__promo-blocks,
-			.vacancy-card__agency-gallery
+			.vacancy-card__promo-blocks
 				display none
 			
 			.vacancy-card__title
@@ -75,16 +76,15 @@
 				margin 20px -35px -30px
 				border-bottom-right-radius 12px
 				border-bottom-left-radius 12px
+				position sticky
+				right 0
+				bottom -4px
+				left 0
 				
 				@media $xs
-					position fixed
-					right 0
 					bottom 0
-					left 0
-					margin 0
-					// margin 20px 0 0 0
-					// padding 0
-					// background transparent 
+					margin-right -20px
+					margin-left -20px
 			
 			.vacancy-card__btns-list
 				justify-content center
