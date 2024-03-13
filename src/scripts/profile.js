@@ -260,9 +260,16 @@ $(() => {
   	$(this).prev('.form-search-box__input').val('');
   });
 
-  $('.verified-vacancies__close-btn').click(function(event) {
-  	$(this).closest('.verified-vacancies').slideUp();
+  $('.banner__close-btn').click(function(event) {
+  	let $banner = $(this).closest('.banner');
+  	$banner.slideUp();
 
-  	setCookie('hideVerifiedVacancies', 'yes', {'max-age': 3153600000});
+  	let cookieName = $banner.data('cookie-name');
+
+  	console.log(cookieName);
+
+  	if (!cookieName) return;
+
+  	setCookie(cookieName, 'yes', {'max-age': 3153600000});
   });
 });

@@ -1,4 +1,4 @@
-.verified-vacancies
+.banner
 	position relative
 	display grid
 	grid-template-columns auto 1fr
@@ -79,3 +79,22 @@
 		
 		& > p + p
 			margin-top 8px
+	
+	&--align-start
+		grid-template-rows auto 1fr
+		align-items start
+		padding-bottom 25px
+		
+		@media $xs
+			gap 8px 16px
+		
+		.banner__img-wrapper
+			padding-top 0
+			
+			@media $xs
+				display grid
+		
+		.banner__title
+			@media $xs
+				align-self center
+				margin-top 0
