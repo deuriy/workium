@@ -39,6 +39,11 @@ function setCookie(name, value, options = {}) {
   document.cookie = updatedCookie;
 }
 
+function toggleMoreLink ($link) {
+	let linkText = $link.text() === 'Менше' ? 'Детальніше' : 'Менше';
+	$link.text(linkText);
+}
+
 $(() => {
 	// let hideProfileCookie = getCookie('hideProfile');
 	// let hideProfileQuoteCookie = getCookie('hideProfileQuote');
@@ -272,4 +277,12 @@ $(() => {
 
   	setCookie(cookieName, 'yes', {'max-age': 3153600000});
   });
+
+  $('.banner__more-link').click(function(e) {
+		$(this).closest('.banner').find('.banner__text').toggleClass('banner__text--truncated-xs');
+		$(this).toggleClass('arrow-link--opened');
+
+		toggleMoreLink($(this));
+		e.preventDefault();
+	});
 });

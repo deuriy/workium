@@ -76,6 +76,4 @@ $(() => {
 		toggleMoreLink($(this));
 		e.preventDefault();
 	});
-
-	// $('.')
 });

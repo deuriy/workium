@@ -79,6 +79,24 @@
 		
 		& > p + p
 			margin-top 8px
+		
+		&--truncated-xs
+			@media $xs
+				display -webkit-box
+				-webkit-line-clamp 3
+				-webkit-box-orient vertical
+				overflow hidden
+				text-overflow ellipsis
+				
+				& > p
+					display inline
+	
+	&__more-link-wrapper
+		grid-column span 2
+	
+	&--grey-text
+		.banner__text
+			color var(--text-color)
 	
 	&--align-start
 		grid-template-rows auto 1fr
@@ -87,6 +105,7 @@
 		
 		@media $xs
 			gap 8px 16px
+			padding-bottom 16px
 		
 		.banner__img-wrapper
 			padding-top 0

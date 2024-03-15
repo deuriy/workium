@@ -3,11 +3,17 @@
   align-items center
   gap 3px
   font-weight 500
-  color #4b97f9
+  color var(--info)
   text-decoration none
   
   &::after
     content ""
-    margin-bottom 3px
+    // margin-bottom 3px
+    margin-bottom -4px
     border 3px solid transparent
-    border-bottom 3px solid #4b97f9
+    border-top 3px solid var(--info)
+  
+  &--opened
+    &::after
+      margin-bottom 3px
+      transform rotate(180deg)
