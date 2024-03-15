@@ -848,10 +848,15 @@ $(() => {
       $vacanciesPreloaderWrapper.show();
     }
 
+    // setTimeout(() => {
+    //   window.location.href = `/vacancies/${urlParams}${requestParams}`;
+    //   // console.log(`/vacancies/${urlParams}${requestParams}`);
+    // }, 500);
+
     setTimeout(() => {
       window.location.href = `/vacancies/${urlParams}${requestParams}`;
       // console.log(`/vacancies/${urlParams}${requestParams}`);
-    }, 500);
+    });
   }
 
   // Creating filter URL
@@ -891,13 +896,13 @@ $(() => {
     let isMobile = $(window).width() < 576;
     let changedAdditionalFilters = !isMobile && $(this).hasClass('additional-filters__countries-select') && call !== 'fromCode';
 
-    setTimeout(() => {
-      updateFilterUrl(changedAdditionalFilters);
-    }, 1000);
-
     // setTimeout(() => {
     //   updateFilterUrl(changedAdditionalFilters);
-    // });
+    // }, 1000);
+
+    setTimeout(() => {
+      updateFilterUrl(changedAdditionalFilters);
+    });
   });
 
   // Temp!
