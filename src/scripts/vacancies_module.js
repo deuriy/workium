@@ -926,8 +926,20 @@ $(() => {
 
   // Dependent filters
   checkDependentFilters();
+
   $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function(event) {
-    checkDependentFilters();
+    let $parentElem = $(this).parent();
+
+    if ($parentElem.hasClass('checkbox--expandable')) {
+      let $checkboxes = $parentElem.next('.additional-filters__checkboxes-group').find('.checkbox__input');
+      
+      if ($(this).is(':checked')) {
+        $checkboxes.prop('checked', true);
+      } else {
+        $checkboxes.prop('checked', false);
+      }
+    }
+    // checkDependentFilters();
   });
 
   // Synchronized selects
