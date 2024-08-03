@@ -853,10 +853,15 @@ $(() => {
     //   // console.log(`/vacancies/${urlParams}${requestParams}`);
     // }, 500);
 
-    setTimeout(() => {
+    // setTimeout(() => {
+      // window.location.href = `/vacancies/${urlParams}${requestParams}`;
+
+    $.get(`/vacancies`).done(function() {
       window.location.href = `/vacancies/${urlParams}${requestParams}`;
-      // console.log(`/vacancies/${urlParams}${requestParams}`);
     });
+
+      // console.log(`/vacancies/${urlParams}${requestParams}`);
+    // });
   }
 
   // Creating filter URL
