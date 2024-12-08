@@ -1,14 +1,13 @@
 .hero-section
 	&__container
 		display grid
-		// grid-template-columns 1fr auto
-		// grid-template-columns 450px auto
 		grid-template-columns 1fr 602px
-		// align-items center
 		justify-content space-between
 		align-items start
 		// gap 80px
-		gap 80px
+		// gap 65px
+		// gap 50px
+		gap 70px
 		
 		@media $mdMinus
 			grid-template-columns repeat(2, 1fr)
@@ -34,6 +33,8 @@
 	
 	&__text
 		// margin-bottom 32px
+		width 500px
+		max-width 100%
 		margin-bottom 45px
 		
 		@media $xs
