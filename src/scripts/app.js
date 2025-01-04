@@ -556,26 +556,30 @@ $(() => {
   });
 
   $(document).on('click', '.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item, .contact-phones--affiliate-support .contact-phones__item', function(e) {
-    if ($(window).width() < 768 && $(this).closest('.contact-phones--order-service')) return;
+    // if ($(window).width() < 768 && $(this).closest('.contact-phones--order-service')) return;
 
-    let $phone = $(this).find('.phone');
-    $phone.after(`<input class="contact-phones__phone-form-text" value="${$phone.text().trim().replaceAll(/ |\t/g, '')}">`);
+    // console.log(e.target);
 
-    let $tooltip = $(this).find('.contact-phones__tooltip');
-    let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
+    if (($(window).width() >= 768 && e.target.closest('.phone')) || e.target.closest('.contact-phones__copy-btn')) {
+      let $phone = $(this).find('.phone');
+      $phone.after(`<input class="contact-phones__phone-form-text" value="${$phone.text().trim().replaceAll(/ |\t/g, '')}">`);
 
-    // console.log($tooltip);
-    console.log($contactPhoneFormText);
+      let $tooltip = $(this).find('.contact-phones__tooltip');
+      let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
 
-    copyText($contactPhoneFormText[0]);
-    $contactPhoneFormText.remove();
+      // console.log($tooltip);
+      // console.log($contactPhoneFormText);
 
-    $tooltip.addClass('tooltip--visible');
-    setTimeout(() => {
-      $tooltip.removeClass('tooltip--visible');
-    }, 1500);
+      copyText($contactPhoneFormText[0]);
+      $contactPhoneFormText.remove();
 
-    e.preventDefault();
+      $tooltip.addClass('tooltip--visible');
+      setTimeout(() => {
+        $tooltip.removeClass('tooltip--visible');
+      }, 1500);
+
+      e.preventDefault();
+    }    
   });
 
   $('.fb-group__copy-btn').click(function(e) {
