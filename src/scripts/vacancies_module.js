@@ -266,7 +266,9 @@ function undoChangesToAdditionalFilters () {
 
   toggleClearFilterButtons();
 
-  document.forms.vacancies_filter.dispatchEvent(new CustomEvent("undoingChangesToAdditionalFilters"));
+  if (document.forms.vacancies_filter) {
+    document.forms.vacancies_filter.dispatchEvent(new CustomEvent("undoingChangesToAdditionalFilters"));
+  }
 }
 
 function clearFilter () {
@@ -1380,9 +1382,11 @@ $(() => {
     // updateFilterUrl();
   });
 
-  document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', function (e) {
-    updateFilterUrl(false);
-  });
+  if (document.forms.vacancies_filter) {
+    document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', function (e) {
+      updateFilterUrl(false);
+    });
+  }
 
   let additionalFiltersSelectedItemsLength = $('.additional-filters .selected-items__item').length;
   setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);

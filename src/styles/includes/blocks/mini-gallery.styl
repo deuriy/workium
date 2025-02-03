@@ -1,0 +1,20 @@
+.mini-gallery
+  display grid
+  grid-template-columns repeat(2, auto)
+  justify-content start
+  gap 6px
+  
+  &__imgs
+    display flex
+  
+  &__img
+    width 28px
+    height 28px
+    border 2px solid var(--light)
+    border-radius 6px
+    
+    & + .mini-gallery__img
+      margin-left -12px
+  
+  &__more-text
+    color var(--grey)

@@ -477,7 +477,7 @@ function clearTagRelatedFields ($selectedItem) {
   setTimeout(() => {
     toggleClearFilterButtons();
 
-    if (isMainFilter) {
+    if (isMainFilter && document.forms.vacancies_filter) {
       document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
     }
   });
@@ -666,7 +666,9 @@ $(() => {
 
           setTimeout(() => {
             // createFilterUrl();
-            document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+            if (document.forms.vacancies_filter) {
+              document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+            }
           });
         });
       },
@@ -734,7 +736,9 @@ $(() => {
 
           setTimeout(() => {
             // createFilterUrl();
-            document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+            if (document.forms.vacancies_filter) {
+              document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+            }
           });
 
           // createOrUpdateTag()
@@ -789,7 +793,9 @@ $(() => {
 
           setTimeout(() => {
             // createFilterUrl();
-            document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+            if (document.forms.vacancies_filter) {
+              document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+            }
           });
 
           // createOrUpdateTag()
@@ -1113,7 +1119,9 @@ $(() => {
 
     setTimeout(() => {
       // createFilterUrl();
-      document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+      if (document.forms.vacancies_filter) {
+        document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+      }
       // $('form[name="vacancies_filter"]').trigger('updateVacanciesFilter');
     });
   });
@@ -1294,7 +1302,9 @@ $(() => {
     $(this).hide();
   });
 
-  document.forms.vacancies_filter.addEventListener('undoingChangesToAdditionalFilters', undoChangesToAdditionalFilters);
+  if (document.forms.vacancies_filter) {
+    document.forms.vacancies_filter.addEventListener('undoingChangesToAdditionalFilters', undoChangesToAdditionalFilters);
+  }
 
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));

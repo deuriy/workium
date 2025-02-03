@@ -103,28 +103,18 @@ $(() => {
 
     on: {
       reveal: (fancybox, slide) => {
-        console.log(slide);
-        // console.log('dmwqmdqdow');
-        console.log(slide.src.includes('cashback-tooltip-popup'));
-
         if (slide.src === '#authorization-popup') {
           let activeTabNumber = slide.activeTabNumber !== undefined ? slide.activeTabNumber : 1;
           let $activeTabLink = $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`);
 
           $activeTabLink.trigger('click');
         } else if (slide.src.includes('cashback-tooltip-popup')) {
-          console.log(slide);
-          console.log('2femwfeewqdmlq');
-
           let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
           $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
-
           $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
           // $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
           // $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
         } else if (slide.src.includes('tooltip-popup')) {
-          console.log(slide);
-
           let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
           $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
 
@@ -139,10 +129,7 @@ $(() => {
       },
 
       // done: (fancybox, slide) => {
-      //   console.log(fancybox, slide);
-
       //   if (slide.src.includes('cashback-tooltip-popup')) {
-      //     console.log(slide);
       //     $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
       //     $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
       //     $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
@@ -174,8 +161,6 @@ $(() => {
       },
 
       done: (fancybox, slide) => {
-        console.log(slide);
-
         if (slide.src.includes('award-') && !slide.contentEl.classList.contains('fancybox-popup--award-dark-bg')) {
           runConfetti();
         } else if (slide.src.includes('employment-smart-work-popup')) {
@@ -217,7 +202,6 @@ $(() => {
             $('#employment-smart-work-popup .fancybox-popup__show-contacts-btn .btn-grey__time-left').text(timeLeft);
           }, 1000);
         } else if (slide.src.includes('order-service-popup')) {
-          console.log(slide);
           $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
           $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
         }
@@ -257,16 +241,10 @@ $(() => {
 
   //     // close: (fancybox, event) => {
   //     //   if (event.target.classList.contains('cities-filter__btn-back')) {
-  //     //     console.log('Closed cities popup!');
-
   //     //     // $('.selected-items--cities .selected-items__clear-btn').click();
   //     //   }
-  //     //   // console.log(fancybox);
-  //     //   // console.log(slide);
-  //     //   // console.log('Closed cities popup!');
   //     //   // if (slide.src === '#cities-popup') {
   //     //   //   // $(slide.contentEl).find('.cities-filter__search-input').focus();
-  //     //   //   console.log('Closed cities popup!');
   //     //   // }
   //     // },
   //   }
@@ -291,28 +269,13 @@ $(() => {
 
   // // Article menu
   $(window).on('scroll', function(e) {
-    // console.log('Scroll!');
-
-    // console.log($articleHeadings[0].getBoundingClientRect());
     $articleHeadings.each(function(index, el) {
-      // console.log(getCoords(el));
       let rect = el.getBoundingClientRect();
       let rect2 = $articleContent[0].getBoundingClientRect();
-
-      // console.log($articleContent.outerHeight());
-      // console.log(rect2);
-      // console.log(rect2.height);
-
-      // console.log($(document).height());
-      // console.log($(window).scrollTop());
-      // console.log($(window).height());
 
       // if ($(window).height() + $(window).scrollTop() == $(document).height()) {
       //   console.log('bottom');
       // }
-
-      // console.log($(window).scrollTop());
-      // console.log($articleContent.height());
 
       if (rect.top <= 5) {
         // let headingID = el.id;
@@ -518,7 +481,6 @@ $(() => {
       // let coords = getCoords($(this)[0]);
       // let coords = $(this)[0].getBoundingClientRect();
       let coords = $dropdownBlock.hasClass('dropdown-block--bottom-fixed') ? $(this)[0].getBoundingClientRect() : getCoords($(this)[0]);
-      // console.log(coords);
 
       $dropdownBlock.css({
         left: `${coords.left}px`,
@@ -526,7 +488,6 @@ $(() => {
       });
     } else if ($dropdownBlock.hasClass('dropdown-block--top')) {
       let coords = getCoords($(this)[0]);
-      // console.log(coords);
 
       $dropdownBlock.css({
         left: `${coords.left}px`,
@@ -558,17 +519,12 @@ $(() => {
   $(document).on('click', '.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item, .contact-phones--affiliate-support .contact-phones__item', function(e) {
     // if ($(window).width() < 768 && $(this).closest('.contact-phones--order-service')) return;
 
-    // console.log(e.target);
-
     if (($(window).width() >= 768 && e.target.closest('.phone')) || e.target.closest('.contact-phones__copy-btn')) {
       let $phone = $(this).find('.phone');
       $phone.after(`<input class="contact-phones__phone-form-text" value="${$phone.text().trim().replaceAll(/ |\t/g, '')}">`);
 
       let $tooltip = $(this).find('.contact-phones__tooltip');
       let $contactPhoneFormText = $phone.next('.contact-phones__phone-form-text');
-
-      // console.log($tooltip);
-      // console.log($contactPhoneFormText);
 
       copyText($contactPhoneFormText[0]);
       $contactPhoneFormText.remove();
@@ -584,7 +540,6 @@ $(() => {
 
   $('.fb-group__copy-btn').click(function(e) {
     let $groupLink = $(this).prev('.fb-group__link');
-    // console.log($groupLink);
 
     $groupLink.after(`<input type="text" class="fb-group__url" value="${$groupLink.attr('href')}" />`);
 
@@ -602,8 +557,6 @@ $(() => {
 
   // $('.selected-item__remove-link').click(function(e) {
   //   e.preventDefault();
-
-  //   console.log('2222mfoemwmfww');
 
   //   $(this).closest('.selected-item').remove();
   // });
@@ -717,6 +670,15 @@ $(() => {
 
     $socBtnsList.hide();
     $preloaderWrapper.show();
+  });
+
+  document.addEventListener('click', function (e) {
+    const like = e.target.closest('.like');
+
+    if (!like) return;
+
+    like.classList.toggle('like--filled');
+    e.preventDefault();
   });
 
 });
