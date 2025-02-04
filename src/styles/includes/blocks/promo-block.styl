@@ -160,11 +160,22 @@
 		gap 10px
 		margin-bottom 10px
 	
+	&__salary-per-month,
+	&__mini-gallery,
+	&__link
+		@media $xs
+			position relative
+			z-index 2
+	
 	&__bottom
 		display grid
-		grid-template-columns 1fr auto
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
 		align-items center
 		gap 10px
+		
+		@media $xs
+			margin-top auto
 		
 		&--no-gallery
 			grid-template-columns 100%
@@ -217,13 +228,24 @@
 	
 	&--working-conditions
 		@media $xs
+			position relative
+			display grid
 			width 312px
 			padding 16px 16px 12px 14px
 			border 1px solid var(--grey-medium)
 			box-shadow none
+			transition none
 			
 			.promo-block__characteristics
 				margin-bottom 12px
 			
 			.promo-block__additional-info
 				margin-bottom 10px
+			
+			.promo-block__stretched-link
+				position absolute
+				inset 0
+			
+			&:has(.checkbox__input:checked)
+				outline 1px solid var(--black)
+				border-color var(--black)
