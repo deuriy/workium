@@ -559,7 +559,7 @@ $(() => {
         // loop: true,
         slidesPerView: 'auto',
         centeredSlides: slidesCount < 2,
-        spaceBetween: 8,
+        spaceBetween: 15,
 
         pagination: {
           el: '.promo-blocks-swiper__pagination',

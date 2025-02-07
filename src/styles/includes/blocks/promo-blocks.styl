@@ -33,8 +33,9 @@
 		.promo-blocks__title
 			@media $xs
 				display grid
-				grid-template-columns auto 1fr
+				grid-template-columns repeat(2, auto)
 				align-items start
+				justify-content start
 				gap 6px
 				margin-bottom 7px
 				margin-left 16px
@@ -44,7 +45,7 @@
 				line-height 1.6
 				color var(--accent)
 				
-				&::before
+				&::after
 					content ""
 					width 16px
 					height 16px
