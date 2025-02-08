@@ -370,11 +370,15 @@
 				&::before
 					content ""
 					position absolute
-					top 4px
+					// top 4px
+					top 18px
 					left 0
 					width 20px
 					height 20px
 					background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill='%23474b5a' fill-rule='evenodd' d='M4.995 3.745A4.25 4.25 0 0 1 12.25 6.75c0 1.308-.74 2.735-1.723 4.027C9.623 11.966 8.59 12.94 8 13.457c-.59-.517-1.622-1.491-2.527-2.68C4.49 9.486 3.75 8.057 3.75 6.75a4.25 4.25 0 0 1 1.245-3.005ZM8 1a5.75 5.75 0 0 0-5.75 5.75c0 1.814.992 3.572 2.03 4.936 1.055 1.387 2.254 2.489 2.855 3.007a1.375 1.375 0 0 0 1.732 0c.6-.518 1.799-1.62 2.854-3.007 1.038-1.364 2.03-3.122 2.03-4.936A5.75 5.75 0 0 0 8 1ZM6.875 6.754a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0ZM8 4.129a2.625 2.625 0 1 0 0 5.25 2.625 2.625 0 0 0 0-5.25Z' clip-rule='evenodd'/%3E%3C/svg%3E") center no-repeat
+				
+				&--truncated
+					-webkit-line-clamp 2
 			
 			.vacancy-card__promo-blocks
 				margin-top 12px
