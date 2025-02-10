@@ -644,9 +644,16 @@ $(() => {
     return false;
   });
 
+  function getLineCount(element) {
+    const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+    const elementHeight = element.clientHeight;
+    
+    return Math.round(elementHeight / lineHeight);
+  }
+
 
   document.querySelectorAll('.vacancy-card__address--truncated').forEach(item => {
-    if (item.scrollHeight < 25) {
+    if (getLineCount(item) <= 2) {
       item.classList.add('vacancy-card__address--no-arrow');
     }
   });
