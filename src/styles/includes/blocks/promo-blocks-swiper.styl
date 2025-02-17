@@ -11,13 +11,28 @@
 	
 	&__slide
 		width auto
+		
+		&--active
+			.promo-blocks-swiper__variant-label
+				color var(--black)
 	
 	&__pagination
 		margin-top 17px
 	
+	&__variant-label
+		position absolute
+		z-index 1
+		top -32px
+		right 0
+		font-size 14px
+		// color #666B80
+		color #555a6d
+	
 	&--working-conditions
 		@media $xs
-			padding-top 3px
+			margin-top -42px
+			padding-top 45px
+			// padding-top 3px
 			padding-bottom 3px
 			
 			.promo-blocks-swiper__slides

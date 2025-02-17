@@ -1,4 +1,10 @@
 .promo-blocks
+	// &__header
+	// 	display grid
+	// 	grid-template-columns repeat(2, auto)
+	// 	justify-content space-between
+	// 	margin 0 16px 7px
+		
 	&__title
 		margin-bottom 10px
 		padding-left 15px
@@ -32,17 +38,20 @@
 	&--working-conditions
 		.promo-blocks__title
 			@media $xs
-				display grid
+				position relative
+				z-index 10
+				display inline-grid
 				grid-template-columns repeat(2, auto)
 				align-items start
 				justify-content start
 				gap 6px
 				margin-bottom 7px
-				margin-left 16px
-				padding-left 0
+				// margin-left 16px
+				padding-left 16px
 				font-weight 600
 				font-size 15px
 				line-height 1.6
+				background var(--light)
 				color var(--accent)
 				
 				&::after

@@ -560,6 +560,7 @@ $(() => {
         slidesPerView: 'auto',
         centeredSlides: slidesCount < 2,
         spaceBetween: 15,
+        slideActiveClass: 'promo-blocks-swiper__slide--active',
 
         pagination: {
           el: '.promo-blocks-swiper__pagination',
