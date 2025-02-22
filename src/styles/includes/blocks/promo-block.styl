@@ -184,6 +184,11 @@
 	&__mini-gallery
 		margin-left -2px
 	
+	&__footnote
+		@media $smPlus
+			margin-top 6px
+			margin-left -2px
+	
 	&:hover
 		.promo-block__view-link
 			background-color transparent
@@ -227,26 +232,49 @@
 			padding-right 34px
 	
 	&--working-conditions
-		@media $xs
-			position relative
-			display grid
-			// width 312px
-			width 336px
-			padding 16px 16px 12px 14px
-			border 1px solid #707070
-			box-shadow none
-			transition none
+		// @media $xs
+		position relative
+		display grid
+		// width 312px
+		width 336px
+		padding 16px 16px 12px 14px
+		border 1px solid #707070
+		box-shadow none
+		transition none
+		
+		@media $smPlus
+			width auto
+			padding 20px
 			
-			.promo-block__characteristics
-				margin-bottom 12px
+			&:hover
+				box-shadow none
+		
+		@media $md
+			padding 24px
+		
+		.promo-block__salaries-and-checkbox
+			@media $smPlus
+				margin-bottom 16px
+		
+		.promo-block__characteristics
+			margin-bottom 12px
 			
-			.promo-block__additional-info
-				margin-bottom 10px
+			@media $smPlus
+				margin-bottom 18px
+		
+		.promo-block__additional-info
+			margin-bottom 10px
 			
-			.promo-block__stretched-link
-				position absolute
-				inset 0
+			@media $smPlus
+				margin-bottom 14px
+		
+		.promo-block__stretched-link
+			position absolute
+			inset 0
 			
-			&:has(.checkbox__input:checked)
-				outline 3px solid var(--black)
-				border-color var(--black)
+			@media $smPlus
+				cursor pointer
+		
+		&:has(.checkbox__input:checked)
+			outline 3px solid var(--black)
+			border-color var(--black)
