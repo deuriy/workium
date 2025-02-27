@@ -18,6 +18,9 @@
 		border-top-left-radius 16px
 		background #FAFBFD
 		
+		@media $smPlus
+			background #F5F7FB
+		
 		@media $xs
 			border-top-right-radius 0
 			border-top-left-radius 0
@@ -70,6 +73,9 @@
 			font-size 16px
 			line-height 1.625
 			text-align center
+		
+		@media $smPlus
+			color var(--black)
 		
 		// @media $xxs
 		// 	font-size 21px
@@ -193,9 +199,15 @@
 				padding 3px 7px 3px 13px
 				border-radius 12px
 				background rgb(245 247 252)
+			
+			@media $smPlus
+				background #EBEFF9
 	
 	&__no-selected-text
 		font-size 14px
+		
+		@media $smPlus
+			color var(--black)
 	
 	&__clear-search-btn
 		position absolute
@@ -313,6 +325,9 @@
 		border-bottom-right-radius 16px
 		border-bottom-left-radius 16px
 		background #FAFBFD
+		
+		@media $smPlus
+			background #F5F7FB
 		
 		@media $xxs
 			grid-template-columns 100%
