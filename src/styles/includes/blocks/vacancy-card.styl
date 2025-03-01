@@ -324,18 +324,23 @@
 			display grid
 			grid-template-columns 100%
 	
-	&__title-and-rating
-		// display grid
-		// grid-template-columns 1fr auto
+	&__title-and-link
 		grid-area auto / 1 / auto / 3
 		justify-self start
+		margin-bottom 8px
+	
+	&__title-more-link
+		text-decoration none
+	
+	&__title-wrapper
+		// display grid
+		// grid-template-columns 1fr auto
 		display inline-grid
 		// grid-template-columns repeat(3, auto)
 		grid-template-columns 24px repeat(2, auto)
 		align-items start
 		// gap 10px
 		gap 6px
-		margin-bottom 8px
 		// padding 8px 12px 8px 9px
 		padding 5px
 		// border-radius 12px
@@ -348,6 +353,7 @@
 		
 		@media $smPlus
 			font-size 15px
+			color #4C4C4A
 	
 	&--teaser
 		// @media $xs
@@ -362,11 +368,19 @@
 			@media $smPlus
 				margin-bottom 8px
 		
-		.vacancy-card__title-and-rating
+		.vacancy-card__title-and-link
 			@media $smPlus
+				display grid
+				grid-template-columns repeat(2, auto)
+				justify-content start
+				align-items center
+				gap 10px
 				order 1
 				grid-area auto
 				margin-left -3px
+		
+		.vacancy-card__title-wrapper
+			@media $smPlus
 				padding 6px 8px 5px
 		
 		.vacancy-card__logo-img
