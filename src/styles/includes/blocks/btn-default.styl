@@ -18,6 +18,9 @@
 	text-decoration none
 	@extend .transition
 	
+	&__small-text
+		font-size 14px
+	
 	&--user-settings
 		padding 11px 80px
 		border-radius 6px
@@ -172,8 +175,16 @@
 		font-size 15px
 		line-height 1.6
 	
+	&--no-gap
+		gap 0
+	
+	&--flex-column
+		flex-direction column
+	
 	&--promo-blocks
 		padding 10px 12px
+		line-height 18px
+		text-align center
 		
 		@media $smPlus
 			padding 10px 26px

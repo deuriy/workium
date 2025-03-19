@@ -18,3 +18,33 @@
 		
 		@media $xs
 			font-size 16px
+	
+	&--promo-block-more
+		position relative
+		z-index 2
+		display grid
+		align-items center
+		gap 8px
+		
+		@media $smPlus
+			grid-template-columns 1fr auto
+		
+		&::after
+			@media $smPlus
+				content ""
+				position relative
+				left 0
+				width 14px
+				height 14px
+				background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath stroke='%235340FF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M.75 7h12.5m0 0L7.625 1.375M13.25 7l-5.625 5.625'/%3E%3C/svg%3E") 0 0 no-repeat
+				@extend .transition
+		
+		&:hover
+			&::after
+				left 10px
+		
+		// &::after
+		// 	content ""
+		// 	width 6px
+		// 	height 10px
+		// 	background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 10' fill='none'%3E%3Cpath stroke='%235340FF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 9 4-4-4-4'/%3E%3C/svg%3E") center no-repeat
