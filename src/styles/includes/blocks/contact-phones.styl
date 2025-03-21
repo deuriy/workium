@@ -31,6 +31,12 @@
 		
 		&--right
 			text-align right
+			
+			.contact-phones__country-label
+				justify-self end
+		
+		&--has-country-label
+			gap 0
 	
 	&__tooltip
 		position absolute
@@ -91,6 +97,12 @@
 			grid-template-columns 1fr auto
 			align-items center
 			gap 12px
+			
+			&--no-copy-btn
+				grid-template-columns 100%
+			
+			&--has-country-label
+				gap 0
 	
 	&--two-col
 		.contact-phones__list

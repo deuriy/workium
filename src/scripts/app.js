@@ -158,6 +158,15 @@ $(() => {
         }
 
         currentFancybox = fancybox;
+
+        if (slide.src.includes("#book-vacancy-popup")) {
+          let checkedVariantInput = slide.triggerEl.closest('.promo-blocks').querySelector('input[name="working_conditions"]:checked');
+
+          if (checkedVariantInput) {
+            let variantLabel = checkedVariantInput.closest('.promo-block').dataset.variantLabel;
+            slide.contentEl.querySelector('.fancybox-popup__variant-label').textContent = variantLabel;
+          }
+        }
       },
 
       done: (fancybox, slide) => {
@@ -205,6 +214,15 @@ $(() => {
           $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
           $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
         }
+
+        // console.log('fancybox');
+        // console.log(fancybox);
+        // console.log('slide');
+        // console.log(slide);
+
+        // if (slide.src.includes("#book-vacancy-popup")) {
+        //   alert('Yes');
+        // }
       }
     }
   });
