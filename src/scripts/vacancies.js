@@ -337,7 +337,7 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
 function addCityCheckbox (item, selectedCitiesArr) {
   let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
   $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
-                                      <div class="checkbox">
+                                      <div class="checkbox checkbox--tag-style">
                                         <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="city_${item.id}" data-seo-slug="${item.seo_slug}"${selectedCitiesArr.includes(item.id.toString()) ? ' checked' : ''}>
                                         <label class="checkbox__label checkbox__label--align-start" for="city_${item.id}">
                                           <div class="checkbox__label-wrapper">

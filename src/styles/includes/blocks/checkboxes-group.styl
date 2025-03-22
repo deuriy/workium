@@ -43,6 +43,16 @@
 		font-size 11px
 		line-height 14px
 		
+		@media $smPlus
+			margin 0
+			padding 0
+			border-radius 0
+			background transparent
+			color #666B80
+			font-weight 400
+			font-size 14px
+			line-height 1.57143 
+		
 		@media $xxs
 			max-width 320px
 			font-size 13px
@@ -131,9 +141,21 @@
 	&--misce-roboti
 		order 1
 		
-		@media $smPlus
-			grid-column span 3
+		// @media $smPlus
+		// 	grid-column span 3
 		
 		.checkboxes-group__list
 			@media $smPlus
 				grid-template-columns repeat(3, 1fr)
+	
+	&--row
+		@media $smPlus
+			.checkboxes-group__title
+				font-size 18px
+				line-height 1.34
+				color #0F182A
+				
+			.checkboxes-group__list
+				display flex
+				flex-wrap wrap
+				gap 8px

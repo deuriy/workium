@@ -32,3 +32,22 @@
       border-radius 50%
       background-color var(--light)
       @extend .transition
+  
+  &--tag-style
+    .radiobtn__input:checked ~ .radiobtn__label,
+    .radiobtn__label:hover
+      padding 11px 15px
+      border 2px solid #0F182A
+      
+    .radiobtn__input:checked ~ .radiobtn__label
+      background #F4F5FC
+      
+    .radiobtn__label
+      padding 12px 16px
+      border 1px solid #DFE2E6
+      border-radius 90px
+      font-size 14px
+      line-height 1.57143
+      
+      &::before
+        display none
