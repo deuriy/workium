@@ -347,6 +347,9 @@
 		border-radius 6px
 		// background var(--user-profile-bg)
 		background #f1f4fb
+		
+		&--no-bg
+			background transparent 
 	
 	&__distance
 		font-size 14px
@@ -401,8 +404,7 @@
 				margin-left -3px
 		
 		.vacancy-card__logo-img
-			@media $smPlus
-				vertical-align top
+			vertical-align top
 		
 		.vacancy-card__title-wrapper
 			@media $smPlus
@@ -470,6 +472,10 @@
 			@media $smPlus
 				margin-bottom 8px
 		
+		.vacancy-card__title-wrapper
+			@media $xs
+				gap 8px
+		
 		.vacancy-card__title
 			margin-bottom 0
 			font-weight 500
@@ -481,6 +487,18 @@
 			@media $smPlus
 				font-size 15px
 		
+		.vacancy-card__salary
+			@media $xs
+				margin-bottom 24px
+		
+		.vacancy-card__salary-per-hour
+			@media $xs
+				margin-bottom 4px
+		
+		// .vacancy-card__specification--responsibilities
+		// 	@media $xs
+		// 		margin-bottom 8px
+		
 		.vacancy-card__promo-blocks
 			margin-top 12px
 			margin-bottom 0
@@ -488,6 +506,25 @@
 			@media $smPlus
 				margin-top 0
 				margin-left 0
+			
+			@media $xs
+				display none
+				margin-top 24px
+		
+		.vacancy-card__more-link
+			@media $xs
+				margin-top 18px
+		
+		&.vacancy-card--teaser-expanded
+			.vacancy-card__promo-blocks
+				@media $xs
+					display block
+			
+			.vacancy-card__salary-per-month,
+			.vacancy-card__salary-per-hour
+			.vacancy-card__salary
+				@media $xs
+					display none
 	
 	&--full
 		padding 0
@@ -515,9 +552,17 @@
 		.vacancy-card__address
 			margin-bottom 8px
 		
+		.vacancy-card__address
+			@media $xs
+				margin-left 0
+		
 		.vacancy-card__title-wrapper
 			// margin-bottom 24px
 			margin-bottom 16px
+			margin-left -5px
+			
+			@media $smPlus
+				margin-left -8px
 		
 		.vacancy-card__salary-per-month
 			@media $xs

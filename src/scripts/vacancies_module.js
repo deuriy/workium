@@ -1442,6 +1442,23 @@ $(() => {
     event.preventDefault();
   });
 
+  document.addEventListener('click', function (e) {
+    const moreLink = e.target.closest('.vacancy-card__more-link');
+
+    if (!moreLink) return;
+
+    const vacancyCardTeaser = moreLink.closest('.vacancy-card--teaser');
+
+    vacancyCardTeaser.classList.toggle('vacancy-card--teaser-expanded');
+    moreLink.classList.toggle('link--vacancy-card-more-expanded');
+
+    if (moreLink.classList.contains('link--vacancy-card-more-expanded')) {
+      moreLink.textContent = 'Приховати';
+    } else {
+      moreLink.textContent = 'Детальніше';
+    }
+  });
+
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
 
