@@ -1306,33 +1306,6 @@ $(() => {
     document.forms.vacancies_filter.addEventListener('undoingChangesToAdditionalFilters', undoChangesToAdditionalFilters);
   }
 
-  function toggleMoreLink (link) {
-    const targetElem = document.getElementById(link.dataset.targetId);
-
-    if (!targetElem) return;
-
-    if (targetElem.style.display === 'none') {
-      targetElem.style.display = '';
-      link.textContent = 'Менше';
-    } else {
-      targetElem.style.display = 'none';
-      link.textContent = 'Більше';
-    }
-  }
-
-  document.querySelectorAll('[data-more-link]').forEach(link => {
-    toggleMoreLink(link);
-  });
-
-  document.addEventListener('click', function (e) {
-    const moreLink = e.target.closest('[data-more-link]');
-
-    if (!moreLink) return;
-
-    toggleMoreLink(moreLink);
-    e.preventDefault();
-  });
-
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
   //   // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);

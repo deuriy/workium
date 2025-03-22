@@ -172,6 +172,14 @@ $(() => {
 		e.preventDefault();
 
 		$(this).toggleClass('bookmark-icon--fill');
+
+		if ($(this).hasClass('bookmark-icon--with-label')) {
+			if ($(this).hasClass('bookmark-icon--fill')) {
+				$(this).text('Збережено');
+			} else {
+				$(this).text('Зберегти');
+			}
+		}
 	});
 
 	$('.promo-block').hover(function() {

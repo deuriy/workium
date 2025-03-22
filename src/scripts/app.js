@@ -579,11 +579,11 @@ $(() => {
   //   $(this).closest('.selected-item').remove();
   // });
 
-  $('.vacancy-card__address').click(function(e) {
-    $(this).toggleClass('vacancy-card__address--truncated');
+  // $('.vacancy-card__address').click(function(e) {
+  //   $(this).toggleClass('vacancy-card__address--truncated');
 
-    e.preventDefault();
-  });
+  //   e.preventDefault();
+  // });
 
   $('.vacancy-info__specialization').click(function(e) {
     $(this).toggleClass('vacancy-info__specialization--truncated');
@@ -703,6 +703,33 @@ $(() => {
     if (!like) return;
 
     like.classList.toggle('like--filled');
+    e.preventDefault();
+  });
+
+  function toggleMoreLink (link) {
+    const targetElem = document.getElementById(link.dataset.targetId);
+
+    if (!targetElem) return;
+
+    if (targetElem.style.display === 'none') {
+      targetElem.style.display = '';
+      link.textContent = 'Менше';
+    } else {
+      targetElem.style.display = 'none';
+      link.textContent = 'Більше';
+    }
+  }
+
+  document.querySelectorAll('[data-more-link]').forEach(link => {
+    toggleMoreLink(link);
+  });
+
+  document.addEventListener('click', function (e) {
+    const moreLink = e.target.closest('[data-more-link]');
+
+    if (!moreLink) return;
+
+    toggleMoreLink(moreLink);
     e.preventDefault();
   });
 

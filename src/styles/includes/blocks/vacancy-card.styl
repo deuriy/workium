@@ -158,7 +158,7 @@
 			padding-right 17px
 			// font-size 15.5px
 			font-size 13.8px
-			cursor pointer
+			// cursor pointer
 			
 			// display inline-grid
 			// grid-template-columns auto auto
@@ -356,19 +356,39 @@
 			// color #4C4C4A
 			color var(--text-color)
 	
-	&--teaser
-		// @media $xs
-		padding 22px 16px
+	&__company-title
+		margin-bottom 0
+		font-weight 500
+		// font-size 15px
+		font-size 17px
+		line-height 1.6
+		color darken(#0f182a, 50)
 		
 		@media $smPlus
-			padding 32px
+			font-size 15px
+	
+	&__employment-variants
+		// margin-bottom 24px
+		margin-bottom 8px
+	
+	&__free-vacancy,
+	&__footnote
+		margin-bottom 12px
+	
+	&__salary
+		margin-bottom 4px
+	
+	&__buttons-panel
+		position sticky
+		z-index 10
+		bottom 15px
+		margin-top 16px
 		
-		.vacancy-card__header
-			grid-template-columns 100%
-			
-			@media $smPlus
-				margin-bottom 8px
-		
+		@media $smMinus
+			bottom 65px
+	
+	&--teaser,
+	&--full
 		.vacancy-card__title-and-link
 			@media $smPlus
 				display grid
@@ -380,24 +400,13 @@
 				grid-area auto
 				margin-left -3px
 		
+		.vacancy-card__logo-img
+			@media $smPlus
+				vertical-align top
+		
 		.vacancy-card__title-wrapper
 			@media $smPlus
 				padding 6px 8px 5px
-		
-		.vacancy-card__logo-img
-			@media $smPlus
-				vertical-align middle
-		
-		.vacancy-card__title
-			margin-bottom 0
-			font-weight 500
-			// font-size 15px
-			font-size 17px
-			line-height 1.6
-			color darken(#0f182a, 50)
-			
-			@media $smPlus
-				font-size 15px
 		
 		.vacancy-card__address
 			position relative
@@ -441,6 +450,37 @@
 			&--truncated
 				-webkit-line-clamp 2
 		
+		.vacancy-card__rating
+			margin-top 2px
+			
+			@media $smPlus
+				margin-top 0
+				margin-left 4px
+	
+	&--teaser
+		// @media $xs
+		padding 22px 16px
+		
+		@media $smPlus
+			padding 32px
+		
+		.vacancy-card__header
+			grid-template-columns 100%
+			
+			@media $smPlus
+				margin-bottom 8px
+		
+		.vacancy-card__title
+			margin-bottom 0
+			font-weight 500
+			// font-size 15px
+			font-size 17px
+			line-height 1.6
+			color darken(#0f182a, 50)
+			
+			@media $smPlus
+				font-size 15px
+		
 		.vacancy-card__promo-blocks
 			margin-top 12px
 			margin-bottom 0
@@ -448,13 +488,6 @@
 			@media $smPlus
 				margin-top 0
 				margin-left 0
-		
-		.vacancy-card__rating
-			margin-top 2px
-			
-			@media $smPlus
-				margin-top 0
-				margin-left 4px
 	
 	&--full
 		padding 0
@@ -470,13 +503,31 @@
 				padding 0 15px
 				// border-bottom 1px solid var(--grey-medium)
 		
-		.vacancy-card__address
-			@media $xs
-				// font-size 15.5px
-				font-size 14px
+		// .vacancy-card__address
+		// 	@media $xs
+		// 		// font-size 15.5px
+		// 		font-size 14px
 				
-				&::after
-					background-color var(--user-profile-bg)
+		// 		&::after
+		// 			background-color var(--user-profile-bg)
+			
+		.vacancy-card__title,
+		.vacancy-card__address
+			margin-bottom 8px
+		
+		.vacancy-card__title-wrapper
+			// margin-bottom 24px
+			margin-bottom 16px
+		
+		.vacancy-card__salary-per-month
+			@media $xs
+				margin-top 24px
+		
+		.vacancy-card__salary
+			margin-left -6px
+			
+			@media $smPlus
+				margin-left -8px
 		
 		.vacancy-card__agency-wrapper
 			display none
