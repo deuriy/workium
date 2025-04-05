@@ -159,14 +159,29 @@ $(() => {
 
         currentFancybox = fancybox;
 
-        if (slide.src.includes("#book-vacancy-popup")) {
-          let checkedVariantInput = slide.triggerEl.closest('.promo-blocks').querySelector('input[name="working_conditions"]:checked');
+        if (!slide.src.includes("#book-vacancy-list-popup")) return;
 
-          if (checkedVariantInput) {
-            let variantLabel = checkedVariantInput.closest('.promo-block').dataset.variantLabel;
-            slide.contentEl.querySelector('.fancybox-popup__variant-label').textContent = variantLabel;
-          }
-        }
+        let promoBlocks = slide.triggerEl.closest('.promo-blocks');
+
+        if (!promoBlocks) return;
+
+        let checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
+
+        if (!checkedVariantInput) return;
+
+        let promoBlock = checkedVariantInput.closest('.promo-block');
+
+        if (!promoBlock) return;
+
+        let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
+        let variantLabel = promoBlock.dataset.variantLabel;
+        const workingPeriod = promoBlock.querySelector('.promo-block__footnote').textContent;
+        const rewardRange = promoBlock.querySelector('.promo-block__salary').textContent;
+
+        slide.contentEl.querySelector('.fancybox-popup__vacancy-title').textContent = vacancyTitle;
+        slide.contentEl.querySelector('.fancybox-popup__variant-label').textContent = variantLabel;
+        slide.contentEl.querySelector('.fancybox-popup__working-period').textContent = workingPeriod;
+        slide.contentEl.querySelector('.fancybox-popup__reward-range').textContent = rewardRange;
       },
 
       done: (fancybox, slide) => {
@@ -731,6 +746,21 @@ $(() => {
 
     toggleMoreLink(moreLink);
     e.preventDefault();
+  });
+
+  document.addEventListener('click', function (e) {
+    const fancyboxShareMoreLink = e.target.closest('.fancybox-popup--share .fancybox-popup__more-link');
+
+    if (!fancyboxShareMoreLink) return;
+
+    const fancyboxSharePopup = fancyboxShareMoreLink.closest('.fancybox-popup--share');
+
+    if (!fancyboxSharePopup) return;
+
+    fancyboxShareMoreLink.style.display = 'none';
+
+    fancyboxSharePopup.querySelector('.fancybox-popup__more-text').style.display = '';
+    fancyboxSharePopup.querySelector('.fancybox-popup__auth-btns').style.display = '';
   });
 
 });

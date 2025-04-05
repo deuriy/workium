@@ -102,7 +102,6 @@
 				justify-content center
 	
 	&__company-name,
-	&__category,
 	&__close-btn
 		display none
 	
@@ -349,7 +348,14 @@
 		background #f1f4fb
 		
 		&--no-bg
-			background transparent 
+			background transparent
+		
+		&--two-col
+			grid-template-columns auto 1fr
+			grid-template-areas "logo company-title" "logo category"
+			
+			.vacancy-card__logo
+				grid-area logo
 	
 	&__distance
 		font-size 14px
@@ -458,6 +464,12 @@
 			@media $smPlus
 				margin-top 0
 				margin-left 4px
+		
+		.vacancy-card__salary
+			margin-left -6px
+			
+			@media $smPlus
+				margin-left -8px
 	
 	&--teaser
 		// @media $xs
@@ -567,12 +579,6 @@
 		.vacancy-card__salary-per-month
 			@media $xs
 				margin-top 24px
-		
-		.vacancy-card__salary
-			margin-left -6px
-			
-			@media $smPlus
-				margin-left -8px
 		
 		.vacancy-card__agency-wrapper
 			display none

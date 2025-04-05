@@ -125,6 +125,13 @@
 	&__contact-box
 		margin-top 40px
 	
+	&__share-btns
+		margin 35px 0
+	
+	&__more-link,
+	&__more-text
+		margin-top 10px
+	
 	&--wide
 		text-align center
 		
@@ -294,7 +301,8 @@
 			margin 14px -16px 0
 			padding 16px
 			border-top 1px solid #DFE1ED
-			color #666B80
+			// color #666B80
+			color #000
 			font-weight 400
 			line-height 1.466666666666667
 			
@@ -375,6 +383,12 @@
 		.fancybox-popup__text
 			width 540px
 			color #000
+		
+		&.fancybox-popup.fancybox__content
+			button.f-button.is-close-btn
+				--f-button-svg-width 20px
+				--f-button-svg-height 20px
+				--f-button-color #000
 	
 	&--tooltip-popup
 		padding 24px 32px
