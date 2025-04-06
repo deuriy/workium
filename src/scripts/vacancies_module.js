@@ -1465,6 +1465,50 @@ $(() => {
 
   });
 
+  function setCashbackForPromoBlocks (cashback, promoBlocks) {
+    let btnCashback = promoBlocks.querySelector('.promo-blocks__btn-cashback');
+
+    if (!btnCashback) return;
+
+    btnCashback.textContent = cashback.textContent;
+  }
+
+  // document.querySelectorAll('.promo-blocks').forEach(promoBlocksItem => {
+  //   let checkboxInput = promoBlocksItem.querySelector('.checkbox__input:checked');
+
+  //   if (!checkboxInput) return;
+
+  //   let promoBlock = checkboxInput.closest('.promo-block');
+
+  //   if (!promoBlock) return;
+
+  //   let cashback = promoBlock.querySelector('.promo-block__salary');
+
+  //   if (!cashback) return;
+
+  //   setCashbackForPromoBlocks(cashback, promoBlocksItem);
+  // });
+
+  document.addEventListener('change', function (e) {
+    let checkboxInput = e.target.closest('.promo-block .checkbox__input');
+
+    if (!checkboxInput) return;
+
+    let promoBlock = checkboxInput.closest('.promo-block');
+
+    if (!promoBlock) return;
+
+    let cashback = promoBlock.querySelector('.promo-block__salary-value');
+
+    if (!cashback) return;
+
+    let promoBlocks = promoBlock.closest('.promo-blocks');
+
+    if (!promoBlocks) return;
+
+    setCashbackForPromoBlocks(cashback, promoBlocks);
+  })
+
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
 
