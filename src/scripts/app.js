@@ -159,7 +159,7 @@ $(() => {
 
         currentFancybox = fancybox;
 
-        if (!slide.src.includes("#book-vacancy-list-popup")) return;
+        if (!slide.src.includes("#book-vacancy-list-popup") && !slide.src.includes("#consult-vacancies-list-popup")) return;
 
         let promoBlocks = slide.triggerEl.closest('.promo-blocks');
 
@@ -175,13 +175,29 @@ $(() => {
 
         let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
         let variantLabel = promoBlock.dataset.variantLabel;
-        const workingPeriod = promoBlock.querySelector('.promo-block__footnote').textContent;
-        const rewardRange = promoBlock.querySelector('.promo-block__salary').textContent;
+        const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
+        const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
 
-        slide.contentEl.querySelector('.fancybox-popup__vacancy-title').textContent = vacancyTitle;
-        slide.contentEl.querySelector('.fancybox-popup__variant-label').textContent = variantLabel;
-        slide.contentEl.querySelector('.fancybox-popup__working-period').textContent = workingPeriod;
-        slide.contentEl.querySelector('.fancybox-popup__reward-range').textContent = rewardRange;
+        const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
+        const fancyBoxVariantLabel = slide.contentEl.querySelector('.fancybox-popup__variant-label');
+        const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
+        const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
+
+        if (fancyBoxVacancyTitle) {
+          fancyBoxVacancyTitle.textContent = vacancyTitle;
+        }
+
+        if (fancyBoxVariantLabel) {
+          fancyBoxVariantLabel.textContent = variantLabel;
+        }
+
+        if (fancyBoxWorkingPeriod) {
+          fancyBoxWorkingPeriod.textContent = workingPeriod;
+        }
+
+        if (fancyBoxRewardRange) {
+          fancyBoxRewardRange.textContent = rewardRange;
+        }
       },
 
       done: (fancybox, slide) => {
