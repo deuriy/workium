@@ -664,6 +664,16 @@ $(() => {
   $(document).on('mouseover', '[data-tooltip]', function(event) {
     let $tooltip = $(this).find('.tooltip');
     $tooltip.addClass('tooltip--visible');
+
+    let windowHeight = document.documentElement.clientHeight;
+    let tooltipTriggerCoords = this.getBoundingClientRect();
+    let tooltipHeight = $tooltip.outerHeight();
+
+    if (windowHeight < tooltipTriggerCoords.bottom + tooltipHeight + 10) {
+      $tooltip.addClass('tooltip--extended-top').removeClass('tooltip--extended-bottom');
+    } else {
+      $tooltip.removeClass('tooltip--extended-top').addClass('tooltip--extended-bottom');
+    }
   });
 
   $(document).on('mouseout', '[data-tooltip]', function(event) {

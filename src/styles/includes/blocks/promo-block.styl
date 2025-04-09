@@ -195,6 +195,12 @@
 			margin-top 6px
 			margin-left -2px
 	
+	&__hourly-rate-wrapper
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content start
+		gap 6px
+	
 	&:hover
 		.promo-block__view-link
 			background-color transparent
@@ -244,16 +250,17 @@
 		// width 312px
 		width 336px
 		padding 16px 16px 12px 14px
-		border 1px solid #707070
-		box-shadow none
-		transition none
+		// border 1px solid #707070
+		border 1px solid transparent
+		// box-shadow none
+		// transition none
 		
 		@media $smPlus
 			width auto
 			padding 20px
 			
-			&:hover
-				box-shadow none
+			// &:hover
+			// 	box-shadow none
 		
 		@media $md
 			padding 24px
@@ -288,5 +295,10 @@
 				cursor pointer
 		
 		&:has(.checkbox__input:checked)
-			outline 3px solid var(--black)
+			// outline 3px solid var(--black)
+			box-shadow none
+			outline 2px solid var(--black)
 			border-color var(--black)
+			
+			&:hover
+				box-shadow none

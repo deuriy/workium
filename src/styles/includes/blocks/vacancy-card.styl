@@ -352,7 +352,8 @@
 			background transparent
 		
 		&--two-col
-			grid-template-columns auto 1fr
+			// grid-template-columns auto 1fr
+			grid-template-columns 32px 1fr
 			grid-template-areas "logo company-title" "logo category"
 			
 			.vacancy-card__logo
@@ -360,6 +361,7 @@
 	
 	&__category
 		font-size 13px
+		line-height normal
 		
 		@media $smPlus
 			font-size 14px
@@ -377,7 +379,8 @@
 		font-weight 500
 		// font-size 15px
 		font-size 17px
-		line-height 1.6
+		// line-height 1.6
+		line-height normal
 		color darken(#0f182a, 50)
 		
 		@media $smPlus
@@ -429,7 +432,8 @@
 			border-radius 6px
 		
 		.vacancy-card__title-wrapper
-			gap 0 8px
+			// gap 0 8px
+			gap 3px 8px
 			
 			@media $smPlus
 				padding 6px 8px 5px
