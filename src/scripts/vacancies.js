@@ -724,7 +724,7 @@ $(() => {
         let $selectableItems = that.$selectableUl.children().toArray();
         let $selectionItems = that.$selectionUl.children().toArray();
 
-        that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-grey btn-grey--multi-select ms-container__apply-btn">Застосувати</button></div>');
+        that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">Застосувати</button></div>');
 
         updateMSItemsDescription($selectionItems);
 

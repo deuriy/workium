@@ -12,6 +12,14 @@
 		font-weight 500
 		font-size 13px
 		line-height 1.6923
+	
+	&__title-link
+		display inline-flex
+		align-items start
+		justify-content start
+		gap 6px
+		color var(--accent)
+		text-decoration none
 		
 	&__items
 		display grid
@@ -87,8 +95,9 @@
 			position relative
 			// z-index 2
 			z-index 3
-			display inline-grid
-			grid-template-columns repeat(2, auto)
+			// display inline-grid
+			display inline-flex
+			// grid-template-columns repeat(2, auto)
 			align-items start
 			justify-content start
 			gap 6px
