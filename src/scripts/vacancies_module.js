@@ -550,7 +550,6 @@ $(() => {
 
 
   if ($(window).width() < 768) {
-    
     document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
       let slidesCount = $(item).find('.swiper-slide').length;
 

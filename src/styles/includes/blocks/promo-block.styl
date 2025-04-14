@@ -255,6 +255,9 @@
 		// box-shadow none
 		// transition none
 		
+		@media $xs
+			width 370px
+		
 		@media $smPlus
 			width auto
 			padding 20px
@@ -294,7 +297,7 @@
 			@media $smPlus
 				cursor pointer
 		
-		&:has(.checkbox__input:checked)
+		&:has(.checkbox__input:checked ~ .checkbox__label)
 			// outline 3px solid var(--black)
 			box-shadow none
 			outline 2px solid var(--black)

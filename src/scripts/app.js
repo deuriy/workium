@@ -161,34 +161,37 @@ $(() => {
 
         if (!slide.src.includes("#book-vacancy-list-popup") && !slide.src.includes("#consult-vacancies-list-popup")) return;
 
-        let promoBlocks = slide.triggerEl.closest('.promo-blocks');
+        const promoBlocks = slide.triggerEl.closest('.promo-blocks');
 
         if (!promoBlocks) return;
 
-        let checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
+        const checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
 
         if (!checkedVariantInput) return;
 
-        let promoBlock = checkedVariantInput.closest('.promo-block');
+        const promoBlock = checkedVariantInput.closest('.promo-block');
 
         if (!promoBlock) return;
 
-        let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
-        let variantLabel = promoBlock.dataset.variantLabel;
-        const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
-        const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
+        const vacancyTitle = promoBlock.dataset.vacancyTitle;
+        const variantLabel = promoBlock.dataset.variantLabel;
+        const workingPeriod = promoBlock.dataset.workingPeriod;
+        const rewardRange = promoBlock.dataset.rewardRange;
+        const companyName = promoBlock.dataset.companyName;
+        const agencyName = promoBlock.dataset.agencyName;
 
         const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
-        const fancyBoxVariantLabel = slide.contentEl.querySelector('.fancybox-popup__variant-label');
+        const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
         const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
         const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
+        const viberBtn = slide.contentEl.querySelector('[data-viber-url]');
 
         if (fancyBoxVacancyTitle) {
           fancyBoxVacancyTitle.textContent = vacancyTitle;
         }
 
-        if (fancyBoxVariantLabel) {
-          fancyBoxVariantLabel.textContent = variantLabel;
+        if (fancyBoxVariant) {
+          fancyBoxVariant.textContent = variantLabel;
         }
 
         if (fancyBoxWorkingPeriod) {
@@ -197,6 +200,10 @@ $(() => {
 
         if (fancyBoxRewardRange) {
           fancyBoxRewardRange.textContent = rewardRange;
+        }
+
+        if (viberBtn) {
+          viberBtn.href = `${viberBtn.dataset.viberUrl}&text=Хочу безкоштовно забронювати вакансію ${vacancyTitle} на підприємстві ${companyName} від агенції ${agencyName}`;
         }
       },
 
@@ -253,6 +260,55 @@ $(() => {
 
         // if (slide.src.includes("#book-vacancy-popup")) {
         //   alert('Yes');
+        // }
+      },
+
+      close: (fancybox, slide) => {
+        // console.log('Close!!');
+
+        // console.log(fancybox, slide);
+
+        // if (!slide.srcElement.includes("#book-vacancy-list-popup") && !slide.srcElement.includes("#consult-vacancies-list-popup")) return;
+
+        // // let promoBlocks = slide.triggerEl.closest('.promo-blocks');
+
+        // // if (!promoBlocks) return;
+
+        // // let checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
+
+        // // if (!checkedVariantInput) return;
+
+        // // let promoBlock = checkedVariantInput.closest('.promo-block');
+
+        // // if (!promoBlock) return;
+
+        // // let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
+        // // let variantLabel = promoBlock.dataset.variantLabel;
+        // // const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
+        // // const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
+
+        // // console.log('variantLabel');
+        // // console.log(variantLabel);
+
+        // const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
+        // const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
+        // const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
+        // const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
+
+        // if (fancyBoxVacancyTitle) {
+        //   // fancyBoxVacancyTitle.textContent = vacancyTitle;
+        // }
+
+        // if (fancyBoxVariant) {
+        //   fancyBoxVariant.textContent = variantLabel;
+        // }
+
+        // if (fancyBoxWorkingPeriod) {
+        //   fancyBoxWorkingPeriod.textContent = workingPeriod;
+        // }
+
+        // if (fancyBoxRewardRange) {
+        //   fancyBoxRewardRange.textContent = rewardRange;
         // }
       }
     }

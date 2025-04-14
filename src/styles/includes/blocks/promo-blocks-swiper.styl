@@ -32,7 +32,8 @@
 	&__company
 		position absolute
 		z-index 1
-		top -34px
+		// top -34px
+		top -38px
 		right 0
 		display grid
 		grid-template-columns 24px 1fr
@@ -59,3 +60,8 @@
 			
 			.promo-blocks-swiper__item
 				height 100%
+	
+	&--working-conditions-single-item
+		@media $xs
+			padding-top 24px
+			padding-bottom 24px

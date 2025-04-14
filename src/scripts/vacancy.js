@@ -171,4 +171,29 @@ $(() => {
     $(this).hide();
   });
 
+  if ($(window).width() < 768) {
+    document.querySelectorAll('.employment-variants-swiper:not(.swiper-initialized)').forEach(item => {
+      let slidesCount = $(item).find('.swiper-slide').length;
+
+      const promoBlocksSwiper = new Swiper(item, {
+        modules: [Pagination],
+        // loop: true,
+        slidesPerView: 'auto',
+        centeredSlides: slidesCount < 2,
+        spaceBetween: 15,
+        slideActiveClass: 'employment-variants-swiper__slide--active',
+
+        pagination: {
+          el: '.employment-variants-swiper__pagination',
+          bulletActiveClass: 'swiper-pagination-bullet--active',
+          // clickable: true
+        },
+      });
+
+      if (promoBlocksSwiper.slides.length === 1) {
+        $(promoBlocksSwiper.pagination.el).hide();
+      }
+    });
+  }
+
 });

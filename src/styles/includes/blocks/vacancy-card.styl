@@ -565,6 +565,11 @@
 		border none
 		background transparent
 		
+		.vacancy-card__wrapper
+			@media $xs
+				padding-top 0
+				border none
+		
 		.vacancy-card__promo-blocks
 			margin-bottom 30px
 			// margin-left 0
@@ -585,6 +590,12 @@
 		.vacancy-card__title,
 		.vacancy-card__address
 			margin-bottom 8px
+		
+		.vacancy-card__title
+			@media $xs
+				margin-bottom 14px
+				font-weight 700
+				font-size 21px
 		
 		.vacancy-card__address
 			@media $xs
