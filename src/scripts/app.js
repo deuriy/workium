@@ -115,8 +115,12 @@ $(() => {
           // $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
           // $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
         } else if (slide.src.includes('tooltip-popup')) {
-          let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
-          $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
+          // console.log(slide.serviceName);
+
+          if (slide.serviceName) {
+            let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
+            $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
+          }
 
           $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
           $(slide.contentEl).find('.fancybox-popup__last-installment').text(slide.lastInstallment);
@@ -179,6 +183,7 @@ $(() => {
         const rewardRange = promoBlock.dataset.rewardRange;
         const companyName = promoBlock.dataset.companyName;
         const agencyName = promoBlock.dataset.agencyName;
+        const agencyId = promoBlock.dataset.agencyId;
 
         const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
         const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
@@ -203,7 +208,18 @@ $(() => {
         }
 
         if (viberBtn) {
-          viberBtn.href = `${viberBtn.dataset.viberUrl}&text=Хочу безкоштовно забронювати вакансію ${vacancyTitle} на підприємстві ${companyName} від агенції ${agencyName}`;
+          let str = '';
+
+          switch (slide.src) {
+            case '#book-vacancy-list-popup':
+              str = `Вітаю! Забронюйте мені, будь ласка, вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              break;
+            case '#consult-vacancies-list-popup':
+              str = `Вітаю! Хочу дізнатись більше деталей про вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              break;
+          }
+
+          viberBtn.href = `${viberBtn.dataset.viberUrl}&text=${str}`;
         }
       },
 
@@ -725,11 +741,11 @@ $(() => {
     let tooltipTriggerCoords = this.getBoundingClientRect();
     let tooltipHeight = $tooltip.outerHeight();
 
-    if (windowHeight < tooltipTriggerCoords.bottom + tooltipHeight + 10) {
-      $tooltip.addClass('tooltip--extended-top').removeClass('tooltip--extended-bottom');
-    } else {
-      $tooltip.removeClass('tooltip--extended-top').addClass('tooltip--extended-bottom');
-    }
+    // if (windowHeight < tooltipTriggerCoords.bottom + tooltipHeight + 10) {
+    //   $tooltip.addClass('tooltip--extended-top').removeClass('tooltip--extended-bottom');
+    // } else {
+    //   $tooltip.removeClass('tooltip--extended-top').addClass('tooltip--extended-bottom');
+    // }
   });
 
   $(document).on('mouseout', '[data-tooltip]', function(event) {
