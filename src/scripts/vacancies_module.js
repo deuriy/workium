@@ -1464,12 +1464,14 @@ $(() => {
 
   });
 
-  function setCashbackForPromoBlocks (cashback, promoBlocks) {
-    let btnCashback = promoBlocks.querySelector('.promo-blocks__btn-cashback');
+  function setBonusForPromoBlocks (cashback, vacancy) {
+    let bookBtns = vacancy.querySelectorAll('.promo-blocks__btn--book');
 
-    if (!btnCashback) return;
+    if (!bookBtns.length) return;
 
-    btnCashback.textContent = cashback.textContent;
+    bookBtns.forEach(btn => {
+      btn.innerHTML = `Забронювати <br class="hidden-smPlus">з бонусом ${cashback}`;
+    });
   }
 
   // document.querySelectorAll('.promo-blocks').forEach(promoBlocksItem => {
@@ -1493,19 +1495,17 @@ $(() => {
 
     if (!checkboxInput) return;
 
+    console.log(checkboxInput);
+
     let promoBlock = checkboxInput.closest('.promo-block');
 
     if (!promoBlock) return;
 
-    let cashback = promoBlock.querySelector('.promo-block__salary-value');
+    let vacancy = promoBlock.closest('.vacancy-card');
 
-    if (!cashback) return;
+    if (!vacancy) return;
 
-    let promoBlocks = promoBlock.closest('.promo-blocks');
-
-    if (!promoBlocks) return;
-
-    setCashbackForPromoBlocks(cashback, promoBlocks);
+    setBonusForPromoBlocks(promoBlock.dataset.rewardRange, vacancy);
   })
 
   // $('[data-remove-last-filter]').click(function(event) {
