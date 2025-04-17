@@ -181,7 +181,8 @@
 	&--flex-column
 		flex-direction column
 	
-	&--promo-blocks
+	&--promo-blocks,
+	&--banner
 		padding 10px 12px
 		line-height 18px
 		text-align center
@@ -191,6 +192,12 @@
 		
 		&:hover
 			background darken(#5340FF, 20%)
+	
+	&--banner
+		@media $xs
+			padding-top 11px
+			padding-bottom 11px
+			line-height 1.625
 	
 	&--multi-select
 		padding 6px 30px

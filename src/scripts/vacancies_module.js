@@ -1464,8 +1464,8 @@ $(() => {
 
   });
 
-  function setBonusForPromoBlocks (cashback, vacancy) {
-    let bookBtns = vacancy.querySelectorAll('.promo-blocks__btn--book');
+  function setBonusForPromoBlocks (cashback, vacancyCard) {
+    let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
 
     if (!bookBtns.length) return;
 
@@ -1495,17 +1495,15 @@ $(() => {
 
     if (!checkboxInput) return;
 
-    console.log(checkboxInput);
-
     let promoBlock = checkboxInput.closest('.promo-block');
 
     if (!promoBlock) return;
 
-    let vacancy = promoBlock.closest('.vacancy-card');
+    let vacancyCard = promoBlock.closest('.vacancy-card');
 
-    if (!vacancy) return;
+    if (!vacancyCard) return;
 
-    setBonusForPromoBlocks(promoBlock.dataset.rewardRange, vacancy);
+    setBonusForPromoBlocks(promoBlock.dataset.rewardRange, vacancyCard);
   })
 
   // $('[data-remove-last-filter]').click(function(event) {

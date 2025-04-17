@@ -273,7 +273,7 @@ $(() => {
   	$(this).prev('.form-search-box__input').val('');
   });
 
-  $('.banner__close-btn').click(function(event) {
+  $('[data-close-banner]').click(function(event) {
   	let $banner = $(this).closest('.banner');
   	$banner.slideUp();
 
@@ -284,6 +284,8 @@ $(() => {
   	if (!cookieName) return;
 
   	setCookie(cookieName, 'yes', {'max-age': 3153600000});
+
+  	event.preventDefault();
   });
 
   $('.banner__more-link').click(function(e) {

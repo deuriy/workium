@@ -25,7 +25,8 @@
     background var(--info)
     color var(--light)
   
-  &--promo-blocks
+  &--promo-blocks,
+  &--banner
     text-align center
     
     @media $smPlus
@@ -33,3 +34,7 @@
     
     @media $xs
       line-height 18px
+  
+  &--banner
+    @media $xs
+      line-height 1.625

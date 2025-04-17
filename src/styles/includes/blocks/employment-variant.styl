@@ -1,11 +1,16 @@
 .employment-variant
   display grid
   grid-template-columns 100%
-  padding 8px 16px
-  border 1px solid #DFE1ED
+  align-content start
+  // padding 8px 16px
+  padding 8px 10px 8px 16px
+  // border 1px solid #DFE1ED
+  border 1px solid transparent
   border-radius 8px
+  box-shadow 0 0 18px rgba(0, 0, 0, .11)
   color var(--accent)
   text-decoration none
+  @extend .transition
   
   @media $xs
     // width 370px
@@ -13,16 +18,46 @@
     max-width 100%
   
   &__title
+    display grid
+    grid-template-columns 1fr auto
     margin-bottom 5px
     font-weight 600
     font-size 12px
     line-height 1.67
     text-transform uppercase
     color #989DB3
+    
+    &::after
+      content ""
+      width 12px
+      height 12px
+      margin-top 2px
+      margin-right 1px
+      border-radius 50%
+      border 1px solid rgba(112, 112, 112, 0.5)
   
-  &__salary
+  &__month-salary,
+  &__hourly-rate-wrapper,
+  &__hourly-rate,
+  &__reward
     font-weight 600
     font-size 12px
+  
+  &__hourly-rate-wrapper
+    .employment-variant__hourly-rate,
+    .employment-variant__brutto-label,
+    .employment-variant__netto-label
+      display inline
+  
+  &__brutto-label
+    color #C85629
+  
+  &__reward
+    justify-self start
+    margin-top 3px
+    margin-left -5px
+    padding 2px 6px
+    background #F1F7ED
   
   &__label
     display inline-grid
@@ -39,6 +74,15 @@
   
   &:is(a):hover,
   &--selected
+    border-radius 12px
+  
+  &:is(a):hover
+    @media $smPlus
+      box-shadow 0 0 24px rgba(19, 31, 54, 0.65)
+  
+  &--selected
     padding 6px 14px
     border 3px solid #020202
-    border-radius 12px
+    
+    .employment-variant__title::after
+      display none

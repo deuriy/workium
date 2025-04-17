@@ -94,6 +94,19 @@
 	&__more-link-wrapper
 		grid-column span 2
 	
+	&__btns
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content center
+		gap 12px
+		grid-column span 2
+		margin-top 23px
+		
+		@media $xxs
+			grid-template-columns 100%
+			gap 10px
+			margin-top 12px
+	
 	&--grey-text
 		.banner__text
 			color var(--text-color)
@@ -117,3 +130,27 @@
 			@media $xs
 				align-self center
 				margin-top 0
+	
+	&--vacancies
+		grid-template-columns 35px 1fr
+		column-gap 17px
+		align-items start
+		padding 31px 41px 25px 26px
+		
+		@media $xs
+			column-gap 12px
+			align-items center
+		
+		.banner__img-wrapper
+			@media $xs
+				width auto
+		
+		.banner__text
+			line-height normal
+			color #353333
+			
+			& > p + p
+				margin-top 16px
+				
+				@media $xs
+					margin-top 12px
