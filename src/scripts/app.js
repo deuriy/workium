@@ -184,11 +184,14 @@ $(() => {
         const companyName = promoBlock.dataset.companyName;
         const agencyName = promoBlock.dataset.agencyName;
         const agencyId = promoBlock.dataset.agencyId;
+        const bonusType = promoBlock.dataset.bonusType;
+        // const bookVacancyConditions = promoBlock.dataset.bookVacancyConditions;
 
         const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
         const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
         const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
         const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
+        const fancyBoxBookVacancyConditions = slide.contentEl.querySelector('.fancybox-popup__book-vacancy-conditions');
         const viberBtn = slide.contentEl.querySelector('[data-viber-url]');
 
         if (fancyBoxVacancyTitle) {
@@ -208,18 +211,43 @@ $(() => {
         }
 
         if (viberBtn) {
-          let str = '';
+          let hrefText = '';
 
           switch (slide.src) {
             case '#book-vacancy-list-popup':
-              str = `Вітаю! Забронюйте мені, будь ласка, вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              hrefText = `Вітаю! Забронюйте мені, будь ласка, вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
               break;
             case '#consult-vacancies-list-popup':
-              str = `Вітаю! Хочу дізнатись більше деталей про вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              hrefText = `Вітаю! Хочу дізнатись більше деталей про вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
               break;
           }
 
-          viberBtn.href = `${viberBtn.dataset.viberUrl}&text=${str}`;
+          viberBtn.href = `${viberBtn.dataset.viberUrl}&text=${hrefText}`;
+        }
+
+        if (fancyBoxBookVacancyConditions) {
+          let vacancyConditionsText = '';
+
+          switch (slide.src) {
+            case '#book-vacancy-list-popup':
+              if (bonusType === 'fixed') {
+                vacancyConditionsText = `А ще після того як ви попрацюєте ${workingPeriod} на цій вакансії, ви отримаєте <strong>${rewardRange}</strong> від WORKIUM — як подяку за те, що обрали нас.`
+              } else {
+                vacancyConditionsText = `А ще після того як ви попрацюєте ${workingPeriod} на цій вакансії, WORKIUM виплатить вам по <strong>${rewardRange}</strong> за весь час, відпрацьований протягом цих ${workingPeriod} — це подяка за те, що обрали роботу через нас.`;
+              }
+
+              break;
+            case '#consult-vacancies-list-popup':
+              if (bonusType === 'fixed') {
+                vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми додатково виплатимо вам <strong>${rewardRange}</strong> після того, як ви попрацюєте ${workingPeriod}.`
+              } else {
+                vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми виплатимо вам по <strong>${rewardRange}</strong> за весь час, відпрацьований протягом ${workingPeriod}.`;
+              }
+              
+              break;
+          }
+
+          fancyBoxBookVacancyConditions.innerHTML = vacancyConditionsText;
         }
       },
 
