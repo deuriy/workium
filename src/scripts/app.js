@@ -719,4 +719,25 @@ $(() => {
     $preloaderWrapper.show();
   });
 
+  $('.accordion-panel__title').click(function(event) {
+    $(this).parent().toggleClass('accordion-panel--opened');
+    $(this).next('.accordion-panel__body').slideToggle();
+    
+    event.preventDefault();
+  });
+
+  // document.addEventListener('click', function(e) {
+  //   const accordionPanelTitle = e.target.closest('.accordion-panel__title');
+
+  //   if (!accordionPanelTitle) return;
+
+  //   const accordionPanel = accordionPanelTitle.closest('.accordion-panel');
+
+  //   if (!accordionPanel) return;
+
+  //   accordionPanel.classList.toggle('accordion-panel--opened');
+
+  //   e.preventDefault();
+  // });
+
 });
