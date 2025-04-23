@@ -721,8 +721,8 @@ $(() => {
 
   $('.accordion-panel__title').click(function(event) {
     $(this).parent().toggleClass('accordion-panel--opened');
-    $(this).next('.accordion-panel__body').slideToggle();
-    
+    $(this).next('.accordion-panel__body').slideToggle('fast');
+
     event.preventDefault();
   });
 
