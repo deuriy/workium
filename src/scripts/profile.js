@@ -274,6 +274,8 @@ $(() => {
   });
 
   $('[data-close-banner]').click(function(event) {
+  	event.preventDefault();
+
   	let $banner = $(this).closest('.banner');
   	$banner.slideUp();
 
@@ -285,7 +287,17 @@ $(() => {
 
   	setCookie(cookieName, 'yes', {'max-age': 3153600000});
 
-  	event.preventDefault();
+  	if (!$banner.attr('id')) return;
+
+  	const $relatedBannerElements = $('[data-related-banner-id]');
+  	$relatedBannerElements.each(function(index, el) {
+  		console.log(el);
+  		if (el.style.display === 'none') {
+  			el.style.display = '';
+  		} else {
+  			el.style.display = 'none';
+  		}
+  	});
   });
 
   $('.banner__more-link').click(function(e) {
