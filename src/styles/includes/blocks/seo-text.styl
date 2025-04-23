@@ -1,0 +1,71 @@
+.seo-text
+  padding 29px 60px 39px 24px
+  border-radius 13px
+  background var(--light)
+  
+  @media $mdMinus
+    padding-right 24px
+  
+  @media $xs
+    padding 20px
+    border-radius 10px
+  
+  & > h2,
+  & > h3
+    margin-top 31px
+    margin-bottom 22px
+    font-weight 700
+    line-height normal
+    
+    @media $xs
+      margin-top 21px
+      margin-bottom 16px
+    
+    &:first-child
+      margin-top 0
+    
+    &:last-child
+      margin-bottom 0
+  
+  & > h2
+    font-size 25px
+    
+    @media $smMinus
+      font-size 22px
+    
+    @media $xs
+      font-size 20px
+  
+  & > h3
+    font-size 22px
+    
+    @media $smMinus
+      font-size 20px
+    
+    @media $xs
+      font-size 18px
+  
+  & > p
+    margin-bottom 18px
+    line-height normal
+      
+    @media $xs
+      margin-bottom 15px
+    
+    &:last-child
+      margin-bottom 0
+  
+  & > ul,
+  & > ol
+    margin-bottom 18px
+    list-style inside
+    line-height normal
+      
+    @media $xs
+      margin-bottom 15px
+    
+    &:last-child
+      margin-bottom 0
+    
+    & > li > p
+      display inline
