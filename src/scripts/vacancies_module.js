@@ -1464,6 +1464,13 @@ $(() => {
 
   });
 
+  $('.banner__more-link').click(function(event) {
+    $(this).parent().next('.banner__text').toggleClass('hidden-xs');
+    $(this).hide();
+
+    event.preventDefault();
+  });
+
   function setBonusForPromoBlocks (cashback, vacancyCard) {
     let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
 

@@ -307,4 +307,19 @@ $(() => {
 		toggleMoreLink($(this));
 		e.preventDefault();
 	});
+
+	$('[data-close-find-vacancy-banner]').click(function(event) {
+  	event.preventDefault();
+
+  	let $findVacancyBanner = $(this).closest('.find-vacancy-banner');
+  	$findVacancyBanner.slideUp();
+
+  	let cookieName = $findVacancyBanner.data('cookie-name');
+
+  	console.log(cookieName);
+
+  	if (!cookieName) return;
+
+  	setCookie(cookieName, 'yes', {'max-age': 3153600000});
+  });
 });

@@ -1,9 +1,11 @@
 .employment-variant
+  position relative
   display grid
   grid-template-columns 100%
   align-content start
   // padding 8px 16px
-  padding 8px 10px 8px 16px
+  // padding 8px 10px 8px 16px
+  padding 8px 10px 20px 16px
   // border 1px solid #DFE1ED
   border 1px solid transparent
   border-radius 8px
@@ -28,13 +30,14 @@
     color #989DB3
     
     &::after
-      content ""
-      width 12px
-      height 12px
-      margin-top 2px
-      margin-right 1px
-      border-radius 50%
-      border 1px solid rgba(112, 112, 112, 0.5)
+      @media $xs
+        content ""
+        width 12px
+        height 12px
+        margin-top 2px
+        margin-right 1px
+        border-radius 50%
+        border 1px solid rgba(112, 112, 112, 0.5)
   
   &__month-salary,
   &__hourly-rate-wrapper,
@@ -59,14 +62,22 @@
     padding 2px 6px
     background #F1F7ED
   
+  &__label,
+  &__operation-link
+    position absolute
+    bottom -10px
+    left 50%
+    transform translateX(-50%)
+  
   &__label
     display inline-grid
-    margin 10px auto -20px
+    // margin 10px auto -20px
     padding 3px 21px
     border-radius 8px
     background #020202
     color var(--light)
     font-size 10px
+    text-align center
     
     // @media $xs
     //   margin-top 8px
@@ -79,9 +90,13 @@
   &:is(a):hover
     @media $smPlus
       box-shadow 0 0 24px rgba(19, 31, 54, 0.65)
+    
+    .operation-link
+      background var(--light-green)
   
   &--selected
-    padding 6px 14px
+    // padding 6px 14px
+    padding 6px 14px 20px
     border 3px solid #020202
     
     .employment-variant__title::after

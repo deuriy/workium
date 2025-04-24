@@ -11,6 +11,10 @@
 		// padding 15px
 		padding 22px 19px
 	
+	.agency-gallery__vacancy-link-wrapper,
+	.agency-gallery__description
+		display none
+	
 	&__wrapper
 		padding 32px 17px 32px 32px
 		border 1px solid var(--grey-medium)
@@ -100,6 +104,18 @@
 			
 			.vacancy-card__btns-list
 				justify-content center
+				
+	&__agency-gallery
+		&.fancybox__content
+			width 650px
+			max-width 100%
+			border-radius 24px
+			
+			@media $smPlus
+				padding 30px 40px
+			
+			.agency-gallery__title
+				text-align center
 	
 	&__company-name,
 	&__close-btn
@@ -421,6 +437,16 @@
 		
 		@media $smMinus
 			bottom 65px
+	
+	&__title-and-like
+		display grid
+		grid-template-columns repeat(2, auto)
+		align-items center
+		justify-content start
+		gap 10px
+	
+	&__bookmark-icon
+		margin-bottom 6px
 	
 	&--teaser,
 	&--full
