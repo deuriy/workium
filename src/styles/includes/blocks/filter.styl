@@ -21,23 +21,14 @@
 			gap 7px
 		
 	&__top
-		// grid-template-columns 13.44% 10.781% 13% 7.707% 7.6% 9.3% 8.9181% 1fr
-		// grid-template-columns 13% 10.781% 13% 7.707% 7.6% 9.3% 9.6181% 1fr
-			
-		// grid-template-columns 1.1fr 1fr 1.4fr 0.8fr 0.8fr 1.74fr
-		grid-template-columns 1.1fr 1fr 1.5fr .8fr .8fr 1.64fr
-		// grid-template-columns 1.3fr 1fr 1fr 1fr 1fr 1.74fr
-		// grid-template-columns 1.3fr 1fr 1fr 1fr 1.74fr
+		// grid-template-columns 1.1fr 1fr 1.5fr .8fr .8fr 1.64fr
+		grid-template-columns 1.1fr 1fr 1.5fr .8fr 1.64fr
 		justify-content start
 		align-items end
 		
 		@media $xlMinus
-			// grid-template-columns 13.44% 9.681% 11% 7.707% 8% 10% 12.2181% 1fr
-			
-			// grid-template-columns 1.1fr 1fr 1.4fr 0.8fr 0.8fr 1.74fr
-			grid-template-columns 1.1fr 1fr 1.5fr .8fr .8fr 1.64fr
-			// grid-template-columns 1.3fr 1fr 1fr 1fr 1fr 1.74fr
-			// grid-template-columns 1.3fr 1fr 1fr 1fr 1.74fr
+			// grid-template-columns 1.1fr 1fr 1.5fr .8fr .8fr 1.64fr
+			grid-template-columns 1.1fr 1fr 1.5fr .8fr 1.64fr
 		
 		@media $mdMinus
 			grid-template-columns repeat(3, 1fr)
@@ -46,16 +37,19 @@
 			grid-template-columns repeat(2, 1fr)
 		
 		&--no-cities
-			grid-template-columns 1.1fr 1.1fr 1.1fr 1.1fr 1.74fr
+			// grid-template-columns 1.1fr 1.1fr 1.1fr 1.1fr 1.74fr
+			grid-template-columns 2.2fr 1.1fr 1.1fr 1.74fr
 			
-			@media $xlMinus
-				grid-template-columns 1.1fr 1.1fr 1.1fr 1.1fr 1.74fr
+			// @media $xlMinus
+			// 	// grid-template-columns 1.1fr 1.1fr 1.1fr 1.1fr 1.74fr
+			// 	grid-template-columns 2.2fr 1.1fr 1.1fr 1.74fr
 		
 			@media $mdMinus
-				grid-template-columns repeat(3, 1fr)
-			
-			@media $xs
+				// grid-template-columns repeat(3, 1fr)
 				grid-template-columns repeat(2, 1fr)
+			
+			// @media $xs
+			// 	grid-template-columns repeat(2, 1fr)
 	
 	&__item
 		position relative
