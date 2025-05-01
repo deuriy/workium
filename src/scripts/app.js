@@ -185,6 +185,7 @@ $(() => {
         const agencyName = promoBlock.dataset.agencyName;
         const agencyId = promoBlock.dataset.agencyId;
         const bonusType = promoBlock.dataset.bonusType;
+        const rewardTerms = promoBlock.dataset.rewardTerms;
         // const bookVacancyConditions = promoBlock.dataset.bookVacancyConditions;
 
         const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
@@ -230,18 +231,18 @@ $(() => {
 
           switch (slide.src) {
             case '#book-vacancy-list-popup':
-              if (bonusType === 'fixed') {
-                vacancyConditionsText = `А ще після того як ви попрацюєте ${workingPeriod} на цій вакансії, ви отримаєте <strong>${rewardRange}</strong> від WORKIUM — як подяку за те, що обрали нас.`
+              if (bonusType === 'fixed_payment_days') {
+                vacancyConditionsText = `А ще після того як ви ${workingPeriod} попрацюєте на цій вакансії (рахуються тільки робочі дні), ви отримаєте <strong>${rewardRange}</strong> від WORKIUM — як подяку за те, що обрали нас.`;
               } else {
-                vacancyConditionsText = `А ще після того як ви попрацюєте ${workingPeriod} на цій вакансії, WORKIUM виплатить вам по <strong>${rewardRange}</strong> за весь час, відпрацьований протягом цих ${workingPeriod} — це подяка за те, що обрали роботу через нас.`;
+                vacancyConditionsText = `А ще — протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів' } ви отримуватимете по <strong>${rewardRange}</strong> за кожну годину від WORKIUM. Це наша щира подяка за те, що ви обрали нас!`;
               }
 
               break;
             case '#consult-vacancies-list-popup':
-              if (bonusType === 'fixed') {
-                vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми додатково виплатимо вам <strong>${rewardRange}</strong> після того, як ви попрацюєте ${workingPeriod}.`
+              if (bonusType === 'fixed_payment_days') {
+                vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми додатково виплатимо вам <strong>${rewardRange}</strong> після того, як ви попрацюєте ${workingPeriod}.`;
               } else {
-                vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми виплатимо вам по <strong>${rewardRange}</strong> за весь час, відпрацьований протягом ${workingPeriod}.`;
+                vacancyConditionsText = `А ще — щоб подякувати вам за те, що ви обрали цю вакансію через WORKIUM, ми будемо нараховувати вам по <strong>${rewardRange}</strong> за кожну годину, яку ви відпрацюєте протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів' }.`;
               }
               
               break;
