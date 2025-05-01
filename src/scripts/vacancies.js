@@ -1289,7 +1289,7 @@ $(() => {
 
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
     $agencyGalleryTab.addClass('agency-gallery--full');
-    $agencyGalleryTab.find('.agency-gallery__hide-link').show();
+    $agencyGalleryTab.find('.agency-gallery__hide-link-wrapper').show();
     $(this).hide();
   });
 
@@ -1299,7 +1299,7 @@ $(() => {
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
     $agencyGalleryTab.removeClass('agency-gallery--full');
     $agencyGalleryTab.find('.agency-gallery__more-item-link').show();
-    $(this).hide();
+    $(this).parent().hide();
   });
 
   if (document.forms.vacancies_filter) {
