@@ -36,6 +36,7 @@ function copyVacancyText (isMultiVacancy = true) {
   let $vacancyCardTextarea = $('.vacancy-card__textarea');
 
   copyText($vacancyCardTextarea[0]);
+  console.log($vacancyCardTextarea[0]);
   $vacancyCardTextarea.remove();
 }
 

@@ -112,23 +112,23 @@ $(() => {
     $('.vacancy-info__bookmark-icon').toggleClass('bookmark-icon--fill');
   });
 
-  $(document).on('click', '.vacancy-card__copy-btn', function(event) {
-    copyVacancyText(this.hasAttribute('data-multi-vacancy'));
+  // $(document).on('click', '.vacancy-card__copy-btn', function(event) {
+  //   copyVacancyText(this.hasAttribute('data-multi-vacancy'));
 
-    let defaultText = $(this).text();
+  //   let defaultText = $(this).text();
 
-    $(this).addClass('btn-white--copied');
-    $(this).text('Текст скопійовано!');
+  //   $(this).addClass('btn-white--copied');
+  //   $(this).text('Текст скопійовано!');
 
-    setTimeout(() => {
-      $(this).removeClass('btn-white--copied');
-      $(this).text(defaultText);
-    }, 2000);
+  //   setTimeout(() => {
+  //     $(this).removeClass('btn-white--copied');
+  //     $(this).text(defaultText);
+  //   }, 2000);
 
-    event.preventDefault();
-  });
+  //   event.preventDefault();
+  // });
 
-  $(document).on('click', '.vacancy-footer__copy-btn', function(event) {
+  $(document).on('click', '.vacancy-card__copy-btn, .vacancy-buttons__copy-btn', function(event) {
     copyVacancyText(this.hasAttribute('data-multi-vacancy'));
 
     let $tooltip = $(this).find('.btn-grey__tooltip');

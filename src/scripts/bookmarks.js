@@ -3,6 +3,42 @@ import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 
 document.addEventListener('bookmarksLoaded', function (event) {
+  function getLineCount(element) {
+    const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+    const elementHeight = element.clientHeight;
+    
+    return Math.round(elementHeight / lineHeight);
+  }
+
+  document.querySelectorAll('.vacancy-card__address--truncated').forEach(item => {
+    if (getLineCount(item) <= 2) {
+      item.classList.add('vacancy-card__address--no-arrow');
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    const moreLink = e.target.closest('.vacancy-card__more-link');
+
+    if (!moreLink) return;
+
+    const vacancyCardTeaser = moreLink.closest('.vacancy-card--teaser');
+    const wrapper = document.querySelector('.wrapper');
+    const mobileHeaderHeight = document.querySelector('.mobile-header').offsetHeight;
+    const iconMenuHeight = document.querySelector('.icon-menu').offsetHeight;
+
+    vacancyCardTeaser.classList.toggle('vacancy-card--teaser-expanded');
+    moreLink.classList.toggle('link--vacancy-card-more-expanded');
+
+    if (moreLink.classList.contains('link--vacancy-card-more-expanded')) {
+      moreLink.textContent = 'Приховати';
+      wrapper.scrollTo({ top: vacancyCardTeaser.offsetTop + iconMenuHeight, behavior: "smooth" });
+    } else {
+      moreLink.textContent = 'Детальніше';
+      wrapper.scrollTo({ top: vacancyCardTeaser.offsetTop - mobileHeaderHeight, behavior: "smooth" });
+    }
+
+  });
+
   if ($(window).width() < 768) {
     
     document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
