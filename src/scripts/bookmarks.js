@@ -39,6 +39,11 @@ document.addEventListener('bookmarksLoaded', function (event) {
 
   });
 
+  const promoBlocksTooltips = document.querySelectorAll('.promo-block__additional-info .tooltip');
+  for (const tooltip of promoBlocksTooltips) {
+    tooltip.classList.remove('tooltip--extended-bottom');
+  }
+
   if ($(window).width() < 768) {
     
     document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
@@ -49,7 +54,7 @@ document.addEventListener('bookmarksLoaded', function (event) {
         // loop: true,
         slidesPerView: 'auto',
         centeredSlides: slidesCount < 2,
-        spaceBetween: 8,
+        spaceBetween: 15,
 
         pagination: {
           el: '.promo-blocks-swiper__pagination',
