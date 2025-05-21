@@ -250,6 +250,12 @@ $(() => {
 
           fancyBoxBookVacancyConditions.innerHTML = vacancyConditionsText;
         }
+
+        const telegramBtn = slide.contentEl.querySelector('[data-telegram-url]');
+        if (telegramBtn) {
+          const tgURL = slide.src === '#book-vacancy-list-popup' ? promoBlock.dataset.tgUrlJobReservation : promoBlock.dataset.tgUrlJobInquiry;
+          telegramBtn.href = tgURL;
+        }
       },
 
       done: (fancybox, slide) => {
