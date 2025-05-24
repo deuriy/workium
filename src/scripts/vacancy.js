@@ -196,4 +196,16 @@ $(() => {
     });
   }
 
+  const vacancyButtonsPanel = document.querySelectorAll('.vacancy-buttons-panel');
+  for (const panel of vacancyButtonsPanel) {
+    if (panel.offsetHeight <= 80) continue;
+
+    const bookmark = panel.querySelector('[data-bookmark]');
+
+    if (!bookmark) continue;
+
+    bookmark.classList.remove('bookmark-icon--with-label');
+    bookmark.textContent = '';
+  }
+
 });
