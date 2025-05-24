@@ -471,6 +471,10 @@
 	&__bookmark-icon
 		margin-bottom 6px
 	
+	&__notice-danger
+		margin-bottom 33px
+		margin-right 12px
+	
 	&--teaser,
 	&--full
 		.vacancy-card__title-and-link
@@ -679,3 +683,7 @@
 		.vacancy-card__btns
 			@media $xs
 				display none
+	
+	&--closed
+		.vacancy-card__wrapper > *:not(.vacancy-card__notice-danger)
+			opacity 0.4
