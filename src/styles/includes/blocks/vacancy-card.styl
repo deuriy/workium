@@ -564,7 +564,9 @@
 		
 		.vacancy-card__header
 			grid-template-columns 100%
-			grid-template-rows 1fr 24px
+			
+			&:has(.vacancy-card__edit-link)
+				grid-template-rows 1fr 24px
 			
 			@media $smPlus
 				margin-bottom 8px
