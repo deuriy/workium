@@ -16,3 +16,20 @@
 	&__bottom
 		margin-top 48px
 		text-align center
+	
+	&__btns
+		display flex
+		flex-wrap wrap
+		justify-content center
+		gap 12px
+		margin-top 23px
+		
+		@media $xxs
+			flex-direction column
+			gap 10px
+			margin-top 12px
+	
+	&__btn
+		@media $xxs
+			flex-grow 1
+			flex-basis 0
