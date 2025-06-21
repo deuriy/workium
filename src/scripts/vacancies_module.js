@@ -1478,7 +1478,7 @@ $(() => {
     if (!bookBtns.length) return;
 
     bookBtns.forEach(btn => {
-      btn.innerHTML = `Забронювати <br class="hidden-smPlus">з бонусом ${cashback}`;
+      btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${cashback}`;
     });
   }
 
