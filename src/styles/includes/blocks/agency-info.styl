@@ -8,6 +8,30 @@
     font-weight 700
     font-size 13px
   
+  &__work-place
+    color #989DB2 
+    font-size 13px
+    line-height 14px
+  
   &--vacancy-card
     .agency-info__company-name
       font-size 14px
+  
+  &--vacancy-block
+    grid-template-columns repeat(3, auto)
+    grid-template-areas "logo company-name rating" "logo work-place rating"
+    gap 0 8px
+    justify-content start
+    
+    .agency-info__company-logo
+      grid-area logo
+      margin-right 4px
+    
+    .agency-info__company-name
+      font-weight 500
+      line-height 20px
+    
+    .agency-info__rating
+      grid-area rating
+      align-self start
+      margin-left 3px

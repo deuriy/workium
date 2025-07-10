@@ -1,0 +1,53 @@
+.vacancy-blocks-section
+  &__title
+    margin-bottom 32px
+  
+  &__tabs
+    @media $xs
+      margin-right -16px
+      margin-left -16px
+  
+  &__tabs-menu
+    margin-bottom 46px
+    
+    @media $smMinus
+      margin-bottom 36px
+    
+    @media $xs
+      margin-bottom 26px
+    
+    @media $xxs
+      margin-bottom 16px
+  
+  &__tabs-list
+    @media $xs
+      padding-right 16px
+      padding-left 16px
+  
+  &__items
+    display grid
+    grid-template-columns repeat(3, 1fr)
+    gap 32px
+    
+    @media $smMinus
+      grid-template-columns repeat(2, 1fr)
+      gap 24px
+    
+    @media $xs
+      grid-template-columns none
+      grid-auto-columns 320px
+      grid-auto-flow column
+      gap 16px
+      // margin-right -16px
+      // margin-left -16px
+      padding-right 16px
+      padding-left 16px
+      overflow auto
+      scrollbar-width none
+      
+      &::-webkit-scrollbar
+        display none
+    
+    @media $xxs
+      // grid-auto-columns 85.3vw
+      gap 8px
