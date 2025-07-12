@@ -10,15 +10,17 @@
 	&__container,
 	&__right
 		display grid
-		grid-template-columns repeat(2, auto)
 		align-items center
 		gap 32px
 		
 	&__container
+		grid-template-columns repeat(2, auto)
 		justify-content space-between
 		padding-top 18px
 		padding-bottom 18px
 	
 	&__right
+		grid-template-columns repeat(3, auto)
+		
 		&--no-menu
 			grid-template-columns 100%

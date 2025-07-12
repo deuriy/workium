@@ -1,0 +1,129 @@
+.lang-switcher
+  position relative
+  
+  &__toggle-btn,
+  &__link
+    color var(--accent)
+    text-decoration none
+  
+  &__toggle-btn
+    display grid
+    grid-template-columns repeat(3, auto)
+    align-items center
+    border none
+    outline none
+    background transparent
+    font-weight 500
+    font-size 15px
+    line-height 1.6
+    font-family var(--base-font)
+    cursor pointer
+    
+    &::before
+      content ""
+      width 20px
+      height 20px
+      margin-right 6px
+      background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cg stroke='%230F182A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' clip-path='url(%23a)'%3E%3Cpath d='M10 18.333a8.333 8.333 0 1 0 0-16.666 8.333 8.333 0 0 0 0 16.666Z'/%3E%3Cpath d='M10 1.667a12.083 12.083 0 0 0 0 16.666 12.083 12.083 0 0 0 0-16.666ZM1.666 10h16.667'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h20v20H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E") center no-repeat
+    
+    &::after
+      content ""
+      width 16px
+      height 16px
+      background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill='%230F182A' d='M8 10 5 6h6l-3 4Z'/%3E%3C/svg%3E") center no-repeat
+  
+  &__list-wrapper
+    position absolute
+    top calc(100% + 20px)
+    right 50%
+    padding-top 10px
+    transform translateX(50%)
+    opacity 0
+    visibility hidden
+    @extend .transition
+  
+  &__list
+    list-style none
+    padding 5px 0
+    border 1px solid var(--grey-medium)
+    border-radius 6px
+    background var(--light)
+  
+  &__link
+    display block
+    padding 6px 23px
+    @extend .transition
+    
+    &:hover,
+    &--current
+      background #F4F4FB
+  
+  &:hover
+    .lang-switcher__list-wrapper
+      top 100%
+      opacity 1
+      visibility visible
+  
+  &--to-top
+    .lang-switcher__list-wrapper
+      top auto
+      bottom calc(100% + 20px)
+      padding-top 0
+      padding-bottom 10px
+      
+    &:hover
+      .lang-switcher__list-wrapper
+        top auto
+        bottom 100%
+  
+  &--user-sidebar    
+    .lang-switcher__toggle-btn
+      justify-content start
+      width 100%
+      padding 10px 18px
+      border-radius 12px
+      color var(--light)
+      @extend .transition
+      
+      &::before
+        margin-right 12px
+        background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cg stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' clip-path='url(%23a)'%3E%3Cpath d='M10.001 18.333a8.333 8.333 0 1 0 0-16.666 8.333 8.333 0 0 0 0 16.666Z'/%3E%3Cpath d='M10.001 1.667a12.083 12.083 0 0 0 0 16.666 12.083 12.083 0 0 0 0-16.666ZM1.668 10h16.667'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h20v20H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+        
+      &::after
+        background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill='%23fff' d='M8 10 5 6h6l-3 4Z'/%3E%3C/svg%3E")
+      
+      &:hover
+        background var(--accent-light)
+    
+    .lang-switcher__list-wrapper
+      bottom 100%
+      width 100%
+    
+    .lang-switcher__list
+      padding 0
+      border none
+      background var(--accent)
+    
+    .lang-switcher__link
+      color var(--light)
+      
+      &:hover,
+      &--current
+        background var(--accent-light)
+    
+    &:hover
+      .lang-switcher__list-wrapper
+        opacity 0
+        visibility hidden
+    
+    &.lang-switcher--opened
+      .lang-switcher__list-wrapper
+        bottom 100%
+        
+      .lang-switcher__list-wrapper
+        opacity 1
+        visibility visible
+        
+
+.phpdebugbar
+  display none !important

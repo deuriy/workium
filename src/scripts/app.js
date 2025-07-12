@@ -903,4 +903,24 @@ $(() => {
     event.preventDefault();
   });
 
+  document.addEventListener('click', function (e) {
+    const langSwitcherToggleBtn = e.target.closest('.lang-switcher__toggle-btn');
+
+    if (!langSwitcherToggleBtn) return;
+
+    langSwitcherToggleBtn.closest('.lang-switcher').classList.toggle('lang-switcher--opened');
+  });
+
+  document.addEventListener('click', function (e) {
+    const isLangSwitcher = e.target.closest('.lang-switcher');
+
+    if (isLangSwitcher) return;
+
+    const openedLangSwitcher = document.querySelector('.lang-switcher--opened');
+
+    if (!openedLangSwitcher) return;
+
+    openedLangSwitcher.classList.remove('lang-switcher--opened');
+  });
+
 });
