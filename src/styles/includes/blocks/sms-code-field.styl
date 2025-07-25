@@ -1,0 +1,32 @@
+.sms-code-field
+  display grid
+  grid-auto-flow column
+  gap 8px
+  
+  &__input
+    width 52px
+    height 88px
+    border none
+    outline none
+    border-bottom 4px solid #DFE2E6
+    font-family var(--base-font)
+    font-weight 600
+    font-size 56px
+    text-align center
+    @extend .transition
+    
+    &::placeholder
+      color #DFE2E6
+      @extend .transition
+    
+    &:focus::placeholder
+      opacity 0
+    
+    &:not(:placeholder-shown)
+      border-bottom-color var(--info)
+    
+    &--error
+      border-bottom-color #F22451
+      
+      &:not(:placeholder-shown)
+        border-bottom-color #F22451

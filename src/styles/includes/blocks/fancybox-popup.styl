@@ -132,6 +132,17 @@
 	&__more-text
 		margin-top 10px
 	
+	&__additional-text
+		margin-top 72px
+		font-size 14px
+		line-height 1.714285 
+		text-align center
+		color #989DB2
+		
+	&__link
+		color var(--info)
+		text-decoration none
+	
 	&--wide
 		text-align center
 		
@@ -540,6 +551,55 @@
 			
 			& > p + p
 				margin-top 16px
+	
+	&--authorization
+		&.fancybox__content.fancybox-popup
+			@media $smPlus
+				padding 2rem
+	
+	&--password-recovery
+		&.fancybox__content.fancybox-popup
+			@media $smPlus
+				padding 2rem
+				
+		.fancybox-popup__title,
+		.fancybox-popup__text
+			text-align center
+
+		.fancybox-popup__title
+			padding-right 0
+			margin-bottom 24px
+			font-weight 600
+			color var(--accent)
+
+		.fancybox-popup__text
+			font-size 16px
+			line-height 1.625
+			color var(--text-color)
+	
+	&--sms-code
+		&.fancybox__content.fancybox-popup
+			@media $smPlus
+				padding 48px 32px 104px
+			
+		.fancybox-popup__img-wrapper
+			min-height 0
+			text-align center
+		
+		.fancybox-popup__title,
+		.fancybox-popup__text
+			text-align center
+			color var(--accent)
+		
+		.fancybox-popup__title
+			margin-bottom 4px
+			padding-right 0
+			font-weight 600
+			font-size 32px
+		
+		.fancybox-popup__text
+			font-size 14px
+    	line-height 1.71428571
 		
 	&.fancybox__content
 		button.f-button.is-close-btn

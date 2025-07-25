@@ -1,6 +1,9 @@
 import $ from "jquery";
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
+import Inputmask from "inputmask";
+
+console.log(Inputmask);
 // import noUiSlider from 'nouislider';
 
 var count = 200;
@@ -129,6 +132,8 @@ $(() => {
         if (currentFancybox) {
           currentFancybox.close();
         }
+
+        currentFancybox = fancybox;
 
       },
 
@@ -921,6 +926,38 @@ $(() => {
     if (!openedLangSwitcher) return;
 
     openedLangSwitcher.classList.remove('lang-switcher--opened');
+  });
+
+  document.querySelectorAll('.form-text--phone').forEach(phoneInput => {
+    console.log(phoneInput);
+
+    Inputmask({
+      mask: '+999 99 999 99 99',    // Маска с фиксированным числом цифр
+      placeholder: '',        // Подсказка - нули
+      showMaskOnHover: true,  // Маска не появляется только по наведению
+      showMaskOnFocus: true,  // Маска всегда отображается
+      clearMaskOnLostFocus: false,
+      autoUnmask: false,
+      insertMode: true,             // вставка по позиции
+      greedy: false                 // чтобы не обрезалась визуально
+    }).mask(phoneInput);
+  });
+
+  const smsInputs = document.querySelectorAll('.sms-code-field__input');
+  smsInputs.forEach((input, i) => {
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/\D/, '');
+      
+      if (input.value.length === 1 && i < smsInputs.length - 1) {
+        smsInputs[i + 1].focus();
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !input.value && i > 0) {
+        smsInputs[i - 1].focus();
+      }
+    });
   });
 
 });
