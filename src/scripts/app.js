@@ -3,7 +3,6 @@ import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
 import Inputmask from "inputmask";
 
-console.log(Inputmask);
 // import noUiSlider from 'nouislider';
 
 var count = 200;
@@ -947,7 +946,7 @@ $(() => {
   smsInputs.forEach((input, i) => {
     input.addEventListener('input', () => {
       input.value = input.value.replace(/\D/, '');
-      
+
       if (input.value.length === 1 && i < smsInputs.length - 1) {
         smsInputs[i + 1].focus();
       }
