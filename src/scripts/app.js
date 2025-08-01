@@ -96,11 +96,11 @@ $(() => {
 
   let currentFancybox = null;
 
-	Fancybox.bind("[data-fancybox]");
-	
-	Fancybox.bind(".fancybox-popup-toggle", {
-	  dragToClose: false,
-	  mainClass: 'fancybox--popup',
+  Fancybox.bind("[data-fancybox]");
+
+  Fancybox.bind(".fancybox-popup-toggle", {
+    dragToClose: false,
+    mainClass: 'fancybox--popup',
     placeFocusBack: false,
 
     on: {
@@ -149,12 +149,12 @@ $(() => {
     // tpl: {
     //   closeButton: '<button data-fancybox-close class="fancybox-close-button" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" id="Icons" viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 12 12A12.013 12.013 0 0 0 12 0Zm0 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1-10 10Z" fill="currentColor"/><path d="M16.707 7.293a1 1 0 0 0-1.414 0L12 10.586 8.707 7.293a1 1 0 1 0-1.414 1.414L10.586 12l-3.293 3.293a1 1 0 1 0 1.414 1.414L12 13.414l3.293 3.293a1 1 0 0 0 1.414-1.414L13.414 12l3.293-3.293a1 1 0 0 0 0-1.414Z" fill="currentColor"/></svg></button>'
     // }
-	});
+  });
 
   let showContactsTimer = null,
-      timeLeftTimer = null,
-      timeLeft = 7;
-  
+    timeLeftTimer = null,
+    timeLeft = 7;
+
   Fancybox.bind(".fancybox-wide-popup-toggle", {
     dragToClose: false,
     mainClass: 'fancybox--wide-popup',
@@ -238,7 +238,7 @@ $(() => {
               if (bonusType === 'fixed_payment_days') {
                 vacancyConditionsText = `А ще після того як ви ${workingPeriod} попрацюєте на цій вакансії (рахуються тільки робочі дні), ви отримаєте <strong>${rewardRange}</strong> від WORKIUM — як подяку за те, що обрали нас.`;
               } else {
-                vacancyConditionsText = `А ще — протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів' } ви отримуватимете по <strong>${rewardRange}</strong> за кожну годину від WORKIUM. Це наша щира подяка за те, що ви обрали нас!`;
+                vacancyConditionsText = `А ще — протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів'} ви отримуватимете по <strong>${rewardRange}</strong> за кожну годину від WORKIUM. Це наша щира подяка за те, що ви обрали нас!`;
               }
 
               break;
@@ -246,9 +246,9 @@ $(() => {
               if (bonusType === 'fixed_payment_days') {
                 vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми додатково виплатимо вам <strong>${rewardRange}</strong> після того, як ви попрацюєте ${workingPeriod}.`;
               } else {
-                vacancyConditionsText = `А ще — щоб подякувати вам за те, що ви обрали цю вакансію через WORKIUM, ми будемо нараховувати вам по <strong>${rewardRange}</strong> за кожну годину, яку ви відпрацюєте протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів' }.`;
+                vacancyConditionsText = `А ще — щоб подякувати вам за те, що ви обрали цю вакансію через WORKIUM, ми будемо нараховувати вам по <strong>${rewardRange}</strong> за кожну годину, яку ви відпрацюєте протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів'}.`;
               }
-              
+
               break;
           }
 
@@ -272,15 +272,15 @@ $(() => {
 
             $showContactsBtn.text('Показати контакти');
 
-            $showContactsBtn.click(function(e) {
+            $showContactsBtn.click(function (e) {
               $(this).parent().hide();
               $('#employment-smart-work-popup').find('.fancybox-popup__contact-box').show();
 
               let destination = $('#employment-contact-box').offset().top;
 
-              $('#employment-smart-work-popup').animate( {
+              $('#employment-smart-work-popup').animate({
                 scrollTop: destination
-              }, 500 );
+              }, 500);
 
               // Adding plus to phone number
               let $viberBtn = $('#employment-smart-work-popup .btn-purple--viber-order-service');
@@ -411,11 +411,11 @@ $(() => {
   // });
 
   // Select menu
-  $('.select-menu').click(function(e) {
+  $('.select-menu').click(function (e) {
     $(this).toggleClass('select-menu--opened');
   });
 
-  $(document).click(function(e) {
+  $(document).click(function (e) {
     let $selectMenuSelected = e.target.closest('.select-menu__selected');
     let $selectMenuDropdown = e.target.closest('.select-menu__dropdown');
 
@@ -428,8 +428,8 @@ $(() => {
   let $articleHeadings = $articleContent.children('h2');
 
   // // Article menu
-  $(window).on('scroll', function(e) {
-    $articleHeadings.each(function(index, el) {
+  $(window).on('scroll', function (e) {
+    $articleHeadings.each(function (index, el) {
       let rect = el.getBoundingClientRect();
       let rect2 = $articleContent[0].getBoundingClientRect();
 
@@ -508,7 +508,7 @@ $(() => {
   // articleHeadings.forEach(block => headingObserver.observe(block));
 
 
-  $('.user-profile-popup-link').click(function(e) {
+  $('.user-profile-popup-link').click(function (e) {
     let fancyboxSlide = Fancybox.getSlide();
 
     if (fancyboxSlide) {
@@ -572,7 +572,7 @@ $(() => {
     });
   });
 
-  $('.user-label--copy-partner-link').click(function(e) {
+  $('.user-label--copy-partner-link').click(function (e) {
     let $copyLinkInput = $($(this).attr('href'));
 
     copyText($copyLinkInput[0]);
@@ -585,14 +585,14 @@ $(() => {
     e.preventDefault();
   });
 
-  $('.authorization-form__password-toggle').click(function(e) {    
+  $('.authorization-form__password-toggle').click(function (e) {
     let $formText = $(this).parent().find('.form-text');
     $formText.get(0).type = $formText.get(0).type === 'password' ? 'text' : 'password';
 
     $(this).toggleClass('password-toggle--visible');
   });
 
-  $(document).on('click', '.tabs__list .tabs__item', function(event) {
+  $(document).on('click', '.tabs__list .tabs__item', function (event) {
     event.preventDefault();
 
     let index = $(this).index();
@@ -605,7 +605,7 @@ $(() => {
     parent.find('.tabs__content:eq(' + index + ')').show();
   });
 
-	// $('.tabs__list').each(function() {
+  // $('.tabs__list').each(function() {
   //   $(this).find('.tabs__item').each(function(i) {
   //     $(this).click(function(e) {
   //       e.preventDefault();
@@ -621,9 +621,9 @@ $(() => {
   // });
 
   // Show/hide dropdown block
-  $(document).on('click', '[data-dropdown-block-trigger]', function(e) {
+  $(document).on('click', '[data-dropdown-block-trigger]', function (e) {
     let blockID = $(this).attr('href').substring(1);
-    let $currentVisibleDropdownBlock = $(`.dropdown-block--visible:not([id="${blockID}"])`);    
+    let $currentVisibleDropdownBlock = $(`.dropdown-block--visible:not([id="${blockID}"])`);
     let $dropdownBlock = $($(this).attr('href'));
 
     if ($currentVisibleDropdownBlock.length) {
@@ -654,19 +654,19 @@ $(() => {
         top: `${coords.top - $dropdownBlock.outerHeight(true) - 6}px`
       });
     }
-    
+
     $dropdownBlock.toggleClass('dropdown-block--visible');
 
     e.preventDefault();
   });
 
-  $(document).on('click', '[data-dropdown-block-close]', function(event) {
+  $(document).on('click', '[data-dropdown-block-close]', function (event) {
     $(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
 
     event.preventDefault();
   });
 
-  $(document).click(function(e) {
+  $(document).click(function (e) {
     let $isDropdownBlock = $(e.target).closest('.dropdown-block--visible');
     // let $visibleDropdownBlock = $('.dropdown-block--visible');
     let $dropdownBlockTrigger = $(e.target).closest('[data-dropdown-block-trigger]');
@@ -676,7 +676,7 @@ $(() => {
     }
   });
 
-  $(document).on('click', '.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item, .contact-phones--affiliate-support .contact-phones__item', function(e) {
+  $(document).on('click', '.contact-phones--support .contact-phones__item, .contact-phones--mobile-support .contact-phones__item, .contact-phones--order-service .contact-phones__item, .contact-phones--affiliate-support .contact-phones__item', function (e) {
     // if ($(window).width() < 768 && $(this).closest('.contact-phones--order-service')) return;
 
     if (($(window).width() >= 768 && e.target.closest('.phone')) || e.target.closest('.contact-phones__copy-btn')) {
@@ -695,10 +695,10 @@ $(() => {
       }, 1500);
 
       e.preventDefault();
-    }    
+    }
   });
 
-  $('.fb-group__copy-btn').click(function(e) {
+  $('.fb-group__copy-btn').click(function (e) {
     let $groupLink = $(this).prev('.fb-group__link');
 
     $groupLink.after(`<input type="text" class="fb-group__url" value="${$groupLink.attr('href')}" />`);
@@ -727,7 +727,7 @@ $(() => {
   //   e.preventDefault();
   // });
 
-  $('.vacancy-info__specialization').click(function(e) {
+  $('.vacancy-info__specialization').click(function (e) {
     $(this).toggleClass('vacancy-info__specialization--truncated');
 
     e.preventDefault();
@@ -744,7 +744,7 @@ $(() => {
     emptyFill: "#333742"
   });
 
-  $('.quote__close-btn').click(function(e) {
+  $('.quote__close-btn').click(function (e) {
     let $quote = $(this).closest('.quote');
     $quote.slideUp();
 
@@ -755,7 +755,7 @@ $(() => {
       $userSidebar.removeClass('user-sidebar--quote-shown');
       $userAvatarLink.removeClass('user-sidebar__user-avatar-link--quote-shown');
 
-      setCookie('hideProfileQuote', 'yes', {'max-age': 3153600000});
+      setCookie('hideProfileQuote', 'yes', { 'max-age': 3153600000 });
     }
   });
 
@@ -772,7 +772,7 @@ $(() => {
   //   }, 300);
   // });
 
-  $(document).on('mouseover', '[data-tooltip]', function(event) {
+  $(document).on('mouseover', '[data-tooltip]', function (event) {
     let $tooltip = $(this).find('.tooltip');
     $tooltip.addClass('tooltip--visible');
 
@@ -787,29 +787,29 @@ $(() => {
     // }
   });
 
-  $(document).on('mouseout', '[data-tooltip]', function(event) {
+  $(document).on('mouseout', '[data-tooltip]', function (event) {
     let $tooltip = $(this).find('.tooltip');
     $tooltip.removeClass('tooltip--visible');
   });
 
   // Article chapters
-  $('.article-chapters__title').click(function(e) {
+  $('.article-chapters__title').click(function (e) {
     let $articleChapters = $(this).closest('.article-chapters');
 
     $articleChapters.toggleClass('article-chapters--collapsed');
     $articleChapters.find('.article-chapters__list').slideToggle();
   });
 
-  $('.article-chapters__link[href*="#"]').click(function(e) {
+  $('.article-chapters__link[href*="#"]').click(function (e) {
     let elementClick = $(this).attr("href");
     let $heading = elementClick.substr(elementClick.indexOf("#"));
     let destination = $($heading).offset().top;
     let scrollTop = destination - $('.mobile-header').outerHeight();
     let $container = $(window).width() < 768 ? $('.wrapper') : $('html, body');
 
-    $container.animate( {
+    $container.animate({
       scrollTop: scrollTop
-    }, 500 );
+    }, 500);
 
     return false;
   });
@@ -817,7 +817,7 @@ $(() => {
   function getLineCount(element) {
     const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
     const elementHeight = element.clientHeight;
-    
+
     return Math.round(elementHeight / lineHeight);
   }
 
@@ -836,12 +836,12 @@ $(() => {
     }
   });
 
-  document.addEventListener("employerAdded", function(event) {
+  document.addEventListener("employerAdded", function (event) {
     Fancybox.close();
     Fancybox.show([{ src: "#add-employer-success-popup", type: "inline" }]);
   });
 
-  $('.authorization-form__socbtns-item .social-btn').click(function(event) {
+  $('.authorization-form__socbtns-item .social-btn').click(function (event) {
     let $socBtnsList = $(this).closest('.authorization-form__socbtns-list');
     let $preloaderWrapper = $socBtnsList.next('.authorization-form__preloader-wrapper');
 
@@ -858,7 +858,7 @@ $(() => {
     e.preventDefault();
   });
 
-  function toggleMoreLink (link) {
+  function toggleMoreLink(link) {
     const targetElem = document.getElementById(link.dataset.targetId);
 
     if (!targetElem) return;
@@ -900,7 +900,7 @@ $(() => {
     fancyboxSharePopup.querySelector('.fancybox-popup__auth-btns').style.display = '';
   });
 
-  $('.accordion-panel__title').click(function(event) {
+  $('.accordion-panel__title').click(function (event) {
     $(this).parent().toggleClass('accordion-panel--opened');
     $(this).next('.accordion-panel__body').slideToggle('fast');
 
@@ -936,9 +936,10 @@ $(() => {
       showMaskOnHover: true,  // Маска не появляется только по наведению
       showMaskOnFocus: true,  // Маска всегда отображается
       clearMaskOnLostFocus: false,
-      autoUnmask: false,
+      autoUnmask: true,
       insertMode: true,             // вставка по позиции
-      greedy: false                 // чтобы не обрезалась визуально
+      greedy: false,                 // чтобы не обрезалась визуально
+      removeMaskOnSubmit: true
     }).mask(phoneInput);
   });
 
