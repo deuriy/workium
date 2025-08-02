@@ -928,8 +928,6 @@ $(() => {
   });
 
   document.querySelectorAll('.form-text--phone').forEach(phoneInput => {
-    console.log(phoneInput);
-
     Inputmask({
       mask: '+999 99 999 99 99',    // Маска с фиксированным числом цифр
       placeholder: '',        // Подсказка - нули
