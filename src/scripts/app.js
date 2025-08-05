@@ -941,20 +941,37 @@ $(() => {
     }).mask(phoneInput);
   });
 
-  const smsInputs = document.querySelectorAll('.sms-code-field__input');
-  smsInputs.forEach((input, i) => {
-    input.addEventListener('input', () => {
-      input.value = input.value.replace(/\D/, '');
+  const smsCodeFields = document.querySelectorAll('.sms-code-field');
+  smsCodeFields.forEach(smsField => {
+    const smsInputs = smsField.querySelectorAll('.sms-code-field__input');
+    smsInputs.forEach((input, i) => {
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/, '');
 
-      if (input.value.length === 1 && i < smsInputs.length - 1) {
-        smsInputs[i + 1].focus();
-      }
-    });
+        if (input.value.length === 1 && i < smsInputs.length - 1) {
+          smsInputs[i + 1].focus();
+        }
+      });
 
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !input.value && i > 0) {
-        smsInputs[i - 1].focus();
-      }
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && i > 0) {
+          smsInputs[i - 1].focus();
+        }
+      });
+
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+        const digits = pasteData.replace(/\D/g, '').split('');
+
+        for (let j = 0; j < smsInputs.length; j++) {
+          smsInputs[j].value = digits[j] || '';
+        }
+
+        const firstEmpty = [...smsInputs].findIndex(input => !input.value);
+        const nextIndex = firstEmpty === -1 ? smsInputs.length - 1 : firstEmpty;
+        smsInputs[nextIndex].focus();
+      });
     });
   });
 
