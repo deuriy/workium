@@ -307,21 +307,9 @@ $(() => {
           $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
           $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
         }
-
-        // console.log('fancybox');
-        // console.log(fancybox);
-        // console.log('slide');
-        // console.log(slide);
-
-        // if (slide.src.includes("#book-vacancy-popup")) {
-        //   alert('Yes');
-        // }
       },
 
       close: (fancybox, slide) => {
-        // console.log('Close!!');
-
-        // console.log(fancybox, slide);
 
         // if (!slide.srcElement.includes("#book-vacancy-list-popup") && !slide.srcElement.includes("#consult-vacancies-list-popup")) return;
 
@@ -341,9 +329,6 @@ $(() => {
         // // let variantLabel = promoBlock.dataset.variantLabel;
         // // const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
         // // const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
-
-        // // console.log('variantLabel');
-        // // console.log(variantLabel);
 
         // const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
         // const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
@@ -929,14 +914,14 @@ $(() => {
 
   document.querySelectorAll('.form-text--phone').forEach(phoneInput => {
     Inputmask({
-      mask: '+999 99 999 99 99',    // Маска с фиксированным числом цифр
-      placeholder: '',        // Подсказка - нули
-      showMaskOnHover: true,  // Маска не появляется только по наведению
-      showMaskOnFocus: true,  // Маска всегда отображается
+      mask: '+999 99 999 99 99',
+      placeholder: '',
+      showMaskOnHover: true,
+      showMaskOnFocus: true,
       clearMaskOnLostFocus: false,
       autoUnmask: true,
-      insertMode: true,             // вставка по позиции
-      greedy: false,                 // чтобы не обрезалась визуально
+      insertMode: true,
+      greedy: false,
       removeMaskOnSubmit: true
     }).mask(phoneInput);
   });
@@ -975,4 +960,22 @@ $(() => {
     });
   });
 
+  document.addEventListener('click', function (e) {
+    const closeLangBlockBtn = e.target.closest('[data-close-lang-block]');
+
+    if (!closeLangBlockBtn) return;
+
+    const langBlock = closeLangBlockBtn.closest('.lang-sticky-block');
+
+    if (!langBlock) return;
+
+    langBlock.classList.add('lang-sticky-block--invisible');
+    const cookieName = langBlock.dataset.cookieName;
+
+    if (cookieName) {
+      setCookie(cookieName, 'yes', { 'max-age': 3153600000 });
+    }
+
+    e.preventDefault();
+  });
 });
