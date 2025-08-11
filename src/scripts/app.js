@@ -1,5 +1,4 @@
 import $ from "jquery";
-import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
 import Inputmask from "inputmask";
 
@@ -926,38 +925,53 @@ $(() => {
     }).mask(phoneInput);
   });
 
-  const smsCodeFields = document.querySelectorAll('.sms-code-field');
-  smsCodeFields.forEach(smsField => {
-    const smsInputs = smsField.querySelectorAll('.sms-code-field__input');
-    smsInputs.forEach((input, i) => {
-      input.addEventListener('input', () => {
-        input.value = input.value.replace(/\D/, '');
 
-        if (input.value.length === 1 && i < smsInputs.length - 1) {
-          smsInputs[i + 1].focus();
-        }
-      });
+  document.addEventListener('input', (e) => {
+    const input = e.target.closest('.sms-code-field__input');
 
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !input.value && i > 0) {
-          smsInputs[i - 1].focus();
-        }
-      });
+    if (!input) return;
 
-      input.addEventListener('paste', (e) => {
-        e.preventDefault();
-        const pasteData = (e.clipboardData || window.clipboardData).getData('text');
-        const digits = pasteData.replace(/\D/g, '').split('');
+    input.value = input.value.replace(/\D/, '');
+    const smsInputs = [...input.parentNode.children];
 
-        for (let j = 0; j < smsInputs.length; j++) {
-          smsInputs[j].value = digits[j] || '';
-        }
+    const i = smsInputs.indexOf(input);
 
-        const firstEmpty = [...smsInputs].findIndex(input => !input.value);
-        const nextIndex = firstEmpty === -1 ? smsInputs.length - 1 : firstEmpty;
-        smsInputs[nextIndex].focus();
-      });
-    });
+    if (input.value.length === 1 && i < smsInputs.length - 1) {
+      smsInputs[i + 1].focus();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const input = e.target.closest('.sms-code-field__input');
+
+    if (!input) return;
+
+    const smsInputs = [...input.parentNode.children];
+    const i = smsInputs.indexOf(input);
+
+    if (e.key === 'Backspace' && !input.value && i > 0) {
+      smsInputs[i - 1].focus();
+    }
+  });
+
+  document.addEventListener('paste', (e) => {
+    const input = e.target.closest('.sms-code-field__input');
+
+    if (!input) return;
+    
+    const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+    const digits = pasteData.replace(/\D/g, '').split('');
+    const smsInputs = input.parentNode.querySelectorAll('.sms-code-field__input');
+
+    for (let j = 0; j < smsInputs.length; j++) {
+      smsInputs[j].value = digits[j] || '';
+    }
+
+    const firstEmpty = [...smsInputs].findIndex(input => !input.value);
+    const nextIndex = firstEmpty === -1 ? smsInputs.length - 1 : firstEmpty;
+    smsInputs[nextIndex].focus();
+
+    e.preventDefault();
   });
 
   document.addEventListener('click', function (e) {
