@@ -80,3 +80,18 @@
 	&--vacancy-card-more-expanded
 		&::after
 			transform rotate(180deg)
+	
+	&--more
+		display inline-grid
+		grid-auto-flow column
+		color var(--info)
+		font-weight 500
+		font-size 15px
+		line-height 1.46667
+
+		&::after
+			content ''
+			width 16px
+			height 16px
+			margin-top 2px
+			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Cpath stroke='%235340FF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m4 7 4 4 4-4'/%3E%3C/svg%3E") center no-repeat

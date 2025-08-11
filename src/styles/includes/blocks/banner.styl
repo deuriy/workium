@@ -139,12 +139,19 @@
 		padding 31px 41px 25px 26px
 		
 		@media $xs
-			column-gap 12px
+			grid-template-columns 100%
+			gap 16px
 			align-items center
+			padding 16px
 		
 		.banner__img-wrapper
 			@media $xs
 				width auto
+		
+		.banner__title
+			@media $xs
+				font-size 16px
+				line-height 1.5
 		
 		.banner__text
 			line-height normal
@@ -155,3 +162,12 @@
 				
 				@media $xs
 					margin-top 12px
+		
+		.banner__more-link
+			@media $xs
+				margin-left 2px
+		
+		.banner__btns
+			@media $xs
+				grid-column auto
+				margin-top 0
