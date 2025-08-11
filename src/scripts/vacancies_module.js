@@ -1466,7 +1466,7 @@ $(() => {
   });
 
   $('.banner__more-link').click(function(event) {
-    $(this).parent().next('.banner__text').toggleClass('hidden-xs');
+    $(this).closest('.banner__title').next('.banner__text').toggleClass('hidden-xs');
     $(this).hide();
 
     event.preventDefault();
