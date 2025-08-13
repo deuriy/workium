@@ -16,7 +16,7 @@ function copyText(input) {
   document.execCommand("copy");
 }
 
-function copyVacancyText (isMultiVacancy = true) {
+function copyVacancyText(isMultiVacancy = true) {
   let $vacancyTextWrapper = $('.vacancy-card__text-wrapper');
   let vacancyTitle = $vacancyTextWrapper.find('.vacancy-card__title').text().trim();
   let vacancyText = $vacancyTextWrapper.find('.vacancy-card__text').text().trim();
@@ -40,7 +40,7 @@ function copyVacancyText (isMultiVacancy = true) {
   $vacancyCardTextarea.remove();
 }
 
-function toggleClearFilterButtons () {
+function toggleClearFilterButtons() {
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
@@ -69,11 +69,11 @@ function toggleClearFilterButtons () {
   }
 }
 
-function setVisibilitySelectedMoreItem (selectedItemsLength) {
+function setVisibilitySelectedMoreItem(selectedItemsLength) {
   let isMobile = $(window).width() < 576;
   let visibleCount = isMobile ? 7 : 11;
 
-  $('.selected-items').each(function(index, selectedItemsWrapper) {
+  $('.selected-items').each(function (index, selectedItemsWrapper) {
     let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
     let moreItemsCount = selectedItemsLength - visibleCount;
 
@@ -87,10 +87,10 @@ function setVisibilitySelectedMoreItem (selectedItemsLength) {
   });
 }
 
-function checkDependentFilters () {
+function checkDependentFilters() {
   let $dependentFilters = $('[data-parent-filter-id]');
 
-  $dependentFilters.each(function(index, el) {
+  $dependentFilters.each(function (index, el) {
     let parentFilterId = $(el).data('parent-filter-id')
     let parentFilterItemId = $(el).data('parent-filter-item-id');
 
@@ -111,7 +111,7 @@ function checkDependentFilters () {
   });
 }
 
-function resetRangeSlider (rangeSlider) {
+function resetRangeSlider(rangeSlider) {
   if (rangeSlider.classList.contains('range-slider--single')) {
     let min = rangeSlider.dataset.min;
 
@@ -154,7 +154,7 @@ function resetRangeSlider (rangeSlider) {
   }
 }
 
-function clearTagRelatedFields ($selectedItem) {
+function clearTagRelatedFields($selectedItem) {
   let $selectedRadio = null;
 
   let name = $selectedItem.data('name');
@@ -183,7 +183,7 @@ function clearTagRelatedFields ($selectedItem) {
         break;
       case 'range':
         let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
-        $rangeSlider.each(function(index, el) {
+        $rangeSlider.each(function (index, el) {
           resetRangeSlider(el);
         });
 
@@ -213,26 +213,26 @@ function clearTagRelatedFields ($selectedItem) {
   // checkDefaultValue();
 }
 
-function resetAgeSwitch () {
-  let $ageInput = $('input[name="vik"]');
-  let $ageInputFrom = $('input[name="vik_from"]');
-  let $ageInputTo = $('input[name="vik_to"]');
-  let $ageSlider = $('.range-slider[data-sync-field-ids="vik"]');
-  let $ageRangeSlider = $('.range-slider[data-sync-from-field-ids="vik_from"]');
+// function resetAgeSwitch () {
+//   let $ageInput = $('input[name="vik"]');
+//   let $ageInputFrom = $('input[name="vik_from"]');
+//   let $ageInputTo = $('input[name="vik_to"]');
+//   let $ageSlider = $('.range-slider[data-sync-field-ids="vik"]');
+//   let $ageRangeSlider = $('.range-slider[data-sync-from-field-ids="vik_from"]');
 
-  $ageSwitch.prop('checked', false).trigger('change');
+//   $ageSwitch.prop('checked', false).trigger('change');
 
-  $ageInput.val($ageInput.attr('min'));
-  $ageInputFrom.val($ageInputFrom.attr('min'));
-  $ageInputTo.val($ageInputTo.attr('max'));
+//   $ageInput.val($ageInput.attr('min'));
+//   $ageInputFrom.val($ageInputFrom.attr('min'));
+//   $ageInputTo.val($ageInputTo.attr('max'));
 
-  $ageSlider[0].noUiSlider.set($ageInput.attr('min'));
-  $ageRangeSlider[0].noUiSlider.set([$ageInputFrom.attr('min'), $ageInputTo.attr('max')]);
-}
+//   $ageSlider[0].noUiSlider.set($ageInput.attr('min'));
+//   $ageRangeSlider[0].noUiSlider.set([$ageInputFrom.attr('min'), $ageInputTo.attr('max')]);
+// }
 
-function undoChangesToAdditionalFilters () {
+function undoChangesToAdditionalFilters() {
   let $checkboxesAndRadio = $('.additional-filters').find('.checkbox__input, .radiobtn__input');
-  $checkboxesAndRadio.each(function(index, el) {
+  $checkboxesAndRadio.each(function (index, el) {
     let type = $(el).attr('type');
     let name = $(el).attr('name');
     let value = $(el).attr('value');
@@ -248,7 +248,7 @@ function undoChangesToAdditionalFilters () {
     }
   });
 
-  $(`.range-slider--range`).each(function(index, el) {
+  $(`.range-slider--range`).each(function (index, el) {
     // resetRangeSlider(el);
     let name = $(el).attr('data-name');
     let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
@@ -272,7 +272,7 @@ function undoChangesToAdditionalFilters () {
   }
 }
 
-function clearFilter () {
+function clearFilter() {
   let $searchInput = $('[data-search-input]');
   let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
   // let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
@@ -287,14 +287,14 @@ function clearFilter () {
 
   $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
 
-  $filterSelects.each(function(index, el) {
+  $filterSelects.each(function (index, el) {
     $(el).val('');
     $(el).find('option[selected]').removeAttr('selected');
     $(el).trigger('change', 'fromCode');
   });
 
   let $rangeSlider = $(`.range-slider`);
-  $rangeSlider.each(function(index, el) {
+  $rangeSlider.each(function (index, el) {
     resetRangeSlider(el);
   });
 
@@ -320,41 +320,41 @@ function clearFilter () {
   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
 }
 
-function removeItemFromArray (array, value) {
-  let index = array.indexOf(value);
+// function removeItemFromArray (array, value) {
+//   let index = array.indexOf(value);
 
-  if (index > -1) {
-    array.splice(index, 1);
-  }
+//   if (index > -1) {
+//     array.splice(index, 1);
+//   }
 
-  return array;
-}
+//   return array;
+// }
 
-function findFilterTagByValue (name, value) {
+function findFilterTagByValue(name, value) {
   let $container = $('.selected-items__list');
   let $selectedItem = $container.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
 
   return $selectedItem;
 }
 
-function clearTextField ($input) {
+function clearTextField($input) {
   $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
   $input.parent().find('[data-clear-search-input]').hide();
 }
 
-function removeFilterTag (type, name, value) {
-  let $selectedItem;
+// function removeFilterTag (type, name, value) {
+//   let $selectedItem;
 
-  if (['range', 'textfield'].includes(type)) {
-    $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-  } else if (['checkbox', 'radio'].includes(type)) {
-    $selectedItem = findFilterTagByValue(name, value);
-  }
+//   if (['range', 'textfield'].includes(type)) {
+//     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+//   } else if (['checkbox', 'radio'].includes(type)) {
+//     $selectedItem = findFilterTagByValue(name, value);
+//   }
 
-  $selectedItem.remove();
-}
+//   $selectedItem.remove();
+// }
 
-function createOrUpdateTag (type, name, value, labelText) {
+function createOrUpdateTag(type, name, value, labelText) {
   let $container = $('.selected-items__list');
   let $selectedItem = findFilterTagByValue(name, value);
 
@@ -384,7 +384,7 @@ function createOrUpdateTag (type, name, value, labelText) {
   $container.find('.selected-items__more-item').before(htmlStr);
 }
 
-function changeCaseOfAgeLabel (age) {
+function changeCaseOfAgeLabel(age) {
   if (isNaN(age)) return false;
 
   let result = 'років';
@@ -398,7 +398,7 @@ function changeCaseOfAgeLabel (age) {
   return result;
 }
 
-function changeCaseOfDaysLabel (days) {
+function changeCaseOfDaysLabel(days) {
   if (isNaN(days)) return false;
 
   let result = 'днів';
@@ -454,7 +454,7 @@ $(() => {
   let currentSelectedCitiesIdx = [];
   let $filterSelects = $();
 
-  $('.filter-select').each(function(index, el) {
+  $('.filter-select').each(function (index, el) {
     if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
       let $item = $(el).select2({
         dropdownCssClass: ':all:',
@@ -468,7 +468,7 @@ $(() => {
     }
   });
 
-  $filterSelects.each(function(index, el) {
+  $filterSelects.each(function (index, el) {
     let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
     let name = $(el).attr('name');
     let value = $(el).select2('val');
@@ -523,7 +523,7 @@ $(() => {
   });
 
 
-  $(document).on('click', '.select-toggle', function(e) {
+  $(document).on('click', '.select-toggle', function (e) {
     let $targetElem = $($(this).attr('href'));
 
     setTimeout(() => {
@@ -543,7 +543,7 @@ $(() => {
   });
 
 
-  $('.filter-tag').click(function(event) {
+  $('.filter-tag').click(function (event) {
     $(this).toggleClass('filter-tag--selected');
 
     event.preventDefault();
@@ -576,21 +576,21 @@ $(() => {
   }
 
   // Removing selected items
-  $(document).on('click', '.selected-item__remove-link', function(event) {
+  $(document).on('click', '.selected-item__remove-link', function (event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
     clearTagRelatedFields($selectedItemParent);
 
     event.preventDefault();
   });
 
-  $('.filter .form-text:not([type="search"])').on('input', function(e) {
+  $('.filter .form-text:not([type="search"])').on('input', function (e) {
     setTimeout(() => {
       toggleClearFilterButtons();
     });
   });
 
   // Search in filter
-  $('input[name="search_filter"]').on('input', function(event) {
+  $('input[name="search_filter"]').on('input', function (event) {
     let searchValue = $(this).val().toLowerCase().trim();
     let $additionalFilters = $(this).closest('.additional-filters');
     let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range');
@@ -602,7 +602,7 @@ $(() => {
       $clearSearchBtn.hide();
     }
 
-    $additionalFiltersGroups.each( (index, group) => {
+    $additionalFiltersGroups.each((index, group) => {
       if ($(group).hasClass('checkboxes-group') || $(group).hasClass('radiobtns-group')) {
         let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
         let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label')).map(label => {
@@ -623,18 +623,18 @@ $(() => {
           $(group).addClass('hidden');
         }
       }
-      
+
     });
   });
 
-  $('.additional-filters__clear-search-btn').click(function(event) {
+  $('.additional-filters__clear-search-btn').click(function (event) {
     $(this).hide();
 
     $(this).siblings('.form-text--filter-search').val('').trigger('input').focus();
   });
 
   // Adding selected checkboxes/radio buttons
-  $('.additional-filters').find('.checkbox__input, .radiobtn__input').change(function(event) {
+  $('.additional-filters').find('.checkbox__input, .radiobtn__input').change(function (event) {
     let name = $(this).attr('name');
     let value = $(this).val();
     let labelText = $(this).parent().find('label').text();
@@ -671,9 +671,10 @@ $(() => {
     toggleClearFilterButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();
+    setVacanciesCount();
   });
 
-  $('.selected-items__more-btn').click(function(event) {
+  $('.selected-items__more-btn').click(function (event) {
     let isMobile = $(window).width() < 576;
     let visibleClass = isMobile ? 'selected-items--expanded-mob' : 'selected-items--expanded';
     let $selectedItems = $(this).closest('.selected-items');
@@ -690,7 +691,22 @@ $(() => {
 
   });
 
-  function updateFilterUrl (changedAdditionalFilters = false) {
+  function setVacanciesCount() {
+    $.ajax({
+      url: `/api/v1/vacancies-count/${getFilterUrl()}`,
+
+      success: function (data) {
+        console.log(data.total);
+        $('.additional-filters__submit-btn-count').text(data.total);
+      },
+
+      error: function (data) {
+        console.error(data);
+      }
+    });
+  }
+
+  function getFilterUrl(changedAdditionalFilters = false) {
     let isMobile = $(window).width() < 576;
     let urlParamsArr = [];
     let requestParamsArr = [];
@@ -699,16 +715,16 @@ $(() => {
 
     // Get url params
     let selectedCountry = '',
-        selectedCitiesSlugs = [];
+      selectedCitiesSlugs = [];
 
     if (isMobile) {
       selectedCountry = $('.filter__countries-select--mobile').val();
-      selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function(index, input) {
+      selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function (index, input) {
         return $(input).attr('data-seo-slug');
       });
     } else {
       selectedCountry = $('.filter__countries-select--desktop').val();
-      selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function(index, option) {
+      selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function (index, option) {
         return $(option).attr('data-seo-slug');
       });
     }
@@ -722,14 +738,14 @@ $(() => {
     urlParamsArr.push(selectedCities);
 
     let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:not([data-exclude-field]):checked');
-    $selectedSegmentCheckboxes.each(function(index, el) {
+    $selectedSegmentCheckboxes.each(function (index, el) {
       if (el.value) {
         urlParamsArr.push(el.value);
       }
     });
 
     let $selectedSegmentRadioBtns = $('.additional-filters .radiobtn__input[data-segment]:not([data-exclude-field]):checked');
-    $selectedSegmentRadioBtns.each(function(index, el) {
+    $selectedSegmentRadioBtns.each(function (index, el) {
       if (el.value) {
         urlParamsArr.push(el.value);
       }
@@ -744,21 +760,21 @@ $(() => {
     }
 
     let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):not([data-exclude-field]):checked');
-    $selectedCheckboxes.each(function(index, el) {
+    $selectedCheckboxes.each(function (index, el) {
       if (el.value) {
         requestParamsArr.push(`${el.name}=${el.value}`);
       }
     });
 
     let $selectedRadioBtns = $('.additional-filters .radiobtn__input:not([data-segment]):not([data-exclude-field]):checked');
-    $selectedRadioBtns.each(function(index, el) {
+    $selectedRadioBtns.each(function (index, el) {
       if (el.value) {
         requestParamsArr.push(`${el.name}=${el.value}`);
       }
     });
 
     let $sliders = $('.additional-filters .range-slider--single');
-    $sliders.each(function(index, el) {
+    $sliders.each(function (index, el) {
       let value = el.noUiSlider.get();
       let rangeValues = el.noUiSlider.options.range;
       let name = el.dataset.name;
@@ -773,7 +789,7 @@ $(() => {
       }
     });
 
-    $('.additional-filters .range-slider--range').each(function(index, el) {
+    $('.additional-filters .range-slider--range').each(function (index, el) {
       let values = el.noUiSlider.get();
       let rangeValues = el.noUiSlider.options.range;
       let name = el.dataset.name;
@@ -791,7 +807,7 @@ $(() => {
     let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
     console.log(`selectedCandidatesType: ${selectedCandidatesType}`);
 
-    let selectedCandidatesSlugs = selectedCandidatesType.map(function(value, index) {
+    let selectedCandidatesSlugs = selectedCandidatesType.map(function (value, index) {
       return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
     });
 
@@ -804,7 +820,7 @@ $(() => {
     console.log(`selectedVacanciesRelevance: ${selectedVacanciesRelevance}`);
     // console.log($('.filter__relevance-select option:selected'));
 
-    let selectedVacanciesRelevancesSlugs = selectedVacanciesRelevance.map(function(value, index) {
+    let selectedVacanciesRelevancesSlugs = selectedVacanciesRelevance.map(function (value, index) {
       return $(`select[name="aktualnіst[]"] option[value="${value}"]`).attr('data-seo-slug');
     });
 
@@ -833,6 +849,11 @@ $(() => {
       requestParams = '/?' + requestParams;
     }
 
+    return urlParams + requestParams;
+  }
+
+  function updateFilterUrl(changedAdditionalFilters = false) {
+    let isMobile = $(window).width() < 576;
     let $filterSearchBtn = $('.filter__search-btn');
     let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
     let $additionalFiltersSubmitBtn = $('.additional-filters__submit-btn');
@@ -857,34 +878,34 @@ $(() => {
     // }, 500);
 
     // setTimeout(() => {
-      // window.location.href = `/vacancies/${urlParams}${requestParams}`;
+    // window.location.href = `/vacancies/${urlParams}${requestParams}`;
 
-    $.get(`/vacancies`).done(function() {
-      window.location.href = `/vacancies/${urlParams}${requestParams}`;
+    $.get(`/vacancies`).done(function () {
+      window.location.href = `/vacancies/${getFilterUrl()}`;
     });
 
-      // console.log(`/vacancies/${urlParams}${requestParams}`);
+    // console.log(`/vacancies/${urlParams}${requestParams}`);
     // });
   }
 
   // Creating filter URL
-  $('form[name="vacancies_filter"]').on('submit', function(event) {
+  $('form[name="vacancies_filter"]').on('submit', function (event) {
     event.preventDefault();
 
     updateFilterUrl();
   });
 
-  function loadCitiesOfSelectedCountry (countryID) {
+  function loadCitiesOfSelectedCountry(countryID) {
     $.ajax({
       url: `https://workium.pl/api/v1/cities?country_id=${countryID}`,
 
-      success: function(data) {
+      success: function (data) {
         document.dispatchEvent(new CustomEvent("citiesLoaded", {
           detail: { data }
         }));
       },
 
-      error: function(data){
+      error: function (data) {
         console.error(data);
       }
     });
@@ -896,7 +917,7 @@ $(() => {
   }
 
   // Loading cities via AJAX
-  $('select[name="countries"]').on('change', function(event, call) {
+  $('select[name="countries"]').on('change', function (event, call) {
     let countryID = $(this).find(':selected').data('entity-id');
 
     loadCitiesOfSelectedCountry(countryID);
@@ -935,12 +956,12 @@ $(() => {
   // Dependent filters
   checkDependentFilters();
 
-  $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function(event) {
+  $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function (event) {
     let $parentElem = $(this).parent();
 
     if ($parentElem.hasClass('checkbox--expandable')) {
       let $checkboxes = $parentElem.next('.additional-filters__checkboxes-group').find('.checkbox__input');
-      
+
       if ($(this).is(':checked')) {
         $checkboxes.prop('checked', true);
       } else {
@@ -951,7 +972,7 @@ $(() => {
   });
 
   // Synchronized selects
-  $('select[data-sync-field]').on('change', function(event) {
+  $('select[data-sync-field]').on('change', function (event) {
     $(this).find('option').each((index, option) => {
       let syncFieldIDs = $(option).data('sync-field-ids');
 
@@ -973,7 +994,7 @@ $(() => {
             $selectedItem.remove();
           }
         }
-        
+
       });
     });
   });
@@ -1342,7 +1363,7 @@ $(() => {
   toggleClearFilterButtons();
 
   // Search input with close button
-  $('[data-search-input]').on('input', function(event) {
+  $('[data-search-input]').on('input', function (event) {
     let name = $(this).attr('name');
     let value = $(this).val();
     let $clearBtn = $(this).next('.filter__clear-search-btn');
@@ -1363,7 +1384,7 @@ $(() => {
 
   });
 
-  $('[data-clear-search-input]').on('click', function(event) {
+  $('[data-clear-search-input]').on('click', function (event) {
     let $input = $(this).prev();
     let name = $input.attr('name');
     let value = $input.val();
@@ -1393,7 +1414,7 @@ $(() => {
   setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);
 
   // Age switch
-  $ageSwitch.change(function(event) {
+  $ageSwitch.change(function (event) {
     let $filterElement = $(this).closest('.filter-element');
     let $singleSliderElement = $filterElement.find('.range-slider-element--single');
     let $rangeSliderElement = $filterElement.find('.range-slider-element--range');
@@ -1410,7 +1431,7 @@ $(() => {
     $ageSelectedItem.remove();
   });
 
-  $(document).on('click', '.vacancy-card__copy-btn', function(event) {
+  $(document).on('click', '.vacancy-card__copy-btn', function (event) {
     copyVacancyText(this.hasAttribute('data-multi-vacancy'));
 
     let defaultText = $(this).text();
@@ -1426,7 +1447,7 @@ $(() => {
     event.preventDefault();
   });
 
-  $(document).on('click', '.vacancy-card__copy-btn-mobile', function(event) {
+  $(document).on('click', '.vacancy-card__copy-btn-mobile', function (event) {
     copyVacancyText(this.hasAttribute('data-multi-vacancy'));
 
     let $tooltip = $(this).find('.btn-grey__tooltip');
@@ -1465,14 +1486,14 @@ $(() => {
 
   });
 
-  $('.banner__more-link').click(function(event) {
+  $('.banner__more-link').click(function (event) {
     $(this).closest('.banner__title').next('.banner__text').toggleClass('hidden-xs');
     $(this).hide();
 
     event.preventDefault();
   });
 
-  function setBonusForPromoBlocks (cashback, vacancyCard) {
+  function setBonusForPromoBlocks(cashback, vacancyCard) {
     let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
 
     if (!bookBtns.length) return;
@@ -1565,6 +1586,6 @@ $(() => {
   // $('[data-next-vacancies-page]').on('click', function(event) {
   //   let pageNumber = $('.pagination .page-item.active .page-link').text();
   // });
-  
-  
+
+
 });
