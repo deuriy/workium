@@ -51,3 +51,21 @@
     @media $xxs
       // grid-auto-columns 85.3vw
       gap 8px
+  
+  &__btns-list
+    display grid
+    grid-template-columns repeat(auto-fit, minmax(auto, 290px))
+    grid-auto-rows 52px
+    gap 12px
+    justify-content center
+    margin-top 40px
+    
+    @media $smMinus
+      margin-top 30px
+    
+    @media $xs
+      margin-top 20px
+    
+    @media $xxs
+      grid-template-columns 100%
+      margin-top 16px

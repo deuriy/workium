@@ -2,7 +2,10 @@
   position relative
   display grid
   grid-template-columns 100%
-  grid-template-rows repeat(4, auto) 1fr
+  // grid-template-rows repeat(4, auto) 1fr
+  grid-template-rows 1fr auto 1fr
+  gap 20px
+  // min-height 296px
   padding 24px
   border 1px solid #DFE1ED
   border-radius 16px
@@ -48,16 +51,27 @@
     
     @media $xxs
       margin-bottom 8px
+
+  &__salary-with-info
+    position relative
+    z-index 10
+    margin-left -6px
+			
+    @media $smPlus
+      margin-left -8px
   
   &__bottom
     display grid
     grid-template-columns repeat(2, auto)
     justify-content space-between
-    align-items start
+    align-items center
     gap 12px
     margin-top auto
   
   &--vacancies-page-style
+    .vacancy-block__title
+      margin-bottom auto
+
     @media $xs
       .vacancy-block__title,
       .vacancy-block__salary-per-month
@@ -77,25 +91,41 @@
         font-size 17px
         background #D4F6DA
         // background #F4F5FC
-        color #0F182A 
-  
-  &--vacancies-page-style2
-    @media $xs
-      .vacancy-block__title,
+        color #0F182A
+
+    @media $smPlus
       .vacancy-block__salary-per-month
         font-weight 700
-        font-size 19px
-      
-      .vacancy-block__title
-        font-size 18px
       
       .vacancy-block__salary-per-hour
-        margin-bottom 8px
+        margin-bottom 15px
         font-weight 700
-        font-size 14px
+        font-size 15px
+        line-height 1.6
       
       .vacancy-block__label
-        margin-bottom 4px
+        padding 4px 8px
         font-size 15px
+        line-height 1.6
+        background #eff8ed
+  
+  // &--vacancies-page-style2
+  //   @media $xs
+  //     .vacancy-block__title,
+  //     .vacancy-block__salary-per-month
+  //       font-weight 700
+  //       font-size 19px
+      
+  //     .vacancy-block__title
+  //       font-size 18px
+      
+  //     .vacancy-block__salary-per-hour
+  //       margin-bottom 8px
+  //       font-weight 700
+  //       font-size 14px
+      
+  //     .vacancy-block__label
+  //       margin-bottom 4px
+  //       font-size 15px
       
     

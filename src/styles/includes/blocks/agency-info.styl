@@ -18,9 +18,10 @@
       font-size 14px
   
   &--vacancy-block
-    grid-template-columns repeat(3, auto)
-    grid-template-areas "logo company-name rating" "logo work-place rating"
-    gap 0 8px
+    // grid-template-columns auto 1fr
+    grid-template-columns 38px 1fr
+    grid-template-areas "logo company-name" "logo work-place"
+    gap 2px 8px
     justify-content start
     
     .agency-info__company-logo
