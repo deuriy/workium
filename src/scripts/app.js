@@ -166,6 +166,11 @@ $(() => {
 
         currentFancybox = fancybox;
 
+        if (slide.src.includes('order-service-popup') || slide.src.includes('consult-service-popup')) {
+          $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
+          // $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
+        }
+
         if (!slide.src.includes("#book-vacancy-list-popup") && !slide.src.includes("#consult-vacancies-list-popup")) return;
 
         const promoBlocks = slide.triggerEl.closest('.promo-blocks');
@@ -302,9 +307,6 @@ $(() => {
 
             $('#employment-smart-work-popup .fancybox-popup__show-contacts-btn .btn-grey__time-left').text(timeLeft);
           }, 1000);
-        } else if (slide.src.includes('order-service-popup')) {
-          $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
-          $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
         }
       },
 
