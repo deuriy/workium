@@ -173,14 +173,18 @@ $(() => {
 
 		$(this).toggleClass('bookmark-icon--fill');
 
-		if ($(this).hasClass('bookmark-icon--with-label')) {
-			if ($(this).hasClass('bookmark-icon--fill')) {
-				$(this).text('Збережено');
-			} else {
-				$(this).text('Зберегти');
-			}
-		}
+		if (!$('.vacancy-card--full').length) return;
+
+		const $bookmarkIcons = $('[data-bookmark]');
+		let isFilled = $(this).hasClass('bookmark-icon--fill');
+
+		isFilled ? $bookmarkIcons.addClass('bookmark-icon--fill') : $bookmarkIcons.removeClass('bookmark-icon--fill');
+
+		$bookmarkIcons.filter('.bookmark-icon--with-label').each(function () {
+      $(this).text(isFilled ? 'Збережено' : 'Зберегти');
+    });
 	});
+	
 
 	$('.promo-block').hover(function() {
 		$(this).find('.more-link').addClass('more-link--hover more-link--full-width-hover');
