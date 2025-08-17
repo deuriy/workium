@@ -189,8 +189,8 @@ $(() => {
         const variantLabel = promoBlock.dataset.variantLabel;
         const workingPeriod = promoBlock.dataset.workingPeriod;
         const rewardRange = promoBlock.dataset.rewardRange;
-        const companyName = promoBlock.dataset.companyName;
-        const agencyName = promoBlock.dataset.agencyName;
+        // const companyName = promoBlock.dataset.companyName;
+        // const agencyName = promoBlock.dataset.agencyName;
         const agencyId = promoBlock.dataset.agencyId;
         const bonusType = promoBlock.dataset.bonusType;
         const rewardTerms = promoBlock.dataset.rewardTerms;
@@ -202,6 +202,7 @@ $(() => {
         const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
         const fancyBoxBookVacancyConditions = slide.contentEl.querySelector('.fancybox-popup__book-vacancy-conditions');
         const viberBtn = slide.contentEl.querySelector('[data-viber-url]');
+        const lang = document.documentElement.lang;
 
         if (fancyBoxVacancyTitle) {
           fancyBoxVacancyTitle.textContent = vacancyTitle;
@@ -224,10 +225,23 @@ $(() => {
 
           switch (slide.src) {
             case '#book-vacancy-list-popup':
-              hrefText = `Вітаю! Забронюйте мені, будь ласка, вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              if (lang === 'uk') {
+                hrefText = `Вітаю! Забронюйте мені, будь ласка, вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              } else if (lang === 'ru') {
+                hrefText = `Здравствуйте! Забронируйте мне, пожалуйста, вакансию "${vacancyTitle}" ${variantLabel}. ID вакансии: ${agencyId}`;
+              } else {
+                hrefText = `Hello! Please reserve the vacancy "${vacancyTitle}" ${variantLabel} for me. Vacancy ID: ${agencyId}`;
+              }
               break;
             case '#consult-vacancies-list-popup':
-              hrefText = `Вітаю! Хочу дізнатись більше деталей про вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              if (lang === 'uk') {
+                hrefText = `Вітаю! Хочу дізнатись більше деталей про вакансію "${vacancyTitle}" ${variantLabel}. ID вакансії: ${agencyId}`;
+              } else if (lang === 'ru') {
+                hrefText = `Здравствуйте! Хочу узнать больше деталей о вакансии "${vacancyTitle}" ${variantLabel}. ID вакансии: ${agencyId}`;
+              } else {
+                hrefText = `Hello! I would like to know more details about the vacancy "${vacancyTitle}" ${variantLabel}. Vacancy ID: ${agencyId}`;
+              }
+              
               break;
           }
 
@@ -240,17 +254,41 @@ $(() => {
           switch (slide.src) {
             case '#book-vacancy-list-popup':
               if (bonusType === 'fixed_payment_days') {
-                vacancyConditionsText = `А ще після того як ви ${workingPeriod} попрацюєте на цій вакансії (рахуються тільки робочі дні), ви отримаєте <strong>${rewardRange}</strong> від WORKIUM — як подяку за те, що обрали нас.`;
+                if (lang === 'uk') {
+                  vacancyConditionsText = `А ще після того як ви ${workingPeriod} попрацюєте на цій вакансії (рахуються тільки робочі дні), ви отримаєте <strong>${rewardRange}</strong> від WORKIUM — як подяку за те, що обрали нас.`;
+                } else if (lang === 'ru') {
+                  vacancyConditionsText = `А ещё после того, как вы ${workingPeriod} проработаете на этой вакансии (считаются только рабочие дни), вы получите <strong>${rewardRange}</strong> от WORKIUM — в знак благодарности за то, что выбрали нас.`;
+                } else {
+                  vacancyConditionsText = `And after you work for ${workingPeriod} in this position (only working days are counted), you will receive <strong>${rewardRange}</strong> from WORKIUM — as a thank you for choosing us.`;
+                }
               } else {
-                vacancyConditionsText = `А ще — протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів'} ви отримуватимете по <strong>${rewardRange}</strong> за кожну годину від WORKIUM. Це наша щира подяка за те, що ви обрали нас!`;
+                if (lang === 'uk') {
+                  vacancyConditionsText = `А ще — протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів'} ви отримуватимете по <strong>${rewardRange}</strong> за кожну годину від WORKIUM. Це наша щира подяка за те, що ви обрали нас!`;
+                } else if (lang === 'ru') {
+                  vacancyConditionsText = `А ещё — в течение первых ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' рабочих дней'} вы будете получать по <strong>${rewardRange}</strong> за каждый час от WORKIUM. Это наша искренняя благодарность за то, что вы выбрали нас!`;
+                } else {
+                  vacancyConditionsText = `And during the first ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' working days'} you will receive <strong>${rewardRange}</strong> for each hour from WORKIUM. This is our sincere gratitude for choosing us!`;
+                }
               }
 
               break;
             case '#consult-vacancies-list-popup':
               if (bonusType === 'fixed_payment_days') {
-                vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми додатково виплатимо вам <strong>${rewardRange}</strong> після того, як ви попрацюєте ${workingPeriod}.`;
+                if (lang === 'uk') {
+                  vacancyConditionsText = `А ще, звісно, як подяку за те, що ви обрали цю вакансію через WORKIUM, ми додатково виплатимо вам <strong>${rewardRange}</strong> після того, як ви попрацюєте ${workingPeriod}.`;
+                } else if (lang === 'ru') {
+                  vacancyConditionsText = `А ещё, конечно, в качестве благодарности за то, что вы выбрали эту вакансию через WORKIUM, мы дополнительно выплатим вам <strong>${rewardRange}</strong> после того, как вы проработаете ${workingPeriod}.`;
+                } else {
+                  vacancyConditionsText = `And of course, as a thank you for choosing this job through WORKIUM, we will additionally pay you <strong>${rewardRange}</strong> after you work for ${workingPeriod}.`;
+                }
               } else {
-                vacancyConditionsText = `А ще — щоб подякувати вам за те, що ви обрали цю вакансію через WORKIUM, ми будемо нараховувати вам по <strong>${rewardRange}</strong> за кожну годину, яку ви відпрацюєте протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів'}.`;
+                if (lang === 'uk') {
+                  vacancyConditionsText = `А ще — щоб подякувати вам за те, що ви обрали цю вакансію через WORKIUM, ми будемо нараховувати вам по <strong>${rewardRange}</strong> за кожну годину, яку ви відпрацюєте протягом перших ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' робочих днів'}.`;
+                } else if (lang === 'ru') {
+                  vacancyConditionsText = `А ещё — чтобы поблагодарить вас за то, что вы выбрали эту вакансию через WORKIUM, мы будем начислять вам по <strong>${rewardRange}</strong> за каждый час, который вы отработаете в течение первых ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' рабочих дней'}.`;
+                } else {
+                  vacancyConditionsText = `And also — to thank you for choosing this job through WORKIUM, we will credit you <strong>${rewardRange}</strong> for every hour you work during the first ${rewardTerms ? rewardTerms : parseInt(workingPeriod) + ' working days'}.`;
+                }
               }
 
               break;
@@ -310,7 +348,7 @@ $(() => {
         }
       },
 
-      close: (fancybox, slide) => {
+      // close: (fancybox, slide) => {
 
         // if (!slide.srcElement.includes("#book-vacancy-list-popup") && !slide.srcElement.includes("#consult-vacancies-list-popup")) return;
 
@@ -351,7 +389,7 @@ $(() => {
         // if (fancyBoxRewardRange) {
         //   fancyBoxRewardRange.textContent = rewardRange;
         // }
-      }
+      // }
     }
   });
 
