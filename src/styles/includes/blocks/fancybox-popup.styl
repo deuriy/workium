@@ -584,6 +584,37 @@
 			line-height 1.625
 			color var(--text-color)
 	
+	&--protect-personal-data
+		text-align center
+
+		&.fancybox__content.fancybox-popup
+			@media $smPlus
+				padding 2.1rem 2rem 2.7rem
+		
+		.fancybox-popup__img-wrapper
+			min-height 0
+			margin-bottom 34px
+		
+		.fancybox-popup__img
+			width 102px
+		
+		.fancybox-popup__title
+			margin-bottom 31px
+			padding-right 0
+			font-weight 600
+			font-size 32px
+		
+		.fancybox-popup__text
+			color #989db2
+			font-size 14px
+			line-height 1.7
+		
+		.fancybox-popup__additional-text
+			margin-bottom 32px
+			margin-top 35px
+			line-height 1.56
+			color #000
+	
 	&--sms-code
 		&.fancybox__content.fancybox-popup
 			@media $smPlus
