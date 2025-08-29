@@ -106,6 +106,10 @@
 	&__link
 		padding 10px
 		border-radius 8px
+		
+		&--outline
+			padding 13px 30px
+			box-shadow: 0 0 0 1px var(--info)
 	
 	&__submenu
 		position absolute
@@ -147,3 +151,8 @@
 		
 		&:hover
 			background #F4F4FB
+	
+	&--header
+		.main-menu__list
+			@media $smPlus
+				gap 12px 14px

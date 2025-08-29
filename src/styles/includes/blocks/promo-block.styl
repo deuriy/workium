@@ -303,12 +303,16 @@
 			@media $xs
 				margin-left -4px
 		
+		.promo-block__stretched-label,
 		.promo-block__stretched-link
 			position absolute
 			inset 0
 			
 			@media $smPlus
 				cursor pointer
+		
+		.promo-block__stretched-link
+			display none
 		
 		&:has(.checkbox__input:checked ~ .checkbox__label)
 			// outline 3px solid var(--black)
@@ -318,3 +322,6 @@
 			
 			&:hover
 				box-shadow none
+			
+			.promo-block__stretched-link
+				display block

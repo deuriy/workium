@@ -696,8 +696,24 @@ $(() => {
       url: `/api/v1/vacancies-count/${getFilterUrl()}`,
 
       success: function (data) {
-        console.log(data.total);
-        $('.additional-filters__submit-btn-count').text(data.total);
+        const translations = {
+          'show': {
+            'en': 'Show',
+            'ru': 'Показать',
+            'uk': 'Показати'
+          },
+
+          'no_vacancies': {
+            'en': 'No vacancies',
+            'ru': 'Нет вакансий',
+            'uk': 'Немає вакансій'
+          }
+        };
+        
+        const lang = document.documentElement.lang;
+        const btnText = data.total ? translations.show[lang] + ' ' + data.label : translations.no_vacancies[lang];
+
+        $('.additional-filters__submit-btn').html(btnText);
       },
 
       error: function (data) {
