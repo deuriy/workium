@@ -34,6 +34,25 @@
 				text-overflow ellipsis
 				overflow hidden
 		
+		&--dot,
+		&--dot-mobile
+			grid-template-columns 20px auto auto
+			justify-content start
+
+			&::after
+				content ""
+				align-self start
+				width 7px
+				height 7px
+				margin-top 4px
+				margin-left -6px
+				border-radius 50%
+				background #38CA16
+		
+		&--dot-mobile
+			&::after
+				margin-top 8px
+		
 		&--closed
 			position relative
 			
