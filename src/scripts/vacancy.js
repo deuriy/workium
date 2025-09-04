@@ -2,6 +2,13 @@ import $ from "jquery";
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 
+function getUrlWithoutParameter(param) {
+  const url = new URL(window.location.href);
+  url.searchParams.delete(param);
+
+  return url.toString();
+}
+
 function copyText(input) {
   input.select();
   input.setSelectionRange(0, 99999);
@@ -10,21 +17,39 @@ function copyText(input) {
 }
 
 function copyVacancyText (isMultiVacancy = true) {
-  let $vacancyTextWrapper = $('.vacancy-card__text-wrapper');
-  let vacancyTitle = $vacancyTextWrapper.find('.vacancy-card__title').text().trim();
-  let vacancyText = $vacancyTextWrapper.find('.vacancy-card__text').text().trim();
-  let vacancyBefore = "";
+  let $vacancyCard = $('.vacancy-card--full');
 
-  if (!$vacancyTextWrapper.length) return;
+  if (!$vacancyCard.length) return;
 
-  if (!isMultiVacancy) {
-    let vacancyCategory = $('.vacancy-info__top .vacancy-info__category').text().trim();
-    let companyName = $('.vacancy-info__top .vacancy-info__company-name').text().trim();
+  const lang = document.documentElement.lang;
+  const labels = {
+    'uk': {
+      'bonus': '💰Винагорода від WORKIUM (додатково до вашої зарплати):',
+      'has_media': '🖼️🎬 Ця вакансія містить фото або відео. Переглянути їх можна тут:',
+      'vacancy': '🌐 Ця вакансія на WORKIUM:'
+    },
+    'ru': {
+      'bonus': '💰 Вознаграждение от WORKIUM (дополнительно к вашей зарплате):',
+      'has_media': '🖼️🎬 Эта вакансия содержит фото или видео. Посмотреть их можно здесь:',
+      'vacancy': '🌐 Эта вакансия на WORKIUM:'
+    },
+    'en': {
+      'bonus': '💰 Bonus from WORKIUM (in addition to your salary):',
+      'has_media': '🖼️🎬 This vacancy contains photos or videos. You can view them here:',
+      'vacancy': '🌐 This vacancy on WORKIUM:'
+    }
+  };
 
-    vacancyBefore = vacancyCategory + ' ' + companyName + '\r\n';
-  }
+  let vacancyTitle = $vacancyCard.find('.vacancy-card__title--main').text().trim();
+  let vacancyCategory = $vacancyCard.find('.vacancy-card__category').text().trim();
+  let companyTitle = $vacancyCard.find('.vacancy-card__company-title').text().trim();
+  let vacancyText = $vacancyCard.find('.vacancy-card__text').text().trim();
+  let vacancyCode = $vacancyCard.find('.vacancy-card__code').text().trim();
+  let salaryTooltip = $vacancyCard.find('.salary-with-info__icon .tooltip__text p:first-child').text().trim();
+  let $agencyGallery = $vacancyCard.find('.vacancy-card__agency-gallery');
+  let hasMediaText = $agencyGallery.length ? labels[lang].has_media + ' ' + getUrlWithoutParameter('i') + '\r\n\r\n' : '';
 
-  $vacancyTextWrapper.after(`<textarea class="vacancy-card__textarea">${vacancyBefore + vacancyTitle + '\r\n' + vacancyText}</textarea>`);
+  $vacancyCard.after(`<textarea class="vacancy-card__textarea">${vacancyTitle + ' (' + vacancyCategory + ' ' + companyTitle + ')\r\n\r\n' + vacancyText + '\r\n\r\n' + labels[lang].bonus + '\r\n\r\n' + salaryTooltip + '\r\n\r\n' + hasMediaText + vacancyCode + '\r\n\r\n' + labels[lang].vacancy + ' ' + getUrlWithoutParameter('i')}</textarea>`);
 
   let $vacancyCardTextarea = $('.vacancy-card__textarea');
 
