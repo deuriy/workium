@@ -16,7 +16,7 @@ function copyText(input) {
   document.execCommand("copy");
 }
 
-function copyVacancyText (isMultiVacancy = true) {
+function copyVacancyText () {
   let $vacancyCard = $('.vacancy-card--full');
 
   if (!$vacancyCard.length) return;
@@ -47,7 +47,7 @@ function copyVacancyText (isMultiVacancy = true) {
   let vacancyCode = $vacancyCard.find('.vacancy-card__code').text().trim();
   let salaryTooltip = $vacancyCard.find('.salary-with-info__icon .tooltip__text p:first-child').text().trim();
   let $agencyGallery = $vacancyCard.find('.vacancy-card__agency-gallery');
-  let hasMediaText = $agencyGallery.length ? labels[lang].has_media + ' ' + getUrlWithoutParameter('i') + '\r\n\r\n' : '';
+  let hasMediaText = $agencyGallery.length ? labels[lang].has_media + ' ' + getUrlWithoutParameter('i') + '#agency-gallery' + '\r\n\r\n' : '';
 
   $vacancyCard.after(`<textarea class="vacancy-card__textarea">${vacancyTitle + ' (' + vacancyCategory + ' ' + companyTitle + ')\r\n\r\n' + vacancyText + '\r\n\r\n' + labels[lang].bonus + '\r\n\r\n' + salaryTooltip + '\r\n\r\n' + hasMediaText + vacancyCode + '\r\n\r\n' + labels[lang].vacancy + ' ' + getUrlWithoutParameter('i')}</textarea>`);
 
@@ -154,7 +154,7 @@ $(() => {
   // });
 
   $(document).on('click', '.vacancy-card__copy-btn, .vacancy-buttons__copy-btn', function(event) {
-    copyVacancyText(this.hasAttribute('data-multi-vacancy'));
+    copyVacancyText();
 
     let $tooltip = $(this).find('.btn-grey__tooltip');
 
