@@ -1,8 +1,6 @@
 import $ from "jquery";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
-import Inputmask from "inputmask";
-
-// import noUiSlider from 'nouislider';
+import IMask from 'imask';
 
 var count = 200;
 var defaults = {
@@ -952,19 +950,14 @@ $(() => {
   });
 
   document.querySelectorAll('.form-text--phone').forEach(phoneInput => {
-    Inputmask({
-      mask: '+999 99 999 99 99',
-      placeholder: '',
-      showMaskOnHover: true,
-      showMaskOnFocus: true,
-      clearMaskOnLostFocus: false,
-      autoUnmask: true,
-      insertMode: true,
-      greedy: false,
-      removeMaskOnSubmit: true
-    }).mask(phoneInput);
+    const mask = IMask(
+      phoneInput,
+      {
+        mask: '+{380} 00 000 00 00'
+      }
+    );
+    mask.value = '+';
   });
-
 
   document.addEventListener('input', (e) => {
     const input = e.target.closest('.sms-code-field__input');

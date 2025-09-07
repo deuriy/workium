@@ -43,6 +43,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-stylus": "^2.7.0",
     "gulp-touch-fd": "^2.0.0",
+    "imask": "^7.6.1",
     "inputmask": "^5.0.9",
     "jquery": "^3.6.4",
     "jquery-circle-progress": "^1.2.2",
