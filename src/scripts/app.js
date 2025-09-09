@@ -953,7 +953,7 @@ $(() => {
     const mask = IMask(
       phoneInput,
       {
-        mask: '+{380} 00 000 00 00'
+        mask: '+000 00 000 00 00'
       }
     );
     mask.value = '+';
