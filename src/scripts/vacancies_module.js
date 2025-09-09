@@ -912,7 +912,7 @@ $(() => {
 
   function loadCitiesOfSelectedCountry(countryID) {
     $.ajax({
-      url: `https://workium.pl/api/v1/cities?country_id=${countryID}`,
+      url: `/api/v1/cities?country_id=${countryID}`,
 
       success: function (data) {
         document.dispatchEvent(new CustomEvent("citiesLoaded", {
