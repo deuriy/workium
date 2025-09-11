@@ -13,10 +13,9 @@
 		// height 100vh
 	
 	&__header
-		padding-bottom 10px
-		border-top-right-radius 16px
-		border-top-left-radius 16px
-		background #FAFBFD
+		border-top-right-radius 24px
+		border-top-left-radius 24px
+		// background #FAFBFD
 		
 		@media $smPlus
 			// background #F5F7FB
@@ -25,10 +24,40 @@
 		@media $xs
 			border-top-right-radius 0
 			border-top-left-radius 0
-			background #F0F4FA
+			// background #F0F4FA
 		
 		@media $xxs
 			padding-bottom 15px
+		
+		&--sticky
+			border-bottom 1px solid #ebebeb
+			
+			.additional-filters__header-top
+				grid-template-columns auto 1fr
+				gap 15px
+				padding 8px 20px
+
+				@media $xxs
+					padding-left 50px
+			
+			.additional-filters__title
+				@media $xxs
+					margin-top 0
+					margin-right 0
+			
+			.additional-filters__form-items
+				max-width 324px
+			
+			.form-text--filter-search-advanced
+				height 40px
+				padding-left 36px
+				background-size 16px auto
+				background-position 14px center
+				font-size 11px
+				letter-spacing: 0.02em
+			
+			& + .additional-filters__body
+				padding-top 56px
 		
 	&__header-top
 		display grid
@@ -82,9 +111,14 @@
 		// 	line-height 1.2857
 	
 	&__clear-link
-		position absolute
-		top 13px
-		right 16px
+		font-size 16px
+		line-height 1.625
+		color #0f182a
+		// color var(--info)
+		text-decoration none
+		// position absolute
+		// top 13px
+		// right 16px
 	
 	&__form-items
 		display grid
@@ -95,7 +129,7 @@
 		gap 23px
 		
 		@media $xs
-			grid-template-columns repeat(2, 1fr)
+			// grid-template-columns repeat(2, 1fr)
 			gap 8px
 		
 		&--three-col-md
@@ -128,8 +162,14 @@
 			// gap 0
 	
 	&__selected-items
+		margin-bottom 28px
+
 		@media $xxs
-			order -1
+			padding-right 10px
+			padding-left 16px
+		
+		// @media $xxs
+		// 	order -1
 	
 	&__clear-btn
 		margin-left auto
@@ -179,9 +219,18 @@
 		& + .additional-filters__form-item
 			padding-bottom 32px
 			border-bottom 1px solid #EBEBEB
+
+			@media $xxs
+				padding-bottom 24px
 		
 		@media $xs
 			display grid
+			padding-right 10px
+			padding-left 16px
+
+			&--no-padding
+				padding-right 0
+				padding-left 0
 			
 			// &--two-col-xs
 			// 	grid-column 1 / 3
@@ -198,21 +247,21 @@
 		// 		background #EBEFF9
 	
 	&__form-item-label
-		@media $smPlus
-			font-weight 600
-			font-size 18px
-			line-height 1.34
+		font-weight 600
+		font-size 18px
+		line-height 1.34
+		
+		@media $xxsPlus
+			margin-bottom 1em
 			color #0F182A
 	
 	&__no-selected-text
 		font-size 14px
-		
-		@media $smPlus
-			// color var(--black)
-			margin-bottom 16px
-			font-weight 400
-			line-height 1.57143
-			color #666B80
+		// color var(--black)
+		margin-bottom 16px
+		font-weight 400
+		line-height 1.57143
+		color #666B80
 	
 	&__clear-search-btn
 		position absolute
@@ -286,26 +335,22 @@
 	
 	&__footer
 		display grid
-		grid-template-columns 100%
-		justify-content center
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
 		justify-items center
 		align-items center
 		gap 32px
-		padding 16px
+		padding 12px 16px
 		border-bottom-right-radius 16px
 		border-bottom-left-radius 16px
-		background #FAFBFD
+		background #FFF
+		box-shadow 0 -4px 10px rgba(0, 0, 0, 0.1)
 		
 		@media $smPlus
-			// background #F5F7FB
-			grid-template-columns repeat(2, auto)
-			justify-content space-between
 			padding 16px 24px
-			box-shadow 0 -4px 10px rgba(0, 0, 0, 0.1)
 		
-		@media $xxs
-			grid-template-columns 100%
-			background #FFF
+		@media $xs
+			gap 16px
 	
 	&__preloader-wrapper
 		position relative
@@ -324,6 +369,9 @@
 		& + .additional-filters__radiobtns-group
 			padding-bottom 32px
 			border-bottom 1px solid #EBEBEB
+
+			@media $xxs
+				padding-bottom 24px
 	
 		// &__checkboxes-group
 		// 	&--termin-vidpraciuvannia,
