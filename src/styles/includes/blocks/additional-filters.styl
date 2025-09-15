@@ -14,12 +14,25 @@
 	
 	&__cancel-search-link
 		display none
+		color #5340ff
+		font-weight 500
+		font-size 14px
+		text-decoration none
+
+		@media $xxsPlus
+			font-size 15px
 	
 	&__header
 		border-top-right-radius 24px
 		border-top-left-radius 24px
 		// background #FAFBFD
 		
+		display block
+		text-align center
+		border none
+		background none
+		padding 0
+		cursor pointer
 		@media $smPlus
 			// background #F5F7FB
 			background transparent
@@ -417,6 +430,10 @@
 		
 		@media $xs
 			gap 16px
+		
+		&:has(>.additional-filters__clear-link[style="display: none;"])
+			grid-template-columns 100%
+			justify-items end
 	
 	&__preloader-wrapper
 		position relative

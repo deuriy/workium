@@ -100,3 +100,23 @@
       
       &::before
         display none
+  
+  &--tabs-style
+    .checkbox__input:checked ~ .checkbox__label,
+    .checkbox__label:hover
+      // padding 11px 15px
+      border-color #0F182A
+    
+    .checkbox__input:checked ~ .checkbox__label
+      background #F4F5FC
+
+    .checkbox__label
+      justify-content center
+      padding 12px 16px
+      border 2px solid transparent
+      border-radius 12px
+      font-size 14px
+      line-height 1.57143
+
+      &::before
+        display none
