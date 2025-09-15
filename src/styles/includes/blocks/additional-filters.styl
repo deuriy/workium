@@ -12,6 +12,9 @@
 		height calc(var(--vh, 100vh) * 100)
 		// height 100vh
 	
+	&__cancel-search-link
+		display none
+	
 	&__header
 		border-top-right-radius 24px
 		border-top-left-radius 24px
@@ -31,6 +34,9 @@
 		
 		&--sticky
 			border-bottom 1px solid #ebebeb
+
+			@media $xxs
+				padding-bottom 0
 			
 			.additional-filters__header-top
 				grid-template-columns auto 1fr
@@ -38,26 +44,78 @@
 				padding 8px 20px
 
 				@media $xxs
+					grid-template-columns 100%
 					padding-left 50px
 			
 			.additional-filters__title
 				@media $xxs
-					margin-top 0
-					margin-right 0
+					display none
 			
 			.additional-filters__form-items
 				max-width 324px
+
+				@media $xxs
+					max-width 100%
 			
-			.form-text--filter-search-advanced
+			.additional-filters__form-item
+				@media $xxs
+					max-width 230px
+					margin-right auto
+					margin-left auto
+					// transition .3s
+			
+			.form-text--filter-search
 				height 40px
 				padding-left 36px
 				background-size 16px auto
 				background-position 14px center
 				font-size 11px
 				letter-spacing: 0.02em
+
+				@media $xxs
+					// max-width 230px
+					// margin 0 auto
+					padding-right 30px
+					padding-left 49px
+					background-position 25px center
+					background-size 18px auto
+					font-size 13px
 			
 			& + .additional-filters__body
 				padding-top 56px
+			
+		&--search-extended
+			.additional-filters__header-top
+				padding-left 20px
+
+				@media $xxsPlus
+					grid-template-columns auto 1fr
+				
+			.additional-filters__btn-back
+				display none
+			
+			.additional-filters__title
+				@media $xxs
+					display none
+			
+			.additional-filters__cancel-search-link
+				display block
+			
+			.additional-filters__form-items
+				display grid
+				grid-template-columns 1fr auto
+				gap 16px
+				max-width 100%
+			
+			.additional-filters__form-item
+				max-width 100%
+				margin-right 0
+				margin-left 0
+			
+			.form-text--filter-search
+				background-position 14px center
+				background-size 16px auto
+
 		
 	&__header-top
 		display grid
@@ -94,11 +152,14 @@
 		// font-family var(--graphik-lcg)
 		
 		@media $xs
-			margin-top 4px
-			margin-right 16px
+			// margin-top 4px
+			// margin-right 16px
 			font-size 16px
 			line-height 1.625
 			text-align center
+		
+		@media $xxs
+			margin-bottom 6px
 		
 		@media $smPlus
 			color var(--black)
@@ -270,13 +331,14 @@
 	&__clear-search-btn
 		position absolute
 		top 0
-		right 10px
+		right 8px
 		bottom 0
 		margin auto
 		width 24px
 		height 48px
 		border none
-		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 18'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1 17 17 1M1 1l16 16'/%3E%3C/svg%3E") center / 15px no-repeat
+		// background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 18'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1 17 17 1M1 1l16 16'/%3E%3C/svg%3E") center / 15px no-repeat
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm4.707 14.293a1 1 0 1 1-1.414 1.414L12 13.414l-3.293 3.293a1 1 0 1 1-1.414-1.414L10.586 12 7.293 8.707a1 1 0 1 1 1.414-1.414L12 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414L13.414 12Z' style='fill:%237b7a7f'/%3E%3C/svg%3E") center / 18px no-repeat
 		cursor pointer
 	
 	&__cities-dropdown-block
@@ -289,7 +351,7 @@
 		width 325px
 		
 		@media $xs
-			width 100%
+			width 100% !important
 	
 	&__label
 		margin-bottom 4px
@@ -381,31 +443,6 @@
 		&--country
 			order -1
 	
-		// &__checkboxes-group
-		// 	&--termin-vidpraciuvannia,
-		// 	&--tip-kandidativ
-		// 		@media $smPlus
-		// 			grid-row 1 / 2
-				
-		// 	&--gender
-		// 		@media $xxs
-		// 			order -2
-			
-			// &--specializaciia
-			// 	@media $smPlus
-			// 		grid-column 1 / 4
-			
-			// &--aktualnіst
-			// 	@media $xs
-			// 		order -1
+	&:has(>.additional-filters__header--search-extended) + .fancybox-close-button
+		display none
 		
-		// &__radiobtns-group
-		// 	&--kategoriia-pracivnika
-		// 		@media $smPlus
-		// 			grid-row 1 / 2
-
-		// 	&--specializaciia
-		// 		order 1
-				
-		// 		@media $smPlus
-		// 			grid-column 1 / 4

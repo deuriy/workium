@@ -420,6 +420,35 @@ function changeCaseOfDaysLabel(days) {
 $(() => {
   select2($);
 
+  // Решение проблемы с потерей фокуса при перемещении поля поиска
+  // $(document).on('focus', '.additional-filters .form-text--filter-search', function() {
+  //   const $input = $(this);
+  //   const $formItem = $input.closest('.additional-filters__form-item');
+  //   const transitionDuration = $formItem.css('transition-duration');
+    
+  //   // Определяем время защиты (если есть анимация - используем её время, иначе фиксированное)
+  //   let protectionTime = 300; // время по умолчанию
+    
+  //   if (transitionDuration && transitionDuration !== '0s') {
+  //     // Парсим время анимации из CSS (например, "0.3s" -> 300ms)
+  //     const durationMatch = transitionDuration.match(/(\d+(?:\.\d+)?)s/);
+  //     if (durationMatch) {
+  //       protectionTime = parseFloat(durationMatch[1]) * 1000;
+  //     }
+  //   }
+    
+  //   // Предотвращаем потерю фокуса во время перемещения
+  //   $input.on('blur', function(e) {
+  //     e.preventDefault();
+  //     $input.focus();
+  //   });
+    
+  //   // Убираем обработчик после завершения перемещения
+  //   setTimeout(() => {
+  //     $input.off('blur');
+  //   }, protectionTime);
+  // });
+
   let fancyboxOpts = {
     dragToClose: false,
     mainClass: 'fancybox--additional-filters-popup',
@@ -1562,31 +1591,50 @@ $(() => {
   let isTypingInSearch = false;
 
   if (searchInput) {
-    // Отслеживаем начало ввода
     searchInput.addEventListener('input', function() {
       isTypingInSearch = true;
-    });
-    
-    // Отслеживаем окончание ввода (с небольшой задержкой)
-    searchInput.addEventListener('input', function() {
       clearTimeout(searchInput.typingTimeout);
+      
       searchInput.typingTimeout = setTimeout(() => {
         isTypingInSearch = false;
-      }, 500); // 500ms задержка после последнего ввода
+      }, 500);
     });
   }
 
   if (additionalFiltersHeader && additionalFiltersBody) {
     additionalFiltersBody.addEventListener('scroll', function (e) {
-      // Не применяем sticky класс, если пользователь недавно вводил текст в поле поиска
-      if (isTypingInSearch) {
+      if (searchInput && document.activeElement === searchInput && isTypingInSearch) {
         return;
       }
       
       additionalFiltersHeader.classList.toggle('additional-filters__header--sticky', this.scrollTop > 0);
     });
   }
+
+  document.addEventListener('click', function (e) {
+    const searchFilterInput = e.target.closest('input[name="search_filter"]');
+
+    if (!searchFilterInput) return;
+
+    const additionalFiltersHeader = searchFilterInput.closest('.additional-filters__header');
+
+    if (!additionalFiltersHeader) return;
+
+    additionalFiltersHeader.classList.add('additional-filters__header--search-extended');
+  });
   
+  document.addEventListener('click', function (e) {
+    const cancelSearchLink = e.target.closest('.additional-filters__cancel-search-link');
+
+    if (!cancelSearchLink) return;
+
+    const additionalFiltersHeader = cancelSearchLink.closest('.additional-filters__header');
+
+    if (!additionalFiltersHeader) return;
+
+    additionalFiltersHeader.classList.remove('additional-filters__header--search-extended');
+    e.preventDefault();
+  });
 
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
