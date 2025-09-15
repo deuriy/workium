@@ -597,7 +597,7 @@ $(() => {
   $('input[name="search_filter"]').on('input', function (event) {
     let searchValue = $(this).val().toLowerCase().trim();
     let $additionalFilters = $(this).closest('.additional-filters');
-    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range');
+    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range, .filter-element--country');
     let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
 
     if (searchValue) {
@@ -1557,9 +1557,32 @@ $(() => {
 
   const additionalFiltersBody = document.querySelector('.additional-filters__body');
   const additionalFiltersHeader = document.querySelector('.additional-filters__header');
+  const searchInput = document.querySelector('input[name="search_filter"]');
+  
+  let isTypingInSearch = false;
+
+  if (searchInput) {
+    // Отслеживаем начало ввода
+    searchInput.addEventListener('input', function() {
+      isTypingInSearch = true;
+    });
+    
+    // Отслеживаем окончание ввода (с небольшой задержкой)
+    searchInput.addEventListener('input', function() {
+      clearTimeout(searchInput.typingTimeout);
+      searchInput.typingTimeout = setTimeout(() => {
+        isTypingInSearch = false;
+      }, 500); // 500ms задержка после последнего ввода
+    });
+  }
 
   if (additionalFiltersHeader && additionalFiltersBody) {
     additionalFiltersBody.addEventListener('scroll', function (e) {
+      // Не применяем sticky класс, если пользователь недавно вводил текст в поле поиска
+      if (isTypingInSearch) {
+        return;
+      }
+      
       additionalFiltersHeader.classList.toggle('additional-filters__header--sticky', this.scrollTop > 0);
     });
   }
