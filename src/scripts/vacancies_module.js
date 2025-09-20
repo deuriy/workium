@@ -1548,7 +1548,7 @@ $(() => {
     if (!vacancyCard) return;
 
     setBonusForPromoBlocks(promoBlock.dataset.rewardRange, vacancyCard);
-  })
+  });
 
   // $('[data-remove-last-filter]').click(function(event) {
   //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
