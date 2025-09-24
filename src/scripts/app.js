@@ -596,12 +596,14 @@ $(() => {
 
   $('.user-label--copy-partner-link').click(function (e) {
     let $copyLinkInput = $($(this).attr('href'));
+    let linkDefaultText = $(this).data('link-default-text');
+		let linkCopiedText = $(this).data('link-copied-text');
 
     copyText($copyLinkInput[0]);
-    $(this).text('Посилання скопійовано!');
+    $(this).text(linkCopiedText);
 
     setTimeout(() => {
-      $(this).text('Скопіювати партнерське посилання');
+      $(this).text(linkDefaultText);
     }, 2000);
 
     e.preventDefault();
