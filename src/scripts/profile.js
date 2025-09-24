@@ -214,16 +214,18 @@ $(() => {
 
   $('.dropdown-menu__link--copy-link').click(function(e) {
   	let $copyLinkInput = $($(this).attr('href'));
+		let linkDefaultText = $(this).find('.dropdown-menu__link-title').data('link-default-text');
+		let linkCopiedText = $(this).find('.dropdown-menu__link-title').data('link-copied-text');
 
   	copyText($copyLinkInput[0]);
 
-  	$(this).find('.dropdown-menu__link-title').text('Посилання скопійовано!');
+  	$(this).find('.dropdown-menu__link-title').text(linkCopiedText);
   	$(this).find('.dropdown-menu__icon').attr('src', '/img/context_menu/checked_ok.svg');
 
   	setTimeout(() => {
   		$(this).closest('.dropdown-block').removeClass('dropdown-block--visible');
 
-  		$(this).find('.dropdown-menu__link-title').text('Партнерське посилання');
+  		$(this).find('.dropdown-menu__link-title').text(linkDefaultText);
   		$(this).find('.dropdown-menu__icon').attr('src', '/img/context_menu/link.svg');
   	}, 1500);
 
