@@ -141,3 +141,10 @@
 				
 			@media $lg
 				gap 12px
+		
+		.promo-blocks__btns:has(>.promo-blocks__btn--consult.hidden)
+			justify-content center
+		
+		.promo-blocks__btn--book:has(~.promo-blocks__btn--consult.hidden)
+			min-height 48px
+			max-width 302px

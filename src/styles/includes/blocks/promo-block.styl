@@ -210,6 +210,18 @@
 		justify-content start
 		gap 6px
 	
+	&__notice-danger
+		z-index 10
+		margin -25px -25px 24px
+		padding 12px 22px
+		border-radius 11px
+		border-bottom-right-radius 0
+		border-bottom-left-radius 0
+
+		@media $xs
+			margin -17px -17px 16px -15px
+			padding 12px 15px
+	
 	&:hover
 		.promo-block__view-link
 			background-color transparent
@@ -326,3 +338,10 @@
 			
 			.promo-block__stretched-link
 				display block
+			
+			.promo-block__notice-danger
+				margin -24px -24px 24px
+
+				@media $xs
+					margin -16px -16px 16px -14px
+					padding 12px 15px
