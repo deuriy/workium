@@ -702,3 +702,12 @@
 	&--closed
 		.vacancy-card__wrapper > *:not(.vacancy-card__notice-danger)
 			opacity 0.4
+	
+	&--business-pricing
+		.vacancy-card__header
+			@media $smPlus
+				margin-bottom 26px
+		
+		.vacancy-card__promo-blocks
+			@media $xs
+				display block
