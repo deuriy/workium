@@ -2,6 +2,34 @@ import $ from "jquery";
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 
+function changePromoBlockButtons(promoBlock, vacancyCard) {
+  if (!promoBlock || !vacancyCard) return;
+
+  let rewardRange = promoBlock.dataset.rewardRange;
+  let vacancyStatus = promoBlock.dataset.vacancyStatus;
+  let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
+  let consultBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--consult');
+
+  if (!bookBtns.length) return;
+
+  if (vacancyStatus !== 'closed') {
+    bookBtns.forEach(btn => {
+      btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${rewardRange}`;
+    });
+    consultBtns.forEach(btn => {
+      btn.classList.remove('hidden');
+    });
+  } else {
+    bookBtns.forEach(btn => {
+      btn.href = `#find-best-vacancy-popup`;
+      btn.innerHTML = `Підібрати схожу вакансію`;
+    });
+    consultBtns.forEach(btn => {
+      btn.classList.add('hidden');
+    });
+  }
+}
+
 document.addEventListener('bookmarksLoaded', function (event) {
   function getLineCount(element) {
     const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
@@ -45,7 +73,6 @@ document.addEventListener('bookmarksLoaded', function (event) {
   }
 
   if ($(window).width() < 768) {
-    
     document.querySelectorAll('.promo-blocks-swiper:not(.swiper-initialized)').forEach(item => {
       let slidesCount = $(item).find('.swiper-slide').length;
 
@@ -68,4 +95,20 @@ document.addEventListener('bookmarksLoaded', function (event) {
       }
     });
   }
+
+  document.addEventListener('change', function (e) {
+    let checkboxInput = e.target.closest('.promo-block .checkbox__input');
+
+    if (!checkboxInput) return;
+
+    let promoBlock = checkboxInput.closest('.promo-block');
+
+    if (!promoBlock) return;
+
+    let vacancyCard = promoBlock.closest('.vacancy-card');
+
+    if (!vacancyCard) return;
+
+    changePromoBlockButtons(promoBlock, vacancyCard);
+  });
 })

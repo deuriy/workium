@@ -81,6 +81,18 @@
 			// grid-template-columns repeat(2, auto)
 			justify-content start
 			padding 28px 0 0
+		
+		&--business-pricing
+			.promo-blocks__details-link
+				margin-left auto
+			
+			@media $xs
+				display grid
+				grid-template-columns 100%
+				grid-auto-rows 48px
+
+				.promo-blocks__details-link
+					margin-right auto
 	
 	&__info-title
 		position relative
@@ -145,6 +157,7 @@
 		.promo-blocks__btns:has(>.promo-blocks__btn--consult.hidden)
 			justify-content center
 		
-		.promo-blocks__btn--book:has(~.promo-blocks__btn--consult.hidden)
+		.promo-blocks__btn--book:has(~.promo-blocks__btn--consult.hidden),
+		.promo-blocks__btn--free-consult:has(~.promo-blocks__btn--consult.hidden)
 			min-height 48px
 			max-width 302px

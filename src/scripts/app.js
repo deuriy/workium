@@ -616,7 +616,7 @@ $(() => {
     $(this).toggleClass('password-toggle--visible');
   });
 
-  $(document).on('click', '.tabs__list .tabs__item', function (event) {
+  $(document).on('click', '.tabs__list:not(.tabs__list--no-tabs) .tabs__item', function (event) {
     event.preventDefault();
 
     let index = $(this).index();
