@@ -1,24 +1,54 @@
 .mini-gallery
-  display grid
-  grid-template-columns repeat(2, auto)
-  justify-content start
-  align-items center
-  gap 6px
+  // display grid
+  // grid-template-columns repeat(2, auto)
+  // justify-content start
+  // align-items center
+  // gap 6px
   text-decoration none
+
+  &__title
+    margin-bottom 3px
+    color var(--grey)
+    font-size 13px
+    line-height 22px
   
   &__imgs
+    position relative
     display flex
-    max-width 80px
+    // max-width 80px
+    max-width 154px
     overflow hidden
+
+    &:has(.mini-gallery__more-number)
+      &::after
+        content ''
+        position absolute
+        z-index 1
+        top 2px
+        right 0
+        width 32px
+        height 32px
+        background rgba(0, 0, 0, 0.5)
+        border-radius 5.33px
   
   &__img
-    width 28px
-    height 28px
-    border 2px solid var(--light)
-    border-radius 6px
+    // width 28px
+    // height 28px
+    width 36px
+    height 36px
+    // border 2px solid var(--light)
+    border 2.67px solid var(--light)
+    // border-radius 6px
+    border-radius 5.33px
     
     & + .mini-gallery__img
-      margin-left -12px
+      margin-left -16px
+    
+    &:nth-child(7)
+      z-index 1
+    
+    &:nth-child(8)
+      margin-left 0
     
     &:last-child
       @media (min-width: 1024px) and (max-width: 1199px)
@@ -26,3 +56,15 @@
   
   &__more-text
     color var(--grey)
+  
+  &__more-number
+    position absolute
+    z-index 2
+    top 7px
+    right 0
+    width 32px
+    font-weight 700
+    font-size 12px
+    line-height 22px
+    color #fff
+    text-align center
