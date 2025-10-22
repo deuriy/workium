@@ -102,6 +102,26 @@ $(() => {
         bulletActiveClass: 'swiper-pagination-bullet--active',
         // clickable: true
       },
+      
+      on: {
+        slideChange: function() {
+          // Снимаем checked со всех радио кнопок в данном слайдере
+          const allCheckboxes = this.el.querySelectorAll('.checkbox__input');
+          allCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+          });
+          
+          // Устанавливаем checked для радио кнопки в активном слайде
+          const activeSlide = this.slides[this.activeIndex];
+          const activeCheckbox = activeSlide.querySelector('.checkbox__input');
+          
+          if (activeCheckbox) {
+            activeCheckbox.checked = true;
+            // Триггерим событие change для обновления связанной логики
+            activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+      }
     });
 
     if (promoBlocksSwiper.slides.length > 1) {
