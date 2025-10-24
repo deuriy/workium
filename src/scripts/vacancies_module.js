@@ -1528,13 +1528,22 @@ $(() => {
     event.preventDefault();
   });
 
-  function setBonusForPromoBlocks(cashback, vacancyCard) {
+  function changePromoBtns(vacancyCard, promoBlock) {
+    if (!vacancyCard || !promoBlock) return;
+
+    let rewardRange = promoBlock.dataset.rewardRange;
+    let promoBlockLink = promoBlock.querySelector('.promo-block__link').href;
     let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
+    let shareBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--share-and-get');
 
     if (!bookBtns.length) return;
 
     bookBtns.forEach(btn => {
-      btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${cashback}`;
+      btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${rewardRange}`;
+    });
+
+    shareBtns.forEach(btn => {
+      btn.dataset.promoBlockLink = promoBlockLink;
     });
   }
 
@@ -1567,7 +1576,7 @@ $(() => {
 
     if (!vacancyCard) return;
 
-    setBonusForPromoBlocks(promoBlock.dataset.rewardRange, vacancyCard);
+    changePromoBtns(vacancyCard, promoBlock);
   });
 
   // $('[data-remove-last-filter]').click(function(event) {

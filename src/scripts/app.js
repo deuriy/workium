@@ -164,6 +164,15 @@ $(() => {
 
         currentFancybox = fancybox;
 
+        if (slide.src.includes('share-vacancy-with-friend')) {
+          const fancyboxBonusLink = slide.contentEl.querySelector('[data-bonus-link]');
+          const promoBlockLink = slide.triggerEl.dataset.promoBlockLink;
+
+          if (fancyboxBonusLink && promoBlockLink) {
+              fancyboxBonusLink.value = promoBlockLink;
+          }
+        }
+
         if (slide.src.includes('order-service-popup') || slide.src.includes('consult-service-popup')) {
           $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
           // $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
