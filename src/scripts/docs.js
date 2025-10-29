@@ -33,10 +33,10 @@ $(() => {
 		let $articleBoxContent = $(this).closest('.article-box').find('.article-box__content');
 
 		if ($articleBoxContent.is(':visible')) {
-			$(this).text('Читати статтю');
+			$(this).text($(this).data('more-text'));
 			$articleBoxContent.hide();
 		} else {
-			$(this).text('Згорнути статтю');
+			$(this).text($(this).data('less-text'));
 			$articleBoxContent.show();
 
 			let $wrapper = $('.wrapper');
