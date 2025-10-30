@@ -282,7 +282,7 @@ $(() => {
   $('[data-close-banner]').click(function(event) {
   	event.preventDefault();
 
-  	let $banner = $(this).closest('.banner');
+  	let $banner = $(this).closest('[data-banner]');
   	$banner.slideUp();
 
   	let cookieName = $banner.data('cookie-name');
@@ -295,8 +295,7 @@ $(() => {
 
   	if (!$banner.attr('id')) return;
 
-  	const $relatedBannerElements = $('[data-related-banner-id]');
-  	$relatedBannerElements.each(function(index, el) {
+  	$('[data-related-banner-id]').each(function(index, el) {
   		console.log(el);
   		if (el.style.display === 'none') {
   			el.style.display = '';
@@ -314,18 +313,33 @@ $(() => {
 	// 	e.preventDefault();
 	// });
 
-	$('[data-close-find-vacancy-banner]').click(function(event) {
-  	event.preventDefault();
+	// $('[data-close-find-vacancy-banner]').click(function(event) {
+  // 	event.preventDefault();
 
-  	let $findVacancyBanner = $(this).closest('.find-vacancy-banner');
-  	$findVacancyBanner.slideUp();
+  // 	let $findVacancyBanner = $(this).closest('.find-vacancy-banner');
+  // 	$findVacancyBanner.slideUp();
 
-  	let cookieName = $findVacancyBanner.data('cookie-name');
+  // 	let cookieName = $findVacancyBanner.data('cookie-name');
 
-  	console.log(cookieName);
+  // 	console.log(cookieName);
 
-  	if (!cookieName) return;
+  // 	if (!cookieName) return;
 
-  	setCookie(cookieName, 'yes', {'max-age': 3153600000});
-  });
+  // 	setCookie(cookieName, 'yes', {'max-age': 3153600000});
+  // });
+
+	// $('[data-close-page-header]').click(function(event) {
+  // 	event.preventDefault();
+
+  // 	let $findVacancyBanner = $(this).closest('.page-header');
+  // 	$findVacancyBanner.slideUp();
+
+  // 	let cookieName = $findVacancyBanner.data('cookie-name');
+
+  // 	console.log(cookieName);
+
+  // 	if (!cookieName) return;
+
+  // 	setCookie(cookieName, 'yes', {'max-age': 3153600000});
+  // });
 });
