@@ -166,10 +166,16 @@ $(() => {
 
         if (slide.src.includes('share-vacancy-with-friend')) {
           const fancyboxBonusLink = slide.contentEl.querySelector('[data-bonus-link]');
+          const fancyBoxRewardRange = slide.contentEl.querySelector('[data-reward-range]');
           const promoBlockLink = slide.triggerEl.dataset.promoBlockLink;
+          const promoBlockRewardRange = slide.triggerEl.dataset.rewardRange;
 
           if (fancyboxBonusLink && promoBlockLink) {
               fancyboxBonusLink.value = promoBlockLink;
+          }
+
+          if (fancyBoxRewardRange && promoBlockRewardRange) {
+            fancyBoxRewardRange.textContent = promoBlockRewardRange;
           }
         }
 

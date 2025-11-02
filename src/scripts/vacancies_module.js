@@ -1536,7 +1536,7 @@ $(() => {
     let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
     let shareBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--share-and-get');
 
-    if (!bookBtns.length) return;
+    if (!bookBtns.length && !shareBtns.length) return;
 
     bookBtns.forEach(btn => {
       btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${rewardRange}`;
@@ -1544,6 +1544,7 @@ $(() => {
 
     shareBtns.forEach(btn => {
       btn.dataset.promoBlockLink = promoBlockLink;
+      btn.dataset.rewardRange = rewardRange;
     });
   }
 

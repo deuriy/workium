@@ -895,6 +895,7 @@ $(() => {
   let oldScrollY = 0;
   let $wrapper = $('.wrapper');
   let $btnFilter = $('.btn-filter');
+  let $scrollTopBtn = $('.btn-scroll-top');
 
   $wrapper.scroll(function(event) {
     let scrolled = $wrapper.scrollTop();
@@ -909,10 +910,41 @@ $(() => {
     oldScrollY = scrolled;
   });
 
-  $('.btn-filter--scroll-top').on('click', function(event) {
+  $('.btn-filter--scroll-top, .btn-scroll-top').on('click', function(event) {
     $wrapper.animate( {
       scrollTop: 0
     }, 0 );
+
+    $('html, body').animate( {
+      scrollTop: 0
+    }, 0 );
+  });
+
+  $wrapper.scroll(function(event) {
+    console.log('scroll');
+    let scrolled = $wrapper.scrollTop();
+    let dY = scrolled - oldScrollY;
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+    
+    oldScrollY = scrolled;
+  });
+
+  $(window).on('scroll', function() {
+    let scrolled = $(window).scrollTop();
+    let dY = scrolled - oldScrollY;
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+    
+    oldScrollY = scrolled;
   });
 
   // Mobile cities filter
