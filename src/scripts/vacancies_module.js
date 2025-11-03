@@ -336,10 +336,10 @@ function findFilterTagByValue(name, value) {
   return $selectedItem;
 }
 
-function clearTextField($input) {
-  $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
-  $input.parent().find('[data-clear-search-input]').hide();
-}
+// function clearTextField($input) {
+//   $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
+//   $input.parent().find('[data-clear-search-input]').hide();
+// }
 
 // function removeFilterTag (type, name, value) {
 //   let $selectedItem;
@@ -1398,46 +1398,46 @@ $(() => {
   toggleClearFilterButtons();
 
   // Search input with close button
-  $('[data-search-input]').on('input', function (event) {
-    let name = $(this).attr('name');
-    let value = $(this).val();
-    let $clearBtn = $(this).next('.filter__clear-search-btn');
-    let $searchBtnMobile = $('.filter__search-btn-mobile');
-    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
+  // $('[data-search-input]').on('input', function (event) {
+  //   let name = $(this).attr('name');
+  //   let value = $(this).val();
+  //   let $clearBtn = $(this).next('.filter__clear-search-btn');
+  //   let $searchBtnMobile = $('.filter__search-btn-mobile');
+  //   let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
-    if (value) {
-      $clearBtn.show();
-      $searchBtnMobile.show();
-      $(this).addClass('form-text--filter-search-filled');
-      // createOrUpdateTag('textfield', name, value, value);
-    } else {
-      $clearBtn.hide();
-      $searchBtnMobile.hide();
-      $(this).removeClass('form-text--filter-search-filled');
-      // removeFilterTag(type, name, value);
-    }
+  //   if (value) {
+  //     $clearBtn.show();
+  //     $searchBtnMobile.show();
+  //     $(this).addClass('form-text--filter-search-filled');
+  //     // createOrUpdateTag('textfield', name, value, value);
+  //   } else {
+  //     $clearBtn.hide();
+  //     $searchBtnMobile.hide();
+  //     $(this).removeClass('form-text--filter-search-filled');
+  //     // removeFilterTag(type, name, value);
+  //   }
 
-  });
+  // });
 
-  $('[data-clear-search-input]').on('click', function (event) {
-    let $input = $(this).prev();
-    let name = $input.attr('name');
-    let value = $input.val();
-    let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
+  // $('[data-clear-search-input]').on('click', function (event) {
+  //   let $input = $(this).prev();
+  //   let name = $input.attr('name');
+  //   let value = $input.val();
+  //   let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
 
-    clearTextField($input);
-    // removeFilterTag(type, name, value);
+  //   clearTextField($input);
+  //   // removeFilterTag(type, name, value);
 
-    $input.focus();
+  //   $input.focus();
 
-    let isMobile = $(window).width() < 576;
-    let $noResults = $('.vacancies__no-results');
-    if (isMobile && $noResults.length) {
-      updateFilterUrl();
-    }
+  //   let isMobile = $(window).width() < 576;
+  //   let $noResults = $('.vacancies__no-results');
+  //   if (isMobile && $noResults.length) {
+  //     updateFilterUrl();
+  //   }
 
-    // updateFilterUrl();
-  });
+  //   // updateFilterUrl();
+  // });
 
   if (document.forms.vacancies_filter) {
     document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', function (e) {
