@@ -14,7 +14,8 @@ function changePromoBlockButtons(promoBlock, vacancyCard) {
 
   if (vacancyStatus !== 'closed') {
     bookBtns.forEach(btn => {
-      btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${rewardRange}`;
+      const bookText = btn.dataset.bookText;
+      btn.innerHTML = `${bookText} ${rewardRange}`;
     });
     consultBtns.forEach(btn => {
       btn.classList.remove('hidden');
@@ -22,7 +23,7 @@ function changePromoBlockButtons(promoBlock, vacancyCard) {
   } else {
     bookBtns.forEach(btn => {
       btn.href = `#find-best-vacancy-popup`;
-      btn.innerHTML = `Підібрати схожу вакансію`;
+      btn.innerHTML = btn.dataset.similarVacancyText;
     });
     consultBtns.forEach(btn => {
       btn.classList.add('hidden');

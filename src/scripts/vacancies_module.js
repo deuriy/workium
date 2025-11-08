@@ -1539,7 +1539,8 @@ $(() => {
     if (!bookBtns.length && !shareBtns.length) return;
 
     bookBtns.forEach(btn => {
-      btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${rewardRange}`;
+      const bookText = btn.dataset.bookText;
+      btn.innerHTML = `${bookText} ${rewardRange}`;
     });
 
     shareBtns.forEach(btn => {
