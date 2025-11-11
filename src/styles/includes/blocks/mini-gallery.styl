@@ -71,3 +71,30 @@
 
     @media $xs
       font-weight 700
+  
+  &--vacancy
+    .mini-gallery__img
+      width 54px
+      height 54px
+      border-width 4px
+      border-radius 8px
+
+      & + .mini-gallery__img
+        margin-left -24px
+    
+    .mini-gallery__imgs
+      max-width 231px
+
+      &:has(.mini-gallery__more-number)
+        &::after
+          // top 2px
+          // right 0
+          width 48px
+          height 48px
+          border-radius 8px
+    
+    .mini-gallery__more-number
+      top 10px
+      width 48px
+      font-size 16px
+      line-height 33px
