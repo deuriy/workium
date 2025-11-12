@@ -22,9 +22,24 @@
   @extend .transition
   
   @media $smPlus
+    z-index 9
     right 20px
     bottom 20px
     font-size 15px
+
+    &::after
+      content ''
+      position absolute
+      z-index -1
+      right -20px
+      bottom -20px
+      left -18px
+      height 100vh
+      cursor pointer
+      @extend .transition
+    
+    &:hover::after
+      background rgba(0, 0, 0, .04)
 
   &::before
     content ""
