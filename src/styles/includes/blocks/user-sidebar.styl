@@ -83,6 +83,8 @@
 		right -430px
 	
 	&__user-menu
+		display grid
+		grid-template 1fr auto / 100%
 		position relative
 		max-height calc(100vh - 159px)
 		margin 16px 0 20px
@@ -102,7 +104,8 @@
 	
 	.socbuttons
 		align-self start
-		margin 0 18px 20px
+		// margin 0 18px 20px
+		margin 20px 18px 0
 	
 	&--opened
 		left 0
@@ -127,7 +130,10 @@
 		
 		.user-sidebar__user-menu
 			// max-height calc(100vh - 243px)
+
 			max-height calc(100vh - 419px)
+
+			max-height calc(100vh - 305px)
 		
 		&.user-sidebar--quote-shown
 			.user-sidebar__inner
@@ -146,7 +152,7 @@
 
 				// max-height calc(100vh - 469px)
 
-				max-height calc(100vh - 510px)
+				// max-height calc(100vh - 510px)
 
-				// max-height calc(100vh - 394px)
+				max-height calc(100vh - 394px)
 		
