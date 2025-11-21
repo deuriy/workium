@@ -65,7 +65,7 @@ function toggleMoreLink ($link) {
 }
 
 $(() => {
-  const vacancyImagesSwiper = new Swiper('.vacancy-images-swiper__swiper', {
+  new Swiper('.vacancy-images-swiper__swiper', {
     modules: [Navigation],
     // loop: true,
     slidesPerView: 2,
@@ -252,5 +252,19 @@ $(() => {
     bookmark.classList.remove('bookmark-icon--with-label');
     bookmark.textContent = '';
   }
+
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-back-btn]');
+    if (!btn) return;
+
+    const hasReferrerFromSameOrigin =
+      document.referrer &&
+      new URL(document.referrer).origin === window.location.origin;
+
+    if (hasReferrerFromSameOrigin) {
+      e.preventDefault();
+      window.history.back();
+    }
+  });
 
 });
