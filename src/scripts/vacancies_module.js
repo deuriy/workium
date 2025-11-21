@@ -1534,9 +1534,10 @@ $(() => {
     let rewardRange = promoBlock.dataset.rewardRange;
     let promoBlockLink = promoBlock.querySelector('.promo-block__link').href;
     let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
+    let consultBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--consult');
     let shareBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--share-and-get');
 
-    if (!bookBtns.length && !shareBtns.length) return;
+    if (!bookBtns.length && !consultBtns.length && !shareBtns.length) return;
 
     bookBtns.forEach(btn => {
       const bookText = btn.dataset.bookText;
@@ -1579,6 +1580,25 @@ $(() => {
     if (!vacancyCard) return;
 
     changePromoBtns(vacancyCard, promoBlock);
+  });
+
+  document.addEventListener("change", function (e) {
+    const radio = e.target;
+    if (radio.type !== "radio") return;
+
+    const syncGroup = radio.dataset.sync;
+    if (!syncGroup) return;
+
+    const value = radio.value;
+
+    // Находим radio из других групп с тем же значением
+    const synced = document.querySelectorAll(
+      `input[type="radio"][data-sync="${syncGroup}"][value="${value}"]`
+    );
+
+    synced.forEach(r => {
+      r.checked = true;
+    });
   });
 
   // $('[data-remove-last-filter]').click(function(event) {

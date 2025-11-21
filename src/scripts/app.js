@@ -196,6 +196,8 @@ $(() => {
         if (!promoBlocks) return;
 
         const checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
+        const checkedVariantInputs = promoBlocks.querySelectorAll('input[name^="working_conditions"]:checked');
+        console.log(checkedVariantInputs);
 
         if (!checkedVariantInput) return;
 

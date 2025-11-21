@@ -897,7 +897,7 @@ $(() => {
   let $btnFilter = $('.btn-filter');
   let $scrollTopBtn = $('.btn-scroll-top');
 
-  $wrapper.scroll(function(event) {
+  $wrapper.on('scroll', function(event) {
     let scrolled = $wrapper.scrollTop();
     let dY = scrolled - oldScrollY;
 
@@ -920,8 +920,7 @@ $(() => {
     }, 0 );
   });
 
-  $wrapper.scroll(function(event) {
-    console.log('scroll');
+  $wrapper.on('scroll', function(event) {
     let scrolled = $wrapper.scrollTop();
     let dY = scrolled - oldScrollY;
 
