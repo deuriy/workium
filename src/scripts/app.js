@@ -805,38 +805,203 @@ $(() => {
     }
   });
 
-  // $('.tooltip__close-btn').click(function(e) {
-  //   e.preventDefault();
+  $('.tooltip__close-btn').click(function(e) {
+    e.preventDefault();
 
-  //   let $tooltip = $(this).closest('.tooltip');
+    let $tooltip = $(this).closest('.tooltip');
 
-  //   $tooltip.removeClass('tooltip--visible');
+    $tooltip.removeClass('tooltip--visible').addClass('tooltip--closed');
 
-  //   setTimeout(() => {
-  //     $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
-  //     $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
-  //   }, 300);
+    setTimeout(() => {
+      $tooltip.removeClass('tooltip--closed');
+    }, 500);
+
+    // setTimeout(() => {
+    //   $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
+    //   $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
+    // }, 300);
+  });
+
+  // $(document).on('mouseover', '[data-tooltip]', function (event) {
+  //   let $tooltip = $(this).find('.tooltip');
+  //   $tooltip.addClass('tooltip--visible');
+
+  //   // let windowHeight = document.documentElement.clientHeight;
+  //   // let tooltipTriggerCoords = this.getBoundingClientRect();
+  //   // let tooltipHeight = $tooltip.outerHeight();
+
+  //   // if (windowHeight < tooltipTriggerCoords.bottom + tooltipHeight + 10) {
+  //   //   $tooltip.addClass('tooltip--extended-top').removeClass('tooltip--extended-bottom');
+  //   // } else {
+  //   //   $tooltip.removeClass('tooltip--extended-top').addClass('tooltip--extended-bottom');
+  //   // }
   // });
 
-  $(document).on('mouseover', '[data-tooltip]', function (event) {
-    let $tooltip = $(this).find('.tooltip');
-    $tooltip.addClass('tooltip--visible');
+  // $(document).on('mouseout', '[data-tooltip]', function (event) {
+  //   let $tooltip = $(this).find('.tooltip');
+  //   $tooltip.removeClass('tooltip--visible');
+  // });
 
-    // let windowHeight = document.documentElement.clientHeight;
-    // let tooltipTriggerCoords = this.getBoundingClientRect();
-    // let tooltipHeight = $tooltip.outerHeight();
+  const initTooltips = () => {
+    const tooltips = Array.from(document.querySelectorAll('.tooltip--extended'));
+    if (!tooltips.length) return;
 
-    // if (windowHeight < tooltipTriggerCoords.bottom + tooltipHeight + 10) {
-    //   $tooltip.addClass('tooltip--extended-top').removeClass('tooltip--extended-bottom');
-    // } else {
-    //   $tooltip.removeClass('tooltip--extended-top').addClass('tooltip--extended-bottom');
-    // }
-  });
+    const HIDE_DELAY = 150; // мс
 
-  $(document).on('mouseout', '[data-tooltip]', function (event) {
-    let $tooltip = $(this).find('.tooltip');
-    $tooltip.removeClass('tooltip--visible');
-  });
+    let tooltipLayer = document.getElementById('tooltip-layer');
+
+    const anchorMap = new WeakMap(); // tooltip -> anchor
+    const stateMap = new WeakMap();  // tooltip -> { hoverAnchor, hoverTooltip, hideTimeout }
+
+    const ensureTooltipLayer = () => {
+      if (tooltipLayer) return tooltipLayer;
+      tooltipLayer = document.createElement('div');
+      tooltipLayer.id = 'tooltip-layer';
+      document.body.appendChild(tooltipLayer);
+      return tooltipLayer;
+    };
+
+    const positionTooltip = (tooltip) => {
+      const anchor = anchorMap.get(tooltip);
+      if (!anchor) return;
+
+      const parentRect = anchor.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+
+      let top = 0;
+      let left = 0;
+
+      if (tooltip.classList.contains('tooltip--extended-top')) {
+        top = parentRect.top - tooltipRect.height;
+        left = parentRect.left + parentRect.width / 2 - tooltipRect.width / 2;
+      } else if (tooltip.classList.contains('tooltip--extended-bottom')) {
+        top = parentRect.bottom;
+        left = parentRect.left + parentRect.width / 2 - tooltipRect.width / 2;
+      } else if (tooltip.classList.contains('tooltip--extended-left')) {
+        top = parentRect.top + parentRect.height / 2 - tooltipRect.height / 2;
+        left = parentRect.left - tooltipRect.width;
+      } else {
+        // справа по умолчанию
+        top = parentRect.top + parentRect.height / 2 - tooltipRect.height / 2;
+        left = parentRect.right;
+      }
+
+      tooltip.style.top = `${Math.round(top)}px`;
+      tooltip.style.left = `${Math.round(left)}px`;
+    };
+
+    const updateAllTooltips = () => {
+      tooltips.forEach((tooltip) => {
+        if (tooltip.classList.contains('tooltip--visible')) {
+          positionTooltip(tooltip);
+        }
+      });
+    };
+
+    tooltips.forEach((tooltip) => {
+      const anchor = tooltip.parentElement;
+      if (!anchor) return;
+
+      anchorMap.set(tooltip, anchor);
+
+      const state = {
+        hoverAnchor: false,
+        hoverTooltip: false,
+        hideTimeout: null,
+      };
+      stateMap.set(tooltip, state);
+
+      const isTooltipEnabled = () => anchor.hasAttribute('data-tooltip');
+
+      const showTooltip = () => {
+        if (!isTooltipEnabled()) return;
+
+        ensureTooltipLayer();
+
+        const movedNow = tooltip.parentElement !== tooltipLayer;
+        if (movedNow) {
+          // первый раз переносим в слой
+          tooltipLayer.appendChild(tooltip);
+          // гарантируем стартовое состояние (скрыто)
+          tooltip.classList.remove('tooltip--visible');
+        }
+
+        if (state.hideTimeout) {
+          clearTimeout(state.hideTimeout);
+          state.hideTimeout = null;
+        }
+
+        // сначала выставляем позицию в скрытом состоянии
+        positionTooltip(tooltip);
+
+        if (movedNow) {
+          // фиксируем начальное состояние (opacity: 0, нужный top/left)
+          void tooltip.offsetWidth; // reflow
+        }
+
+        // меняем состояние на видимое в следующем кадре — transition отработает
+        requestAnimationFrame(() => {
+          tooltip.classList.add('tooltip--visible');
+        });
+      };
+
+      const scheduleHide = () => {
+        if (state.hideTimeout) {
+          clearTimeout(state.hideTimeout);
+        }
+        state.hideTimeout = setTimeout(() => {
+          if (!state.hoverAnchor && !state.hoverTooltip) {
+            tooltip.classList.remove('tooltip--visible');
+          }
+          state.hideTimeout = null;
+        }, HIDE_DELAY);
+      };
+
+      // hover по якорю
+      anchor.addEventListener('mouseenter', () => {
+        if (!isTooltipEnabled()) return;
+        state.hoverAnchor = true;
+        showTooltip();
+      });
+
+      anchor.addEventListener('mouseleave', () => {
+        if (!isTooltipEnabled()) return;
+        state.hoverAnchor = false;
+        scheduleHide();
+      });
+
+      // hover по самой подсказке
+      tooltip.addEventListener('mouseenter', () => {
+        if (!isTooltipEnabled()) return;
+        state.hoverTooltip = true;
+        showTooltip();
+      });
+
+      tooltip.addEventListener('mouseleave', () => {
+        if (!isTooltipEnabled()) return;
+        state.hoverTooltip = false;
+        scheduleHide();
+      });
+    });
+
+    // пересчёт при скролле/resize только для видимых
+    let ticking = false;
+
+    const onScrollOrResize = () => {
+      if (ticking) return;
+      ticking = true;
+
+      window.requestAnimationFrame(() => {
+        updateAllTooltips();
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+  };
+
+  initTooltips();
 
   // Article chapters
   $('.article-chapters__title').click(function (e) {

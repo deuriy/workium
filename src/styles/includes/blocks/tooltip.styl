@@ -12,7 +12,8 @@
 	white-space normal
 	opacity 0
 	visibility hidden
-	@extend .transition
+	transition opacity .3s, visibility .3s, margin .3s
+	// @extend .transition
 	
 	&__title
 		margin-bottom 8px
@@ -51,11 +52,12 @@
 		color var(--light)
 	
 	&--extended
-		position absolute
+		// position absolute
+		position fixed
 		z-index 100
-		top 50%
-		transform translateY(-50%)
-		left 100%
+		// top 50%
+		// transform translateY(-50%)
+		// left 100%
 		display grid
 		grid-template-columns 1fr auto
 		gap 4px
@@ -78,7 +80,8 @@
 			background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 8 10'%3E%3Cpath fill='%232A364C' d='m0 5 8-5v10L0 5Z'/%3E%3C/svg%3E") center no-repeat
 		
 		&.tooltip--visible
-			left calc(100% + 14px)
+			// left calc(100% + 14px)
+			margin-left 14px
 	
 	&--large
 		width 433px
@@ -90,12 +93,14 @@
 	
 	&--extended-top
 		// top -14px
-		top auto
 		// right 0
-		bottom calc(100% + 20px)
-		left 50%
 		// margin auto
-		transform translateX(-50%)
+		
+		// top auto
+
+		// bottom calc(100% + 20px)
+		// left 50%
+		// transform translateX(-50%)
 		
 		&::before
 			top calc(100% - 1px)
@@ -105,14 +110,18 @@
 			transform rotate(-90deg)
 		
 		&.tooltip--visible
-			bottom calc(100% + 10px)
-			left 50%
+			// bottom calc(100% + 10px)
+			// left 50%
+
+			margin-top -10px
+			margin-left 0
 	
 	&--extended-bottom
 		// top calc(100% - 10px)
-		top calc(100%)
-		left 50%
-		transform translateX(-50%)
+
+		// top calc(100%)
+		// left 50%
+		// transform translateX(-50%)
 		
 		&::before
 			top -8px
@@ -123,12 +132,16 @@
 		
 		&.tooltip--visible
 			// top 100%
-			top calc(100% + 10px)
-			left 50%
+
+			// top calc(100% + 10px)
+			// left 50%
+
+			margin-top 10px
+			margin-left 0
 			
 	&--extended-left
-		right 100%
-		left auto
+		// right 100%
+		// left auto
 		
 		&::before
 			margin-top -8px
@@ -137,8 +150,10 @@
 			transform rotate(180deg)
 		
 		&.tooltip--visible
-			left auto
-			right calc(100% + 14px)
+			// left auto
+			// right calc(100% + 14px)
+
+			margin-left -14px
 	
 	// &--phone-copied
 	// 	padding-right 5px
@@ -150,3 +165,6 @@
 	&--visible
 		opacity 1
 		visibility visible
+	
+	&--closed
+		pointer-events none
