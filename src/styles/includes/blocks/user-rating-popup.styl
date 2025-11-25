@@ -1,0 +1,77 @@
+.user-rating-popup
+  &__header
+    display grid
+    grid-template-columns auto auto auto
+    grid-template-areas "avatar username username" "avatar rating date"
+    align-items center
+    gap 2px 16px
+    justify-content start
+    margin-bottom 12px
+
+    @media $xs
+      position relative
+      grid-template-columns auto 1fr auto
+      grid-template-areas "avatar username rating" "avatar date rating"
+      gap 0 8px
+      padding-bottom 12px
+
+      &::after
+        content ""
+        position absolute
+        right -16px
+        bottom 0
+        left -16px
+        height 1px
+        background #F0F4FA
+  
+  &__user-avatar
+    grid-area avatar
+    width 48px
+    height 48px
+    border-radius 50%
+    object-fit cover
+
+    @media $xs
+      width 40px
+      height 40px
+  
+  &__username-wrapper
+    grid-area username
+    display grid
+    grid-template-columns auto auto
+    justify-content start
+    // align-items center
+    gap 4px
+  
+  &__username
+    font-weight 600
+  
+  &__influence-rating
+    display grid
+    grid-template-columns auto 1fr
+    align-items center
+    color #989DB2
+    font-weight 400
+    font-size 13px
+    line-height 1.69230769
+
+    &::before
+      content ""
+      width 16px
+      height 16px
+      background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill='%23b4b8cc' d='M9.53 4.758c-.149.103-.258.254-.367.394-.92 1.184-1.722 2.137-1.722 2.137.792.377 1.663.264 1.663.264S8.46 8.657 7.465 9.728c-.609.652-1.02 1.637-.995 2.79.035 1.464.688 2.482.688 2.482.634-1.492 1.684-2.816 3.139-4.383C11.277 9.562 12 8.495 12 7.457c0-.98-.465-1.719-.866-2.316-.411-.614-1.06-.749-1.6-.383zM5.485 8.41s.025-.732 1.371-2.164c.797-.846 1.392-1.831 1.327-2.967A5.5 5.5 0 0 0 7.525 1C6.89 2.492 6.104 3.53 4.609 5.178 3.505 6.395 3 7.661 3 8.48c0 .883.149 1.578.554 2.176.411.614 1.06.748 1.595.382.148-.102.272-.237.366-.393.703-1.185 1.475-2.11 1.475-2.11-.792-.378-1.51-.125-1.51-.125z'/%3E%3Cpath fill='%23b4b8cc' d='M9.163 5.152c.11-.14.218-.291.367-.394h.005c.54-.366 1.188-.231 1.599.383.4.597.866 1.335.866 2.315 0 1.04-.723 2.106-1.703 3.16C8.842 12.185 7.792 13.51 7.158 15c0 0-.653-1.018-.688-2.482-.024-1.153.386-2.138.995-2.79.995-1.071 1.639-2.175 1.639-2.175s-.871.113-1.663-.264c0 0 .802-.953 1.722-2.137M6.856 6.245c-1.309 1.392-1.368 2.123-1.37 2.163a2.14 2.14 0 0 1 1.504.125s-.772.926-1.475 2.11c-.094.157-.218.292-.366.394-.535.366-1.184.231-1.595-.382C3.15 10.057 3 9.362 3 8.479c0-.818.505-2.084 1.609-3.3C6.104 3.53 6.89 2.491 7.525 1c0 0 .579.97.658 2.278.065 1.136-.53 2.121-1.327 2.967'/%3E%3C/svg%3E") center no-repeat
+  
+  &__rating
+    position relative
+    grid-area rating
+  
+  &__date
+    grid-area date
+    margin-left -8px
+    font-weight 400
+    font-size 13px
+    line-height 1.69230769
+    color #989DB2
+
+    @media $xs
+      margin-left 0

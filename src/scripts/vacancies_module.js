@@ -438,6 +438,15 @@ $(() => {
 
   Fancybox.bind(".additional-filters-popup-link", fancyboxOpts);
 
+  Fancybox.bind(".vacancy-card__rating-popup-link", {
+    dragToClose: false,
+    mainClass: 'fancybox--rating-popup',
+
+    tpl: {
+      closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+    }
+  });
+
   if (window.location.href.includes('open-popup')) {
     Fancybox.show(
       [
@@ -1652,6 +1661,48 @@ $(() => {
   // $('[data-next-vacancies-page]').on('click', function(event) {
   //   let pageNumber = $('.pagination .page-item.active .page-link').text();
   // });
+
+
+  const updateMobileHeaderState = (popup) => {
+    if (!popup) return;
+
+    const mobileHeader   = popup.querySelector('.rating-popup__mobile-header');
+    if (!mobileHeader) return;
+
+    const titleEl        = mobileHeader.querySelector('.rating-popup__title');
+    const companyInfoEl  = mobileHeader.querySelector('.rating-popup__company-info--mobile-header');
+
+    if (!titleEl || !companyInfoEl) return;
+
+    const scrolled = popup.scrollTop;
+
+    if (scrolled >= 100) {
+      // показываем компанию, прячем заголовок
+      titleEl.classList.add('hidden');
+      companyInfoEl.classList.remove('hidden');
+    } else {
+      // показываем заголовок, прячем компанию
+      titleEl.classList.remove('hidden');
+      companyInfoEl.classList.add('hidden');
+    }
+  };
+
+  // Делегирование: один обработчик на документ, ловим скроллы всех .rating-popup
+  document.addEventListener(
+    'scroll',
+    function (e) {
+      const target = e.target;
+
+      // Нас интересуют только элементы с классом rating-popup
+      if (!target.classList || !target.classList.contains('rating-popup')) return;
+
+      updateMobileHeaderState(target);
+    },
+    true // захват, чтобы событие точно словилось
+  );
+
+  // Инициализация состояния при загрузке
+  document.querySelectorAll('.rating-popup').forEach(updateMobileHeaderState);
 
 
 });

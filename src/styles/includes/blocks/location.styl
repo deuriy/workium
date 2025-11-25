@@ -1,0 +1,25 @@
+.location
+  display grid
+  grid-template-columns auto 1fr
+  gap 4px
+  align-items center
+  font-weight 400
+  color #666B80
+
+  @media $xs
+    font-size 13px
+    line-height 1.69230769
+
+  &::before
+    content ''
+    width 16px
+    height 16px
+    background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill='%23989db3' d='M8 1a5.75 5.75 0 0 1 5.751 5.75c0 1.813-.992 3.572-2.03 4.935-1.056 1.387-2.255 2.49-2.855 3.008l-.039.032a1.38 1.38 0 0 1-1.692-.032c-.6-.518-1.8-1.62-2.856-3.008C3.241 10.323 2.25 8.564 2.25 6.75A5.75 5.75 0 0 1 8 1m0 1.5a4.25 4.25 0 0 0-4.25 4.25c0 1.308.74 2.735 1.724 4.027.903 1.187 1.936 2.159 2.526 2.677.59-.518 1.624-1.49 2.527-2.677.984-1.292 1.724-2.72 1.724-4.027A4.25 4.25 0 0 0 8 2.5m0 1.629a2.625 2.625 0 1 1 0 5.25 2.625 2.625 0 0 1 0-5.25m0 1.5a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25'/%3E%3C/svg%3E") center no-repeat
+  
+  &--rating-popup
+    @media $xs
+      grid-template-columns 100%
+      color #989DB2
+
+      &::before
+        display none

@@ -333,6 +333,24 @@
 			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
 	
+	&--rating
+		padding 0
+
+		@media $smPlus
+			width 1180px
+			border-radius 20px
+		
+		@media $xs
+			// height 100vh
+			height calc(var(--vh, 100vh) * 100)
+			border-radius 0
+		
+		.fancybox-close-button
+			top 28px
+			right 24px
+			width 32px
+			height 32px
+	
 	&--cities
 		@media $xs
 			// height 100vh
@@ -655,6 +673,11 @@
 			margin-top 35px
 			line-height 1.56
 			color #000
+	
+	&--user-rating
+		&.fancybox__content
+			border-top-right-radius 24px
+			border-top-left-radius 24px
 	
 	&--sms-code
 		&.fancybox__content.fancybox-popup

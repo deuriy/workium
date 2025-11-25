@@ -1215,6 +1215,25 @@ $(() => {
     e.preventDefault();
   });
 
+  document.addEventListener('click', function (e) {
+    const closeNoticeBtn = e.target.closest('[data-close-notice]');
+
+    if (!closeNoticeBtn) return;
+
+    const notice = closeNoticeBtn.closest('.notice');
+
+    if (!notice) return;
+
+    notice.classList.add('hidden');
+    const cookieName = notice.dataset.cookieName;
+
+    if (cookieName) {
+      setCookie(cookieName, 'yes', { 'max-age': 3153600000 });
+    }
+
+    e.preventDefault();
+  });
+
   // Search input with close button
   $('[data-search-input]').on('input', function (event) {
     let name = $(this).attr('name');

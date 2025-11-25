@@ -1,4 +1,5 @@
 .vacancy-card
+	position relative
 	padding 32px 17px 32px 32px
 	border 1px solid var(--grey-medium)
 	border-radius 12px
@@ -498,6 +499,20 @@
 
 		@media $xs
 			margin-top 12px
+	
+	&__rating-popup-link
+		position absolute
+		top 0
+		left 0
+		width 20px
+		height 20px
+
+		@media $xs
+			top 150px
+			right 0
+			left auto
+			width 30px
+			height 30px
 	
 	&--teaser,
 	&--full
