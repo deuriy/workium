@@ -6,8 +6,15 @@
     position sticky
     top 0
     z-index 10
+  
+  &__mobile-header-inner
+    position relative
+    z-index 11
     padding 12px 46px 12px
     background #fff
+
+    &:has(+.dropdown-block--visible) .rating-popup__company-info--mobile-header::after
+      transform rotate(0deg)
   
   &__btn-back
     position absolute
@@ -53,9 +60,6 @@
         margin-left -6px
         transform rotate(180deg)
         background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' fill='none'%3E%3Cpath fill='%230f182a' d='M3.743 1.429a.3.3 0 0 1 .514 0l2.47 4.117A.3.3 0 0 1 6.47 6H1.53a.3.3 0 0 1-.257-.454z'/%3E%3C/svg%3E") center no-repeat
-      
-      &:has(+.dropdown-block--visible)::after
-        transform rotate(0deg)
   
   &__company-logo
     grid-row span 2

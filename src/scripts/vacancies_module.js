@@ -1671,6 +1671,7 @@ $(() => {
 
     const titleEl        = mobileHeader.querySelector('.rating-popup__title');
     const companyInfoEl  = mobileHeader.querySelector('.rating-popup__company-info--mobile-header');
+    const ratingDropdownCriteriaHeader  = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
 
     if (!titleEl || !companyInfoEl) return;
 
@@ -1684,6 +1685,10 @@ $(() => {
       // показываем заголовок, прячем компанию
       titleEl.classList.remove('hidden');
       companyInfoEl.classList.add('hidden');
+
+      if (ratingDropdownCriteriaHeader) {
+        ratingDropdownCriteriaHeader.classList.remove('dropdown-block--visible');
+      }
     }
   };
 
