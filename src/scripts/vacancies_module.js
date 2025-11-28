@@ -1666,11 +1666,11 @@ $(() => {
   const updateMobileHeaderState = (popup) => {
     if (!popup) return;
 
-    const mobileHeader   = popup.querySelector('.rating-popup__mobile-header');
+    const mobileHeader   = popup.querySelector('.popup-mobile-header');
     if (!mobileHeader) return;
 
-    const titleEl        = mobileHeader.querySelector('.rating-popup__title');
-    const companyInfoEl  = mobileHeader.querySelector('.rating-popup__company-info--mobile-header');
+    const titleEl        = mobileHeader.querySelector('.popup-mobile-header__title');
+    const companyInfoEl  = mobileHeader.querySelector('.company-info--popup-mobile-header');
     const ratingDropdownCriteriaHeader  = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
 
     if (!titleEl || !companyInfoEl) return;

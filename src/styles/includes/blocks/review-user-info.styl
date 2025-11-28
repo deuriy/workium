@@ -1,0 +1,40 @@
+.review-user-info
+  display grid
+  grid-template-columns auto auto
+  align-items center
+  gap 2px 16px
+  justify-content start
+  
+  &__avatar
+    grid-row span 2
+    width 48px
+    height 48px
+    border-radius 50%
+    object-fit cover
+
+    @media $xs
+      width 40px
+      height 40px
+  
+  &__username
+    display grid
+    grid-template-columns 1fr auto
+    align-items center
+    gap 2px
+    padding 1px 8px
+    border-radius 24px
+    background #F0F4FA
+    font-weight 600
+    color var(--accent)
+
+    &::after
+      content ''
+      width 8px
+      height 8px
+      background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' fill='none'%3E%3Cpath fill='%230f182a' d='M4.257 6.571a.3.3 0 0 1-.514 0l-2.47-4.117A.3.3 0 0 1 1.53 2h4.94a.3.3 0 0 1 .257.454z'/%3E%3C/svg%3E") center no-repeat
+  
+  &__date
+    font-weight 400
+    font-size 13px
+    line-height 1.69230769
+    color #989DB2

@@ -1,0 +1,25 @@
+.review-rating-block
+  padding 24px
+  border-radius 12px
+  background #F4F5FC
+
+  &__criterion
+    display grid
+    grid-template-columns 1.15fr 1fr
+    align-items center
+    gap 8px 16px
+    border none
+
+    @media $xs
+      grid-template-columns 100%
+
+    & + &
+      margin-top 24px
+
+  &__criterion-name
+    font-weight 600
+    color var(--accent)
+  
+  &__stars
+    @media $xs
+      justify-self start
