@@ -74,7 +74,7 @@ $(() => {
 	// 	$userSidebarQuote.hide();
 	// }
 
-	const userSidebarMenuPS = new PerfectScrollbar('.user-sidebar__user-menu', {
+	new PerfectScrollbar('.user-sidebar__user-menu', {
 		wheelSpeed: 2,
 		wheelPropagation: false,
 		minScrollbarLength: 20

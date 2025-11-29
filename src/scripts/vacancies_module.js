@@ -6,7 +6,7 @@ import select2 from 'select2';
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
 
-let selectedFiltersCount = 0;
+// let selectedFiltersCount = 0;
 let $ageSwitch = $('input[name="age_switch"]');
 
 function copyText(input) {
@@ -438,7 +438,7 @@ $(() => {
 
   Fancybox.bind(".additional-filters-popup-link", fancyboxOpts);
 
-  Fancybox.bind(".vacancy-card__rating-popup-link", {
+  Fancybox.bind(".rating-popup-link", {
     dragToClose: false,
     mainClass: 'fancybox--rating-popup',
 
@@ -446,6 +446,28 @@ $(() => {
       closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
     }
   });
+
+
+  let reviewsPSInstance = null;
+  const reviewsContainer = document.querySelector('.rating-popup__reviews');
+  const media = window.matchMedia('(min-width: 1024px)');
+
+  function handleMedia(e) {
+    if (e.matches) {
+      if (!reviewsPSInstance) {
+        reviewsPSInstance = new PerfectScrollbar(reviewsContainer);
+      }
+    } else {
+      if (reviewsPSInstance) {
+        reviewsPSInstance.destroy();
+        reviewsPSInstance = null;
+      }
+    }
+  }
+
+  media.addEventListener('change', handleMedia);
+  handleMedia(media);
+
 
   if (window.location.href.includes('open-popup')) {
     Fancybox.show(

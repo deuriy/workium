@@ -34,7 +34,7 @@ $(() => {
 
   let banksListPopup = document.querySelector('.banks-list--popup');
   if (banksListPopup) {
-    const banksListPS = new PerfectScrollbar(banksListPopup, {
+    new PerfectScrollbar(banksListPopup, {
       wheelSpeed: 2,
       wheelPropagation: true,
       minScrollbarLength: 20

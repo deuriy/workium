@@ -1,6 +1,7 @@
 .rating-popup
-  max-height 100vh
-  overflow auto
+  @media $smMinus
+    max-height 100vh
+    overflow auto
   
   &__body
     display grid
@@ -20,12 +21,15 @@
       padding 12px 16px
   
   &__reviews
+    position relative
     // max-height 658px
     padding-right 50px
 
     @media $md
-      max-height 630px
-      overflow auto
+      // max-height 630px
+      max-height calc(100vh - 142px)
+      // overflow auto
+      overflow hidden
 
     @media $mdMinus
       padding-right 32px
