@@ -138,14 +138,20 @@ $(() => {
 	});
 	
 
-	$('.copy-link__btn').click(function(e) {
-		let $copyLinkInput = $(this).closest('.copy-link').find('.copy-link__input');
+	$('[data-copy-link-btn]').click(function(e) {
+		let $copyLinkInput = $(this).closest('[data-copy-link]').find('[data-copy-link-input]');
 
 		if (!$copyLinkInput.length) return;
 
-		copyText($copyLinkInput[0]);
+		if ($copyLinkInput.hasClass('hidden')) {
+			$copyLinkInput.removeClass('hidden');
+			copyText($copyLinkInput[0]);
+			$copyLinkInput.addClass('hidden');
+		} else {
+			copyText($copyLinkInput[0]);
+		}
 
-		let $copyLink = $copyLinkInput.closest('.copy-link');
+		let $copyLink = $copyLinkInput.closest('[data-copy-link]');
 		let $tooltip = $copyLink.find('.tooltip');
 
 		$tooltip.addClass('tooltip--visible');
