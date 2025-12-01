@@ -72,7 +72,8 @@
     @media $xs
       font-weight 700
   
-  &--vacancy
+  &--vacancy,
+  &--review
     .mini-gallery__img
       width 54px
       height 54px
@@ -80,6 +81,14 @@
       border-radius 8px
 
       & + .mini-gallery__img
+        margin-left -24px
+      
+      &:last-child
+        @media (min-width: 1024px) and (max-width: 1199px)
+          display block
+    
+    .mini-gallery__img-link
+      & + .mini-gallery__img-link
         margin-left -24px
       
       &:last-child
