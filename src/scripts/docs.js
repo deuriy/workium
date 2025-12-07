@@ -3,7 +3,7 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 
 $(() => {
-	const peopleSwiper = new Swiper('.people-swiper', {
+	new Swiper('.people-swiper', {
     modules: [Navigation],
     loop: true,
     slidesPerView: 'auto',
@@ -60,4 +60,11 @@ $(() => {
 
 		event.preventDefault();
 	});
+
+	$('.article-box--how-recommend .article-box__more-link').on('click', function (event) {
+    $(this).closest('.article-box').find('.article-box__text').toggleClass('hidden-xs');
+    $(this).hide();
+
+    event.preventDefault();
+  });
 });
