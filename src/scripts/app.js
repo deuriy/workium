@@ -982,6 +982,30 @@ $(() => {
         state.hoverTooltip = false;
         scheduleHide();
       });
+
+      // ---------------------------------------------------------
+      // NEW: Close tooltip when clicking any link inside it
+      // ---------------------------------------------------------
+      tooltip.addEventListener('click', (event) => {
+        const target = event.target.closest('a');
+        if (target) {
+          // моментально закрываем подсказку
+          tooltip.classList.remove('tooltip--visible');
+
+          // отменяем ховер-состояние
+          state.hoverTooltip = false;
+          state.hoverAnchor = false;
+
+          // если был таймер скрытия — очищаем
+          if (state.hideTimeout) {
+            clearTimeout(state.hideTimeout);
+            state.hideTimeout = null;
+          }
+
+          // переход по ссылке произойдёт нормально
+        }
+      });
+      // ---------------------------------------------------------
     });
 
     // пересчёт при скролле/resize только для видимых
