@@ -480,8 +480,8 @@ $(() => {
     );
   }
 
-  let selectedCitiesIdx = [];
-  let currentSelectedCitiesIdx = [];
+  // let selectedCitiesIdx = [];
+  // let currentSelectedCitiesIdx = [];
   let $filterSelects = $();
 
   $('.filter-select').each(function (index, el) {

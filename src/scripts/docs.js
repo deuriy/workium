@@ -1,8 +1,11 @@
 import $ from "jquery";
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import select2 from 'select2';
 
 $(() => {
+  select2($);
+
 	new Swiper('.people-swiper', {
     modules: [Navigation],
     loop: true,
@@ -66,5 +69,32 @@ $(() => {
     $(this).hide();
 
     event.preventDefault();
+  });
+
+  $('.filter-select').each(function (index, el) {
+    if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
+      $(el).select2({
+        dropdownCssClass: ':all:',
+        selectionCssClass: ':all:',
+        theme: 'filter-select',
+        width: '100%',
+        dropdownAutoWidth: true,
+        minimumResultsForSearch: -1
+      });
+    }
+  });
+
+  let $servicesFilter = $('form[name="services_filter"]');
+  
+  $servicesFilter.on('submit', function (event) {
+    let $filterSearchBtn = $('.filter__search-btn');
+    let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
+
+    $filterSearchBtn.hide();
+    $filterPreloaderWrapper.show();
+  });
+
+  $('.filter-select').on('change', function (event, call) {
+    $servicesFilter.trigger('submit');
   });
 });

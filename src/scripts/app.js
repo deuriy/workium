@@ -124,6 +124,8 @@ $(() => {
           if (slide.serviceName) {
             let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
             $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
+            console.log($(slide.contentEl).find('a[href="#order-service-popup"]'));
+            $(slide.contentEl).find('a[href="#order-service-popup"]').attr("data-service-name", serviceName);
           }
 
           $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
