@@ -2,6 +2,21 @@
   @media $smMinus
     max-height 100vh
     overflow auto
+
+  &__header
+    padding 24px 48px
+    border-top-right-radius 20px
+    border-top-left-radius 20px
+    background #F4F5FC
+  
+  &__title
+    font-weight 600
+    font-size 24px
+    line-height 1.25
+    color #000
+  
+  &__tabs-menu
+    margin 24px 46px 0
   
   &__body
     display grid
@@ -39,4 +54,11 @@
   
   &__rating-criteria
     @media $smMinus
+      order -1
+  
+  &--agency
+    .rating-popup__body
+      grid-template-columns 320px 1fr
+
+    .rating-popup__rating-criteria
       order -1

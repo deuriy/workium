@@ -448,20 +448,51 @@ $(() => {
   });
 
 
-  let reviewsPSInstance = null;
-  const reviewsContainer = document.querySelector('.rating-popup__reviews');
+  // let reviewsPSInstance = null;
+  // const reviewsContainer = document.querySelector('.rating-popup__reviews');
+  // const media = window.matchMedia('(min-width: 1024px)');
+
+  // function handleMedia(e) {
+  //   if (e.matches) {
+  //     if (!reviewsPSInstance) {
+  //       reviewsPSInstance = new PerfectScrollbar(reviewsContainer);
+  //     }
+  //   } else {
+  //     if (reviewsPSInstance) {
+  //       reviewsPSInstance.destroy();
+  //       reviewsPSInstance = null;
+  //     }
+  //   }
+  // }
+
+  // media.addEventListener('change', handleMedia);
+  // handleMedia(media);
+
+  let psInstances = new Map(); // хранит {element -> psInstance}
   const media = window.matchMedia('(min-width: 1024px)');
+  const containers = Array.from(document.querySelectorAll('.rating-popup__reviews'));
+
+  function enableScroll(el) {
+    if (!psInstances.has(el)) {
+      psInstances.set(el, new PerfectScrollbar(el));
+    }
+  }
+
+  function disableScroll(el) {
+    const instance = psInstances.get(el);
+    if (instance) {
+      instance.destroy();
+      psInstances.delete(el);
+    }
+  }
 
   function handleMedia(e) {
     if (e.matches) {
-      if (!reviewsPSInstance) {
-        reviewsPSInstance = new PerfectScrollbar(reviewsContainer);
-      }
+      // >= 1024px → включаем все scrollbars
+      containers.forEach(enableScroll);
     } else {
-      if (reviewsPSInstance) {
-        reviewsPSInstance.destroy();
-        reviewsPSInstance = null;
-      }
+      // < 1024px → выключаем все
+      containers.forEach(disableScroll);
     }
   }
 
