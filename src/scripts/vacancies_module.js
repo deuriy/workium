@@ -515,7 +515,7 @@ $(() => {
   // let currentSelectedCitiesIdx = [];
   let $filterSelects = $();
 
-  $('.filter-select').each(function (index, el) {
+  $('.filter-select:not(.reviews__select)').each(function (index, el) {
     if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
       let $item = $(el).select2({
         dropdownCssClass: ':all:',

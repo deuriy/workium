@@ -1029,6 +1029,10 @@ $(() => {
 
   initTooltips();
 
+  document.addEventListener('jobReviewsLoaded', function (event) {
+    initTooltips();
+  });
+
   // Article chapters
   $('.article-chapters__title').click(function (e) {
     let $articleChapters = $(this).closest('.article-chapters');
@@ -1168,7 +1172,10 @@ $(() => {
     const mask = IMask(
       phoneInput,
       {
-        mask: '+000 00 000 00 00'
+        mask: [
+          { mask: '+000 00 000 00 00' },
+          { mask: '+000 00 000 00 000' }
+        ]
       }
     );
     mask.value = '+';

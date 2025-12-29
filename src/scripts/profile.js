@@ -50,6 +50,8 @@ $(() => {
 
 	// console.log(hideProfileCookie);
 
+	let currentFancybox = null;
+
 	let $userSidebar = $('.user-sidebar');
 	let $userAvatarLink = $('.user-sidebar__user-avatar-link');
   let $userInfoWrapper = $('.user-sidebar__user-info-wrapper');
@@ -101,6 +103,16 @@ $(() => {
 
     tpl: {
       closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+    },
+
+		on: {
+      reveal: (fancybox, slide) => {
+        if (currentFancybox) {
+          currentFancybox.close();
+        }
+
+        currentFancybox = fancybox;
+      }
     }
   });
 
