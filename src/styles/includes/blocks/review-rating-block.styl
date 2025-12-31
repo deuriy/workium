@@ -20,6 +20,24 @@
     font-weight 600
     color var(--accent)
   
+  &__mark
+    margin-bottom 8px
+    color var(--text-color)
+    font-weight 400
+    font-size 13px
+    line-height 22px
+  
   &__stars
     @media $xs
       justify-self start
+  
+  &--edit
+    padding 0
+
+    .review-rating-block__criterion
+      display block
+      padding 24px 24px 15px
+
+      & + .review-rating-block__criterion
+        margin-top 0
+        border-top 2px solid var(--light)

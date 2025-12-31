@@ -17,12 +17,22 @@
     &:has(+.add-review-form__review-status)
       margin-bottom 8px
   
-  &__description
+  &__description,
+  &__field-text
     font-weight 400
     color var(--accent)
 
     & > p + p
       margin-top 12px
+  
+  &__field-text
+    & > a
+      font-weight 500
+      color var(--info)
+      text-decoration none
+    
+    &:has(+.media-upload-box)
+      margin-bottom 16px
   
   &__rating-block
     margin 32px 0
@@ -38,10 +48,6 @@
   
   &__field-label
     margin-bottom 8px
-  
-  &__field-text
-    color var(--accent)
-    font-weight 400
   
   &__review-photos
     margin-top 12px

@@ -17,4 +17,27 @@ $(() => {
 
   	e.preventDefault();
   });
+
+	// document.addEventListener('click', (e) => {
+	// 	const input = e.target;
+
+	// 	if (input.type !== 'radio' || !input.classList.contains('rating-stars__item')) return;
+
+	// 	// если радиокнопка уже была выбрана
+	// 	if (input.dataset.wasChecked === 'true') {
+	// 		console.log(input.checked);
+	// 		input.checked = false;
+	// 		input.dataset.wasChecked = 'false';
+	// 		console.log(input.checked);
+	// 		e.preventDefault();
+	// 	} else {
+	// 		// сбрасываем флаг у всех radio этой группы
+	// 		document
+	// 			.querySelectorAll(`input[type="radio"][name="${input.name}"]`)
+	// 			.forEach(radio => radio.dataset.wasChecked = 'false');
+
+	// 		input.dataset.wasChecked = 'true';
+	// 	}
+	// });
+
 });
