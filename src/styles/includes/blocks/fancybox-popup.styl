@@ -456,6 +456,22 @@
 				// margin-top 10px
 				margin-top 12px
 	
+	&--operation-error,
+	&--operation-success
+		.fancybox-popup__text
+			text-align center
+
+			@media $xs
+				margin-bottom 30px
+
+		.fancybox-popup__img-wrapper
+			@media $xs
+				min-height 0
+
+		.fancybox-popup__img
+			@media $xs
+				width 60px
+	
 	&--book-vacancy
 		border-top-right-radius 16px
 		border-top-left-radius 16px
