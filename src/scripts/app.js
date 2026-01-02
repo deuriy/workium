@@ -848,8 +848,6 @@ $(() => {
     const tooltips = Array.from(document.querySelectorAll('.tooltip--extended'));
     if (!tooltips.length) return;
 
-    console.log(tooltips);
-
     const HIDE_DELAY = 150; // мс
 
     let tooltipLayer = document.getElementById('tooltip-layer');
