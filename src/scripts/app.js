@@ -1262,6 +1262,10 @@ $(() => {
 
     if (cookieName) {
       setCookie(cookieName, 'yes', { 'max-age': 3153600000 });
+
+      document.querySelectorAll(`.notice[data-cookie-name="${cookieName}"]`).forEach(el => {
+        el.classList.add('hidden');
+      });
     }
 
     e.preventDefault();
