@@ -4,7 +4,8 @@
 		display grid
 		// grid-template-columns repeat(2, auto)
 		// grid-template-columns auto 1fr auto
-		grid-template-columns auto 1fr 170px
+		// grid-template-columns auto 1fr 170px
+		grid-template-columns auto 1fr 0.4fr
 		justify-content start
 		align-items center
 		gap 16px
@@ -33,13 +34,17 @@
 		justify-content start
 		// align-items center
 		align-items start
-		gap 19px
+		// gap 19px
+		gap 8px
 		
 		@media $xs
-			gap 9px
+			padding-left 8px
+			background var(--grey-light)
+		// 	gap 9px
 	
 	&__currencies-select
-		width 105px
+		// width 105px
+		width 135px
 		
 		@media $xs
 			margin-top 6px

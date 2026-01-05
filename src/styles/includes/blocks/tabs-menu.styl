@@ -160,7 +160,7 @@
 	
 	&--operations-types
 		@media $xs
-			height 58px
+			// height 58px
 			padding-right 0
 			padding-left 0
 			
@@ -168,7 +168,8 @@
 			@media $smPlus
 				flex-wrap wrap
 				// gap 19px
-				gap 6px 19px
+				// gap 6px 19px
+				gap 8px
 			
 			@media $xs
 				height 58px
@@ -183,16 +184,52 @@
 				line-height 1.6
 		
 		.tabs-menu__link
+			grid-template-columns auto 1fr
+			align-items center
+			gap 8px
+			padding 6px 12px
+			border-radius 20px
+
+			&::before
+				content ''
+				box-sizing border-box
+				width 16px
+				height 16px
+				border 1px solid #CACCE0
+				border-radius 50%
+				background-position center
+				background-size 8px auto
+				background-repeat no-repeat
+				@extend .transition
+			
+			&:not(.tabs-menu__link--active):hover
+				background var(--light)
+				color var(--accent)
+
+				&::before
+					background-color #e6e4fe
+			
+			&--active
+				background var(--light)
+				color var(--accent)
+
+				&::before
+					border-color var(--info)
+					background-color var(--info)
+					background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 6' fill='none'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6.75.75-4.125 4L.75 2.932'/%3E%3C/svg%3E")
+
 			@media $xs
 				// padding 7px 16px
-				padding 12px 16px
+				// padding 12px 16px
+				min-height 36px
+				font-size 14px
 				
 				&:not(.tabs-menu__link--active)
 					background var(--light)
 					
-					&:hover
-						background var(--dark)
-						color var(--light)
+					// &:hover
+					// 	background var(--dark)
+					// 	color var(--light)
 	
 	&--light-bg-mob
 		@media $xs
