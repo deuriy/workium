@@ -752,7 +752,10 @@ $(() => {
     toggleClearFilterButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();
-    setVacanciesCount();
+    
+    setTimeout(() => {
+      setVacanciesCount();
+    });
   });
 
   $('.selected-items__more-btn').click(function (event) {
@@ -774,7 +777,7 @@ $(() => {
 
   function setVacanciesCount() {
     $.ajax({
-      url: `/api/v1/vacancies-count/${getFilterUrl()}`,
+      url: `/api/v1/vacancies-count${getFilterUrl().replace(/^\//, '')}`,
 
       success: function (data) {
         const translations = {
