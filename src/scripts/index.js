@@ -3,7 +3,7 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 
 $(() => {
-  const peopleSwiper = new Swiper('.people-swiper', {
+  new Swiper('.people-swiper', {
     modules: [Navigation],
     loop: true,
     slidesPerView: 'auto',
@@ -28,10 +28,19 @@ $(() => {
         spaceBetween: 32,
         centeredSlides: false,
       }
-    }
+    },
+
+    on: {
+      init: function (swiper) {
+        swiper.slideToLoop(0, 0, false);
+      },
+      resize(swiper) {
+        swiper.slideToLoop(0, 0, false);
+      }
+    },
   });
 
-  const testimonialsSwiper = new Swiper('.testimonials-swiper', {
+  new Swiper('.testimonials-swiper', {
     modules: [Navigation],
     loop: true,
     slidesPerView: 'auto',
