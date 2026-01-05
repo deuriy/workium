@@ -171,6 +171,13 @@ $(() => {
 
         currentFancybox = fancybox;
 
+        if (slide.src.includes('operation-success-popup')) {
+          const approveCheckedLoadingPlayer = document.getElementById('approve-checked-loading-player');
+
+          approveCheckedLoadingPlayer?.stop();
+          approveCheckedLoadingPlayer?.play();
+        }
+
         if (slide.src.includes('share-vacancy-with-friend')) {
           const fancyboxBonusLink = slide.contentEl.querySelector('[data-bonus-link]');
           const fancyBoxRewardRange = slide.contentEl.querySelector('[data-reward-range]');
