@@ -986,7 +986,7 @@ $(() => {
     // window.location.href = `/vacancies/${urlParams}${requestParams}`;
 
     $.get(`/vacancies`).done(function () {
-      window.location.href = `/vacancies/${getFilterUrl()}`;
+      window.location.href = `/vacancies${getFilterUrl()}`;
     });
 
     // console.log(`/vacancies/${urlParams}${requestParams}`);
