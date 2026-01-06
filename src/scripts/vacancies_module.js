@@ -777,7 +777,7 @@ $(() => {
 
   function setVacanciesCount() {
     $.ajax({
-      url: `/api/v1/vacancies-count${getFilterUrl().replace(/^\//, '')}`,
+      url: `/api/v1/vacancies-count${getFilterUrl()}`,
 
       success: function (data) {
         const translations = {
@@ -945,8 +945,13 @@ $(() => {
     }
 
     requestParams = requestParamsArr.join('&');
+
+    if (urlParams) {
+      urlParams = '/' + urlParams.replace(/\/+$/, '');
+    }
+    
     if (requestParams) {
-      requestParams = '/?' + requestParams;
+      requestParams = '?' + requestParams;
     }
 
     return urlParams + requestParams;
