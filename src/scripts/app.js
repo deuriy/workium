@@ -185,7 +185,7 @@ $(() => {
           const promoBlockRewardRange = slide.triggerEl.dataset.rewardRange;
 
           if (fancyboxBonusLink && promoBlockLink) {
-              fancyboxBonusLink.value = promoBlockLink;
+            fancyboxBonusLink.value = promoBlockLink;
           }
 
           if (fancyBoxRewardRange && promoBlockRewardRange) {
@@ -270,7 +270,7 @@ $(() => {
               } else {
                 hrefText = `Hello! I would like to know more details about the vacancy "${vacancyTitle}" ${variantLabel}. Vacancy ID: ${agencyId}`;
               }
-              
+
               break;
           }
 
@@ -379,45 +379,45 @@ $(() => {
 
       // close: (fancybox, slide) => {
 
-        // if (!slide.srcElement.includes("#book-vacancy-list-popup") && !slide.srcElement.includes("#consult-vacancies-list-popup")) return;
+      // if (!slide.srcElement.includes("#book-vacancy-list-popup") && !slide.srcElement.includes("#consult-vacancies-list-popup")) return;
 
-        // // let promoBlocks = slide.triggerEl.closest('.promo-blocks');
+      // // let promoBlocks = slide.triggerEl.closest('.promo-blocks');
 
-        // // if (!promoBlocks) return;
+      // // if (!promoBlocks) return;
 
-        // // let checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
+      // // let checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
 
-        // // if (!checkedVariantInput) return;
+      // // if (!checkedVariantInput) return;
 
-        // // let promoBlock = checkedVariantInput.closest('.promo-block');
+      // // let promoBlock = checkedVariantInput.closest('.promo-block');
 
-        // // if (!promoBlock) return;
+      // // if (!promoBlock) return;
 
-        // // let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
-        // // let variantLabel = promoBlock.dataset.variantLabel;
-        // // const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
-        // // const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
+      // // let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
+      // // let variantLabel = promoBlock.dataset.variantLabel;
+      // // const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
+      // // const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
 
-        // const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
-        // const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
-        // const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
-        // const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
+      // const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
+      // const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
+      // const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
+      // const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
 
-        // if (fancyBoxVacancyTitle) {
-        //   // fancyBoxVacancyTitle.textContent = vacancyTitle;
-        // }
+      // if (fancyBoxVacancyTitle) {
+      //   // fancyBoxVacancyTitle.textContent = vacancyTitle;
+      // }
 
-        // if (fancyBoxVariant) {
-        //   fancyBoxVariant.textContent = variantLabel;
-        // }
+      // if (fancyBoxVariant) {
+      //   fancyBoxVariant.textContent = variantLabel;
+      // }
 
-        // if (fancyBoxWorkingPeriod) {
-        //   fancyBoxWorkingPeriod.textContent = workingPeriod;
-        // }
+      // if (fancyBoxWorkingPeriod) {
+      //   fancyBoxWorkingPeriod.textContent = workingPeriod;
+      // }
 
-        // if (fancyBoxRewardRange) {
-        //   fancyBoxRewardRange.textContent = rewardRange;
-        // }
+      // if (fancyBoxRewardRange) {
+      //   fancyBoxRewardRange.textContent = rewardRange;
+      // }
       // }
     }
   });
@@ -628,7 +628,7 @@ $(() => {
   $('.user-label--copy-partner-link').click(function (e) {
     let $copyLinkInput = $($(this).attr('href'));
     let linkDefaultText = $(this).data('link-default-text');
-		let linkCopiedText = $(this).data('link-copied-text');
+    let linkCopiedText = $(this).data('link-copied-text');
 
     copyText($copyLinkInput[0]);
     $(this).text(linkCopiedText);
@@ -814,7 +814,7 @@ $(() => {
     }
   });
 
-  $('.tooltip__close-btn').click(function(e) {
+  $('.tooltip__close-btn').click(function (e) {
     e.preventDefault();
 
     let $tooltip = $(this).closest('.tooltip');
@@ -855,12 +855,12 @@ $(() => {
     const tooltips = Array.from(document.querySelectorAll('.tooltip--extended'));
     if (!tooltips.length) return;
 
-    const HIDE_DELAY = 150; // мс
+    const HIDE_DELAY = 150;
 
     let tooltipLayer = document.getElementById('tooltip-layer');
 
     const anchorMap = new WeakMap(); // tooltip -> anchor
-    const stateMap = new WeakMap();  // tooltip -> { hoverAnchor, hoverTooltip, hideTimeout }
+    const stateMap = new WeakMap();  // tooltip -> state
 
     const ensureTooltipLayer = () => {
       if (tooltipLayer) return tooltipLayer;
@@ -870,29 +870,71 @@ $(() => {
       return tooltipLayer;
     };
 
+    const isOutOfViewportVertically = (rect) => {
+      return rect.top < 0 || rect.bottom > window.innerHeight;
+    };
+
+    /* -------------------------------------------
+     * Определяем вертикальное направление ДО показа
+     * ------------------------------------------- */
+    const resolveVerticalDirection = (tooltip) => {
+      const anchor = anchorMap.get(tooltip);
+      if (!anchor) return;
+
+      // Сбрасываем вертикальные классы — пробуем дефолт
+      tooltip.classList.remove(
+        'tooltip--extended-top',
+        'tooltip--extended-bottom'
+      );
+
+      // Временно позиционируем дефолт
+      positionTooltip(tooltip);
+
+      const rect = tooltip.getBoundingClientRect();
+      if (!isOutOfViewportVertically(rect)) {
+        // ✔ подсказка влезает — НИЧЕГО не делаем
+        return;
+      }
+
+      const anchorRect = anchor.getBoundingClientRect();
+      const spaceAbove = anchorRect.top;
+      const spaceBelow = window.innerHeight - anchorRect.bottom;
+      const tooltipHeight = rect.height;
+
+      // Пробуем альтернативу
+      if (spaceAbove >= tooltipHeight) {
+        tooltip.classList.add('tooltip--extended-top');
+      } else if (spaceBelow >= tooltipHeight) {
+        tooltip.classList.add('tooltip--extended-bottom');
+      }
+
+      // Финальная перепозиция после смены направления
+      positionTooltip(tooltip);
+    };
+
     const positionTooltip = (tooltip) => {
       const anchor = anchorMap.get(tooltip);
       if (!anchor) return;
 
-      const parentRect = anchor.getBoundingClientRect();
+      const anchorRect = anchor.getBoundingClientRect();
       const tooltipRect = tooltip.getBoundingClientRect();
 
-      let top = 0;
-      let left = 0;
+      let top;
+      let left;
 
       if (tooltip.classList.contains('tooltip--extended-top')) {
-        top = parentRect.top - tooltipRect.height;
-        left = parentRect.left + parentRect.width / 2 - tooltipRect.width / 2;
+        top = anchorRect.top - tooltipRect.height;
+        left = anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2;
       } else if (tooltip.classList.contains('tooltip--extended-bottom')) {
-        top = parentRect.bottom;
-        left = parentRect.left + parentRect.width / 2 - tooltipRect.width / 2;
+        top = anchorRect.bottom;
+        left = anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2;
       } else if (tooltip.classList.contains('tooltip--extended-left')) {
-        top = parentRect.top + parentRect.height / 2 - tooltipRect.height / 2;
-        left = parentRect.left - tooltipRect.width;
+        top = anchorRect.top + anchorRect.height / 2 - tooltipRect.height / 2;
+        left = anchorRect.left - tooltipRect.width;
       } else {
         // справа по умолчанию
-        top = parentRect.top + parentRect.height / 2 - tooltipRect.height / 2;
-        left = parentRect.right;
+        top = anchorRect.top + anchorRect.height / 2 - tooltipRect.height / 2;
+        left = anchorRect.right;
       }
 
       tooltip.style.top = `${Math.round(top)}px`;
@@ -901,9 +943,10 @@ $(() => {
 
     const updateAllTooltips = () => {
       tooltips.forEach((tooltip) => {
-        if (tooltip.classList.contains('tooltip--visible')) {
-          positionTooltip(tooltip);
-        }
+        if (!tooltip.classList.contains('tooltip--visible')) return;
+
+        resolveVerticalDirection(tooltip);
+        positionTooltip(tooltip);
       });
     };
 
@@ -929,9 +972,7 @@ $(() => {
 
         const movedNow = tooltip.parentElement !== tooltipLayer;
         if (movedNow) {
-          // первый раз переносим в слой
           tooltipLayer.appendChild(tooltip);
-          // гарантируем стартовое состояние (скрыто)
           tooltip.classList.remove('tooltip--visible');
         }
 
@@ -940,15 +981,14 @@ $(() => {
           state.hideTimeout = null;
         }
 
-        // сначала выставляем позицию в скрытом состоянии
+        // ВАЖНО: сначала определяем направление, потом позицию
+        resolveVerticalDirection(tooltip);
         positionTooltip(tooltip);
 
         if (movedNow) {
-          // фиксируем начальное состояние (opacity: 0, нужный top/left)
-          void tooltip.offsetWidth; // reflow
+          void tooltip.offsetWidth; // фиксируем layout
         }
 
-        // меняем состояние на видимое в следующем кадре — transition отработает
         requestAnimationFrame(() => {
           tooltip.classList.add('tooltip--visible');
         });
@@ -958,6 +998,7 @@ $(() => {
         if (state.hideTimeout) {
           clearTimeout(state.hideTimeout);
         }
+
         state.hideTimeout = setTimeout(() => {
           if (!state.hoverAnchor && !state.hoverTooltip) {
             tooltip.classList.remove('tooltip--visible');
@@ -979,7 +1020,7 @@ $(() => {
         scheduleHide();
       });
 
-      // hover по самой подсказке
+      // hover по подсказке
       tooltip.addEventListener('mouseenter', () => {
         if (!isTooltipEnabled()) return;
         state.hoverTooltip = true;
@@ -992,39 +1033,30 @@ $(() => {
         scheduleHide();
       });
 
-      // ---------------------------------------------------------
-      // NEW: Close tooltip when clicking any link inside it
-      // ---------------------------------------------------------
+      // закрытие по клику на ссылку
       tooltip.addEventListener('click', (event) => {
-        const target = event.target.closest('a');
-        if (target) {
-          // моментально закрываем подсказку
-          tooltip.classList.remove('tooltip--visible');
+        const link = event.target.closest('a');
+        if (!link) return;
 
-          // отменяем ховер-состояние
-          state.hoverTooltip = false;
-          state.hoverAnchor = false;
+        tooltip.classList.remove('tooltip--visible');
+        state.hoverAnchor = false;
+        state.hoverTooltip = false;
 
-          // если был таймер скрытия — очищаем
-          if (state.hideTimeout) {
-            clearTimeout(state.hideTimeout);
-            state.hideTimeout = null;
-          }
-
-          // переход по ссылке произойдёт нормально
+        if (state.hideTimeout) {
+          clearTimeout(state.hideTimeout);
+          state.hideTimeout = null;
         }
       });
-      // ---------------------------------------------------------
     });
 
-    // пересчёт при скролле/resize только для видимых
+    // scroll / resize
     let ticking = false;
 
     const onScrollOrResize = () => {
       if (ticking) return;
       ticking = true;
 
-      window.requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         updateAllTooltips();
         ticking = false;
       });
@@ -1220,7 +1252,7 @@ $(() => {
     const input = e.target.closest('.sms-code-field__input');
 
     if (!input) return;
-    
+
     const pasteData = (e.clipboardData || window.clipboardData).getData('text');
     const digits = pasteData.replace(/\D/g, '').split('');
     const smsInputs = input.parentNode.querySelectorAll('.sms-code-field__input');

@@ -47,6 +47,9 @@
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23676F80' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m4 12 8-8M4 4l8 8'/%3E%3C/svg%3E") center / cover no-repeat
 		cursor pointer
 	
+	&__btn
+		width 100%
+	
 	&--copied
 		padding-left 35px
 		background var(--light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath fill='%235340ff' d='M8 23c0 8.838 7.164 16 16 16s16-7.162 16-16c0-8.836-7.164-16-16-16S8 14.164 8 23Zm13.474 7.002-2.968-2.971-3.006-3.013 2.968-2.971 3.013 3.008L29.532 16l2.968 2.971-11.026 11.031Z'/%3E%3C/g%3E%3C/svg%3E") 5px / 24px no-repeat
@@ -185,3 +188,7 @@
 	
 	&--closed
 		pointer-events none
+	
+	&--review-salary
+		.tooltip__text > p
+			margin-bottom 12px
