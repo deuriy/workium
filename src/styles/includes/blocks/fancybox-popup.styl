@@ -352,9 +352,12 @@
 			width 1180px
 			border-radius 20px
 		
+		@media $smMinus
+			height calc(var(--vh, 100vh) * 100)
+		
 		@media $xs
 			// height 100vh
-			height calc(var(--vh, 100vh) * 100)
+			// height calc(var(--vh, 100vh) * 100)
 			border-radius 0
 		
 		.fancybox-close-button

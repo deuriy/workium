@@ -860,7 +860,7 @@ $(() => {
     let tooltipLayer = document.getElementById('tooltip-layer');
 
     const anchorMap = new WeakMap(); // tooltip -> anchor
-    const stateMap = new WeakMap();  // tooltip -> state
+    const stateMap = new WeakMap(); // tooltip -> state
 
     const ensureTooltipLayer = () => {
       if (tooltipLayer) return tooltipLayer;
@@ -870,81 +870,71 @@ $(() => {
       return tooltipLayer;
     };
 
-    const isOutOfViewportVertically = (rect) => {
-      return rect.top < 0 || rect.bottom > window.innerHeight;
-    };
+    const getTrigger = (anchor) =>
+      anchor.getAttribute('data-tooltip-trigger') || 'hover';
 
-    /* -------------------------------------------
-     * Определяем вертикальное направление ДО показа
-     * ------------------------------------------- */
-    const resolveVerticalDirection = (tooltip) => {
-      const anchor = anchorMap.get(tooltip);
-      if (!anchor) return;
-
-      // Сбрасываем вертикальные классы — пробуем дефолт
-      tooltip.classList.remove(
-        'tooltip--extended-top',
-        'tooltip--extended-bottom'
-      );
-
-      // Временно позиционируем дефолт
-      positionTooltip(tooltip);
-
-      const rect = tooltip.getBoundingClientRect();
-      if (!isOutOfViewportVertically(rect)) {
-        // ✔ подсказка влезает — НИЧЕГО не делаем
-        return;
-      }
-
-      const anchorRect = anchor.getBoundingClientRect();
-      const spaceAbove = anchorRect.top;
-      const spaceBelow = window.innerHeight - anchorRect.bottom;
-      const tooltipHeight = rect.height;
-
-      // Пробуем альтернативу
-      if (spaceAbove >= tooltipHeight) {
-        tooltip.classList.add('tooltip--extended-top');
-      } else if (spaceBelow >= tooltipHeight) {
-        tooltip.classList.add('tooltip--extended-bottom');
-      }
-
-      // Финальная перепозиция после смены направления
-      positionTooltip(tooltip);
-    };
+    const isOutOfViewportVertically = (rect) =>
+      rect.top < 0 || rect.bottom > window.innerHeight;
 
     const positionTooltip = (tooltip) => {
       const anchor = anchorMap.get(tooltip);
       if (!anchor) return;
 
-      const anchorRect = anchor.getBoundingClientRect();
-      const tooltipRect = tooltip.getBoundingClientRect();
+      const a = anchor.getBoundingClientRect();
+      const t = tooltip.getBoundingClientRect();
 
-      let top;
-      let left;
+      let top, left;
 
       if (tooltip.classList.contains('tooltip--extended-top')) {
-        top = anchorRect.top - tooltipRect.height;
-        left = anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2;
+        top = a.top - t.height;
+        left = a.left + a.width / 2 - t.width / 2;
       } else if (tooltip.classList.contains('tooltip--extended-bottom')) {
-        top = anchorRect.bottom;
-        left = anchorRect.left + anchorRect.width / 2 - tooltipRect.width / 2;
+        top = a.bottom;
+        left = a.left + a.width / 2 - t.width / 2;
       } else if (tooltip.classList.contains('tooltip--extended-left')) {
-        top = anchorRect.top + anchorRect.height / 2 - tooltipRect.height / 2;
-        left = anchorRect.left - tooltipRect.width;
+        top = a.top + a.height / 2 - t.height / 2;
+        left = a.left - t.width;
       } else {
         // справа по умолчанию
-        top = anchorRect.top + anchorRect.height / 2 - tooltipRect.height / 2;
-        left = anchorRect.right;
+        top = a.top + a.height / 2 - t.height / 2;
+        left = a.right;
       }
 
       tooltip.style.top = `${Math.round(top)}px`;
       tooltip.style.left = `${Math.round(left)}px`;
     };
 
+    const resolveVerticalDirection = (tooltip) => {
+      const anchor = anchorMap.get(tooltip);
+      if (!anchor) return;
+
+      tooltip.classList.remove(
+        'tooltip--extended-top',
+        'tooltip--extended-bottom'
+      );
+
+      positionTooltip(tooltip);
+
+      const rect = tooltip.getBoundingClientRect();
+      if (!isOutOfViewportVertically(rect)) return;
+
+      const a = anchor.getBoundingClientRect();
+      const spaceAbove = a.top;
+      const spaceBelow = window.innerHeight - a.bottom;
+      const height = rect.height;
+
+      if (spaceAbove >= height) {
+        tooltip.classList.add('tooltip--extended-top');
+      } else if (spaceBelow >= height) {
+        tooltip.classList.add('tooltip--extended-bottom');
+      }
+
+      positionTooltip(tooltip);
+    };
+
     const updateAllTooltips = () => {
       tooltips.forEach((tooltip) => {
         if (!tooltip.classList.contains('tooltip--visible')) return;
-
         resolveVerticalDirection(tooltip);
         positionTooltip(tooltip);
       });
@@ -963,15 +953,16 @@ $(() => {
       };
       stateMap.set(tooltip, state);
 
-      const isTooltipEnabled = () => anchor.hasAttribute('data-tooltip');
+      const isEnabled = () => anchor.hasAttribute('data-tooltip');
+      const trigger = getTrigger(anchor);
 
       const showTooltip = () => {
-        if (!isTooltipEnabled()) return;
+        if (!isEnabled()) return;
 
         ensureTooltipLayer();
 
-        const movedNow = tooltip.parentElement !== tooltipLayer;
-        if (movedNow) {
+        const moved = tooltip.parentElement !== tooltipLayer;
+        if (moved) {
           tooltipLayer.appendChild(tooltip);
           tooltip.classList.remove('tooltip--visible');
         }
@@ -981,13 +972,10 @@ $(() => {
           state.hideTimeout = null;
         }
 
-        // ВАЖНО: сначала определяем направление, потом позицию
         resolveVerticalDirection(tooltip);
         positionTooltip(tooltip);
 
-        if (movedNow) {
-          void tooltip.offsetWidth; // фиксируем layout
-        }
+        if (moved) void tooltip.offsetWidth;
 
         requestAnimationFrame(() => {
           tooltip.classList.add('tooltip--visible');
@@ -995,9 +983,7 @@ $(() => {
       };
 
       const scheduleHide = () => {
-        if (state.hideTimeout) {
-          clearTimeout(state.hideTimeout);
-        }
+        if (state.hideTimeout) clearTimeout(state.hideTimeout);
 
         state.hideTimeout = setTimeout(() => {
           if (!state.hoverAnchor && !state.hoverTooltip) {
@@ -1007,35 +993,70 @@ $(() => {
         }, HIDE_DELAY);
       };
 
-      // hover по якорю
-      anchor.addEventListener('mouseenter', () => {
-        if (!isTooltipEnabled()) return;
-        state.hoverAnchor = true;
-        showTooltip();
-      });
+      /* ---------- HOVER MODE ---------- */
+      if (trigger === 'hover') {
+        anchor.addEventListener('mouseenter', () => {
+          if (!isEnabled()) return;
+          state.hoverAnchor = true;
+          showTooltip();
+        });
 
-      anchor.addEventListener('mouseleave', () => {
-        if (!isTooltipEnabled()) return;
-        state.hoverAnchor = false;
-        scheduleHide();
-      });
+        anchor.addEventListener('mouseleave', () => {
+          if (!isEnabled()) return;
+          state.hoverAnchor = false;
+          scheduleHide();
+        });
 
-      // hover по подсказке
-      tooltip.addEventListener('mouseenter', () => {
-        if (!isTooltipEnabled()) return;
-        state.hoverTooltip = true;
-        showTooltip();
-      });
+        tooltip.addEventListener('mouseenter', () => {
+          if (!isEnabled()) return;
+          state.hoverTooltip = true;
+          showTooltip();
+        });
 
-      tooltip.addEventListener('mouseleave', () => {
-        if (!isTooltipEnabled()) return;
-        state.hoverTooltip = false;
-        scheduleHide();
-      });
+        tooltip.addEventListener('mouseleave', () => {
+          if (!isEnabled()) return;
+          state.hoverTooltip = false;
+          scheduleHide();
+        });
+      }
 
-      // закрытие по клику на ссылку
-      tooltip.addEventListener('click', (event) => {
-        const link = event.target.closest('a');
+      /* ---------- CLICK MODE ---------- */
+      if (trigger === 'click') {
+        anchor.addEventListener('click', (e) => {
+          if (!isEnabled()) return;
+
+          e.preventDefault();
+          e.stopPropagation();
+
+          const visible = tooltip.classList.contains('tooltip--visible');
+
+          tooltips.forEach((t) => {
+            if (t === tooltip) return;
+            t.classList.remove('tooltip--visible');
+            const s = stateMap.get(t);
+            if (s) {
+              s.hoverAnchor = false;
+              s.hoverTooltip = false;
+            }
+          });
+
+          if (visible) {
+            tooltip.classList.remove('tooltip--visible');
+            state.hoverAnchor = false;
+          } else {
+            state.hoverAnchor = true;
+            showTooltip();
+          }
+        });
+
+        tooltip.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      }
+
+      /* ---------- CLOSE ON LINK CLICK ---------- */
+      tooltip.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
         if (!link) return;
 
         tooltip.classList.remove('tooltip--visible');
@@ -1049,7 +1070,22 @@ $(() => {
       });
     });
 
-    // scroll / resize
+    /* ---------- CLICK OUTSIDE ---------- */
+    document.addEventListener('click', () => {
+      tooltips.forEach((tooltip) => {
+        const anchor = anchorMap.get(tooltip);
+        if (!anchor || getTrigger(anchor) !== 'click') return;
+
+        tooltip.classList.remove('tooltip--visible');
+        const state = stateMap.get(tooltip);
+        if (state) {
+          state.hoverAnchor = false;
+          state.hoverTooltip = false;
+        }
+      });
+    });
+
+    /* ---------- SCROLL / RESIZE ---------- */
     let ticking = false;
 
     const onScrollOrResize = () => {
@@ -1132,7 +1168,7 @@ $(() => {
   document.addEventListener('click', function (e) {
     const like = e.target.closest('.like');
 
-    if (!like) return;
+    if (!like || like.classList.contains('like--not-clickable')) return;
 
     like.classList.toggle('like--filled');
     e.preventDefault();

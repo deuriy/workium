@@ -86,12 +86,19 @@
 			outline none
 			background-position right 14px center
 
+			@media $xs
+				border-color #5b617c
+				background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 8'%3E%3Cpath stroke='%235b617c' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 1 6 6 6-6'/%3E%3C/svg%3E")
+
 			.select2-selection__rendered
 				padding-right 36px
 				padding-left 10px
 				font-size 13px
 				line-height 1.69230
 				color #666B80
+
+				@media $xs
+					color var(--accent)
 	
 	&--dropdown-select,
 	&--currency-dropdown-select
