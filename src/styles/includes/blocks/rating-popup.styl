@@ -18,6 +18,12 @@
   
   &__tabs-menu
     margin 24px 46px 0
+
+    @media $mdMinus
+      margin 24px 24px 0
+
+    @media $xs
+      margin 12px 16px 0
   
   &__body
     display grid
@@ -60,6 +66,9 @@
   &--agency
     .rating-popup__body
       grid-template-columns 320px 1fr
+
+      @media $smMinus
+        grid-template-columns 100%
 
     .rating-popup__rating-criteria
       order -1

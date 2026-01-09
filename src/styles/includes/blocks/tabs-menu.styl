@@ -309,8 +309,15 @@
 		border 1px solid #DFE1ED
 		border-radius 14px
 
+		@media $xs
+			height auto
+			background transparent
+
 		.tabs-menu__list
 			gap 0
+
+			@media $xs
+				height auto
 
 		.tabs-menu__link
 			display flex
@@ -318,4 +325,7 @@
 			border-radius 12px
 			font-size 15px
 			line-height 1.6
+
+			@media $xs
+				padding 6px 12px
 			

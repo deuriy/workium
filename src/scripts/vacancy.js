@@ -1,6 +1,7 @@
 import $ from "jquery";
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 function getUrlWithoutParameter(param) {
   const url = new URL(window.location.href);
@@ -16,7 +17,7 @@ function copyText(input) {
   document.execCommand("copy");
 }
 
-function copyVacancyText () {
+function copyVacancyText() {
   let $vacancyCard = $('.vacancy-card--full');
 
   if (!$vacancyCard.length) return;
@@ -57,7 +58,7 @@ function copyVacancyText () {
   $vacancyCardTextarea.remove();
 }
 
-function toggleMoreLink ($link) {
+function toggleMoreLink($link) {
   let linkText = $link.text() === 'Приховати' ? 'Детальніше' : 'Приховати';
   $link.text(linkText);
 
@@ -102,19 +103,19 @@ $(() => {
         bulletActiveClass: 'swiper-pagination-bullet--active',
         // clickable: true
       },
-      
+
       on: {
-        slideChange: function() {
+        slideChange: function () {
           // Снимаем checked со всех радио кнопок в данном слайдере
           const allCheckboxes = this.el.querySelectorAll('.checkbox__input');
           allCheckboxes.forEach(checkbox => {
             checkbox.checked = false;
           });
-          
+
           // Устанавливаем checked для радио кнопки в активном слайде
           const activeSlide = this.slides[this.activeIndex];
           const activeCheckbox = activeSlide.querySelector('.checkbox__input');
-          
+
           if (activeCheckbox) {
             activeCheckbox.checked = true;
             // Триггерим событие change для обновления связанной логики
@@ -136,24 +137,24 @@ $(() => {
     }
   }
 
-  $('.infoblock__more-link').click(function(e) {
+  $('.infoblock__more-link').click(function (e) {
     $(this).closest('.infoblock').find('.infoblock__text').toggleClass('infoblock__text--truncated');
 
     toggleMoreLink($(this));
     e.preventDefault();
   });
 
-  $('.btn-grey--bookmark').click(function(e) {
+  $('.btn-grey--bookmark').click(function (e) {
     e.preventDefault();
 
     $(this).toggleClass('btn-grey--bookmark-fill');
   });
 
-  $('.vacancy-info__bookmark-icon').click(function(event) {
+  $('.vacancy-info__bookmark-icon').click(function (event) {
     $('.vacancy-footer__bookmark-btn').toggleClass('btn-grey--bookmark-fill');
   });
 
-  $('.vacancy-footer__bookmark-btn').click(function(event) {
+  $('.vacancy-footer__bookmark-btn').click(function (event) {
     $('.vacancy-info__bookmark-icon').toggleClass('bookmark-icon--fill');
   });
 
@@ -173,7 +174,7 @@ $(() => {
   //   event.preventDefault();
   // });
 
-  $(document).on('click', '.vacancy-card__copy-btn, .vacancy-buttons__copy-btn', function(event) {
+  $(document).on('click', '.vacancy-card__copy-btn, .vacancy-buttons__copy-btn', function (event) {
     copyVacancyText();
 
     let $tooltip = $(this).find('.btn-grey__tooltip');
@@ -198,7 +199,7 @@ $(() => {
   //   $fancyboxPopup.find('.fancybox-popup__contact-box').slideDown();
   // });
 
-  $(document).on('click', '.agency-gallery__more-item-link', function(event) {
+  $(document).on('click', '.agency-gallery__more-item-link', function (event) {
     event.preventDefault();
 
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
@@ -207,7 +208,7 @@ $(() => {
     $(this).hide();
   });
 
-  $(document).on('click', '.agency-gallery__hide-link', function(event) {
+  $(document).on('click', '.agency-gallery__hide-link', function (event) {
     event.preventDefault();
 
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
@@ -266,5 +267,36 @@ $(() => {
       window.history.back();
     }
   });
+
+  let psInstances = new Map(); // хранит {element -> psInstance}
+  const media = window.matchMedia('(min-width: 1024px)');
+  const containers = Array.from(document.querySelectorAll('.rating-popup__reviews'));
+
+  function enableScroll(el) {
+    if (!psInstances.has(el)) {
+      psInstances.set(el, new PerfectScrollbar(el));
+    }
+  }
+
+  function disableScroll(el) {
+    const instance = psInstances.get(el);
+    if (instance) {
+      instance.destroy();
+      psInstances.delete(el);
+    }
+  }
+
+  function handleMedia(e) {
+    if (e.matches) {
+      // >= 1024px → включаем все scrollbars
+      containers.forEach(enableScroll);
+    } else {
+      // < 1024px → выключаем все
+      containers.forEach(disableScroll);
+    }
+  }
+
+  media.addEventListener('change', handleMedia);
+  handleMedia(media);
 
 });
