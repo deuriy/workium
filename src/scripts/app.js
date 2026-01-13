@@ -93,8 +93,20 @@ function clearTextField($input) {
 }
 
 $(() => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  // первичная установка
+  setVh();
+
+  // пересчёт при изменениях
+  window.addEventListener('resize', setVh);
+  window.addEventListener('orientationchange', setVh);
+
+  // для мобильных браузеров (Safari, Chrome Android и т.п.)
+  window.visualViewport?.addEventListener('resize', setVh);
 
   let currentFancybox = null;
 

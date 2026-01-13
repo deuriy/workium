@@ -299,4 +299,51 @@ $(() => {
   media.addEventListener('change', handleMedia);
   handleMedia(media);
 
+
+  const updateMobileHeaderState = (popup) => {
+    if (!popup) return;
+
+    const mobileHeader   = popup.querySelector('.popup-mobile-header');
+    if (!mobileHeader) return;
+
+    const titleEl        = mobileHeader.querySelector('.popup-mobile-header__title');
+    const companyInfoEl  = mobileHeader.querySelector('.company-info--popup-mobile-header');
+    const ratingDropdownCriteriaHeader  = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
+
+    if (!titleEl || !companyInfoEl) return;
+
+    const scrolled = popup.scrollTop;
+
+    if (scrolled >= 100) {
+      // показываем компанию, прячем заголовок
+      titleEl.classList.add('hidden');
+      companyInfoEl.classList.remove('hidden');
+    } else {
+      // показываем заголовок, прячем компанию
+      titleEl.classList.remove('hidden');
+      companyInfoEl.classList.add('hidden');
+
+      if (ratingDropdownCriteriaHeader) {
+        ratingDropdownCriteriaHeader.classList.remove('dropdown-block--visible');
+      }
+    }
+  };
+
+  // Делегирование: один обработчик на документ, ловим скроллы всех .rating-popup
+  document.addEventListener(
+    'scroll',
+    function (e) {
+      const target = e.target;
+
+      // Нас интересуют только элементы с классом rating-popup
+      if (!target.classList || !target.classList.contains('rating-popup')) return;
+
+      updateMobileHeaderState(target);
+    },
+    true // захват, чтобы событие точно словилось
+  );
+
+  // Инициализация состояния при загрузке
+  document.querySelectorAll('.rating-popup').forEach(updateMobileHeaderState);
+
 });

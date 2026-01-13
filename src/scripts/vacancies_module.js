@@ -1770,5 +1770,4 @@ $(() => {
   // Инициализация состояния при загрузке
   document.querySelectorAll('.rating-popup').forEach(updateMobileHeaderState);
 
-
 });
