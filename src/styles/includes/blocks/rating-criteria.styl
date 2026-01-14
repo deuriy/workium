@@ -11,6 +11,10 @@
 
     @media $xs
       margin-bottom 10px
+  
+  &__items
+    max-height calc(100vh - 240px)
+    overflow auto
     
   &__item
     & + &
@@ -35,4 +39,8 @@
     .rating-criteria__criterion
       font-size 13px
       line-height 1.69230769
+  
+  &--agency-popup
+    .rating-criteria__items
+      max-height calc(100vh - 286px)
       

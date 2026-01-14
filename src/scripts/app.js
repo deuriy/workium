@@ -112,6 +112,16 @@ $(() => {
 
   Fancybox.bind("[data-fancybox]");
 
+  Fancybox.bind("[data-fancybox-mini-gallery]", {
+    on: {
+      destroy: (fancybox) => {
+        document.documentElement.classList.add("with-fancybox");
+        document.body.classList.add("hide-scrollbar");
+      }
+    }
+  });
+
+
   Fancybox.bind(".fancybox-popup-toggle", {
     dragToClose: false,
     mainClass: 'fancybox--popup',
