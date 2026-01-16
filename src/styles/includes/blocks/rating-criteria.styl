@@ -13,8 +13,9 @@
       margin-bottom 10px
   
   &__items
-    max-height calc(100vh - 240px)
-    overflow auto
+    @media $md
+      max-height calc(100vh - 240px)
+      overflow auto
     
   &__item
     & + &
@@ -42,5 +43,6 @@
   
   &--agency-popup
     .rating-criteria__items
-      max-height calc(100vh - 286px)
+      @media $md
+        max-height calc(100vh - 286px)
       
