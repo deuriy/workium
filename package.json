@@ -52,6 +52,7 @@
     "postcss": "^8.3.11",
     "select2": "^4.1.0-rc.0",
     "stylus-supremacy": "^2.15.0",
+    "wavesurfer.js": "^7.12.1",
     "yargs": "^17.2.1"
   },
   "optionalDependencies": {

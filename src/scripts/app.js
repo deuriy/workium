@@ -1,6 +1,7 @@
 import $ from "jquery";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
 import IMask from 'imask';
+import { AudioPlayers } from "./audio_player.js";
 
 var count = 200;
 var defaults = {
@@ -1128,6 +1129,8 @@ $(() => {
 
   document.addEventListener('jobReviewsLoaded', function (event) {
     initTooltips();
+    console.log(AudioPlayers);
+    AudioPlayers.init();
   });
 
   // Article chapters
@@ -1408,4 +1411,9 @@ $(() => {
 
     // updateFilterUrl();
   });
+
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   AudioPlayers.init();
+  // });
+
 });
