@@ -1129,7 +1129,6 @@ $(() => {
 
   document.addEventListener('jobReviewsLoaded', function (event) {
     initTooltips();
-    console.log(AudioPlayers);
     AudioPlayers.init();
   });
 
@@ -1411,9 +1410,4 @@ $(() => {
 
     // updateFilterUrl();
   });
-
-  // document.addEventListener('DOMContentLoaded', () => {
-  //   AudioPlayers.init();
-  // });
-
 });

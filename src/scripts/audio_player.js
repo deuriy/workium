@@ -14,8 +14,6 @@ const AudioPlayers = (() => {
   function initPlayer(player) {
     if (instances.has(player)) return;
 
-    console.log(player);
-
     const audio = player.querySelector('audio');
     const src = player.dataset.audioSrc;
     const waveformEl = player.querySelector('.audio-waveform');
@@ -66,8 +64,6 @@ const AudioPlayers = (() => {
     ws.on('pause', () => btn.classList.remove('audio-play--paused'));
 
     instances.set(player, ws);
-
-    console.log(ws);
   }
 
   /* ---------------- EVENTS ---------------- */
@@ -119,7 +115,6 @@ const AudioPlayers = (() => {
 
     ws.setPlaybackRate(next);
 
-    console.log(rate);
     btn.classList.toggle('audio-speed--highlighted', rate !== 2)
     btn.textContent = `${next}x`;
   }
