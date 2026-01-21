@@ -1129,7 +1129,11 @@ $(() => {
 
   document.addEventListener('jobReviewsLoaded', function (event) {
     initTooltips();
-    AudioPlayers.init();
+  });
+
+  document.addEventListener('audioPlayersLoaded', function (event) {
+    const ratingPopup = document.querySelector(event.detail.popupId);
+    AudioPlayers.init(ratingPopup);
   });
 
   // Article chapters

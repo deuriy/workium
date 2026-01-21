@@ -3,6 +3,7 @@ import WaveSurfer from 'wavesurfer.js';
 const AudioPlayers = (() => {
 
   const instances = new WeakMap();
+  let activeWs = null;
 
   function init(root = document) {
     root.querySelectorAll('.audio-player').forEach(initPlayer);
@@ -26,7 +27,7 @@ const AudioPlayers = (() => {
 
     const ws = WaveSurfer.create({
       "container": waveformEl,
-      "height": 82,
+      "height": 32,
       "splitChannels": false,
       "normalize": false,
       "waveColor": "#d9dae7",
@@ -37,7 +38,7 @@ const AudioPlayers = (() => {
       "barGap": 2,
       "barRadius": 0,
       "barHeight": 1.2,
-      "barAlign": "",
+      "barAlign": "bottom",
       "minPxPerSec": 1,
       "fillParent": true,
       "media": audio,
@@ -55,15 +56,31 @@ const AudioPlayers = (() => {
     });
 
     ws.on('audioprocess', () => {
-      timeEl.hidden = false;
       timeEl.textContent =
         `${formatTime(ws.getCurrentTime())} / ${formatTime(ws.getDuration())}`;
     });
 
-    ws.on('play', () => btn.classList.add('audio-play--paused'));
-    ws.on('pause', () => btn.classList.remove('audio-play--paused'));
+    ws.on('play', () => {
+      if (activeWs && activeWs !== ws) {
+        activeWs.pause();
+      }
+      activeWs = ws;
+
+      btn.classList.add('audio-play--paused');
+    });
+
+    ws.on('pause', () => {
+      if (activeWs === ws) activeWs = null;
+      btn.classList.remove('audio-play--paused');
+    });
+
+    ws.on('finish', () => {
+      if (activeWs === ws) activeWs = null;
+      btn.classList.remove('audio-play--paused');
+    });
 
     instances.set(player, ws);
+    updateVolumeState(player, audio.volume || 1);
   }
 
   /* ---------------- EVENTS ---------------- */
@@ -105,6 +122,7 @@ const AudioPlayers = (() => {
     ws.setVolume(volume);
 
     updateRangeFill(range);
+    updateVolumeState(player, volume);
   }
 
   /* ---------------- ACTIONS ---------------- */
@@ -125,9 +143,27 @@ const AudioPlayers = (() => {
 
     ws.setMuted(!muted);
 
+    let volume = 0;
+
     if (range) {
-      range.value = muted ? ws.getVolume() || 1 : 0;
+      volume = muted ? ws.getVolume() || 1 : 0;
+      range.value = volume;
       updateRangeFill(range);
+    }
+
+    updateVolumeState(player, volume);
+  }
+
+  function updateVolumeState(player, volume) {
+    const volumeEl = player.querySelector('.audio-volume');
+    if (!volumeEl) return;
+
+    volumeEl.classList.remove('audio-volume--lower', 'audio-volume--no-sound');
+
+    if (volume === 0) {
+      volumeEl.classList.add('audio-volume--no-sound');
+    } else if (volume < 0.5) {
+      volumeEl.classList.add('audio-volume--lower');
     }
   }
 
