@@ -1,6 +1,7 @@
 import $ from "jquery";
 import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 function changePromoBlockButtons(promoBlock, vacancyCard) {
   if (!promoBlock || !vacancyCard) return;
@@ -35,7 +36,7 @@ document.addEventListener('bookmarksLoaded', function (event) {
   function getLineCount(element) {
     const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
     const elementHeight = element.clientHeight;
-    
+
     return Math.round(elementHeight / lineHeight);
   }
 
@@ -89,19 +90,19 @@ document.addEventListener('bookmarksLoaded', function (event) {
           bulletActiveClass: 'swiper-pagination-bullet--active',
           // clickable: true
         },
-        
+
         on: {
-          slideChange: function() {
+          slideChange: function () {
             // Снимаем checked со всех радио кнопок в данном слайдере
             const allCheckboxes = this.el.querySelectorAll('.checkbox__input');
             allCheckboxes.forEach(checkbox => {
               checkbox.checked = false;
             });
-            
+
             // Устанавливаем checked для радио кнопки в активном слайде
             const activeSlide = this.slides[this.activeIndex];
             const activeCheckbox = activeSlide.querySelector('.checkbox__input');
-            
+
             if (activeCheckbox) {
               activeCheckbox.checked = true;
               // Триггерим событие change для обновления связанной логики
@@ -132,4 +133,35 @@ document.addEventListener('bookmarksLoaded', function (event) {
 
     changePromoBlockButtons(promoBlock, vacancyCard);
   });
+
+  let psInstances = new Map(); // хранит {element -> psInstance}
+  const media = window.matchMedia('(min-width: 1024px)');
+  const containers = Array.from(document.querySelectorAll('.rating-popup__reviews'));
+
+  function enableScroll(el) {
+    if (!psInstances.has(el)) {
+      psInstances.set(el, new PerfectScrollbar(el));
+    }
+  }
+
+  function disableScroll(el) {
+    const instance = psInstances.get(el);
+    if (instance) {
+      instance.destroy();
+      psInstances.delete(el);
+    }
+  }
+
+  function handleMedia(e) {
+    if (e.matches) {
+      // >= 1024px → включаем все scrollbars
+      containers.forEach(enableScroll);
+    } else {
+      // < 1024px → выключаем все
+      containers.forEach(disableScroll);
+    }
+  }
+
+  media.addEventListener('change', handleMedia);
+  handleMedia(media);
 })
