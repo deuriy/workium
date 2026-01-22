@@ -1,6 +1,7 @@
 import $ from "jquery";
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 $(() => {
   new Swiper('.people-swiper', {
@@ -66,5 +67,36 @@ $(() => {
       }
     }
   });
+
+  let psInstances = new Map(); // хранит {element -> psInstance}
+  const media = window.matchMedia('(min-width: 1024px)');
+  const containers = Array.from(document.querySelectorAll('.rating-popup__reviews'));
+
+  function enableScroll(el) {
+    if (!psInstances.has(el)) {
+      psInstances.set(el, new PerfectScrollbar(el));
+    }
+  }
+
+  function disableScroll(el) {
+    const instance = psInstances.get(el);
+    if (instance) {
+      instance.destroy();
+      psInstances.delete(el);
+    }
+  }
+
+  function handleMedia(e) {
+    if (e.matches) {
+      // >= 1024px → включаем все scrollbars
+      containers.forEach(enableScroll);
+    } else {
+      // < 1024px → выключаем все
+      containers.forEach(disableScroll);
+    }
+  }
+
+  media.addEventListener('change', handleMedia);
+  handleMedia(media);
 
 });
