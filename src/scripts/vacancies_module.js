@@ -87,7 +87,10 @@ function setVisibilitySelectedMoreItem(selectedItemsLength) {
 }
 
 function checkDependentFilters() {
+  console.log('checkDependentFilters()');
   let $dependentFilters = $('[data-parent-filter-id]');
+  
+  // console.log($dependentFilters);
 
   $dependentFilters.each(function (index, el) {
     let parentFilterId = $(el).data('parent-filter-id')
@@ -97,15 +100,31 @@ function checkDependentFilters() {
     if (!$parentFilter.length) return;
 
     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
-    if (!$parentFilterItem.length) return;
+    // let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="76"]`);
+    
+    if (!$parentFilterItem.length) {
+      let parentFilterTagName = $parentFilter.prop('tagName').toLowerCase();
+
+      if (parentFilterTagName === 'select') {
+        $(el).hide();
+      }
+
+      return;
+    }
 
     let tagName = $parentFilterItem.prop('tagName').toLowerCase();
     let compareOp = tagName === 'option' ? ':selected' : ':checked';
 
+    console.log(compareOp);
+    console.log('parentFilterItem:', $parentFilterItem[0]);
+    console.log('$parentFilterItem.is(compareOp):', $parentFilterItem.is(compareOp));
+
     if (!$parentFilterItem.is(compareOp)) {
       $(el).hide();
+      console.log('HIDE', el);
     } else {
       $(el).show();
+      console.log('SHOW', el);
     }
   });
 }
