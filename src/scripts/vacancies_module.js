@@ -6,7 +6,7 @@ import select2 from 'select2';
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
 
-let selectedFiltersCount = 0;
+// let selectedFiltersCount = 0;
 let $ageSwitch = $('input[name="age_switch"]');
 
 function copyText(input) {
@@ -89,7 +89,10 @@ function setVisibilitySelectedMoreItem(selectedItemsLength) {
 }
 
 function checkDependentFilters() {
+  console.log('checkDependentFilters()');
   let $dependentFilters = $('[data-parent-filter-id]');
+  
+  // console.log($dependentFilters);
 
   $dependentFilters.each(function (index, el) {
     let parentFilterId = $(el).data('parent-filter-id')
@@ -99,15 +102,31 @@ function checkDependentFilters() {
     if (!$parentFilter.length) return;
 
     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
-    if (!$parentFilterItem.length) return;
+    // let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="76"]`);
+    
+    if (!$parentFilterItem.length) {
+      let parentFilterTagName = $parentFilter.prop('tagName').toLowerCase();
+
+      if (parentFilterTagName === 'select') {
+        $(el).hide();
+      }
+
+      return;
+    }
 
     let tagName = $parentFilterItem.prop('tagName').toLowerCase();
     let compareOp = tagName === 'option' ? ':selected' : ':checked';
 
+    console.log(compareOp);
+    console.log('parentFilterItem:', $parentFilterItem[0]);
+    console.log('$parentFilterItem.is(compareOp):', $parentFilterItem.is(compareOp));
+
     if (!$parentFilterItem.is(compareOp)) {
       $(el).hide();
+      console.log('HIDE', el);
     } else {
       $(el).show();
+      console.log('SHOW', el);
     }
   });
 }
@@ -341,10 +360,10 @@ function findFilterTagByValue(name, value) {
   return $selectedItem;
 }
 
-function clearTextField($input) {
-  $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
-  $input.parent().find('[data-clear-search-input]').hide();
-}
+// function clearTextField($input) {
+//   $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
+//   $input.parent().find('[data-clear-search-input]').hide();
+// }
 
 // function removeFilterTag (type, name, value) {
 //   let $selectedItem;
@@ -472,6 +491,68 @@ $(() => {
 
   Fancybox.bind(".additional-filters-popup-link", fancyboxOpts);
 
+  Fancybox.bind(".rating-popup-link", {
+    dragToClose: false,
+    mainClass: 'fancybox--rating-popup',
+
+    tpl: {
+      closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+    }
+  });
+
+
+  // let reviewsPSInstance = null;
+  // const reviewsContainer = document.querySelector('.rating-popup__reviews');
+  // const media = window.matchMedia('(min-width: 1024px)');
+
+  // function handleMedia(e) {
+  //   if (e.matches) {
+  //     if (!reviewsPSInstance) {
+  //       reviewsPSInstance = new PerfectScrollbar(reviewsContainer);
+  //     }
+  //   } else {
+  //     if (reviewsPSInstance) {
+  //       reviewsPSInstance.destroy();
+  //       reviewsPSInstance = null;
+  //     }
+  //   }
+  // }
+
+  // media.addEventListener('change', handleMedia);
+  // handleMedia(media);
+
+  let psInstances = new Map(); // хранит {element -> psInstance}
+  const media = window.matchMedia('(min-width: 1024px)');
+  const containers = Array.from(document.querySelectorAll('.rating-popup__reviews'));
+
+  function enableScroll(el) {
+    if (!psInstances.has(el)) {
+      psInstances.set(el, new PerfectScrollbar(el));
+    }
+  }
+
+  function disableScroll(el) {
+    const instance = psInstances.get(el);
+    if (instance) {
+      instance.destroy();
+      psInstances.delete(el);
+    }
+  }
+
+  function handleMedia(e) {
+    if (e.matches) {
+      // >= 1024px → включаем все scrollbars
+      containers.forEach(enableScroll);
+    } else {
+      // < 1024px → выключаем все
+      containers.forEach(disableScroll);
+    }
+  }
+
+  media.addEventListener('change', handleMedia);
+  handleMedia(media);
+
+
   if (window.location.href.includes('open-popup')) {
     Fancybox.show(
       [
@@ -483,11 +564,11 @@ $(() => {
     );
   }
 
-  let selectedCitiesIdx = [];
-  let currentSelectedCitiesIdx = [];
+  // let selectedCitiesIdx = [];
+  // let currentSelectedCitiesIdx = [];
   let $filterSelects = $();
 
-  $('.filter-select').each(function (index, el) {
+  $('.filter-select:not(.reviews__select)').each(function (index, el) {
     if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
       let $item = $(el).select2({
         dropdownCssClass: ':all:',
@@ -600,6 +681,26 @@ $(() => {
           bulletActiveClass: 'swiper-pagination-bullet--active',
           // clickable: true
         },
+        
+        on: {
+          slideChange: function() {
+            // Снимаем checked со всех радио кнопок в данном слайдере
+            const allCheckboxes = this.el.querySelectorAll('.checkbox__input');
+            allCheckboxes.forEach(checkbox => {
+              checkbox.checked = false;
+            });
+            
+            // Устанавливаем checked для радио кнопки в активном слайде
+            const activeSlide = this.slides[this.activeIndex];
+            const activeCheckbox = activeSlide.querySelector('.checkbox__input');
+            
+            if (activeCheckbox) {
+              activeCheckbox.checked = true;
+              // Триггерим событие change для обновления связанной логики
+              activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }
+        }
       });
 
       if (promoBlocksSwiper.slides.length === 1) {
@@ -704,7 +805,10 @@ $(() => {
     toggleClearFilterButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();
-    setVacanciesCount();
+    
+    setTimeout(() => {
+      setVacanciesCount();
+    });
   });
 
   $('.selected-items__more-btn').click(function (event) {
@@ -726,7 +830,7 @@ $(() => {
 
   function setVacanciesCount() {
     $.ajax({
-      url: `/api/v1/vacancies-count/${getFilterUrl()}`,
+      url: `/api/v1/vacancies-count${getFilterUrl()}`,
 
       success: function (data) {
         const translations = {
@@ -894,8 +998,13 @@ $(() => {
     }
 
     requestParams = requestParamsArr.join('&');
+
+    if (urlParams) {
+      urlParams = '/' + urlParams.replace(/\/+$/, '');
+    }
+    
     if (requestParams) {
-      requestParams = '/?' + requestParams;
+      requestParams = '?' + requestParams;
     }
 
     return urlParams + requestParams;
@@ -930,7 +1039,8 @@ $(() => {
     // window.location.href = `/vacancies/${urlParams}${requestParams}`;
 
     $.get(`/vacancies`).done(function () {
-      window.location.href = `/vacancies/${getFilterUrl()}`;
+      const lang = document.documentElement.lang;
+      window.location.href = `/${lang}/vacancies${getFilterUrl()}`;
     });
 
     // console.log(`/vacancies/${urlParams}${requestParams}`);
@@ -1412,46 +1522,46 @@ $(() => {
   toggleClearFilterButtons();
 
   // Search input with close button
-  $('[data-search-input]').on('input', function (event) {
-    let name = $(this).attr('name');
-    let value = $(this).val();
-    let $clearBtn = $(this).next('.filter__clear-search-btn');
-    let $searchBtnMobile = $('.filter__search-btn-mobile');
-    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
+  // $('[data-search-input]').on('input', function (event) {
+  //   let name = $(this).attr('name');
+  //   let value = $(this).val();
+  //   let $clearBtn = $(this).next('.filter__clear-search-btn');
+  //   let $searchBtnMobile = $('.filter__search-btn-mobile');
+  //   let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
-    if (value) {
-      $clearBtn.show();
-      $searchBtnMobile.show();
-      $(this).addClass('form-text--filter-search-filled');
-      // createOrUpdateTag('textfield', name, value, value);
-    } else {
-      $clearBtn.hide();
-      $searchBtnMobile.hide();
-      $(this).removeClass('form-text--filter-search-filled');
-      // removeFilterTag(type, name, value);
-    }
+  //   if (value) {
+  //     $clearBtn.show();
+  //     $searchBtnMobile.show();
+  //     $(this).addClass('form-text--filter-search-filled');
+  //     // createOrUpdateTag('textfield', name, value, value);
+  //   } else {
+  //     $clearBtn.hide();
+  //     $searchBtnMobile.hide();
+  //     $(this).removeClass('form-text--filter-search-filled');
+  //     // removeFilterTag(type, name, value);
+  //   }
 
-  });
+  // });
 
-  $('[data-clear-search-input]').on('click', function (event) {
-    let $input = $(this).prev();
-    let name = $input.attr('name');
-    let value = $input.val();
-    let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
+  // $('[data-clear-search-input]').on('click', function (event) {
+  //   let $input = $(this).prev();
+  //   let name = $input.attr('name');
+  //   let value = $input.val();
+  //   let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
 
-    clearTextField($input);
-    // removeFilterTag(type, name, value);
+  //   clearTextField($input);
+  //   // removeFilterTag(type, name, value);
 
-    $input.focus();
+  //   $input.focus();
 
-    let isMobile = $(window).width() < 576;
-    let $noResults = $('.vacancies__no-results');
-    if (isMobile && $noResults.length) {
-      updateFilterUrl();
-    }
+  //   let isMobile = $(window).width() < 576;
+  //   let $noResults = $('.vacancies__no-results');
+  //   if (isMobile && $noResults.length) {
+  //     updateFilterUrl();
+  //   }
 
-    // updateFilterUrl();
-  });
+  //   // updateFilterUrl();
+  // });
 
   if (document.forms.vacancies_filter) {
     document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', function (e) {
@@ -1542,13 +1652,25 @@ $(() => {
     event.preventDefault();
   });
 
-  function setBonusForPromoBlocks(cashback, vacancyCard) {
-    let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
+  function changePromoBtns(vacancyCard, promoBlock) {
+    if (!vacancyCard || !promoBlock) return;
 
-    if (!bookBtns.length) return;
+    let rewardRange = promoBlock.dataset.rewardRange;
+    let promoBlockLink = promoBlock.querySelector('.promo-block__link').href;
+    let bookBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--book');
+    let consultBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--consult');
+    let shareBtns = vacancyCard.querySelectorAll('.promo-blocks__btn--share-and-get');
+
+    if (!bookBtns.length && !consultBtns.length && !shareBtns.length) return;
 
     bookBtns.forEach(btn => {
-      btn.innerHTML = `Забронювати <br class="hidden-smPlus">та отримати ${cashback}`;
+      const bookText = btn.dataset.bookText;
+      btn.innerHTML = `${bookText} ${rewardRange}`;
+    });
+
+    shareBtns.forEach(btn => {
+      btn.dataset.promoBlockLink = promoBlockLink;
+      btn.dataset.rewardRange = rewardRange;
     });
   }
 
@@ -1581,7 +1703,26 @@ $(() => {
 
     if (!vacancyCard) return;
 
-    setBonusForPromoBlocks(promoBlock.dataset.rewardRange, vacancyCard);
+    changePromoBtns(vacancyCard, promoBlock);
+  });
+
+  document.addEventListener("change", function (e) {
+    const radio = e.target;
+    if (radio.type !== "radio") return;
+
+    const syncGroup = radio.dataset.sync;
+    if (!syncGroup) return;
+
+    const value = radio.value;
+
+    // Находим radio из других групп с тем же значением
+    const synced = document.querySelectorAll(
+      `input[type="radio"][data-sync="${syncGroup}"][value="${value}"]`
+    );
+
+    synced.forEach(r => {
+      r.checked = true;
+    });
   });
 
   const additionalFiltersBody = document.querySelector('.additional-filters__body');
@@ -1688,5 +1829,51 @@ $(() => {
   //   let pageNumber = $('.pagination .page-item.active .page-link').text();
   // });
 
+
+  const updateMobileHeaderState = (popup) => {
+    if (!popup) return;
+
+    const mobileHeader   = popup.querySelector('.popup-mobile-header');
+    if (!mobileHeader) return;
+
+    const titleEl        = mobileHeader.querySelector('.popup-mobile-header__title');
+    const companyInfoEl  = mobileHeader.querySelector('.company-info--popup-mobile-header');
+    const ratingDropdownCriteriaHeader  = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
+
+    if (!titleEl || !companyInfoEl) return;
+
+    const scrolled = popup.scrollTop;
+
+    if (scrolled >= 100) {
+      // показываем компанию, прячем заголовок
+      titleEl.classList.add('hidden');
+      companyInfoEl.classList.remove('hidden');
+    } else {
+      // показываем заголовок, прячем компанию
+      titleEl.classList.remove('hidden');
+      companyInfoEl.classList.add('hidden');
+
+      if (ratingDropdownCriteriaHeader) {
+        ratingDropdownCriteriaHeader.classList.remove('dropdown-block--visible');
+      }
+    }
+  };
+
+  // Делегирование: один обработчик на документ, ловим скроллы всех .rating-popup
+  document.addEventListener(
+    'scroll',
+    function (e) {
+      const target = e.target;
+
+      // Нас интересуют только элементы с классом rating-popup
+      if (!target.classList || !target.classList.contains('rating-popup')) return;
+
+      updateMobileHeaderState(target);
+    },
+    true // захват, чтобы событие точно словилось
+  );
+
+  // Инициализация состояния при загрузке
+  document.querySelectorAll('.rating-popup').forEach(updateMobileHeaderState);
 
 });

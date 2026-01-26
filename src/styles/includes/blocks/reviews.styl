@@ -1,0 +1,51 @@
+.reviews
+  &__header
+    display grid
+    grid-template-columns repeat(2, auto)
+    justify-content space-between
+    align-items start
+    gap 12px
+    margin-bottom 18px
+
+    @media $xs
+      grid-template-columns 100%
+      justify-items start
+      margin-bottom 24px
+  
+  &__title
+    margin-left 4px
+    font-weight 600
+    font-size 20px
+    line-height 1.3
+    color #000
+
+    @media $xs
+      margin-left 0
+  
+  &__dropdowns
+    display grid
+    grid-template-columns repeat(2, auto)
+    gap 8px
+  
+  &__notice
+    margin-bottom 24px
+  
+  &__item
+    & + &
+      margin-top 24px
+
+      @media $mdMinus
+        margin-top 20px
+
+      @media $xs
+        margin-top 16px
+    
+    &:not(:last-child)
+      padding-bottom 24px
+      border-bottom 1px solid #F0F4FA
+
+      @media $mdMinus
+        padding-bottom 20px
+
+      @media $xs
+        padding-bottom 16px

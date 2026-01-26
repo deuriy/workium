@@ -79,8 +79,29 @@
 				
 				&--highlighted
 					background #F4F4FB
+		
+		.select2-selection--single.filter-select--rounded-style
+			height 32px
+			border-radius 24px
+			outline none
+			background-position right 14px center
+
+			@media $xs
+				border-color #5b617c
+				background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 8'%3E%3Cpath stroke='%235b617c' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='m1 1 6 6 6-6'/%3E%3C/svg%3E")
+
+			.select2-selection__rendered
+				padding-right 36px
+				padding-left 10px
+				font-size 13px
+				line-height 1.69230
+				color #666B80
+
+				@media $xs
+					color var(--accent)
 	
-	&--dropdown-select
+	&--dropdown-select,
+	&--currency-dropdown-select
 		.select2-selection--single
 			display inline-grid
 			grid-template-columns 1fr auto
@@ -129,9 +150,62 @@
 				
 				&--highlighted
 					background #F4F4FB
+	
+	&--currency-dropdown-select
+		z-index 1
+
+		.select2-selection--single
+			border-radius 20px
+
+			@media $xs
+				height 36px
+				padding-top 11px
+				font-size 14px
 					
 	&--filter-select
 		.select2-selection--single.additional-filters__countries-select
 			.select2-selection__rendered
 				@media $smPlus
 					color var(--black)
+	
+	&--user-display-name-select
+		.select2-selection--single
+			display flex
+			align-items center
+			gap 3px
+			height 26px
+			padding-right 9px
+			border-radius 20px
+			background #F0F4FA
+
+			.select2-selection__rendered
+				padding-right 0
+				font-weight 600
+				line-height 26px
+			
+			.select2-selection__arrow
+				width 6px
+				height 5px
+				margin-top 2px
+				background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 5' fill='none'%3E%3Cpath fill='%230f182a' d='M3.028 4.571a.3.3 0 0 1-.515 0L.043.454A.3.3 0 0 1 .3 0h4.94a.3.3 0 0 1 .258.454z'/%3E%3C/svg%3E") center no-repeat
+		
+		.select2-dropdown
+			padding 5px 7px
+			border 1px solid var(--grey-medium)
+			// border-radius 7px
+			border-radius 12px
+			box-shadow 0 18px 36px rgba(0, 0, 0, .14)
+				
+			.select2-results__option
+				border-radius 8px
+				@extend .transition
+
+				&--highlighted
+					background #F4F4FB
+			
+		// .select2-dropdown
+		// 	border none
+		// 	background #f0f4fa
+		
+		// .select2-results__option
+		// 	padding 3px 8px

@@ -1,0 +1,48 @@
+.rating-criteria
+  &__title
+    margin-bottom 16px
+    font-weight 600
+    font-size 20px
+    line-height 1.3
+    color #000
+  
+  &__rating
+    margin-bottom 16px
+
+    @media $xs
+      margin-bottom 10px
+  
+  &__items
+    @media $md
+      max-height calc(100vh - 240px)
+      overflow auto
+    
+  &__item
+    & + &
+      // margin-top 20px
+      margin-top 17px
+
+      @media $xs
+        // margin-top 16px
+        margin-top 12px
+  
+  &__notice
+    margin-top 90px
+
+    @media $mdMinus
+      margin-top 70px
+  
+  &--dropdown
+    .rating-criteria__item + .rating-criteria__item
+      // margin-top 12px
+      margin-top 8px
+    
+    .rating-criteria__criterion
+      font-size 13px
+      line-height 1.69230769
+  
+  &--agency-popup
+    .rating-criteria__items
+      @media $md
+        max-height calc(100vh - 286px)
+      

@@ -50,6 +50,8 @@ $(() => {
 
 	// console.log(hideProfileCookie);
 
+	let currentFancybox = null;
+
 	let $userSidebar = $('.user-sidebar');
 	let $userAvatarLink = $('.user-sidebar__user-avatar-link');
   let $userInfoWrapper = $('.user-sidebar__user-info-wrapper');
@@ -74,7 +76,7 @@ $(() => {
 	// 	$userSidebarQuote.hide();
 	// }
 
-	const userSidebarMenuPS = new PerfectScrollbar('.user-sidebar__user-menu', {
+	new PerfectScrollbar('.user-sidebar__user-menu', {
 		wheelSpeed: 2,
 		wheelPropagation: false,
 		minScrollbarLength: 20
@@ -85,6 +87,25 @@ $(() => {
     mainClass: 'fancybox--user-profile-popup',
 
     on: {
+      reveal: (fancybox, slide) => {
+        if (currentFancybox) {
+          currentFancybox.close();
+        }
+
+        currentFancybox = fancybox;
+      }
+    }
+  });
+
+	Fancybox.bind(".add-review-popup-link", {
+    dragToClose: false,
+    mainClass: 'fancybox--add-review-popup',
+
+    tpl: {
+      closeButton: '<button data-fancybox-close class="fancybox-close-button hidden-xxs" title="{{CLOSE}}"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button>'
+    },
+
+		on: {
       reveal: (fancybox, slide) => {
         if (currentFancybox) {
           currentFancybox.close();
@@ -129,14 +150,20 @@ $(() => {
 	});
 	
 
-	$('.copy-link__btn').click(function(e) {
-		let $copyLinkInput = $(this).closest('.copy-link').find('.copy-link__input');
+	$('[data-copy-link-btn]').click(function(e) {
+		let $copyLinkInput = $(this).closest('[data-copy-link]').find('[data-copy-link-input]');
 
 		if (!$copyLinkInput.length) return;
 
-		copyText($copyLinkInput[0]);
+		if ($copyLinkInput.hasClass('hidden')) {
+			$copyLinkInput.removeClass('hidden');
+			copyText($copyLinkInput[0]);
+			$copyLinkInput.addClass('hidden');
+		} else {
+			copyText($copyLinkInput[0]);
+		}
 
-		let $copyLink = $copyLinkInput.closest('.copy-link');
+		let $copyLink = $copyLinkInput.closest('[data-copy-link]');
 		let $tooltip = $copyLink.find('.tooltip');
 
 		$tooltip.addClass('tooltip--visible');
@@ -282,7 +309,7 @@ $(() => {
   $('[data-close-banner]').click(function(event) {
   	event.preventDefault();
 
-  	let $banner = $(this).closest('.banner');
+  	let $banner = $(this).closest('[data-banner]');
   	$banner.slideUp();
 
   	let cookieName = $banner.data('cookie-name');
@@ -295,8 +322,7 @@ $(() => {
 
   	if (!$banner.attr('id')) return;
 
-  	const $relatedBannerElements = $('[data-related-banner-id]');
-  	$relatedBannerElements.each(function(index, el) {
+  	$('[data-related-banner-id]').each(function(index, el) {
   		console.log(el);
   		if (el.style.display === 'none') {
   			el.style.display = '';
@@ -314,18 +340,33 @@ $(() => {
 	// 	e.preventDefault();
 	// });
 
-	$('[data-close-find-vacancy-banner]').click(function(event) {
-  	event.preventDefault();
+	// $('[data-close-find-vacancy-banner]').click(function(event) {
+  // 	event.preventDefault();
 
-  	let $findVacancyBanner = $(this).closest('.find-vacancy-banner');
-  	$findVacancyBanner.slideUp();
+  // 	let $findVacancyBanner = $(this).closest('.find-vacancy-banner');
+  // 	$findVacancyBanner.slideUp();
 
-  	let cookieName = $findVacancyBanner.data('cookie-name');
+  // 	let cookieName = $findVacancyBanner.data('cookie-name');
 
-  	console.log(cookieName);
+  // 	console.log(cookieName);
 
-  	if (!cookieName) return;
+  // 	if (!cookieName) return;
 
-  	setCookie(cookieName, 'yes', {'max-age': 3153600000});
-  });
+  // 	setCookie(cookieName, 'yes', {'max-age': 3153600000});
+  // });
+
+	// $('[data-close-page-header]').click(function(event) {
+  // 	event.preventDefault();
+
+  // 	let $findVacancyBanner = $(this).closest('.page-header');
+  // 	$findVacancyBanner.slideUp();
+
+  // 	let cookieName = $findVacancyBanner.data('cookie-name');
+
+  // 	console.log(cookieName);
+
+  // 	if (!cookieName) return;
+
+  // 	setCookie(cookieName, 'yes', {'max-age': 3153600000});
+  // });
 });

@@ -1,0 +1,30 @@
+.rating-block
+  display flex
+  align-items center
+  gap 4px
+  padding 3px 2px 3px 8px
+  border-radius 20px
+  background #F4F5FC
+  text-decoration none
+
+  @media $xs
+    padding 1px 2px 1px 8px
+
+  &__avatars-list
+    display flex
+    align-items center
+
+  &__avatar
+    width 22px
+    height 22px
+    border-radius 50%
+    border 1px solid #F4F5FC
+
+    & + .rating-block__avatar
+      margin-left -10px
+    
+    &:first-child
+      z-index 2
+    
+    &:nth-child(2)
+      z-index 1

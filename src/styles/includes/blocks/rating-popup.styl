@@ -1,0 +1,79 @@
+.rating-popup
+  @media $smMinus
+    // max-height 100vh
+    max-height 100%
+    overflow auto
+
+  &__header
+    padding 24px 48px
+    border-top-right-radius 20px
+    border-top-left-radius 20px
+    background #F4F5FC
+  
+  &__title
+    font-weight 600
+    font-size 24px
+    line-height 1.25
+    color #000
+  
+  &__tabs-menu
+    margin 24px 46px 0
+
+    @media $mdMinus
+      margin 24px 24px 0
+
+    @media $xs
+      margin 12px 16px 0
+  
+  &__body
+    display grid
+    grid-template-columns 1fr 320px
+    gap 49px
+    padding 24px 48px 20px
+
+    @media $mdMinus
+      gap 24px
+      padding 24px 24px 20px
+    
+    @media $smMinus
+      grid-template-columns 100%
+    
+    @media $xs
+      gap 48px
+      padding 12px 16px
+  
+  &__reviews
+    position relative
+    // max-height 658px
+    padding-right 50px
+
+    @media $md
+      // max-height 630px
+      max-height calc(100vh - 142px)
+      // overflow auto
+      overflow hidden
+
+    @media $mdMinus
+      padding-right 32px
+    
+    @media $smMinus
+      padding-right 0
+  
+  &__rating-criteria
+    @media $smMinus
+      order -1
+  
+  &--agency
+    .rating-popup__body
+      grid-template-columns 320px 1fr
+
+      @media $smMinus
+        grid-template-columns 100%
+
+    .rating-popup__rating-criteria
+      order -1
+    
+    .rating-popup__reviews
+      @media $md
+        // max-height calc(100vh - 294px)
+        max-height calc(100vh - 188px)

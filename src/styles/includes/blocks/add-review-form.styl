@@ -1,0 +1,82 @@
+.add-review-form
+  max-height calc(100vh - 98px)
+  overflow auto
+  padding 32px 48px 48px
+
+  @media $xs
+    // max-height calc(100vh - 48px)
+    max-height none
+    padding 16px
+  
+  &__title
+    margin-bottom 12px
+    font-weight 600
+    font-size 20px
+    line-height 1.3
+    color var(--accent)
+
+    &:has(+.add-review-form__review-status)
+      margin-bottom 8px
+  
+  &__description,
+  &__field-text
+    font-weight 400
+    color var(--accent)
+
+    & > p + p
+      margin-top 12px
+  
+  &__field-text
+    & > a
+      font-weight 500
+      color var(--info)
+      text-decoration none
+    
+    &:has(+.media-upload-box)
+      margin-bottom 16px
+  
+  &__rating-block
+    margin 32px 0
+
+    @media $xs
+      margin 24px 0
+  
+  &__field
+    margin-top 32px
+    
+    @media $xs
+      margin-top 24px
+  
+  &__field-label
+    margin-bottom 8px
+  
+  &__review-photos
+    margin-top 12px
+  
+  &__working-term-inputs
+    display grid
+    grid-template-columns repeat(2, 112px)
+    gap 12px
+  
+  &__working-term-text
+    margin-top 10px
+    font-weight 400
+  
+  &__working-term
+    font-weight 600
+  
+  &__actions
+    display flex
+    align-items center
+    gap 12px
+    margin-top 48px
+
+    @media $xs
+      margin-top 32px
+  
+  &__submit-btn,
+  &__edit-btn,
+  &__delete-btn
+    @media $xs
+      flex-grow 1
+      flex-basis auto

@@ -63,6 +63,11 @@
 			grid-template-columns repeat(2, auto)
 			align-items center
 			gap 12px
+		
+		&--search,
+		&--button
+			@media $xs
+				order -1
 	
 	&__preloader-wrapper
 		position relative
@@ -195,3 +200,11 @@
 		// width 100%
 		min-width 200px
 		margin-top 10px
+	
+	&--services
+		// grid-template-columns 2fr 1fr 1fr auto
+		grid-template-columns 2.4fr 1.2fr 1fr auto
+		align-items center
+
+		@media $xs
+			grid-template-columns 1fr 1fr

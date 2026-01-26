@@ -1,4 +1,5 @@
 .vacancy-card
+	position relative
 	padding 32px 17px 32px 32px
 	border 1px solid var(--grey-medium)
 	border-radius 12px
@@ -112,6 +113,10 @@
 			width 612px
 			max-width 100%
 			border-radius 24px
+
+			@media $xs
+				border-bottom-right-radius 0
+				border-bottom-left-radius 0
 			
 			.f-button.is-close-btn
 				--f-button-color #000
@@ -266,11 +271,13 @@
 				// max-width 820px
 				
 				margin-top 0
-				margin-bottom 15px
+				// margin-bottom 15px
+				margin-bottom 8px
 				order 2
 			
 			@media $xs
 				grid-column 1 / 3
+				margin-top 0
 	
 	&__agency-wrapper
 		display grid
@@ -364,6 +371,12 @@
 		grid-area auto / 1 / auto / 3
 		justify-self start
 		margin-bottom 8px
+	
+	&__title-and-rating,
+	&__category-and-rating
+		display flex
+		align-items center
+		gap 8px
 	
 	&__title-more-link
 		text-decoration none
@@ -478,6 +491,34 @@
 	&__notice-danger
 		margin-bottom 33px
 		margin-right 12px
+
+		@media $xs
+			grid-template-columns repeat(2, auto)
+			justify-content center
+			margin -22px -16px 33px
+			border-radius 0
+			border-top-right-radius 12px
+			border-top-left-radius 12px
+	
+	&__mini-gallery
+		margin-bottom 24px
+
+		@media $xs
+			margin-top 12px
+	
+	&__rating-popup-link
+		position absolute
+		top 0
+		left 0
+		width 20px
+		height 20px
+
+		@media $xs
+			top 150px
+			right 0
+			left auto
+			width 30px
+			height 30px
 	
 	&--teaser,
 	&--full
@@ -502,18 +543,19 @@
 			
 			@media $smPlus
 				padding 6px 8px 5px
+			
+			@media $xs
+				&:has(.rating-block)
+					gap 0 8px
 		
 		.vacancy-card__address
 			position relative
 			grid-area auto / 1 / auto / 3
 			margin-bottom 8px
-			// padding-left 20px
 			margin-left 6px
 			padding-left 29px
 			font-size 15px
 			font-size 17px
-			// line-height 1.6
-			// line-height 1.4
 			line-height 1.29
 			color var(--black)
 			
@@ -544,6 +586,55 @@
 			
 			&--truncated
 				-webkit-line-clamp 2
+			
+			&--has-flag
+				display grid
+				grid-template-columns 20px 1fr
+				align-items center
+				gap 9px
+				padding-left 0
+
+				svg
+					max-width 100%
+
+				@media $smPlus
+					grid-template-columns 16px 1fr
+					padding-left 1px
+
+				&::before
+					display none
+			
+			// &--poland
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23f0f0f0' d='M256 512c141.385 0 256-114.615 256-256S397.385 0 256 0 0 114.615 0 256s114.615 256 256 256'/%3E%3Cpath fill='%23d80027' d='M512 256c0 141.384-114.616 256-256 256S0 397.384 0 256'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+			
+			// &--czech
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23f0f0f0' d='M256 512c141.385 0 256-114.615 256-256S397.385 0 256 0 0 114.615 0 256s114.615 256 256 256'/%3E%3Cpath fill='%23d80027' d='M233.739 256S75.131 437.055 74.981 437.019C121.306 483.346 185.307 512 256 512c141.384 0 256-114.616 256-256z'/%3E%3Cpath fill='%230052b4' d='M74.98 74.98c-99.974 99.974-99.974 262.065 0 362.04L256 256z'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+			
+			// &--germany
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23ffda44' d='M15.923 345.043C52.093 442.527 145.929 512 256 512s203.906-69.473 240.077-166.957L256 322.783z'/%3E%3Cpath fill='%23000' d='M256 0C145.929 0 52.094 69.472 15.923 166.957L256 189.217l240.077-22.261C459.906 69.472 366.071 0 256 0'/%3E%3Cpath fill='%23d80027' d='M15.923 166.957C5.633 194.69 0 224.686 0 256s5.633 61.31 15.923 89.043h480.155C506.368 317.31 512 287.314 512 256s-5.632-61.31-15.923-89.043z'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+			
+			// &--netherlands
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23f0f0f0' d='M256 512c141.385 0 256-114.615 256-256S397.385 0 256 0 0 114.615 0 256s114.615 256 256 256'/%3E%3Cpath fill='%23a2001d' d='M256 0C145.929 0 52.094 69.472 15.923 166.957h480.155C459.906 69.472 366.071 0 256 0'/%3E%3Cpath fill='%230052b4' d='M256 512c110.071 0 203.906-69.472 240.077-166.957H15.923C52.093 442.528 145.929 512 256 512'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+			
+			// &--belgium
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23ffda44' d='M345.043 15.923C317.31 5.633 287.314 0 256 0s-61.31 5.633-89.043 15.923L144.696 256l22.261 240.077C194.69 506.368 224.686 512 256 512s61.31-5.632 89.043-15.923L367.304 256z'/%3E%3Cpath fill='%23d80027' d='M512 256c0-110.07-69.472-203.906-166.957-240.076v480.155C442.528 459.906 512 366.072 512 256'/%3E%3Cpath fill='%23000' d='M0 256c0 110.072 69.472 203.906 166.957 240.078V15.924C69.472 52.094 0 145.93 0 256'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+			
+			// &--sweden
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23ffda44' d='M256 512c141.385 0 256-114.615 256-256S397.385 0 256 0 0 114.615 0 256s114.615 256 256 256'/%3E%3Cpath fill='%230052b4' d='M200.349 222.609h309.484C493.47 97.002 386.067 0 256 0a257 257 0 0 0-55.652 6.085zM133.565 222.608V31.127C63.271 69.481 12.95 139.832 2.167 222.609h131.398zM133.564 289.391H2.167c10.783 82.777 61.104 153.128 131.398 191.481zM200.348 289.392v216.523A257 257 0 0 0 256 512c130.067 0 237.47-97.002 253.833-222.609z'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+			
+			// &--hungary
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23f0f0f0' d='M15.923 166.957C5.633 194.691 0 224.686 0 256s5.633 61.311 15.923 89.043L256 367.304l240.077-22.261C506.367 317.311 512 287.314 512 256s-5.633-61.309-15.923-89.043L256 144.696z'/%3E%3Cpath fill='%23d80027' d='M256 0C145.93 0 52.094 69.472 15.924 166.957h480.155C459.906 69.472 366.072 0 256 0'/%3E%3Cpath fill='%236da544' d='M256 512c110.072 0 203.906-69.472 240.078-166.957H15.924C52.094 442.528 145.93 512 256 512'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
+			
+			// &--slovakia
+			// 	&::before
+			// 		background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23f0f0f0' d='M256 512c141.385 0 256-114.615 256-256S397.385 0 256 0 0 114.615 0 256s114.615 256 256 256'/%3E%3Cpath fill='%230052b4' d='M256 512c141.384 0 256-114.616 256-256 0-31.314-5.632-61.311-15.923-89.043H15.923C5.633 194.689 0 224.686 0 256c0 141.384 114.616 256 256 256'/%3E%3Cpath fill='%23d80027' d='M256 512c110.071 0 203.906-69.472 240.077-166.957H15.923C52.093 442.528 145.929 512 256 512'/%3E%3Cpath fill='%23f0f0f0' d='M66.198 144.696v127.706c0 72.644 94.901 94.903 94.901 94.903s94.9-22.259 94.9-94.903V144.696z'/%3E%3Cpath fill='%23d80027' d='M88.459 144.696v127.706c0 8.528 1.894 16.582 5.646 24.133h133.987c3.752-7.55 5.646-15.605 5.646-24.133V144.696z'/%3E%3Cpath fill='%23f0f0f0' d='M205.62 233.739h-33.39v-22.261h22.261v-22.261H172.23v-22.26h-22.261v22.26h-22.26v22.261h22.26v22.261h-33.392V256h33.392v22.261h22.261V256h33.39z'/%3E%3Cpath fill='%230052b4' d='M124.471 327.61c14.345 9.015 29.083 14.249 36.628 16.577 7.545-2.327 22.283-7.562 36.628-16.577 14.466-9.092 24.607-19.49 30.365-31.075a38.78 38.78 0 0 0-22.471-7.143c-3.048 0-6.009.361-8.856 1.024-6.033-13.708-19.728-23.285-35.665-23.285s-29.633 9.577-35.665 23.285a39 39 0 0 0-8.856-1.024c-8.371 0-16.12 2.65-22.471 7.143 5.755 11.584 15.896 21.982 30.363 31.075'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h512v512H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E")
 		
 		.vacancy-card__rating
 			margin-top 2px
@@ -596,7 +687,8 @@
 		
 		.vacancy-card__salary
 			@media $xs
-				margin-bottom 24px
+				// margin-bottom 24px
+				margin-bottom 14px
 		
 		.vacancy-card__salary-per-hour
 			@media $xs
@@ -623,6 +715,9 @@
 				margin 16px -16px 0
 				border-top 1px solid #DFE1ED
 		
+		.vacancy-card__category
+			color #000
+		
 		&:has(.vacancy-card__edit-link) .vacancy-card__header,
 		&:has(.promo-blocks__agency-info) .vacancy-card__header
 			grid-template-rows 1fr 24px
@@ -647,6 +742,9 @@
 			@media $xs
 				padding-top 0
 				border none
+		
+		.vacancy-card__mini-gallery
+			margin-top 6px
 		
 		.vacancy-card__promo-blocks
 			margin-bottom 30px

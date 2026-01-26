@@ -1,11 +1,11 @@
 import $ from "jquery";
 import Swiper from 'swiper';
-import select2 from 'select2';
+// import select2 from 'select2';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 import PerfectScrollbar from 'perfect-scrollbar';
 
 $(() => {
-  select2($);
+  // select2($);
 
 	const walletsSwiper = new Swiper('.wallets-swiper', {
     slidesPerView: 'auto',
@@ -24,17 +24,17 @@ $(() => {
     mainClass: 'fancybox--payment-systems-popup',
   });
 
-  $('.dropdown-select').select2({
-    dropdownCssClass: ':all:',
-    selectionCssClass: ':all:',
-    theme: 'dropdown-select',
-    dropdownAutoWidth: true,
-    minimumResultsForSearch: -1
-  });
+  // $('.dropdown-select').select2({
+  //   dropdownCssClass: ':all:',
+  //   selectionCssClass: ':all:',
+  //   theme: 'dropdown-select',
+  //   dropdownAutoWidth: true,
+  //   minimumResultsForSearch: -1
+  // });
 
   let banksListPopup = document.querySelector('.banks-list--popup');
   if (banksListPopup) {
-    const banksListPS = new PerfectScrollbar(banksListPopup, {
+    new PerfectScrollbar(banksListPopup, {
       wheelSpeed: 2,
       wheelPropagation: true,
       minScrollbarLength: 20

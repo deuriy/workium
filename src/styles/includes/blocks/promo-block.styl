@@ -300,10 +300,34 @@
 				margin-bottom 18px
 		
 		.promo-block__additional-info
-			margin-bottom 10px
-			
-			@media $smPlus
-				margin-bottom 14px
+			position relative
+			z-index 3
+			// z-index 10
+			display flex
+			flex-wrap wrap
+			align-items center
+			justify-self start
+			gap 6px 11px
+			margin-bottom 14px
+
+			@media $xs
+				flex-direction column
+				align-items start
+				gap 4px 8px
+				margin-bottom 12px
+		
+		.promo-block__footnote
+			align-items center
+			gap 0
+			margin-top 0
+			color #000
+
+			.salary-with-info__icon
+				margin-left -4px
+				background-size 12px
+
+				@media $xs
+					margin-left 0
 		
 		.promo-block__salary
 			margin-left -6px
@@ -326,6 +350,11 @@
 		.promo-block__stretched-link
 			&--multiple-variants
 				display none
+		
+		.promo-block__bottom
+			&:has(.mini-gallery__title)
+				.promo-block__link
+					margin-bottom -26px
 		
 		&:has(.checkbox__input:checked ~ .checkbox__label)
 			// outline 3px solid var(--black)

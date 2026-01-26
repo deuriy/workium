@@ -526,9 +526,14 @@ $(() => {
   let psArr = [];
 
   $(".cities-select").each((index, el) => {
+    const selectPlaceholder = $(el).data('placeholder') || 'Введіть назву міста…';
+    const selectionLabel = $(el).data('selection-label') || 'Обрані міста';
+    const clearText = $(el).data('clear-text') || 'Очистити';
+    const applyText = $(el).data('apply-text') || 'Застосувати';
+    
     $(el).multiSelect({
-      selectableHeader: '<div class="ms-selectable__header"><div class="ms-selectable__search-input-box"><input type="search" name="ms_search" class="ms-selectable__search-input" placeholder="Введіть назву міста…" title="Введіть назву міста…" / data-ms-search-input><button type="button" class="ms-selectable__clear-search-btn" style="display: none;" data-ms-clear-search-input><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button></div></div>',
-      selectionHeader: '<div class="ms-selection__header"><div class="ms-selection__label">Обрані міста</div><a href="#" class="btn-beige btn-beige--filter ms-selection__clear-btn" style="display: none;">Очистити</a></div>',
+      selectableHeader: `<div class="ms-selectable__header"><div class="ms-selectable__search-input-box"><input type="search" name="ms_search" class="ms-selectable__search-input" placeholder="${selectPlaceholder}" title="${selectPlaceholder}" / data-ms-search-input><button type="button" class="ms-selectable__clear-search-btn" style="display: none;" data-ms-clear-search-input><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18"><path stroke="#A1A7B3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M1 17 17 1M1 1l16 16"></path></svg></button></div></div>`,
+      selectionHeader: `<div class="ms-selection__header"><div class="ms-selection__label">${selectionLabel}</div><a href="#" class="btn-beige btn-beige--filter ms-selection__clear-btn" style="display: none;">${clearText}</a></div>`,
       keepOrder: true,
       cssClass: 'ms-container--default',
 
@@ -553,7 +558,7 @@ $(() => {
         // let psArr = [];
 
         that.$selectionContainer.append('<div class="ms-selection__no-results">У вас ще немає обраних міст...</div>');
-        that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">Застосувати</button></div>');
+        that.$container.append(`<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">${applyText}</button></div>`);
 
         $([that.$selectableUl[0], that.$selectionUl[0]]).each(function(index, item) {
           psArr.push(new PerfectScrollbar(item, {
@@ -715,6 +720,8 @@ $(() => {
   });
 
   $(".sex-select").each((index, el) => {
+    const applyText = $(el).data('apply-text') || 'Застосувати';
+
     $(el).multiSelect({
       keepOrder: true,
       cssClass: 'ms-container--default ms-container--short',
@@ -724,7 +731,7 @@ $(() => {
         let $selectableItems = that.$selectableUl.children().toArray();
         let $selectionItems = that.$selectionUl.children().toArray();
 
-        that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">Застосувати</button></div>');
+        that.$container.append(`<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">${applyText}</button></div>`);
 
         updateMSItemsDescription($selectionItems);
 
@@ -772,6 +779,8 @@ $(() => {
   });
 
   $(".relevance-select").each((index, el) => {
+    const applyText = $(el).data('apply-text') || 'Застосувати';
+
     $(el).multiSelect({
       keepOrder: true,
       cssClass: 'ms-container--default ms-container--short',
@@ -781,7 +790,7 @@ $(() => {
         let $selectableItems = that.$selectableUl.children().toArray();
         let $selectionItems = that.$selectionUl.children().toArray();
 
-        that.$container.append('<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">Застосувати</button></div>');
+        that.$container.append(`<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">${applyText}</button></div>`);
 
         updateMSItemsDescription($selectionItems);
 
@@ -886,8 +895,9 @@ $(() => {
   let oldScrollY = 0;
   let $wrapper = $('.wrapper');
   let $btnFilter = $('.btn-filter');
+  let $scrollTopBtn = $('.btn-scroll-top');
 
-  $wrapper.scroll(function(event) {
+  $wrapper.on('scroll', function(event) {
     let scrolled = $wrapper.scrollTop();
     let dY = scrolled - oldScrollY;
 
@@ -900,10 +910,40 @@ $(() => {
     oldScrollY = scrolled;
   });
 
-  $('.btn-filter--scroll-top').on('click', function(event) {
+  $('.btn-filter--scroll-top, .btn-scroll-top').on('click', function(event) {
     $wrapper.animate( {
       scrollTop: 0
     }, 0 );
+
+    $('html, body').animate( {
+      scrollTop: 0
+    }, 0 );
+  });
+
+  $wrapper.on('scroll', function(event) {
+    let scrolled = $wrapper.scrollTop();
+    let dY = scrolled - oldScrollY;
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+    
+    oldScrollY = scrolled;
+  });
+
+  $(window).on('scroll', function() {
+    let scrolled = $(window).scrollTop();
+    let dY = scrolled - oldScrollY;
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+    
+    oldScrollY = scrolled;
   });
 
   // Mobile cities filter

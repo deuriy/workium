@@ -1,0 +1,25 @@
+.popup-mobile-header
+  position sticky
+  top 0
+  z-index 10
+  
+  &__inner
+    position relative
+    z-index 11
+    padding 12px 46px 12px
+    background #fff
+
+    &:has(+.dropdown-block--visible) .company-info--popup-mobile-header::after
+      transform rotate(0deg)
+  
+  &__btn-back
+    position absolute
+    top 12px
+    left 16px
+
+  &__title
+    font-weight 600
+    font-size 15px
+    line-height 1.6
+    text-align center
+    color #000

@@ -17,9 +17,15 @@
 		
 		@media $1440-
 			margin-bottom 20px
+
+			&:has(+.article-box__more-link-wrapper)
+				margin-bottom 12px
 		
 		@media $xs
 			font-size 18px
+	
+	&__more-link-wrapper
+		text-align center
 	
 	&__subtitle-wrapper
 		margin-bottom 42px

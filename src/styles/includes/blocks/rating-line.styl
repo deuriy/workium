@@ -23,6 +23,30 @@
 		margin-right -7px
 		font-size 12px
 	
+	&__criterion
+		// display grid
+		// grid-template-columns repeat(2, auto)
+		// justify-content space-between
+		// align-items center
+		margin-bottom 2px
+		// color var(--accent)
+		color #000
+	
+	&__criterion-value-wrapper
+		display flex
+		align-items center
+		gap 8px
+		margin-top 2px
+	
+	&__criterion-value
+		font-weight 600
+		// color var(--accent)
+		color #000
+	
+	&__mark
+		color #515569
+		font-weight 400
+	
 	&--user-level
 		.rating-line__line
 			@media $xs
@@ -32,3 +56,32 @@
 		.rating-line__numbers
 			@media $xs
 				margin-right -1px
+	
+	&--criteria-style
+		.rating-line__line
+			height 4px
+	
+	&--dropdown-block-style
+		.rating-line__criterion,
+		.rating-line__criterion-value,
+		.rating-line__mark
+			font-size 13px
+			line-height 1.69230769
+		
+		.rating-line__criterion
+			margin-bottom 2px
+
+		.rating-line__line
+			height 3px
+	
+	&--green-grad
+		.rating-line__line-inner
+			background-image linear-gradient(90deg, #20BF00 0%, #A2D800 100%)
+	
+	&--orange-grad
+		.rating-line__line-inner
+			background-image linear-gradient(90deg, #FFA01A 0%, #FFC44D 100%)
+	
+	&--red-grad
+		.rating-line__line-inner
+			background-image linear-gradient(90deg, #FF3355 0%, #FF6666 100%)

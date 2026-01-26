@@ -1,9 +1,12 @@
 import $ from "jquery";
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import select2 from 'select2';
 
 $(() => {
-	const peopleSwiper = new Swiper('.people-swiper', {
+  select2($);
+
+	new Swiper('.people-swiper', {
     modules: [Navigation],
     loop: true,
     slidesPerView: 'auto',
@@ -33,10 +36,10 @@ $(() => {
 		let $articleBoxContent = $(this).closest('.article-box').find('.article-box__content');
 
 		if ($articleBoxContent.is(':visible')) {
-			$(this).text('Читати статтю');
+			$(this).text($(this).data('more-text'));
 			$articleBoxContent.hide();
 		} else {
-			$(this).text('Згорнути статтю');
+			$(this).text($(this).data('less-text'));
 			$articleBoxContent.show();
 
 			let $wrapper = $('.wrapper');
@@ -60,4 +63,38 @@ $(() => {
 
 		event.preventDefault();
 	});
+
+	$('.article-box--how-recommend .article-box__more-link').on('click', function (event) {
+    $(this).closest('.article-box').find('.article-box__text').toggleClass('hidden-xs');
+    $(this).hide();
+
+    event.preventDefault();
+  });
+
+  $('.filter-select').each(function (index, el) {
+    if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
+      $(el).select2({
+        dropdownCssClass: ':all:',
+        selectionCssClass: ':all:',
+        theme: 'filter-select',
+        width: '100%',
+        dropdownAutoWidth: true,
+        minimumResultsForSearch: -1
+      });
+    }
+  });
+
+  let $servicesFilter = $('form[name="services_filter"]');
+  
+  $servicesFilter.on('submit', function (event) {
+    let $filterSearchBtn = $('.filter__search-btn');
+    let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
+
+    $filterSearchBtn.hide();
+    $filterPreloaderWrapper.show();
+  });
+
+  $('.filter-select').on('change', function (event, call) {
+    $servicesFilter.trigger('submit');
+  });
 });

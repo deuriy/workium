@@ -1,6 +1,7 @@
 import $ from "jquery";
 import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
 import IMask from 'imask';
+import { AudioPlayers } from "./audio_player.js";
 
 var count = 200;
 var defaults = {
@@ -87,13 +88,40 @@ function setCookie(name, value, options = {}) {
   document.cookie = updatedCookie;
 }
 
+function clearTextField($input) {
+  $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
+  $input.parent().find('[data-clear-search-input]').hide();
+}
+
 $(() => {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  const setVh = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
+
+  // первичная установка
+  setVh();
+
+  // пересчёт при изменениях
+  window.addEventListener('resize', setVh);
+  window.addEventListener('orientationchange', setVh);
+
+  // для мобильных браузеров (Safari, Chrome Android и т.п.)
+  window.visualViewport?.addEventListener('resize', setVh);
 
   let currentFancybox = null;
 
   Fancybox.bind("[data-fancybox]");
+
+  Fancybox.bind("[data-fancybox-mini-gallery]", {
+    on: {
+      destroy: (fancybox) => {
+        document.documentElement.classList.add("with-fancybox");
+        document.body.classList.add("hide-scrollbar");
+      }
+    }
+  });
+
 
   Fancybox.bind(".fancybox-popup-toggle", {
     dragToClose: false,
@@ -119,6 +147,8 @@ $(() => {
           if (slide.serviceName) {
             let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
             $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
+            console.log($(slide.contentEl).find('a[href="#order-service-popup"]'));
+            $(slide.contentEl).find('a[href="#order-service-popup"]').attr("data-service-name", serviceName);
           }
 
           $(slide.contentEl).find('.fancybox-popup__first-installment').text(slide.firstInstallment);
@@ -164,6 +194,28 @@ $(() => {
 
         currentFancybox = fancybox;
 
+        if (slide.src.includes('operation-success-popup')) {
+          const approveCheckedLoadingPlayer = document.getElementById('approve-checked-loading-player');
+
+          approveCheckedLoadingPlayer?.stop();
+          approveCheckedLoadingPlayer?.play();
+        }
+
+        if (slide.src.includes('share-vacancy-with-friend')) {
+          const fancyboxBonusLink = slide.contentEl.querySelector('[data-bonus-link]');
+          const fancyBoxRewardRange = slide.contentEl.querySelector('[data-reward-range]');
+          const promoBlockLink = slide.triggerEl.dataset.promoBlockLink;
+          const promoBlockRewardRange = slide.triggerEl.dataset.rewardRange;
+
+          if (fancyboxBonusLink && promoBlockLink) {
+            fancyboxBonusLink.value = promoBlockLink;
+          }
+
+          if (fancyBoxRewardRange && promoBlockRewardRange) {
+            fancyBoxRewardRange.textContent = promoBlockRewardRange;
+          }
+        }
+
         if (slide.src.includes('order-service-popup') || slide.src.includes('consult-service-popup')) {
           $(slide.contentEl).find('.fancybox-popup__service-name').text(slide.serviceName);
           // $(slide.contentEl).find('.fancybox-popup__cashback').text(slide.cashback);
@@ -176,6 +228,8 @@ $(() => {
         if (!promoBlocks) return;
 
         const checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
+        const checkedVariantInputs = promoBlocks.querySelectorAll('input[name^="working_conditions"]:checked');
+        console.log(checkedVariantInputs);
 
         if (!checkedVariantInput) return;
 
@@ -239,7 +293,7 @@ $(() => {
               } else {
                 hrefText = `Hello! I would like to know more details about the vacancy "${vacancyTitle}" ${variantLabel}. Vacancy ID: ${agencyId}`;
               }
-              
+
               break;
           }
 
@@ -348,45 +402,45 @@ $(() => {
 
       // close: (fancybox, slide) => {
 
-        // if (!slide.srcElement.includes("#book-vacancy-list-popup") && !slide.srcElement.includes("#consult-vacancies-list-popup")) return;
+      // if (!slide.srcElement.includes("#book-vacancy-list-popup") && !slide.srcElement.includes("#consult-vacancies-list-popup")) return;
 
-        // // let promoBlocks = slide.triggerEl.closest('.promo-blocks');
+      // // let promoBlocks = slide.triggerEl.closest('.promo-blocks');
 
-        // // if (!promoBlocks) return;
+      // // if (!promoBlocks) return;
 
-        // // let checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
+      // // let checkedVariantInput = promoBlocks.querySelector('input[name^="working_conditions"]:checked');
 
-        // // if (!checkedVariantInput) return;
+      // // if (!checkedVariantInput) return;
 
-        // // let promoBlock = checkedVariantInput.closest('.promo-block');
+      // // let promoBlock = checkedVariantInput.closest('.promo-block');
 
-        // // if (!promoBlock) return;
+      // // if (!promoBlock) return;
 
-        // // let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
-        // // let variantLabel = promoBlock.dataset.variantLabel;
-        // // const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
-        // // const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
+      // // let vacancyTitle = promoBlock.closest('.vacancy-card').querySelector('.vacancy-info__company-name').textContent;
+      // // let variantLabel = promoBlock.dataset.variantLabel;
+      // // const workingPeriod = promoBlock.querySelector('.footnote__value').textContent.toLowerCase();
+      // // const rewardRange = promoBlock.querySelector('.promo-block__salary-value').textContent;
 
-        // const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
-        // const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
-        // const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
-        // const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
+      // const fancyBoxVacancyTitle = slide.contentEl.querySelector('.fancybox-popup__vacancy-title');
+      // const fancyBoxVariant = slide.contentEl.querySelector('.fancybox-popup__variant');
+      // const fancyBoxWorkingPeriod = slide.contentEl.querySelector('.fancybox-popup__working-period');
+      // const fancyBoxRewardRange = slide.contentEl.querySelector('.fancybox-popup__reward-range');
 
-        // if (fancyBoxVacancyTitle) {
-        //   // fancyBoxVacancyTitle.textContent = vacancyTitle;
-        // }
+      // if (fancyBoxVacancyTitle) {
+      //   // fancyBoxVacancyTitle.textContent = vacancyTitle;
+      // }
 
-        // if (fancyBoxVariant) {
-        //   fancyBoxVariant.textContent = variantLabel;
-        // }
+      // if (fancyBoxVariant) {
+      //   fancyBoxVariant.textContent = variantLabel;
+      // }
 
-        // if (fancyBoxWorkingPeriod) {
-        //   fancyBoxWorkingPeriod.textContent = workingPeriod;
-        // }
+      // if (fancyBoxWorkingPeriod) {
+      //   fancyBoxWorkingPeriod.textContent = workingPeriod;
+      // }
 
-        // if (fancyBoxRewardRange) {
-        //   fancyBoxRewardRange.textContent = rewardRange;
-        // }
+      // if (fancyBoxRewardRange) {
+      //   fancyBoxRewardRange.textContent = rewardRange;
+      // }
       // }
     }
   });
@@ -597,7 +651,7 @@ $(() => {
   $('.user-label--copy-partner-link').click(function (e) {
     let $copyLinkInput = $($(this).attr('href'));
     let linkDefaultText = $(this).data('link-default-text');
-		let linkCopiedText = $(this).data('link-copied-text');
+    let linkCopiedText = $(this).data('link-copied-text');
 
     copyText($copyLinkInput[0]);
     $(this).text(linkCopiedText);
@@ -783,37 +837,303 @@ $(() => {
     }
   });
 
-  // $('.tooltip__close-btn').click(function(e) {
-  //   e.preventDefault();
+  $('.tooltip__close-btn').click(function (e) {
+    e.preventDefault();
 
-  //   let $tooltip = $(this).closest('.tooltip');
+    let $tooltip = $(this).closest('.tooltip');
 
-  //   $tooltip.removeClass('tooltip--visible');
+    $tooltip.removeClass('tooltip--visible').addClass('tooltip--closed');
 
-  //   setTimeout(() => {
-  //     $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
-  //     $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
-  //   }, 300);
-  // });
+    setTimeout(() => {
+      $tooltip.removeClass('tooltip--closed');
+    }, 500);
 
-  $(document).on('mouseover', '[data-tooltip]', function (event) {
-    let $tooltip = $(this).find('.tooltip');
-    $tooltip.addClass('tooltip--visible');
-
-    // let windowHeight = document.documentElement.clientHeight;
-    // let tooltipTriggerCoords = this.getBoundingClientRect();
-    // let tooltipHeight = $tooltip.outerHeight();
-
-    // if (windowHeight < tooltipTriggerCoords.bottom + tooltipHeight + 10) {
-    //   $tooltip.addClass('tooltip--extended-top').removeClass('tooltip--extended-bottom');
-    // } else {
-    //   $tooltip.removeClass('tooltip--extended-top').addClass('tooltip--extended-bottom');
-    // }
+    // setTimeout(() => {
+    //   $tooltip.closest('.hint').removeClass('hint--tooltip-visible');
+    //   $tooltip.closest('.cashback').removeClass('cashback--tooltip-visible');
+    // }, 300);
   });
 
-  $(document).on('mouseout', '[data-tooltip]', function (event) {
-    let $tooltip = $(this).find('.tooltip');
-    $tooltip.removeClass('tooltip--visible');
+  // $(document).on('mouseover', '[data-tooltip]', function (event) {
+  //   let $tooltip = $(this).find('.tooltip');
+  //   $tooltip.addClass('tooltip--visible');
+
+  //   // let windowHeight = document.documentElement.clientHeight;
+  //   // let tooltipTriggerCoords = this.getBoundingClientRect();
+  //   // let tooltipHeight = $tooltip.outerHeight();
+
+  //   // if (windowHeight < tooltipTriggerCoords.bottom + tooltipHeight + 10) {
+  //   //   $tooltip.addClass('tooltip--extended-top').removeClass('tooltip--extended-bottom');
+  //   // } else {
+  //   //   $tooltip.removeClass('tooltip--extended-top').addClass('tooltip--extended-bottom');
+  //   // }
+  // });
+
+  // $(document).on('mouseout', '[data-tooltip]', function (event) {
+  //   let $tooltip = $(this).find('.tooltip');
+  //   $tooltip.removeClass('tooltip--visible');
+  // });
+
+  const initTooltips = () => {
+    const tooltips = Array.from(document.querySelectorAll('.tooltip--extended'));
+    if (!tooltips.length) return;
+
+    const HIDE_DELAY = 150;
+
+    let tooltipLayer = document.getElementById('tooltip-layer');
+
+    const anchorMap = new WeakMap(); // tooltip -> anchor
+    const stateMap = new WeakMap(); // tooltip -> state
+
+    const ensureTooltipLayer = () => {
+      if (tooltipLayer) return tooltipLayer;
+      tooltipLayer = document.createElement('div');
+      tooltipLayer.id = 'tooltip-layer';
+      document.body.appendChild(tooltipLayer);
+      return tooltipLayer;
+    };
+
+    const getTrigger = (anchor) =>
+      anchor.getAttribute('data-tooltip-trigger') || 'hover';
+
+    const isOutOfViewportVertically = (rect) =>
+      rect.top < 0 || rect.bottom > window.innerHeight;
+
+    const positionTooltip = (tooltip) => {
+      const anchor = anchorMap.get(tooltip);
+      if (!anchor) return;
+
+      const a = anchor.getBoundingClientRect();
+      const t = tooltip.getBoundingClientRect();
+
+      let top, left;
+
+      if (tooltip.classList.contains('tooltip--extended-top')) {
+        top = a.top - t.height;
+        left = a.left + a.width / 2 - t.width / 2;
+      } else if (tooltip.classList.contains('tooltip--extended-bottom')) {
+        top = a.bottom;
+        left = a.left + a.width / 2 - t.width / 2;
+      } else if (tooltip.classList.contains('tooltip--extended-left')) {
+        top = a.top + a.height / 2 - t.height / 2;
+        left = a.left - t.width;
+      } else {
+        // справа по умолчанию
+        top = a.top + a.height / 2 - t.height / 2;
+        left = a.right;
+      }
+
+      tooltip.style.top = `${Math.round(top)}px`;
+      tooltip.style.left = `${Math.round(left)}px`;
+    };
+
+    const resolveVerticalDirection = (tooltip) => {
+      const anchor = anchorMap.get(tooltip);
+      if (!anchor) return;
+
+      tooltip.classList.remove(
+        'tooltip--extended-top',
+        'tooltip--extended-bottom'
+      );
+
+      positionTooltip(tooltip);
+
+      const rect = tooltip.getBoundingClientRect();
+      if (!isOutOfViewportVertically(rect)) return;
+
+      const a = anchor.getBoundingClientRect();
+      const spaceAbove = a.top;
+      const spaceBelow = window.innerHeight - a.bottom;
+      const height = rect.height;
+
+      if (spaceAbove >= height) {
+        tooltip.classList.add('tooltip--extended-top');
+      } else if (spaceBelow >= height) {
+        tooltip.classList.add('tooltip--extended-bottom');
+      }
+
+      positionTooltip(tooltip);
+    };
+
+    const updateAllTooltips = () => {
+      tooltips.forEach((tooltip) => {
+        if (!tooltip.classList.contains('tooltip--visible')) return;
+        resolveVerticalDirection(tooltip);
+        positionTooltip(tooltip);
+      });
+    };
+
+    tooltips.forEach((tooltip) => {
+      const anchor = tooltip.parentElement;
+      if (!anchor) return;
+
+      anchorMap.set(tooltip, anchor);
+
+      const state = {
+        hoverAnchor: false,
+        hoverTooltip: false,
+        hideTimeout: null,
+      };
+      stateMap.set(tooltip, state);
+
+      const isEnabled = () => anchor.hasAttribute('data-tooltip');
+      const trigger = getTrigger(anchor);
+
+      const showTooltip = () => {
+        if (!isEnabled()) return;
+
+        ensureTooltipLayer();
+
+        const moved = tooltip.parentElement !== tooltipLayer;
+        if (moved) {
+          tooltipLayer.appendChild(tooltip);
+          tooltip.classList.remove('tooltip--visible');
+        }
+
+        if (state.hideTimeout) {
+          clearTimeout(state.hideTimeout);
+          state.hideTimeout = null;
+        }
+
+        resolveVerticalDirection(tooltip);
+        positionTooltip(tooltip);
+
+        if (moved) void tooltip.offsetWidth;
+
+        requestAnimationFrame(() => {
+          tooltip.classList.add('tooltip--visible');
+        });
+      };
+
+      const scheduleHide = () => {
+        if (state.hideTimeout) clearTimeout(state.hideTimeout);
+
+        state.hideTimeout = setTimeout(() => {
+          if (!state.hoverAnchor && !state.hoverTooltip) {
+            tooltip.classList.remove('tooltip--visible');
+          }
+          state.hideTimeout = null;
+        }, HIDE_DELAY);
+      };
+
+      /* ---------- HOVER MODE ---------- */
+      if (trigger === 'hover') {
+        anchor.addEventListener('mouseenter', () => {
+          if (!isEnabled()) return;
+          state.hoverAnchor = true;
+          showTooltip();
+        });
+
+        anchor.addEventListener('mouseleave', () => {
+          if (!isEnabled()) return;
+          state.hoverAnchor = false;
+          scheduleHide();
+        });
+
+        tooltip.addEventListener('mouseenter', () => {
+          if (!isEnabled()) return;
+          state.hoverTooltip = true;
+          showTooltip();
+        });
+
+        tooltip.addEventListener('mouseleave', () => {
+          if (!isEnabled()) return;
+          state.hoverTooltip = false;
+          scheduleHide();
+        });
+      }
+
+      /* ---------- CLICK MODE ---------- */
+      if (trigger === 'click') {
+        anchor.addEventListener('click', (e) => {
+          if (!isEnabled()) return;
+
+          e.preventDefault();
+          e.stopPropagation();
+
+          const visible = tooltip.classList.contains('tooltip--visible');
+
+          tooltips.forEach((t) => {
+            if (t === tooltip) return;
+            t.classList.remove('tooltip--visible');
+            const s = stateMap.get(t);
+            if (s) {
+              s.hoverAnchor = false;
+              s.hoverTooltip = false;
+            }
+          });
+
+          if (visible) {
+            tooltip.classList.remove('tooltip--visible');
+            state.hoverAnchor = false;
+          } else {
+            state.hoverAnchor = true;
+            showTooltip();
+          }
+        });
+
+        tooltip.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      }
+
+      /* ---------- CLOSE ON LINK CLICK ---------- */
+      tooltip.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        tooltip.classList.remove('tooltip--visible');
+        state.hoverAnchor = false;
+        state.hoverTooltip = false;
+
+        if (state.hideTimeout) {
+          clearTimeout(state.hideTimeout);
+          state.hideTimeout = null;
+        }
+      });
+    });
+
+    /* ---------- CLICK OUTSIDE ---------- */
+    document.addEventListener('click', () => {
+      tooltips.forEach((tooltip) => {
+        const anchor = anchorMap.get(tooltip);
+        if (!anchor || getTrigger(anchor) !== 'click') return;
+
+        tooltip.classList.remove('tooltip--visible');
+        const state = stateMap.get(tooltip);
+        if (state) {
+          state.hoverAnchor = false;
+          state.hoverTooltip = false;
+        }
+      });
+    });
+
+    /* ---------- SCROLL / RESIZE ---------- */
+    let ticking = false;
+
+    const onScrollOrResize = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        updateAllTooltips();
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+  };
+
+  initTooltips();
+
+  document.addEventListener('jobReviewsLoaded', function (event) {
+    initTooltips();
+  });
+
+  document.addEventListener('audioPlayersLoaded', function (event) {
+    const ratingPopup = document.querySelector(event.detail.popupId);
+    AudioPlayers.init(ratingPopup);
   });
 
   // Article chapters
@@ -876,7 +1196,7 @@ $(() => {
   document.addEventListener('click', function (e) {
     const like = e.target.closest('.like');
 
-    if (!like) return;
+    if (!like || like.classList.contains('like--not-clickable')) return;
 
     like.classList.toggle('like--filled');
     e.preventDefault();
@@ -955,7 +1275,10 @@ $(() => {
     const mask = IMask(
       phoneInput,
       {
-        mask: '+000 00 000 00 00'
+        mask: [
+          { mask: '+000 00 000 00 00' },
+          { mask: '+000 00 000 00 000' }
+        ]
       }
     );
     mask.value = '+';
@@ -993,7 +1316,7 @@ $(() => {
     const input = e.target.closest('.sms-code-field__input');
 
     if (!input) return;
-    
+
     const pasteData = (e.clipboardData || window.clipboardData).getData('text');
     const digits = pasteData.replace(/\D/g, '').split('');
     const smsInputs = input.parentNode.querySelectorAll('.sms-code-field__input');
@@ -1026,5 +1349,69 @@ $(() => {
     }
 
     e.preventDefault();
+  });
+
+  document.addEventListener('click', function (e) {
+    const closeNoticeBtn = e.target.closest('[data-close-notice]');
+
+    if (!closeNoticeBtn) return;
+
+    const notice = closeNoticeBtn.closest('.notice');
+
+    if (!notice) return;
+
+    notice.classList.add('hidden');
+    const cookieName = notice.dataset.cookieName;
+
+    if (cookieName) {
+      setCookie(cookieName, 'yes', { 'max-age': 3153600000 });
+
+      document.querySelectorAll(`.notice[data-cookie-name="${cookieName}"]`).forEach(el => {
+        el.classList.add('hidden');
+      });
+    }
+
+    e.preventDefault();
+  });
+
+  // Search input with close button
+  $('[data-search-input]').on('input', function (event) {
+    let name = $(this).attr('name');
+    let value = $(this).val();
+    let $clearBtn = $(this).next('.filter__clear-search-btn');
+    let $searchBtnMobile = $('.filter__search-btn-mobile');
+    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
+
+    if (value) {
+      $clearBtn.show();
+      $searchBtnMobile.show();
+      $(this).addClass('form-text--filter-search-filled');
+      // createOrUpdateTag('textfield', name, value, value);
+    } else {
+      $clearBtn.hide();
+      $searchBtnMobile.hide();
+      $(this).removeClass('form-text--filter-search-filled');
+      // removeFilterTag(type, name, value);
+    }
+  });
+
+  $('[data-clear-search-input]').on('click', function (event) {
+    let $input = $(this).prev();
+    let name = $input.attr('name');
+    let value = $input.val();
+    let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
+
+    clearTextField($input);
+    // removeFilterTag(type, name, value);
+
+    $input.focus();
+
+    let isMobile = $(window).width() < 576;
+    let $noResults = $('.vacancies__no-results');
+    if (isMobile && $noResults.length) {
+      updateFilterUrl();
+    }
+
+    // updateFilterUrl();
   });
 });

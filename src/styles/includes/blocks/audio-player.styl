@@ -1,0 +1,24 @@
+.audio-player
+  display grid
+  grid-template-columns auto 1fr auto
+  grid-template-areas "play-btn waveform waveform" "play-btn time controls"
+  gap 12px
+  padding 16px 16px 12px
+  border-radius 16px
+  background #F4F5FC
+
+  &__play-btn
+    grid-area play-btn
+
+  &__waveform
+    grid-area waveform
+    // margin-top -10px
+  
+  &__time
+    grid-area time
+  
+  &__controls
+    grid-area controls
+    display flex
+    align-items center
+    gap 8px

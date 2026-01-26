@@ -1,13 +1,22 @@
 .vacancy-buttons
   // display grid
   // grid-template-columns repeat(2, 1fr)
-  display flex
   // align-items center
-  gap 12px
+
+  // display flex
+  // gap 12px
+
+  display grid
+  grid-template-columns 1fr 58px 58px
+  grid-auto-rows 58px
+  gap 8px
   
   &__btn
     flex 1 0 0
     min-height 58px
+  
+  &--one-col
+    grid-template-columns 100%
   
   // @media $smPlus
   //   padding 24px 0 0

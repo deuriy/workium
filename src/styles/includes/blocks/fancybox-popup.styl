@@ -43,6 +43,12 @@
 		min-height 180px
 		margin-bottom 26px
 	
+	&__lottie-player
+		width 200px
+		height 200px
+		margin-right auto
+		margin-left auto
+	
 	&__user-level-avatar
 		margin-right auto
 		margin-left auto
@@ -50,6 +56,10 @@
 	&__text
 		font-size 15px
 		line-height normal
+
+		.underline-link
+			color var(--info)
+			text-decoration underline
 		
 		& > p
 			& + p
@@ -95,6 +105,12 @@
 	
 	&__btn
 		width 100%
+		line-height 1.4
+	
+	&__btn-order-label
+		display block
+		font-weight 600
+		font-size 20px
 	
 	&__show-contacts-btn-wrapper
 		@media $xs
@@ -149,6 +165,35 @@
 	&__notice
 		margin-right -8px
 		margin-left -8px
+	
+	&__get-bonus-link
+		@media $xs
+			margin-top 20px
+	
+	&__bonus-link,
+	&__get-bonus-link-title,
+	&__get-bonus-link-buttons
+		width 540px
+		max-width 100%
+		margin-right auto
+		margin-left auto
+	
+	&__get-bonus-link-title
+		margin-bottom 20px
+
+		@media $xs
+			margin-bottom 12px
+	
+	&__get-bonus-link-buttons
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content center
+		gap 12px
+
+		@media $xs
+			grid-template-columns 100%
+			grid-auto-rows 48px
+			gap 8px
 	
 	&--wide
 		text-align center
@@ -299,6 +344,37 @@
 			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
 	
+	&--rating
+		padding 0
+
+		@media $smPlus
+			width 1180px
+			border-radius 20px
+		
+		@media $smMinus
+			height calc(var(--vh, 100vh) * 100)
+		
+		@media $xs
+			// height 100vh
+			// height calc(var(--vh, 100vh) * 100)
+			border-radius 0
+		
+		.fancybox-close-button
+			top 28px
+			right 24px
+			width 32px
+			height 32px
+	
+	&--add-review
+		padding 0
+		
+		@media $smPlus
+			width 660px
+		
+		@media $xs
+			height calc(var(--vh, 100vh) * 100)
+			border-radius 0
+	
 	&--cities
 		@media $xs
 			// height 100vh
@@ -392,6 +468,24 @@
 				// margin-top 10px
 				margin-top 12px
 	
+	&--operation-error,
+	&--operation-success
+		.fancybox-popup__text
+			text-align center
+
+			@media $xs
+				margin-bottom 30px
+
+		.fancybox-popup__img-wrapper
+			@media $xs
+				min-height 0
+
+		.fancybox-popup__img,
+		.fancybox-popup__lottie-player
+			@media $xs
+				width 60px
+				height 60px
+	
 	&--book-vacancy
 		border-top-right-radius 16px
 		border-top-left-radius 16px
@@ -414,6 +508,8 @@
 				--f-button-color #000
 	
 	&--tooltip-popup
+		max-height 100vh
+		overflow auto
 		padding 24px 32px
 		border-top-right-radius 16px
 		border-top-left-radius 16px
@@ -442,6 +538,13 @@
 			
 			& > p + p
 				margin-top 16px
+		
+		.fancybox-popup__link-wrapper
+			margin-top 15px
+			text-align center
+		
+		.fancybox-popup__link
+			font-size 17px
 	
 	&--invite-friend
 		.fancybox-popup__text
@@ -621,6 +724,11 @@
 			margin-top 35px
 			line-height 1.56
 			color #000
+	
+	&--user-rating
+		&.fancybox__content
+			border-top-right-radius 24px
+			border-top-left-radius 24px
 	
 	&--sms-code
 		&.fancybox__content.fancybox-popup

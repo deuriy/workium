@@ -1,17 +1,40 @@
 .docs-page
-	&__title
-		margin-bottom 30px
+	// &__title
+	// 	margin-bottom 30px
+
+	&__title-wrapper
+		display grid
+		grid-template-columns repeat(2, auto)
+		justify-content start
+		align-items start
+		gap 5px
+		margin-bottom 10px
+		
+		@media $xs
+			gap 7px
+		
+		&:has(>.vacancies-title__btn)
+			align-items center
+			gap 18px
+			
+			@media $xs
+				gap 12px
 	
 	&__header
-		margin-bottom 35px
+		margin-bottom 20px
+		// margin-bottom 35px
 		
-		@media $smMinus
-			margin-bottom 25px
+		// @media $smMinus
+		// 	margin-bottom 25px
 		
 		@media $xs
 			margin-bottom 20px
 	
-	&__tabs
+	&__filter
+		margin-bottom 20px
+	
+	// &__tabs
+	&__content
 		margin-bottom 66px
 		
 		@media $1440-

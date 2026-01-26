@@ -1,0 +1,43 @@
+.review-rating-block
+  border-radius 12px
+  background #F4F5FC
+
+  &__criterion
+    padding 24px 24px 21px
+
+    & + &
+      // margin-top 24px
+      border-top 2px solid var(--light)
+
+  &__criterion-name
+    font-weight 600
+    color var(--accent)
+  
+  &__mark
+    display inline-flex
+    margin-bottom 8px
+    margin-left -10px
+    padding 0 10px
+    border-radius 20px
+    color var(--text-color)
+    font-weight 400
+    font-size 13px
+    line-height 22px
+
+    &--red,
+    &--yellow,
+    &--green
+      font-weight 500
+
+    &--red
+      background #FFEAE6
+    
+    &--yellow
+      background #fff2df
+    
+    &--green
+      background #e9f9e6
+  
+  &__stars
+    @media $xs
+      justify-self start

@@ -267,6 +267,17 @@
 		font-size 15px
 		line-height 1.6
 	
+	&__buttons
+		display flex
+		flex-wrap wrap
+		align-items center
+		gap 12px
+		margin-top 16px
+
+		@media $xxs
+			display grid
+			grid-template-columns repeat(2, 1fr)
+	
 	&--grey-bg
 		.client-card__header
 			background linear-gradient(90deg, #d4d6e4 0%, #dfe1ed 100%)

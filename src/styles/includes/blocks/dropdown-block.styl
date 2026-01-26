@@ -51,6 +51,31 @@
 		left 0
 		transition none
 	
+	&--rating-criteria,
+	&--rating-criteria-header
+		position absolute
+		top 100%
+		// width 312px
+		width 330px
+		padding 16px
+		border none
+		border-radius 12px
+		box-shadow 0 4px 30px rgba(0, 0, 0, 0.25)
+		transform none
+		transition none
+	
+	&--rating-criteria-header
+		width 100%
+		left 0
+		padding 8px 16px 16px
+		border-top 1px solid #F0F4FA
+		box-shadow 0 4px 30px rgba(0, 0, 0, 0.25)
+		border-radius 0
+	
+	&--rating-criteria-top
+		top auto
+		bottom 100%
+	
 	&--bottom-fixed
 		position fixed
 		// transition none
@@ -67,7 +92,8 @@
 	
 	&--cities-select,
 	&--sex-select,
-	&--relevance-select
+	&--relevance-select,
+	&--doc-types
 		position absolute
 		// top 100%
 		top calc(100% + 6px)
