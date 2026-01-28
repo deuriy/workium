@@ -87,10 +87,7 @@ function setVisibilitySelectedMoreItem(selectedItemsLength) {
 }
 
 function checkDependentFilters() {
-  console.log('checkDependentFilters()');
   let $dependentFilters = $('[data-parent-filter-id]');
-  
-  // console.log($dependentFilters);
 
   $dependentFilters.each(function (index, el) {
     let parentFilterId = $(el).data('parent-filter-id')
@@ -115,16 +112,10 @@ function checkDependentFilters() {
     let tagName = $parentFilterItem.prop('tagName').toLowerCase();
     let compareOp = tagName === 'option' ? ':selected' : ':checked';
 
-    console.log(compareOp);
-    console.log('parentFilterItem:', $parentFilterItem[0]);
-    console.log('$parentFilterItem.is(compareOp):', $parentFilterItem.is(compareOp));
-
     if (!$parentFilterItem.is(compareOp)) {
       $(el).hide();
-      console.log('HIDE', el);
     } else {
       $(el).show();
-      console.log('SHOW', el);
     }
   });
 }
@@ -924,7 +915,6 @@ $(() => {
     });
 
     let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
-    console.log(`selectedCandidatesType: ${selectedCandidatesType}`);
 
     let selectedCandidatesSlugs = selectedCandidatesType.map(function (value, index) {
       return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
@@ -936,8 +926,6 @@ $(() => {
 
 
     let selectedVacanciesRelevance = $('.filter__relevance-select').val();
-    console.log(`selectedVacanciesRelevance: ${selectedVacanciesRelevance}`);
-    // console.log($('.filter__relevance-select option:selected'));
 
     let selectedVacanciesRelevancesSlugs = selectedVacanciesRelevance.map(function (value, index) {
       return $(`select[name="aktualnіst[]"] option[value="${value}"]`).attr('data-seo-slug');
