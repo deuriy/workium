@@ -673,14 +673,19 @@ $(() => {
   $(document).on('click', '.tabs__list:not(.tabs__list--no-tabs) .tabs__item', function (event) {
     event.preventDefault();
 
-    let index = $(this).index();
+    const index = $(this).index();
+    const $tabs = $(this).closest('.tabs');
 
+    $tabs.find('.tabs-menu__link').removeClass('tabs-menu__link--active');
     $(this).find('.tabs-menu__link').addClass('tabs-menu__link--active');
-    $(this).siblings().find('.tabs-menu__link').removeClass('tabs-menu__link--active');
 
-    const parent = $(this).parents('.tabs');
-    parent.find('.tabs__content').hide();
-    parent.find('.tabs__content:eq(' + index + ')').show();
+    $tabs.find('.tabs__content').hide();
+    $tabs
+      .find('.tabs__content')
+      .parent()
+      .each(function () {
+        $(this).children('.tabs__content').eq(index).show();
+      });
   });
 
   // $('.tabs__list').each(function() {
