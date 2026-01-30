@@ -159,6 +159,15 @@
 		grid-template-columns 1fr auto
 		gap 10px
 		margin-bottom 10px
+
+		&:has(~.promo-block__rating-block)
+			margin-bottom 4px
+	
+	&__rating-block
+		position relative
+		z-index 2
+		justify-self start
+		margin-bottom 16px
 	
 	&__mini-gallery,
 	&__link
@@ -208,7 +217,7 @@
 		display grid
 		grid-template-columns repeat(2, auto)
 		justify-content start
-		gap 6px
+		gap 5px
 	
 	&__notice-danger
 		z-index 10
@@ -292,6 +301,9 @@
 		.promo-block__salaries-and-checkbox
 			@media $smPlus
 				margin-bottom 16px
+
+				&:has(~.promo-block__rating-block)
+					margin-bottom 4px
 		
 		.promo-block__characteristics
 			margin-bottom 12px
