@@ -28,6 +28,12 @@
     line-height 1.67
     text-transform uppercase
     color #989DB3
+  
+  &__rating-block
+    position relative
+    z-index 2
+    justify-self start
+    margin-bottom 8px
     
     // &::after
     //   @media $xs
@@ -83,11 +89,11 @@
     //   margin-top 8px
     //   margin-right 0
   
-  &:is(a):hover,
+  &:is(:not(.employment-variant--selected)):hover,
   &--selected
     border-radius 12px
   
-  &:is(a):hover
+  &:is(:not(.employment-variant--selected)):hover
     @media $smPlus
       box-shadow 0 0 24px rgba(19, 31, 54, 0.65)
     
