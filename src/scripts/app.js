@@ -1166,7 +1166,9 @@ $(() => {
 
   document.addEventListener('audioPlayersLoaded', function (event) {
     const ratingPopup = document.querySelector(event.detail.popupId);
-    AudioPlayers.init(ratingPopup);
+    setTimeout(() => {
+      AudioPlayers.init(ratingPopup);
+    }, 100);
   });
 
   // Article chapters
