@@ -673,14 +673,19 @@ $(() => {
   $(document).on('click', '.tabs__list:not(.tabs__list--no-tabs) .tabs__item', function (event) {
     event.preventDefault();
 
-    let index = $(this).index();
+    const index = $(this).index();
+    const $tabs = $(this).closest('.tabs');
 
+    $tabs.find('.tabs-menu__link').removeClass('tabs-menu__link--active');
     $(this).find('.tabs-menu__link').addClass('tabs-menu__link--active');
-    $(this).siblings().find('.tabs-menu__link').removeClass('tabs-menu__link--active');
 
-    const parent = $(this).parents('.tabs');
-    parent.find('.tabs__content').hide();
-    parent.find('.tabs__content:eq(' + index + ')').show();
+    $tabs.find('.tabs__content').hide();
+    $tabs
+      .find('.tabs__content')
+      .parent()
+      .each(function () {
+        $(this).children('.tabs__content').eq(index).show();
+      });
   });
 
   // $('.tabs__list').each(function() {
@@ -931,28 +936,56 @@ $(() => {
       const anchor = anchorMap.get(tooltip);
       if (!anchor) return;
 
-      tooltip.classList.remove(
-        'tooltip--extended-top',
-        'tooltip--extended-bottom'
-      );
-
+      // Позиционируем в текущем состоянии (НЕ трогаем классы)
       positionTooltip(tooltip);
 
       const rect = tooltip.getBoundingClientRect();
-      if (!isOutOfViewportVertically(rect)) return;
+
+      // Если tooltip полностью во viewport — ничего не делаем
+      if (!isOutOfViewportVertically(rect)) {
+        return;
+      }
 
       const a = anchor.getBoundingClientRect();
       const spaceAbove = a.top;
       const spaceBelow = window.innerHeight - a.bottom;
       const height = rect.height;
 
-      if (spaceAbove >= height) {
+      let changed = false;
+
+      // Меняем направление ТОЛЬКО если есть куда
+      if (
+        tooltip.classList.contains('tooltip--extended-bottom') &&
+        spaceAbove >= height
+      ) {
+        tooltip.classList.remove('tooltip--extended-bottom');
         tooltip.classList.add('tooltip--extended-top');
-      } else if (spaceBelow >= height) {
+        changed = true;
+      } else if (
+        tooltip.classList.contains('tooltip--extended-top') &&
+        spaceBelow >= height
+      ) {
+        tooltip.classList.remove('tooltip--extended-top');
         tooltip.classList.add('tooltip--extended-bottom');
+        changed = true;
+      } else if (
+        !tooltip.classList.contains('tooltip--extended-top') &&
+        !tooltip.classList.contains('tooltip--extended-bottom')
+      ) {
+        // если направления ещё нет — выбираем оптимальное
+        if (spaceBelow >= height) {
+          tooltip.classList.add('tooltip--extended-bottom');
+          changed = true;
+        } else if (spaceAbove >= height) {
+          tooltip.classList.add('tooltip--extended-top');
+          changed = true;
+        }
       }
 
-      positionTooltip(tooltip);
+      // Перепозиционируем ТОЛЬКО если реально сменили класс
+      if (changed) {
+        positionTooltip(tooltip);
+      }
     };
 
     const updateAllTooltips = () => {
@@ -1133,7 +1166,9 @@ $(() => {
 
   document.addEventListener('audioPlayersLoaded', function (event) {
     const ratingPopup = document.querySelector(event.detail.popupId);
-    AudioPlayers.init(ratingPopup);
+    setTimeout(() => {
+      AudioPlayers.init(ratingPopup);
+    }, 100);
   });
 
   // Article chapters

@@ -52,19 +52,19 @@ document.addEventListener('bookmarksLoaded', function (event) {
     if (!moreLink) return;
 
     const vacancyCardTeaser = moreLink.closest('.vacancy-card--teaser');
-    const wrapper = document.querySelector('.wrapper');
-    const mobileHeaderHeight = document.querySelector('.mobile-header').offsetHeight;
-    const iconMenuHeight = document.querySelector('.icon-menu').offsetHeight;
+    // const wrapper = document.querySelector('.wrapper');
+    // const mobileHeaderHeight = document.querySelector('.mobile-header').offsetHeight;
+    // const iconMenuHeight = document.querySelector('.icon-menu').offsetHeight;
 
     vacancyCardTeaser.classList.toggle('vacancy-card--teaser-expanded');
     moreLink.classList.toggle('link--vacancy-card-more-expanded');
 
     if (moreLink.classList.contains('link--vacancy-card-more-expanded')) {
       moreLink.textContent = 'Приховати';
-      wrapper.scrollTo({ top: vacancyCardTeaser.offsetTop + iconMenuHeight, behavior: "smooth" });
+      // wrapper.scrollTo({ top: vacancyCardTeaser.offsetTop + iconMenuHeight, behavior: "smooth" });
     } else {
       moreLink.textContent = 'Детальніше';
-      wrapper.scrollTo({ top: vacancyCardTeaser.offsetTop - mobileHeaderHeight, behavior: "smooth" });
+      // wrapper.scrollTo({ top: vacancyCardTeaser.offsetTop - mobileHeaderHeight, behavior: "smooth" });
     }
 
   });

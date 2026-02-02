@@ -1,7 +1,8 @@
 .review
   &__header
     display grid
-    grid-template-columns auto auto auto
+    // grid-template-columns auto auto auto
+    grid-template-columns auto 60px auto
     grid-template-areas "avatar username username" "avatar rating date"
     align-items center
     gap 2px 16px
@@ -69,14 +70,14 @@
   
   &__date
     grid-area date
-    margin-left -8px
+    // margin-left -8px
     font-weight 400
     font-size 13px
     line-height 1.69230769
     color #989DB2
 
     @media $xs
-      margin-left 0
+      // margin-left 0
       color #5b617c
   
   &__body
@@ -191,3 +192,8 @@
   
   &__like-block
     margin-left auto
+  
+  &--agency
+    @media $xs
+      .review__footer
+        grid-template-columns 100%

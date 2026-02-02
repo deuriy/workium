@@ -1,4 +1,15 @@
 .rating-popup
+  &::after
+    content ""
+    position absolute
+    z-index 2
+    inset 0
+    background rgba(0, 0, 0, 0.6)
+    opacity 0
+    visibility hidden
+    pointer-events none
+    @extend .transition
+
   @media $smMinus
     // max-height 100vh
     max-height 100%
@@ -77,3 +88,8 @@
       @media $md
         // max-height calc(100vh - 294px)
         max-height calc(100vh - 188px)
+  
+  &:has(.dropdown-block--rating-criteria-header.dropdown-block--visible)
+    &::after
+      opacity 1
+      visibility visible
