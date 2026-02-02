@@ -111,8 +111,21 @@
 		margin-bottom -2px
 		margin-left -3px
 	
+	&__online-support
+		position relative
+				
+		&::after
+			content ""
+			width 7px
+			height 7px
+			position absolute
+			right -12px
+			bottom 8px
+			border-radius 50%
+			background #38CA16
+	
 	&--mobile-profile,
-	&--mobile-submenu-profile		
+	&--mobile-submenu-profile
 		.user-menu__link
 			border 1px solid transparent
 			background var(--accent-light)
@@ -122,18 +135,18 @@
 				background var(--black)
 				border-color #5041F5
 			
-			&--support
-				position relative
+			// &--support
+			// 	position relative
 				
-				&::after
-					content ""
-					width 7px
-					height 7px
-					position absolute
-					bottom 18px
-					left 140px
-					border-radius 50%
-					background #38CA16
+			// 	&::after
+			// 		content ""
+			// 		width 7px
+			// 		height 7px
+			// 		position absolute
+			// 		bottom 18px
+			// 		left 140px
+			// 		border-radius 50%
+			// 		background #38CA16
 	
 	&--mobile-profile
 		.user-menu__list
