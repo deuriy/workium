@@ -20,10 +20,6 @@
     border-radius 50%
     border 1px solid #F4F5FC
 
-    @media $xs
-      width 24px
-      height 24px
-
     & + .rating-block__avatar
       margin-left -10px
     
@@ -32,3 +28,9 @@
     
     &:nth-child(2)
       z-index 1
+  
+  &--agency-term
+    .rating-block__avatar
+      @media $xs
+        width 24px
+        height 24px
