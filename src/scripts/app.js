@@ -93,7 +93,50 @@ function clearTextField($input) {
   $input.parent().find('[data-clear-search-input]').hide();
 }
 
+function initLoopTimers() {
+  const timers = document.querySelectorAll('[data-loop-timer]');
+
+  timers.forEach(timer => {
+    const startFrom = parseInt(timer.getAttribute('data-loop-timer'), 10);
+    if (!Number.isInteger(startFrom) || startFrom < 1) return;
+
+    let current = startFrom;
+    let intervalId = null;
+
+    timer.textContent = current;
+
+    function tick() {
+      current--;
+
+      if (current < 1) {
+        current = startFrom;
+      }
+
+      timer.textContent = current;
+    }
+
+    function start() {
+      if (intervalId !== null) return; // уже запущен
+      intervalId = setInterval(tick, 1000);
+    }
+
+    function stop() {
+      if (intervalId === null) return;
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+
+    // сохраняем управление прямо в элемент
+    timer.loopTimer = { start, stop };
+
+    // автозапуск
+    // start();
+  });
+}
+
 $(() => {
+  initLoopTimers();
+
   const setVh = () => {
     const vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -135,6 +178,12 @@ $(() => {
           let $activeTabLink = $(slide.el).find(`.tabs-menu__item:nth-child(${activeTabNumber}) .tabs-menu__link`);
 
           $activeTabLink.trigger('click');
+
+          let timer = slide.contentEl.querySelector('[data-loop-timer]');
+
+          if (!timer) return;
+
+          timer.loopTimer.start();
         } else if (slide.src.includes('cashback-tooltip-popup')) {
           let serviceName = slide.serviceName.charAt(0).toLowerCase() + slide.serviceName.slice(1);
           $(slide.contentEl).find('.fancybox-popup__service-name').text(serviceName);
@@ -162,6 +211,18 @@ $(() => {
         currentFancybox = fancybox;
 
       },
+
+      shouldClose: () => {
+        let slide = Fancybox.getSlide();
+        
+        if (slide.src === '#authorization-popup') {
+          let timer = slide.contentEl.querySelector('[data-loop-timer]');
+
+          if (!timer) return;
+
+          timer.loopTimer.stop();
+        }
+      }
 
       // done: (fancybox, slide) => {
       //   if (slide.src.includes('cashback-tooltip-popup')) {
@@ -1311,8 +1372,8 @@ $(() => {
       phoneInput,
       {
         mask: [
-          { mask: '+000 00 000 00 00' },
-          { mask: '+000 00 000 00 000' }
+          { mask: '+000000000000' },
+          { mask: '+0000000000000' }
         ]
       }
     );

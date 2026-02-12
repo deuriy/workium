@@ -58,6 +58,17 @@
 		inset 0
 		margin auto
 	
+	&__sms-confirmation
+		margin-top 55px
+		margin-bottom 10px
+
+		@media $xs
+			margin-top 35px
+			margin-bottom 0
+	
+	&__sending-sms-confirmation
+		margin-top 52px
+	
 	&--single-page
 		width 400px
 		max-width 100%
@@ -75,6 +86,17 @@
 	&--login
 		.authorization-form__field
 			margin-bottom 24px
+			
+			&:last-child
+				margin-bottom 0
+		
+		.authorization-form__buttons
+			margin-top 16px
+			margin-bottom 0
+	
+	&--register
+		.authorization-form__field
+			margin-bottom 16px
 			
 			&:last-child
 				margin-bottom 0
