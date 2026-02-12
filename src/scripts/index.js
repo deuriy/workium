@@ -3,6 +3,13 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import PerfectScrollbar from 'perfect-scrollbar';
 
+function copyText(input) {
+  input.select();
+  input.setSelectionRange(0, 99999);
+
+  document.execCommand("copy");
+}
+
 $(() => {
   new Swiper('.people-swiper', {
     modules: [Navigation],
@@ -98,5 +105,25 @@ $(() => {
 
   media.addEventListener('change', handleMedia);
   handleMedia(media);
+
+
+  $('.sms-confirmation__code, .sms-confirmation__number').click(function (e) {
+    let $copyValueInput = $($(this).attr('href'));
+
+    if (!$copyValueInput[0]) return;
+
+    copyText($copyValueInput[0]);
+
+    let $copySMSCode = $(this).parent();
+    let $tooltip = $copySMSCode.find('.tooltip');
+
+    $tooltip.addClass('tooltip--visible');
+
+    setTimeout(() => {
+      $tooltip.removeClass('tooltip--visible');
+    }, 2000);
+
+    e.preventDefault();
+  });
 
 });
