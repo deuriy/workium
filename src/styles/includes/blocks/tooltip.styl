@@ -68,7 +68,8 @@
 		position fixed
 
 		// z-index 100
-		pointer-events auto
+		// pointer-events auto
+		pointer-events none
 		z-index 2147483647
 
 		// top 50%
@@ -98,6 +99,7 @@
 		&.tooltip--visible
 			// left calc(100% + 14px)
 			margin-left 14px
+			pointer-events auto
 	
 	&--large
 		width 433px

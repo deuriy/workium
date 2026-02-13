@@ -223,6 +223,13 @@
 		justify-content start
 		gap 5px
 	
+	&__promo-label
+		@media $smPlus
+			margin -8px 0
+
+			&[data-tooltip]
+				cursor pointer
+	
 	&__notice-danger
 		z-index 10
 		margin -25px -25px 24px
