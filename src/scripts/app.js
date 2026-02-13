@@ -214,7 +214,7 @@ $(() => {
 
       shouldClose: () => {
         let slide = Fancybox.getSlide();
-        
+
         if (slide.src === '#authorization-popup') {
           let timer = slide.contentEl.querySelector('[data-loop-timer]');
 
@@ -1052,6 +1052,10 @@ $(() => {
     const updateAllTooltips = () => {
       tooltips.forEach((tooltip) => {
         if (!tooltip.classList.contains('tooltip--visible')) return;
+
+        const state = stateMap.get(tooltip);
+        if (state?.isClosing) return;
+
         resolveVerticalDirection(tooltip);
         positionTooltip(tooltip);
       });
@@ -1067,6 +1071,7 @@ $(() => {
         hoverAnchor: false,
         hoverTooltip: false,
         hideTimeout: null,
+        isClosing: false,
       };
       stateMap.set(tooltip, state);
 
@@ -1074,6 +1079,8 @@ $(() => {
       const trigger = getTrigger(anchor);
 
       const showTooltip = () => {
+        if (state.isClosing) return;
+
         if (!isEnabled()) return;
 
         ensureTooltipLayer();
@@ -1102,10 +1109,14 @@ $(() => {
       const scheduleHide = () => {
         if (state.hideTimeout) clearTimeout(state.hideTimeout);
 
+        state.isClosing = true;
+
         state.hideTimeout = setTimeout(() => {
           if (!state.hoverAnchor && !state.hoverTooltip) {
             tooltip.classList.remove('tooltip--visible');
           }
+
+          state.isClosing = false;
           state.hideTimeout = null;
         }, HIDE_DELAY);
       };
@@ -1175,13 +1186,37 @@ $(() => {
       if (trigger === 'click-hover') {
         anchor.addEventListener('click', (e) => {
           if (!isEnabled()) return;
+
           e.preventDefault();
           e.stopPropagation();
-          state.hoverAnchor = true;
-          showTooltip();
+
+          const visible = tooltip.classList.contains('tooltip--visible');
+
+          if (visible) {
+            // закрываем
+            tooltip.classList.remove('tooltip--visible');
+            state.hoverAnchor = false;
+            state.hoverTooltip = false;
+
+            if (state.hideTimeout) {
+              clearTimeout(state.hideTimeout);
+              state.hideTimeout = null;
+            }
+          } else {
+            // открываем
+            state.hoverAnchor = true;
+            showTooltip();
+          }
         });
 
-        anchor.addEventListener('mouseleave', () => {
+        anchor.addEventListener('mouseleave', (e) => {
+          const to = e.relatedTarget;
+
+          // если курсор ушёл в tooltip — не закрываем
+          if (to && (tooltip === to || tooltip.contains(to))) {
+            return;
+          }
+
           state.hoverAnchor = false;
           scheduleHide();
         });

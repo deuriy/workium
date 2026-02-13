@@ -169,6 +169,11 @@
       content ''
       position absolute
       inset -8px
+
+    @media $smPlus
+      &[data-tooltip]
+        &::before
+          cursor pointer
   
   &__salary
     padding 3px 8px
