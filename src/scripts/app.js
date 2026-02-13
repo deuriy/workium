@@ -1171,6 +1171,32 @@ $(() => {
         });
       }
 
+      /* ---------- CLICK + HOVER MODE ---------- */
+      if (trigger === 'click-hover') {
+        anchor.addEventListener('click', (e) => {
+          if (!isEnabled()) return;
+          e.preventDefault();
+          e.stopPropagation();
+          state.hoverAnchor = true;
+          showTooltip();
+        });
+
+        anchor.addEventListener('mouseleave', () => {
+          state.hoverAnchor = false;
+          scheduleHide();
+        });
+
+        tooltip.addEventListener('mouseenter', () => {
+          state.hoverTooltip = true;
+          showTooltip();
+        });
+
+        tooltip.addEventListener('mouseleave', () => {
+          state.hoverTooltip = false;
+          scheduleHide();
+        });
+      }
+
       /* ---------- CLOSE ON LINK CLICK ---------- */
       tooltip.addEventListener('click', (e) => {
         const link = e.target.closest('a');
