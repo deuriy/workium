@@ -332,13 +332,13 @@ $(() => {
   	});
   });
 
-  // $('.banner__more-link').click(function(e) {
-	// 	$(this).closest('.banner').find('.banner__text').toggleClass('banner__text--truncated-xs');
-	// 	$(this).toggleClass('arrow-link--opened');
+  $('.banner__more-link').click(function(e) {
+		$(this).closest('.banner').find('.banner__text').toggleClass('banner__text--truncated-xs');
+		$(this).toggleClass('arrow-link--opened');
 
-	// 	toggleMoreLink($(this));
-	// 	e.preventDefault();
-	// });
+		toggleMoreLink($(this));
+		e.preventDefault();
+	});
 
 	// $('[data-close-find-vacancy-banner]').click(function(event) {
   // 	event.preventDefault();
