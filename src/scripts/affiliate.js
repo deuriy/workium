@@ -2,13 +2,22 @@ import $ from "jquery";
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 
-function toggleMoreLink ($link) {
-	let linkText = $link.text() === 'Приховати' ? 'Читати далі' : 'Приховати';
-	$link.text(linkText);
+// function toggleMoreLink ($link) {
+// 	let linkText = $link.text() === 'Приховати' ? 'Читати далі' : 'Приховати';
+// 	$link.text(linkText);
+// }
+
+function toggleMoreLink($link) {
+	const { readMore, hide } = window.translations;
+
+	const currentText = $link.text().trim();
+	const newText = currentText === hide ? readMore : hide;
+
+	$link.text(newText);
 }
 
 $(() => {
-	const peopleSwiper = new Swiper('.people-swiper', {
+	new Swiper('.people-swiper', {
     modules: [Navigation],
     loop: true,
     slidesPerView: 'auto',
@@ -34,7 +43,7 @@ $(() => {
     }
   });
 
-  const testimonialsSwiper = new Swiper('.testimonials-swiper', {
+  new Swiper('.testimonials-swiper', {
     modules: [Navigation],
     loop: true,
     slidesPerView: 'auto',
