@@ -1,0 +1,286 @@
+/* =========================================
+   ROOT WRAPPER
+========================================= */
+
+.calendar {
+    position: relative;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* =========================================
+   FIELD
+========================================= */
+
+.calendar .calendar-field {
+  width: 325px;
+  max-width: 100%;
+  height: 52px;
+  border: 1px solid #dcdfe4;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  cursor: pointer;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath fill='%23989db3' d='M8.01 17a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2zM12.01 17a1 1 0 1 1 0 2H12a1 1 0 1 1 0-2zM16.01 17a1 1 0 1 1 0 2H16a1 1 0 1 1 0-2zM8.01 13a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2zM12.01 13a1 1 0 1 1 0 2H12a1 1 0 1 1 0-2zM16.01 13a1 1 0 1 1 0 2H16a1 1 0 1 1 0-2z'/%3E%3Cpath fill='%23989db3' fill-rule='evenodd' d='M16 1.25a.75.75 0 0 1 .75.75v1.25H19A2.75 2.75 0 0 1 21.75 6v14A2.75 2.75 0 0 1 19 22.75H5A2.75 2.75 0 0 1 2.25 20V6A2.75 2.75 0 0 1 5 3.25h2.25V2a.75.75 0 0 1 1.5 0v1.25h6.5V2a.75.75 0 0 1 .75-.75M3.75 20c0 .69.56 1.25 1.25 1.25h14c.69 0 1.25-.56 1.25-1.25v-9.25H3.75zM5 4.75c-.69 0-1.25.56-1.25 1.25v3.25h16.5V6c0-.69-.56-1.25-1.25-1.25h-2.25V6a.75.75 0 0 1-1.5 0V4.75h-6.5V6a.75.75 0 0 1-1.5 0V4.75z' clip-rule='evenodd'/%3E%3C/svg%3E") right 12px center / 24px no-repeat;
+  font-size: 16px;
+  transition: all .2s ease;
+}
+
+.calendar .calendar-field:hover {
+    border-color: #b9bec7;
+}
+
+/* =========================================
+   OVERLAY
+========================================= */
+
+.calendar .calendar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 40px 0;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .3s ease,
+        visibility 0s linear .3s;
+}
+
+.calendar .calendar-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+    transition:
+        opacity .3s ease,
+        visibility 0s linear 0s;
+}
+
+/* =========================================
+   MODAL
+========================================= */
+
+.calendar .calendar-modal {
+    width: 600px;
+    height: 1000px
+    max-height: 100%;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 24px;
+    padding: 28px 32px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+    overflow: auto;
+
+    transform: translateY(20px) scale(.96);
+    opacity: 0;
+
+    transition:
+        transform .3s cubic-bezier(.16,1,.3,1),
+        opacity .3s ease;
+}
+
+.calendar .calendar-overlay.is-open .calendar-modal {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.calendar .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.calendar .calendar-header button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #6b7280;
+}
+
+.calendar .calendar-header button:hover {
+    color: #111827;
+}
+
+.calendar .js-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* =========================================
+   WEEKDAYS
+========================================= */
+
+.calendar .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+    font-weight: 500;
+}
+
+.calendar .weekdays div {
+    padding: 4px 0;
+}
+
+/* =========================================
+   MONTH BLOCK
+========================================= */
+
+.calendar .month {
+    margin-bottom: 32px;
+}
+
+.calendar .month h4 {
+    font-size: 16px;
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+/* =========================================
+   DAYS GRID
+========================================= */
+
+.calendar .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px 36px;
+}
+
+.calendar .days button {
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all .15s ease;
+    position: relative;
+}
+
+.calendar .days button:hover {
+    background: #eef2ff;
+}
+
+/* Selected day */
+.calendar .days button.selected {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+}
+
+/* Range background */
+.calendar .days button.range {
+    background: #eef2ff;
+    border-radius: 0;
+}
+
+/* Correct rounding for range edges */
+.calendar .days button.range:first-child {
+    border-radius: 20px 0 0 20px;
+}
+
+.calendar .days button.range:last-child {
+    border-radius: 0 20px 20px 0;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.calendar .calendar-footer {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 20px;
+}
+
+.calendar .accuracy {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.calendar .accuracy button {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.calendar .accuracy button:hover {
+    border-color: #9ca3af;
+}
+
+.calendar .accuracy button.active {
+    border: 2px solid #111827;
+    background: #f9fafb;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.calendar .footer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.calendar .js-clear {
+    background: none;
+    border: none;
+    color: #4f46e5;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.calendar .js-clear:hover {
+    text-decoration: underline;
+}
+
+.calendar .js-apply {
+    padding: 10px 22px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.calendar .js-apply:hover {
+    opacity: .9;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .calendar .calendar-modal {
+        width: 95%;
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .calendar .days button {
+        height: 36px;
+        font-size: 13px;
+    }
+
+}
