@@ -8,6 +8,7 @@ class Calendar {
 
     this.trans = JSON.parse(root.dataset.translations);
     this.months = this.trans.months_short;
+    this.monthsFull = this.trans.months_full;
     this.weekdays = this.trans.weekdays_short;
 
     this.today = new Date();
@@ -58,10 +59,21 @@ class Calendar {
       }
     });
 
+    // Close on ESC
+    this._handleEsc = (e) => {
+      if (e.key === 'Escape' && this.overlay.classList.contains('is-open')) {
+        this.cancel();
+      }
+    };
+
+    document.addEventListener('keydown', this._handleEsc);
+
   }
 
   open() {
     this.temp = structuredClone(this.state);
+
+    this.toggleClearButton();
 
     this.overlay.classList.add('is-open');
     document.body.style.overflow = 'hidden'; // блок скролла
@@ -84,6 +96,7 @@ class Calendar {
 
   clear() {
     this.temp = { start: null, end: null, accuracy: 0 };
+    this.toggleClearButton();
     this.root.querySelectorAll('[data-accuracy]')
       .forEach(b => b.classList.remove('active'));
     this.root.querySelector('[data-accuracy="0"]').classList.add('active');
@@ -92,6 +105,20 @@ class Calendar {
 
   render() {
     this.body.innerHTML = '';
+
+    /* ===== WEEKDAYS (один раз) ===== */
+    const weekdaysRow = document.createElement('div');
+    weekdaysRow.className = 'weekdays global-weekdays';
+
+    this.weekdays.forEach(day => {
+      const el = document.createElement('div');
+      el.textContent = day;
+      weekdaysRow.appendChild(el);
+    });
+
+    this.body.appendChild(weekdaysRow);
+
+    /* ===== MONTHS ===== */
     let cursor = new Date(this.today);
     cursor.setDate(1);
 
@@ -100,6 +127,7 @@ class Calendar {
       cursor.setMonth(cursor.getMonth() + 1);
     }
     this.updateTitle();
+    this.toggleClearButton();
   }
 
   renderMonth(date) {
@@ -110,20 +138,8 @@ class Calendar {
     block.className = 'month';
 
     const title = document.createElement('h4');
-    title.textContent = `${this.months[month]} ${year}`;
+    title.textContent = `${this.monthsFull[month]} ${year}`;
     block.appendChild(title);
-
-    /* ===== WEEKDAYS ===== */
-    const weekdaysRow = document.createElement('div');
-    weekdaysRow.className = 'weekdays';
-
-    this.weekdays.forEach(day => {
-      const el = document.createElement('div');
-      el.textContent = day;
-      weekdaysRow.appendChild(el);
-    });
-
-    block.appendChild(weekdaysRow);
 
     /* ===== DAYS GRID ===== */
     const grid = document.createElement('div');
@@ -160,14 +176,28 @@ class Calendar {
   }
 
   select(date) {
+
+    // если нет старта или диапазон уже завершён — начинаем новый выбор
     if (!this.temp.start || this.temp.end) {
       this.temp.start = date;
       this.temp.end = null;
-    } else if (date < this.temp.start) {
+    }
+
+    // если клик по тому же самому дню — ничего не делаем
+    else if (date.getTime() === this.temp.start.getTime()) {
+      return;
+    }
+
+    // если клик по более ранней дате — меняем старт
+    else if (date < this.temp.start) {
       this.temp.start = date;
-    } else {
+    }
+
+    // иначе устанавливаем конец диапазона
+    else {
       this.temp.end = date;
     }
+
     this.render();
   }
 
@@ -182,7 +212,7 @@ class Calendar {
   }
 
   format({ start, end, accuracy }) {
-    if (!start) return this.trans.choose;
+    if (!start) return this.trans.choose_date;
 
     const from = `${start.getDate()} ${this.months[start.getMonth()]}`;
     if (!end) {
@@ -197,6 +227,16 @@ class Calendar {
 
   updateTitle() {
     this.title.textContent = this.format(this.temp);
+  }
+
+  toggleClearButton() {
+    const clearBtn = this.root.querySelector('.js-clear');
+
+    if (this.temp.start) {
+      clearBtn.classList.add('is-visible');
+    } else {
+      clearBtn.classList.remove('is-visible');
+    }
   }
 }
 
