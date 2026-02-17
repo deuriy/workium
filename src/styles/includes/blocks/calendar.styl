@@ -27,6 +27,9 @@
   color #989DB2
   transition: all .2s ease;
 }
+.calendar .calendar-field.is-filled {
+    color #000
+}
 
 .calendar .calendar-field:hover {
     border-color: #b9bec7;
@@ -97,12 +100,10 @@
 ========================================= */
 
 .calendar .calendar-header {
-    margin-bottom: 24px;
-}
-.calendar .calendar-header__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 24px;
 }
 
 .calendar .calendar-back {
@@ -149,10 +150,10 @@
 ========================================= */
 
 .calendar .global-weekdays {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background #fff;
+    // position: sticky;
+    // top: 0;
+    // z-index: 10;
+    // background #fff;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 36px;
@@ -167,8 +168,14 @@
 }
 
 .calendar .month {
-    margin-bottom: 28px;
+    margin-bottom: 32px;
 }
+
+.month + .month {
+    padding-top: 32px;
+    border-top: 1px solid #EBEBEB;
+}
+
 
 // .calendar .weekdays {
 //     display: grid;
@@ -189,9 +196,13 @@
 ========================================= */
 
 .js-body {
-    max-height: calc(100% - 110px);
+    max-height: calc(100% - 152px);
     // max-height: calc(100% - 182px);
     overflow: auto;
+    scrollbar-width none
+}
+.js-body::-webkit-scrollbar {
+    display none
 }
 
 .calendar .month {
@@ -287,6 +298,7 @@
 .calendar .days button.range::before {
     content ""
     position absolute
+    z-index -1
     top 0
     left -48px
     width 48px
@@ -327,12 +339,21 @@
 .calendar .accuracy {
     display: flex;
     gap: 8px;
-    flex-wrap: wrap;
+    overflow auto
+    scrollbar-width none
+    
+    // flex-wrap: wrap;
     // margin-bottom: 18px;
 }
 
+.calendar .accuracy::-webkit-scrollbar {
+    display none
+}
+
 .calendar .accuracy button {
-    padding: 11px 15px;
+    // padding: 11px 15px;
+    flex-shrink 0
+    padding: 11px 12px;
     border-radius: 90px;
     border: 1px solid #DFE2E6;
     background: #fff;
@@ -347,7 +368,8 @@
 
 .calendar .accuracy button:hover,
 .calendar .accuracy button.active {
-    padding: 10px 14px;
+    // padding: 10px 14px;
+    padding: 10px 11px;
     border: 2px solid #0F182A;
     background: #F4F5FC;
 }
@@ -357,19 +379,21 @@
 ========================================= */
 
 .calendar .footer-actions {
-    display: flex;
+    display: grid;
+    grid-template-columns 100%
     align-items: center;
     justify-content: space-between;
     gap 16px
 }
 
 .calendar:has(.calendar-clear.is-visible) .js-body {
-    max-height calc(100% - 174px)
+    max-height calc(100% - 216px)
 }
 .calendar:has(.calendar-clear.is-visible) .calendar-footer {
     display block
 }
 .calendar:has(.calendar-clear.is-visible) .footer-actions {
+    grid-template-columns auto 169px
     margin-top 16px
 }
 
@@ -421,6 +445,10 @@
 ========================================= */
 
 @media (max-width: 575px) {
+    .calendar .calendar-field {
+        width 100%
+    }
+
     .calendar .calendar-overlay {
         padding 0
     }
@@ -436,12 +464,29 @@
     }
 
     .js-body {
-        max-height calc(100% - 176px)
+        max-height calc(100% - 216px)
     }
 
     .calendar .global-weekdays,
     .calendar .days {
         gap 8px
+    }
+
+    .calendar .global-weekdays {
+        margin-bottom 8px
+        padding-bottom 8px
+    }
+
+    .calendar .month {
+        margin-bottom: 24px;
+    }
+
+    .month + .month {
+        padding-top: 24px;
+    }
+
+    .calendar .month h4 {
+        margin-bottom 16px
     }
 
     .calendar .days button {
@@ -458,6 +503,21 @@
 
     .calendar .calendar-footer {
         display block
+        padding 12px 16px 0
+    }
+
+    .calendar .accuracy {
+        margin 0 -12px
+        padding 0 12px
+    }
+
+    .calendar .accuracy button {
+        padding 11px 16px
+    }
+
+    .calendar .accuracy button:hover,
+    .calendar .accuracy button.active {
+        padding 10px 15px
     }
 
     .calendar .footer-actions {
@@ -466,6 +526,10 @@
 
     .calendar-modal__apply-btn {
         width 100%;
+    }
+
+    .calendar:has(.calendar-clear.is-visible) .calendar-modal__apply-btn {
+        width auto
     }
 
 }
