@@ -150,10 +150,6 @@
 ========================================= */
 
 .calendar .global-weekdays {
-    // position: sticky;
-    // top: 0;
-    // z-index: 10;
-    // background #fff;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 36px;
@@ -163,7 +159,7 @@
     line-height: 1.67;
     color: #000;
     text-align: center;
-    font-weight: 600;
+    font-weight: 800;
     text-transform uppercase
 }
 
@@ -532,4 +528,27 @@
         width auto
     }
 
+}
+
+@media (min-width: 576px) {
+    .calendar .global-weekdays {
+        grid-template-columns: repeat(7, 48px);
+        justify-content center
+        gap 20px
+        font-size: 13px;
+    }
+
+    .calendar .month h4 {
+        text-align center
+    }
+
+    .calendar .days {
+        grid-template-columns: repeat(7, 48px);
+        justify-content center
+        gap: 8px 20px;
+    }
+
+    .calendar .days button {
+        width auto
+    }
 }
