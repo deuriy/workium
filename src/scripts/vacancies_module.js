@@ -1007,11 +1007,14 @@ $(() => {
     let $vacanciesTogglePlusBtn = $('.vacancies__toggle-plus-btn');
     let $vacanciesPreloaderWrapper = $('.vacancies__preloader-wrapper');
 
-    $filterSearchBtn.hide();
-    $filterPreloaderWrapper.show();
+   $filterSearchBtn.addClass('btn-default--filter-loading');
+   $additionalFiltersSubmitBtn.addClass('btn-default--filter-loading');
 
-    $additionalFiltersSubmitBtn.hide();
-    $additionalFiltersPreloaderWrapper.show();
+    // $filterSearchBtn.hide();
+    // $filterPreloaderWrapper.show();
+
+    // $additionalFiltersSubmitBtn.hide();
+    // $additionalFiltersPreloaderWrapper.show();
 
     if (isMobile) {
       $vacanciesTogglePlusBtn.hide();

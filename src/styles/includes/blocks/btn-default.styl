@@ -21,6 +21,10 @@
 	&__small-text
 		font-size 14px
 	
+	&__preloader
+		position absolute
+		inset 0
+	
 	&--user-settings
 		padding 11px 80px
 		border-radius 6px
@@ -99,6 +103,7 @@
 			display block
 	
 	&--filter
+		position relative
 		padding 0.6875em 2.375em
 		font-weight 600
 		// font-family var(--graphik-lcg)
@@ -106,6 +111,23 @@
 		@media $xlMinus
 			// padding 0.6875em 1.85em
 			padding .6875em 1.6012em
+		
+		.btn-default__preloader
+			display none
+
+	&--additional-filters
+		position relative
+		padding 11px 26px
+
+		.btn-default__preloader
+			display none
+	
+	&--filter-loading
+		.btn-default__text
+			visibility hidden
+		
+		.btn-default__preloader
+			display block
 	
 	&--closed-section
 		padding 13px 36px
@@ -151,9 +173,6 @@
 			padding-top 11px
 			padding-bottom 11px
 			border-radius 8px
-
-	&--additional-filters
-		padding 11px 26px
 	
 	&--apply-calendar
 		padding 11px 20px
