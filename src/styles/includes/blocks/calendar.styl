@@ -236,7 +236,7 @@
     font-size: 16px;
     font-family: var(--base-font);
     color #000
-    transition: all .15s ease;
+    // transition: all .15s ease;
     position: relative;
 }
 
@@ -263,8 +263,10 @@
 // }
 
 /* Range background */
-.calendar .days button.range {
+.calendar .days button {
     position relative
+}
+.calendar .days button.range {
     background: #F4F5FC;
     border-radius: 0;
 }
@@ -277,22 +279,35 @@
     border-top-left-radius 12px
     border-bottom-left-radius 12px
 }
-.calendar .days button.range::after {
+.calendar .days button::after {
     content: "";
     position absolute;
     top 0
     right -48px
     width: 48px;
     height: 48px;
-    background: #F4F5FC;
+    background: transparent;
     pointer-events none
 }
+.calendar .days button.range::after {
+    background: #F4F5FC;
+}
+// .calendar .days button.selected + button.selected::before {
+//     content: "";
+//     position absolute;
+//     top 0
+//     right 48px
+//     width: 48px;
+//     height: 48px;
+//     background: #F4F5FC;
+//     pointer-events none
+// }
 .calendar .days button.range:nth-child(7n)::after,
 .calendar .days button.range:nth-of-type(1)::before,
 .calendar .days button.range:last-child::after {
     display none
 }
-.calendar .days button.range::before {
+.calendar .days button::before {
     content ""
     position absolute
     z-index -1
@@ -300,8 +315,11 @@
     left -48px
     width 48px
     height 48px
-    background: #F4F5FC;
+    background: transparent;
     pointer-events none
+}
+.calendar .days button.range::before {
+    background: #F4F5FC;
 }
 
 /* Correct rounding for range edges */
@@ -549,7 +567,7 @@
         gap: 8px 20px;
     }
 
-    .calendar .days button {
-        width auto
-    }
+    // .calendar .days button {
+    //     width auto
+    // }
 }

@@ -25,6 +25,8 @@ class Calendar {
 
     this.temp = structuredClone(this.state);
 
+    this.hoverDate = null;
+
     this.init();
   }
 
@@ -172,6 +174,24 @@ class Calendar {
       const btn = document.createElement('button');
       btn.textContent = d;
 
+      btn.dataset.year = year;
+      btn.dataset.month = month;
+      btn.dataset.day = d;
+      
+      btn.addEventListener('mouseenter', () => {
+        if (this.temp.start && !this.temp.end) {
+          this.hoverDate = dayDate;
+          this.updateHoverRange();
+        }
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        if (this.temp.start && !this.temp.end) {
+          this.hoverDate = null;
+          this.updateHoverRange();
+        }
+      });
+
       const isDisabled = dayDate < this.today || dayDate > this.maxDate;
 
       if (isDisabled) {
@@ -215,6 +235,7 @@ class Calendar {
     }
 
     this.render();
+    this.hoverDate = null;
   }
 
   isSelected(d) {
@@ -223,8 +244,19 @@ class Calendar {
   }
 
   inRange(d) {
-    return this.temp.start && this.temp.end &&
-      d > this.temp.start && d < this.temp.end;
+    // обычный выбранный диапазон
+    if (this.temp.start && this.temp.end) {
+      return d > this.temp.start && d < this.temp.end;
+    }
+
+    // hover диапазон
+    if (this.temp.start && !this.temp.end && this.hoverDate) {
+      if (this.hoverDate <= this.temp.start) return false;
+
+      return d > this.temp.start && d < this.hoverDate;
+    }
+
+    return false;
   }
 
   format({ start, end, accuracy }) {
@@ -288,6 +320,31 @@ class Calendar {
     );
 
     return btn ? btn.textContent.trim() : '';
+  }
+
+  updateHoverRange() {
+    if (!this.temp.start || this.temp.end) return;
+
+    const buttons = this.body.querySelectorAll('button');
+
+    buttons.forEach(btn => {
+      const year = +btn.dataset.year;
+      const month = +btn.dataset.month;
+      const day = +btn.dataset.day;
+
+      const date = new Date(year, month, day);
+
+      btn.classList.remove('range');
+
+      if (
+        this.hoverDate &&
+        this.hoverDate > this.temp.start &&
+        date > this.temp.start &&
+        date < this.hoverDate
+      ) {
+        btn.classList.add('range');
+      }
+    });
   }
 }
 
