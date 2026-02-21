@@ -44,3 +44,31 @@
 	&__actions
 		@media $xs
 			display grid
+	
+	&__my-id-title,
+	&__my-id-wrapper
+		display flex
+		align-items center
+		justify-content center
+		gap 8px
+	
+	&__my-id-title
+		margin-bottom 60px
+
+		@media $xs
+			display block
+			margin-bottom 80px
+	
+	&--my-id
+		text-align center
+	
+	&__my-id-wrapper
+		position relative
+
+		.tooltip
+			white-space nowrap
+
+		@media $xs
+			margin-top 16px
+			margin-left 40px
+			font-size 36px
