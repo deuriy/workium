@@ -226,11 +226,17 @@
 }
 
 .calendar .days button {
+    border none
+    background transparent
+}
+
+.calendar .days button span {
+    display flex
+    align-items center
+    justify-content center
     width 48px
     height: 48px;
     border-radius: 50%;
-    border: none;
-    background: transparent;
     cursor: pointer;
     font-weight: 500;
     font-size: 16px;
@@ -240,13 +246,13 @@
     position: relative;
 }
 
-.calendar .days button:hover {
+.calendar .days button span:hover {
     background: #F4F5FC;
 }
 
 /* Selected day */
-.calendar .days button.selected {
-    z-index 1
+.calendar .days button.selected span {
+    z-index 2
     background: #5340FF;
     color: #fff;
 }
@@ -270,12 +276,12 @@
     background: #F4F5FC;
     border-radius: 0;
 }
-.calendar .days button.range:nth-child(7n) {
+.calendar .days button.range:nth-child(7n) span {
     border-top-right-radius 12px
     border-bottom-right-radius 12px
 }
-.calendar .days button.range:nth-child(7n+1),
-.calendar .days button.range:nth-of-type(1) {
+.calendar .days button.range:nth-child(7n+1) span,
+.calendar .days button.range:nth-of-type(1) span {
     border-top-left-radius 12px
     border-bottom-left-radius 12px
 }
@@ -292,6 +298,21 @@
 .calendar .days button.range::after {
     background: #F4F5FC;
 }
+
+.calendar .days button.selected:has(+button.selected)
+    z-index 2
+
+.calendar .days button.selected + button.selected::before,
+.calendar .days button.selected:has(+button.selected)::after,
+.calendar .days button.selected + button:not(.selected):hover::before
+    background #F4F5FC
+
+.calendar .days button.selected + button:not(.selected):hover::before
+    width 70px
+
+.calendar .days button.selected + button.selected + button:not(.selected):hover::before
+    background transparent
+
 // .calendar .days button.selected + button.selected::before {
 //     content: "";
 //     position absolute;
@@ -302,6 +323,7 @@
 //     background: #F4F5FC;
 //     pointer-events none
 // }
+
 .calendar .days button.range:nth-child(7n)::after,
 .calendar .days button.range:nth-of-type(1)::before,
 .calendar .days button.range:last-child::after,
@@ -460,13 +482,21 @@
    RESPONSIVE
 ========================================= */
 
+@media (max-width: 767px) {
+    .calendar {
+        .calendar-overlay {
+            padding 0
+        }
+
+        .calendar-modal {
+            width 100%
+        }
+    }
+}
+
 @media (max-width: 575px) {
     .calendar .calendar-field {
         width 100%
-    }
-
-    .calendar .calendar-overlay {
-        padding 0
     }
 
     .calendar .calendar-modal {
@@ -505,7 +535,7 @@
         margin-bottom 16px
     }
 
-    .calendar .days button {
+    .calendar .days button span {
         width 40px
         height 40px
         // height: 36px;

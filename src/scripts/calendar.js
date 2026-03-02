@@ -172,7 +172,9 @@ class Calendar {
       const dayDate = new Date(year, month, d);
 
       const btn = document.createElement('button');
-      btn.textContent = d;
+      const btnText = document.createElement('span');
+      btnText.textContent = d;
+      btn.appendChild(btnText);
 
       btn.dataset.year = year;
       btn.dataset.month = month;
