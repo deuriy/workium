@@ -432,8 +432,13 @@
     display block
 }
 .calendar:has(.calendar-clear.is-visible) .footer-actions {
-    grid-template-columns auto 169px
+    // grid-template-columns auto 169px
+    grid-template-columns auto auto
     margin-top 16px
+}
+
+.calendar-modal__apply-btn {
+    min-width 169px
 }
 
 .calendar .js-clear {
