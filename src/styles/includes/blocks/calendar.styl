@@ -166,6 +166,7 @@
 
 .calendar .month {
     margin-bottom: 32px;
+    overflow hidden
 }
 
 .month + .month {
@@ -228,6 +229,7 @@
 .calendar .days button {
     border none
     background transparent
+    cursor pointer
 }
 
 .calendar .days button span {
@@ -246,7 +248,7 @@
     position: relative;
 }
 
-.calendar .days button span:hover {
+.calendar .days button:hover span {
     background: #F4F5FC;
 }
 

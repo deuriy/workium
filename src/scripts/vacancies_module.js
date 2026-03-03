@@ -964,8 +964,6 @@ $(() => {
 
     $('.additional-filters .calendar__input').each(function (index, el) {
       let resultValue = `${el.name}=${el.value}`;
-      console.log('Calendar input');
-      console.log(resultValue);
       requestParamsArr.push(resultValue);
     });
 
