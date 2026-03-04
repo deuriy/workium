@@ -5,6 +5,7 @@ class Calendar {
     this.overlay = root.querySelector('.calendar-overlay');
     this.body = root.querySelector('.js-body');
     this.title = root.querySelector('.js-title');
+    this.hiddenInput = root.querySelector('.calendar__input');
 
     this.trans = JSON.parse(root.dataset.translations);
     this.months = this.trans.months_short;
@@ -27,7 +28,47 @@ class Calendar {
 
     this.hoverDate = null;
 
+    this.initFromHidden();
     this.init();
+  }
+
+  initFromHidden() {
+    if (!this.hiddenInput) return;
+  
+    const value = this.hiddenInput.value?.trim();
+    if (!value) return;
+  
+    const parseDate = (ts) => {
+      const date = new Date(Number(ts) * 1000);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    };
+  
+    // диапазон
+    if (value.includes('-')) {
+      const [fromTs, toTs] = value.split('-');
+  
+      const start = parseDate(fromTs);
+      const end = parseDate(toTs);
+  
+      this.state = {
+        start,
+        end,
+        accuracy: 0
+      };
+    } 
+    // одиночная дата
+    else {
+      const start = parseDate(value);
+  
+      this.state = {
+        start,
+        end: null,
+        accuracy: 0
+      };
+    }
+  
+    this.temp = structuredClone(this.state);
   }
 
   init() {
@@ -49,6 +90,8 @@ class Calendar {
           btn.classList.add('active');
           this.temp.accuracy = +btn.dataset.accuracy;
           this.updateTitle();
+          this.updateHiddenInput();
+          this.dispatchChangeEvent();
         };
       });
 
@@ -71,6 +114,8 @@ class Calendar {
     document.addEventListener('keydown', this._handleEsc);
 
     this.updateFieldState();
+
+    this.field.textContent = this.format(this.state);
   }
 
   open() {
@@ -79,15 +124,21 @@ class Calendar {
     this.syncAccuracyButtons();
     this.toggleClearButton();
 
+    this.updateHiddenInputFromState();
+
     this.overlay.classList.add('is-open');
     document.body.style.overflow = 'hidden'; // блок скролла
 
     this.render();
+
+    this.dispatchOpenEvent();
   }
 
   cancel() {
     this.overlay.classList.remove('is-open');
     document.body.style.overflow = '';
+
+    this.updateHiddenInputFromState();
   }
 
   apply() {
@@ -95,6 +146,8 @@ class Calendar {
     this.field.textContent = this.format(this.state);
 
     this.updateFieldState();
+
+    this.updateHiddenInputFromState();
 
     this.overlay.classList.remove('is-open');
     document.body.style.overflow = '';
@@ -106,6 +159,8 @@ class Calendar {
     this.syncAccuracyButtons();
     this.toggleClearButton();
 
+    this.updateHiddenInput();
+
     this.root.querySelectorAll('[data-accuracy]')
       .forEach(b => b.classList.remove('active'));
     this.root.querySelector('[data-accuracy="0"]').classList.add('active');
@@ -116,6 +171,8 @@ class Calendar {
     if (!this.state.start) {
       this.updateFieldState();
     }
+
+    this.dispatchChangeEvent();
   }
 
   render() {
@@ -238,6 +295,8 @@ class Calendar {
 
     this.render();
     this.hoverDate = null;
+    this.updateHiddenInput();
+    this.dispatchChangeEvent();
   }
 
   isSelected(d) {
@@ -347,6 +406,89 @@ class Calendar {
         btn.classList.add('range');
       }
     });
+  }
+
+  getTimestampValue() {
+    const { start, end, accuracy } = this.temp;
+  
+    if (!start) return '';
+  
+    const toTimestamp = (date) => Math.floor(date.getTime() / 1000);
+  
+    // Одиночная дата
+    if (!end) {
+  
+      if (!accuracy) {
+        return String(toTimestamp(start));
+      }
+  
+      const fromDate = new Date(start);
+      fromDate.setDate(fromDate.getDate() - accuracy);
+  
+      const toDate = new Date(start);
+      toDate.setDate(toDate.getDate() + accuracy);
+  
+      return `${toTimestamp(fromDate)}-${toTimestamp(toDate)}`;
+    }
+  
+    // Диапазон
+    let fromDate = new Date(start);
+    let toDate = new Date(end);
+  
+    if (accuracy) {
+      fromDate.setDate(fromDate.getDate() - accuracy);
+      toDate.setDate(toDate.getDate() + accuracy);
+    }
+  
+    return `${toTimestamp(fromDate)}-${toTimestamp(toDate)}`;
+  }
+
+  updateHiddenInput() {
+    if (!this.hiddenInput) return;
+    this.hiddenInput.value = this.getTimestampValue();
+  }
+
+  updateHiddenInputFromState() {
+    if (!this.hiddenInput) return;
+  
+    const currentTemp = this.temp;
+    this.temp = this.state;              // временно подменяем
+    this.hiddenInput.value = this.getTimestampValue();
+    this.temp = currentTemp;             // возвращаем обратно
+  }
+
+  dispatchOpenEvent() {
+    const { start, end, accuracy } = this.temp;
+  
+    const event = new CustomEvent('calendar:open', {
+      bubbles: true,
+      detail: {
+        root: this.root,
+        start,
+        end,
+        accuracy,
+        value: this.getTimestampValue()
+      }
+    });
+  
+    this.root.dispatchEvent(event);
+  }
+
+  dispatchChangeEvent() {
+    const { start, end, accuracy } = this.temp;
+  
+    const event = new CustomEvent('calendar:change', {
+      bubbles: true,
+      detail: {
+        root: this.root,
+        start,
+        end,
+        accuracy,
+        value: this.getTimestampValue()
+      }
+    });
+  
+    this.root.dispatchEvent(event);
   }
 }
 

@@ -43,7 +43,7 @@
 .calendar .calendar-overlay {
     position: fixed;
     inset: 0;
-    // background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,17 +54,17 @@
     opacity: 0;
     visibility: hidden;
 
-    transition:
-        opacity .3s ease,
-        visibility 0s linear .3s;
+    // transition:
+    //     opacity .3s ease,
+    //     visibility 0s linear .3s;
 }
 
 .calendar .calendar-overlay.is-open {
     opacity: 1;
     visibility: visible;
-    transition:
-        opacity .3s ease,
-        visibility 0s linear 0s;
+    // transition:
+    //     opacity .3s ease,
+    //     visibility 0s linear 0s;
 }
 
 /* =========================================
@@ -166,6 +166,7 @@
 
 .calendar .month {
     margin-bottom: 32px;
+    overflow hidden
 }
 
 .month + .month {
@@ -228,6 +229,7 @@
 .calendar .days button {
     border none
     background transparent
+    cursor pointer
 }
 
 .calendar .days button span {
@@ -246,7 +248,7 @@
     position: relative;
 }
 
-.calendar .days button span:hover {
+.calendar .days button:hover span {
     background: #F4F5FC;
 }
 
@@ -310,7 +312,8 @@
 .calendar .days button.selected + button:not(.selected):hover::before
     width 70px
 
-.calendar .days button.selected + button.selected + button:not(.selected):hover::before
+.calendar .days button.selected + button.selected + button:not(.selected):hover::before,
+.calendar .days button.range + button.selected + button:not(.selected):hover::before
     background transparent
 
 // .calendar .days button.selected + button.selected::before {
@@ -431,8 +434,13 @@
     display block
 }
 .calendar:has(.calendar-clear.is-visible) .footer-actions {
-    grid-template-columns auto 169px
+    // grid-template-columns auto 169px
+    grid-template-columns auto auto
     margin-top 16px
+}
+
+.calendar-modal__apply-btn {
+    min-width 169px
 }
 
 .calendar .js-clear {

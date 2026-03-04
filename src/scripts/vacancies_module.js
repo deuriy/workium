@@ -802,6 +802,21 @@ $(() => {
     });
   });
 
+  document.querySelectorAll('.additional-filters__filter-element--date-range').forEach(dateRange => {
+    // setCalendarVacanciesCount(dateRange);
+    // setVacanciesCount();
+
+    dateRange.addEventListener('calendar:open', (e) => {
+      setCalendarVacanciesCount(e.detail.root);
+      setVacanciesCount();
+    });
+
+    dateRange.addEventListener('calendar:change', (e) => {
+      setCalendarVacanciesCount(e.detail.root);
+      setVacanciesCount();
+    });
+  });
+
   $('.selected-items__more-btn').click(function (event) {
     let isMobile = $(window).width() < 576;
     let visibleClass = isMobile ? 'selected-items--expanded-mob' : 'selected-items--expanded';
@@ -842,6 +857,39 @@ $(() => {
         const btnText = data.total ? translations.show[lang] + ' ' + data.label : translations.no_vacancies[lang];
 
         $('.additional-filters__submit-btn').html(btnText);
+      },
+
+      error: function (data) {
+        console.error(data);
+      }
+    });
+  }
+
+  function setCalendarVacanciesCount(root) {
+    let value = $(root).find('.calendar__input').val();
+
+    $.ajax({
+      url: `/api/v1/vacancies-count${getFilterUrl()}`,
+
+      success: function (data) {
+        const translations = {
+          'apply': {
+            'en': 'Apply',
+            'ru': 'Применить',
+            'uk': 'Застосувати'
+          },
+
+          'no_vacancies': {
+            'en': 'No vacancies',
+            'ru': 'Нет вакансий',
+            'uk': 'Немає вакансій'
+          }
+        };
+        
+        const lang = document.documentElement.lang;
+        const btnText = value && data.total ? translations.apply[lang] + ' · ' + data.label : translations.apply[lang];
+
+        $(root).find('.calendar-modal__apply-btn').html(btnText);
       },
 
       error: function (data) {
@@ -946,6 +994,11 @@ $(() => {
         let resultValue = `${name}=${values[0]}-${values[1]}`;
         requestParamsArr.push(resultValue);
       }
+    });
+
+    $('.additional-filters .calendar__input').each(function (index, el) {
+      let resultValue = `${el.name}=${el.value}`;
+      requestParamsArr.push(resultValue);
     });
 
     let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
