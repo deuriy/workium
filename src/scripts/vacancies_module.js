@@ -789,16 +789,21 @@ $(() => {
     });
   });
 
-  document.addEventListener('calendar:apply', (e) => {
-    // console.log(e.detail);
+  function initCalendarTag(calendarEl) {
+    const calendarField = calendarEl.querySelector('.calendar-field');
+    const calendarInput = calendarEl.querySelector('.calendar__input');
 
-    if (!e.detail.value) return;
-
-    const calendarRoot = e.detail.root;
-    const calendarField = calendarRoot.querySelector('.calendar-field');
-    const calendarInput = calendarRoot.querySelector('.calendar__input');
+    if (!calendarInput.value) return;
     
     createOrUpdateTag('date-range', calendarInput.name, calendarInput.value, calendarField.textContent);
+  }
+
+  document.querySelectorAll('.additional-filters .js-calendar').forEach(el => {
+    initCalendarTag(el);
+  });
+
+  document.addEventListener('calendar:apply', (e) => {
+    initCalendarTag(e.detail.root);
   });
 
   document.querySelectorAll('.additional-filters__filter-element--date-range').forEach(dateRange => {
