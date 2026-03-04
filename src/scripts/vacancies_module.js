@@ -102,11 +102,11 @@ function checkDependentFilters() {
     let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
     if (!$parentFilter.length) return;
 
-    // let $parentFilterItemAll = $parentFilter.find(`[value="all"]:checked`);
-    // if ($parentFilterItemAll.length) {
-    //   $(el).show();
-    //   return;
-    // }
+    let $parentFilterItemAll = $parentFilter.find(`[value="all"]:checked`);
+    if ($parentFilterItemAll.length) {
+      $(el).show();
+      return;
+    }
 
     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
     // let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="76"]`);
@@ -276,7 +276,10 @@ function undoChangesToAdditionalFilters() {
 
     if (el.dataset.defaultChecked !== undefined) {
       el.checked = true;
-      createOrUpdateTag(type, name, value, labelText);
+
+      if (!(el.name === 'zitlo[]' && el.value === 'all')) {
+        createOrUpdateTag(type, name, value, labelText);
+      }
     } else {
       el.checked = false;
       clearTagRelatedFields($selectedItem);
@@ -1000,7 +1003,7 @@ $(() => {
 
     let $selectedCheckboxes = $('.additional-filters .checkbox__input:not([data-segment]):not([data-exclude-field]):checked');
     $selectedCheckboxes.each(function (index, el) {
-      if (el.value) {
+      if (el.value && !(el.name === 'zitlo[]' && el.value === 'all')) {
         requestParamsArr.push(`${el.name}=${el.value}`);
       }
     });
@@ -1134,6 +1137,7 @@ $(() => {
     $.get(`/vacancies`).done(function () {
       const lang = document.documentElement.lang;
       window.location.href = `/${lang}/vacancies${getFilterUrl()}`;
+      // console.log(getFilterUrl());
     });
 
     // console.log(`/vacancies/${urlParams}${requestParams}`);
