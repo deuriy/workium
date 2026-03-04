@@ -751,8 +751,10 @@ $(() => {
   $('input[name="search_filter"]').on('input', function (event) {
     let searchValue = $(this).val().toLowerCase().trim();
     let $additionalFilters = $(this).closest('.additional-filters');
-    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range, .filter-element--country');
+    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range, .filter-element--country, .filter-element--date-range');
     let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
+    let $notFound = $additionalFilters.find('.additional-filters__not-found');
+    const zoomSearchPlayer = document.getElementById('zoom-search-player');
 
     if (searchValue) {
       $clearSearchBtn.show();
@@ -768,21 +770,31 @@ $(() => {
         });
 
         if (groupTitle.includes(searchValue) || checkboxesLabels.find(label => label.includes(searchValue))) {
-          $(group).removeClass('hidden');
+          $(group).show();
         } else {
-          $(group).addClass('hidden');
+          $(group).hide();
         }
       } else {
         let groupTitle = $(group).find('.filter-element__title').text().toLowerCase();
 
         if (groupTitle.includes(searchValue)) {
-          $(group).removeClass('hidden');
+          $(group).show();
         } else {
-          $(group).addClass('hidden');
+          $(group).hide();
         }
       }
 
     });
+
+    const $visibleFilters = $additionalFilters.find('.checkboxes-group:not(:hidden), .radiobtns-group:not(:hidden), .filter-element--range:not(:hidden), .filter-element--country:not(:hidden), .filter-element--date-range:not(:hidden)');
+    
+    if (!$visibleFilters.length) {
+      $notFound.show();
+      zoomSearchPlayer?.play();
+    } else {
+      $notFound.hide();
+      zoomSearchPlayer?.stop();
+    }
   });
 
   $('.additional-filters__clear-search-btn').click(function (event) {
