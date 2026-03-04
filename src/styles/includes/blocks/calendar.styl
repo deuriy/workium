@@ -15,8 +15,7 @@
   width: 325px;
   max-width: 100%;
   height: 48px;
-//   border: 1px solid #DFE2E6;
-  border: 1px solid #e5e7ea;
+  border: 1px solid #DFE2E6;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -278,12 +277,12 @@
     background: #F4F5FC;
     border-radius: 0;
 }
-.calendar .days button.range:nth-child(7n) span {
+.calendar .days button.range:nth-child(7n) {
     border-top-right-radius 12px
     border-bottom-right-radius 12px
 }
-.calendar .days button.range:nth-child(7n+1) span,
-.calendar .days button.range:nth-of-type(1) span {
+.calendar .days button.range:nth-child(7n+1),
+.calendar .days button.range:nth-of-type(1) {
     border-top-left-radius 12px
     border-bottom-left-radius 12px
 }
@@ -498,6 +497,10 @@
 
         .calendar-modal {
             width 100%
+        }
+        
+        .calendar-field {
+            border-color: #e5e7ea;
         }
     }
 }

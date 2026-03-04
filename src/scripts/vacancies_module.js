@@ -98,6 +98,12 @@ function checkDependentFilters() {
     let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
     if (!$parentFilter.length) return;
 
+    // let $parentFilterItemAll = $parentFilter.find(`[value="all"]:checked`);
+    // if ($parentFilterItemAll.length) {
+    //   $(el).show();
+    //   return;
+    // }
+
     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
     // let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="76"]`);
     
@@ -114,9 +120,12 @@ function checkDependentFilters() {
     let tagName = $parentFilterItem.prop('tagName').toLowerCase();
     let compareOp = tagName === 'option' ? ':selected' : ':checked';
 
+    // console.log($parentFilterItem);
+
     if (!$parentFilterItem.is(compareOp)) {
       $(el).hide();
     } else {
+      // console.log('Yes');
       $(el).show();
     }
   });

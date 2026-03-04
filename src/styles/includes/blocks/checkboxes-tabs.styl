@@ -2,13 +2,19 @@
   list-style none
   display grid
   grid-auto-flow column
+  align-items center
   padding 4px
-  // border 1px solid #DFE2E6
-  border 1px solid #e5e7ea
+  border 1px solid #DFE2E6
   border-radius 16px
+
+  @media $xs
+    border-color #e5e7ea
   
   @media $xxs
-    gap 16px
-    // gap 18px
+    gap 0
+    // gap 16px
     // max-height 200px
     overflow auto
+  
+  &--zitlo
+    grid-template-columns minmax(100px, auto) auto minmax(115px, auto)
