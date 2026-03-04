@@ -30,6 +30,7 @@ class Calendar {
 
     this.initFromHidden();
     this.init();
+    root._calendarInstance = this;
   }
 
   initFromHidden() {
@@ -151,6 +152,10 @@ class Calendar {
 
     this.overlay.classList.remove('is-open');
     document.body.style.overflow = '';
+
+    // this.updateHiddenInput();
+
+    this.dispatchApplyEvent();
   }
 
   clear() {
@@ -490,7 +495,76 @@ class Calendar {
   
     this.root.dispatchEvent(event);
   }
+
+  dispatchApplyEvent() {
+    const event = new CustomEvent('calendar:apply', {
+      bubbles: true,
+      detail: {
+        root: this.root,
+        state: structuredClone(this.state),
+        value: this.hiddenInput ? this.hiddenInput.value : ''
+      }
+    });
+  
+    this.root.dispatchEvent(event);
+  }
+
+  /* ================= PUBLIC API ================= */
+
+  openCalendar() {
+    this.open();
+  }
+
+  closeCalendar() {
+    this.cancel();
+  }
+
+  clearCalendar({ apply = true } = {}) {
+    this.temp = { start: null, end: null, accuracy: 0 };
+
+    if (apply) {
+      this.state = structuredClone(this.temp);
+      this.field.textContent = this.format(this.state);
+      this.updateFieldState();
+      this.updateHiddenInputFromState();
+      this.dispatchApplyEvent();
+    }
+
+    this.render();
+  }
+
+  setDate({ start, end = null, accuracy = 0 }, { apply = true } = {}) {
+    this.temp = {
+      start: start ? new Date(start) : null,
+      end: end ? new Date(end) : null,
+      accuracy
+    };
+
+    if (apply) {
+      this.state = structuredClone(this.temp);
+      this.field.textContent = this.format(this.state);
+      this.updateFieldState();
+      this.updateHiddenInputFromState();
+      this.dispatchApplyEvent();
+    }
+
+    this.render();
+  }
+
+  getState() {
+    return structuredClone(this.state);
+  }
+
+  getValue() {
+    return this.hiddenInput ? this.hiddenInput.value : '';
+  }
 }
+
+Calendar.getInstance = function (element) {
+  return element?._calendarInstance || null;
+};
+
+window.Calendar = Calendar;
 
 /* --- Init all calendars --- */
 document.querySelectorAll('.js-calendar')

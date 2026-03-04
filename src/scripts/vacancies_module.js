@@ -40,6 +40,8 @@ function copyVacancyText(isMultiVacancy = true) {
 }
 
 function toggleClearFilterButtons() {
+  console.log('toggleClearFilterButtons');
+  
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
@@ -60,6 +62,7 @@ function toggleClearFilterButtons() {
     $filtersBtnCount.removeClass('hidden').text(selectedItemsLength);
     $btnFilterScrollTop.addClass('btn-filter--non-zero');
     $btnFilterScrollTopCount.removeClass('hidden').text(selectedItemsLength);
+    console.log('if');
   } else {
     $clearBtns.hide();
     $('.additional-filters__selected-items').hide();
@@ -67,6 +70,7 @@ function toggleClearFilterButtons() {
     $filtersBtnCount.addClass('hidden').text('');
     $btnFilterScrollTop.removeClass('btn-filter--non-zero');
     $btnFilterScrollTopCount.addClass('hidden').text('');
+    console.log('else');
   }
 }
 
@@ -175,13 +179,15 @@ function resetRangeSlider(rangeSlider) {
 }
 
 function clearTagRelatedFields($selectedItem) {
+  console.log('clearTagRelatedFields');
+  
   let $selectedRadio = null;
 
   let name = $selectedItem.data('name');
   let value = $selectedItem.data('value');
   let type = $selectedItem.data('type');
 
-  if (['range', 'textfield', 'multiselect'].includes(type)) {
+  if (['range', 'textfield', 'multiselect', 'date-range'].includes(type)) {
     let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
     $otherSelectedItem.remove();
   }
@@ -206,6 +212,15 @@ function clearTagRelatedFields($selectedItem) {
         $rangeSlider.each(function (index, el) {
           resetRangeSlider(el);
         });
+
+        break;
+      
+      case 'date-range':
+        const calendarInput = document.querySelector(`.calendar__input[name="${name}"][value="${value}"]`);
+        const calendarEl = calendarInput.closest('.js-calendar');
+        const calendar = Calendar.getInstance(calendarEl);
+
+        calendar.clearCalendar();
 
         break;
 
@@ -298,6 +313,7 @@ function clearFilter() {
   // let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
   let $allCheckboxes = $('.additional-filters .checkbox__input');
   let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
+  let $calendars = $('.additional-filters .js-calendar');
   let $clearBtn = $(`.filter__clear-btn`);
   let $filtersBtn = $('.btn-white--filter .btn-white__count');
   // let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
@@ -328,6 +344,11 @@ function clearFilter() {
 
   $allCheckboxes.prop('checked', false);
   $allNonCheckedRadio.prop('checked', true);
+
+  $calendars.each(function (index, el) {
+    const calendar = Calendar.getInstance(el);
+    calendar.clearCalendar();
+  });
 
   $('.selected-items__item').remove();
   // $additionalFiltersGroups.show();
@@ -391,7 +412,7 @@ function createOrUpdateTag(type, name, value, labelText) {
                 </div>
               </li>`;
 
-  if (['range', 'textfield', 'select'].includes(type)) {
+  if (['range', 'date-range' ,'textfield', 'select'].includes(type)) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
 
     if ($selectedItem.length) {
@@ -811,6 +832,23 @@ $(() => {
     });
   });
 
+  function initCalendarTag(calendarEl) {
+    const calendarField = calendarEl.querySelector('.calendar-field');
+    const calendarInput = calendarEl.querySelector('.calendar__input');
+
+    if (!calendarInput.value) return;
+    
+    createOrUpdateTag('date-range', calendarInput.name, calendarInput.value, calendarField.textContent);
+  }
+
+  document.querySelectorAll('.additional-filters .js-calendar').forEach(el => {
+    initCalendarTag(el);
+  });
+
+  document.addEventListener('calendar:apply', (e) => {
+    initCalendarTag(e.detail.root);
+  });
+
   document.querySelectorAll('.additional-filters__filter-element--date-range').forEach(dateRange => {
     // setCalendarVacanciesCount(dateRange);
     // setVacanciesCount();
@@ -1006,6 +1044,8 @@ $(() => {
     });
 
     $('.additional-filters .calendar__input').each(function (index, el) {
+      if (!el.value) return;
+
       let resultValue = `${el.name}=${el.value}`;
       requestParamsArr.push(resultValue);
     });
