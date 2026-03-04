@@ -39,9 +39,7 @@ function copyVacancyText(isMultiVacancy = true) {
   $vacancyCardTextarea.remove();
 }
 
-function toggleClearFilterButtons() {
-  console.log('toggleClearFilterButtons');
-  
+function toggleClearFilterButtons() {  
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
@@ -62,7 +60,6 @@ function toggleClearFilterButtons() {
     $filtersBtnCount.removeClass('hidden').text(selectedItemsLength);
     $btnFilterScrollTop.addClass('btn-filter--non-zero');
     $btnFilterScrollTopCount.removeClass('hidden').text(selectedItemsLength);
-    console.log('if');
   } else {
     $clearBtns.hide();
     $('.additional-filters__selected-items').hide();
@@ -70,7 +67,6 @@ function toggleClearFilterButtons() {
     $filtersBtnCount.addClass('hidden').text('');
     $btnFilterScrollTop.removeClass('btn-filter--non-zero');
     $btnFilterScrollTopCount.addClass('hidden').text('');
-    console.log('else');
   }
 }
 
@@ -124,12 +120,9 @@ function checkDependentFilters() {
     let tagName = $parentFilterItem.prop('tagName').toLowerCase();
     let compareOp = tagName === 'option' ? ':selected' : ':checked';
 
-    // console.log($parentFilterItem);
-
     if (!$parentFilterItem.is(compareOp)) {
       $(el).hide();
     } else {
-      // console.log('Yes');
       $(el).show();
     }
   });
@@ -178,9 +171,7 @@ function resetRangeSlider(rangeSlider) {
   }
 }
 
-function clearTagRelatedFields($selectedItem) {
-  console.log('clearTagRelatedFields');
-  
+function clearTagRelatedFields($selectedItem) {  
   let $selectedRadio = null;
 
   let name = $selectedItem.data('name');
@@ -747,14 +738,26 @@ $(() => {
     });
   });
 
+  function toggleNotFoundBlock($additionalFilters) {
+    let $notFound = $additionalFilters.find('.additional-filters__not-found');
+    const zoomSearchPlayer = document.getElementById('zoom-search-player');
+    const $visibleFiltersGroups = $additionalFilters.find('.checkboxes-group:not(.hidden):not(:hidden), .radiobtns-group:not(.hidden):not(:hidden), .filter-element--range:not(.hidden):not(:hidden), .filter-element--country:not(.hidden):not(:hidden), .filter-element--date-range:not(.hidden):not(:hidden)');
+    
+    if (!$visibleFiltersGroups.length) {
+      $notFound.show();
+      zoomSearchPlayer?.play();
+    } else {
+      $notFound.hide();
+      zoomSearchPlayer?.stop();
+    }
+  }
+
   // Search in filter
   $('input[name="search_filter"]').on('input', function (event) {
     let searchValue = $(this).val().toLowerCase().trim();
     let $additionalFilters = $(this).closest('.additional-filters');
     let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range, .filter-element--country, .filter-element--date-range');
     let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
-    let $notFound = $additionalFilters.find('.additional-filters__not-found');
-    const zoomSearchPlayer = document.getElementById('zoom-search-player');
 
     if (searchValue) {
       $clearSearchBtn.show();
@@ -765,36 +768,40 @@ $(() => {
     $additionalFiltersGroups.each((index, group) => {
       if ($(group).hasClass('checkboxes-group') || $(group).hasClass('radiobtns-group')) {
         let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
-        let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label')).map(label => {
-          return $(label).text().toLowerCase();
-        });
+        let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label'));
+        checkboxesLabels.forEach(label => label.parentNode.classList.remove('checkbox--highlighted', 'checkbox--highlighted-animation'));
 
-        if (groupTitle.includes(searchValue) || checkboxesLabels.find(label => label.includes(searchValue))) {
-          $(group).show();
+        let filteredCheckboxesLabels = checkboxesLabels.filter(label => label.textContent.toLowerCase().includes(searchValue));
+        if (searchValue) {
+          filteredCheckboxesLabels.forEach(label => label.parentNode.classList.add('checkbox--highlighted', 'checkbox--highlighted-animation'));
+        }
+
+        if (groupTitle.includes(searchValue) || filteredCheckboxesLabels.length) {
+          $(group).removeClass('hidden');
         } else {
-          $(group).hide();
+          $(group).addClass('hidden');
         }
       } else {
         let groupTitle = $(group).find('.filter-element__title').text().toLowerCase();
 
         if (groupTitle.includes(searchValue)) {
-          $(group).show();
+          $(group).removeClass('hidden');
         } else {
-          $(group).hide();
+          $(group).addClass('hidden');
         }
       }
 
     });
 
-    const $visibleFilters = $additionalFilters.find('.checkboxes-group:not(:hidden), .radiobtns-group:not(:hidden), .filter-element--range:not(:hidden), .filter-element--country:not(:hidden), .filter-element--date-range:not(:hidden)');
-    
-    if (!$visibleFilters.length) {
-      $notFound.show();
-      zoomSearchPlayer?.play();
-    } else {
-      $notFound.hide();
-      zoomSearchPlayer?.stop();
-    }
+    toggleNotFoundBlock($additionalFilters);
+  });
+  
+  document.addEventListener('click', function(e) {
+    const highlightedAnimationTag = e.target.closest('.additional-filters .checkbox--highlighted-animation');
+
+    if (!highlightedAnimationTag) return;
+
+    highlightedAnimationTag.classList.remove('checkbox--highlighted-animation');
   });
 
   $('.additional-filters__clear-search-btn').click(function (event) {

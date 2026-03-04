@@ -129,3 +129,25 @@
 
       &::before
         display none
+  
+  &--highlighted
+    .checkbox__label
+      background #fdf5e5
+  
+  &--highlighted-animation
+    .checkbox__label
+      animation glow 3s infinite linear
+
+@keyframes glow {
+  from {
+    background #fdf5e5
+  }
+
+  50% {
+    background transparent
+  }
+
+  to {
+    background #fdf5e5
+  }
+}
