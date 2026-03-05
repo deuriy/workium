@@ -33,7 +33,11 @@
     position relative
     z-index 2
     justify-self start
-    margin-bottom 8px
+    margin-bottom 16px
+    margin-left -8px
+
+    @media $xs
+      margin-left -6px
     
     // &::after
     //   @media $xs
@@ -107,3 +111,9 @@
     
     .employment-variant__title::after
       display none
+  
+  &:not(:has(.employment-variant__rating-block))
+    grid-template-rows auto 1fr
+
+    .employment-variant__salaries-and-reward
+      align-self center
