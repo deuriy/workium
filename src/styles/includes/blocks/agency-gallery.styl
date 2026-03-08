@@ -69,6 +69,9 @@
     
     @media $xs
       text-align right
+
+  &__toggle-link-wrapper
+    margin-top 12px
   
   &__description
     margin-bottom 24px
@@ -87,3 +90,14 @@
   &--full
     .agency-gallery__item:nth-child(n+11)
       display block
+  
+  &--review
+    .agency-gallery__item:nth-child(n+6)
+      display none
+
+      @media $xs
+        display block
+
+    &.agency-gallery--full
+      .agency-gallery__item:nth-child(n+6)
+        display block

@@ -1342,6 +1342,69 @@ $(() => {
     $(this).parent().hide();
   });
 
+  document.addEventListener('click', function (e) {
+    const agencyGalleryToggleLink = e.target.closest('.agency-gallery__toggle-link');
+
+    if (!agencyGalleryToggleLink) return;
+
+    const agencyGallery = agencyGalleryToggleLink.closest('.agency-gallery');
+
+    if (!agencyGallery) return;
+
+    agencyGalleryToggleLink.classList.toggle('arrow-link--opened');
+
+    if (!agencyGallery.classList.contains('agency-gallery--full')) {
+      agencyGallery.classList.add('agency-gallery--full');
+      agencyGalleryToggleLink.textContent = window.translations.show_less;
+
+    } else {
+      agencyGallery.classList.remove('agency-gallery--full');
+      agencyGalleryToggleLink.textContent = window.translations.show_more + ' (' + agencyGalleryToggleLink.dataset.moreCount + ')';
+    }
+
+    e.preventDefault();
+  });
+
+  function getLineCount(element) {
+    const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+    const elementHeight = element.clientHeight;
+
+    return Math.round(elementHeight / lineHeight);
+  }
+
+  document.addEventListener('ratingPopupLoaded', function (event) {
+    const ratingPopup = document.querySelector(event.detail.popupId);
+    
+    ratingPopup.querySelectorAll('.review__positive > p, .review__negative > p').forEach(p => {
+      if (getLineCount(p) <= 7) return;
+
+      p.parentNode.classList.add('truncated-text');
+    });
+  });
+  
+  document.addEventListener('click', function (e) {
+    const reviewToggleLink = e.target.closest('.review__toggle-link');
+
+    if (!reviewToggleLink) return;
+
+    const reviewText = reviewToggleLink.parentNode.parentNode;
+
+    if (!reviewText) return;
+
+    reviewToggleLink.classList.toggle('arrow-link--opened');
+
+    if (!reviewText.classList.contains('full-text')) {
+      reviewText.classList.add('full-text');
+      reviewToggleLink.textContent = window.translations.show_less;
+
+    } else {
+      reviewText.classList.remove('full-text');
+      reviewToggleLink.textContent = window.translations.read_more;
+    }
+
+    e.preventDefault();
+  });
+
   if (document.forms.vacancies_filter) {
     document.forms.vacancies_filter.addEventListener('undoingChangesToAdditionalFilters', undoChangesToAdditionalFilters);
   }

@@ -202,19 +202,81 @@ $(() => {
   $(document).on('click', '.agency-gallery__more-item-link', function (event) {
     event.preventDefault();
 
-    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
-    $agencyGalleryTab.addClass('agency-gallery--full');
-    $agencyGalleryTab.find('.agency-gallery__hide-link-wrapper').show();
+    let $agencyGalleryRoot = $(this).closest('.agency-gallery__list-wrapper').parent();
+    $agencyGalleryRoot.addClass('agency-gallery--full');
+    $agencyGalleryRoot.find('.agency-gallery__hide-link-wrapper').show();
     $(this).hide();
   });
 
   $(document).on('click', '.agency-gallery__hide-link', function (event) {
     event.preventDefault();
 
-    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
-    $agencyGalleryTab.removeClass('agency-gallery--full');
-    $agencyGalleryTab.find('.agency-gallery__more-item-link').show();
+    let $agencyGalleryRoot = $(this).closest('.agency-gallery__list-wrapper').parent();
+    $agencyGalleryRoot.removeClass('agency-gallery--full');
+    $agencyGalleryRoot.find('.agency-gallery__more-item-link').show();
     $(this).parent().hide();
+  });
+
+  document.addEventListener('click', function (e) {
+    const agencyGalleryToggleLink = e.target.closest('.agency-gallery__toggle-link');
+
+    if (!agencyGalleryToggleLink) return;
+
+    const agencyGallery = agencyGalleryToggleLink.closest('.agency-gallery');
+
+    if (!agencyGallery) return;
+
+    agencyGalleryToggleLink.classList.toggle('arrow-link--opened');
+
+    if (!agencyGallery.classList.contains('agency-gallery--full')) {
+      agencyGallery.classList.add('agency-gallery--full');
+      agencyGalleryToggleLink.textContent = window.translations.show_less;
+    } else {
+      agencyGallery.classList.remove('agency-gallery--full');
+      agencyGalleryToggleLink.textContent = window.translations.show_more + ' (' + agencyGalleryToggleLink.dataset.moreCount + ')';
+    }
+
+    e.preventDefault();
+  });
+
+  function getLineCount(element) {
+    const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+    const elementHeight = element.clientHeight;
+
+    return Math.round(elementHeight / lineHeight);
+  }
+
+  document.addEventListener('ratingPopupLoaded', function (event) {
+    const ratingPopup = document.querySelector(event.detail.popupId);
+    
+    ratingPopup.querySelectorAll('.review__positive > p, .review__negative > p').forEach(p => {
+      if (getLineCount(p) <= 7) return;
+
+      p.parentNode.classList.add('truncated-text');
+    });
+  });
+  
+  document.addEventListener('click', function (e) {
+    const reviewToggleLink = e.target.closest('.review__toggle-link');
+
+    if (!reviewToggleLink) return;
+
+    const reviewText = reviewToggleLink.parentNode.parentNode;
+
+    if (!reviewText) return;
+
+    reviewToggleLink.classList.toggle('arrow-link--opened');
+
+    if (!reviewText.classList.contains('full-text')) {
+      reviewText.classList.add('full-text');
+      reviewToggleLink.textContent = window.translations.show_less;
+
+    } else {
+      reviewText.classList.remove('full-text');
+      reviewToggleLink.textContent = window.translations.read_more;
+    }
+
+    e.preventDefault();
   });
 
   if ($(window).width() < 768) {

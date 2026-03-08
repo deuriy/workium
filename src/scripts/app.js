@@ -1286,8 +1286,9 @@ $(() => {
     initTooltips();
   });
 
-  document.addEventListener('audioPlayersLoaded', function (event) {
+  document.addEventListener('ratingPopupLoaded', function (event) {
     const ratingPopup = document.querySelector(event.detail.popupId);
+    
     setTimeout(() => {
       AudioPlayers.init(ratingPopup);
     }, 100);
