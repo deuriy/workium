@@ -140,6 +140,8 @@ class Calendar {
     document.body.style.overflow = '';
 
     this.updateHiddenInputFromState();
+
+    this.dispatchCancelEvent();
   }
 
   apply() {
@@ -506,6 +508,19 @@ class Calendar {
       }
     });
   
+    this.root.dispatchEvent(event);
+  }
+
+  dispatchCancelEvent() {
+    const event = new CustomEvent('calendar:cancel', {
+      bubbles: true,
+      detail: {
+        root: this.root,
+        state: structuredClone(this.state),
+        value: this.hiddenInput ? this.hiddenInput.value : ''
+      }
+    });
+
     this.root.dispatchEvent(event);
   }
 

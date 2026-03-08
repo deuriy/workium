@@ -760,9 +760,9 @@ $(() => {
     let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
 
     if (searchValue) {
-      $clearSearchBtn.show();
+      $clearSearchBtn.removeClass('hidden');
     } else {
-      $clearSearchBtn.hide();
+      $clearSearchBtn.addClass('hidden');
     }
 
     $additionalFiltersGroups.each((index, group) => {
@@ -805,7 +805,7 @@ $(() => {
   });
 
   $('.additional-filters__clear-search-btn').click(function (event) {
-    $(this).hide();
+    $(this).addClass('hidden');
 
     $(this).siblings('.form-text--filter-search').val('').trigger('input').focus();
   });
@@ -831,7 +831,13 @@ $(() => {
 
       if (value !== '') {
         let type = (name === 'kategoriia-pracivnika') ? 'select' : 'radio';
-        createOrUpdateTag(type, name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
+
+        // el.name === 'zitlo[]' && el.value === 'all'
+        console.log('radio!!');
+
+        if (!(name === 'zitlo[]' && value === 'all')) {
+          createOrUpdateTag(type, name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
+        }
       }
 
       if (name === 'kategoriia-pracivnika') {
@@ -876,12 +882,16 @@ $(() => {
     // setVacanciesCount();
 
     dateRange.addEventListener('calendar:open', (e) => {
-      setCalendarVacanciesCount(e.detail.root);
+      // setCalendarVacanciesCount(e.detail.root);
       setVacanciesCount();
     });
 
     dateRange.addEventListener('calendar:change', (e) => {
-      setCalendarVacanciesCount(e.detail.root);
+      // setCalendarVacanciesCount(e.detail.root);
+      setVacanciesCount();
+    });
+
+    dateRange.addEventListener('calendar:cancel', (e) => {
       setVacanciesCount();
     });
   });
@@ -904,6 +914,9 @@ $(() => {
   });
 
   function setVacanciesCount() {
+    let additionalFiltersSubmitBtn = document.querySelector('.additional-filters__submit-btn');
+    additionalFiltersSubmitBtn.classList.add('btn-default--filter-loading');
+
     $.ajax({
       url: `/api/v1/vacancies-count${getFilterUrl()}`,
 
@@ -925,7 +938,8 @@ $(() => {
         const lang = document.documentElement.lang;
         const btnText = data.total ? translations.show[lang] + ' ' + data.label : translations.no_vacancies[lang];
 
-        $('.additional-filters__submit-btn').html(btnText);
+        additionalFiltersSubmitBtn.classList.remove('btn-default--filter-loading');
+        additionalFiltersSubmitBtn.querySelector('.btn-default__text').textContent = btnText;
       },
 
       error: function (data) {
@@ -935,7 +949,8 @@ $(() => {
   }
 
   function setCalendarVacanciesCount(root) {
-    let value = $(root).find('.calendar__input').val();
+    let value = root.querySelector('.calendar__input').value;
+    const applyBtn = root.querySelector('.calendar-modal__apply-btn');
 
     $.ajax({
       url: `/api/v1/vacancies-count${getFilterUrl()}`,
@@ -956,9 +971,11 @@ $(() => {
         };
         
         const lang = document.documentElement.lang;
-        const btnText = value && data.total ? translations.apply[lang] + ' · ' + data.label : translations.apply[lang];
+        const btnText = data.total ? translations.apply[lang] + ' · ' + data.label : translations.apply[lang];
+        
+        applyBtn.textContent = btnText;
 
-        $(root).find('.calendar-modal__apply-btn').html(btnText);
+        console.log(lang, btnText, applyBtn);
       },
 
       error: function (data) {
@@ -1125,14 +1142,14 @@ $(() => {
   function updateFilterUrl(changedAdditionalFilters = false) {
     let isMobile = $(window).width() < 576;
     let $filterSearchBtn = $('.filter__search-btn');
-    let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
+    // let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
     let $additionalFiltersSubmitBtn = $('.additional-filters__submit-btn');
-    let $additionalFiltersPreloaderWrapper = $('.additional-filters__preloader-wrapper');
+    // let $additionalFiltersPreloaderWrapper = $('.additional-filters__preloader-wrapper');
     let $vacanciesTogglePlusBtn = $('.vacancies__toggle-plus-btn');
     let $vacanciesPreloaderWrapper = $('.vacancies__preloader-wrapper');
 
-   $filterSearchBtn.addClass('btn-default--filter-loading');
-   $additionalFiltersSubmitBtn.addClass('btn-default--filter-loading');
+    $filterSearchBtn.addClass('btn-default--filter-loading');
+    $additionalFiltersSubmitBtn.addClass('btn-default--filter-loading');
 
     // $filterSearchBtn.hide();
     // $filterPreloaderWrapper.show();
@@ -1890,6 +1907,17 @@ $(() => {
     if (!additionalFiltersHeader) return;
 
     additionalFiltersHeader.classList.remove('additional-filters__header--search-extended');
+
+    const searchInput = additionalFiltersHeader.querySelector('input[name="search_filter"]');
+    const clearSearchBtn = additionalFiltersHeader.querySelector('.additional-filters__clear-search-btn');
+
+    if (searchInput) {
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    clearSearchBtn?.classList.add('hidden');
+    
     e.preventDefault();
   });
 
