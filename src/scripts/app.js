@@ -859,18 +859,6 @@ $(() => {
     }, 1500);
   });
 
-  // $('.selected-item__remove-link').click(function(e) {
-  //   e.preventDefault();
-
-  //   $(this).closest('.selected-item').remove();
-  // });
-
-  // $('.vacancy-card__address').click(function(e) {
-  //   $(this).toggleClass('vacancy-card__address--truncated');
-
-  //   e.preventDefault();
-  // });
-
   $('.vacancy-info__specialization').click(function (e) {
     $(this).toggleClass('vacancy-info__specialization--truncated');
 
@@ -1534,33 +1522,25 @@ $(() => {
 
   // Search input with close button
   $('[data-search-input]').on('input', function (event) {
-    let name = $(this).attr('name');
     let value = $(this).val();
     let $clearBtn = $(this).next('.filter__clear-search-btn');
     let $searchBtnMobile = $('.filter__search-btn-mobile');
-    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
     if (value) {
       $clearBtn.show();
       $searchBtnMobile.show();
       $(this).addClass('form-text--filter-search-filled');
-      // createOrUpdateTag('textfield', name, value, value);
     } else {
       $clearBtn.hide();
       $searchBtnMobile.hide();
       $(this).removeClass('form-text--filter-search-filled');
-      // removeFilterTag(type, name, value);
     }
   });
 
   $('[data-clear-search-input]').on('click', function (event) {
     let $input = $(this).prev();
-    let name = $input.attr('name');
-    let value = $input.val();
-    let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
 
     clearTextField($input);
-    // removeFilterTag(type, name, value);
 
     $input.focus();
 
@@ -1569,7 +1549,5 @@ $(() => {
     if (isMobile && $noResults.length) {
       updateFilterUrl();
     }
-
-    // updateFilterUrl();
   });
 });

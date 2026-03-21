@@ -39,7 +39,7 @@ function copyVacancyText(isMultiVacancy = true) {
   $vacancyCardTextarea.remove();
 }
 
-function toggleClearFilterButtons() {  
+function toggleClearFilterButtons() {
   let $clearBtns = $('[data-clear-filter]');
   let selectedItemsLength = $('.filter .selected-items__item').length;
   let $filtersBtn = $('.btn-white--filter');
@@ -105,8 +105,7 @@ function checkDependentFilters() {
     }
 
     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
-    // let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="76"]`);
-    
+
     if (!$parentFilterItem.length) {
       let parentFilterTagName = $parentFilter.prop('tagName').toLowerCase();
 
@@ -171,7 +170,7 @@ function resetRangeSlider(rangeSlider) {
   }
 }
 
-function clearTagRelatedFields($selectedItem) {  
+function clearTagRelatedFields($selectedItem) {
   let $selectedRadio = null;
 
   let name = $selectedItem.data('name');
@@ -205,7 +204,7 @@ function clearTagRelatedFields($selectedItem) {
         });
 
         break;
-      
+
       case 'date-range':
         const calendarInput = document.querySelector(`.calendar__input[name="${name}"][value="${value}"]`);
         const calendarEl = calendarInput.closest('.js-calendar');
@@ -236,25 +235,7 @@ function clearTagRelatedFields($selectedItem) {
   setVisibilitySelectedMoreItem(selectedItemsLength);
 
   checkDependentFilters();
-  // checkDefaultValue();
 }
-
-// function resetAgeSwitch () {
-//   let $ageInput = $('input[name="vik"]');
-//   let $ageInputFrom = $('input[name="vik_from"]');
-//   let $ageInputTo = $('input[name="vik_to"]');
-//   let $ageSlider = $('.range-slider[data-sync-field-ids="vik"]');
-//   let $ageRangeSlider = $('.range-slider[data-sync-from-field-ids="vik_from"]');
-
-//   $ageSwitch.prop('checked', false).trigger('change');
-
-//   $ageInput.val($ageInput.attr('min'));
-//   $ageInputFrom.val($ageInputFrom.attr('min'));
-//   $ageInputTo.val($ageInputTo.attr('max'));
-
-//   $ageSlider[0].noUiSlider.set($ageInput.attr('min'));
-//   $ageRangeSlider[0].noUiSlider.set([$ageInputFrom.attr('min'), $ageInputTo.attr('max')]);
-// }
 
 function undoChangesToAdditionalFilters() {
   let $checkboxesAndRadio = $('.additional-filters').find('.checkbox__input, .radiobtn__input');
@@ -292,8 +273,6 @@ function undoChangesToAdditionalFilters() {
     // clearTagRelatedFields($selectedItem);
   });
 
-  // resetAgeSwitch();
-
   toggleClearFilterButtons();
 
   if (document.forms.vacancies_filter) {
@@ -304,14 +283,11 @@ function undoChangesToAdditionalFilters() {
 function clearFilter() {
   let $searchInput = $('[data-search-input]');
   let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
-  // let $additionalFiltersGroups = $('.additional-filters .checkboxes-group, .additional-filters .radiobtns-group');
   let $allCheckboxes = $('.additional-filters .checkbox__input');
   let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
   let $calendars = $('.additional-filters .js-calendar');
   let $clearBtn = $(`.filter__clear-btn`);
   let $filtersBtn = $('.btn-white--filter .btn-white__count');
-  // let $additionalFiltersClearBtn = $('.additional-filters__clear-btn');
-  // let $additionalFiltersClearLink = $('.additional-filters__clear-link');
 
   $searchInput.val('').trigger('input').removeAttr('value');
 
@@ -333,9 +309,6 @@ function clearFilter() {
   $clearBtn.hide();
   $('.additional-filters__selected-items').hide();
 
-  // $additionalFiltersClearBtn.hide();
-  // $additionalFiltersClearLink.hide();
-
   $allCheckboxes.prop('checked', false);
   $allNonCheckedRadio.prop('checked', true);
 
@@ -345,7 +318,6 @@ function clearFilter() {
   });
 
   $('.selected-items__item').remove();
-  // $additionalFiltersGroups.show();
 
   // $('.selected-items--filter-params').hide();
 
@@ -358,39 +330,12 @@ function clearFilter() {
   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
 }
 
-// function removeItemFromArray (array, value) {
-//   let index = array.indexOf(value);
-
-//   if (index > -1) {
-//     array.splice(index, 1);
-//   }
-
-//   return array;
-// }
-
 function findFilterTagByValue(name, value) {
   let $container = $('.selected-items__list');
   let $selectedItem = $container.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
 
   return $selectedItem;
 }
-
-// function clearTextField($input) {
-//   $input.removeClass('form-text--filter-search-filled').val('').trigger('input');
-//   $input.parent().find('[data-clear-search-input]').hide();
-// }
-
-// function removeFilterTag (type, name, value) {
-//   let $selectedItem;
-
-//   if (['range', 'textfield'].includes(type)) {
-//     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-//   } else if (['checkbox', 'radio'].includes(type)) {
-//     $selectedItem = findFilterTagByValue(name, value);
-//   }
-
-//   $selectedItem.remove();
-// }
 
 function createOrUpdateTag(type, name, value, labelText) {
   let $container = $('.selected-items__list');
@@ -406,7 +351,7 @@ function createOrUpdateTag(type, name, value, labelText) {
                 </div>
               </li>`;
 
-  if (['range', 'date-range' ,'textfield', 'select'].includes(type)) {
+  if (['range', 'date-range', 'textfield', 'select'].includes(type)) {
     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
 
     if ($selectedItem.length) {
@@ -454,35 +399,6 @@ function changeCaseOfDaysLabel(days) {
 $(() => {
   select2($);
 
-  // Решение проблемы с потерей фокуса при перемещении поля поиска
-  // $(document).on('focus', '.additional-filters .form-text--filter-search', function() {
-  //   const $input = $(this);
-  //   const $formItem = $input.closest('.additional-filters__form-item');
-  //   const transitionDuration = $formItem.css('transition-duration');
-    
-  //   // Определяем время защиты (если есть анимация - используем её время, иначе фиксированное)
-  //   let protectionTime = 300; // время по умолчанию
-    
-  //   if (transitionDuration && transitionDuration !== '0s') {
-  //     // Парсим время анимации из CSS (например, "0.3s" -> 300ms)
-  //     const durationMatch = transitionDuration.match(/(\d+(?:\.\d+)?)s/);
-  //     if (durationMatch) {
-  //       protectionTime = parseFloat(durationMatch[1]) * 1000;
-  //     }
-  //   }
-    
-  //   // Предотвращаем потерю фокуса во время перемещения
-  //   $input.on('blur', function(e) {
-  //     e.preventDefault();
-  //     $input.focus();
-  //   });
-    
-  //   // Убираем обработчик после завершения перемещения
-  //   setTimeout(() => {
-  //     $input.off('blur');
-  //   }, protectionTime);
-  // });
-
   let fancyboxOpts = {
     dragToClose: false,
     mainClass: 'fancybox--additional-filters-popup',
@@ -515,26 +431,6 @@ $(() => {
     }
   });
 
-
-  // let reviewsPSInstance = null;
-  // const reviewsContainer = document.querySelector('.rating-popup__reviews');
-  // const media = window.matchMedia('(min-width: 1024px)');
-
-  // function handleMedia(e) {
-  //   if (e.matches) {
-  //     if (!reviewsPSInstance) {
-  //       reviewsPSInstance = new PerfectScrollbar(reviewsContainer);
-  //     }
-  //   } else {
-  //     if (reviewsPSInstance) {
-  //       reviewsPSInstance.destroy();
-  //       reviewsPSInstance = null;
-  //     }
-  //   }
-  // }
-
-  // media.addEventListener('change', handleMedia);
-  // handleMedia(media);
 
   let psInstances = new Map(); // хранит {element -> psInstance}
   const media = window.matchMedia('(min-width: 1024px)');
@@ -660,15 +556,8 @@ $(() => {
     });
   });
 
-  // $('.filter__clear-btn, .additional-filters__clear-btn, .additional-filters__clear-filter-btn, .additional-filters__clear-link').click(clearFilter);
-
   $('[data-clear-filter]').click(() => {
     clearFilter();
-
-    // setTimeout(() => {
-    //   // alert('updateFilterUrl()');
-    //   // updateFilterUrl();
-    // });
   });
 
 
@@ -696,19 +585,19 @@ $(() => {
           bulletActiveClass: 'swiper-pagination-bullet--active',
           // clickable: true
         },
-        
+
         on: {
-          slideChange: function() {
+          slideChange: function () {
             // Снимаем checked со всех радио кнопок в данном слайдере
             const allCheckboxes = this.el.querySelectorAll('.checkbox__input');
             allCheckboxes.forEach(checkbox => {
               checkbox.checked = false;
             });
-            
+
             // Устанавливаем checked для радио кнопки в активном слайде
             const activeSlide = this.slides[this.activeIndex];
             const activeCheckbox = activeSlide.querySelector('.checkbox__input');
-            
+
             if (activeCheckbox) {
               activeCheckbox.checked = true;
               // Триггерим событие change для обновления связанной логики
@@ -742,7 +631,7 @@ $(() => {
     let $notFound = $additionalFilters.find('.additional-filters__not-found');
     const zoomSearchPlayer = document.getElementById('zoom-search-player');
     const $visibleFiltersGroups = $additionalFilters.find('.checkboxes-group:not(.hidden):not(:hidden), .radiobtns-group:not(.hidden):not(:hidden), .filter-element--range:not(.hidden):not(:hidden), .filter-element--country:not(.hidden):not(:hidden), .filter-element--date-range:not(.hidden):not(:hidden)');
-    
+
     if (!$visibleFiltersGroups.length) {
       $notFound.show();
       zoomSearchPlayer?.play();
@@ -795,8 +684,8 @@ $(() => {
 
     toggleNotFoundBlock($additionalFilters);
   });
-  
-  document.addEventListener('click', function(e) {
+
+  document.addEventListener('click', function (e) {
     const highlightedAnimationTag = e.target.closest('.additional-filters .checkbox--highlighted-animation');
 
     if (!highlightedAnimationTag) return;
@@ -832,9 +721,6 @@ $(() => {
       if (value !== '') {
         let type = (name === 'kategoriia-pracivnika') ? 'select' : 'radio';
 
-        // el.name === 'zitlo[]' && el.value === 'all'
-        console.log('radio!!');
-
         if (!(name === 'zitlo[]' && value === 'all')) {
           createOrUpdateTag(type, name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
         }
@@ -854,7 +740,7 @@ $(() => {
     toggleClearFilterButtons();
     setVisibilitySelectedMoreItem(selectedItemsLength);
     checkDependentFilters();
-    
+
     setTimeout(() => {
       setVacanciesCount();
     });
@@ -865,7 +751,7 @@ $(() => {
     const calendarInput = calendarEl.querySelector('.calendar__input');
 
     if (!calendarInput.value) return;
-    
+
     createOrUpdateTag('date-range', calendarInput.name, calendarInput.value, calendarField.textContent);
   }
 
@@ -934,7 +820,7 @@ $(() => {
             'uk': 'Немає вакансій'
           }
         };
-        
+
         const lang = document.documentElement.lang;
         const btnText = data.total ? translations.show[lang] + ' ' + data.label : translations.no_vacancies[lang];
 
@@ -948,41 +834,38 @@ $(() => {
     });
   }
 
-  function setCalendarVacanciesCount(root) {
-    let value = root.querySelector('.calendar__input').value;
-    const applyBtn = root.querySelector('.calendar-modal__apply-btn');
+  // function setCalendarVacanciesCount(root) {
+  //   const applyBtn = root.querySelector('.calendar-modal__apply-btn');
 
-    $.ajax({
-      url: `/api/v1/vacancies-count${getFilterUrl()}`,
+  //   $.ajax({
+  //     url: `/api/v1/vacancies-count${getFilterUrl()}`,
 
-      success: function (data) {
-        const translations = {
-          'apply': {
-            'en': 'Apply',
-            'ru': 'Применить',
-            'uk': 'Застосувати'
-          },
+  //     success: function (data) {
+  //       const translations = {
+  //         'apply': {
+  //           'en': 'Apply',
+  //           'ru': 'Применить',
+  //           'uk': 'Застосувати'
+  //         },
 
-          'no_vacancies': {
-            'en': 'No vacancies',
-            'ru': 'Нет вакансий',
-            'uk': 'Немає вакансій'
-          }
-        };
-        
-        const lang = document.documentElement.lang;
-        const btnText = data.total ? translations.apply[lang] + ' · ' + data.label : translations.apply[lang];
-        
-        applyBtn.textContent = btnText;
+  //         'no_vacancies': {
+  //           'en': 'No vacancies',
+  //           'ru': 'Нет вакансий',
+  //           'uk': 'Немає вакансій'
+  //         }
+  //       };
 
-        console.log(lang, btnText, applyBtn);
-      },
+  //       const lang = document.documentElement.lang;
+  //       const btnText = data.total ? translations.apply[lang] + ' · ' + data.label : translations.apply[lang];
 
-      error: function (data) {
-        console.error(data);
-      }
-    });
-  }
+  //       applyBtn.textContent = btnText;
+  //     },
+
+  //     error: function (data) {
+  //       console.error(data);
+  //     }
+  //   });
+  // }
 
   function getFilterUrl(changedAdditionalFilters = false) {
     let isMobile = $(window).width() < 576;
@@ -1100,17 +983,6 @@ $(() => {
     });
 
 
-    let selectedVacanciesRelevance = $('.filter__relevance-select').val();
-
-    let selectedVacanciesRelevancesSlugs = selectedVacanciesRelevance.map(function (value, index) {
-      return $(`select[name="aktualnіst[]"] option[value="${value}"]`).attr('data-seo-slug');
-    });
-
-    [...new Set(selectedVacanciesRelevancesSlugs)].forEach(item => {
-      requestParamsArr.push(`aktualnіst[]=${item}`);
-    });
-
-
     let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
     if (catWorkerValue) {
       requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
@@ -1131,7 +1003,7 @@ $(() => {
     if (urlParams) {
       urlParams = '/' + urlParams.replace(/\/+$/, '');
     }
-    
+
     if (requestParams) {
       requestParams = '?' + requestParams;
     }
@@ -1139,45 +1011,25 @@ $(() => {
     return urlParams + requestParams;
   }
 
-  function updateFilterUrl(changedAdditionalFilters = false) {
+  function updateFilterUrl() {
     let isMobile = $(window).width() < 576;
     let $filterSearchBtn = $('.filter__search-btn');
-    // let $filterPreloaderWrapper = $('.filter__preloader-wrapper');
     let $additionalFiltersSubmitBtn = $('.additional-filters__submit-btn');
-    // let $additionalFiltersPreloaderWrapper = $('.additional-filters__preloader-wrapper');
     let $vacanciesTogglePlusBtn = $('.vacancies__toggle-plus-btn');
     let $vacanciesPreloaderWrapper = $('.vacancies__preloader-wrapper');
 
     $filterSearchBtn.addClass('btn-default--filter-loading');
     $additionalFiltersSubmitBtn.addClass('btn-default--filter-loading');
 
-    // $filterSearchBtn.hide();
-    // $filterPreloaderWrapper.show();
-
-    // $additionalFiltersSubmitBtn.hide();
-    // $additionalFiltersPreloaderWrapper.show();
-
     if (isMobile) {
       $vacanciesTogglePlusBtn.hide();
       $vacanciesPreloaderWrapper.show();
     }
 
-    // setTimeout(() => {
-    //   window.location.href = `/vacancies/${urlParams}${requestParams}`;
-    //   // console.log(`/vacancies/${urlParams}${requestParams}`);
-    // }, 500);
-
-    // setTimeout(() => {
-    // window.location.href = `/vacancies/${urlParams}${requestParams}`;
-
     $.get(`/vacancies`).done(function () {
       const lang = document.documentElement.lang;
       window.location.href = `/${lang}/vacancies${getFilterUrl()}`;
-      // console.log(getFilterUrl());
     });
-
-    // console.log(`/vacancies/${urlParams}${requestParams}`);
-    // });
   }
 
   // Creating filter URL
@@ -1187,20 +1039,23 @@ $(() => {
     updateFilterUrl();
   });
 
-  function loadCitiesOfSelectedCountry(countryID) {
-    $.ajax({
-      url: `/api/v1/cities?country_id=${countryID}`,
+  async function loadCitiesOfSelectedCountry(countryID) {
+    try {
+      const response = await fetch(`/api/v1/cities?country_id=${encodeURIComponent(countryID)}`);
 
-      success: function (data) {
-        document.dispatchEvent(new CustomEvent("citiesLoaded", {
-          detail: { data }
-        }));
-      },
-
-      error: function (data) {
-        console.error(data);
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
       }
-    });
+
+      const data = await response.json();
+
+      document.dispatchEvent(new CustomEvent('citiesLoaded', {
+        detail: { data }
+      }));
+
+    } catch (error) {
+      console.error('Failed to load cities:', error);
+    }
   }
 
   let selectedCountryId = $('select[name="countries"] option:selected').data('entity-id');
@@ -1209,41 +1064,13 @@ $(() => {
   }
 
   // Loading cities via AJAX
-  $('select[name="countries"]').on('change', function (event, call) {
-    let countryID = $(this).find(':selected').data('entity-id');
+  $(document).on('change', 'select[name="countries"]', function () {
+    let countryID = this.selectedOptions[0]?.dataset.entityId;
 
     loadCitiesOfSelectedCountry(countryID);
 
-    let isMobile = $(window).width() < 576;
-    let changedAdditionalFilters = !isMobile && $(this).hasClass('additional-filters__countries-select') && call !== 'fromCode';
-
-    // setTimeout(() => {
-    //   updateFilterUrl(changedAdditionalFilters);
-    // }, 1000);
-
-    setTimeout(() => {
-      updateFilterUrl(changedAdditionalFilters);
-    });
+    setTimeout(updateFilterUrl);
   });
-
-  // Temp!
-  // Set current currency
-  // let currencies = {
-  //   'robota-v-polshi': 'zł',
-  //   'robota-v-chehiyi': 'Kč',
-  //   'robota-v-rumuniyi': 'lei',
-  //   'robota-v-slovachchini': '€',
-  //   'robota-v-nimechchini': '€',
-  //   'robota-v-niderlandah': '€',
-  //   'robota-v-litvi': '€',
-  // };
-
-  // $('select[name="countries"]').on('change', function(event) {
-  //   let selectedCurrency = currencies[$(this).val()];
-
-  //   $('.filter input[name="salary"]').attr('placeholder', `Від… (${selectedCurrency})`);
-  //   $('.filter input[name="remuneration"]').attr('placeholder', `Від… (${selectedCurrency})`);
-  // });
 
   // Dependent filters
   checkDependentFilters();
@@ -1291,30 +1118,6 @@ $(() => {
     });
   });
 
-  // function checkDefaultValue() {
-  //   $('[data-hide-default-min-value]').each(function(index, el) {
-  //     if ($(this).val() === $(this).attr('min')) {
-  //       $(this).val('');
-  //     }
-  //   });
-  // }
-
-  // Range slider tips
-  // slider.noUiSlider.on('update', function (values, handle) {
-  //   let tip = slider.querySelector('.range-slider__tip');
-  //   let noUiOrigins = slider.querySelectorAll('.noUi-origin');
-  //   let firstHandleOffset = noUiOrigins[0].style.transform;
-  //   let secondHandleOffset = noUiOrigins[1].style.transform;
-
-  //   firstHandleOffset = parseInt(firstHandleOffset.substring(firstHandleOffset.indexOf('(') + 1, firstHandleOffset.indexOf(')')));
-  //   secondHandleOffset = parseInt(secondHandleOffset.substring(secondHandleOffset.indexOf('(') + 1, secondHandleOffset.indexOf(')')));
-
-  //   let diff = secondHandleOffset - firstHandleOffset;
-  //   tip.style.marginLeft = `${diff}%`;
-
-  //   // slider.querySelector('.range-slider__tip').style.transform = 'translate(20%)';
-  //   // inputFormat.value = values[handle];
-  // });
 
   const sliders = document.querySelectorAll('.range-slider--single');
   sliders.forEach(slider => {
@@ -1397,7 +1200,6 @@ $(() => {
           let value = this.value;
 
           if (slider.dataset.min != this.value) {
-            let label = slider.closest('.filter-element').querySelector('.filter-element__title');
             let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : '';
 
             createOrUpdateTag("range", name, value, labelText);
@@ -1423,7 +1225,6 @@ $(() => {
       field.addEventListener('change', function (e) {
         let name = slider.dataset.name;
         let value = this.value;
-        let toValue = fields[idx].value;
 
         if (this.value == '') {
           value = slider.noUiSlider.get()[0];
@@ -1530,8 +1331,6 @@ $(() => {
       });
 
       if (slider.dataset.min != values[0] || slider.dataset.max != values[1]) {
-        let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-        // let labelText = `<strong>${label.textContent}:</strong> ${values[0]}-${values[1]}`;
         let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(values[1]) : value;
 
         createOrUpdateTag("range", name, value, labelText);
@@ -1542,8 +1341,6 @@ $(() => {
 
       toggleClearFilterButtons();
     });
-
-    // checkDefaultValue();
 
     ['input'].forEach(eventName => {
       fieldsFrom.forEach((field, idx) => {
@@ -1556,7 +1353,6 @@ $(() => {
           let value = `${this.value}-${fieldsTo[idx].value}`;
 
           if (slider.dataset.min != this.value || slider.dataset.max != fieldsTo[idx].value) {
-            let label = slider.closest('.filter-element').querySelector('.filter-element__title');
             let labelText = name === 'vik_from' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
 
             createOrUpdateTag("range", name, value, labelText);
@@ -1587,7 +1383,6 @@ $(() => {
           let value = `${fieldsFrom[idx].value}-${this.value}`;
 
           if (slider.dataset.min != fieldsFrom[idx].value || slider.dataset.max != this.value) {
-            let label = slider.closest('.filter-element').querySelector('.filter-element__title');
             let labelText = name === 'vik_to' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
 
             createOrUpdateTag("range", name, value, labelText);
@@ -1654,51 +1449,9 @@ $(() => {
 
   toggleClearFilterButtons();
 
-  // Search input with close button
-  // $('[data-search-input]').on('input', function (event) {
-  //   let name = $(this).attr('name');
-  //   let value = $(this).val();
-  //   let $clearBtn = $(this).next('.filter__clear-search-btn');
-  //   let $searchBtnMobile = $('.filter__search-btn-mobile');
-  //   let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
-
-  //   if (value) {
-  //     $clearBtn.show();
-  //     $searchBtnMobile.show();
-  //     $(this).addClass('form-text--filter-search-filled');
-  //     // createOrUpdateTag('textfield', name, value, value);
-  //   } else {
-  //     $clearBtn.hide();
-  //     $searchBtnMobile.hide();
-  //     $(this).removeClass('form-text--filter-search-filled');
-  //     // removeFilterTag(type, name, value);
-  //   }
-
-  // });
-
-  // $('[data-clear-search-input]').on('click', function (event) {
-  //   let $input = $(this).prev();
-  //   let name = $input.attr('name');
-  //   let value = $input.val();
-  //   let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
-
-  //   clearTextField($input);
-  //   // removeFilterTag(type, name, value);
-
-  //   $input.focus();
-
-  //   let isMobile = $(window).width() < 576;
-  //   let $noResults = $('.vacancies__no-results');
-  //   if (isMobile && $noResults.length) {
-  //     updateFilterUrl();
-  //   }
-
-  //   // updateFilterUrl();
-  // });
-
   if (document.forms.vacancies_filter) {
     document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', function (e) {
-      updateFilterUrl(false);
+      updateFilterUrl();
     });
   }
 
@@ -1807,22 +1560,6 @@ $(() => {
     });
   }
 
-  // document.querySelectorAll('.promo-blocks').forEach(promoBlocksItem => {
-  //   let checkboxInput = promoBlocksItem.querySelector('.checkbox__input:checked');
-
-  //   if (!checkboxInput) return;
-
-  //   let promoBlock = checkboxInput.closest('.promo-block');
-
-  //   if (!promoBlock) return;
-
-  //   let cashback = promoBlock.querySelector('.promo-block__salary');
-
-  //   if (!cashback) return;
-
-  //   setCashbackForPromoBlocks(cashback, promoBlocksItem);
-  // });
-
   document.addEventListener('change', function (e) {
     let checkboxInput = e.target.closest('.promo-block .checkbox__input');
 
@@ -1861,14 +1598,14 @@ $(() => {
   const additionalFiltersBody = document.querySelector('.additional-filters__body');
   const additionalFiltersHeader = document.querySelector('.additional-filters__header');
   const searchInput = document.querySelector('input[name="search_filter"]');
-  
+
   let isTypingInSearch = false;
 
   if (searchInput) {
-    searchInput.addEventListener('input', function() {
+    searchInput.addEventListener('input', function () {
       isTypingInSearch = true;
       clearTimeout(searchInput.typingTimeout);
-      
+
       searchInput.typingTimeout = setTimeout(() => {
         isTypingInSearch = false;
       }, 500);
@@ -1880,7 +1617,7 @@ $(() => {
       if (searchInput && document.activeElement === searchInput && isTypingInSearch) {
         return;
       }
-      
+
       additionalFiltersHeader.classList.toggle('additional-filters__header--sticky', this.scrollTop > 0);
     });
   }
@@ -1896,7 +1633,7 @@ $(() => {
 
     additionalFiltersHeader.classList.add('additional-filters__header--search-extended');
   });
-  
+
   document.addEventListener('click', function (e) {
     const cancelSearchLink = e.target.closest('.additional-filters__cancel-search-link');
 
@@ -1917,72 +1654,20 @@ $(() => {
     }
 
     clearSearchBtn?.classList.add('hidden');
-    
+
     e.preventDefault();
   });
-
-  // $('[data-remove-last-filter]').click(function(event) {
-  //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
-
-  //   let type = lastSelectedTagObj.type;
-  //   let name = lastSelectedTagObj.name;
-  //   let value = lastSelectedTagObj.value;
-
-  //   let $filterSearchBtn = $('.filter__search-btn');
-  //   let $selectedItem = null;
-  //   // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-
-  //   switch (type) {
-  //     case 'multiselect':
-  //     case 'checkbox':
-  //       // let $select = $(`select[name="${name}"]`);
-  //       $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-
-  //       // $select.multiSelect('deselect', lastSelectedTagObj.value.toString());
-
-  //       break;
-
-  //     case 'textfield':
-  //       // let $input = $(`input[name="${name}"]`);
-  //       $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-
-  //       // $input.val('');
-  //       // $selectedItem.remove();
-
-  //       break;
-  //   }
-
-  //   $selectedItem.find('.selected-item__remove-link').click();
-  //   localStorage.removeItem('lastSelectedTag');
-
-  //   // let $lastSelectedTag = $('.selected-items__item:last-child');
-  //   let $lastSelectedTag = $('.filter .selected-items__item').last();
-  //   lastSelectedTagObj = {
-  //     type: $lastSelectedTag.attr('data-type'),
-  //     name: $lastSelectedTag.attr('data-name'),
-  //     value: $lastSelectedTag.attr('data-value'),
-  //   };
-
-  //   localStorage.setItem('lastSelectedTag', JSON.stringify(lastSelectedTagObj));
-  //   $filterSearchBtn.click();
-
-  //   // window.location.href = `/vacancies/${urlParams}${requestParams}`;
-  // });
-
-  // $('[data-next-vacancies-page]').on('click', function(event) {
-  //   let pageNumber = $('.pagination .page-item.active .page-link').text();
-  // });
 
 
   const updateMobileHeaderState = (popup) => {
     if (!popup) return;
 
-    const mobileHeader   = popup.querySelector('.popup-mobile-header');
+    const mobileHeader = popup.querySelector('.popup-mobile-header');
     if (!mobileHeader) return;
 
-    const titleEl        = mobileHeader.querySelector('.popup-mobile-header__title');
-    const companyInfoEl  = mobileHeader.querySelector('.company-info--popup-mobile-header');
-    const ratingDropdownCriteriaHeader  = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
+    const titleEl = mobileHeader.querySelector('.popup-mobile-header__title');
+    const companyInfoEl = mobileHeader.querySelector('.company-info--popup-mobile-header');
+    const ratingDropdownCriteriaHeader = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
 
     if (!titleEl || !companyInfoEl) return;
 
@@ -2019,5 +1704,86 @@ $(() => {
 
   // Инициализация состояния при загрузке
   document.querySelectorAll('.rating-popup').forEach(updateMobileHeaderState);
+
+  $(document).on('click', '.agency-gallery__more-item-link', function(event) {
+    event.preventDefault();
+
+    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
+    $agencyGalleryTab.addClass('agency-gallery--full');
+    $agencyGalleryTab.find('.agency-gallery__hide-link-wrapper').show();
+    $(this).hide();
+  });
+
+  $(document).on('click', '.agency-gallery__hide-link', function(event) {
+    event.preventDefault();
+
+    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
+    $agencyGalleryTab.removeClass('agency-gallery--full');
+    $agencyGalleryTab.find('.agency-gallery__more-item-link').show();
+    $(this).parent().hide();
+  });
+
+  document.addEventListener('click', function (e) {
+    const agencyGalleryToggleLink = e.target.closest('.agency-gallery__toggle-link');
+
+    if (!agencyGalleryToggleLink) return;
+
+    const agencyGallery = agencyGalleryToggleLink.closest('.agency-gallery');
+
+    if (!agencyGallery) return;
+
+    agencyGalleryToggleLink.classList.toggle('arrow-link--opened');
+
+    if (!agencyGallery.classList.contains('agency-gallery--full')) {
+      agencyGallery.classList.add('agency-gallery--full');
+      agencyGalleryToggleLink.textContent = window.translations.show_less;
+
+    } else {
+      agencyGallery.classList.remove('agency-gallery--full');
+      agencyGalleryToggleLink.textContent = window.translations.show_more + ' (' + agencyGalleryToggleLink.dataset.moreCount + ')';
+    }
+
+    e.preventDefault();
+  });
+
+  function getLineCount(element) {
+    const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
+    const elementHeight = element.clientHeight;
+
+    return Math.round(elementHeight / lineHeight);
+  }
+
+  document.addEventListener('ratingPopupLoaded', function (event) {
+    const ratingPopup = document.querySelector(event.detail.popupId);
+    
+    ratingPopup.querySelectorAll('.review__positive > p, .review__negative > p').forEach(p => {
+      if (getLineCount(p) <= 7) return;
+
+      p.parentNode.classList.add('truncated-text');
+    });
+  });
+  
+  document.addEventListener('click', function (e) {
+    const reviewToggleLink = e.target.closest('.review__toggle-link');
+
+    if (!reviewToggleLink) return;
+
+    const reviewText = reviewToggleLink.parentNode.parentNode;
+
+    if (!reviewText) return;
+
+    reviewToggleLink.classList.toggle('arrow-link--opened');
+
+    if (!reviewText.classList.contains('full-text')) {
+      reviewText.classList.add('full-text');
+      reviewToggleLink.textContent = window.translations.show_less;
+
+    } else {
+      reviewText.classList.remove('full-text');
+      reviewToggleLink.textContent = window.translations.read_more;
+    }
+
+    e.preventDefault();
+  });
 
 });

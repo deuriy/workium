@@ -6,9 +6,6 @@ let currentSelectedCitiesIds = [];
 let selectedGendersIds = [];
 let currentSelectedGendersIds = [];
 
-let selectedVacanciesRelevancesIds = [];
-let currentSelectedVacanciesRelevancesIds = [];
-
 let citySearchInputValue = '';
 let searchCitiesTimeoutID = null;
 
@@ -75,11 +72,9 @@ function applyChangesToSelectedCities ($select) {
 function applyChangesToSelectedSex ($select) {
   selectedGendersIds = [...currentSelectedGendersIds];
 
-  let $dropdownBlock = $select.closest('.dropdown-block');
   let name = $select.attr('name');
 
   changeSelectToggleTitle($select);
-  // updateDropdownMultiSelectClass($dropdownBlock);
 
   $select.multiSelect('deselect_all');
   $select.find('option').each(function(index, el) {
@@ -95,7 +90,6 @@ function applyChangesToSelectedSex ($select) {
 
     if (labelText) {
       let value = $option.attr('data-seo-slug');
-      // createOrUpdateTag('multiselect', name, id, labelText);
       createOrUpdateTag('checkbox', name, value, labelText);
     }
   });
@@ -104,44 +98,6 @@ function applyChangesToSelectedSex ($select) {
   setVisibilitySelectedMoreItem($selectedItemsLength);
 
   toggleClearFilterButtons();
-
-  // $select[0].dispatchEvent(new Event('change'));
-}
-
-function applyChangesToSelectedVacanciesRelevance ($select) {
-  selectedVacanciesRelevancesIds = [...currentSelectedVacanciesRelevancesIds];
-
-  let $dropdownBlock = $select.closest('.dropdown-block');
-  let name = $select.attr('name');
-
-  changeSelectToggleTitle($select);
-  // updateDropdownMultiSelectClass($dropdownBlock);
-
-  $select.multiSelect('deselect_all');
-  $select.find('option').each(function(index, el) {
-    let $selectedItem = findFilterTagByValue(name, $(el).attr('value'));
-    $selectedItem.remove();
-  });
-
-  selectedVacanciesRelevancesIds.forEach(id => {
-    $select.multiSelect('select', id);
-
-    let $option = $select.find(`option[value="${id}"]`);
-    let labelText = $option.text();
-
-    if (labelText) {
-      let value = $option.attr('data-seo-slug');
-      // createOrUpdateTag('multiselect', name, id, labelText);
-      createOrUpdateTag('checkbox', name, value, labelText);
-    }
-  });
-
-  let $selectedItemsLength = $('.filter .selected-items__item').length;
-  setVisibilitySelectedMoreItem($selectedItemsLength);
-
-  toggleClearFilterButtons();
-
-  // $select[0].dispatchEvent(new Event('change'));
 }
 
 function clearCitiesSelect () {
@@ -178,18 +134,6 @@ function clearSexSelect () {
   currentSelectedGendersIds = [];
 }
 
-function clearVacanciesRelevancesSelect () {
-  $('.relevance-select').multiSelect('deselect_all');
-  changeSelectToggleTitle($('.relevance-select'));
-
-  selectedVacanciesRelevancesIds = [];
-  currentSelectedVacanciesRelevancesIds = [];
-}
-
-function clearExperinceSelect () {
-  $('.filter__experience-select').val('');
-}
-
 function removeItemFromArray (array, value) {
   let index = array.indexOf(value);
 
@@ -201,7 +145,6 @@ function removeItemFromArray (array, value) {
 }
 
 function changeSelectToggleTitle ($select) {
-  // $gendersSelectToggles.each(function(index, el) {
   $select.each(function(index, el) {
     let $dropdown = $(el).closest('.dropdown-block');
     let dropdownId = $dropdown.attr('id');
@@ -216,14 +159,8 @@ function changeSelectToggleTitle ($select) {
       $selectToggle.removeClass('select-toggle--selected');
     }
 
-    // $('.sex-select').multiSelect('deselect_all');
-    // selectedGendersIds.forEach(id => {
-    //   $('.sex-select').multiSelect('select', id);
-    // });
-
     $selectToggle.html(selectToggleText);
   });
-  // });
 }
 
 function clearTextField ($input) {
@@ -464,12 +401,6 @@ function clearTagRelatedFields ($selectedItem) {
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
         selectedCitiesIds = [...currentSelectedCitiesIds];
 
-        // if (!selectedCitiesIds.length) {
-        //   $('.filter__distance-select').next().find('.select2-selection').removeClass('filter-select--selected');
-        // }
-
-        // $multiSelect.multiSelect('refresh');
-
         break;
     }
   }
@@ -508,15 +439,6 @@ function undoChangesToAdditionalFilters () {
   $('.sex-select').val(defaultSelectedGenderIds);
   
   changeSelectToggleTitle($('.sex-select'));
-
-
-  let defaultSelectedVacanciesRelevancesIds = Array.from($('#relevance-select option[data-default-selected]')).map(option => option.value);
-
-  $('.relevance-select').multiSelect('deselect_all');
-  $('.relevance-select').multiSelect('select', defaultSelectedVacanciesRelevancesIds);
-  $('.relevance-select').val(defaultSelectedVacanciesRelevancesIds);
-  
-  changeSelectToggleTitle($('.relevance-select'));
 
   toggleClearFilterButtons();
 }
@@ -575,9 +497,6 @@ $(() => {
         $searchInput.on('input', function(event) {
           clearTimeout(searchCitiesTimeoutID);
 
-          // $('select[name="cities"]').multiSelect('refresh');
-          // $(this).focus();
-
           let searchValue = $(this).val().trim();
           citySearchInputValue = searchValue;
 
@@ -599,15 +518,11 @@ $(() => {
                 let cities = data.results;
                 let missingCitiesIds = Array.from($citiesSelect.find('option')).map(item => item.value);
 
-                // clearCitiesSelect();
-
                 $options.each(function(index, option) {
                   if (!$(option).is(':selected')) {
                     $(option).remove();
                   }
                 });
-
-                // $citiesSelect.multiSelect('refresh');
 
                 // Filling selects from data
                 cities.forEach((item, index) => {
@@ -670,7 +585,6 @@ $(() => {
           applyChangesToSelectedCities(that.$element);
 
           setTimeout(() => {
-            // createFilterUrl();
             if (document.forms.vacancies_filter) {
               document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
             }
@@ -700,7 +614,6 @@ $(() => {
 
       afterDeselect: function(values) {
         let $clearBtn = this.$container.find('.ms-selection__clear-btn');
-        let name = this.$element.attr('name');
 
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, values[0]);
 
@@ -742,13 +655,10 @@ $(() => {
           applyChangesToSelectedSex(that.$element);
 
           setTimeout(() => {
-            // createFilterUrl();
             if (document.forms.vacancies_filter) {
               document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
             }
           });
-
-          // createOrUpdateTag()
         });
 
         $($selectableItems).each(function(index, el) {
@@ -778,71 +688,10 @@ $(() => {
     });
   });
 
-  $(".relevance-select").each((index, el) => {
-    const applyText = $(el).data('apply-text') || 'Застосувати';
-
-    $(el).multiSelect({
-      keepOrder: true,
-      cssClass: 'ms-container--default ms-container--short',
-
-      afterInit: function (container) {
-        let that = this;
-        let $selectableItems = that.$selectableUl.children().toArray();
-        let $selectionItems = that.$selectionUl.children().toArray();
-
-        that.$container.append(`<div class="ms-container__footer"><button type="button" class="btn-default btn-default--multi-select ms-container__apply-btn">${applyText}</button></div>`);
-
-        updateMSItemsDescription($selectionItems);
-
-        that.$container.find('.ms-container__apply-btn').click(function(event) {
-          let $dropdownBlock = $(this).closest('.dropdown-block');
-          $dropdownBlock.removeClass('dropdown-block--visible');
-
-          applyChangesToSelectedVacanciesRelevance(that.$element);
-
-          setTimeout(() => {
-            // createFilterUrl();
-            if (document.forms.vacancies_filter) {
-              document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
-            }
-          });
-
-          // createOrUpdateTag()
-        });
-
-        $($selectableItems).each(function(index, el) {
-          $(el).click(function(event) {
-            if (($(el).hasClass('ms-selected'))) {
-              setTimeout(() => {
-                let lastIndexID = $(el).attr('id').indexOf("-");
-                let selectedItemID = $(el).attr('id').substring(0, lastIndexID);
-                let $selectionWrapper = $(el).closest('.ms-container').find('.ms-selection');
-
-                $selectionWrapper.find(`li[id^="${selectedItemID}"]`).click();
-              });
-            }
-          });
-        });
-      },
-
-      afterSelect: function(values) {
-        if (!currentSelectedVacanciesRelevancesIds.includes(values[0])) {
-          currentSelectedVacanciesRelevancesIds.push(values[0]);
-        }
-      },
-
-      afterDeselect: function(values) {
-        currentSelectedVacanciesRelevancesIds = removeItemFromArray(currentSelectedVacanciesRelevancesIds, values[0]);
-      }
-    });
-  });
-
   $('[data-clear-filter]').click(() => {
     clearCitiesSelect();
     clearCitiesCheckboxes();
     clearSexSelect();
-    clearVacanciesRelevancesSelect();
-    clearExperinceSelect();
   });
 
   $(document).on('click', function(e) {
@@ -875,31 +724,15 @@ $(() => {
         }
       }
     }
-
-    if ($('.dropdown-block--relevance-select').hasClass('dropdown-block--visible')) {
-      if (!$(e.target).closest('.dropdown-block').length && !$(e.target).closest('a.item').length) {
-        $('.relevance-select').multiSelect('deselect_all');
-        selectedVacanciesRelevancesIds.forEach(id => {
-          $('.relevance-select').multiSelect('select', id);
-        });
-
-        currentSelectedVacanciesRelevancesIds = [...selectedVacanciesRelevancesIds];
-
-        if (!selectedVacanciesRelevancesIds.length) {
-          $('#ms-relevance-select, #ms-additional-filter-relevance-select').addClass('ms-container--default');
-        }
-      }
-    }
   });
 
-  let oldScrollY = 0;
+  let oldScrollY;
   let $wrapper = $('.wrapper');
   let $btnFilter = $('.btn-filter');
   let $scrollTopBtn = $('.btn-scroll-top');
 
   $wrapper.on('scroll', function(event) {
     let scrolled = $wrapper.scrollTop();
-    let dY = scrolled - oldScrollY;
 
     if (scrolled > 170) {
       $btnFilter.removeClass('btn-filter--invisible');
@@ -922,7 +755,6 @@ $(() => {
 
   $wrapper.on('scroll', function(event) {
     let scrolled = $wrapper.scrollTop();
-    let dY = scrolled - oldScrollY;
 
     if (scrolled > 170) {
       $scrollTopBtn.removeClass('btn-scroll-top--invisible');
@@ -935,7 +767,6 @@ $(() => {
 
   $(window).on('scroll', function() {
     let scrolled = $(window).scrollTop();
-    let dY = scrolled - oldScrollY;
 
     if (scrolled > 170) {
       $scrollTopBtn.removeClass('btn-scroll-top--invisible');
@@ -950,8 +781,6 @@ $(() => {
   $('.cities-filter__search-input').on('input', function(event) {
     let $citiesFilter = $(this).closest('.cities-filter');
     let $clearSearchBtn = $citiesFilter.find('.cities-filter__clear-search-btn');
-    let $checkboxesGroupItems = $citiesFilter.find('.checkboxes-group__item')
-    let value = $(this).val().toLowerCase().trim();
 
     let searchValue = $(this).val().trim();
     citySearchInputValue = searchValue;
@@ -1009,86 +838,20 @@ $(() => {
   });
 
   $(document).on('change', '.checkboxes-group--cities .checkbox__input', function(event) {
-    // let name = $(this).attr('name');
     let value = $(this).val();
-    // let labelText = $(this).parent().find('.checkbox__title').text();
-    // let $selectedItems = $('.selected-items--cities');
-    // let $selectedItem = $selectedItems.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-    // let $clearBtn = $selectedItems.find('.selected-items__clear-btn');
 
     if ($(this).is(':checkbox')) {
       if ($(this).is(':checked')) {
-        // $selectedItems.find('.selected-items__list').append(`
-        //   <li class="selected-items__item" data-name="${name}" data-value="${value}">
-        //     <div class="selected-item selected-item--city">
-        //       <div class="selected-item__value">${labelText}</div>
-        //       <a href="#" class="selected-item__remove-link"></a>
-        //     </div>
-        //   </li>`);
-
         if (!currentSelectedCitiesIds.includes(value)) {
           currentSelectedCitiesIds.push(value);
         }
       } else {
-        // $selectedItem.remove();
-
         currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
       }
     }
 
     toggleClearCitiesButtons();
-
-    // let selectedItemsLength = $('.selected-items--cities .selected-items__item').length;
-
-    // if (selectedItemsLength) {
-    //   $selectedItems.show();
-    //   $clearBtn.show();
-    // } else {
-    //   $selectedItems.hide();
-    //   $clearBtn.hide();
-    // }
   });
-
-  // $('.checkboxes-group--cities .checkbox__input').change(function(event) {
-  //   // let name = $(this).attr('name');
-  //   let value = $(this).val();
-  //   // let labelText = $(this).parent().find('.checkbox__title').text();
-  //   // let $selectedItems = $('.selected-items--cities');
-  //   // let $selectedItem = $selectedItems.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-  //   // let $clearBtn = $selectedItems.find('.selected-items__clear-btn');
-
-  //   if ($(this).is(':checkbox')) {
-  //     if ($(this).is(':checked')) {
-  //       // $selectedItems.find('.selected-items__list').append(`
-  //       //   <li class="selected-items__item" data-name="${name}" data-value="${value}">
-  //       //     <div class="selected-item selected-item--city">
-  //       //       <div class="selected-item__value">${labelText}</div>
-  //       //       <a href="#" class="selected-item__remove-link"></a>
-  //       //     </div>
-  //       //   </li>`);
-
-  //       if (!currentSelectedCitiesIds.includes(value)) {
-  //         currentSelectedCitiesIds.push(value);
-  //       }
-  //     } else {
-  //       // $selectedItem.remove();
-
-  //       currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
-  //     }
-  //   }
-
-  //   toggleClearCitiesButtons();
-
-  //   // let selectedItemsLength = $('.selected-items--cities .selected-items__item').length;
-
-  //   // if (selectedItemsLength) {
-  //   //   $selectedItems.show();
-  //   //   $clearBtn.show();
-  //   // } else {
-  //   //   $selectedItems.hide();
-  //   //   $clearBtn.hide();
-  //   // }
-  // });
 
   $(document).on('click', '.selected-item--city .selected-item__remove-link', function(event) {
     let $selectedItemParent = $(this).closest('.selected-items__item');
@@ -1115,8 +878,6 @@ $(() => {
   });
 
   $('.selected-items--cities .selected-items__clear-btn').click(function(event) {
-    let $citiesFilter = $(this).closest('.cities-filter');
-
     $(this).closest('.selected-items').find('.selected-item__remove-link').click();
   });
 
@@ -1124,7 +885,6 @@ $(() => {
   $('.cities-filter__btn-back').click(function(event) {
     currentSelectedCitiesIds = [...selectedCitiesIds];
 
-    // $('.selected-items--cities .selected-items__clear-btn').click();
     let $citiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
     let $searchInput = $('.cities-filter__search-input');
     let $citiesClearBtn = $('.cities-filter__clear-btn');
@@ -1158,11 +918,9 @@ $(() => {
     toggleClearCitiesButtons();
 
     setTimeout(() => {
-      // createFilterUrl();
       if (document.forms.vacancies_filter) {
         document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
       }
-      // $('form[name="vacancies_filter"]').trigger('updateVacanciesFilter');
     });
   });
 
@@ -1226,8 +984,6 @@ $(() => {
 
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
-    // toggleClearFilterButtons();
-
     $('.filter__cities-select--desktop option[selected]').removeAttr('selected');
     
     let isMobile = $(window).width() < 576;
@@ -1299,17 +1055,6 @@ $(() => {
 
   changeSelectToggleTitle($sexSelect);
 
-
-  let $relevanceSelect = $('.filter__relevance-select');
-  let selectedVacanciesRelevances = Array.from($relevanceSelect.find('option:selected')).map(item => $(item).attr('value'));
-
-  selectedVacanciesRelevancesIds = [...selectedVacanciesRelevances];
-  currentSelectedVacanciesRelevancesIds = [...selectedVacanciesRelevances];
-
-  changeSelectToggleTitle($relevanceSelect);
-
-  // applyChangesToSelectedSex($sexSelect);
-
   // Synchronized input fields
   $('input[data-sync-field-ids]').on('input', function(event) {
     syncInputFields($(this));
@@ -1324,115 +1069,8 @@ $(() => {
     event.preventDefault();
   });
 
-  $(document).on('click', '.agency-gallery__more-item-link', function(event) {
-    event.preventDefault();
-
-    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
-    $agencyGalleryTab.addClass('agency-gallery--full');
-    $agencyGalleryTab.find('.agency-gallery__hide-link-wrapper').show();
-    $(this).hide();
-  });
-
-  $(document).on('click', '.agency-gallery__hide-link', function(event) {
-    event.preventDefault();
-
-    let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
-    $agencyGalleryTab.removeClass('agency-gallery--full');
-    $agencyGalleryTab.find('.agency-gallery__more-item-link').show();
-    $(this).parent().hide();
-  });
-
-  document.addEventListener('click', function (e) {
-    const agencyGalleryToggleLink = e.target.closest('.agency-gallery__toggle-link');
-
-    if (!agencyGalleryToggleLink) return;
-
-    const agencyGallery = agencyGalleryToggleLink.closest('.agency-gallery');
-
-    if (!agencyGallery) return;
-
-    agencyGalleryToggleLink.classList.toggle('arrow-link--opened');
-
-    if (!agencyGallery.classList.contains('agency-gallery--full')) {
-      agencyGallery.classList.add('agency-gallery--full');
-      agencyGalleryToggleLink.textContent = window.translations.show_less;
-
-    } else {
-      agencyGallery.classList.remove('agency-gallery--full');
-      agencyGalleryToggleLink.textContent = window.translations.show_more + ' (' + agencyGalleryToggleLink.dataset.moreCount + ')';
-    }
-
-    e.preventDefault();
-  });
-
-  function getLineCount(element) {
-    const lineHeight = parseFloat(getComputedStyle(element).lineHeight);
-    const elementHeight = element.clientHeight;
-
-    return Math.round(elementHeight / lineHeight);
-  }
-
-  document.addEventListener('ratingPopupLoaded', function (event) {
-    const ratingPopup = document.querySelector(event.detail.popupId);
-    
-    ratingPopup.querySelectorAll('.review__positive > p, .review__negative > p').forEach(p => {
-      if (getLineCount(p) <= 7) return;
-
-      p.parentNode.classList.add('truncated-text');
-    });
-  });
-  
-  document.addEventListener('click', function (e) {
-    const reviewToggleLink = e.target.closest('.review__toggle-link');
-
-    if (!reviewToggleLink) return;
-
-    const reviewText = reviewToggleLink.parentNode.parentNode;
-
-    if (!reviewText) return;
-
-    reviewToggleLink.classList.toggle('arrow-link--opened');
-
-    if (!reviewText.classList.contains('full-text')) {
-      reviewText.classList.add('full-text');
-      reviewToggleLink.textContent = window.translations.show_less;
-
-    } else {
-      reviewText.classList.remove('full-text');
-      reviewToggleLink.textContent = window.translations.read_more;
-    }
-
-    e.preventDefault();
-  });
-
   if (document.forms.vacancies_filter) {
     document.forms.vacancies_filter.addEventListener('undoingChangesToAdditionalFilters', undoChangesToAdditionalFilters);
   }
-
-  // $('[data-remove-last-filter]').click(function(event) {
-  //   let lastSelectedTagObj = JSON.parse(localStorage.getItem('lastSelectedTag'));
-  //   // let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-
-  //   switch (lastSelectedTagObj.type) {
-  //     case 'multiselect':
-  //       let $select = $(`select[name="${name}"]`);
-  //       let $selectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
-
-  //       $select.multiSelect('deselect', lastSelectedTagObj.value.toString());
-
-  //       break;
-
-  //     case 'textfield':
-  //       let $input = $(`input[name="${name}"]`);
-  //       let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
-
-  //       $input.val('');
-  //       $selectedItem.remove();
-
-  //       break;
-  //   }
-
-  //   lastSelectedTagObj.removeItem('lastSelectedTag');
-  // });
 
 });
