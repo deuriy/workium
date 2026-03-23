@@ -83,6 +83,18 @@
 			overflow hidden
 			text-overflow ellipsis
 			font-size 19px
+		
+		&:is(a)
+			display block
+			
+			@media (hover: hover) and (pointer: fine)
+				margin 0 -8px
+				padding 0 8px
+				border-radius 16px
+				@extend .transition
+
+				&:hover
+					background #f8f8ff
 	
 	&__bookmark-icon
 		flex-shrink 0
