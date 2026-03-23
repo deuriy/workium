@@ -5,9 +5,129 @@ import { Pagination } from 'swiper/modules';
 import select2 from 'select2';
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
+// import { CitiesCheckboxes } from "./components/cities_checkboxes";
 
-// let selectedFiltersCount = 0;
 let $ageSwitch = $('input[name="age_switch"]');
+
+let selectedCitiesIds = [];
+let currentSelectedCitiesIds = [];
+
+let citySearchInputValue = '';
+let searchCitiesTimeoutID = null;
+
+function removeItemFromArray(array, value) {
+  let index = array.indexOf(value);
+
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+
+  return array;
+}
+
+function clearCitiesCheckboxes() {
+  currentSelectedCitiesIds = [];
+
+  let $citiesCheckboxInput = $('.checkboxes-group--cities .checkbox__input');
+  $citiesCheckboxInput.prop('checked', false);
+  $(this).hide();
+}
+
+function setCheckedCityCheckboxesTitle() {
+  let $citiesBtn = $('.additional-filters__cities-btn');
+  let $citiesBtnText = $citiesBtn.find('.btn-white__text');
+  let $citiesBtnCount = $citiesBtn.find('.count');
+  let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+
+  if (!$checkedLabels.length) {
+    $citiesBtnText.text($citiesBtn.data('placeholder'));
+    $citiesBtnCount.hide();
+  } else if ($checkedLabels.length == 1) {
+    $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
+    $citiesBtnCount.hide();
+  } else {
+    $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
+    $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
+    $citiesBtnCount.show();
+  }
+
+  toggleClearFilterButtons();
+}
+
+function toggleClearCitiesButtons() {
+  let $checkedInputs = $('.checkboxes-group--cities .checkbox__input:checked');
+  let $clearBtn = $('.cities-filter__clear-btn');
+
+  if (!$checkedInputs.length) {
+    $clearBtn.hide();
+  } else {
+    $clearBtn.show();
+  }
+}
+
+function addAllSelectedCities(allSelectedCitiesIds) {
+  if (!allSelectedCitiesIds.length) return;
+
+  let cities = [];
+  let urlParams = allSelectedCitiesIds.map(cityId => `city_ids[]=${cityId}`).join('&');
+
+  let url = `api/v1/cities?${urlParams}`;
+
+  $.ajax({
+    url: url,
+
+    success: function (data) {
+      cities = data.results;
+
+      cities.forEach((item, index) => {
+        addCityCheckbox(item, allSelectedCitiesIds);
+      });
+
+      selectedCitiesIds = [...allSelectedCitiesIds];
+      currentSelectedCitiesIds = [...allSelectedCitiesIds];
+
+      setCheckedCityCheckboxesTitle();
+      toggleClearCitiesButtons();
+    },
+
+    error: function (data) {
+      console.log(data);
+    }
+  });
+}
+
+function syncInputFields ($input) {
+  let syncFieldIDs = $input.data('sync-field-ids');
+
+  if (!syncFieldIDs) return;
+
+  syncFieldIDs.split(',').forEach(id => {
+    let $syncField = $(`#${id.trim()}`);
+
+    if (!$syncField.length) return;
+
+    let nodeName = $syncField.prop('tagName').toLowerCase();
+
+    switch (nodeName) {
+      case 'input':
+        let type = $syncField.attr('type');
+
+        if (['text', 'number'].includes(type)) {
+          let value = $input.val();
+          $syncField.val(value);
+          $syncField[0].dispatchEvent(new Event('change'));
+        }
+
+        break;
+    }
+    
+  });
+}
+
+function clearTextField ($input) {
+  $input.removeClass('form-text--filter-search-filled').val('');
+  $input.parent().find('[data-clear-search-input]').hide();
+}
 
 function copyText(input) {
   input.select();
@@ -37,6 +157,21 @@ function copyVacancyText(isMultiVacancy = true) {
 
   copyText($vacancyCardTextarea[0]);
   $vacancyCardTextarea.remove();
+}
+
+function addCityCheckbox(item, selectedCitiesArr) {
+  let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+  $citiesCheckboxesList.append(`<li class="checkboxes-group__item">
+                                      <div class="checkbox">
+                                        <input class="checkbox__input" name="cities" value="${item.id}" type="checkbox" id="city_${item.id}" data-seo-slug="${item.seo_slug}"${selectedCitiesArr.includes(item.id.toString()) ? ' checked' : ''}>
+                                        <label class="checkbox__label checkbox__label--align-start" for="city_${item.id}">
+                                          <div class="checkbox__label-wrapper">
+                                            <div class="checkbox__title">${item.origin}</div>
+                                            <div class="checkbox__description">${item.province}</div>
+                                          </div>
+                                        </label>
+                                      </div>
+                                    </li>`);
 }
 
 function toggleClearFilterButtons() {
@@ -171,6 +306,7 @@ function resetRangeSlider(rangeSlider) {
 }
 
 function clearTagRelatedFields($selectedItem) {
+  let isMainFilter = !!$selectedItem.closest('.selected-items--main-filter').length;
   let $selectedRadio = null;
 
   let name = $selectedItem.data('name');
@@ -191,10 +327,20 @@ function clearTagRelatedFields($selectedItem) {
         let $otherSelectedItem = $(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
         $otherSelectedItem.remove();
 
+        syncInputFields($selectedCheckbox);
+
         break;
       case 'radio':
         $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
         $selectedRadio.prop('checked', false);
+
+        let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
+        syncInputFields($nonCheckedRadio);
+
+        break;
+      case 'textfield':
+        let $input = $(`input[name="${name}"]`).val('');
+        clearTextField($input);
 
         break;
       case 'range':
@@ -229,6 +375,10 @@ function clearTagRelatedFields($selectedItem) {
 
   setTimeout(() => {
     toggleClearFilterButtons();
+
+    if (isMainFilter && document.forms.vacancies_filter) {
+      document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+    }
   });
 
   let selectedItemsLength = $('.filter .selected-items__item').length;
@@ -259,9 +409,6 @@ function undoChangesToAdditionalFilters() {
   });
 
   $(`.range-slider--range`).each(function (index, el) {
-    // resetRangeSlider(el);
-    let name = $(el).attr('data-name');
-    let $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
     let $inputFrom = $(`#${el.dataset.syncFromFieldIds}`);
     let $inputTo = $(`#${el.dataset.syncToFieldIds}`);
 
@@ -269,20 +416,18 @@ function undoChangesToAdditionalFilters() {
 
     $inputFrom.val(el.dataset.minValue);
     $inputTo.val(el.dataset.maxValue);
-
-    // clearTagRelatedFields($selectedItem);
   });
 
   toggleClearFilterButtons();
 
-  if (document.forms.vacancies_filter) {
-    document.forms.vacancies_filter.dispatchEvent(new CustomEvent("undoingChangesToAdditionalFilters"));
-  }
+  // if (document.forms.vacancies_filter) {
+  //   document.forms.vacancies_filter.dispatchEvent(new CustomEvent("undoingChangesToAdditionalFilters"));
+  // }
 }
 
 function clearFilter() {
   let $searchInput = $('[data-search-input]');
-  let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
+  // let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
   let $allCheckboxes = $('.additional-filters .checkbox__input');
   let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
   let $calendars = $('.additional-filters .js-calendar');
@@ -291,15 +436,12 @@ function clearFilter() {
 
   $searchInput.val('').trigger('input').removeAttr('value');
 
-  $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+  // $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
 
-  $filterSelects.each(function (index, el) {
-    $(el).val('');
-    $(el).find('option[selected]').removeAttr('selected');
-
-    // Disabling filter reboot when cleaning!
-    // $(el).trigger('change', 'fromCode');
-  });
+  // $filterSelects.each(function (index, el) {
+  //   $(el).val('');
+  //   $(el).find('option[selected]').removeAttr('selected');
+  // });
 
   let $rangeSlider = $(`.range-slider`);
   $rangeSlider.each(function (index, el) {
@@ -319,12 +461,7 @@ function clearFilter() {
 
   $('.selected-items__item').remove();
 
-  // $('.selected-items--filter-params').hide();
-
   setVisibilitySelectedMoreItem(0);
-  // checkDependentFilters();
-
-  // toggleClearFilterButtons();
 
   $filtersBtn.addClass('hidden').text(0);
   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
@@ -475,86 +612,81 @@ $(() => {
     );
   }
 
-  // let selectedCitiesIdx = [];
-  // let currentSelectedCitiesIdx = [];
-  let $filterSelects = $();
+  // let $filterSelects = $();
 
-  $('.filter-select:not(.reviews__select)').each(function (index, el) {
-    if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
-      let $item = $(el).select2({
-        dropdownCssClass: ':all:',
-        selectionCssClass: ':all:',
-        theme: 'filter-select',
-        dropdownAutoWidth: true,
-        minimumResultsForSearch: -1
-      });
+  // console.log($('.filter-select:not(.reviews__select)'));
 
-      $filterSelects = $filterSelects.add($item);
-    }
-  });
+  // $('.filter-select:not(.reviews__select)').each(function (index, el) {
+  //   if ($(window).width() > 575 || ($(window).width() < 576 && !$(el).hasClass('hidden-xs'))) {
+  //     let $item = $(el).select2({
+  //       dropdownCssClass: ':all:',
+  //       selectionCssClass: ':all:',
+  //       theme: 'filter-select',
+  //       dropdownAutoWidth: true,
+  //       minimumResultsForSearch: -1
+  //     });
 
-  $filterSelects.each(function (index, el) {
-    let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
-    let name = $(el).attr('name');
-    let value = $(el).select2('val');
-    let $label = $select2Selection.find('.select2-selection__rendered');
+  //     $filterSelects = $filterSelects.add($item);
+  //   }
+  // });
 
-    if (name === 'kategoriia-pracivnika') {
-      if (!value) {
-        $label.text('Спеціалізація');
-      } else {
-        $select2Selection.addClass('select2-selection--selected');
-      }
-    }
+  // $filterSelects.each(function (index, el) {
+  //   let $select2Selection = $(el).next('.select2-container').find('.select2-selection');
+  //   let name = $(el).attr('name');
+  //   let value = $(el).select2('val');
+  //   let $label = $select2Selection.find('.select2-selection__rendered');
 
-    $(el).on('change', function (e, call) {
-      let value = $(this).select2('val');
+  //   if (name === 'kategoriia-pracivnika') {
+  //     if (!value) {
+  //       $label.text('Спеціалізація');
+  //     } else {
+  //       $select2Selection.addClass('select2-selection--selected');
+  //     }
+  //   }
 
-      if (name === 'kategoriia-pracivnika') {
-        if (value !== '') {
-          $select2Selection.addClass('select2-selection--selected');
-          // createOrUpdateTag("select", name, value, `<strong>Категорія працівника:</strong> ${$label.text()}`);
-        } else {
-          $select2Selection.removeClass('select2-selection--selected');
-          let $selectedItem = $(`.selected-items__item[data-type="select"][data-name="${name}"]`);
+  //   $(el).on('change', function (e, call) {
+  //     let value = $(this).select2('val');
 
-          $selectedItem.remove();
+  //     if (name === 'kategoriia-pracivnika') {
+  //       if (value !== '') {
+  //         $select2Selection.addClass('select2-selection--selected');
+  //       } else {
+  //         $select2Selection.removeClass('select2-selection--selected');
+  //         let $selectedItem = $(`.selected-items__item[data-type="select"][data-name="${name}"]`);
 
-          $label.text('Спеціалізація');
-        }
-      }
+  //         $selectedItem.remove();
 
-      if (name === 'countries') {
-        let $countriesSelects = $('select[name="countries"]');
-        $countriesSelects.val(value);
-      }
+  //         $label.text('Спеціалізація');
+  //       }
+  //     }
 
-      // if (!['countries', 'currency'].includes(name)) {
-      //   toggleClearFilterButtons();
-      // }
+  //     if (name === 'countries') {
+  //       let $countriesSelects = $('select[name="countries"]');
+  //       $countriesSelects.val(value);
+  //     }
 
-      if (!['currency'].includes(name)) {
-        toggleClearFilterButtons();
-      }
+  //     if (!['currency'].includes(name)) {
+  //       toggleClearFilterButtons();
+  //     }
 
-      if (['kategoriia-pracivnika', 'distance'].includes(name)) {
-        if (call !== 'fromCode') {
-          setTimeout(() => {
-            updateFilterUrl();
-          });
-        }
-      }
-    });
-  });
+  //     if (['kategoriia-pracivnika', 'distance'].includes(name)) {
+  //       if (call !== 'fromCode') {
+  //         setTimeout(() => {
+  //           updateFilterUrl();
+  //         });
+  //       }
+  //     }
+  //   });
+  // });
 
 
-  $(document).on('click', '.select-toggle', function (e) {
-    let $targetElem = $($(this).attr('href'));
+  // $(document).on('click', '.select-toggle', function (e) {
+  //   let $targetElem = $($(this).attr('href'));
 
-    setTimeout(() => {
-      $targetElem.find('.ms-selectable__search-input').focus();
-    });
-  });
+  //   setTimeout(() => {
+  //     $targetElem.find('.ms-selectable__search-input').focus();
+  //   });
+  // });
 
   $('[data-clear-filter]').click(() => {
     clearFilter();
@@ -574,7 +706,6 @@ $(() => {
 
       const promoBlocksSwiper = new Swiper(item, {
         modules: [Pagination],
-        // loop: true,
         slidesPerView: 'auto',
         centeredSlides: slidesCount < 2,
         spaceBetween: 15,
@@ -583,7 +714,6 @@ $(() => {
         pagination: {
           el: '.promo-blocks-swiper__pagination',
           bulletActiveClass: 'swiper-pagination-bullet--active',
-          // clickable: true
         },
 
         on: {
@@ -875,28 +1005,32 @@ $(() => {
     let requestParams = '';
 
     // Get url params
-    let selectedCountry = '',
-      selectedCitiesSlugs = [];
+    // let selectedCountry = '',
+    //   selectedCitiesSlugs = [];
 
-    if (isMobile) {
-      selectedCountry = $('.filter__countries-select--mobile').val();
-      selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function (index, input) {
-        return $(input).attr('data-seo-slug');
-      });
-    } else {
-      selectedCountry = $('.filter__countries-select--desktop').val();
-      selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function (index, option) {
-        return $(option).attr('data-seo-slug');
-      });
-    }
+    // if (isMobile) {
+    //   selectedCountry = $('.filter__countries-select--mobile').val();
+    //   selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function (index, input) {
+    //     return $(input).attr('data-seo-slug');
+    //   });
+    // } else {
+    //   selectedCountry = $('.filter__countries-select--desktop').val();
+    //   selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function (index, option) {
+    //     return $(option).attr('data-seo-slug');
+    //   });
+    // }
 
+    // let selectedCities = Array.from(selectedCitiesSlugs).join('/');
+    // if (selectedCountry) {
+    //   urlParamsArr.push(selectedCountry);
+    // }
 
-    let selectedCities = Array.from(selectedCitiesSlugs).join('/');
-    if (selectedCountry) {
-      urlParamsArr.push(selectedCountry);
-    }
+    // urlParamsArr.push(selectedCities);
 
-    urlParamsArr.push(selectedCities);
+    // console.log('selectedCities');
+    // console.log(selectedCities);
+    // console.log('selectedCountry');
+    // console.log(selectedCountry);
 
     let $selectedSegmentCheckboxes = $('.additional-filters .checkbox__input[data-segment]:not([data-exclude-field]):checked');
     $selectedSegmentCheckboxes.each(function (index, el) {
@@ -972,15 +1106,15 @@ $(() => {
       requestParamsArr.push(resultValue);
     });
 
-    let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
+    // let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
 
-    let selectedCandidatesSlugs = selectedCandidatesType.map(function (value, index) {
-      return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
-    });
+    // let selectedCandidatesSlugs = selectedCandidatesType.map(function (value, index) {
+    //   return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
+    // });
 
-    [...new Set(selectedCandidatesSlugs)].forEach(item => {
-      requestParamsArr.push(`tip-kandidativ[]=${item}`);
-    });
+    // [...new Set(selectedCandidatesSlugs)].forEach(item => {
+    //   requestParamsArr.push(`tip-kandidativ[]=${item}`);
+    // });
 
 
     let catWorkerValue = $('select[name="kategoriia-pracivnika"]').val();
@@ -1058,18 +1192,37 @@ $(() => {
     }
   }
 
-  let selectedCountryId = $('select[name="countries"] option:selected').data('entity-id');
-  if (selectedCountryId) {
-    loadCitiesOfSelectedCountry(selectedCountryId);
+  // let selectedCountryId = $('select[name="countries"] option:selected').data('entity-id');
+  let selectedCountryIds = document.querySelectorAll('input[name="country[]"]:checked');
+  // console.log(selectedCountryIds);
+
+  if (selectedCountryIds.length) {
+    let countryID = selectedCountryIds[0]?.dataset.entityId;
+
+    loadCitiesOfSelectedCountry(countryID);
   }
 
   // Loading cities via AJAX
-  $(document).on('change', 'select[name="countries"]', function () {
-    let countryID = this.selectedOptions[0]?.dataset.entityId;
+  // $(document).on('change', 'select[name="countries"]', function () {
+  //   let countryID = this.selectedOptions[0]?.dataset.entityId;
 
+  //   loadCitiesOfSelectedCountry(countryID);
+
+  //   setTimeout(updateFilterUrl);
+  // });
+
+  document.addEventListener('change', function (e) {
+    if (!e.target.matches('input[name="country[]"]')) return;
+
+    // let countryID = this.selectedOptions[0]?.dataset.entityId;
+    let selectedCountryIds = document.querySelectorAll('input[name="country[]"]:checked');
+
+    if (!selectedCountryIds.length) return;
+
+    let countryID = selectedCountryIds[0]?.dataset.entityId;
     loadCitiesOfSelectedCountry(countryID);
 
-    setTimeout(updateFilterUrl);
+    // setTimeout(updateFilterUrl);
   });
 
   // Dependent filters
@@ -1087,7 +1240,6 @@ $(() => {
         $checkboxes.prop('checked', false);
       }
     }
-    // checkDependentFilters();
   });
 
   // Synchronized selects
@@ -1476,6 +1628,253 @@ $(() => {
     $ageSelectedItem.remove();
   });
 
+  // Mobile cities filter
+  $('.cities-filter__search-input').on('input', function (event) {
+    let $citiesFilter = $(this).closest('.cities-filter');
+    let $clearSearchBtn = $citiesFilter.find('.cities-filter__clear-search-btn');
+
+    let searchValue = $(this).val().trim();
+    citySearchInputValue = searchValue;
+
+    // let countryID = $('select[name="countries"]').find(':selected').data('entity-id');
+    let selectedCountryIds = document.querySelectorAll('input[name="country[]"]:checked');
+
+    if (!selectedCountryIds.length) return;
+
+    let countryID = selectedCountryIds[0]?.dataset.entityId;
+    let url = `api/v1/cities?country_id=${countryID}`;
+
+    if (searchValue) {
+      url = `api/v1/cities?country_id=${countryID}&term=${searchValue}`;
+      $clearSearchBtn.show();
+    } else {
+      $clearSearchBtn.hide();
+    }
+
+    searchCitiesTimeoutID = setTimeout(() => {
+      $.ajax({
+        url: url,
+
+        success: function (data) {
+          let $allCitiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
+          let cities = data.results;
+          let allSelectedCitiesIds = [];
+
+          // Clear checkboxes (mobile filter)
+          $allCitiesCheckboxes.each(function (index, checkbox) {
+            if (!$(checkbox).is(':checked')) {
+              $(checkbox).closest('.checkboxes-group__item').remove();
+            } else {
+              allSelectedCitiesIds.push($(checkbox).val());
+            }
+          });
+
+          // Filling checkboxes from data
+          cities.forEach((item, index) => {
+            if (!allSelectedCitiesIds.includes(item.id.toString())) {
+              addCityCheckbox(item, allSelectedCitiesIds);
+            }
+          });
+        },
+
+        error: function (data) {
+          console.log(data);
+        }
+      });
+
+      // psArr[0].update();
+
+    }, 500);
+  });
+
+  $('.cities-filter__clear-search-btn').click(function (event) {
+    $(this).hide();
+
+    $('.cities-filter__search-input').val('').trigger('input').focus();
+  });
+
+  $(document).on('change', '.checkboxes-group--cities .checkbox__input', function (event) {
+    let value = $(this).val();
+
+    if ($(this).is(':checkbox')) {
+      if ($(this).is(':checked')) {
+        if (!currentSelectedCitiesIds.includes(value)) {
+          currentSelectedCitiesIds.push(value);
+        }
+      } else {
+        currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+      }
+    }
+
+    toggleClearCitiesButtons();
+  });
+
+  $(document).on('click', '.selected-item--city .selected-item__remove-link', function (event) {
+    let $selectedItemParent = $(this).closest('.selected-items__item');
+    let $selectedItems = $selectedItemParent.closest('.selected-items');
+
+    let name = $selectedItemParent.data('name');
+    let value = $selectedItemParent.data('value');
+
+    let $selectedCheckbox = $(`.checkboxes-group--cities .checkbox__input[name="${name}"][value="${value}"]`);
+    $selectedCheckbox.prop("checked", false);
+
+    $selectedItemParent.remove();
+    currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+
+    let selectedItemsLength = $selectedItems.find('.selected-items__item').length;
+
+    if (selectedItemsLength) {
+      $selectedItems.show();
+    } else {
+      $selectedItems.hide();
+    }
+
+    event.preventDefault();
+  });
+
+  $('.selected-items--cities .selected-items__clear-btn').click(function (event) {
+    $(this).closest('.selected-items').find('.selected-item__remove-link').click();
+  });
+
+  // Closing cities popup without saving
+  $('.cities-filter__btn-back').click(function (event) {
+    currentSelectedCitiesIds = [...selectedCitiesIds];
+
+    let $citiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
+    let $searchInput = $('.cities-filter__search-input');
+    let $citiesClearBtn = $('.cities-filter__clear-btn');
+
+    $searchInput.val('').trigger('input');
+
+    $citiesCheckboxes.each(function (index, checkbox) {
+      if (selectedCitiesIds.includes($(checkbox).val())) {
+        $(checkbox).prop('checked', true);
+      } else {
+        $(checkbox).prop('checked', false);
+      }
+    });
+
+    if (currentSelectedCitiesIds.length) {
+      $citiesClearBtn.show();
+    } else {
+      $citiesClearBtn.hide();
+    }
+  });
+
+  $('.cities-filter__clear-btn').on('click', clearCitiesCheckboxes);
+
+  $('.cities-filter__apply-btn').click(function (event) {
+    selectedCitiesIds = [...currentSelectedCitiesIds];
+
+    let $searchInput = $('.cities-filter__search-input');
+    $searchInput.val('').trigger('input');
+
+    setCheckedCityCheckboxesTitle();
+    toggleClearCitiesButtons();
+
+    setTimeout(() => {
+      if (document.forms.vacancies_filter) {
+        document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+      }
+    });
+  });
+
+  // Loading cities via AJAX
+  document.addEventListener('citiesLoaded', function (e) {
+    console.log('citiesLoaded');
+
+    let cities = e.detail.data.results;
+
+    let $citiesCheckboxesList = $('.checkboxes-group--cities .checkboxes-group__list');
+    let selectedCities = $citiesCheckboxesList.attr('data-selected-cities');
+    let selectedCitiesArr = selectedCities ? selectedCities.split(", ") : [];
+
+    $citiesCheckboxesList.empty();
+    setCheckedCityCheckboxesTitle();
+    toggleClearCitiesButtons();
+
+    let allSelectedCitiesIds = selectedCitiesArr.filter(cityId => !cities.includes(cityId));
+    addAllSelectedCities(allSelectedCitiesIds);
+
+    setTimeout(() => {
+      cities.forEach((item, index) => {
+        if (!allSelectedCitiesIds.includes(item.id.toString())) {
+          addCityCheckbox(item, allSelectedCitiesIds);
+        }
+      });
+
+      $citiesCheckboxesList.removeAttr('data-selected-cities');
+    }, 300);
+  });
+
+  // Synchronized input fields
+  $('input[data-sync-field-ids]').on('input', function(event) {
+    syncInputFields($(this));
+    toggleClearFilterButtons();
+  });
+
+  // Synchronizing fields when remove tag
+  $(document).on('click', '.selected-item__remove-link', function(event) {
+    let $selectedItemParent = $(this).closest('.selected-items__item');
+    clearTagRelatedFields($selectedItemParent);
+
+    event.preventDefault();
+  });
+
+  $('[data-clear-filter]').click(() => {
+    // clearCitiesSelect();
+    clearCitiesCheckboxes();
+    // clearSexSelect();
+  });
+
+
+  let $wrapper = $('.wrapper');
+  let $btnFilter = $('.btn-filter');
+  let $scrollTopBtn = $('.btn-scroll-top');
+
+  $wrapper.on('scroll', function(event) {
+    let scrolled = $wrapper.scrollTop();
+
+    if (scrolled > 170) {
+      $btnFilter.removeClass('btn-filter--invisible');
+    } else {
+      $btnFilter.addClass('btn-filter--invisible');
+    }
+  });
+
+  $wrapper.on('scroll', function(event) {
+    let scrolled = $wrapper.scrollTop();
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+  });
+
+  $(window).on('scroll', function() {
+    let scrolled = $(window).scrollTop();
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+  });
+
+  $('.btn-filter--scroll-top, .btn-scroll-top').on('click', function(event) {
+    $wrapper.animate( {
+      scrollTop: 0
+    }, 0 );
+
+    $('html, body').animate( {
+      scrollTop: 0
+    }, 0 );
+  });
+
+
+
   $(document).on('click', '.vacancy-card__copy-btn', function (event) {
     copyVacancyText(this.hasAttribute('data-multi-vacancy'));
 
@@ -1705,7 +2104,7 @@ $(() => {
   // Инициализация состояния при загрузке
   document.querySelectorAll('.rating-popup').forEach(updateMobileHeaderState);
 
-  $(document).on('click', '.agency-gallery__more-item-link', function(event) {
+  $(document).on('click', '.agency-gallery__more-item-link', function (event) {
     event.preventDefault();
 
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
@@ -1714,7 +2113,7 @@ $(() => {
     $(this).hide();
   });
 
-  $(document).on('click', '.agency-gallery__hide-link', function(event) {
+  $(document).on('click', '.agency-gallery__hide-link', function (event) {
     event.preventDefault();
 
     let $agencyGalleryTab = $(this).closest('.agency-gallery__tabs-content');
@@ -1755,14 +2154,14 @@ $(() => {
 
   document.addEventListener('ratingPopupLoaded', function (event) {
     const ratingPopup = document.querySelector(event.detail.popupId);
-    
+
     ratingPopup.querySelectorAll('.review__positive > p, .review__negative > p').forEach(p => {
       if (getLineCount(p) <= 7) return;
 
       p.parentNode.classList.add('truncated-text');
     });
   });
-  
+
   document.addEventListener('click', function (e) {
     const reviewToggleLink = e.target.closest('.review__toggle-link');
 

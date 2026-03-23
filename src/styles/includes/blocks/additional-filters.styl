@@ -7,13 +7,14 @@
 	@media $xs
 		height 100vh
 	
-	@media (min-width 1600px)
-		height 890px
-	
 	@media $xxs
 		max-height calc(var(--vh, 100vh) * 100)
 		height calc(var(--vh, 100vh) * 100)
 		// height 100vh
+	
+	@media (min-width 1600px)
+		height 890px
+		max-height calc(100vh - 40px)
 	
 	&__cancel-search-link
 		display none
@@ -456,8 +457,10 @@
 	
 	&__checkboxes-group,
 	&__radiobtns-group
+		&:first-child,
 		& + .additional-filters__checkboxes-group,
-		& + .additional-filters__radiobtns-group
+		& + .additional-filters__radiobtns-group,
+		& + .additional-filters__filter-element
 			padding-bottom 32px
 			border-bottom 1px solid #EBEBEB
 

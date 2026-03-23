@@ -342,15 +342,16 @@
 	&--additional-filters
 		padding 0
 		
-		@media $smPlus
-			// width 1090px
-			width 600px
-			// border-radius 16px
-		
 		@media $xs
 			// height 100vh
 			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
+		
+		@media $smPlus
+			// width 1090px
+			width 600px
+			max-height calc(100vh - 40px)
+			// border-radius 16px
 	
 	&--rating
 		padding 0
@@ -392,6 +393,7 @@
 		@media $smPlus
 			width 600px
 			max-height calc(100vh - 40px)
+			padding 20px
 	
 	&--share
 		border-top-right-radius 16px

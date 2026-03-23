@@ -117,6 +117,10 @@
 	&--additional-filters-popup
 		&:has(.calendar-overlay.is-open)
 			--fancybox-opacity 0
+
+		&:has(~.fancybox__container[aria-hidden="false"])
+			.fancybox__backdrop
+				background transparent
 			
 
 // .f-slideInUp
