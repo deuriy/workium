@@ -3,8 +3,8 @@ import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
 import IMask from 'imask';
 import { AudioPlayers } from "./audio_player.js";
 
-var count = 200;
-var defaults = {
+const count = 200;
+const defaults = {
   origin: { y: 0.7 },
   zIndex: 10000
 };
@@ -40,11 +40,20 @@ function runConfetti() {
   });
 }
 
-function copyText(input) {
-  input.select();
-  input.setSelectionRange(0, 99999);
+// function copyText(input) {
+//   input.select();
+//   input.setSelectionRange(0, 99999);
 
-  document.execCommand("copy");
+//   document.execCommand("copy");
+// }
+
+async function copyText(input) {
+  try {
+    await navigator.clipboard.writeText(input.value);
+    console.log('Текст скопирован');
+  } catch (error) {
+    console.error('Ошибка копирования:', error);
+  }
 }
 
 function getCoords(elem) {
@@ -568,7 +577,6 @@ $(() => {
   $(window).on('scroll', function (e) {
     $articleHeadings.each(function (index, el) {
       let rect = el.getBoundingClientRect();
-      let rect2 = $articleContent[0].getBoundingClientRect();
 
       // if ($(window).height() + $(window).scrollTop() == $(document).height()) {
       //   console.log('bottom');
