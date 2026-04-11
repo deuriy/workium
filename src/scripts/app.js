@@ -547,7 +547,7 @@ $(() => {
 
   //     // close: (fancybox, event) => {
   //     //   if (event.target.classList.contains('cities-filter__btn-back')) {
-  //     //     // $('.selected-items--cities .selected-items__clear-btn').click();
+  //     //     // $('.filter-tags--cities .filter-tags__clear-btn').click();
   //     //   }
   //     //   // if (slide.src === '#cities-popup') {
   //     //   //   // $(slide.contentEl).find('.cities-filter__search-input').focus();

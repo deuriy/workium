@@ -2,11 +2,20 @@ import $ from "jquery";
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/fancybox.esm.js";
 
-function copyText(input) {
-	input.select();
-	input.setSelectionRange(0, 99999);
+// function copyText(input) {
+// 	input.select();
+// 	input.setSelectionRange(0, 99999);
 
-	document.execCommand("copy");
+// 	document.execCommand("copy");
+// }
+
+async function copyText(input) {
+  try {
+    await navigator.clipboard.writeText(input.value);
+    console.log('Текст скопирован');
+  } catch (error) {
+    console.error('Ошибка копирования:', error);
+  }
 }
 
 // function getCookie(name) {

@@ -14,7 +14,7 @@
 
 // function toggleClearFilterButtons () {
 //   let $clearBtns = $('[data-clear-filter]');
-//   let selectedItemsLength = $('.filter .selected-items__item').length;
+//   let selectedItemsLength = $('.filter .filter-tags__item').length;
 //   let $filtersBtn = $('.btn-white--filter');
 //   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
 //   let isMobile = $(window).width() < 576;
@@ -48,8 +48,8 @@
 
 //   $select.multiSelect('deselect_all');
 //   $select.find('option').each(function(index, el) {
-//     let $selectedItem = findFilterTagByValue(name, $(el).attr('value'));
-//     $selectedItem.remove();
+//     let $filterTag = findFilterTagByValue(name, $(el).attr('value'));
+//     $filterTag.remove();
 //   });
 
 //   setTimeout(() => {
@@ -64,8 +64,8 @@
 //       }
 //     });
 
-//     let $selectedItemsLength = $('.filter .selected-items__item').length;
-//     setVisibilitySelectedMoreItem($selectedItemsLength);
+//     let $filterTagsLength = $('.filter .filter-tags__item').length;
+//     setVisibilitySelectedMoreItem($filterTagsLength);
 
 //     toggleClearFilterButtons();
 //   });
@@ -80,8 +80,8 @@
 
 //   $select.multiSelect('deselect_all');
 //   $select.find('option').each(function(index, el) {
-//     let $selectedItem = findFilterTagByValue(name, $(el).attr('value'));
-//     $selectedItem.remove();
+//     let $filterTag = findFilterTagByValue(name, $(el).attr('value'));
+//     $filterTag.remove();
 //   });
 
 //   selectedGendersIds.forEach(id => {
@@ -96,8 +96,8 @@
 //     }
 //   });
 
-//   let $selectedItemsLength = $('.filter .selected-items__item').length;
-//   setVisibilitySelectedMoreItem($selectedItemsLength);
+//   let $filterTagsLength = $('.filter .filter-tags__item').length;
+//   setVisibilitySelectedMoreItem($filterTagsLength);
 
 //   toggleClearFilterButtons();
 // }
@@ -186,60 +186,60 @@
 // }
 
 // function findFilterTagByValue (name, value) {
-//   let $container = $('.selected-items__list');
-//   let $selectedItem = $container.find(`.selected-items__item[data-name="${name}"][data-value="${value}"]`);
+//   let $container = $('.filter-tags__list');
+//   let $filterTag = $container.find(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
 
-//   return $selectedItem;
+//   return $filterTag;
 // }
 
 // function createOrUpdateTag (type, name, value, labelText) {
-//   let $container = $('.selected-items__list');
-//   let $selectedItem = findFilterTagByValue(name, value);
+//   let $container = $('.filter-tags__list');
+//   let $filterTag = findFilterTagByValue(name, value);
 
-//   if ($selectedItem.length) return;
+//   if ($filterTag.length) return;
 
 //   let htmlStr = '';
 
 //   if ('multiselect' === type) {
 //     let seoSlug = $(`select[name="${name}"] option[value="${value}"]`).attr('data-seo-slug');
 //     htmlStr = `
-//             <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}" data-seo-slug="${seoSlug}">
-//               <div class="selected-item">
-//                 <div class="selected-item__value">${labelText}</div>
-//                 <a href="#" class="selected-item__remove-link"></a>
+//             <li class="filter-tags__item" data-type="${type}" data-name="${name}" data-value="${value}" data-seo-slug="${seoSlug}">
+//               <div class="filter-tag">
+//                 <div class="filter-tag__value">${labelText}</div>
+//                 <a href="#" class="filter-tag__remove-btn"></a>
 //               </div>
 //             </li>`;
 //   } else if (['range', 'textfield', 'select'].includes(type)) {
 //     htmlStr = `
-//             <li class="selected-items__item" data-type="${type}" data-name="${name}" data-value="${value}">
-//               <div class="selected-item">
-//                 <div class="selected-item__value">${labelText}</div>
-//                 <a href="#" class="selected-item__remove-link"></a>
+//             <li class="filter-tags__item" data-type="${type}" data-name="${name}" data-value="${value}">
+//               <div class="filter-tag">
+//                 <div class="filter-tag__value">${labelText}</div>
+//                 <a href="#" class="filter-tag__remove-btn"></a>
 //               </div>
 //             </li>`;
-//     $selectedItem = $(`.selected-items__item[data-name="${name}"]`);
+//     $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
 
-//     if ($selectedItem.length) {
-//       $selectedItem.attr('data-type', type);
-//       $selectedItem.attr('data-name', name);
-//       $selectedItem.attr('data-value', value);
-//       $selectedItem.find('.selected-item__value').text(labelText);
+//     if ($filterTag.length) {
+//       $filterTag.attr('data-type', type);
+//       $filterTag.attr('data-name', name);
+//       $filterTag.attr('data-value', value);
+//       $filterTag.find('.filter-tag__value').text(labelText);
 
 //       return;
 //     }
 //   }
 
 //   if (name === 'cities') {
-//     $container.find('.selected-items__item[data-name="countries"]').after(htmlStr);
+//     $container.find('.filter-tags__item[data-name="countries"]').after(htmlStr);
 //   } else {
-//     $container.find('.selected-items__more-item').before(htmlStr);
+//     $container.find('.filter-tags__more-item').before(htmlStr);
 //   }
 // }
 
 // function updateDropdownMultiSelectClass ($dropdown) {
-//   let $selectedItems = $dropdown.find('.ms-selection .ms-selected span');
+//   let $filterTags = $dropdown.find('.ms-selection .ms-selected span');
 
-//   if (!$selectedItems.length) {
+//   if (!$filterTags.length) {
 //     let $multiSelectContainer = $dropdown.find('.ms-container--empty');
 //     $multiSelectContainer.removeClass('ms-container--empty').addClass('ms-container--default');
 //   }
@@ -261,8 +261,8 @@
 //   let isMobile = $(window).width() < 576;
 //   let visibleCount = isMobile ? 7 : 11;
 
-//   $('.selected-items').each(function(index, selectedItemsWrapper) {
-//     let $moreItem = $(selectedItemsWrapper).find('.selected-items__more-item');
+//   $('.filter-tags').each(function(index, selectedItemsWrapper) {
+//     let $moreItem = $(selectedItemsWrapper).find('.filter-tags__more-item');
 //     let moreItemsCount = selectedItemsLength - visibleCount;
 
 //     if (selectedItemsLength > visibleCount) {
@@ -372,11 +372,11 @@
 // }
 // END: Moved to vacancies_module.js
 
-// function clearTagRelatedFields ($selectedItem) {
-//   let isMainFilter = !!$selectedItem.closest('.selected-items--main-filter').length;
-//   let name = $selectedItem.data('name');
-//   let value = $selectedItem.data('value');
-//   let type = $selectedItem.data('type');
+// function clearTagRelatedFields ($filterTag) {
+//   let isMainFilter = !!$filterTag.closest('.filter-tags--main-filter').length;
+//   let name = $filterTag.data('name');
+//   let value = $filterTag.data('value');
+//   let type = $filterTag.data('type');
 
 //   if (![name, value].includes(undefined)) {
 //     switch (type) {
@@ -429,14 +429,14 @@
 //     let name = $(el).attr('name');
 //     let value = $(el).attr('value');
 //     let labelText = $(el).parent().find('label').text();
-//     let $selectedItem = findFilterTagByValue(name, value);
+//     let $filterTag = findFilterTagByValue(name, value);
 
 //     if (el.dataset.defaultChecked !== undefined) {
 //       el.checked = true;
 //       createOrUpdateTag(type, name, value, labelText);
 //     } else {
 //       el.checked = false;
-//       clearTagRelatedFields($selectedItem);
+//       clearTagRelatedFields($filterTag);
 //     }
 //   });
 
@@ -859,32 +859,32 @@
   //   toggleClearCitiesButtons();
   // });
 
-  // $(document).on('click', '.selected-item--city .selected-item__remove-link', function(event) {
-  //   let $selectedItemParent = $(this).closest('.selected-items__item');
-  //   let $selectedItems = $selectedItemParent.closest('.selected-items');
+  // $(document).on('click', '.filter-tag--city .filter-tag__remove-btn', function(event) {
+  //   let $filterTagParent = $(this).closest('.filter-tags__item');
+  //   let $filterTags = $filterTagParent.closest('.filter-tags');
 
-  //   let name = $selectedItemParent.data('name');
-  //   let value = $selectedItemParent.data('value');
+  //   let name = $filterTagParent.data('name');
+  //   let value = $filterTagParent.data('value');
 
   //   let $selectedCheckbox = $(`.checkboxes-group--cities .checkbox__input[name="${name}"][value="${value}"]`);
   //   $selectedCheckbox.prop("checked", false);
 
-  //   $selectedItemParent.remove();
+  //   $filterTagParent.remove();
   //   currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
 
-  //   let selectedItemsLength = $selectedItems.find('.selected-items__item').length;
+  //   let selectedItemsLength = $filterTags.find('.filter-tags__item').length;
 
   //   if (selectedItemsLength) {
-  //     $selectedItems.show();
+  //     $filterTags.show();
   //   } else {
-  //     $selectedItems.hide();
+  //     $filterTags.hide();
   //   }
 
   //   event.preventDefault();
   // });
 
-  // $('.selected-items--cities .selected-items__clear-btn').click(function(event) {
-  //   $(this).closest('.selected-items').find('.selected-item__remove-link').click();
+  // $('.filter-tags--cities .filter-tags__clear-btn').click(function(event) {
+  //   $(this).closest('.filter-tags').find('.filter-tag__remove-btn').click();
   // });
 
   // // Closing cities popup without saving
@@ -1073,9 +1073,9 @@
   // });
 
   // // Synchronizing fields when remove tag
-  // $(document).on('click', '.selected-item__remove-link', function(event) {
-  //   let $selectedItemParent = $(this).closest('.selected-items__item');
-  //   clearTagRelatedFields($selectedItemParent);
+  // $(document).on('click', '.filter-tag__remove-btn', function(event) {
+  //   let $filterTagParent = $(this).closest('.filter-tags__item');
+  //   clearTagRelatedFields($filterTagParent);
 
   //   event.preventDefault();
   // });

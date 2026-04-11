@@ -10,11 +10,20 @@ function getUrlWithoutParameter(param) {
   return url.toString();
 }
 
-function copyText(input) {
-  input.select();
-  input.setSelectionRange(0, 99999);
+// function copyText(input) {
+//   input.select();
+//   input.setSelectionRange(0, 99999);
 
-  document.execCommand("copy");
+//   document.execCommand("copy");
+// }
+
+async function copyText(input) {
+  try {
+    await navigator.clipboard.writeText(input.value);
+    console.log('Текст скопирован');
+  } catch (error) {
+    console.error('Ошибка копирования:', error);
+  }
 }
 
 function copyVacancyText() {

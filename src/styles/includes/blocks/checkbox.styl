@@ -59,6 +59,9 @@
     color var(--grey)
     font-size 13px
     line-height 1.6
+  
+  &__note
+    color var(--grey)
     
   &--expandable
     .checkbox__label::after
@@ -115,6 +118,10 @@
       &::before
         display none
   
+  &--with-note
+    .checkbox__label
+      gap 5px
+  
   &--tabs-style
     .checkbox__input:checked ~ .checkbox__label,
     .checkbox__label:hover
@@ -135,6 +142,11 @@
 
       &::before
         display none
+  
+  &--distance
+    .checkbox__label
+      padding 8px 4px
+      white-space nowrap
   
   &--highlighted
     .checkbox__label
