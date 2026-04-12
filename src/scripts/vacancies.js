@@ -649,7 +649,7 @@ function clearFilter() {
   //   $(el).find('option[selected]').removeAttr('selected');
   // });
 
-  document.querySelectorAll(`.range-slider`).forEach(el => resetRangeSlider(el));
+  document.querySelectorAll(`.range-slider`).forEach(resetRangeSlider);
 
   clearFilterBtns.forEach(btn => btn.style.display = 'none');
   $('.additional-filters__filter-tags').hide();
@@ -1993,21 +1993,21 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault();
   });
 
-  $(document).on('click', '.vacancy-card__copy-btn-mobile', function (event) {
-    copyVacancyText(this.hasAttribute('data-multi-vacancy'));
+  // $(document).on('click', '.vacancy-card__copy-btn-mobile', function (event) {
+  //   copyVacancyText(this.hasAttribute('data-multi-vacancy'));
 
-    let $tooltip = $(this).find('.btn-grey__tooltip');
+  //   let $tooltip = $(this).find('.btn-grey__tooltip');
 
-    $tooltip.addClass('tooltip--visible');
-    $(this).addClass('btn-grey--copied');
+  //   $tooltip.addClass('tooltip--visible');
+  //   $(this).addClass('btn-grey--copied');
 
-    setTimeout(() => {
-      $tooltip.removeClass('tooltip--visible');
-      $(this).removeClass('btn-grey--copied');
-    }, 2000);
+  //   setTimeout(() => {
+  //     $tooltip.removeClass('tooltip--visible');
+  //     $(this).removeClass('btn-grey--copied');
+  //   }, 2000);
 
-    event.preventDefault();
-  });
+  //   event.preventDefault();
+  // });
 
   document.addEventListener('click', function (e) {
     const moreLink = e.target.closest('.vacancy-card__more-link');
