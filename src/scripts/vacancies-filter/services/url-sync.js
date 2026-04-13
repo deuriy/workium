@@ -14,7 +14,10 @@ export class UrlSync {
     const params = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, values]) => {
-      if (!Array.isArray(values) || !values.length) return;
+      if (!Array.isArray(values) || values.length === 0) {
+        return;
+      }
+
       params.set(key, values.join(','));
     });
 
@@ -27,11 +30,13 @@ export class UrlSync {
   }
 
   static parseCsv(value) {
-    if (!value) return [];
+    if (!value) {
+      return [];
+    }
 
     return value
       .split(',')
-      .map(item => item.trim())
+      .map((item) => item.trim())
       .filter(Boolean);
   }
 }

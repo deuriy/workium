@@ -1,70 +1,48 @@
-export class CitiesCheckboxes {
+import { BaseFilterComponent } from '../core/base-filter-component.js';
+
+export class CitiesCheckboxes extends BaseFilterComponent {
   constructor({
     containerSelector,
     filterKey = 'cities',
     mapItem = null
   }) {
+    super(filterKey);
+
     this.container = document.querySelector(containerSelector);
-    
+
     if (!this.container) {
       throw new Error(`CitiesCheckboxes container not found: ${containerSelector}`);
     }
 
-    this.filterKey = filterKey;
-    this.mapItem = mapItem || this.defaultMapItem;
-
-    this.store = null;
-    this.unsubscribe = null;
+    this.mapItem = typeof mapItem === 'function' ? mapItem : this.defaultMapItem;
 
     this.state = {
       items: []
     };
 
-    this.nodesMap = new Map(); // id -> node
+    this.nodesMap = new Map();
 
-    // 🔥 Event delegation
     this.handleChange = this.handleChange.bind(this);
     this.container.addEventListener('change', this.handleChange);
   }
 
   // =========================
-  // STORE CONNECTION
+  // EVENTS
   // =========================
-
-  connectStore(store) {
-    this.store = store;
-
-    this.unsubscribe = this.store.subscribe((state) => {
-      this.syncSelected(state[this.filterKey] || new Set());
-    });
-
-    this.syncSelected(this.store.getFilter(this.filterKey));
-  }
-
-  disconnectStore() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-      this.unsubscribe = null;
-    }
-  }
 
   handleChange(event) {
     const target = event.target;
 
-    if (!target.matches('.checkbox__input')) return;
-
-    const id = String(target.value);
-
-    if (this.store) {
-      this.store.toggleFilterValue(this.filterKey, id);
+    if (!target.matches('.checkbox__input')) {
       return;
     }
 
-    // fallback если store не подключен
-    this.toggleLocal(id);
+    this.toggle(target.value);
   }
 
-  // --- PUBLIC API ---
+  // =========================
+  // OPTIONS / DATA API
+  // =========================
 
   setCities(cities = []) {
     this.state.items = cities.map((item) => {
@@ -83,82 +61,8 @@ export class CitiesCheckboxes {
     }
   }
 
-  setSelected(selectedArr = []) {
-    if (this.store) {
-      this.store.setFilter(this.filterKey, selectedArr.map(String));
-      return;
-    }
-
-    this.syncSelected(new Set(selectedArr.map(String)));
-  }
-
-  toggle(id) {
-    id = String(id);
-
-    if (this.store) {
-      this.store.toggleFilterValue(this.filterKey, id);
-      return;
-    }
-
-    this.toggleLocal(id);
-  }
-
-  select(id) {
-    id = String(id);
-
-    if (this.store) {
-      this.store.addValue(this.filterKey, id);
-      return;
-    }
-
-    const node = this.nodesMap.get(id);
-    if (!node) return;
-
-    node._refs.input.checked = true;
-  }
-
-  deselect(id) {
-    id = String(id);
-
-    if (this.store) {
-      this.store.removeValue(this.filterKey, id);
-      return;
-    }
-
-    const node = this.nodesMap.get(id);
-    if (!node) return;
-
-    node._refs.input.checked = false;
-  }
-
-  clear() {
-    if (this.store) {
-      this.store.clearFilter(this.filterKey);
-      return;
-    }
-
-    this.syncSelected(new Set());
-  }
-
-  has(id) {
-    id = String(id);
-
-    if (this.store) {
-      return this.store.hasValue(this.filterKey, id);
-    }
-
-    const node = this.nodesMap.get(id);
-    return !!node?._refs.input.checked;
-  }
-  
-  getSelected() {
-    if (this.store) {
-      return [...this.store.getFilter(this.filterKey)];
-    }
-
-    return [...this.nodesMap.entries()]
-      .filter(([, node]) => node._refs.input.checked)
-      .map(([id]) => id);
+  setOptions(items = []) {
+    this.setCities(items);
   }
 
   getSelectedItems() {
@@ -171,19 +75,9 @@ export class CitiesCheckboxes {
     return [...this.state.items];
   }
 
-  destroy() {
-    this.disconnectStore();
-    this.container.removeEventListener('change', this.handleChange);
-    this.nodesMap.clear();
-    this.state.items = [];
-  }
-
-  toggleLocal(id) {
-    const node = this.nodesMap.get(id);
-    if (!node) return;
-
-    node._refs.input.checked = !node._refs.input.checked;
-  }
+  // =========================
+  // CONTRACT IMPLEMENTATION
+  // =========================
 
   syncSelected(selectedSet) {
     this.nodesMap.forEach((node, id) => {
@@ -195,14 +89,61 @@ export class CitiesCheckboxes {
     });
   }
 
-  // --- CORE RENDER (incremental diff) ---
+  toggleLocal(id) {
+    const node = this.nodesMap.get(String(id));
+
+    if (!node) {
+      return;
+    }
+
+    node._refs.input.checked = !node._refs.input.checked;
+  }
+
+  selectLocal(id) {
+    const node = this.nodesMap.get(String(id));
+
+    if (!node) {
+      return;
+    }
+
+    node._refs.input.checked = true;
+  }
+
+  deselectLocal(id) {
+    const node = this.nodesMap.get(String(id));
+
+    if (!node) {
+      return;
+    }
+
+    node._refs.input.checked = false;
+  }
+
+  hasLocal(id) {
+    const node = this.nodesMap.get(String(id));
+    return !!node?._refs.input.checked;
+  }
+
+  getSelectedLocal() {
+    return [...this.nodesMap.entries()]
+      .filter(([, node]) => node._refs.input.checked)
+      .map(([id]) => id);
+  }
+
+  getLabelLocal(value) {
+    const node = this.nodesMap.get(String(value));
+    return node?._refs?.title?.textContent?.trim() ?? String(value);
+  }
+
+  // =========================
+  // RENDER
+  // =========================
 
   render() {
-    const newMap = new Map();
+    const nextMap = new Map();
 
     this.state.items.forEach((item) => {
       const id = item.id;
-
       let node = this.nodesMap.get(id);
 
       if (!node) {
@@ -212,19 +153,17 @@ export class CitiesCheckboxes {
         this.updateNode(node, item);
       }
 
-      newMap.set(id, node);
+      nextMap.set(id, node);
     });
 
     this.nodesMap.forEach((node, id) => {
-      if (!newMap.has(id)) {
+      if (!nextMap.has(id)) {
         node.remove();
       }
     });
 
-    this.nodesMap = newMap;
+    this.nodesMap = nextMap;
   }
-
-  // --- NODE CREATION ---
 
   createNode(item) {
     const li = document.createElement('li');
@@ -254,9 +193,7 @@ export class CitiesCheckboxes {
 
     const title = document.createElement('div');
     title.className = 'checkbox__title';
-
-    const titleText = document.createTextNode(item.title || '');
-    title.appendChild(titleText);
+    title.textContent = item.title || '';
 
     const country = document.createElement('span');
     country.className = 'checkbox__country';
@@ -275,7 +212,7 @@ export class CitiesCheckboxes {
 
     li._refs = {
       input,
-      titleText,
+      title,
       country,
       description
     };
@@ -283,10 +220,8 @@ export class CitiesCheckboxes {
     return li;
   }
 
-  // --- NODE UPDATE (без querySelector) ---
-
   updateNode(node, item) {
-    const { input, titleText, country, description } = node._refs;
+    const { input, title, country, description } = node._refs;
 
     const nextTitle = item.title || '';
     const nextCountry = item.country ? ` · ${item.country}` : '';
@@ -294,8 +229,15 @@ export class CitiesCheckboxes {
     const nextSeoSlug = item.seoSlug || '';
     const currentSeoSlug = input.dataset.seoSlug || '';
 
-    if (titleText.textContent !== nextTitle) {
-      titleText.textContent = nextTitle;
+    const titleTextOnly = title.childNodes[0]?.textContent ?? '';
+
+    if (titleTextOnly !== nextTitle) {
+      if (title.firstChild) {
+        title.firstChild.textContent = nextTitle;
+      } else {
+        title.textContent = nextTitle;
+        title.appendChild(country);
+      }
     }
 
     if (country.textContent !== nextCountry) {
@@ -313,6 +255,13 @@ export class CitiesCheckboxes {
         delete input.dataset.seoSlug;
       }
     }
+  }
+
+  destroy() {
+    super.destroy();
+    this.container.removeEventListener('change', this.handleChange);
+    this.nodesMap.clear();
+    this.state.items = [];
   }
 
   defaultMapItem(item) {

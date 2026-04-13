@@ -7,9 +7,14 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
 import { Calendar } from "./calendar";
 
-import { FilterController } from "./vacancies_filter/filter_controller";
-import { CitiesCheckboxes } from "./vacancies_filter/components/cities_checkboxes";
-import { FilterTags } from "./vacancies_filter/components/filter_tags";
+import { initVacanciesFilter } from "./vacancies-filter";
+
+initVacanciesFilter();
+
+// import { FilterController } from "./vacancies-filter/core/filter-controller";
+// import { CitiesCheckboxes } from "./vacancies-filter/components/cities-checkboxes";
+// import { CheckboxTagsGroup } from "./vacancies-filter/components/checkbox-tags-group";
+// import { FilterTags } from "./vacancies-filter/components/filter-tags";
 
 // import { CheckboxListComponent } from "./vacancies_filter/components/checkbox_list";
 
@@ -17,75 +22,75 @@ import { FilterTags } from "./vacancies_filter/components/filter_tags";
 
 // let $ageSwitch = $('input[name="age_switch"]');
 
-let selectedCitiesIds = [];
-let currentSelectedCitiesIds = [];
+// let selectedCitiesIds = [];
+// let currentSelectedCitiesIds = [];
 
 // let citySearchInputValue = '';
 // let searchCitiesTimeoutID = null;
 
-const filterController = new FilterController({
-  formSelector: 'form[name="vacancies_filter"]',
-  components: {
-    cities: new CitiesCheckboxes({
-      containerSelector: '.checkboxes-group--cities .checkboxes-group__list',
-      filterKey: 'cities'
-    })
-  }
-})
+// const filterController = new FilterController({
+//   formSelector: 'form[name="vacancies_filter"]',
+//   components: {
+//     cities: new CitiesCheckboxes({
+//       containerSelector: '.checkboxes-group--cities .checkboxes-group__list',
+//       filterKey: 'cities'
+//     })
+//   }
+// });
 
 // const citiesComponent = new CitiesCheckboxes(
 //   '.checkboxes-group--cities .checkboxes-group__list'
 // );
 
-function removeItemFromArray(array, value) {
-  let index = array.indexOf(value);
+// function removeItemFromArray(array, value) {
+//   let index = array.indexOf(value);
 
-  if (index > -1) {
-    array.splice(index, 1);
-  }
+//   if (index > -1) {
+//     array.splice(index, 1);
+//   }
 
-  return array;
-}
+//   return array;
+// }
 
-function clearCitiesCheckboxes() {
-  currentSelectedCitiesIds = [];
+// function clearCitiesCheckboxes() {
+//   currentSelectedCitiesIds = [];
 
-  let $citiesCheckboxInput = $('.checkboxes-group--cities .checkbox__input');
-  $citiesCheckboxInput.prop('checked', false);
-  $(this).hide();
-}
+//   let $citiesCheckboxInput = $('.checkboxes-group--cities .checkbox__input');
+//   $citiesCheckboxInput.prop('checked', false);
+//   $(this).hide();
+// }
 
-function setCheckedCityCheckboxesTitle() {
-  let $citiesBtn = $('.additional-filters__cities-btn');
-  let $citiesBtnText = $citiesBtn.find('.btn-white__text');
-  let $citiesBtnCount = $citiesBtn.find('.count');
-  let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+// function setCheckedCityCheckboxesTitle() {
+//   let $citiesBtn = $('.additional-filters__cities-btn');
+//   let $citiesBtnText = $citiesBtn.find('.btn-white__text');
+//   let $citiesBtnCount = $citiesBtn.find('.count');
+//   let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
 
-  if (!$checkedLabels.length) {
-    $citiesBtnText.text($citiesBtn.data('placeholder'));
-    $citiesBtnCount.hide();
-  } else if ($checkedLabels.length == 1) {
-    $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
-    $citiesBtnCount.hide();
-  } else {
-    $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
-    $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
-    $citiesBtnCount.show();
-  }
+//   if (!$checkedLabels.length) {
+//     $citiesBtnText.text($citiesBtn.data('placeholder'));
+//     $citiesBtnCount.hide();
+//   } else if ($checkedLabels.length == 1) {
+//     $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
+//     $citiesBtnCount.hide();
+//   } else {
+//     $citiesBtnText.text($($checkedLabels[0]).find('.checkbox__title').text());
+//     $citiesBtnCount.text(`+${$checkedLabels.length - 1}`);
+//     $citiesBtnCount.show();
+//   }
 
-  toggleClearFilterButtons();
-}
+//   toggleClearFilterButtons();
+// }
 
-function toggleClearCitiesButtons() {
-  let $checkedInputs = $('.checkboxes-group--cities .checkbox__input:checked');
-  let $clearBtn = $('.cities-filter__clear-btn');
+// function toggleClearCitiesButtons() {
+//   let $checkedInputs = $('.checkboxes-group--cities .checkbox__input:checked');
+//   let $clearBtn = $('.cities-filter__clear-btn');
 
-  if (!$checkedInputs.length) {
-    $clearBtn.hide();
-  } else {
-    $clearBtn.show();
-  }
-}
+//   if (!$checkedInputs.length) {
+//     $clearBtn.hide();
+//   } else {
+//     $clearBtn.show();
+//   }
+// }
 
 function getFilterUrl(changedAdditionalFilters = false) {
   let isMobile = $(window).width() < 576;
@@ -110,7 +115,8 @@ function getFilterUrl(changedAdditionalFilters = false) {
   // }
 
   // console.log(citiesComponent.getSelected());
-  console.log(filterController.getSelected());
+  // console.log(filterController.getSelected());
+
   let selectedCitiesSlugs = [];
   let selectedCities = Array.from(selectedCitiesSlugs).join('/');
   // if (selectedCountry) {
@@ -240,26 +246,26 @@ function getFilterUrl(changedAdditionalFilters = false) {
   return urlParams + requestParams;
 }
 
-function updateFilterUrl() {
-  let isMobile = $(window).width() < 576;
-  let $filterSearchBtn = $('.filter__search-btn');
-  let $additionalFiltersSubmitBtn = $('.additional-filters__submit-btn');
-  let $vacanciesTogglePlusBtn = $('.vacancies__toggle-plus-btn');
-  let $vacanciesPreloaderWrapper = $('.vacancies__preloader-wrapper');
+// function updateFilterUrl() {
+//   let isMobile = $(window).width() < 576;
+//   let $filterSearchBtn = $('.filter__search-btn');
+//   let $additionalFiltersSubmitBtn = $('.additional-filters__submit-btn');
+//   let $vacanciesTogglePlusBtn = $('.vacancies__toggle-plus-btn');
+//   let $vacanciesPreloaderWrapper = $('.vacancies__preloader-wrapper');
 
-  $filterSearchBtn.addClass('btn-default--filter-loading');
-  $additionalFiltersSubmitBtn.addClass('btn-default--filter-loading');
+//   $filterSearchBtn.addClass('btn-default--filter-loading');
+//   $additionalFiltersSubmitBtn.addClass('btn-default--filter-loading');
 
-  if (isMobile) {
-    $vacanciesTogglePlusBtn.hide();
-    $vacanciesPreloaderWrapper.show();
-  }
+//   if (isMobile) {
+//     $vacanciesTogglePlusBtn.hide();
+//     $vacanciesPreloaderWrapper.show();
+//   }
 
-  $.get(`/vacancies`).done(function () {
-    const lang = document.documentElement.lang;
-    window.location.href = `/${lang}/vacancies${getFilterUrl()}`;
-  });
-}
+//   $.get(`/vacancies`).done(function () {
+//     const lang = document.documentElement.lang;
+//     window.location.href = `/${lang}/vacancies${getFilterUrl()}`;
+//   });
+// }
 
 // function addAllSelectedCities(allSelectedCitiesIds) {
 //   if (!allSelectedCitiesIds.length) return;
@@ -335,10 +341,10 @@ function syncInputFields($input) {
   });
 }
 
-function clearTextField($input) {
-  $input.removeClass('form-text--filter-search-filled').val('');
-  $input.parent().find('[data-clear-search-input]').hide();
-}
+// function clearTextField($input) {
+//   $input.removeClass('form-text--filter-search-filled').val('');
+//   $input.parent().find('[data-clear-search-input]').hide();
+// }
 
 // function copyText(input) {
 //   input.select();
@@ -410,267 +416,267 @@ function toggleClearFilterButtons() {
   }
 }
 
-function setVisibilitySelectedMoreItem(selectedItemsLength) {
-  let isMobile = $(window).width() < 576;
-  let visibleCount = isMobile ? 7 : 11;
+// function setVisibilitySelectedMoreItem(selectedItemsLength) {
+//   let isMobile = $(window).width() < 576;
+//   let visibleCount = isMobile ? 7 : 11;
 
-  $('.filter-tags').each(function (index, selectedItemsWrapper) {
-    let $moreItem = $(selectedItemsWrapper).find('.filter-tags__more-item');
-    let moreItemsCount = selectedItemsLength - visibleCount;
+//   $('.filter-tags').each(function (index, selectedItemsWrapper) {
+//     let $moreItem = $(selectedItemsWrapper).find('.filter-tags__more-item');
+//     let moreItemsCount = selectedItemsLength - visibleCount;
 
-    if (selectedItemsLength > visibleCount) {
-      $moreItem.removeClass('hidden');
-    } else {
-      $moreItem.addClass('hidden');
-    }
+//     if (selectedItemsLength > visibleCount) {
+//       $moreItem.removeClass('hidden');
+//     } else {
+//       $moreItem.addClass('hidden');
+//     }
 
-    $moreItem.find('.more-btn__count').text(`+${moreItemsCount}`);
-  });
-}
-
-function checkDependentFilters() {
-  let $dependentFilters = $('[data-parent-filter-id]');
+//     $moreItem.find('.more-btn__count').text(`+${moreItemsCount}`);
+//   });
+// }
+
+// function checkDependentFilters() {
+//   let $dependentFilters = $('[data-parent-filter-id]');
 
-  $dependentFilters.each(function (index, el) {
-    let parentFilterId = $(el).data('parent-filter-id')
-    let parentFilterItemId = $(el).data('parent-filter-item-id');
+//   $dependentFilters.each(function (index, el) {
+//     let parentFilterId = $(el).data('parent-filter-id')
+//     let parentFilterItemId = $(el).data('parent-filter-item-id');
 
-    let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
-    if (!$parentFilter.length) return;
+//     let $parentFilter = $(`.additional-filters [data-filter-id="${parentFilterId}"]`);
+//     if (!$parentFilter.length) return;
 
-    let $parentFilterItemAll = $parentFilter.find(`[value="all"]:checked`);
-    if ($parentFilterItemAll.length) {
-      $(el).show();
-      return;
-    }
+//     let $parentFilterItemAll = $parentFilter.find(`[value="all"]:checked`);
+//     if ($parentFilterItemAll.length) {
+//       $(el).show();
+//       return;
+//     }
 
-    let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
+//     let $parentFilterItem = $parentFilter.find(`[data-filter-item-id="${parentFilterItemId}"]`);
 
-    if (!$parentFilterItem.length) {
-      let parentFilterTagName = $parentFilter.prop('tagName').toLowerCase();
+//     if (!$parentFilterItem.length) {
+//       let parentFilterTagName = $parentFilter.prop('tagName').toLowerCase();
 
-      if (parentFilterTagName === 'select') {
-        $(el).hide();
-      }
-
-      return;
-    }
-
-    let tagName = $parentFilterItem.prop('tagName').toLowerCase();
-    let compareOp = tagName === 'option' ? ':selected' : ':checked';
+//       if (parentFilterTagName === 'select') {
+//         $(el).hide();
+//       }
+
+//       return;
+//     }
+
+//     let tagName = $parentFilterItem.prop('tagName').toLowerCase();
+//     let compareOp = tagName === 'option' ? ':selected' : ':checked';
 
-    if (!$parentFilterItem.is(compareOp)) {
-      $(el).hide();
-    } else {
-      $(el).show();
-    }
-  });
-}
+//     if (!$parentFilterItem.is(compareOp)) {
+//       $(el).hide();
+//     } else {
+//       $(el).show();
+//     }
+//   });
+// }
 
-function resetRangeSlider(rangeSlider) {
-  if (rangeSlider.classList.contains('range-slider--single')) {
-    let min = rangeSlider.dataset.min;
+// function resetRangeSlider(rangeSlider) {
+//   if (rangeSlider.classList.contains('range-slider--single')) {
+//     let min = rangeSlider.dataset.min;
 
-    rangeSlider.noUiSlider.set(min);
+//     rangeSlider.noUiSlider.set(min);
 
-    let syncFieldIds = rangeSlider.dataset.syncFieldIds;
+//     let syncFieldIds = rangeSlider.dataset.syncFieldIds;
 
-    syncFieldIds.split(',').forEach(id => {
-      let field = document.getElementById(id.trim());
+//     syncFieldIds.split(',').forEach(id => {
+//       let field = document.getElementById(id.trim());
 
-      if (field) {
-        field.value = min;
-      }
-    });
+//       if (field) {
+//         field.value = min;
+//       }
+//     });
 
-  } else if (rangeSlider.classList.contains('range-slider--range')) {
-    let min = rangeSlider.dataset.min;
-    let max = rangeSlider.dataset.max;
+//   } else if (rangeSlider.classList.contains('range-slider--range')) {
+//     let min = rangeSlider.dataset.min;
+//     let max = rangeSlider.dataset.max;
 
-    rangeSlider.noUiSlider.set([min, max]);
+//     rangeSlider.noUiSlider.set([min, max]);
 
-    let syncFromFieldIds = rangeSlider.dataset.syncFromFieldIds;
-    let syncToFieldIds = rangeSlider.dataset.syncToFieldIds;
+//     let syncFromFieldIds = rangeSlider.dataset.syncFromFieldIds;
+//     let syncToFieldIds = rangeSlider.dataset.syncToFieldIds;
 
-    syncFromFieldIds.split(',').forEach(id => {
-      let field = document.getElementById(id.trim());
+//     syncFromFieldIds.split(',').forEach(id => {
+//       let field = document.getElementById(id.trim());
 
-      if (field) {
-        field.value = min;
-      }
-    });
+//       if (field) {
+//         field.value = min;
+//       }
+//     });
 
-    syncToFieldIds.split(',').forEach(id => {
-      let field = document.getElementById(id.trim());
+//     syncToFieldIds.split(',').forEach(id => {
+//       let field = document.getElementById(id.trim());
 
-      if (field) {
-        field.value = max;
-      }
-    });
-  }
-}
+//       if (field) {
+//         field.value = max;
+//       }
+//     });
+//   }
+// }
 
-function clearTagRelatedFields($filterTag) {
-  // let isMainFilter = !!$filterTag.closest('.filter-tags--main-filter').length;
-  let $selectedRadio = null;
-
-  let name = $filterTag.data('name');
-  let value = $filterTag.data('value');
-  let type = $filterTag.data('type');
-
-  if (['range', 'textfield', 'multiselect', 'date-range'].includes(type)) {
-    let $otherSelectedItem = $(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
-    $otherSelectedItem.remove();
-  }
-
-  if (![name, value].includes(undefined)) {
-    switch (type) {
-      case 'checkbox':
-        let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
-        $selectedCheckbox.prop("checked", false);
-
-        let $otherSelectedItem = $(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
-        $otherSelectedItem.remove();
-
-        syncInputFields($selectedCheckbox);
-
-        break;
-      case 'radio':
-        $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
-        $selectedRadio.prop('checked', false);
-
-        let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
-        syncInputFields($nonCheckedRadio);
-
-        break;
-      case 'textfield':
-        let $input = $(`input[name="${name}"]`).val('');
-        clearTextField($input);
-
-        break;
-      case 'range':
-        let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
-        $rangeSlider.each(function (index, el) {
-          resetRangeSlider(el);
-        });
-
-        break;
-
-      case 'date-range':
-        const calendarInput = document.querySelector(`.calendar__input[name="${name}"][value="${value}"]`);
-        const calendarEl = calendarInput.closest('.js-calendar');
-        const calendar = Calendar.getInstance(calendarEl);
-
-        calendar.clearCalendar();
+// function clearTagRelatedFields($filterTag) {
+//   // let isMainFilter = !!$filterTag.closest('.filter-tags--main-filter').length;
+//   let $selectedRadio = null;
+
+//   let name = $filterTag.data('name');
+//   let value = $filterTag.data('value');
+//   let type = $filterTag.data('type');
+
+//   if (['range', 'textfield', 'multiselect', 'date-range'].includes(type)) {
+//     let $otherSelectedItem = $(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
+//     $otherSelectedItem.remove();
+//   }
+
+//   if (![name, value].includes(undefined)) {
+//     switch (type) {
+//       case 'checkbox':
+//         let $selectedCheckbox = $(`.checkbox__input[name="${name}"][value="${value}"]`);
+//         $selectedCheckbox.prop("checked", false);
+
+//         let $otherSelectedItem = $(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
+//         $otherSelectedItem.remove();
+
+//         syncInputFields($selectedCheckbox);
+
+//         break;
+//       case 'radio':
+//         $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
+//         $selectedRadio.prop('checked', false);
+
+//         let $nonCheckedRadio = $(`.radiobtn__input[name="${name}"][value=""]`);
+//         syncInputFields($nonCheckedRadio);
+
+//         break;
+//       case 'textfield':
+//         let $input = $(`input[name="${name}"]`).val('');
+//         clearTextField($input);
+
+//         break;
+//       case 'range':
+//         let $rangeSlider = $(`.range-slider[data-name="${name}"]`);
+//         $rangeSlider.each(function (index, el) {
+//           resetRangeSlider(el);
+//         });
+
+//         break;
+
+//       case 'date-range':
+//         const calendarInput = document.querySelector(`.calendar__input[name="${name}"][value="${value}"]`);
+//         const calendarEl = calendarInput.closest('.js-calendar');
+//         const calendar = Calendar.getInstance(calendarEl);
+
+//         calendar.clearCalendar();
 
-        break;
+//         break;
 
-      case 'select':
-        let $select = $(`select[name="${name}"]`);
-        $select.val('').trigger('change', ['fromCode']);
+//       case 'select':
+//         let $select = $(`select[name="${name}"]`);
+//         $select.val('').trigger('change', ['fromCode']);
 
-        $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
-        $selectedRadio.prop('checked', false);
+//         $selectedRadio = $(`.radiobtn__input[name="${name}"][value="${value}"]`);
+//         $selectedRadio.prop('checked', false);
 
-        break;
-    }
-  }
+//         break;
+//     }
+//   }
 
-  $filterTag.remove();
+//   $filterTag.remove();
 
-  setTimeout(() => {
-    toggleClearFilterButtons();
+//   setTimeout(() => {
+//     toggleClearFilterButtons();
 
-    // if (isMainFilter && document.forms.vacancies_filter) {
-      // updateFilterUrl();
-      // document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
-    // }
-  });
+//     // if (isMainFilter && document.forms.vacancies_filter) {
+//       // updateFilterUrl();
+//       // document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+//     // }
+//   });
 
-  let selectedItemsLength = $('.filter .filter-tags__item').length;
-  setVisibilitySelectedMoreItem(selectedItemsLength);
+//   let selectedItemsLength = $('.filter .filter-tags__item').length;
+//   setVisibilitySelectedMoreItem(selectedItemsLength);
 
-  checkDependentFilters();
-}
+//   checkDependentFilters();
+// }
 
-function undoChangesToAdditionalFilters() {
-  const checkboxesAndRadio = document.querySelectorAll('.additional-filters .checkbox__input, .additional-filters .radiobtn__input');
-  checkboxesAndRadio.forEach(el => {
-    let type = el.getAttribute('type');
-    let name = el.getAttribute('name');
-    let value = el.getAttribute('value');
-    let labelText = el.parentNode.querySelector('label').textContent;
-    let $filterTag = findFilterTagByValue(name, value);
+// function undoChangesToAdditionalFilters() {
+//   const checkboxesAndRadio = document.querySelectorAll('.additional-filters .checkbox__input, .additional-filters .radiobtn__input');
+//   checkboxesAndRadio.forEach(el => {
+//     let type = el.getAttribute('type');
+//     let name = el.getAttribute('name');
+//     let value = el.getAttribute('value');
+//     let labelText = el.parentNode.querySelector('label').textContent;
+//     let $filterTag = findFilterTagByValue(name, value);
 
-    if (el.dataset.defaultChecked !== undefined) {
-      el.checked = true;
+//     if (el.dataset.defaultChecked !== undefined) {
+//       el.checked = true;
 
-      if (!(el.name === 'zitlo[]' && el.value === 'all')) {
-        createOrUpdateTag(type, name, value, labelText);
-      }
-    } else {
-      el.checked = false;
-      clearTagRelatedFields($filterTag);
-    }
-  });
+//       if (!(el.name === 'zitlo[]' && el.value === 'all')) {
+//         createOrUpdateTag(type, name, value, labelText);
+//       }
+//     } else {
+//       el.checked = false;
+//       clearTagRelatedFields($filterTag);
+//     }
+//   });
 
-  document.querySelectorAll(`.range-slider--range`).forEach(el => {
-    const inputFrom = document.getElementById(el.dataset.syncFromFieldIds);
-    const inputTo = document.getElementById(el.dataset.syncToFieldIds);
+//   document.querySelectorAll(`.range-slider--range`).forEach(el => {
+//     const inputFrom = document.getElementById(el.dataset.syncFromFieldIds);
+//     const inputTo = document.getElementById(el.dataset.syncToFieldIds);
 
-    el.noUiSlider.set([el.dataset.minValue, el.dataset.maxValue]);
+//     el.noUiSlider.set([el.dataset.minValue, el.dataset.maxValue]);
 
-    if (inputFrom) inputFrom.value = el.dataset.minValue;
-    if (inputTo) inputTo.value = el.dataset.maxValue;
-  });
+//     if (inputFrom) inputFrom.value = el.dataset.minValue;
+//     if (inputTo) inputTo.value = el.dataset.maxValue;
+//   });
 
-  toggleClearFilterButtons();
+//   toggleClearFilterButtons();
 
-  // if (document.forms.vacancies_filter) {
-  //   document.forms.vacancies_filter.dispatchEvent(new CustomEvent("undoingChangesToAdditionalFilters"));
-  // }
-}
+//   // if (document.forms.vacancies_filter) {
+//   //   document.forms.vacancies_filter.dispatchEvent(new CustomEvent("undoingChangesToAdditionalFilters"));
+//   // }
+// }
 
-function clearFilter() {
-  let $searchInput = $('[data-search-input]');
-  // let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
-  let $allCheckboxes = $('.additional-filters .checkbox__input');
-  let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
-  let calendars = document.querySelectorAll('.additional-filters .js-calendar');
-  let clearFilterBtns = document.querySelectorAll(`[data-clear-filter]`);
-  let $filtersBtn = $('.btn-white--filter .btn-white__count');
+// function clearFilter() {
+//   let $searchInput = $('[data-search-input]');
+//   // let $filterSelects = $('.filter select.filter-select, .additional-filters select.filter-select');
+//   let $allCheckboxes = $('.additional-filters .checkbox__input');
+//   let $allNonCheckedRadio = $(`.additional-filters .radiobtn__input[value=""]`);
+//   let calendars = document.querySelectorAll('.additional-filters .js-calendar');
+//   let clearFilterBtns = document.querySelectorAll(`[data-clear-filter]`);
+//   let $filtersBtn = $('.btn-white--filter .btn-white__count');
 
-  $searchInput.val('').trigger('input').removeAttr('value');
+//   $searchInput.val('').trigger('input').removeAttr('value');
 
-  // $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
+//   // $filterSelects.next('.select2-container').find('.select2-selection').removeClass('select2-selection--selected');
 
-  // $filterSelects.each(function (index, el) {
-  //   $(el).val('');
-  //   $(el).find('option[selected]').removeAttr('selected');
-  // });
+//   // $filterSelects.each(function (index, el) {
+//   //   $(el).val('');
+//   //   $(el).find('option[selected]').removeAttr('selected');
+//   // });
 
-  document.querySelectorAll(`.range-slider`).forEach(resetRangeSlider);
+//   document.querySelectorAll(`.range-slider`).forEach(resetRangeSlider);
 
-  clearFilterBtns.forEach(btn => btn.style.display = 'none');
-  $('.additional-filters__filter-tags').hide();
+//   clearFilterBtns.forEach(btn => btn.style.display = 'none');
+//   $('.additional-filters__filter-tags').hide();
 
-  $allCheckboxes.prop('checked', false);
-  $allNonCheckedRadio.prop('checked', true);
+//   $allCheckboxes.prop('checked', false);
+//   $allNonCheckedRadio.prop('checked', true);
 
-  calendars.forEach(el => {
-    const calendar = Calendar.getInstance(el);
-    calendar.clearCalendar();
-  });
+//   calendars.forEach(el => {
+//     const calendar = Calendar.getInstance(el);
+//     calendar.clearCalendar();
+//   });
 
-  document.querySelectorAll('.filter-tags__item').forEach(el => el.remove());
+//   document.querySelectorAll('.filter-tags__item').forEach(el => el.remove());
 
-  setVisibilitySelectedMoreItem(0);
+//   setVisibilitySelectedMoreItem(0);
 
-  $filtersBtn.addClass('hidden').text(0);
-  $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
+//   $filtersBtn.addClass('hidden').text(0);
+//   $filtersBtn.closest('.btn-white--filter').addClass('btn-white--filter-dark-icon');
 
-  clearCitiesCheckboxes();
-}
+//   // clearCitiesCheckboxes();
+// }
 
 function findFilterTagByValue(name, value) {
   let $container = $('.filter-tags__list');
@@ -760,7 +766,7 @@ document.addEventListener('DOMContentLoaded', function () {
       },
 
       close: (fancybox, event) => {
-        undoChangesToAdditionalFilters();
+        // undoChangesToAdditionalFilters();
       }
     }
   };
@@ -906,11 +912,11 @@ document.addEventListener('DOMContentLoaded', function () {
   //   // clearSexSelect();
   // });
 
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('[data-clear-filter]')) return;
+  // document.addEventListener('click', function (e) {
+  //   if (!e.target.closest('[data-clear-filter]')) return;
 
-    clearFilter();
-  });
+  //   clearFilter();
+  // });
 
 
   if ($(window).width() < 768) {
@@ -957,12 +963,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Removing selected items
-  $(document).on('click', '.filter-tag__remove-btn', function (event) {
-    let $filterTagParent = $(this).closest('.filter-tags__item');
-    clearTagRelatedFields($filterTagParent);
+  // $(document).on('click', '.filter-tag__remove-btn', function (event) {
+  //   let $filterTagParent = $(this).closest('.filter-tags__item');
+  //   clearTagRelatedFields($filterTagParent);
 
-    event.preventDefault();
-  });
+  //   event.preventDefault();
+  // });
 
   $('.filter .form-text:not([type="search"])').on('input', function (e) {
     setTimeout(() => {
@@ -1043,51 +1049,51 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Adding selected checkboxes/radio buttons
-  $('.additional-filters').find('.checkbox__input, .radiobtn__input').change(function (event) {
-    let name = $(this).attr('name');
-    let value = $(this).val();
-    let labelText = $(this).parent().find('label').text();
-    let $filterTag = $(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
+  // $('.additional-filters').find('.checkbox__input, .radiobtn__input').change(function (event) {
+  //   let name = $(this).attr('name');
+  //   let value = $(this).val();
+  //   let labelText = $(this).parent().find('label').text();
+  //   let $filterTag = $(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
 
-    if ($(this).is(':checkbox')) {
-      if ($(this).is(':checked')) {
-        createOrUpdateTag("checkbox", name, value, labelText);
-      } else {
-        $filterTag.remove();
-      }
-    } else if ($(this).is(':radio')) {
-      let groupTitle = $(this).closest('.radiobtns-group').find('.radiobtns-group__title').text();
-      let $otherSelectedItems = $(`.filter-tags__item[data-name="${name}"]`).not(`[data-value="${value}"]`);
+  //   if ($(this).is(':checkbox')) {
+  //     if ($(this).is(':checked')) {
+  //       createOrUpdateTag("checkbox", name, value, labelText);
+  //     } else {
+  //       $filterTag.remove();
+  //     }
+  //   } else if ($(this).is(':radio')) {
+  //     let groupTitle = $(this).closest('.radiobtns-group').find('.radiobtns-group__title').text();
+  //     let $otherSelectedItems = $(`.filter-tags__item[data-name="${name}"]`).not(`[data-value="${value}"]`);
 
-      $otherSelectedItems.remove();
+  //     $otherSelectedItems.remove();
 
-      if (value !== '') {
-        let type = (name === 'kategoriia-pracivnika') ? 'select' : 'radio';
+  //     if (value !== '') {
+  //       let type = (name === 'kategoriia-pracivnika') ? 'select' : 'radio';
 
-        if (!(name === 'zitlo[]' && value === 'all')) {
-          createOrUpdateTag(type, name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
-        }
-      }
+  //       if (!(name === 'zitlo[]' && value === 'all')) {
+  //         createOrUpdateTag(type, name, value, `<strong>${groupTitle}:</strong> ${labelText}`);
+  //       }
+  //     }
 
-      if (name === 'kategoriia-pracivnika') {
-        let $employeeCategorySelect = $('select[name="kategoriia-pracivnika"]');
+  //     if (name === 'kategoriia-pracivnika') {
+  //       let $employeeCategorySelect = $('select[name="kategoriia-pracivnika"]');
 
-        $employeeCategorySelect.val(value);
-        $employeeCategorySelect.find('option[selected]').removeAttr('selected');
-        $employeeCategorySelect.trigger('change', ['fromCode']);
-      }
-    }
+  //       $employeeCategorySelect.val(value);
+  //       $employeeCategorySelect.find('option[selected]').removeAttr('selected');
+  //       $employeeCategorySelect.trigger('change', ['fromCode']);
+  //     }
+  //   }
 
-    let selectedItemsLength = $('.additional-filters .filter-tags__item').length;
+  //   let selectedItemsLength = $('.additional-filters .filter-tags__item').length;
 
-    toggleClearFilterButtons();
-    setVisibilitySelectedMoreItem(selectedItemsLength);
-    checkDependentFilters();
+  //   toggleClearFilterButtons();
+  //   setVisibilitySelectedMoreItem(selectedItemsLength);
+  //   checkDependentFilters();
 
-    setTimeout(() => {
-      setVacanciesCount();
-    });
-  });
+  //   setTimeout(() => {
+  //     setVacanciesCount();
+  //   });
+  // });
 
   function initCalendarTag(calendarEl) {
     const calendarField = calendarEl.querySelector('.calendar-field');
@@ -1211,14 +1217,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // }
 
   // Creating filter URL
-  document.addEventListener('submit', (event) => {
-    const form = event.target.closest('form[name="vacancies_filter"]');
+  // document.addEventListener('submit', (event) => {
+  //   const form = event.target.closest('form[name="vacancies_filter"]');
 
-    if (!form) return;
+  //   if (!form) return;
 
-    event.preventDefault();
-    updateFilterUrl();
-  });
+  //   event.preventDefault();
+  //   updateFilterUrl();
+  // });
 
   async function loadCities(params = {}) {
     try {
@@ -1288,7 +1294,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Dependent filters
-  checkDependentFilters();
+  // checkDependentFilters();
 
   // $('.additional-filters').find('.checkbox__input, .radiobtn__input').on('change', function (event) {
   //   let $parentElem = $(this).parent();
@@ -1669,8 +1675,8 @@ document.addEventListener('DOMContentLoaded', function () {
   //   });
   // }
 
-  let additionalFiltersSelectedItemsLength = $('.additional-filters .filter-tags__item').length;
-  setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);
+  // let additionalFiltersSelectedItemsLength = $('.additional-filters .filter-tags__item').length;
+  // setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);
 
   // Age switch
   function handleAgeSwitchChange(ageSwitch) {
@@ -1724,164 +1730,164 @@ document.addEventListener('DOMContentLoaded', function () {
   // });
 
   // Cities filter
-  document.addEventListener('input', function (e) {
-    const searchInput = e.target.closest('.cities-filter__search-input');
+  // document.addEventListener('input', function (e) {
+  //   const searchInput = e.target.closest('.cities-filter__search-input');
 
-    if (!searchInput) return;
+  //   if (!searchInput) return;
 
-    const citiesFilter = searchInput.closest('.cities-filter');
-    const clearSearchBtn = citiesFilter.querySelector('.cities-filter__clear-search-btn');
+  //   const citiesFilter = searchInput.closest('.cities-filter');
+  //   const clearSearchBtn = citiesFilter.querySelector('.cities-filter__clear-search-btn');
 
-    let searchValue = searchInput.value.trim();
+  //   let searchValue = searchInput.value.trim();
 
-    let selectedCountryIds = [...document.querySelectorAll('input[name="country[]"]:checked')].map(item => item.dataset.entityId);
-    loadCities({
-      country_ids: selectedCountryIds,
-      term: searchValue
-    });
+  //   let selectedCountryIds = [...document.querySelectorAll('input[name="country[]"]:checked')].map(item => item.dataset.entityId);
+  //   loadCities({
+  //     country_ids: selectedCountryIds,
+  //     term: searchValue
+  //   });
 
-    searchValue ? clearSearchBtn.classList.remove('hidden') : clearSearchBtn.classList.add('hidden');
+  //   searchValue ? clearSearchBtn.classList.remove('hidden') : clearSearchBtn.classList.add('hidden');
 
-    // searchCitiesTimeoutID = setTimeout(() => {
-    //   $.ajax({
-    //     url: url,
+  //   // searchCitiesTimeoutID = setTimeout(() => {
+  //   //   $.ajax({
+  //   //     url: url,
 
-    //     success: function (data) {
-    //       let $allCitiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
-    //       let cities = data.results;
-    //       let allSelectedCitiesIds = [];
+  //   //     success: function (data) {
+  //   //       let $allCitiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
+  //   //       let cities = data.results;
+  //   //       let allSelectedCitiesIds = [];
 
-    //       // Clear checkboxes (mobile filter)
-    //       $allCitiesCheckboxes.each(function (index, checkbox) {
-    //         if (!$(checkbox).is(':checked')) {
-    //           $(checkbox).closest('.checkboxes-group__item').remove();
-    //         } else {
-    //           allSelectedCitiesIds.push($(checkbox).val());
-    //         }
-    //       });
+  //   //       // Clear checkboxes (mobile filter)
+  //   //       $allCitiesCheckboxes.each(function (index, checkbox) {
+  //   //         if (!$(checkbox).is(':checked')) {
+  //   //           $(checkbox).closest('.checkboxes-group__item').remove();
+  //   //         } else {
+  //   //           allSelectedCitiesIds.push($(checkbox).val());
+  //   //         }
+  //   //       });
 
-    //       // Filling checkboxes from data
-    //       cities.forEach((item, index) => {
-    //         if (!allSelectedCitiesIds.includes(item.id.toString())) {
-    //           addCityCheckbox(item, allSelectedCitiesIds);
-    //         }
-    //       });
-    //     },
+  //   //       // Filling checkboxes from data
+  //   //       cities.forEach((item, index) => {
+  //   //         if (!allSelectedCitiesIds.includes(item.id.toString())) {
+  //   //           addCityCheckbox(item, allSelectedCitiesIds);
+  //   //         }
+  //   //       });
+  //   //     },
 
-    //     error: function (data) {
-    //       console.log(data);
-    //     }
-    //   });
+  //   //     error: function (data) {
+  //   //       console.log(data);
+  //   //     }
+  //   //   });
 
-    //   // psArr[0].update();
+  //   //   // psArr[0].update();
 
-    // }, 500);
-  });
+  //   // }, 500);
+  // });
 
-  document.addEventListener('click', function (e) {
-    const clearSearchBtn = e.target.closest('.cities-filter__clear-search-btn');
+  // document.addEventListener('click', function (e) {
+  //   const clearSearchBtn = e.target.closest('.cities-filter__clear-search-btn');
 
-    if (!clearSearchBtn) return;
+  //   if (!clearSearchBtn) return;
 
-    clearSearchBtn.classList.add('hidden');
+  //   clearSearchBtn.classList.add('hidden');
 
-    $('.cities-filter__search-input').val('').trigger('input').focus();
-  });
+  //   $('.cities-filter__search-input').val('').trigger('input').focus();
+  // });
 
-  $(document).on('change', '.checkboxes-group--cities .checkbox__input', function (event) {
-    let value = $(this).val();
+  // $(document).on('change', '.checkboxes-group--cities .checkbox__input', function (event) {
+  //   let value = $(this).val();
 
-    if ($(this).is(':checkbox')) {
-      if ($(this).is(':checked')) {
-        if (!currentSelectedCitiesIds.includes(value)) {
-          currentSelectedCitiesIds.push(value);
-        }
-      } else {
-        currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
-      }
-    }
+  //   if ($(this).is(':checkbox')) {
+  //     if ($(this).is(':checked')) {
+  //       if (!currentSelectedCitiesIds.includes(value)) {
+  //         currentSelectedCitiesIds.push(value);
+  //       }
+  //     } else {
+  //       currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+  //     }
+  //   }
 
-    toggleClearCitiesButtons();
-  });
+  //   toggleClearCitiesButtons();
+  // });
 
-  $(document).on('click', '.filter-tag--city .filter-tag__remove-btn', function (event) {
-    let $filterTagParent = $(this).closest('.filter-tags__item');
-    let $filterTags = $filterTagParent.closest('.filter-tags');
+  // $(document).on('click', '.filter-tag--city .filter-tag__remove-btn', function (event) {
+  //   let $filterTagParent = $(this).closest('.filter-tags__item');
+  //   let $filterTags = $filterTagParent.closest('.filter-tags');
 
-    let name = $filterTagParent.data('name');
-    let value = $filterTagParent.data('value');
+  //   let name = $filterTagParent.data('name');
+  //   let value = $filterTagParent.data('value');
 
-    let $selectedCheckbox = $(`.checkboxes-group--cities .checkbox__input[name="${name}"][value="${value}"]`);
-    $selectedCheckbox.prop("checked", false);
+  //   let $selectedCheckbox = $(`.checkboxes-group--cities .checkbox__input[name="${name}"][value="${value}"]`);
+  //   $selectedCheckbox.prop("checked", false);
 
-    $filterTagParent.remove();
-    currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
+  //   $filterTagParent.remove();
+  //   currentSelectedCitiesIds = removeItemFromArray(currentSelectedCitiesIds, value);
 
-    let selectedItemsLength = $filterTags.find('.filter-tags__item').length;
+  //   let selectedItemsLength = $filterTags.find('.filter-tags__item').length;
 
-    if (selectedItemsLength) {
-      $filterTags.show();
-    } else {
-      $filterTags.hide();
-    }
+  //   if (selectedItemsLength) {
+  //     $filterTags.show();
+  //   } else {
+  //     $filterTags.hide();
+  //   }
 
-    event.preventDefault();
-  });
+  //   event.preventDefault();
+  // });
 
-  $('.filter-tags--cities .filter-tags__clear-btn').click(function (event) {
-    $(this).closest('.filter-tags').find('.filter-tag__remove-btn').click();
-  });
+  // $('.filter-tags--cities .filter-tags__clear-btn').click(function (event) {
+  //   $(this).closest('.filter-tags').find('.filter-tag__remove-btn').click();
+  // });
 
   // Closing cities popup without saving
-  $('.cities-filter__btn-back').click(function (event) {
-    currentSelectedCitiesIds = [...selectedCitiesIds];
+  // $('.cities-filter__btn-back').click(function (event) {
+  //   currentSelectedCitiesIds = [...selectedCitiesIds];
 
-    let $citiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
-    let $searchInput = $('.cities-filter__search-input');
-    let $citiesClearBtn = $('.cities-filter__clear-btn');
+  //   let $citiesCheckboxes = $('.checkboxes-group--cities .checkbox__input');
+  //   let $searchInput = $('.cities-filter__search-input');
+  //   let $citiesClearBtn = $('.cities-filter__clear-btn');
 
-    $searchInput.val('').trigger('input');
+  //   $searchInput.val('').trigger('input');
 
-    $citiesCheckboxes.each(function (index, checkbox) {
-      if (selectedCitiesIds.includes($(checkbox).val())) {
-        $(checkbox).prop('checked', true);
-      } else {
-        $(checkbox).prop('checked', false);
-      }
-    });
+  //   $citiesCheckboxes.each(function (index, checkbox) {
+  //     if (selectedCitiesIds.includes($(checkbox).val())) {
+  //       $(checkbox).prop('checked', true);
+  //     } else {
+  //       $(checkbox).prop('checked', false);
+  //     }
+  //   });
 
-    if (currentSelectedCitiesIds.length) {
-      $citiesClearBtn.show();
-    } else {
-      $citiesClearBtn.hide();
-    }
-  });
+  //   if (currentSelectedCitiesIds.length) {
+  //     $citiesClearBtn.show();
+  //   } else {
+  //     $citiesClearBtn.hide();
+  //   }
+  // });
 
   // $('.cities-filter__clear-btn').on('click', clearCitiesCheckboxes);
   
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('.cities-filter__clear-btn')) return;
+  // document.addEventListener('click', function (e) {
+  //   if (!e.target.closest('.cities-filter__clear-btn')) return;
 
-    clearCitiesCheckboxes();
-  });
+  //   clearCitiesCheckboxes();
+  // });
 
-  $('.cities-filter__apply-btn').click(function (event) {
-    selectedCitiesIds = [...currentSelectedCitiesIds];
+  // $('.cities-filter__apply-btn').click(function (event) {
+  //   selectedCitiesIds = [...currentSelectedCitiesIds];
 
-    let $searchInput = $('.cities-filter__search-input');
-    $searchInput.val('').trigger('input');
+  //   let $searchInput = $('.cities-filter__search-input');
+  //   $searchInput.val('').trigger('input');
 
-    setCheckedCityCheckboxesTitle();
-    toggleClearCitiesButtons();
+  //   setCheckedCityCheckboxesTitle();
+  //   toggleClearCitiesButtons();
 
-    setTimeout(() => {
-      if (document.forms.vacancies_filter) {
-        getFilterUrl();
-        // updateFilterUrl();
-        // document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
-      }
-    });
-  });
+  //   setTimeout(() => {
+  //     if (document.forms.vacancies_filter) {
+  //       getFilterUrl();
+  //       // updateFilterUrl();
+  //       // document.forms.vacancies_filter.dispatchEvent(new CustomEvent("updateVacanciesFilter"));
+  //     }
+  //   });
+  // });
 
   // Loading cities via AJAX
   document.addEventListener('citiesLoaded', function (e) {
@@ -1890,7 +1896,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let cities = e.detail.data.results;
     // console.log(e.detail);
 
-    filterController.setOptions('cities', cities);
+    // filterController.setOptions('cities', cities);
+
     // citiesComponent.setCities(cities);
     // console.log(citiesComponent);
 
@@ -1923,12 +1930,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Synchronizing fields when remove tag
-  $(document).on('click', '.filter-tag__remove-btn', function (event) {
-    let $filterTagParent = $(this).closest('.filter-tags__item');
-    clearTagRelatedFields($filterTagParent);
+  // $(document).on('click', '.filter-tag__remove-btn', function (event) {
+  //   let $filterTagParent = $(this).closest('.filter-tags__item');
+  //   clearTagRelatedFields($filterTagParent);
 
-    event.preventDefault();
-  });
+  //   event.preventDefault();
+  // });
 
 
   let $wrapper = $('.wrapper');
