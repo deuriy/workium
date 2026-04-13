@@ -9,7 +9,9 @@ import { Calendar } from "./calendar";
 
 import { initVacanciesFilter } from "./vacancies-filter";
 
-initVacanciesFilter();
+// initVacanciesFilter();
+
+// let filterController = null;
 
 // import { FilterController } from "./vacancies-filter/core/filter-controller";
 // import { CitiesCheckboxes } from "./vacancies-filter/components/cities-checkboxes";
@@ -750,6 +752,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   Calendar.initAll();
 
+  const filterController = initVacanciesFilter();
+
   let fancyboxOpts = {
     dragToClose: false,
     mainClass: 'fancybox--additional-filters-popup',
@@ -759,15 +763,25 @@ document.addEventListener('DOMContentLoaded', function () {
     },
 
     on: {
-      reveal: (fancybox, slide) => {
-        if (slide.src === '#cities-popup') {
-          $(slide.contentEl).find('.cities-filter__search-input').focus();
-        }
+      ready: () => {
+        filterController?.resetUiPlugins?.();
       },
 
+      // reveal: (fancybox, slide) => {
+      //   if (slide.src === '#cities-popup') {
+      //     $(slide.contentEl).find('.cities-filter__search-input').focus();
+      //   }
+      // },
+
       // close: (fancybox, event) => {
+      //   filterController?.resetUiPlugins?.();
+
       //   // undoChangesToAdditionalFilters();
-      // }
+      // },
+
+      destroy: () => {
+        filterController?.resetUiPlugins?.();
+      }
     }
   };
 
@@ -976,76 +990,12 @@ document.addEventListener('DOMContentLoaded', function () {
   //   });
   // });
 
-  function toggleNotFoundBlock($additionalFilters) {
-    let $notFound = $additionalFilters.find('.additional-filters__not-found');
-    const zoomSearchPlayer = document.getElementById('zoom-search-player');
-    const $visibleFiltersGroups = $additionalFilters.find('.checkboxes-group:not(.hidden):not(:hidden), .radiobtns-group:not(.hidden):not(:hidden), .filter-element--range:not(.hidden):not(:hidden), .filter-element--country:not(.hidden):not(:hidden), .filter-element--date-range:not(.hidden):not(:hidden)');
-
-    if (!$visibleFiltersGroups.length) {
-      $notFound.show();
-      zoomSearchPlayer?.play();
-    } else {
-      $notFound.hide();
-      zoomSearchPlayer?.stop();
-    }
-  }
-
-  // Search in filter
-  $('input[name="search_filter"]').on('input', function (event) {
-    let searchValue = $(this).val().toLowerCase().trim();
-    let $additionalFilters = $(this).closest('.additional-filters');
-    let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range, .filter-element--country, .filter-element--date-range');
-    let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
-
-    if (searchValue) {
-      $clearSearchBtn.removeClass('hidden');
-    } else {
-      $clearSearchBtn.addClass('hidden');
-    }
-
-    $additionalFiltersGroups.each((index, group) => {
-      if ($(group).hasClass('checkboxes-group') || $(group).hasClass('radiobtns-group')) {
-        let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
-        let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label'));
-        checkboxesLabels.forEach(label => label.parentNode.classList.remove('checkbox--highlighted', 'checkbox--highlighted-animation'));
-
-        let filteredCheckboxesLabels = checkboxesLabels.filter(label => label.textContent.toLowerCase().includes(searchValue));
-        if (searchValue) {
-          filteredCheckboxesLabels.forEach(label => label.parentNode.classList.add('checkbox--highlighted', 'checkbox--highlighted-animation'));
-        }
-
-        if (groupTitle.includes(searchValue) || filteredCheckboxesLabels.length) {
-          $(group).removeClass('hidden');
-        } else {
-          $(group).addClass('hidden');
-        }
-      } else {
-        let groupTitle = $(group).find('.filter-element__title').text().toLowerCase();
-
-        if (groupTitle.includes(searchValue)) {
-          $(group).removeClass('hidden');
-        } else {
-          $(group).addClass('hidden');
-        }
-      }
-
-    });
-
-    toggleNotFoundBlock($additionalFilters);
-  });
-
   document.addEventListener('click', function (e) {
     const highlightedAnimationTag = e.target.closest('.additional-filters .checkbox--highlighted-animation');
 
     if (!highlightedAnimationTag) return;
 
     highlightedAnimationTag.classList.remove('checkbox--highlighted-animation');
-  });
-
-  $('.additional-filters__clear-search-btn').click(function (event) {
-    $(this).addClass('hidden');
-
-    $(this).siblings('.form-text--filter-search').val('').trigger('input').focus();
   });
 
   // Adding selected checkboxes/radio buttons
@@ -2101,68 +2051,139 @@ document.addEventListener('DOMContentLoaded', function () {
     synced.forEach(r => r.checked = true);
   });
 
-  const additionalFiltersBody = document.querySelector('.additional-filters__body');
-  const additionalFiltersHeader = document.querySelector('.additional-filters__header');
-  const searchInput = document.querySelector('input[name="search_filter"]');
+  
+  // function toggleNotFoundBlock($additionalFilters) {
+  //   let $notFound = $additionalFilters.find('.additional-filters__not-found');
+  //   const zoomSearchPlayer = document.getElementById('zoom-search-player');
+  //   const $visibleFiltersGroups = $additionalFilters.find('.checkboxes-group:not(.hidden):not(:hidden), .radiobtns-group:not(.hidden):not(:hidden), .filter-element--range:not(.hidden):not(:hidden), .filter-element--country:not(.hidden):not(:hidden), .filter-element--date-range:not(.hidden):not(:hidden)');
 
-  let isTypingInSearch = false;
+  //   if (!$visibleFiltersGroups.length) {
+  //     $notFound.show();
+  //     zoomSearchPlayer?.play();
+  //   } else {
+  //     $notFound.hide();
+  //     zoomSearchPlayer?.stop();
+  //   }
+  // }
 
-  if (searchInput) {
-    searchInput.addEventListener('input', function () {
-      isTypingInSearch = true;
-      clearTimeout(searchInput.typingTimeout);
+  // // Search in filter
+  // $('input[name="search_filter"]').on('input', function (event) {
+  //   let searchValue = $(this).val().toLowerCase().trim();
+  //   let $additionalFilters = $(this).closest('.additional-filters');
+  //   let $additionalFiltersGroups = $additionalFilters.find('.checkboxes-group, .radiobtns-group, .filter-element--range, .filter-element--country, .filter-element--date-range');
+  //   let $clearSearchBtn = $(this).siblings('.additional-filters__clear-search-btn');
 
-      searchInput.typingTimeout = setTimeout(() => {
-        isTypingInSearch = false;
-      }, 500);
-    });
-  }
+  //   if (searchValue) {
+  //     $clearSearchBtn.removeClass('hidden');
+  //   } else {
+  //     $clearSearchBtn.addClass('hidden');
+  //   }
 
-  if (additionalFiltersHeader && additionalFiltersBody) {
-    additionalFiltersBody.addEventListener('scroll', function (e) {
-      if (searchInput && document.activeElement === searchInput && isTypingInSearch) {
-        return;
-      }
+  //   $additionalFiltersGroups.each((index, group) => {
+  //     if ($(group).hasClass('checkboxes-group') || $(group).hasClass('radiobtns-group')) {
+  //       let groupTitle = $(group).find('.checkboxes-group__title, .radiobtns-group__title').text().toLowerCase();
+  //       let checkboxesLabels = Array.from($(group).find('.checkbox__label, .radiobtn__label'));
+  //       checkboxesLabels.forEach(label => label.parentNode.classList.remove('checkbox--highlighted', 'checkbox--highlighted-animation'));
 
-      additionalFiltersHeader.classList.toggle('additional-filters__header--sticky', this.scrollTop > 0);
-    });
-  }
+  //       let filteredCheckboxesLabels = checkboxesLabels.filter(label => label.textContent.toLowerCase().includes(searchValue));
+  //       if (searchValue) {
+  //         filteredCheckboxesLabels.forEach(label => label.parentNode.classList.add('checkbox--highlighted', 'checkbox--highlighted-animation'));
+  //       }
 
-  document.addEventListener('click', function (e) {
-    const searchFilterInput = e.target.closest('input[name="search_filter"]');
+  //       if (groupTitle.includes(searchValue) || filteredCheckboxesLabels.length) {
+  //         $(group).removeClass('hidden');
+  //       } else {
+  //         $(group).addClass('hidden');
+  //       }
+  //     } else {
+  //       let groupTitle = $(group).find('.filter-element__title').text().toLowerCase();
 
-    if (!searchFilterInput) return;
+  //       if (groupTitle.includes(searchValue)) {
+  //         $(group).removeClass('hidden');
+  //       } else {
+  //         $(group).addClass('hidden');
+  //       }
+  //     }
 
-    const additionalFiltersHeader = searchFilterInput.closest('.additional-filters__header');
+  //   });
 
-    if (!additionalFiltersHeader) return;
+  //   toggleNotFoundBlock($additionalFilters);
+  // });
 
-    additionalFiltersHeader.classList.add('additional-filters__header--search-extended');
-  });
+  // $('.additional-filters__clear-search-btn').click(function (event) {
+  //   $(this).addClass('hidden');
 
-  document.addEventListener('click', function (e) {
-    const cancelSearchLink = e.target.closest('.additional-filters__cancel-search-link');
+  //   $(this).siblings('.form-text--filter-search').val('').trigger('input').focus();
+  // });
+  
 
-    if (!cancelSearchLink) return;
+  // const additionalFiltersBody = document.querySelector('.additional-filters__body');
+  // const additionalFiltersHeader = document.querySelector('.additional-filters__header');
+  // const searchInput = document.querySelector('input[name="search_filter"]');
 
-    const additionalFiltersHeader = cancelSearchLink.closest('.additional-filters__header');
+  // let isTypingInSearch = false;
 
-    if (!additionalFiltersHeader) return;
+  // if (searchInput) {
+  //   searchInput.addEventListener('input', function () {
+  //     isTypingInSearch = true;
+  //     clearTimeout(searchInput.typingTimeout);
 
-    additionalFiltersHeader.classList.remove('additional-filters__header--search-extended');
+  //     searchInput.typingTimeout = setTimeout(() => {
+  //       isTypingInSearch = false;
+  //     }, 500);
+  //   });
+  // }
 
-    const searchInput = additionalFiltersHeader.querySelector('input[name="search_filter"]');
-    const clearSearchBtn = additionalFiltersHeader.querySelector('.additional-filters__clear-search-btn');
+  // if (additionalFiltersHeader && additionalFiltersBody) {
+  //   additionalFiltersBody.addEventListener('scroll', function (e) {
+  //     if (searchInput && document.activeElement === searchInput && isTypingInSearch) {
+  //       return;
+  //     }
 
-    if (searchInput) {
-      searchInput.value = '';
-      searchInput.dispatchEvent(new Event("input", { bubbles: true }));
-    }
+  //     additionalFiltersHeader.classList.toggle('additional-filters__header--sticky', this.scrollTop > 0);
+  //   });
+  // }
 
-    clearSearchBtn?.classList.add('hidden');
+  
 
-    e.preventDefault();
-  });
+  // document.addEventListener('click', function (e) {
+  //   const searchFilterInput = e.target.closest('input[name="search_filter"]');
+
+  //   if (!searchFilterInput) return;
+
+  //   const additionalFiltersHeader = searchFilterInput.closest('.additional-filters__header');
+
+  //   if (!additionalFiltersHeader) return;
+
+  //   additionalFiltersHeader.classList.add('additional-filters__header--search-extended');
+  // });
+
+  // document.addEventListener('click', function (e) {
+  //   const cancelSearchLink = e.target.closest('.additional-filters__cancel-search-link');
+
+  //   if (!cancelSearchLink) return;
+
+  //   const additionalFiltersHeader = cancelSearchLink.closest('.additional-filters__header');
+
+  //   if (!additionalFiltersHeader) return;
+
+  //   additionalFiltersHeader.classList.remove('additional-filters__header--search-extended');
+
+  //   const searchInput = additionalFiltersHeader.querySelector('input[name="search_filter"]');
+  //   const clearSearchBtn = additionalFiltersHeader.querySelector('.additional-filters__clear-search-btn');
+
+  //   if (searchInput) {
+  //     searchInput.value = '';
+  //     searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+  //   }
+
+  //   clearSearchBtn?.classList.add('hidden');
+
+  //   e.preventDefault();
+  // });
+
+
+
 
 
   const updateMobileHeaderState = (popup) => {

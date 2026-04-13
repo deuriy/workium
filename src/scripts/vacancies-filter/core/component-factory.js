@@ -1,24 +1,32 @@
 import { CheckboxTagsGroup } from '../components/checkbox-tags-group.js';
 import { CitiesCheckboxes } from '../components/cities-checkboxes.js';
 import { FilterTags } from '../components/filter-tags.js';
+import { AdditionalFiltersSearch } from '../components/additional-filters-search.js';
 
 export class ComponentFactory {
-  constructor({ registry = {} } = {}) {
+  constructor({ registry = {}, uiRegistry = {} } = {}) {
     this.registry = {
       'checkbox-group': CheckboxTagsGroup,
       'cities-checkboxes': CitiesCheckboxes,
       'filter-tags': FilterTags,
       ...registry
     };
+
+    this.uiRegistry = {
+      'additional-filters-search': AdditionalFiltersSearch,
+      ...uiRegistry
+    };
   }
 
   build(config = {}) {
     const components = this.buildComponents(config.components || []);
     const filterTags = this.buildTags(config.tags);
+    const uiPlugins = this.buildUi(config.ui || []);
 
     return {
       components,
-      filterTags
+      filterTags,
+      uiPlugins
     };
   }
 
@@ -172,6 +180,76 @@ export class ComponentFactory {
     return new ComponentClass(props);
   }
 
+  buildUi(uiConfigs = []) {
+    if (!uiConfigs) {
+      return [];
+    }
+
+    const normalizedConfigs = Array.isArray(uiConfigs) ? uiConfigs : [uiConfigs];
+
+    return normalizedConfigs
+      .filter(Boolean)
+      .filter((config) => config.enabled !== false)
+      .flatMap((config, index) => this.buildUiEntry(config, index));
+  }
+
+  buildUiEntry(config, index = 0) {
+    if (!config?.type) {
+      throw new Error(`ComponentFactory: ui config at index ${index} requires "type"`);
+    }
+
+    if (config.mode === 'auto') {
+      return this.buildAutoUi(config, index);
+    }
+
+    return [this.createUiInstance(config, index)];
+  }
+
+  buildAutoUi(config, index = 0) {
+    const selector = config.selector || config.rootSelector;
+
+    if (!selector) {
+      throw new Error(
+        `ComponentFactory: auto ui config at index ${index} requires "selector" or "rootSelector"`
+      );
+    }
+
+    const elements = document.querySelectorAll(selector);
+
+    return Array.from(elements).map((element, elementIndex) => {
+      return this.createUiInstance(
+        {
+          ...config,
+          rootElement: element
+        },
+        `${index}.${elementIndex}`
+      );
+    });
+  }
+
+  createUiInstance(config, index = 0) {
+    const ComponentClass = this.uiRegistry[config.type];
+
+    if (!ComponentClass) {
+      throw new Error(`ComponentFactory: unknown ui type "${config.type}"`);
+    }
+
+    const props = { ...config };
+
+    delete props.enabled;
+    delete props.type;
+    delete props.mode;
+    delete props.selector;
+
+    if (!props.rootSelector && !props.rootElement) {
+      throw new Error(
+        `ComponentFactory: ui config at index ${index} requires "rootSelector" or "rootElement"`
+      );
+    }
+
+    return new ComponentClass(props);
+  }
+
   createInstance(config) {
     const ComponentClass = this.registry[config.type];
 
@@ -255,5 +333,13 @@ export class ComponentFactory {
     }
 
     this.registry[type] = ComponentClass;
+  }
+
+  registerUi(type, ComponentClass) {
+    if (!type) {
+      throw new Error('ComponentFactory.registerUi(type, ComponentClass): type is required');
+    }
+
+    this.uiRegistry[type] = ComponentClass;
   }
 }

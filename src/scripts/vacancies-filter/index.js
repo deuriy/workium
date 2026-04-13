@@ -5,12 +5,13 @@ import { filterConfig } from './filter.config.js';
 export function initVacanciesFilter() {
   const factory = new ComponentFactory();
 
-  const { components, filterTags } = factory.build(filterConfig);
+  const { components, filterTags, uiPlugins } = factory.build(filterConfig);
 
   const filterController = new FilterController({
     formSelector: filterConfig.formSelector,
     components,
     filterTags,
+    uiPlugins,
     syncUrl: filterConfig.syncUrl,
     restoreFromUrl: filterConfig.restoreFromUrl,
 

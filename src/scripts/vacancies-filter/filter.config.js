@@ -1,5 +1,3 @@
-console.log(window.translations?.filter?.more);
-
 export const filterConfig = {
   formSelector: 'form[name="vacancies_filter"]',
   syncUrl: true,
@@ -22,6 +20,30 @@ export const filterConfig = {
       hide: window.translations?.filter?.hide || 'Hide'
     }
   },
+
+  ui: [
+    {
+      enabled: true,
+      type: 'additional-filters-search',
+      mode: 'auto',
+      selector: '.additional-filters',
+
+      inputSelector: 'input[name="search_filter"]',
+      clearButtonSelector: '.additional-filters__clear-search-btn',
+      cancelButtonSelector: '.additional-filters__cancel-search-link',
+      bodySelector: '.additional-filters__body',
+      headerSelector: '.additional-filters__header',
+      notFoundSelector: '.additional-filters__not-found',
+
+      hiddenClass: 'hidden',
+      headerStickyClass: 'additional-filters__header--sticky',
+      headerExtendedClass: 'additional-filters__header--search-extended',
+      highlightClass: 'checkbox--highlighted',
+      highlightAnimationClass: 'checkbox--highlighted-animation',
+      typingIdleDelay: 500,
+      zoomPlayerId: 'zoom-search-player'
+    }
+  ],
 
   components: [
     {

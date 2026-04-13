@@ -8,6 +8,7 @@ export class FilterController {
     formSelector,
     components = {},
     filterTags = [],
+    uiPlugins = [],
     syncUrl = true,
     restoreFromUrl = false,
     initialState = {},
@@ -22,6 +23,7 @@ export class FilterController {
 
     this.components = components;
     this.filterTags = this.normalizeFilterTags(filterTags);
+    this.uiPlugins = this.normalizeUiPlugins(uiPlugins);
 
     this.syncUrl = syncUrl;
     this.onSubmit = onSubmit;
@@ -40,6 +42,7 @@ export class FilterController {
     });
 
     this.bindFilterTags();
+    this.bindUiPlugins();
     this.bindEvents();
 
     if (restoreFromUrl) {
@@ -55,9 +58,13 @@ export class FilterController {
     return Array.isArray(filterTags) ? filterTags.filter(Boolean) : [filterTags];
   }
 
-  // =========================
-  // BINDINGS
-  // =========================
+  normalizeUiPlugins(uiPlugins) {
+    if (!uiPlugins) {
+      return [];
+    }
+
+    return Array.isArray(uiPlugins) ? uiPlugins.filter(Boolean) : [uiPlugins];
+  }
 
   bindEvents() {
     this.handleSubmit = (event) => {
@@ -106,9 +113,22 @@ export class FilterController {
     });
   }
 
-  // =========================
-  // STATE CHANGE PIPELINE
-  // =========================
+  bindUiPlugins() {
+    if (!this.uiPlugins.length) {
+      return;
+    }
+
+    this.uiPlugins.forEach((plugin) => {
+      plugin.controller = this;
+      plugin.init?.();
+    });
+  }
+
+  resetUiPlugins() {
+    this.uiPlugins.forEach((plugin) => {
+      plugin.resetUiState?.();
+    });
+  }
 
   handleStateChange(state) {
     this.dependencies.apply(state, this.store);
@@ -153,17 +173,9 @@ export class FilterController {
     this.store.removeValue(tag.filterKey, tag.value);
   }
 
-  // =========================
-  // DEPENDENCY API
-  // =========================
-
   setCityCountryMapping(cities = []) {
     this.dependencies.setCityCountryMapping(cities);
   }
-
-  // =========================
-  // COMPONENT API
-  // =========================
 
   setOptions(filterKey, options) {
     const component = this.components[filterKey];
@@ -182,10 +194,6 @@ export class FilterController {
   getComponent(filterKey) {
     return this.components[filterKey] || null;
   }
-
-  // =========================
-  // STORE PROXY API
-  // =========================
 
   setSelected(filterKey, values) {
     return this.store.setFilter(filterKey, values);
@@ -274,10 +282,6 @@ export class FilterController {
     console.log('Filters submit:', serialized);
   }
 
-  // =========================
-  // LIFECYCLE
-  // =========================
-
   destroy() {
     if (this.unsubscribe) {
       this.unsubscribe();
@@ -297,6 +301,10 @@ export class FilterController {
 
     this.filterTags.forEach((filterTagsInstance) => {
       filterTagsInstance.destroy?.();
+    });
+
+    this.uiPlugins.forEach((plugin) => {
+      plugin.destroy?.();
     });
   }
 }
