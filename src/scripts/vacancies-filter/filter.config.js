@@ -1,3 +1,5 @@
+console.log(window.translations?.filter?.more);
+
 export const filterConfig = {
   formSelector: 'form[name="vacancies_filter"]',
   syncUrl: true,
@@ -6,8 +8,19 @@ export const filterConfig = {
   tags: {
     enabled: true,
     type: 'filter-tags',
-    rootSelector: '.filter-tags',
-    maxVisibleItems: 4
+    mode: 'auto',
+    selector: '.filter-tags',
+
+    maxVisibleItems: {
+      mobile: 7,
+      desktop: 11,
+      breakpoint: 768
+    },
+
+    texts: {
+      more: window.translations?.filter?.more || 'More',
+      hide: window.translations?.filter?.hide || 'Hide'
+    }
   },
 
   components: [

@@ -1,16 +1,23 @@
 export class FilterTags {
   constructor({
-    rootSelector,
+    rootElement = null,
+    rootSelector = null,
     maxVisibleItems = 4,
     mapTag = null,
     onRemove = null,
     onClear = null,
-    onMoreClick = null
+    onMoreClick = null,
+    texts = {}
   }) {
-    this.root = document.querySelector(rootSelector);
+    this.root =
+      rootElement instanceof Element
+        ? rootElement
+        : document.querySelector(rootSelector);
 
     if (!this.root) {
-      throw new Error(`FilterTags: root element not found by selector "${rootSelector}"`);
+      throw new Error(
+        `FilterTags: root element not found by selector "${rootSelector}"`
+      );
     }
 
     this.list = this.root.querySelector('.filter-tags__list');
@@ -19,7 +26,10 @@ export class FilterTags {
       throw new Error('FilterTags: .filter-tags__list not found');
     }
 
-    this.maxVisibleItems = maxVisibleItems;
+    this.maxVisibleItemsConfig = maxVisibleItems;
+    this.mediaQueryList = null;
+    this.maxVisibleItems = this.resolveMaxVisibleItems();
+
     this.mapTag = typeof mapTag === 'function' ? mapTag : null;
 
     this.onRemove = typeof onRemove === 'function' ? onRemove : null;
@@ -29,9 +39,101 @@ export class FilterTags {
     this.tags = [];
     this.isExpanded = false;
 
+    this.texts = {
+      more: texts.more || 'More',
+      hide: texts.hide || 'Hide'
+    };
+
     this.handleClick = this.handleClick.bind(this);
+    this.handleBreakpointChange = this.handleBreakpointChange.bind(this);
 
     this.root.addEventListener('click', this.handleClick);
+    this.bindResponsiveVisibility();
+
+    this.updateVisibility();
+  }
+
+  resolveMaxVisibleItems() {
+    const config = this.maxVisibleItemsConfig;
+
+    if (typeof config === 'number' && Number.isFinite(config)) {
+      return config;
+    }
+
+    if (!config || typeof config !== 'object') {
+      return 4;
+    }
+
+    const mobile = Number(config.mobile);
+    const desktop = Number(config.desktop);
+    const breakpoint = Number(config.breakpoint) || 768;
+
+    const mobileValue = Number.isFinite(mobile) ? mobile : 7;
+    const desktopValue = Number.isFinite(desktop) ? desktop : mobileValue;
+
+    return window.innerWidth >= breakpoint ? desktopValue : mobileValue;
+  }
+
+  getBreakpoint() {
+    const config = this.maxVisibleItemsConfig;
+
+    if (!config || typeof config !== 'object') {
+      return null;
+    }
+
+    const breakpoint = Number(config.breakpoint);
+
+    return Number.isFinite(breakpoint) ? breakpoint : 768;
+  }
+
+  bindResponsiveVisibility() {
+    const breakpoint = this.getBreakpoint();
+
+    if (breakpoint === null) {
+      return;
+    }
+
+    this.mediaQueryList = window.matchMedia(`(min-width: ${breakpoint}px)`);
+
+    if (typeof this.mediaQueryList.addEventListener === 'function') {
+      this.mediaQueryList.addEventListener('change', this.handleBreakpointChange);
+      return;
+    }
+
+    if (typeof this.mediaQueryList.addListener === 'function') {
+      this.mediaQueryList.addListener(this.handleBreakpointChange);
+    }
+  }
+
+  unbindResponsiveVisibility() {
+    if (!this.mediaQueryList) {
+      return;
+    }
+
+    if (typeof this.mediaQueryList.removeEventListener === 'function') {
+      this.mediaQueryList.removeEventListener('change', this.handleBreakpointChange);
+      return;
+    }
+
+    if (typeof this.mediaQueryList.removeListener === 'function') {
+      this.mediaQueryList.removeListener(this.handleBreakpointChange);
+    }
+  }
+
+  handleBreakpointChange() {
+    const nextMaxVisibleItems = this.resolveMaxVisibleItems();
+
+    if (nextMaxVisibleItems === this.maxVisibleItems) {
+      return;
+    }
+
+    this.maxVisibleItems = nextMaxVisibleItems;
+
+    if (this.tags.length <= this.maxVisibleItems) {
+      this.isExpanded = false;
+    }
+
+    this.render();
   }
 
   setTags(tags = []) {
@@ -55,8 +157,16 @@ export class FilterTags {
     this.onMoreClick?.(this);
   }
 
+  collapse() {
+    this.isExpanded = false;
+    this.render();
+
+    this.root.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
   destroy() {
     this.root.removeEventListener('click', this.handleClick);
+    this.unbindResponsiveVisibility();
   }
 
   render() {
@@ -89,22 +199,33 @@ export class FilterTags {
   renderMoreButton() {
     const hiddenCount = this.tags.length - this.maxVisibleItems;
 
-    if (this.isExpanded || hiddenCount <= 0) {
+    if (hiddenCount <= 0) {
       return '';
     }
 
+    const isActive = this.isExpanded;
+    const text = isActive ? this.texts.hide : this.texts.more;
+
     return `
       <li class="filter-tags__more-item">
-        <button class="filter-tags__more-btn more-btn" type="button">
-          <span class="more-btn__text">Ще</span>
-          <span class="more-btn__count count count--info-bg count--more-btn">+${hiddenCount}</span>
+        <button
+          class="filter-tags__more-btn more-btn${isActive ? ' more-btn--expanded' : ''}"
+          type="button"
+        >
+          <span class="more-btn__text">${text}</span>
+          ${
+            !isActive
+              ? `<span class="more-btn__count count count--info-bg count--more-btn">+${hiddenCount}</span>`
+              : ''
+          }
         </button>
       </li>
     `;
   }
 
   updateVisibility() {
-    this.root.hidden = this.tags.length === 0;
+    const isEmpty = this.tags.length === 0;
+    this.root.classList.toggle('hidden', isEmpty);
   }
 
   handleClick(event) {
@@ -137,7 +258,11 @@ export class FilterTags {
     }
 
     if (moreBtn) {
-      this.expandAll();
+      if (this.isExpanded) {
+        this.collapse();
+      } else {
+        this.expandAll();
+      }
     }
   }
 

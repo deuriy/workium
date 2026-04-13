@@ -30,9 +30,7 @@ export class ComponentFactory {
 
       Object.entries(instances).forEach(([key, instance]) => {
         if (components[key]) {
-          throw new Error(
-            `ComponentFactory: duplicate component key "${key}"`
-          );
+          throw new Error(`ComponentFactory: duplicate component key "${key}"`);
         }
 
         components[key] = instance;
@@ -89,6 +87,12 @@ export class ComponentFactory {
         element
       });
 
+      if (result[key]) {
+        throw new Error(
+          `ComponentFactory: duplicate auto component key "${key}" for type "${config.type}"`
+        );
+      }
+
       result[key] = instance;
     });
 
@@ -96,10 +100,55 @@ export class ComponentFactory {
   }
 
   buildTags(tagsConfig) {
-    if (!tagsConfig || tagsConfig.enabled === false) {
-      return null;
+    if (!tagsConfig) {
+      return [];
     }
 
+    const normalizedConfigs = Array.isArray(tagsConfig) ? tagsConfig : [tagsConfig];
+
+    return normalizedConfigs
+      .filter(Boolean)
+      .filter((config) => config.enabled !== false)
+      .flatMap((config, index) => this.buildTagsEntry(config, index));
+  }
+
+  buildTagsEntry(config, index = 0) {
+    if (!config?.type && !config?.rootSelector && !config?.selector) {
+      throw new Error(
+        `ComponentFactory: tags config at index ${index} is invalid`
+      );
+    }
+
+    if (config.mode === 'auto') {
+      return this.buildAutoTags(config, index);
+    }
+
+    return [this.createTagsInstance(config, index)];
+  }
+
+  buildAutoTags(config, index = 0) {
+    const selector = config.selector || config.rootSelector;
+
+    if (!selector) {
+      throw new Error(
+        `ComponentFactory: auto tags config at index ${index} requires "selector" or "rootSelector"`
+      );
+    }
+
+    const elements = document.querySelectorAll(selector);
+
+    return Array.from(elements).map((element, elementIndex) => {
+      return this.createTagsInstance(
+        {
+          ...config,
+          rootElement: element
+        },
+        `${index}.${elementIndex}`
+      );
+    });
+  }
+
+  createTagsInstance(tagsConfig, index = 0) {
     const type = tagsConfig.type || 'filter-tags';
     const ComponentClass = this.registry[type];
 
@@ -108,8 +157,17 @@ export class ComponentFactory {
     }
 
     const props = { ...tagsConfig };
+
     delete props.enabled;
     delete props.type;
+    delete props.mode;
+    delete props.selector;
+
+    if (!props.rootSelector && !props.rootElement) {
+      throw new Error(
+        `ComponentFactory: tags config at index ${index} requires "rootSelector" or "rootElement"`
+      );
+    }
 
     return new ComponentClass(props);
   }

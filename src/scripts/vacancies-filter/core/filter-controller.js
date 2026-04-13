@@ -7,7 +7,7 @@ export class FilterController {
   constructor({
     formSelector,
     components = {},
-    filterTags = null,
+    filterTags = [],
     syncUrl = true,
     restoreFromUrl = false,
     initialState = {},
@@ -21,7 +21,7 @@ export class FilterController {
     }
 
     this.components = components;
-    this.filterTags = filterTags;
+    this.filterTags = this.normalizeFilterTags(filterTags);
 
     this.syncUrl = syncUrl;
     this.onSubmit = onSubmit;
@@ -45,6 +45,14 @@ export class FilterController {
     if (restoreFromUrl) {
       this.restoreFromUrl();
     }
+  }
+
+  normalizeFilterTags(filterTags) {
+    if (!filterTags) {
+      return [];
+    }
+
+    return Array.isArray(filterTags) ? filterTags.filter(Boolean) : [filterTags];
   }
 
   // =========================
@@ -79,21 +87,23 @@ export class FilterController {
   }
 
   bindFilterTags() {
-    if (!this.filterTags) {
+    if (!this.filterTags.length) {
       return;
     }
 
-    this.filterTags.onRemove = (tag) => {
-      this.removeTag(tag);
-    };
+    this.filterTags.forEach((filterTagsInstance) => {
+      filterTagsInstance.onRemove = (tag) => {
+        this.removeTag(tag);
+      };
 
-    this.filterTags.onClear = () => {
-      this.reset();
-    };
+      filterTagsInstance.onClear = () => {
+        this.reset();
+      };
 
-    this.filterTags.onMoreClick = () => {
-      // optional analytics hook
-    };
+      filterTagsInstance.onMoreClick = () => {
+        // optional analytics hook
+      };
+    });
   }
 
   // =========================
@@ -117,12 +127,15 @@ export class FilterController {
   }
 
   syncTags(filters) {
-    if (!this.filterTags) {
+    if (!this.filterTags.length) {
       return;
     }
 
     const tags = this.tagsBuilder.build(filters);
-    this.filterTags.setTags(tags);
+
+    this.filterTags.forEach((filterTagsInstance) => {
+      filterTagsInstance.setTags(tags);
+    });
   }
 
   removeTag(tag) {
@@ -282,6 +295,8 @@ export class FilterController {
       component.destroy?.();
     });
 
-    this.filterTags?.destroy?.();
+    this.filterTags.forEach((filterTagsInstance) => {
+      filterTagsInstance.destroy?.();
+    });
   }
 }

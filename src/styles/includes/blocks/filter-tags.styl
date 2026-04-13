@@ -30,9 +30,9 @@
 	
 	&__more-item
 		position relative
-		right 3px
-		order 200
-		margin-left auto
+		// right 3px
+		// order 200
+		// margin-left auto
 	
 	&__clear-btn
 		width 32px
@@ -55,26 +55,26 @@
 		.filter-tags__list
 			gap 4px 3px
 		
-		.filter-tags__more-item
-			right 0
+		// .filter-tags__more-item
+		// 	right 0
 	
-	&:not(.filter-tags--expanded-mob)
-		@media $xxs
-			.filter-tags__item:nth-child(n+8)
-				display none
+	// &:not(.filter-tags--expanded-mob)
+	// 	@media $xxs
+	// 		.filter-tags__item:nth-child(n+8)
+	// 			display none
 			
-	&--expanded-mob
-		.filter-tags__item:nth-child(n+8)
-			display block
+	// &--expanded-mob
+	// 	.filter-tags__item:nth-child(n+8)
+	// 		display block
 	
-	&:not(.filter-tags--expanded)
-		@media $xxsPlus
-			.filter-tags__item:nth-child(n+12)
-				display none
+	// &:not(.filter-tags--expanded)
+	// 	@media $xxsPlus
+	// 		.filter-tags__item:nth-child(n+12)
+	// 			display none
 	
-	&--expanded
-		.filter-tags__item:nth-child(n+12)
-			display block
+	// &--expanded
+	// 	.filter-tags__item:nth-child(n+12)
+	// 		display block
 	
 	&--cities
 		.filter-tags__item

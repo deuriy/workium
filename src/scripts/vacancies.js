@@ -765,9 +765,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       },
 
-      close: (fancybox, event) => {
-        // undoChangesToAdditionalFilters();
-      }
+      // close: (fancybox, event) => {
+      //   // undoChangesToAdditionalFilters();
+      // }
     }
   };
 
@@ -970,11 +970,11 @@ document.addEventListener('DOMContentLoaded', function () {
   //   event.preventDefault();
   // });
 
-  $('.filter .form-text:not([type="search"])').on('input', function (e) {
-    setTimeout(() => {
-      toggleClearFilterButtons();
-    });
-  });
+  // $('.filter .form-text:not([type="search"])').on('input', function (e) {
+  //   setTimeout(() => {
+  //     toggleClearFilterButtons();
+  //   });
+  // });
 
   function toggleNotFoundBlock($additionalFilters) {
     let $notFound = $additionalFilters.find('.additional-filters__not-found');
@@ -1131,22 +1131,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  $('.filter-tags__more-btn').click(function (event) {
-    let isMobile = $(window).width() < 576;
-    let visibleClass = isMobile ? 'filter-tags--expanded-mob' : 'filter-tags--expanded';
-    let $filterTags = $(this).closest('.filter-tags');
+  // $('.filter-tags__more-btn').click(function (event) {
+  //   let isMobile = $(window).width() < 576;
+  //   let visibleClass = isMobile ? 'filter-tags--expanded-mob' : 'filter-tags--expanded';
+  //   let $filterTags = $(this).closest('.filter-tags');
 
-    $(this).toggleClass('more-btn--active');
+  //   $(this).toggleClass('more-btn--active');
 
-    if ($(this).hasClass('more-btn--active')) {
-      $(this).find('.more-btn__text').text('Приховати');
-      $filterTags.addClass(visibleClass);
-    } else {
-      $(this).find('.more-btn__text').text('Ще');
-      $filterTags.removeClass(visibleClass);
-    }
+  //   if ($(this).hasClass('more-btn--active')) {
+  //     $(this).find('.more-btn__text').text('Приховати');
+  //     $filterTags.addClass(visibleClass);
+  //   } else {
+  //     $(this).find('.more-btn__text').text('Ще');
+  //     $filterTags.removeClass(visibleClass);
+  //   }
 
-  });
+  // });
 
   function setVacanciesCount() {
     let additionalFiltersSubmitBtn = document.querySelector('.additional-filters__submit-btn');
@@ -1667,7 +1667,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  toggleClearFilterButtons();
+  // toggleClearFilterButtons();
 
   // if (document.forms.vacancies_filter) {
   //   document.forms.vacancies_filter.addEventListener('updateVacanciesFilter', function (e) {
