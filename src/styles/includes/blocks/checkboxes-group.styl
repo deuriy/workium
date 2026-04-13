@@ -148,6 +148,10 @@
 			@media $smPlus
 				grid-template-columns repeat(3, 1fr)
 	
+	&__item
+		&:has(.checkbox__input[name="misce-roboti[]"][value="inse"])
+			order 1
+	
 	&--row
 		// @media $smPlus
 		.checkboxes-group__title
