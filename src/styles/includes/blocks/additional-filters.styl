@@ -198,6 +198,9 @@
 		// top 13px
 		// right 16px
 
+		@media $xs
+			font-size 14px
+
 		&--blue
 			color var(--info)
 
@@ -446,7 +449,7 @@
 		@media $xs
 			gap 16px
 		
-		&:has(>.additional-filters__clear-link[style="display: none;"])
+		&:has(>.additional-filters__clear-link.hidden)
 			grid-template-columns 100%
 			justify-items end
 	
