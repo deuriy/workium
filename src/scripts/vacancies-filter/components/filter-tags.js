@@ -50,7 +50,7 @@ export class FilterTags {
     this.root.addEventListener('click', this.handleClick);
     this.bindResponsiveVisibility();
 
-    this.updateVisibility();
+    // this.updateVisibility();
   }
 
   resolveMaxVisibleItems() {
