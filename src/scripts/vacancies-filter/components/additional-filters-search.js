@@ -100,7 +100,6 @@ export class AdditionalFiltersSearch {
     }
 
     this.resetUiState();
-    this.applySearch('');
   }
 
   destroy() {
@@ -253,7 +252,7 @@ export class AdditionalFiltersSearch {
       this.updateGroupVisibility(meta, searchValue, hasSearch);
     });
 
-    this.toggleNotFound();
+    this.toggleNotFound(hasSearch);
   }
 
   updateGroupVisibility(meta, searchValue, hasSearch) {
@@ -314,8 +313,17 @@ export class AdditionalFiltersSearch {
     this.tagsBlock.classList.toggle(this.searchHiddenClass, !visible);
   }
 
-  toggleNotFound() {
+  toggleNotFound(hasSearch = false) {
     if (!this.notFound) {
+      return;
+    }
+
+    if (!hasSearch) {
+      this.notFound.classList.add(this.hiddenClass);
+
+      const zoomPlayer = document.getElementById(this.zoomPlayerId);
+      zoomPlayer?.stop?.();
+
       return;
     }
 
