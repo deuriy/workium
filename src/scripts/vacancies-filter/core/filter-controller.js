@@ -13,7 +13,9 @@ export class FilterController {
     restoreFromUrl = false,
     initialState = {},
     onSubmit = null,
-    onChange = null
+    onChange = null,
+    submitWithPhpArrayStyle = false,
+    seoCountryFilterKey = 'country'
   }) {
     this.form = document.querySelector(formSelector);
 
@@ -28,6 +30,8 @@ export class FilterController {
     this.syncUrl = syncUrl;
     this.onSubmit = onSubmit;
     this.onChange = onChange;
+    this.submitWithPhpArrayStyle = submitWithPhpArrayStyle;
+    this.seoCountryFilterKey = seoCountryFilterKey;
 
     this.store = new FilterStore(initialState);
     this.dependencies = new FilterDependencies();
@@ -138,7 +142,10 @@ export class FilterController {
     this.syncTags(serialized);
 
     if (this.syncUrl) {
-      UrlSync.write(serialized);
+      UrlSync.write(serialized, {
+        phpArrayStyle: this.submitWithPhpArrayStyle,
+        seoCountryFilterKey: this.seoCountryFilterKey
+      });
     }
 
     if (typeof this.onChange === 'function') {
@@ -220,7 +227,9 @@ export class FilterController {
   }
 
   restoreFromUrl() {
-    const filters = UrlSync.read();
+    const filters = UrlSync.read({
+      seoCountryFilterKey: this.seoCountryFilterKey
+    });
 
     Object.entries(filters).forEach(([key, values]) => {
       this.store.setFilter(key, values);
@@ -249,12 +258,74 @@ export class FilterController {
     return this.store.serialize();
   }
 
+  normalizePath(pathname = '') {
+    const normalized = String(pathname || '')
+      .replace(/\/{2,}/g, '/')
+      .replace(/\/+$/, '');
+
+    return normalized || '/';
+  }
+
+  getSeoCountryValues(filters = {}) {
+    const values = filters[this.seoCountryFilterKey];
+    return Array.isArray(values) ? values : [];
+  }
+
+  buildCountryUrlPart(countryValues = []) {
+    if (!Array.isArray(countryValues) || countryValues.length !== 1) {
+      return '';
+    }
+
+    return String(countryValues[0]).trim();
+  }
+
+  getSubmitBasePath(pathname = '', countryValues = []) {
+    const normalizedPath = this.normalizePath(pathname);
+
+    if (normalizedPath === '/') {
+      return '/';
+    }
+
+    const segments = normalizedPath.split('/').filter(Boolean);
+
+    if (!segments.length) {
+      return '/';
+    }
+
+    const currentPathCountrySlug = segments.length > 1
+      ? segments[segments.length - 1]
+      : '';
+
+    const hasCountryInPath = currentPathCountrySlug.startsWith('robota-v-');
+
+    if (hasCountryInPath) {
+      return `/${segments.slice(0, -1).join('/')}` || '/';
+    }
+
+    return `/${segments.join('/')}`;
+  }
+
   buildQueryString({ phpArrayStyle = false } = {}) {
     const filters = this.serialize();
     const params = new URLSearchParams();
+    const countryValues = this.getSeoCountryValues(filters);
+
+    if (countryValues.length > 1) {
+      if (phpArrayStyle) {
+        countryValues.forEach((value) => {
+          params.append(`${this.seoCountryFilterKey}[]`, value);
+        });
+      } else {
+        params.set(this.seoCountryFilterKey, countryValues.join(','));
+      }
+    }
 
     Object.entries(filters).forEach(([key, values]) => {
       if (!Array.isArray(values) || values.length === 0) {
+        return;
+      }
+
+      if (key === this.seoCountryFilterKey) {
         return;
       }
 
@@ -270,16 +341,40 @@ export class FilterController {
     return params.toString();
   }
 
+  buildSubmitUrl({ phpArrayStyle = this.submitWithPhpArrayStyle } = {}) {
+    const action = this.form.getAttribute('action');
+    const fallbackBaseUrl = action && action.trim() ? action : window.location.pathname;
+
+    const url = new URL(fallbackBaseUrl, window.location.origin);
+    const filters = this.serialize();
+    const countryValues = this.getSeoCountryValues(filters);
+
+    const basePath = this.getSubmitBasePath(url.pathname, countryValues);
+    const singleCountrySlug = this.buildCountryUrlPart(countryValues);
+
+    url.pathname = singleCountrySlug
+      ? `${basePath === '/' ? '' : basePath}/${singleCountrySlug}`
+      : basePath;
+
+    url.search = this.buildQueryString({ phpArrayStyle });
+
+    return url.toString();
+  }
+
   submit() {
     const serialized = this.serialize();
     const rawState = this.getState();
+    const submitUrl = this.buildSubmitUrl();
 
     if (typeof this.onSubmit === 'function') {
-      this.onSubmit(serialized, rawState);
-      return;
+      const result = this.onSubmit(serialized, rawState, submitUrl);
+
+      if (result === false) {
+        return;
+      }
     }
 
-    console.log('Filters submit:', serialized);
+    window.location.href = submitUrl;
   }
 
   destroy() {
