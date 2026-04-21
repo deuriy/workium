@@ -1,0 +1,21 @@
+.email-block
+  position relative
+  display grid
+  grid-template-columns 1fr auto
+  align-items center
+  gap 20px
+  width 342px
+  max-width 100%
+  padding 10px 20px 10px 64px
+  border-radius 12px
+  background #fcf6ed url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='none' viewBox='0 -4 32 32'%3E%3Cpath fill='url(%23a)' d='M29.09 0H2.91A2.91 2.91 0 0 0 0 2.91v17.454a2.91 2.91 0 0 0 2.91 2.909h26.18a2.91 2.91 0 0 0 2.91-2.91V2.91A2.91 2.91 0 0 0 29.09 0'/%3E%3Cpath fill='url(%23b)' fill-rule='evenodd' d='M29.09 0H2.91q-.58 0-1.114.221a2.9 2.9 0 0 0-.944.631l13.091 13.091q.409.41.944.63a2.9 2.9 0 0 0 1.113.222q.579 0 1.113-.222.535-.22.944-.63L31.147.852a2.9 2.9 0 0 0-.943-.63A2.9 2.9 0 0 0 29.091 0' clip-rule='evenodd'/%3E%3Cdefs%3E%3ClinearGradient id='a' x1='16' x2='16' y1='0' y2='23.273' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23fac227'/%3E%3Cstop offset='1' stop-color='%23faa627'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='16' x2='16' y1='0' y2='14.795' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%23fce4b1'/%3E%3Cstop offset='1' stop-color='%23ffd272'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E") 17px center / 29px auto no-repeat
+
+  &__link
+    font-size 18px
+    color #000
+  
+  &__tooltip
+    position absolute
+    z-index 10
+    top -32px
+    right -23px

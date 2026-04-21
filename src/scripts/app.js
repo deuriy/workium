@@ -859,6 +859,47 @@ $(() => {
     }, 1500);
   });
 
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-copy-btn]');
+    if (!btn) return;
+
+    const container = btn.closest('div'); // можно ограничить область
+    const targetSelector = btn.dataset.copyTarget;
+    const tooltipSelector = btn.dataset.copyTooltip;
+
+    if (!targetSelector) return;
+
+    const target = container.querySelector(targetSelector);
+    if (!target) return;
+
+    // Получаем текст
+    let text = '';
+
+    if (target.value !== undefined) {
+      text = target.value;
+    } else {
+      text = target.textContent.trim();
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+
+      // Tooltip
+      if (tooltipSelector) {
+        const tooltip = container.querySelector(tooltipSelector);
+        if (tooltip) {
+          tooltip.classList.add('tooltip--visible');
+
+          setTimeout(() => {
+            tooltip.classList.remove('tooltip--visible');
+          }, 1500);
+        }
+      }
+    } catch (err) {
+      console.error('Copy failed:', err);
+    }
+  });
+
   // $('.selected-item__remove-link').click(function(e) {
   //   e.preventDefault();
 

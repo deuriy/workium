@@ -100,24 +100,25 @@
 					height auto !important
 		
 		& > h2
-			display inline-flex
-			margin-top 21px
-			margin-bottom 21px
-			margin-left -27px
-			padding 5px 39px 5px 26px
-			border-top-right-radius 10px
-			border-bottom-right-radius 10px
-			background #F4F5FC
-			font-weight 600
-			font-size 22px
-			
-			@media $xs
-				margin-top 8px
-				margin-bottom 17px
-				padding 12px 16px
-				margin-left -16px
-				font-size 20px
-				line-height 1.3
+			&:not(:empty)
+				display inline-flex
+				margin-top 21px
+				margin-bottom 21px
+				margin-left -27px
+				padding 5px 39px 5px 26px
+				border-top-right-radius 10px
+				border-bottom-right-radius 10px
+				background #F4F5FC
+				font-weight 600
+				font-size 22px
+				
+				@media $xs
+					margin-top 8px
+					margin-bottom 17px
+					padding 12px 16px
+					margin-left -16px
+					font-size 20px
+					line-height 1.3
 		
 		&--article > h2
 			margin-top -10px
@@ -210,6 +211,10 @@
 		@media $xs
 			order -1
 	
+	&__email-block
+		margin-bottom 24px
+		margin-left -8px
+	
 	&__btn-wrapper
 		text-align center
 	
@@ -218,3 +223,18 @@
 		
 		@media $mdMinus
 			grid-template-columns 100%
+	
+	&--contacts
+		.affiliate-page__content
+			@media $lg
+				padding-top 24px
+
+				&	> h2:not(:empty)
+					margin-top 13px
+					margin-bottom 23px
+			
+		.affiliate-page__contact-box
+			@media $smPlus
+				gap 36px
+				margin-top 48px
+				margin-bottom 34px
