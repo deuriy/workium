@@ -43,7 +43,36 @@ export function initVacanciesFilter() {
     }
   });
 
+  bindCitiesFancyboxDraft(uiPlugins);
+
   window.vacanciesFilter = filterController;
 
   return filterController;
+}
+
+function bindCitiesFancyboxDraft(uiPlugins = []) {
+  const citiesPopupPlugin = uiPlugins.find((plugin) => {
+    return plugin.constructor.name === 'CitiesFilterSearch';
+  });
+
+  if (!window.Fancybox?.bind || !citiesPopupPlugin) {
+    return;
+  }
+
+  console.log('Binding cities popup with Fancybox');
+  console.log(window.Fancybox.bind);
+
+  window.Fancybox.bind('[data-src="#cities-popup"]', {
+    on: {
+      ready() {
+        console.log('Cities popup opened');
+        citiesPopupPlugin.rememberCitiesSnapshot();
+      },
+
+      close() {
+        console.log('Cities popup closed');
+        citiesPopupPlugin.restoreCitiesSnapshotIfNeeded();
+      }
+    }
+  });
 }

@@ -5,6 +5,7 @@ export class CitiesFilterSearch {
     inputSelector = '.cities-filter__search-input',
     clearButtonSelector = '.cities-filter__clear-search-btn',
     clearCitiesSelector = '[data-clear-cities]',
+    applyButtonSelector = '[data-apply-cities]',
     hiddenClass = 'hidden',
     citiesFilterKey = 'cities'
   } = {}) {
@@ -22,6 +23,7 @@ export class CitiesFilterSearch {
     this.inputSelector = inputSelector;
     this.clearButtonSelector = clearButtonSelector;
     this.clearCitiesSelector = clearCitiesSelector;
+    this.applyButtonSelector = applyButtonSelector;
     this.hiddenClass = hiddenClass;
     this.citiesFilterKey = citiesFilterKey;
 
@@ -30,10 +32,17 @@ export class CitiesFilterSearch {
     this.input = this.root.querySelector(this.inputSelector);
     this.clearButton = this.root.querySelector(this.clearButtonSelector);
     this.clearCitiesButton = this.root.querySelector(this.clearCitiesSelector);
+    this.applyButton = this.root.querySelector(this.applyButtonSelector);
+
+    this.unsubscribe = null;
+
+    this.initialSelectedCities = [];
+    this.isCitiesApplied = false;
 
     this.handleInput = this.handleInput.bind(this);
     this.handleClearClick = this.handleClearClick.bind(this);
     this.handleClearCitiesClick = this.handleClearCitiesClick.bind(this);
+    this.handleApplyCitiesClick = this.handleApplyCitiesClick.bind(this);
   }
 
   init() {
@@ -46,10 +55,11 @@ export class CitiesFilterSearch {
     }
 
     if (this.clearCitiesButton) {
-      this.clearCitiesButton.addEventListener(
-        'click',
-        this.handleClearCitiesClick
-      );
+      this.clearCitiesButton.addEventListener('click', this.handleClearCitiesClick);
+    }
+
+    if (this.applyButton) {
+      this.applyButton.addEventListener('click', this.handleApplyCitiesClick);
     }
 
     this.unsubscribe = this.controller?.store?.subscribe?.(() => {
@@ -58,27 +68,6 @@ export class CitiesFilterSearch {
 
     this.updateClearButton();
     this.updateClearCitiesButton();
-  }
-
-  handleClearCitiesClick(event) {
-    event.preventDefault();
-
-    this.controller?.clearFilter?.(this.citiesFilterKey);
-    this.updateClearCitiesButton();
-  }
-
-  updateClearCitiesButton() {
-    if (!this.clearCitiesButton) {
-      return;
-    }
-
-    const selectedCities = this.controller?.getSelected?.(this.citiesFilterKey) || [];
-    const hasSelectedCities = selectedCities.length > 0;
-
-    this.clearCitiesButton.classList.toggle(
-      this.hiddenClass,
-      !hasSelectedCities
-    );
   }
 
   destroy() {
@@ -91,10 +80,11 @@ export class CitiesFilterSearch {
     }
 
     if (this.clearCitiesButton) {
-      this.clearCitiesButton.removeEventListener(
-        'click',
-        this.handleClearCitiesClick
-      );
+      this.clearCitiesButton.removeEventListener('click', this.handleClearCitiesClick);
+    }
+
+    if (this.applyButton) {
+      this.applyButton.removeEventListener('click', this.handleApplyCitiesClick);
     }
 
     if (this.unsubscribe) {
@@ -127,6 +117,17 @@ export class CitiesFilterSearch {
     this.input.focus();
   }
 
+  handleClearCitiesClick(event) {
+    event.preventDefault();
+
+    this.controller?.clearFilter?.(this.citiesFilterKey);
+    this.updateClearCitiesButton();
+  }
+
+  handleApplyCitiesClick() {
+    this.applyCitiesSelection();
+  }
+
   updateClearButton() {
     if (!this.clearButton || !this.input) {
       return;
@@ -137,6 +138,20 @@ export class CitiesFilterSearch {
     this.clearButton.classList.toggle(this.hiddenClass, !hasValue);
   }
 
+  updateClearCitiesButton() {
+    if (!this.clearCitiesButton) {
+      return;
+    }
+
+    const selectedCities = this.controller?.getSelected?.(this.citiesFilterKey) || [];
+    const hasSelectedCities = selectedCities.length > 0;
+
+    this.clearCitiesButton.classList.toggle(
+      this.hiddenClass,
+      !hasSelectedCities
+    );
+  }
+
   resetUiState() {
     if (!this.input) {
       return;
@@ -145,5 +160,31 @@ export class CitiesFilterSearch {
     this.input.value = '';
     this.getCitiesComponent()?.clearSearchQuery?.();
     this.updateClearButton();
+    this.updateClearCitiesButton();
+  }
+
+  rememberCitiesSnapshot() {
+    this.initialSelectedCities = this.controller?.getSelected?.(this.citiesFilterKey) || [];
+    this.isCitiesApplied = false;
+  }
+
+  applyCitiesSelection() {
+    this.isCitiesApplied = true;
+  }
+
+  restoreCitiesSnapshotIfNeeded() {
+    if (this.isCitiesApplied) {
+      this.initialSelectedCities = [];
+      this.isCitiesApplied = false;
+      return;
+    }
+
+    this.controller?.setSelected?.(
+      this.citiesFilterKey,
+      this.initialSelectedCities
+    );
+
+    this.initialSelectedCities = [];
+    this.isCitiesApplied = false;
   }
 }

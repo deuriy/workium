@@ -62,6 +62,7 @@ export const filterConfig = {
       inputSelector: '.cities-filter__search-input',
       clearButtonSelector: '.cities-filter__clear-search-btn',
       clearCitiesSelector: '[data-clear-cities]',
+      applyButtonSelector: '[data-apply-cities]',
       hiddenClass: 'hidden',
       citiesFilterKey: 'cities'
     }
