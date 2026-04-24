@@ -13,6 +13,13 @@ export class FilterTagsBuilder {
 
       const component = this.components[filterKey];
 
+      if (
+        component?.isReadyForTags &&
+        !component.isReadyForTags()
+      ) {
+        return;
+      }
+
       values.forEach((value) => {
         const label = component?.getLabel?.(value) ?? value;
 

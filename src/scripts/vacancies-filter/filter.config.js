@@ -1,7 +1,19 @@
 export const filterConfig = {
   formSelector: 'form[name="vacancies_filter"]',
-  syncUrl: true,
+  syncUrl: false,
   restoreFromUrl: true,
+
+  submitWithPhpArrayStyle: true,
+  seoCountryFilterKey: 'country',
+
+  cities: {
+    endpoint: '/api/v1/cities',
+    filterKey: 'cities',
+    requestCountryFilterKey: 'country',
+    requestParam: 'country_ids',
+    arrayStyle: true,
+    clearOnCountryChange: true
+  },
 
   tags: {
     enabled: true,

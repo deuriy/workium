@@ -14,8 +14,15 @@ export class FilterController {
     initialState = {},
     onSubmit = null,
     onChange = null,
-    submitWithPhpArrayStyle = false,
-    seoCountryFilterKey = 'country'
+    submitWithPhpArrayStyle = true,
+    seoCountryFilterKey = 'country',
+
+    // NEW
+    citiesLoader = null,
+    citiesFilterKey = 'cities',
+    citiesRequestCountryFilterKey = 'countries',
+    citiesRequestParam = 'country',
+    clearCitiesOnCountryChange = true
   }) {
     this.form = document.querySelector(formSelector);
 
@@ -32,6 +39,16 @@ export class FilterController {
     this.onChange = onChange;
     this.submitWithPhpArrayStyle = submitWithPhpArrayStyle;
     this.seoCountryFilterKey = seoCountryFilterKey;
+
+    // NEW
+    this.citiesLoader = citiesLoader;
+    this.citiesFilterKey = citiesFilterKey;
+    this.citiesRequestCountryFilterKey = citiesRequestCountryFilterKey;
+    this.citiesRequestParam = citiesRequestParam;
+    this.clearCitiesOnCountryChange = clearCitiesOnCountryChange;
+    this.lastCitiesRequestKey = null;
+    this.citiesAbortController = null;
+    this.isCitiesLoading = false;
 
     this.store = new FilterStore(initialState);
     this.dependencies = new FilterDependencies();
@@ -52,6 +69,9 @@ export class FilterController {
     if (restoreFromUrl) {
       this.restoreFromUrl();
     }
+
+    // NEW: первичная загрузка городов при старте страницы
+    this.syncCitiesOptions();
   }
 
   normalizeFilterTags(filterTags) {
@@ -79,6 +99,7 @@ export class FilterController {
     this.handleReset = () => {
       setTimeout(() => {
         this.reset();
+        this.syncCitiesOptions();
       }, 0);
     };
 
@@ -91,10 +112,25 @@ export class FilterController {
       this.handleResetButtonClick = (event) => {
         event.preventDefault();
         this.reset();
+        this.syncCitiesOptions();
       };
 
       this.resetButton.addEventListener('click', this.handleResetButtonClick);
     }
+
+    this.handleGlobalClearClick = (event) => {
+      const btn = event.target.closest('[data-clear-filter]');
+
+      if (!btn) return;
+
+      event.preventDefault();
+
+      this.resetCitiesRequestCache();
+      this.reset();
+      this.syncCitiesOptions();
+    };
+
+    document.addEventListener('click', this.handleGlobalClearClick);
   }
 
   bindFilterTags() {
@@ -109,6 +145,7 @@ export class FilterController {
 
       filterTagsInstance.onClear = () => {
         this.reset();
+        this.syncCitiesOptions();
       };
 
       filterTagsInstance.onMoreClick = () => {
@@ -147,6 +184,9 @@ export class FilterController {
         seoCountryFilterKey: this.seoCountryFilterKey
       });
     }
+
+    // NEW: при изменении стран подгружаем города
+    this.syncCitiesOptions(state);
 
     if (typeof this.onChange === 'function') {
       this.onChange(serialized, state);
@@ -193,9 +233,11 @@ export class FilterController {
 
     component.setOptions(options);
 
-    if (filterKey === 'cities') {
+    if (filterKey === this.citiesFilterKey) {
       this.setCityCountryMapping(options);
     }
+
+    this.syncTags(this.serialize());
   }
 
   getComponent(filterKey) {
@@ -223,7 +265,17 @@ export class FilterController {
   }
 
   reset() {
-    return this.store.resetAll();
+    this.resetCitiesRequestCache();
+
+    const changed = this.store.resetAll();
+
+    this.syncCitiesOptions();
+
+    return changed;
+  }
+
+  resetCitiesRequestCache() {
+    this.lastCitiesRequestKey = null;
   }
 
   restoreFromUrl() {
@@ -361,6 +413,94 @@ export class FilterController {
     return url.toString();
   }
 
+  buildCitiesRequestKey(countryValues = []) {
+    return JSON.stringify([...countryValues].map(String).sort());
+  }
+
+  pruneSelectedCitiesByOptions(cities = []) {
+    const availableCityIds = new Set(
+      cities
+        .map((city) => city?.id)
+        .filter(Boolean)
+        .map(String)
+    );
+
+    const selectedCityIds = this.getSelected(this.citiesFilterKey);
+
+    const nextSelectedCityIds = selectedCityIds.filter((id) => availableCityIds.has(id));
+
+    if (selectedCityIds.length !== nextSelectedCityIds.length) {
+      this.setSelected(this.citiesFilterKey, nextSelectedCityIds);
+    }
+  }
+
+  async syncCitiesOptions(state = this.getState()) {
+    if (!this.citiesLoader) {
+      return;
+    }
+
+    const countryComponent = this.getComponent(this.citiesRequestCountryFilterKey);
+
+    const countryIds = countryComponent?.getSelectedItems?.()
+      .map((item) => item.entityId)
+      .filter(Boolean)
+      .map(String) || [];
+
+    const requestKey = this.buildCitiesRequestKey(countryIds);
+
+    if (requestKey === this.lastCitiesRequestKey) {
+      return;
+    }
+
+    this.lastCitiesRequestKey = requestKey;
+
+    if (this.citiesAbortController) {
+      this.citiesAbortController.abort();
+    }
+
+    this.citiesAbortController = new AbortController();
+
+    try {
+      this.isCitiesLoading = true;
+
+      const requestParams = countryIds.length
+        ? { [this.citiesRequestParam]: countryIds }
+        : {};
+
+      const response = await this.citiesLoader.load(requestParams, {
+        signal: this.citiesAbortController.signal
+      });
+
+      const cities = Array.isArray(response)
+        ? response
+        : Array.isArray(response?.results)
+          ? response.results
+          : Array.isArray(response?.data)
+            ? response.data
+            : Array.isArray(response?.cities)
+              ? response.cities
+              : [];
+
+      console.log('[Cities] loaded:', response);
+      console.log('[Cities] normalized:', cities);
+
+      this.setOptions(this.citiesFilterKey, cities);
+
+      if (this.clearCitiesOnCountryChange) {
+        this.pruneSelectedCitiesByOptions(cities);
+      }
+    } catch (error) {
+      if (error?.name === 'AbortError') {
+        return;
+      }
+
+      console.error('Failed to load cities:', error);
+      this.setOptions(this.citiesFilterKey, []);
+    } finally {
+      this.isCitiesLoading = false;
+    }
+  }
+
   submit() {
     const serialized = this.serialize();
     const rawState = this.getState();
@@ -383,6 +523,11 @@ export class FilterController {
       this.unsubscribe = null;
     }
 
+    if (this.citiesAbortController) {
+      this.citiesAbortController.abort();
+      this.citiesAbortController = null;
+    }
+
     this.form.removeEventListener('submit', this.handleSubmit);
     this.form.removeEventListener('reset', this.handleReset);
 
@@ -401,5 +546,7 @@ export class FilterController {
     this.uiPlugins.forEach((plugin) => {
       plugin.destroy?.();
     });
+
+    document.removeEventListener('click', this.handleGlobalClearClick);
   }
 }

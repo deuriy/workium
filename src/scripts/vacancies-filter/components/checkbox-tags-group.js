@@ -160,7 +160,8 @@ export class CheckboxTagsGroup extends BaseFilterComponent {
       input,
       label,
       value: input.value,
-      text: label?.textContent?.trim() || ''
+      text: label?.textContent?.trim() || '',
+      entityId: input.dataset.entityId || ''
     };
   }
 

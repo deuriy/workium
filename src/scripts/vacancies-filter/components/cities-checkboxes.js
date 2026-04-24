@@ -15,6 +15,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     }
 
     this.mapItem = typeof mapItem === 'function' ? mapItem : this.defaultMapItem;
+    this.isOptionsLoaded = false;
 
     this.state = {
       items: []
@@ -45,6 +46,8 @@ export class CitiesCheckboxes extends BaseFilterComponent {
   // =========================
 
   setCities(cities = []) {
+    this.isOptionsLoaded = true;
+
     this.state.items = cities.map((item) => {
       const normalized = this.mapItem(item);
 
@@ -131,8 +134,21 @@ export class CitiesCheckboxes extends BaseFilterComponent {
   }
 
   getLabelLocal(value) {
-    const node = this.nodesMap.get(String(value));
-    return node?._refs?.title?.textContent?.trim() ?? String(value);
+    const normalizedValue = String(value);
+
+    const item = this.state.items.find((item) => String(item.id) === normalizedValue);
+
+    if (item?.title) {
+      return item.title;
+    }
+
+    const node = this.nodesMap.get(normalizedValue);
+
+    return node?._refs?.itemTitle || String(value);
+  }
+
+  isReadyForTags() {
+    return this.isOptionsLoaded;
   }
 
   // =========================
@@ -214,7 +230,8 @@ export class CitiesCheckboxes extends BaseFilterComponent {
       input,
       title,
       country,
-      description
+      description,
+      itemTitle: item.title || ''
     };
 
     return li;
@@ -224,6 +241,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     const { input, title, country, description } = node._refs;
 
     const nextTitle = item.title || '';
+    node._refs.itemTitle = nextTitle;
     const nextCountry = item.country ? ` · ${item.country}` : '';
     const nextDescription = item.description || '';
     const nextSeoSlug = item.seoSlug || '';
