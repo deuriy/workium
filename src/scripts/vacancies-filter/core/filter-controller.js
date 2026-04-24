@@ -25,6 +25,9 @@ export class FilterController {
     clearCitiesOnCountryChange = true
   }) {
     this.form = document.querySelector(formSelector);
+    this.clearFilterButtons = Array.from(
+      document.querySelectorAll('[data-clear-filter]')
+    );
 
     if (!this.form) {
       throw new Error(`Form not found: ${formSelector}`);
@@ -72,6 +75,7 @@ export class FilterController {
 
     // NEW: первичная загрузка городов при старте страницы
     this.syncCitiesOptions();
+    this.toggleClearFilterButtons();
   }
 
   normalizeFilterTags(filterTags) {
@@ -176,6 +180,8 @@ export class FilterController {
 
     const serialized = this.serialize();
 
+    this.toggleClearFilterButtons(serialized);
+
     this.syncTags(serialized);
 
     if (this.syncUrl) {
@@ -276,6 +282,20 @@ export class FilterController {
 
   resetCitiesRequestCache() {
     this.lastCitiesRequestKey = null;
+  }
+
+  hasSelectedFilters(filters = this.serialize()) {
+    return Object.values(filters).some((values) => {
+      return Array.isArray(values) && values.length > 0;
+    });
+  }
+
+  toggleClearFilterButtons(filters = this.serialize()) {
+    const hasSelected = this.hasSelectedFilters(filters);
+
+    this.clearFilterButtons.forEach((button) => {
+      button.classList.toggle('hidden', !hasSelected);
+    });
   }
 
   restoreFromUrl() {

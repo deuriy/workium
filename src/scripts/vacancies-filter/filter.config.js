@@ -54,6 +54,16 @@ export const filterConfig = {
       highlightAnimationClass: 'checkbox--highlighted-animation',
       typingIdleDelay: 500,
       zoomPlayerId: 'zoom-search-player'
+    },
+    {
+      enabled: true,
+      type: 'cities-filter-search',
+      rootSelector: '#cities-popup',
+      inputSelector: '.cities-filter__search-input',
+      clearButtonSelector: '.cities-filter__clear-search-btn',
+      clearCitiesSelector: '[data-clear-cities]',
+      hiddenClass: 'hidden',
+      citiesFilterKey: 'cities'
     }
   ],
 

@@ -2,6 +2,7 @@ import { CheckboxTagsGroup } from '../components/checkbox-tags-group.js';
 import { CitiesCheckboxes } from '../components/cities-checkboxes.js';
 import { FilterTags } from '../components/filter-tags.js';
 import { AdditionalFiltersSearch } from '../components/additional-filters-search.js';
+import { CitiesFilterSearch } from '../components/cities-filter-search.js';
 
 export class ComponentFactory {
   constructor({ registry = {}, uiRegistry = {} } = {}) {
@@ -14,6 +15,7 @@ export class ComponentFactory {
 
     this.uiRegistry = {
       'additional-filters-search': AdditionalFiltersSearch,
+      'cities-filter-search': CitiesFilterSearch,
       ...uiRegistry
     };
   }

@@ -4,7 +4,8 @@ export class CitiesCheckboxes extends BaseFilterComponent {
   constructor({
     containerSelector,
     filterKey = 'cities',
-    mapItem = null
+    mapItem = null,
+    hiddenClass = 'hidden'
   }) {
     super(filterKey);
 
@@ -22,6 +23,8 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     };
 
     this.nodesMap = new Map();
+    this.hiddenClass = hiddenClass;
+    this.searchQuery = '';
 
     this.handleChange = this.handleChange.bind(this);
     this.container.addEventListener('change', this.handleChange);
@@ -151,34 +154,130 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     return this.isOptionsLoaded;
   }
 
+  setSearchQuery(query = '') {
+    this.searchQuery = this.normalizeSearchQuery(query);
+    this.render();
+
+    if (this.store) {
+      this.syncSelected(this.store.getFilter(this.filterKey));
+    }
+  }
+
+  clearSearchQuery() {
+    this.setSearchQuery('');
+  }
+
+  normalizeSearchQuery(value = '') {
+    return String(value).toLowerCase().trim();
+  }
+
+  getItemSearchText(item) {
+    return [
+      item.title,
+      item.description,
+      item.country,
+      item.text
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+  }
+
+  getSelectedIdSet() {
+    if (this.store) {
+      return this.store.getFilter(this.filterKey);
+    }
+
+    return new Set(this.getSelectedLocal());
+  }
+
+  getVisibleItems() {
+    const items = [...this.state.items];
+
+    if (this.searchQuery) {
+      return items.filter((item) => {
+        return this.getItemSearchText(item).includes(this.searchQuery);
+      });
+    }
+
+    const selectedIds = this.getSelectedIdSet();
+
+    const selectedItems = [];
+    const restItems = [];
+
+    items.forEach((item) => {
+      if (selectedIds.has(String(item.id))) {
+        selectedItems.push(item);
+      } else {
+        restItems.push(item);
+      }
+    });
+
+    return [...selectedItems, ...restItems];
+  }
+
   // =========================
   // RENDER
   // =========================
 
+  // render() {
+  //   const nextMap = new Map();
+
+  //   this.state.items.forEach((item) => {
+  //     const id = item.id;
+  //     let node = this.nodesMap.get(id);
+
+  //     if (!node) {
+  //       node = this.createNode(item);
+  //       this.container.appendChild(node);
+  //     } else {
+  //       this.updateNode(node, item);
+  //     }
+
+  //     nextMap.set(id, node);
+  //   });
+
+  //   this.nodesMap.forEach((node, id) => {
+  //     if (!nextMap.has(id)) {
+  //       node.remove();
+  //     }
+  //   });
+
+  //   this.nodesMap = nextMap;
+  // }
+
   render() {
-    const nextMap = new Map();
+    const currentIds = new Set(this.state.items.map((item) => String(item.id)));
+    const visibleItems = this.getVisibleItems();
+
+    this.nodesMap.forEach((node, id) => {
+      if (!currentIds.has(id)) {
+        node.remove();
+        this.nodesMap.delete(id);
+      }
+    });
 
     this.state.items.forEach((item) => {
-      const id = item.id;
+      const id = String(item.id);
       let node = this.nodesMap.get(id);
 
       if (!node) {
         node = this.createNode(item);
-        this.container.appendChild(node);
+        this.nodesMap.set(id, node);
       } else {
         this.updateNode(node, item);
       }
 
-      nextMap.set(id, node);
+      node.remove();
     });
 
-    this.nodesMap.forEach((node, id) => {
-      if (!nextMap.has(id)) {
-        node.remove();
+    visibleItems.forEach((item) => {
+      const node = this.nodesMap.get(String(item.id));
+
+      if (node) {
+        this.container.appendChild(node);
       }
     });
-
-    this.nodesMap = nextMap;
   }
 
   createNode(item) {
