@@ -230,7 +230,7 @@ export class FilterTags {
 
   handleClick(event) {
     const removeBtn = event.target.closest('.filter-tag__remove-btn');
-    const clearBtn = event.target.closest('[data-clear-filter]');
+    const clearBtn = event.target.closest('[data-clear-tags]');
     const moreBtn = event.target.closest('.filter-tags__more-btn');
 
     if (removeBtn) {
