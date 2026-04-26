@@ -10,14 +10,19 @@ export class FilterDependencies {
     this.isApplying = false;
   }
 
-  setCityCountryMapping(cities = []) {
-    this.cityToCountry.clear();
+  setCityCountryMapping(cities = [], { reset = false } = {}) {
+    if (reset) {
+      this.cityToCountry.clear();
+    }
 
     cities.forEach((city) => {
       const cityId = city?.id;
+
       const countryValue =
         city?.country_value ||
+        city?.countryValue ||
         city?.country_slug ||
+        city?.countrySlug ||
         city?.country_id;
 
       if (!cityId || !countryValue) {
@@ -49,7 +54,7 @@ export class FilterDependencies {
     const selectedCountries = state[this.countriesFilterKey] || new Set();
 
     if (!selectedCities.size) {
-      return;
+      return false;
     }
 
     const nextCountries = new Set(selectedCountries);
@@ -68,8 +73,44 @@ export class FilterDependencies {
       }
     });
 
-    if (changed) {
-      store.setFilter(this.countriesFilterKey, [...nextCountries]);
+    if (!changed) {
+      return false;
     }
+
+    return store.setFilter(this.countriesFilterKey, [...nextCountries]);
+  }
+
+  pruneCitiesByCountries(state, store) {
+    const selectedCities = state[this.citiesFilterKey] || new Set();
+    const selectedCountries = state[this.countriesFilterKey] || new Set();
+
+    if (!selectedCities.size) {
+      return false;
+    }
+
+    if (!selectedCountries.size) {
+      return store.clearFilter(this.citiesFilterKey);
+    }
+
+    const nextCities = [];
+    let changed = false;
+
+    selectedCities.forEach((cityId) => {
+      const normalizedCityId = String(cityId);
+      const countryValue = this.cityToCountry.get(normalizedCityId);
+
+      if (countryValue && !selectedCountries.has(countryValue)) {
+        changed = true;
+        return;
+      }
+
+      nextCities.push(normalizedCityId);
+    });
+
+    if (!changed) {
+      return false;
+    }
+
+    return store.setFilter(this.citiesFilterKey, nextCities);
   }
 }

@@ -57,8 +57,13 @@ export class FilterController {
     this.isCitiesLoading = false;
     this.autoSyncCountriesWithCities = autoSyncCountriesWithCities;
     this.preserveSelectedCitiesOnNextLoad = false;
+    this.lastCountrySelectionKey = null;
 
     this.store = new FilterStore(initialState);
+
+    this.lastCountrySelectionKey = this.buildCountrySelectionStateKey(
+      this.store.getState()
+    );
 
     this.dependencies = new FilterDependencies({
       citiesFilterKey: this.citiesFilterKey,
@@ -86,6 +91,39 @@ export class FilterController {
     // NEW: первичная загрузка городов при старте страницы
     this.syncCitiesOptions();
     this.toggleClearFilterButtons();
+  }
+
+  buildCountrySelectionStateKey(state = this.getState()) {
+    const selectedCountries =
+      state[this.citiesRequestCountryFilterKey] || new Set();
+
+    return JSON.stringify(
+      [...selectedCountries].map(String).sort()
+    );
+  }
+
+  pruneCitiesAfterCountryChange(state) {
+    const nextCountrySelectionKey = this.buildCountrySelectionStateKey(state);
+    const didCountriesChange =
+      nextCountrySelectionKey !== this.lastCountrySelectionKey;
+
+    this.lastCountrySelectionKey = nextCountrySelectionKey;
+
+    if (!didCountriesChange) {
+      return state;
+    }
+
+    if (!this.clearCitiesOnCountryChange) {
+      return state;
+    }
+
+    if (this.preserveSelectedCitiesOnNextLoad) {
+      return state;
+    }
+
+    const changed = this.dependencies.pruneCitiesByCountries(state, this.store);
+
+    return changed ? this.getState() : state;
   }
 
   normalizeFilterTags(filterTags) {
@@ -195,7 +233,9 @@ export class FilterController {
   }
 
   handleStateChange(state) {
-    this.dependencies.apply(state, this.store, {
+    const currentState = this.pruneCitiesAfterCountryChange(state);
+
+    this.dependencies.apply(currentState, this.store, {
       syncCountriesWithCities: this.autoSyncCountriesWithCities
     });
 
@@ -213,7 +253,7 @@ export class FilterController {
     }
 
     // NEW: при изменении стран подгружаем города
-    this.syncCitiesOptions(state);
+    this.syncCitiesOptions(currentState);
 
     if (typeof this.onChange === 'function') {
       this.onChange(serialized, state);
