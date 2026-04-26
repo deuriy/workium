@@ -176,15 +176,22 @@ export class CitiesFilterSearch {
     );
   }
 
-  resetUiState() {
-    if (!this.input) {
-      return;
+  resetUiState({ reloadCities = true } = {}) {
+    if (this.input) {
+      this.input.value = '';
     }
 
-    this.input.value = '';
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = null;
+
     this.getCitiesComponent()?.clearSearchQuery?.();
+
     this.updateClearButton();
     this.updateClearCitiesButton();
+
+    if (reloadCities) {
+      this.controller?.searchCitiesOptions?.('');
+    }
   }
 
   rememberCitiesSnapshot() {

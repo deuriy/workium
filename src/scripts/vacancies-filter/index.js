@@ -73,6 +73,7 @@ function bindCitiesFancyboxDraft(uiPlugins = []) {
 
       close() {
         citiesPopupPlugin.restoreCitiesSnapshotIfNeeded();
+        citiesPopupPlugin.resetUiState();
       }
     }
   });

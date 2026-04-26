@@ -103,9 +103,11 @@ export class FilterController {
   }
 
   pruneCitiesAfterCountryChange(state) {
+    const prevCountrySelectionKey = this.lastCountrySelectionKey;
     const nextCountrySelectionKey = this.buildCountrySelectionStateKey(state);
+
     const didCountriesChange =
-      nextCountrySelectionKey !== this.lastCountrySelectionKey;
+      nextCountrySelectionKey !== prevCountrySelectionKey;
 
     this.lastCountrySelectionKey = nextCountrySelectionKey;
 
@@ -121,7 +123,22 @@ export class FilterController {
       return state;
     }
 
-    const changed = this.dependencies.pruneCitiesByCountries(state, this.store);
+    const prevCountries = new Set(JSON.parse(prevCountrySelectionKey || '[]'));
+    const nextCountries = state[this.citiesRequestCountryFilterKey] || new Set();
+
+    const removedCountries = [...prevCountries].filter((countryValue) => {
+      return !nextCountries.has(countryValue);
+    });
+
+    if (!removedCountries.length) {
+      return state;
+    }
+
+    const changed = this.dependencies.pruneCitiesByRemovedCountries(
+      state,
+      this.store,
+      removedCountries
+    );
 
     return changed ? this.getState() : state;
   }
@@ -677,9 +694,9 @@ export class FilterController {
 
       this.setOptions(this.citiesFilterKey, citiesWithCountries);
 
-      if (this.clearCitiesOnCountryChange && !this.preserveSelectedCitiesOnNextLoad) {
-        this.pruneSelectedCitiesByOptions(citiesWithCountries);
-      }
+      // if (this.clearCitiesOnCountryChange && !this.preserveSelectedCitiesOnNextLoad) {
+      //   this.pruneSelectedCitiesByOptions(citiesWithCountries);
+      // }
 
       this.preserveSelectedCitiesOnNextLoad = false;
     } catch (error) {

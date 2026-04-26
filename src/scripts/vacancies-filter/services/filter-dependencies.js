@@ -22,8 +22,7 @@ export class FilterDependencies {
         city?.country_value ||
         city?.countryValue ||
         city?.country_slug ||
-        city?.countrySlug ||
-        city?.country_id;
+        city?.countrySlug;
 
       if (!cityId || !countryValue) {
         return;
@@ -80,17 +79,50 @@ export class FilterDependencies {
     return store.setFilter(this.countriesFilterKey, [...nextCountries]);
   }
 
-  pruneCitiesByCountries(state, store) {
-    const selectedCities = state[this.citiesFilterKey] || new Set();
-    const selectedCountries = state[this.countriesFilterKey] || new Set();
+  // pruneCitiesByCountries(state, store) {
+  //   const selectedCities = state[this.citiesFilterKey] || new Set();
+  //   const selectedCountries = state[this.countriesFilterKey] || new Set();
 
-    if (!selectedCities.size) {
+  //   if (!selectedCities.size) {
+  //     return false;
+  //   }
+
+  //   if (!selectedCountries.size) {
+  //     return store.clearFilter(this.citiesFilterKey);
+  //   }
+
+  //   const nextCities = [];
+  //   let changed = false;
+
+  //   selectedCities.forEach((cityId) => {
+  //     const normalizedCityId = String(cityId);
+  //     const countryValue = this.cityToCountry.get(normalizedCityId);
+
+  //     if (countryValue && !selectedCountries.has(countryValue)) {
+  //       changed = true;
+  //       return;
+  //     }
+
+  //     nextCities.push(normalizedCityId);
+  //   });
+
+  //   if (!changed) {
+  //     return false;
+  //   }
+
+  //   return store.setFilter(this.citiesFilterKey, nextCities);
+  // }
+
+  pruneCitiesByRemovedCountries(state, store, removedCountries = []) {
+    const selectedCities = state[this.citiesFilterKey] || new Set();
+
+    if (!selectedCities.size || !removedCountries.length) {
       return false;
     }
 
-    if (!selectedCountries.size) {
-      return store.clearFilter(this.citiesFilterKey);
-    }
+    const removedCountriesSet = new Set(
+      removedCountries.map((value) => String(value))
+    );
 
     const nextCities = [];
     let changed = false;
@@ -99,7 +131,7 @@ export class FilterDependencies {
       const normalizedCityId = String(cityId);
       const countryValue = this.cityToCountry.get(normalizedCityId);
 
-      if (countryValue && !selectedCountries.has(countryValue)) {
+      if (countryValue && removedCountriesSet.has(countryValue)) {
         changed = true;
         return;
       }
