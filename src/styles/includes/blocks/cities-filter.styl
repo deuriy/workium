@@ -2,6 +2,9 @@
 	display grid
 	height 100%
 	grid-template auto 1fr auto / 100%
+
+	@media $smPlus
+		min-height 720px
 	
 	&__header
 		margin-bottom 25px
@@ -57,6 +60,11 @@
 		font-weight 600
 		font-size 18px
 		text-align center
+	
+	&__not-found
+		display grid
+		height 100%
+		align-content center
 	
 	&__footer
 		display grid

@@ -10,6 +10,9 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     super(filterKey);
 
     this.container = document.querySelector(containerSelector);
+    this.notFoundNode = this.container
+      ?.closest('.cities-filter__body')
+      ?.querySelector('.cities-filter__not-found');
 
     if (!this.container) {
       throw new Error(`CitiesCheckboxes container not found: ${containerSelector}`);
@@ -317,32 +320,6 @@ export class CitiesCheckboxes extends BaseFilterComponent {
   // RENDER
   // =========================
 
-  // render() {
-  //   const nextMap = new Map();
-
-  //   this.state.items.forEach((item) => {
-  //     const id = item.id;
-  //     let node = this.nodesMap.get(id);
-
-  //     if (!node) {
-  //       node = this.createNode(item);
-  //       this.container.appendChild(node);
-  //     } else {
-  //       this.updateNode(node, item);
-  //     }
-
-  //     nextMap.set(id, node);
-  //   });
-
-  //   this.nodesMap.forEach((node, id) => {
-  //     if (!nextMap.has(id)) {
-  //       node.remove();
-  //     }
-  //   });
-
-  //   this.nodesMap = nextMap;
-  // }
-
   render() {
     const currentIds = new Set(this.state.items.map((item) => String(item.id)));
 
@@ -392,16 +369,25 @@ export class CitiesCheckboxes extends BaseFilterComponent {
         }
       });
 
+      const totalVisible =
+        selectedCountryItems.length + otherCountryItems.length;
+
+      this.updateNotFoundVisibility(totalVisible);
+
       return;
     }
 
-    this.getVisibleItems().forEach((item) => {
+    const visibleItems = this.getVisibleItems();
+
+    visibleItems.forEach((item) => {
       const node = this.nodesMap.get(String(item.id));
 
       if (node) {
         this.container.appendChild(node);
       }
     });
+
+    this.updateNotFoundVisibility(visibleItems.length);
   }
 
   createGroupTitleNode(title) {
@@ -505,6 +491,17 @@ export class CitiesCheckboxes extends BaseFilterComponent {
         delete input.dataset.seoSlug;
       }
     }
+  }
+
+  updateNotFoundVisibility(visibleItemsCount = 0) {
+    if (!this.notFoundNode) {
+      return;
+    }
+
+    this.notFoundNode.classList.toggle(
+      this.hiddenClass,
+      visibleItemsCount > 0
+    );
   }
 
   destroy() {
