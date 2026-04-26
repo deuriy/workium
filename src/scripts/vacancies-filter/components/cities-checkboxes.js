@@ -5,7 +5,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     containerSelector,
     filterKey = 'cities',
     mapItem = null,
-    hiddenClass = 'hidden'
+    hiddenClass = 'hidden',
   }) {
     super(filterKey);
 
@@ -22,9 +22,13 @@ export class CitiesCheckboxes extends BaseFilterComponent {
       items: []
     };
 
+    this.knownItemsMap = new Map();
     this.nodesMap = new Map();
     this.hiddenClass = hiddenClass;
     this.searchQuery = '';
+
+    this.selectedCountryValues = new Set();
+    this.otherCountriesTitle = 'В інших країнах';
 
     this.handleChange = this.handleChange.bind(this);
     this.container.addEventListener('change', this.handleChange);
@@ -51,14 +55,13 @@ export class CitiesCheckboxes extends BaseFilterComponent {
   setCities(cities = []) {
     this.isOptionsLoaded = true;
 
-    this.state.items = cities.map((item) => {
-      const normalized = this.mapItem(item);
+    const items = cities.map((item) => this.normalizeItem(item));
 
-      return {
-        ...normalized,
-        id: String(normalized.id)
-      };
+    items.forEach((item) => {
+      this.knownItemsMap.set(String(item.id), item);
     });
+
+    this.state.items = items;
 
     this.render();
 
@@ -71,6 +74,48 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     this.setCities(items);
   }
 
+  setSelectedCountryValues(values = []) {
+    this.selectedCountryValues = new Set(
+      values.map((value) => String(value)).filter(Boolean)
+    );
+  }
+
+  setOtherCountriesTitle(title = 'В інших країнах') {
+    this.otherCountriesTitle = title;
+  }
+
+  setSearchResults(cities = []) {
+    this.isOptionsLoaded = true;
+
+    const searchItems = cities.map((item) => this.normalizeItem(item));
+
+    searchItems.forEach((item) => {
+      this.knownItemsMap.set(String(item.id), item);
+    });
+
+    const currentMatchedItems = this.state.items.filter((item) => {
+      return this.getItemSearchText(item).includes(this.searchQuery);
+    });
+
+    const mergedMap = new Map();
+
+    currentMatchedItems.forEach((item) => {
+      mergedMap.set(String(item.id), item);
+    });
+
+    searchItems.forEach((item) => {
+      mergedMap.set(String(item.id), item);
+    });
+
+    this.state.items = [...mergedMap.values()];
+
+    this.render();
+
+    if (this.store) {
+      this.syncSelected(this.store.getFilter(this.filterKey));
+    }
+  }
+
   getSelectedItems() {
     const selected = new Set(this.getSelected());
 
@@ -79,6 +124,14 @@ export class CitiesCheckboxes extends BaseFilterComponent {
 
   getAllItems() {
     return [...this.state.items];
+  }
+
+  getKnownSelectedItems() {
+    const selectedIds = this.getSelected();
+
+    return selectedIds
+      .map((id) => this.knownItemsMap?.get?.(String(id)))
+      .filter(Boolean);
   }
 
   // =========================
@@ -139,6 +192,12 @@ export class CitiesCheckboxes extends BaseFilterComponent {
   getLabelLocal(value) {
     const normalizedValue = String(value);
 
+    const knownItem = this.knownItemsMap.get(normalizedValue);
+
+    if (knownItem?.title) {
+      return knownItem.title;
+    }
+
     const item = this.state.items.find((item) => String(item.id) === normalizedValue);
 
     if (item?.title) {
@@ -147,7 +206,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
 
     const node = this.nodesMap.get(normalizedValue);
 
-    return node?._refs?.itemTitle || String(value);
+    return node?._refs?.itemTitle || normalizedValue;
   }
 
   isReadyForTags() {
@@ -169,6 +228,15 @@ export class CitiesCheckboxes extends BaseFilterComponent {
 
   normalizeSearchQuery(value = '') {
     return String(value).toLowerCase().trim();
+  }
+
+  normalizeItem(item) {
+    const normalized = this.mapItem(item);
+
+    return {
+      ...normalized,
+      id: String(normalized.id)
+    };
   }
 
   getItemSearchText(item) {
@@ -194,26 +262,55 @@ export class CitiesCheckboxes extends BaseFilterComponent {
   getVisibleItems() {
     const items = [...this.state.items];
 
-    if (this.searchQuery) {
-      return items.filter((item) => {
-        return this.getItemSearchText(item).includes(this.searchQuery);
+    if (!this.searchQuery) {
+      const selectedIds = this.getSelectedIdSet();
+
+      const selectedItems = [];
+      const restItems = [];
+
+      items.forEach((item) => {
+        if (selectedIds.has(String(item.id))) {
+          selectedItems.push(item);
+        } else {
+          restItems.push(item);
+        }
       });
+
+      return [...selectedItems, ...restItems];
     }
 
-    const selectedIds = this.getSelectedIdSet();
+    return items.filter((item) => {
+      return this.getItemSearchText(item).includes(this.searchQuery);
+    });
+  }
 
-    const selectedItems = [];
-    const restItems = [];
+  getGroupedSearchItems() {
+    const visibleItems = this.getVisibleItems();
 
-    items.forEach((item) => {
-      if (selectedIds.has(String(item.id))) {
-        selectedItems.push(item);
+    if (!this.searchQuery || !this.selectedCountryValues.size) {
+      return {
+        selectedCountryItems: visibleItems,
+        otherCountryItems: []
+      };
+    }
+
+    const selectedCountryItems = [];
+    const otherCountryItems = [];
+
+    visibleItems.forEach((item) => {
+      const countryValue = String(item.countryValue || item.country_value || '');
+
+      if (this.selectedCountryValues.has(countryValue)) {
+        selectedCountryItems.push(item);
       } else {
-        restItems.push(item);
+        otherCountryItems.push(item);
       }
     });
 
-    return [...selectedItems, ...restItems];
+    return {
+      selectedCountryItems,
+      otherCountryItems
+    };
   }
 
   // =========================
@@ -248,7 +345,6 @@ export class CitiesCheckboxes extends BaseFilterComponent {
 
   render() {
     const currentIds = new Set(this.state.items.map((item) => String(item.id)));
-    const visibleItems = this.getVisibleItems();
 
     this.nodesMap.forEach((node, id) => {
       if (!currentIds.has(id)) {
@@ -271,13 +367,50 @@ export class CitiesCheckboxes extends BaseFilterComponent {
       node.remove();
     });
 
-    visibleItems.forEach((item) => {
+    this.container.innerHTML = '';
+
+    if (this.searchQuery && this.selectedCountryValues.size) {
+      const { selectedCountryItems, otherCountryItems } = this.getGroupedSearchItems();
+
+      selectedCountryItems.forEach((item) => {
+        const node = this.nodesMap.get(String(item.id));
+
+        if (node) {
+          this.container.appendChild(node);
+        }
+      });
+
+      if (otherCountryItems.length) {
+        this.container.appendChild(this.createGroupTitleNode(this.otherCountriesTitle));
+      }
+
+      otherCountryItems.forEach((item) => {
+        const node = this.nodesMap.get(String(item.id));
+
+        if (node) {
+          this.container.appendChild(node);
+        }
+      });
+
+      return;
+    }
+
+    this.getVisibleItems().forEach((item) => {
       const node = this.nodesMap.get(String(item.id));
 
       if (node) {
         this.container.appendChild(node);
       }
     });
+  }
+
+  createGroupTitleNode(title) {
+    const li = document.createElement('li');
+
+    li.className = 'checkboxes-group__separator cities-filter__separator';
+    li.textContent = title;
+
+    return li;
   }
 
   createNode(item) {
@@ -385,6 +518,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     return {
       id: item.id,
       title: item.origin || item.title || item.name || '',
+      text: item.text || '',
       description: item.province || item.description || '',
       country: item.country_name || item.country || '',
       countryValue: item.country_value || '',

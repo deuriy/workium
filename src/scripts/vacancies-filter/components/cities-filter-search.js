@@ -7,7 +7,9 @@ export class CitiesFilterSearch {
     clearCitiesSelector = '[data-clear-cities]',
     applyButtonSelector = '[data-apply-cities]',
     hiddenClass = 'hidden',
-    citiesFilterKey = 'cities'
+    citiesFilterKey = 'cities',
+    otherCountriesTitle = 'В інших країнах',
+    searchDebounceDelay = 300,
   } = {}) {
     this.root =
       rootElement instanceof Element
@@ -26,6 +28,10 @@ export class CitiesFilterSearch {
     this.applyButtonSelector = applyButtonSelector;
     this.hiddenClass = hiddenClass;
     this.citiesFilterKey = citiesFilterKey;
+
+    this.otherCountriesTitle = otherCountriesTitle;
+    this.searchDebounceDelay = searchDebounceDelay;
+    this.searchTimeout = null;
 
     this.controller = null;
 
@@ -87,6 +93,9 @@ export class CitiesFilterSearch {
       this.applyButton.removeEventListener('click', this.handleApplyCitiesClick);
     }
 
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = null;
+
     if (this.unsubscribe) {
       this.unsubscribe();
       this.unsubscribe = null;
@@ -101,7 +110,18 @@ export class CitiesFilterSearch {
     const value = event.target.value || '';
 
     this.getCitiesComponent()?.setSearchQuery?.(value);
+    this.getCitiesComponent()?.setOtherCountriesTitle?.(this.otherCountriesTitle);
+    this.getCitiesComponent()?.setSelectedCountryValues?.(
+      this.controller?.getSelectedCountryValues?.() || []
+    );
+
     this.updateClearButton();
+
+    clearTimeout(this.searchTimeout);
+
+    this.searchTimeout = window.setTimeout(() => {
+      this.controller?.searchCitiesOptions?.(value);
+    }, this.searchDebounceDelay);
   }
 
   handleClearClick() {
@@ -111,8 +131,12 @@ export class CitiesFilterSearch {
 
     this.input.value = '';
 
+    clearTimeout(this.searchTimeout);
+
     this.getCitiesComponent()?.clearSearchQuery?.();
     this.updateClearButton();
+
+    this.controller?.searchCitiesOptions?.('');
 
     this.input.focus();
   }
@@ -183,6 +207,10 @@ export class CitiesFilterSearch {
     this.controller?.setSelected?.(
       this.citiesFilterKey,
       this.initialSelectedCities
+    );
+
+    this.controller?.syncTags?.(
+      this.controller?.serialize?.() || {}
     );
 
     this.initialSelectedCities = [];

@@ -163,7 +163,9 @@ $(() => {
 
   let currentFancybox = null;
 
-  Fancybox.bind("[data-fancybox]:not([data-src='#cities-popup'])");
+  Fancybox.bind("[data-fancybox]:not([data-src='#cities-popup'])", {
+    dragToClose: false
+  });
 
   Fancybox.bind("[data-fancybox-mini-gallery]", {
     on: {

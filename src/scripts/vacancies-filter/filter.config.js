@@ -11,6 +11,7 @@ export const filterConfig = {
     filterKey: 'cities',
     requestCountryFilterKey: 'country',
     requestParam: 'country_ids',
+    searchParam: 'term',
     arrayStyle: true,
     clearOnCountryChange: true
   },
@@ -64,7 +65,8 @@ export const filterConfig = {
       clearCitiesSelector: '[data-clear-cities]',
       applyButtonSelector: '[data-apply-cities]',
       hiddenClass: 'hidden',
-      citiesFilterKey: 'cities'
+      citiesFilterKey: 'cities',
+      otherCountriesTitle: window.translations?.filter?.other_countries || 'В інших країнах'
     }
   ],
 

@@ -29,8 +29,9 @@ export function initVacanciesFilter() {
     citiesLoader,
     citiesFilterKey: filterConfig.cities?.filterKey || 'cities',
     citiesRequestCountryFilterKey:
-      filterConfig.cities?.requestCountryFilterKey || 'countries',
-    citiesRequestParam: filterConfig.cities?.requestParam || 'country',
+      filterConfig.cities?.requestCountryFilterKey || 'country',
+    citiesRequestParam: filterConfig.cities?.requestParam || 'country_ids',
+    citiesSearchParam: filterConfig.cities?.searchParam || 'term',
     clearCitiesOnCountryChange:
       filterConfig.cities?.clearOnCountryChange ?? true,
     
