@@ -67,6 +67,13 @@ export const filterConfig = {
       hiddenClass: 'hidden',
       citiesFilterKey: 'cities',
       otherCountriesTitle: window.translations?.filter?.other_countries || 'В інших країнах'
+    },
+    {
+      enabled: true,
+      type: 'result-field',
+      mode: 'auto',
+      selector: '[data-result-field]',
+      filterKeyFrom: 'data-result-field'
     }
   ],
 

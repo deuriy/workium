@@ -3,6 +3,7 @@ import { CitiesCheckboxes } from '../components/cities-checkboxes.js';
 import { FilterTags } from '../components/filter-tags.js';
 import { AdditionalFiltersSearch } from '../components/additional-filters-search.js';
 import { CitiesFilterSearch } from '../components/cities-filter-search.js';
+import { ResultField } from '../components/result-field.js';
 
 export class ComponentFactory {
   constructor({ registry = {}, uiRegistry = {} } = {}) {
@@ -16,6 +17,7 @@ export class ComponentFactory {
     this.uiRegistry = {
       'additional-filters-search': AdditionalFiltersSearch,
       'cities-filter-search': CitiesFilterSearch,
+      'result-field': ResultField,
       ...uiRegistry
     };
   }
@@ -247,6 +249,12 @@ export class ComponentFactory {
       throw new Error(
         `ComponentFactory: ui config at index ${index} requires "rootSelector" or "rootElement"`
       );
+    }
+
+    if (!props.filterKey && props.rootElement && config.filterKeyFrom) {
+      props.filterKey = this.resolveKey(props.rootElement, {
+        keyFrom: config.filterKeyFrom
+      });
     }
 
     return new ComponentClass(props);
