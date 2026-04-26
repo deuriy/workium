@@ -387,6 +387,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
       title: item.origin || item.title || item.name || '',
       description: item.province || item.description || '',
       country: item.country_name || item.country || '',
+      countryValue: item.country_value || '',
       seoSlug: item.seo_slug || ''
     };
   }

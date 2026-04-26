@@ -22,7 +22,8 @@ export class FilterController {
     citiesFilterKey = 'cities',
     citiesRequestCountryFilterKey = 'countries',
     citiesRequestParam = 'country',
-    clearCitiesOnCountryChange = true
+    clearCitiesOnCountryChange = true,
+    autoSyncCountriesWithCities
   }) {
     this.form = document.querySelector(formSelector);
     this.clearFilterButtons = Array.from(
@@ -52,9 +53,15 @@ export class FilterController {
     this.lastCitiesRequestKey = null;
     this.citiesAbortController = null;
     this.isCitiesLoading = false;
+    this.autoSyncCountriesWithCities = autoSyncCountriesWithCities;
 
     this.store = new FilterStore(initialState);
-    this.dependencies = new FilterDependencies();
+
+    this.dependencies = new FilterDependencies({
+      citiesFilterKey: this.citiesFilterKey,
+      countriesFilterKey: this.citiesRequestCountryFilterKey
+    });
+
     this.tagsBuilder = new FilterTagsBuilder(this.components);
 
     Object.values(this.components).forEach((component) => {
@@ -175,8 +182,14 @@ export class FilterController {
     });
   }
 
+  applyCountriesFromSelectedCities() {
+    this.dependencies.syncCountriesWithCities(this.getState(), this.store);
+  }
+
   handleStateChange(state) {
-    this.dependencies.apply(state, this.store);
+    this.dependencies.apply(state, this.store, {
+      syncCountriesWithCities: this.autoSyncCountriesWithCities
+    });
 
     const serialized = this.serialize();
 
@@ -454,6 +467,35 @@ export class FilterController {
     }
   }
 
+  attachCountryValuesToCities(cities = []) {
+    const countryComponent = this.getComponent(this.citiesRequestCountryFilterKey);
+
+    if (!countryComponent?.getAllItems) {
+      return cities;
+    }
+
+    const countries = countryComponent.getAllItems();
+
+    const countryValueByEntityId = new Map();
+
+    countries.forEach((country) => {
+      if (!country.entityId || !country.value) {
+        return;
+      }
+
+      countryValueByEntityId.set(String(country.entityId), String(country.value));
+    });
+
+    return cities.map((city) => {
+      const countryValue = countryValueByEntityId.get(String(city.country_id));
+
+      return {
+        ...city,
+        country_value: countryValue || city.country_value || ''
+      };
+    });
+  }
+
   async syncCitiesOptions(state = this.getState()) {
     if (!this.citiesLoader) {
       return;
@@ -501,10 +543,9 @@ export class FilterController {
               ? response.cities
               : [];
 
-      console.log('[Cities] loaded:', response);
-      console.log('[Cities] normalized:', cities);
+      const citiesWithCountries = this.attachCountryValuesToCities(cities);
 
-      this.setOptions(this.citiesFilterKey, cities);
+      this.setOptions(this.citiesFilterKey, citiesWithCountries);
 
       if (this.clearCitiesOnCountryChange) {
         this.pruneSelectedCitiesByOptions(cities);

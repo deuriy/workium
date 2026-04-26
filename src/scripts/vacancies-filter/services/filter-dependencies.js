@@ -1,5 +1,11 @@
 export class FilterDependencies {
-  constructor() {
+  constructor({
+    citiesFilterKey = 'cities',
+    countriesFilterKey = 'country'
+  } = {}) {
+    this.citiesFilterKey = citiesFilterKey;
+    this.countriesFilterKey = countriesFilterKey;
+
     this.cityToCountry = new Map();
     this.isApplying = false;
   }
@@ -8,15 +14,21 @@ export class FilterDependencies {
     this.cityToCountry.clear();
 
     cities.forEach((city) => {
-      if (!city?.id || !city?.country_id) {
+      const cityId = city?.id;
+      const countryValue =
+        city?.country_value ||
+        city?.country_slug ||
+        city?.country_id;
+
+      if (!cityId || !countryValue) {
         return;
       }
 
-      this.cityToCountry.set(String(city.id), String(city.country_id));
+      this.cityToCountry.set(String(cityId), String(countryValue));
     });
   }
 
-  apply(state, store) {
+  apply(state, store, { syncCountriesWithCities = false } = {}) {
     if (this.isApplying) {
       return;
     }
@@ -24,15 +36,17 @@ export class FilterDependencies {
     this.isApplying = true;
 
     try {
-      this.syncCountriesWithCities(state, store);
+      if (syncCountriesWithCities) {
+        this.syncCountriesWithCities(state, store);
+      }
     } finally {
       this.isApplying = false;
     }
   }
 
   syncCountriesWithCities(state, store) {
-    const selectedCities = state.cities || new Set();
-    const selectedCountries = state.countries || new Set();
+    const selectedCities = state[this.citiesFilterKey] || new Set();
+    const selectedCountries = state[this.countriesFilterKey] || new Set();
 
     if (!selectedCities.size) {
       return;
@@ -42,20 +56,20 @@ export class FilterDependencies {
     let changed = false;
 
     selectedCities.forEach((cityId) => {
-      const countryId = this.cityToCountry.get(String(cityId));
+      const countryValue = this.cityToCountry.get(String(cityId));
 
-      if (!countryId) {
+      if (!countryValue) {
         return;
       }
 
-      if (!nextCountries.has(countryId)) {
-        nextCountries.add(countryId);
+      if (!nextCountries.has(countryValue)) {
+        nextCountries.add(countryValue);
         changed = true;
       }
     });
 
     if (changed) {
-      store.setFilter('countries', [...nextCountries]);
+      store.setFilter(this.countriesFilterKey, [...nextCountries]);
     }
   }
 }

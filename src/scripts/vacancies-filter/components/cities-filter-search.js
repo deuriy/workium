@@ -169,6 +169,7 @@ export class CitiesFilterSearch {
   }
 
   applyCitiesSelection() {
+    this.controller?.applyCountriesFromSelectedCities?.();
     this.isCitiesApplied = true;
   }
 

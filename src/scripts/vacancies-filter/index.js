@@ -33,6 +33,8 @@ export function initVacanciesFilter() {
     citiesRequestParam: filterConfig.cities?.requestParam || 'country',
     clearCitiesOnCountryChange:
       filterConfig.cities?.clearOnCountryChange ?? true,
+    
+    autoSyncCountriesWithCities: false,
 
     onChange(filters, state) {
       console.log('Changed:', filters, state);
@@ -65,12 +67,10 @@ function bindCitiesFancyboxDraft(uiPlugins = []) {
   window.Fancybox.bind('[data-src="#cities-popup"]', {
     on: {
       ready() {
-        console.log('Cities popup opened');
         citiesPopupPlugin.rememberCitiesSnapshot();
       },
 
       close() {
-        console.log('Cities popup closed');
         citiesPopupPlugin.restoreCitiesSnapshotIfNeeded();
       }
     }
