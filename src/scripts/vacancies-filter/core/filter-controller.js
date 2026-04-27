@@ -322,6 +322,7 @@ export class FilterController {
     }
 
     this.syncTags(this.serialize());
+    this.syncResultFields(filterKey);
   }
 
   getComponent(filterKey) {
@@ -709,6 +710,20 @@ export class FilterController {
     } finally {
       this.isCitiesLoading = false;
     }
+  }
+
+  syncResultFields(filterKey = null) {
+    this.uiPlugins.forEach((plugin) => {
+      if (!plugin.isResultField) {
+        return;
+      }
+
+      if (filterKey && plugin.filterKey !== filterKey) {
+        return;
+      }
+
+      plugin.update?.();
+    });
   }
 
   mergeSelectedKnownCities(cities = []) {

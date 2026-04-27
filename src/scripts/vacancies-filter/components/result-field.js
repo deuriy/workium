@@ -41,6 +41,8 @@ export class ResultField {
     this.controller = null;
     this.unsubscribe = null;
 
+    this.isResultField = true;
+
     this.handleClearClick = this.handleClearClick.bind(this);
   }
 
