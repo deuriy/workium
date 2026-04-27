@@ -80,8 +80,14 @@ export const filterConfig = {
     {
       type: 'checkbox-group',
       mode: 'auto',
-      selector: '.checkboxes-group:not(.checkboxes-group--cities)',
+      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius)',
       keyFrom: 'data-filter-key'
+    },
+
+    {
+      type: 'radius-field',
+      key: 'radius',
+      containerSelector: '.radius-field'
     },
 
     {

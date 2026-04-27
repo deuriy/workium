@@ -119,54 +119,54 @@ function getFilterUrl(changedAdditionalFilters = false) {
   // console.log(citiesComponent.getSelected());
   // console.log(filterController.getSelected());
 
-  let selectedCitiesSlugs = [];
-  let selectedCities = Array.from(selectedCitiesSlugs).join('/');
+  // let selectedCitiesSlugs = [];
+  // let selectedCities = Array.from(selectedCitiesSlugs).join('/');
   // if (selectedCountry) {
   //   urlParamsArr.push(selectedCountry);
   // }
 
-  urlParamsArr.push(selectedCities);
+  // urlParamsArr.push(selectedCities);
 
   // console.log('selectedCities');
   // console.log(selectedCities);
   // console.log('selectedCountry');
   // console.log(selectedCountry);
 
-  const selectedSegmentCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input[data-segment]:not([data-exclude-field]):checked');
-  selectedSegmentCheckboxes.forEach(el => {
-    if (el.value) {
-      urlParamsArr.push(el.value);
-    }
-  });
+  // const selectedSegmentCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input[data-segment]:not([data-exclude-field]):checked');
+  // selectedSegmentCheckboxes.forEach(el => {
+  //   if (el.value) {
+  //     urlParamsArr.push(el.value);
+  //   }
+  // });
 
-  const selectedSegmentRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input[data-segment]:not([data-exclude-field]):checked');
-  selectedSegmentRadioBtns.forEach(el => {
-    if (el.value) {
-      urlParamsArr.push(el.value);
-    }
-  });
+  // const selectedSegmentRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input[data-segment]:not([data-exclude-field]):checked');
+  // selectedSegmentRadioBtns.forEach(el => {
+  //   if (el.value) {
+  //     urlParamsArr.push(el.value);
+  //   }
+  // });
 
-  urlParams = urlParamsArr.join('/');
+  // urlParams = urlParamsArr.join('/');
 
   // Get request params
-  let searchValue = document.querySelector('input[name="vacancy_name"]')?.value;
-  if (searchValue) {
-    requestParamsArr.push(`search=${encodeURIComponent(searchValue)}`);
-  }
+  // let searchValue = document.querySelector('input[name="vacancy_name"]')?.value;
+  // if (searchValue) {
+  //   requestParamsArr.push(`search=${encodeURIComponent(searchValue)}`);
+  // }
 
-  const selectedCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input:not([data-segment]):not([data-exclude-field]):checked');
-  selectedCheckboxes.forEach(el => {
-    if (el.value && !(el.name === 'zitlo[]' && el.value === 'all')) {
-      requestParamsArr.push(`${el.name}=${el.value}`);
-    }
-  });
+  // const selectedCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input:not([data-segment]):not([data-exclude-field]):checked');
+  // selectedCheckboxes.forEach(el => {
+  //   if (el.value && !(el.name === 'zitlo[]' && el.value === 'all')) {
+  //     requestParamsArr.push(`${el.name}=${el.value}`);
+  //   }
+  // });
 
-  const selectedRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input:not([data-segment]):not([data-exclude-field]):checked');
-  selectedRadioBtns.forEach(el => {
-    if (el.value) {
-      requestParamsArr.push(`${el.name}=${el.value}`);
-    }
-  });
+  // const selectedRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input:not([data-segment]):not([data-exclude-field]):checked');
+  // selectedRadioBtns.forEach(el => {
+  //   if (el.value) {
+  //     requestParamsArr.push(`${el.name}=${el.value}`);
+  //   }
+  // });
 
   const sliders = document.querySelectorAll('.additional-filters .range-slider--single');
   sliders.forEach(el => {
@@ -219,17 +219,17 @@ function getFilterUrl(changedAdditionalFilters = false) {
   // });
 
 
-  let catWorkerValue = document.querySelector('select[name="kategoriia-pracivnika"]')?.value;
-  if (catWorkerValue) {
-    requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
-  }
+  // let catWorkerValue = document.querySelector('select[name="kategoriia-pracivnika"]')?.value;
+  // if (catWorkerValue) {
+  //   requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
+  // }
 
-  const distance = isMobile ? document.querySelector('.filter__distance-select--mobile') : document.querySelector('.filter__distance-select--desktop');
+  // const distance = isMobile ? document.querySelector('.filter__distance-select--mobile') : document.querySelector('.filter__distance-select--desktop');
 
   // if (distance.value && selectedCountry && selectedCities) {
-  if (distance && distance.value) {
-    requestParamsArr.push(`radius=${distance.value}`);
-  }
+  // if (distance && distance.value) {
+  //   requestParamsArr.push(`radius=${distance.value}`);
+  // }
 
   if (changedAdditionalFilters) {
     requestParamsArr.push('open-popup=1');

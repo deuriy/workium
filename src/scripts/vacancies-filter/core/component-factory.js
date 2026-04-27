@@ -4,12 +4,14 @@ import { FilterTags } from '../components/filter-tags.js';
 import { AdditionalFiltersSearch } from '../components/additional-filters-search.js';
 import { CitiesFilterSearch } from '../components/cities-filter-search.js';
 import { ResultField } from '../components/result-field.js';
+import { RadiusField } from '../components/radius-field.js';
 
 export class ComponentFactory {
   constructor({ registry = {}, uiRegistry = {} } = {}) {
     this.registry = {
       'checkbox-group': CheckboxTagsGroup,
       'cities-checkboxes': CitiesCheckboxes,
+      'radius-field': RadiusField,
       'filter-tags': FilterTags,
       ...registry
     };
