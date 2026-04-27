@@ -91,6 +91,13 @@ export const filterConfig = {
     },
 
     {
+      type: 'calendar-field',
+      mode: 'auto',
+      selector: '.js-calendar',
+      keyFrom: 'data-filter-key'
+    },
+
+    {
       type: 'cities-checkboxes',
       key: 'cities',
       containerSelector: '.checkboxes-group--cities .checkboxes-group__list'

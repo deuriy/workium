@@ -5,7 +5,7 @@ import { Pagination } from 'swiper/modules';
 // import select2 from 'select2';
 import PerfectScrollbar from 'perfect-scrollbar';
 import noUiSlider from 'nouislider';
-import { Calendar } from "./calendar";
+// import { Calendar } from "./calendar";
 
 import { initVacanciesFilter } from "./vacancies-filter";
 
@@ -201,12 +201,12 @@ function getFilterUrl(changedAdditionalFilters = false) {
     }
   });
 
-  document.querySelectorAll('.additional-filters .calendar__input').forEach(el => {
-    if (!el.value) return;
+  // document.querySelectorAll('.additional-filters .calendar__input').forEach(el => {
+  //   if (!el.value) return;
 
-    let resultValue = `${el.name}=${el.value}`;
-    requestParamsArr.push(resultValue);
-  });
+  //   let resultValue = `${el.name}=${el.value}`;
+  //   requestParamsArr.push(resultValue);
+  // });
 
   // let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
 
@@ -750,7 +750,7 @@ function changeCaseOfDaysLabel(days) {
 document.addEventListener('DOMContentLoaded', function () {
   // select2($);
 
-  Calendar.initAll();
+  // Calendar.initAll();
 
   const filterController = initVacanciesFilter();
 
@@ -1045,41 +1045,41 @@ document.addEventListener('DOMContentLoaded', function () {
   //   });
   // });
 
-  function initCalendarTag(calendarEl) {
-    const calendarField = calendarEl.querySelector('.calendar-field');
-    const calendarInput = calendarEl.querySelector('.calendar__input');
+  // function initCalendarTag(calendarEl) {
+  //   const calendarField = calendarEl.querySelector('.calendar-field');
+  //   const calendarInput = calendarEl.querySelector('.calendar__input');
 
-    if (!calendarInput.value) return;
+  //   if (!calendarInput.value) return;
 
-    createOrUpdateTag('date-range', calendarInput.name, calendarInput.value, calendarField.textContent);
-  }
+  //   createOrUpdateTag('date-range', calendarInput.name, calendarInput.value, calendarField.textContent);
+  // }
 
-  document.querySelectorAll('.additional-filters .js-calendar').forEach(el => {
-    initCalendarTag(el);
-  });
+  // document.querySelectorAll('.additional-filters .js-calendar').forEach(el => {
+  //   initCalendarTag(el);
+  // });
 
-  document.addEventListener('calendar:apply', (e) => {
-    initCalendarTag(e.detail.root);
-  });
+  // document.addEventListener('calendar:apply', (e) => {
+  //   initCalendarTag(e.detail.root);
+  // });
 
-  document.querySelectorAll('.additional-filters__filter-element--date-range').forEach(dateRange => {
-    // setCalendarVacanciesCount(dateRange);
-    // setVacanciesCount();
+  // document.querySelectorAll('.additional-filters__filter-element--date-range').forEach(dateRange => {
+  //   // setCalendarVacanciesCount(dateRange);
+  //   // setVacanciesCount();
 
-    dateRange.addEventListener('calendar:open', (e) => {
-      // setCalendarVacanciesCount(e.detail.root);
-      setVacanciesCount();
-    });
+  //   dateRange.addEventListener('calendar:open', (e) => {
+  //     // setCalendarVacanciesCount(e.detail.root);
+  //     setVacanciesCount();
+  //   });
 
-    dateRange.addEventListener('calendar:change', (e) => {
-      // setCalendarVacanciesCount(e.detail.root);
-      setVacanciesCount();
-    });
+  //   dateRange.addEventListener('calendar:change', (e) => {
+  //     // setCalendarVacanciesCount(e.detail.root);
+  //     setVacanciesCount();
+  //   });
 
-    dateRange.addEventListener('calendar:cancel', (e) => {
-      setVacanciesCount();
-    });
-  });
+  //   dateRange.addEventListener('calendar:cancel', (e) => {
+  //     setVacanciesCount();
+  //   });
+  // });
 
   // $('.filter-tags__more-btn').click(function (event) {
   //   let isMobile = $(window).width() < 576;

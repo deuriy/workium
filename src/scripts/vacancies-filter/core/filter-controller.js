@@ -96,6 +96,10 @@ export class FilterController {
     this.dependencies.applyDependentVisibility(this.getState());
   }
 
+  isSingleValueFilter(key) {
+    return this.components[key]?.isSingleValue === true;
+  }
+
   registerRadiusVisibilityDependency() {
     const radiusComponent = this.components.radius;
 
@@ -572,6 +576,11 @@ export class FilterController {
       }
 
       if (key === this.seoCountryFilterKey) {
+        return;
+      }
+
+      if (this.isSingleValueFilter(key)) {
+        params.set(key, String(values[0]));
         return;
       }
 

@@ -21,6 +21,7 @@ export class RadiusField extends BaseFilterComponent {
     this.state = {
       items: []
     };
+    this.isSingleValue = true;
 
     this.inputsMap = new Map();
 
