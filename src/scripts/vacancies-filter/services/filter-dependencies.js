@@ -8,6 +8,32 @@ export class FilterDependencies {
 
     this.cityToCountry = new Map();
     this.isApplying = false;
+    this.dependentVisibilityItems = [];
+  }
+
+  registerDependentVisibility({
+    sourceFilterKey,
+    targetElement,
+    hiddenClass = 'hidden'
+  } = {}) {
+    if (!sourceFilterKey || !(targetElement instanceof Element)) {
+      return;
+    }
+
+    this.dependentVisibilityItems.push({
+      sourceFilterKey,
+      targetElement,
+      hiddenClass
+    });
+  }
+
+  applyDependentVisibility(state = {}) {
+    this.dependentVisibilityItems.forEach((item) => {
+      const selectedValues = state[item.sourceFilterKey] || new Set();
+      const shouldShow = selectedValues.size > 0;
+
+      item.targetElement.classList.toggle(item.hiddenClass, !shouldShow);
+    });
   }
 
   setCityCountryMapping(cities = [], { reset = false } = {}) {
@@ -43,6 +69,8 @@ export class FilterDependencies {
       if (syncCountriesWithCities) {
         this.syncCountriesWithCities(state, store);
       }
+
+      this.applyDependentVisibility(state);
     } finally {
       this.isApplying = false;
     }

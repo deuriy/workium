@@ -69,6 +69,7 @@ export class FilterController {
       citiesFilterKey: this.citiesFilterKey,
       countriesFilterKey: this.citiesRequestCountryFilterKey
     });
+    this.registerRadiusVisibilityDependency();
 
     this.tagsBuilder = new FilterTagsBuilder(this.components);
 
@@ -91,6 +92,22 @@ export class FilterController {
     // NEW: первичная загрузка городов при старте страницы
     this.syncCitiesOptions();
     this.toggleClearFilterButtons();
+
+    this.dependencies.applyDependentVisibility(this.getState());
+  }
+
+  registerRadiusVisibilityDependency() {
+    const radiusComponent = this.components.radius;
+
+    if (!radiusComponent?.container) {
+      return;
+    }
+
+    this.dependencies.registerDependentVisibility({
+      sourceFilterKey: this.citiesFilterKey,
+      targetElement: radiusComponent.container,
+      hiddenClass: 'hidden'
+    });
   }
 
   buildCountrySelectionStateKey(state = this.getState()) {
