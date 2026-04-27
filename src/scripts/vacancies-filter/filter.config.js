@@ -53,8 +53,7 @@ export const filterConfig = {
       headerExtendedClass: 'additional-filters__header--search-extended',
       highlightClass: 'checkbox--highlighted',
       highlightAnimationClass: 'checkbox--highlighted-animation',
-      typingIdleDelay: 500,
-      zoomPlayerId: 'zoom-search-player'
+      typingIdleDelay: 500
     },
     {
       enabled: true,

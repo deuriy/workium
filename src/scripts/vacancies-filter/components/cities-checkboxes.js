@@ -13,6 +13,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
     this.notFoundNode = this.container
       ?.closest('.cities-filter__body')
       ?.querySelector('.cities-filter__not-found');
+    this.notFoundPlayer = this.notFoundNode?.querySelector('lottie-player, dotlottie-player') || null;
 
     if (!this.container) {
       throw new Error(`CitiesCheckboxes container not found: ${containerSelector}`);
@@ -498,10 +499,15 @@ export class CitiesCheckboxes extends BaseFilterComponent {
       return;
     }
 
-    this.notFoundNode.classList.toggle(
-      this.hiddenClass,
-      visibleItemsCount > 0
-    );
+    const shouldShow = visibleItemsCount === 0;
+
+    this.notFoundNode.classList.toggle(this.hiddenClass, !shouldShow);
+
+    if (shouldShow) {
+      this.notFoundPlayer?.play?.();
+    } else {
+      this.notFoundPlayer?.stop?.();
+    }
   }
 
   destroy() {

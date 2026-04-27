@@ -22,8 +22,7 @@ export class AdditionalFiltersSearch {
     searchHiddenClass = 'is-search-hidden',
     headerStickyClass = 'additional-filters__header--sticky',
     headerExtendedClass = 'additional-filters__header--search-extended',
-    typingIdleDelay = 500,
-    zoomPlayerId = 'zoom-search-player'
+    typingIdleDelay = 500
   } = {}) {
     this.root =
       rootElement instanceof Element
@@ -53,7 +52,6 @@ export class AdditionalFiltersSearch {
     this.headerExtendedClass = headerExtendedClass;
 
     this.typingIdleDelay = typingIdleDelay;
-    this.zoomPlayerId = zoomPlayerId;
 
     this.isTyping = false;
     this.typingTimeout = null;
@@ -64,6 +62,7 @@ export class AdditionalFiltersSearch {
     this.clearButton = this.root.querySelector(this.clearButtonSelector);
     this.cancelButton = this.root.querySelector(this.cancelButtonSelector);
     this.notFound = this.root.querySelector(this.notFoundSelector);
+    this.notFoundPlayer = this.notFound?.querySelector('lottie-player, dotlottie-player') || null;
     this.tagsBlock = this.root.querySelector(this.tagsSelector);
 
     this.groups = Array.from(
@@ -320,10 +319,7 @@ export class AdditionalFiltersSearch {
 
     if (!hasSearch) {
       this.notFound.classList.add(this.hiddenClass);
-
-      const zoomPlayer = document.getElementById(this.zoomPlayerId);
-      zoomPlayer?.stop?.();
-
+      this.notFoundPlayer?.stop?.();
       return;
     }
 
@@ -340,12 +336,10 @@ export class AdditionalFiltersSearch {
 
     this.notFound.classList.toggle(this.hiddenClass, hasVisibleGroups);
 
-    const zoomPlayer = document.getElementById(this.zoomPlayerId);
-
     if (!hasVisibleGroups) {
-      zoomPlayer?.play?.();
+      this.notFoundPlayer?.play?.();
     } else {
-      zoomPlayer?.stop?.();
+      this.notFoundPlayer?.stop?.();
     }
   }
 
