@@ -104,4 +104,29 @@ function bindFancyboxDrafts(uiPlugins = [], filterController = null) {
       }
     });
   }
+
+  const checkboxesGroupsComponents = Object.values(filterController.components)
+  .filter((component) => component.isCheckboxesGroupsField);
+
+  checkboxesGroupsComponents.forEach((component) => {
+    if (!component.container?.id) {
+      return;
+    }
+
+    window.Fancybox.bind(`[data-src="#${component.container.id}"]`, {
+      on: {
+        ready() {
+          component.resetDraftFromStore();
+        },
+
+        reveal() {
+          component.resetDraftFromStore();
+        },
+
+        close() {
+          component.resetDraftFromStore();
+        }
+      }
+    });
+  });
 }

@@ -80,7 +80,7 @@ export const filterConfig = {
     {
       type: 'checkbox-group',
       mode: 'auto',
-      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius):not([data-radio-filter])',
+      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius):not([data-radio-filter]):not(.checkboxes-group--filter-element-popup)',
       keyFrom: 'data-filter-key'
     },
 
@@ -125,6 +125,17 @@ export const filterConfig = {
       props: {
         currencyFilterKey: 'currency',
         converterEndpoint: 'https://filter.workium.uno/api/v1/currency-converter'
+      }
+    },
+
+    {
+      type: 'checkboxes-groups-field',
+      mode: 'auto',
+      selector: '[data-checkboxes-groups-field]',
+      keyFrom: 'data-checkboxes-groups-field',
+      props: {
+        countriesFilterKey: 'country',
+        hiddenClass: 'hidden'
       }
     },
 
