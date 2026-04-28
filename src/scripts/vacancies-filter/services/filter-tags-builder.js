@@ -13,6 +13,10 @@ export class FilterTagsBuilder {
 
       const component = this.components[filterKey];
 
+      if (component?.excludeFromTags) {
+        return;
+      }
+
       if (
         component?.isReadyForTags &&
         !component.isReadyForTags()

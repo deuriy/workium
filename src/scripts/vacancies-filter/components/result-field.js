@@ -85,13 +85,25 @@ export class ResultField {
 
     const component = this.controller?.getComponent?.(this.filterKey);
 
+    const isHtml = typeof component?.getLabelHtml === 'function';
+
     const labels = selectedValues.map((value) => {
+      if (isHtml) {
+        return component.getLabelHtml(value);
+      }
+
       return component?.getLabel?.(value) || value;
     });
 
-    this.text.textContent = hasSelected
-      ? labels.join(', ')
-      : this.placeholder;
+    if (isHtml) {
+      this.text.innerHTML = hasSelected
+        ? labels.join(', ')
+        : this.placeholder;
+    } else {
+      this.text.textContent = hasSelected
+        ? labels.join(', ')
+        : this.placeholder;
+    }
 
     this.root.classList.toggle(this.selectedRootClass, hasSelected);
     this.field?.classList.toggle(this.selectedFieldClass, hasSelected);

@@ -25,6 +25,7 @@ export function initVacanciesFilter() {
     restoreFromUrl: filterConfig.restoreFromUrl,
     submitWithPhpArrayStyle: filterConfig.submitWithPhpArrayStyle,
     seoCountryFilterKey: filterConfig.seoCountryFilterKey,
+    currency: filterConfig.currency,
 
     citiesLoader,
     citiesFilterKey: filterConfig.cities?.filterKey || 'cities',
@@ -46,35 +47,61 @@ export function initVacanciesFilter() {
     }
   });
 
-  bindCitiesFancyboxDraft(uiPlugins);
-
   window.vacanciesFilter = filterController;
+
+  bindFancyboxDrafts(uiPlugins, filterController);
 
   return filterController;
 }
 
-function bindCitiesFancyboxDraft(uiPlugins = []) {
+function bindFancyboxDrafts(uiPlugins = [], filterController = null) {
+  if (!window.Fancybox?.bind) {
+    return;
+  }
+
   const citiesPopupPlugin = uiPlugins.find((plugin) => {
     return plugin.constructor.name === 'CitiesFilterSearch';
   });
 
-  if (!window.Fancybox?.bind || !citiesPopupPlugin) {
-    return;
+  if (citiesPopupPlugin) {
+    window.Fancybox.bind('[data-src="#cities-popup"]', {
+      dragToClose: false,
+
+      on: {
+        ready() {
+          citiesPopupPlugin.rememberCitiesSnapshot();
+        },
+
+        close() {
+          citiesPopupPlugin.restoreCitiesSnapshotIfNeeded();
+          citiesPopupPlugin.resetUiState();
+        }
+      }
+    });
   }
 
-  console.log('Binding cities popup with Fancybox');
-  console.log(window.Fancybox.bind);
+  const currencyComponent = filterController?.getComponent?.('currency');
 
-  window.Fancybox.bind('[data-src="#cities-popup"]', {
-    on: {
-      ready() {
-        citiesPopupPlugin.rememberCitiesSnapshot();
-      },
+  if (currencyComponent) {
+    window.Fancybox.bind('[data-src="#currencies-popup"]', {
+      dragToClose: false,
+      
+      on: {
+        ready() {
+          console.log('Ready!');
+          currencyComponent.resetDraftFromStore?.();
+        },
 
-      close() {
-        citiesPopupPlugin.restoreCitiesSnapshotIfNeeded();
-        citiesPopupPlugin.resetUiState();
+        reveal() {
+          console.log('reveal!');
+          currencyComponent.resetDraftFromStore?.();
+        },
+
+        close() {
+          console.log('close!');
+          currencyComponent.resetDraftFromStore?.();
+        }
       }
-    }
-  });
+    });
+  }
 }

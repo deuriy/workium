@@ -16,6 +16,7 @@ export class FilterController {
     onChange = null,
     submitWithPhpArrayStyle = true,
     seoCountryFilterKey = 'country',
+    currency = null,
 
     // NEW
     citiesLoader = null,
@@ -58,6 +59,7 @@ export class FilterController {
     this.autoSyncCountriesWithCities = autoSyncCountriesWithCities;
     this.preserveSelectedCitiesOnNextLoad = false;
     this.lastCountrySelectionKey = null;
+    this.currencyConfig = currency;
 
     this.store = new FilterStore(initialState);
 
@@ -67,7 +69,8 @@ export class FilterController {
 
     this.dependencies = new FilterDependencies({
       citiesFilterKey: this.citiesFilterKey,
-      countriesFilterKey: this.citiesRequestCountryFilterKey
+      countriesFilterKey: this.citiesRequestCountryFilterKey,
+      currencyConfig: this.currencyConfig
     });
     this.registerRadiusVisibilityDependency();
 
@@ -89,11 +92,19 @@ export class FilterController {
       this.restoreFromUrl();
     }
 
+    this.dependencies.apply(this.getState(), this.store, {
+      components: this.components
+    });
+
     // NEW: первичная загрузка городов при старте страницы
     this.syncCitiesOptions();
     this.toggleClearFilterButtons();
 
     this.dependencies.applyDependentVisibility(this.getState());
+  }
+
+  shouldIgnoreFilterInSelectedState(key) {
+    return this.components[key]?.excludeFromSelectedState === true;
   }
 
   isSingleValueFilter(key) {
@@ -274,7 +285,8 @@ export class FilterController {
     const currentState = this.pruneCitiesAfterCountryChange(state);
 
     this.dependencies.apply(currentState, this.store, {
-      syncCountriesWithCities: this.autoSyncCountriesWithCities
+      syncCountriesWithCities: this.autoSyncCountriesWithCities,
+      components: this.components
     });
 
     const serialized = this.serialize();
@@ -373,7 +385,13 @@ export class FilterController {
   reset() {
     this.resetCitiesRequestCache();
 
+    const preservedState = this.getPreservedResetState();
+
     const changed = this.store.resetAll();
+
+    Object.entries(preservedState).forEach(([key, values]) => {
+      this.store.setFilter(key, values);
+    });
 
     this.syncCitiesOptions();
 
@@ -385,7 +403,11 @@ export class FilterController {
   }
 
   hasSelectedFilters(filters = this.serialize()) {
-    return Object.values(filters).some((values) => {
+    return Object.entries(filters).some(([key, values]) => {
+      if (this.shouldIgnoreFilterInSelectedState(key)) {
+        return false;
+      }
+
       return Array.isArray(values) && values.length > 0;
     });
   }
@@ -424,6 +446,24 @@ export class FilterController {
 
   getSelectedCountryValues() {
     return this.getSelected(this.citiesRequestCountryFilterKey);
+  }
+
+  getPreservedResetState() {
+    const preservedState = {};
+
+    Object.entries(this.components).forEach(([key, component]) => {
+      if (!component?.preserveOnReset) {
+        return;
+      }
+
+      const values = this.getSelected(key);
+
+      if (values.length) {
+        preservedState[key] = values;
+      }
+    });
+
+    return preservedState;
   }
 
   async searchCitiesOptions(query = '') {

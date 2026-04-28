@@ -1,10 +1,12 @@
 export class FilterDependencies {
   constructor({
     citiesFilterKey = 'cities',
-    countriesFilterKey = 'country'
+    countriesFilterKey = 'country',
+    currencyConfig = null
   } = {}) {
     this.citiesFilterKey = citiesFilterKey;
     this.countriesFilterKey = countriesFilterKey;
+    this.currencyConfig = currencyConfig;
 
     this.cityToCountry = new Map();
     this.isApplying = false;
@@ -25,6 +27,42 @@ export class FilterDependencies {
       targetElement,
       hiddenClass
     });
+  }
+
+  applyCurrencyDependency(state, store) {
+    if (!this.currencyConfig) {
+      return;
+    }
+
+    const {
+      filterKey = 'currency',
+      countriesFilterKey = this.countriesFilterKey,
+      defaultValue = 'EUR',
+      countryCurrencyMap = {}
+    } = this.currencyConfig;
+
+    const selectedCountries = state[countriesFilterKey] || new Set();
+    const selectedCurrencies = state[filterKey] || new Set();
+
+    const currentCurrency = [...selectedCurrencies][0] || '';
+    const currencyComponent = this.components?.[filterKey];
+
+    if (currencyComponent?.isManuallySelected) {
+      return;
+    }
+
+    let nextCurrency = defaultValue;
+
+    if (selectedCountries.size === 1) {
+      const countryValue = [...selectedCountries][0];
+      nextCurrency = countryCurrencyMap[countryValue] || defaultValue;
+    }
+
+    if (currentCurrency === nextCurrency) {
+      return;
+    }
+
+    store.setFilter(filterKey, [nextCurrency]);
   }
 
   applyDependentVisibility(state = {}) {
@@ -58,12 +96,18 @@ export class FilterDependencies {
     });
   }
 
-  apply(state, store, { syncCountriesWithCities = false } = {}) {
+  apply(state, store, {
+    syncCountriesWithCities = false,
+    components = {}
+  } = {}) {
     if (this.isApplying) {
       return;
     }
 
     this.isApplying = true;
+
+    this.components = components;
+    this.applyCurrencyDependency(state, store);
 
     try {
       if (syncCountriesWithCities) {

@@ -6,6 +6,7 @@ import { CitiesFilterSearch } from '../components/cities-filter-search.js';
 import { ResultField } from '../components/result-field.js';
 import { RadiusField } from '../components/radius-field.js';
 import { CalendarField } from '../components/calendar-field.js';
+import { CurrencyField } from '../components/currency-field.js';
 
 export class ComponentFactory {
   constructor({ registry = {}, uiRegistry = {} } = {}) {
@@ -14,6 +15,7 @@ export class ComponentFactory {
       'cities-checkboxes': CitiesCheckboxes,
       'radius-field': RadiusField,
       'calendar-field': CalendarField,
+      'currency-field': CurrencyField,
       'filter-tags': FilterTags,
       ...registry
     };

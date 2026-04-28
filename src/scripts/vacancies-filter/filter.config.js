@@ -80,7 +80,7 @@ export const filterConfig = {
     {
       type: 'checkbox-group',
       mode: 'auto',
-      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius):not(.checkboxes-group--currencies)',
+      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius)',
       keyFrom: 'data-filter-key'
     },
 
@@ -98,9 +98,32 @@ export const filterConfig = {
     },
 
     {
+      type: 'currency-field',
+      key: 'currency',
+      containerSelector: '.radiobtns-group--currencies',
+      props: {
+        defaultValue: 'EUR'
+      }
+    },
+
+    {
       type: 'cities-checkboxes',
       key: 'cities',
       containerSelector: '.checkboxes-group--cities .checkboxes-group__list'
     }
-  ]
+  ],
+
+  currency: {
+    filterKey: 'currency',
+    countriesFilterKey: 'country',
+    defaultValue: 'EUR',
+
+    countryCurrencyMap: {
+      'robota-v-polshi': 'PLN',
+      'robota-v-chehiyi': 'CZK',
+      'robota-v-ukraine': 'UAH',
+      'robota-v-usa': 'USD',
+      'robota-v-moldovi': 'MDL',
+    }
+  }
 };
