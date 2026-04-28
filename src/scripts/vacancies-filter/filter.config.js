@@ -80,7 +80,7 @@ export const filterConfig = {
     {
       type: 'checkbox-group',
       mode: 'auto',
-      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius)',
+      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius):not(.checkboxes-group--currencies)',
       keyFrom: 'data-filter-key'
     },
 

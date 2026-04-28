@@ -990,13 +990,13 @@ document.addEventListener('DOMContentLoaded', function () {
   //   });
   // });
 
-  document.addEventListener('click', function (e) {
-    const highlightedAnimationTag = e.target.closest('.additional-filters .checkbox--highlighted-animation');
+  // document.addEventListener('click', function (e) {
+  //   const highlightedAnimationTag = e.target.closest('.additional-filters .checkbox--highlighted-animation');
 
-    if (!highlightedAnimationTag) return;
+  //   if (!highlightedAnimationTag) return;
 
-    highlightedAnimationTag.classList.remove('checkbox--highlighted-animation');
-  });
+  //   highlightedAnimationTag.classList.remove('checkbox--highlighted-animation');
+  // });
 
   // Adding selected checkboxes/radio buttons
   // $('.additional-filters').find('.checkbox__input, .radiobtn__input').change(function (event) {
