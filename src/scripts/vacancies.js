@@ -4,7 +4,7 @@ import Swiper from 'swiper';
 import { Pagination } from 'swiper/modules';
 // import select2 from 'select2';
 import PerfectScrollbar from 'perfect-scrollbar';
-import noUiSlider from 'nouislider';
+// import noUiSlider from 'nouislider';
 // import { Calendar } from "./calendar";
 
 import { initVacanciesFilter } from "./vacancies-filter";
@@ -1289,333 +1289,333 @@ document.addEventListener('DOMContentLoaded', function () {
   // });
 
 
-  const sliders = document.querySelectorAll('.range-slider--single');
-  sliders.forEach(slider => {
-    let min = parseInt(slider.dataset.min);
-    let max = parseInt(slider.dataset.max);
-    let startValue = parseInt(slider.dataset.startValue);
-
-    noUiSlider.create(slider, {
-      start: [startValue],
-      connect: [true, false],
-      range: {
-        'min': min,
-        'max': max
-      },
-
-      format: {
-        to: function (value) {
-          return parseInt(value);
-        },
-
-        from: function (value) {
-          return parseInt(value);
-        },
-      },
-    });
-
-    let syncFieldIds = slider.dataset.syncFieldIds;
-    let fields = [];
-    let fieldsSuffixes = [];
-
-    syncFieldIds.split(',').forEach(id => {
-      let field = document.getElementById(id.trim());
-
-      if (field) {
-        fields.push(field);
-
-        let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
-
-        if (fieldSuffix) {
-          fieldsSuffixes.push(fieldSuffix);
-        }
-      }
-    });
-
-    slider.noUiSlider.on('slide', function (values, handle) {
-      fields.forEach(field => {
-        field.value = values[0];
-      });
-
-      let name = slider.dataset.name;
-      let value = values[0];
-
-      fieldsSuffixes.forEach(fieldSuffix => {
-        if (name === 'vik') {
-          fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
-        }
-      });
-
-      if (slider.dataset.min != values[0]) {
-        let label = slider.closest('.filter-element').querySelector('.filter-element__title');
-        let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : value;
-
-        createOrUpdateTag("range", name, value, labelText);
-      } else {
-        let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
-        $filterTag.remove();
-      }
-
-      toggleClearFilterButtons();
-    });
-
-    ['input'].forEach(eventName => {
-      fields.forEach((field, idx) => {
-        field.addEventListener(eventName, function (e) {
-          if (!this.value) return;
-
-          slider.noUiSlider.set(this.value);
-
-          let name = slider.dataset.name;
-          let value = this.value;
-
-          if (slider.dataset.min != this.value) {
-            let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : '';
-
-            createOrUpdateTag("range", name, value, labelText);
-          } else {
-            let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
-            $filterTag.remove();
-          }
-
-          fieldsSuffixes.forEach(fieldSuffix => {
-            if (name === 'vik') {
-              fieldSuffix.textContent = changeCaseOfAgeLabel(value);
-            }
-          });
-
-          setTimeout(() => {
-            toggleClearFilterButtons();
-          });
-        });
-      });
-    });
-
-    fields.forEach((field, idx) => {
-      field.addEventListener('change', function (e) {
-        let name = slider.dataset.name;
-        let value = this.value;
-
-        if (this.value == '') {
-          value = slider.noUiSlider.get()[0];
-        } else if (this.value < min) {
-          value = min;
-        } else if (this.value > max) {
-          value = max;
-        }
-
-        this.value = value;
-        slider.noUiSlider.set(value);
-        createOrUpdateTag("range", name, value, name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : value);
-      });
-    });
-  });
-
-  const rangeSliders = document.querySelectorAll('.range-slider--range');
-  rangeSliders.forEach(slider => {
-    let min = parseInt(slider.dataset.min);
-    let max = parseInt(slider.dataset.max);
-    let minValue = parseInt(slider.dataset.minValue);
-    let maxValue = parseInt(slider.dataset.maxValue);
-
-    noUiSlider.create(slider, {
-      start: [minValue, maxValue],
-      connect: true,
-      range: {
-        'min': min,
-        'max': max
-      },
-
-      format: {
-        to: function (value) {
-          return parseInt(value);
-        },
-
-        from: function (value) {
-          return parseInt(value);
-        },
-      },
-    });
-
-    let syncFromFieldIds = slider.dataset.syncFromFieldIds;
-    let syncToFieldIds = slider.dataset.syncToFieldIds;
-    let fieldsFrom = [];
-    let fieldsTo = [];
-    let fieldsFromSuffixes = [];
-    let fieldsToSuffixes = [];
-
-    syncFromFieldIds.split(',').forEach(id => {
-      let field = document.getElementById(id.trim());
-
-      if (field) {
-        fieldsFrom.push(field);
-
-        let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
-
-        if (fieldSuffix) {
-          fieldsFromSuffixes.push(fieldSuffix);
-        }
-      }
-    });
-
-    syncToFieldIds.split(',').forEach(id => {
-      let field = document.getElementById(id.trim());
-
-      if (field) {
-        fieldsTo.push(field);
-
-        let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
-
-        if (fieldSuffix) {
-          fieldsToSuffixes.push(fieldSuffix);
-        }
-      }
-    });
-
-    slider.noUiSlider.on('slide', function (values, handle) {
-      fieldsFrom.forEach(field => {
-        field.value = values[0];
-      });
-
-      fieldsTo.forEach(field => {
-        field.value = values[1];
-      });
-
-      let name = slider.dataset.name;
-      let value = `${values[0]}-${values[1]}`;
-
-      fieldsFromSuffixes.forEach(fieldSuffix => {
-        if (name === 'vik') {
-          fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
-        } else if (name === 'fiksovanii-termin') {
-          fieldSuffix.textContent = changeCaseOfDaysLabel(values[0]);
-        }
-      });
-
-      fieldsToSuffixes.forEach(fieldSuffix => {
-        if (name === 'vik') {
-          fieldSuffix.textContent = changeCaseOfAgeLabel(values[1]);
-        } else if (name === 'fiksovanii-termin') {
-          fieldSuffix.textContent = changeCaseOfDaysLabel(values[1]);
-        }
-      });
-
-      if (slider.dataset.min != values[0] || slider.dataset.max != values[1]) {
-        let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(values[1]) : value;
-
-        createOrUpdateTag("range", name, value, labelText);
-      } else {
-        let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
-        $filterTag.remove();
-      }
-
-      toggleClearFilterButtons();
-    });
-
-    ['input'].forEach(eventName => {
-      fieldsFrom.forEach((field, idx) => {
-        field.addEventListener(eventName, function (e) {
-          if (!this.value) return;
-
-          slider.noUiSlider.set([this.value, null]);
-
-          let name = slider.dataset.name;
-          let value = `${this.value}-${fieldsTo[idx].value}`;
-
-          if (slider.dataset.min != this.value || slider.dataset.max != fieldsTo[idx].value) {
-            let labelText = name === 'vik_from' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
-
-            createOrUpdateTag("range", name, value, labelText);
-          } else {
-            let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
-            $filterTag.remove();
-          }
-
-          fieldsFromSuffixes.forEach(fieldSuffix => {
-            if (name === 'vik') {
-              fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
-            }
-          });
-
-          setTimeout(() => {
-            toggleClearFilterButtons();
-          });
-        });
-      });
-
-      fieldsTo.forEach((field, idx) => {
-        field.addEventListener(eventName, function (e) {
-          if (!this.value) return;
-
-          slider.noUiSlider.set([null, this.value]);
-
-          let name = slider.dataset.name;
-          let value = `${fieldsFrom[idx].value}-${this.value}`;
-
-          if (slider.dataset.min != fieldsFrom[idx].value || slider.dataset.max != this.value) {
-            let labelText = name === 'vik_to' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
-
-            createOrUpdateTag("range", name, value, labelText);
-          } else {
-            let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
-            $filterTag.remove();
-          }
-
-          fieldsToSuffixes.forEach(fieldSuffix => {
-            if (name === 'vik') {
-              fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
-            }
-          });
-
-          setTimeout(() => {
-            toggleClearFilterButtons();
-          });
-        });
-      });
-    });
-
-    fieldsFrom.forEach((field, idx) => {
-      field.addEventListener('change', function (e) {
-        let name = slider.dataset.name;
-        let fromValue = this.value;
-        let toValue = fieldsTo[idx].value;
-
-        if (this.value == '') {
-          fromValue = slider.noUiSlider.get()[0];
-        } else if (this.value < min) {
-          fromValue = min;
-        } else if (this.value > max) {
-          fromValue = max;
-        }
-
-        let value = `${fromValue}-${toValue}`;
-        this.value = fromValue;
-        slider.noUiSlider.set([fromValue, null]);
-        createOrUpdateTag("range", name, value, name === 'vik_from' ? value + ' років' : value);
-      });
-    });
-
-    fieldsTo.forEach((field, idx) => {
-      field.addEventListener('change', function (e) {
-        let name = slider.dataset.name;
-        let fromValue = fieldsFrom[idx].value;
-        let toValue = this.value;
-
-        if (this.value == '') {
-          toValue = slider.noUiSlider.get()[1];
-        } else if (this.value < min) {
-          toValue = min;
-        } else if (this.value > max) {
-          toValue = max;
-        }
-
-        let value = `${fromValue}-${toValue}`;
-        this.value = toValue;
-        slider.noUiSlider.set([null, toValue]);
-        createOrUpdateTag("range", name, value, name === 'vik_to' ? value + ' років' : value);
-      });
-    });
-  });
+  // const sliders = document.querySelectorAll('.range-slider--single');
+  // sliders.forEach(slider => {
+  //   let min = parseInt(slider.dataset.min);
+  //   let max = parseInt(slider.dataset.max);
+  //   let startValue = parseInt(slider.dataset.startValue);
+
+  //   noUiSlider.create(slider, {
+  //     start: [startValue],
+  //     connect: [true, false],
+  //     range: {
+  //       'min': min,
+  //       'max': max
+  //     },
+
+  //     format: {
+  //       to: function (value) {
+  //         return parseInt(value);
+  //       },
+
+  //       from: function (value) {
+  //         return parseInt(value);
+  //       },
+  //     },
+  //   });
+
+  //   let syncFieldIds = slider.dataset.syncFieldIds;
+  //   let fields = [];
+  //   let fieldsSuffixes = [];
+
+  //   syncFieldIds.split(',').forEach(id => {
+  //     let field = document.getElementById(id.trim());
+
+  //     if (field) {
+  //       fields.push(field);
+
+  //       let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
+
+  //       if (fieldSuffix) {
+  //         fieldsSuffixes.push(fieldSuffix);
+  //       }
+  //     }
+  //   });
+
+  //   slider.noUiSlider.on('slide', function (values, handle) {
+  //     fields.forEach(field => {
+  //       field.value = values[0];
+  //     });
+
+  //     let name = slider.dataset.name;
+  //     let value = values[0];
+
+  //     fieldsSuffixes.forEach(fieldSuffix => {
+  //       if (name === 'vik') {
+  //         fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+  //       }
+  //     });
+
+  //     if (slider.dataset.min != values[0]) {
+  //       let label = slider.closest('.filter-element').querySelector('.filter-element__title');
+  //       let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : value;
+
+  //       createOrUpdateTag("range", name, value, labelText);
+  //     } else {
+  //       let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
+  //       $filterTag.remove();
+  //     }
+
+  //     toggleClearFilterButtons();
+  //   });
+
+  //   ['input'].forEach(eventName => {
+  //     fields.forEach((field, idx) => {
+  //       field.addEventListener(eventName, function (e) {
+  //         if (!this.value) return;
+
+  //         slider.noUiSlider.set(this.value);
+
+  //         let name = slider.dataset.name;
+  //         let value = this.value;
+
+  //         if (slider.dataset.min != this.value) {
+  //           let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : '';
+
+  //           createOrUpdateTag("range", name, value, labelText);
+  //         } else {
+  //           let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
+  //           $filterTag.remove();
+  //         }
+
+  //         fieldsSuffixes.forEach(fieldSuffix => {
+  //           if (name === 'vik') {
+  //             fieldSuffix.textContent = changeCaseOfAgeLabel(value);
+  //           }
+  //         });
+
+  //         setTimeout(() => {
+  //           toggleClearFilterButtons();
+  //         });
+  //       });
+  //     });
+  //   });
+
+  //   fields.forEach((field, idx) => {
+  //     field.addEventListener('change', function (e) {
+  //       let name = slider.dataset.name;
+  //       let value = this.value;
+
+  //       if (this.value == '') {
+  //         value = slider.noUiSlider.get()[0];
+  //       } else if (this.value < min) {
+  //         value = min;
+  //       } else if (this.value > max) {
+  //         value = max;
+  //       }
+
+  //       this.value = value;
+  //       slider.noUiSlider.set(value);
+  //       createOrUpdateTag("range", name, value, name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(value) : value);
+  //     });
+  //   });
+  // });
+
+  // const rangeSliders = document.querySelectorAll('.range-slider--range');
+  // rangeSliders.forEach(slider => {
+  //   let min = parseInt(slider.dataset.min);
+  //   let max = parseInt(slider.dataset.max);
+  //   let minValue = parseInt(slider.dataset.minValue);
+  //   let maxValue = parseInt(slider.dataset.maxValue);
+
+  //   noUiSlider.create(slider, {
+  //     start: [minValue, maxValue],
+  //     connect: true,
+  //     range: {
+  //       'min': min,
+  //       'max': max
+  //     },
+
+  //     format: {
+  //       to: function (value) {
+  //         return parseInt(value);
+  //       },
+
+  //       from: function (value) {
+  //         return parseInt(value);
+  //       },
+  //     },
+  //   });
+
+  //   let syncFromFieldIds = slider.dataset.syncFromFieldIds;
+  //   let syncToFieldIds = slider.dataset.syncToFieldIds;
+  //   let fieldsFrom = [];
+  //   let fieldsTo = [];
+  //   let fieldsFromSuffixes = [];
+  //   let fieldsToSuffixes = [];
+
+  //   syncFromFieldIds.split(',').forEach(id => {
+  //     let field = document.getElementById(id.trim());
+
+  //     if (field) {
+  //       fieldsFrom.push(field);
+
+  //       let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
+
+  //       if (fieldSuffix) {
+  //         fieldsFromSuffixes.push(fieldSuffix);
+  //       }
+  //     }
+  //   });
+
+  //   syncToFieldIds.split(',').forEach(id => {
+  //     let field = document.getElementById(id.trim());
+
+  //     if (field) {
+  //       fieldsTo.push(field);
+
+  //       let fieldSuffix = field.parentNode.querySelector('.range-slider-element__input-suffix');
+
+  //       if (fieldSuffix) {
+  //         fieldsToSuffixes.push(fieldSuffix);
+  //       }
+  //     }
+  //   });
+
+  //   slider.noUiSlider.on('slide', function (values, handle) {
+  //     fieldsFrom.forEach(field => {
+  //       field.value = values[0];
+  //     });
+
+  //     fieldsTo.forEach(field => {
+  //       field.value = values[1];
+  //     });
+
+  //     let name = slider.dataset.name;
+  //     let value = `${values[0]}-${values[1]}`;
+
+  //     fieldsFromSuffixes.forEach(fieldSuffix => {
+  //       if (name === 'vik') {
+  //         fieldSuffix.textContent = changeCaseOfAgeLabel(values[0]);
+  //       } else if (name === 'fiksovanii-termin') {
+  //         fieldSuffix.textContent = changeCaseOfDaysLabel(values[0]);
+  //       }
+  //     });
+
+  //     fieldsToSuffixes.forEach(fieldSuffix => {
+  //       if (name === 'vik') {
+  //         fieldSuffix.textContent = changeCaseOfAgeLabel(values[1]);
+  //       } else if (name === 'fiksovanii-termin') {
+  //         fieldSuffix.textContent = changeCaseOfDaysLabel(values[1]);
+  //       }
+  //     });
+
+  //     if (slider.dataset.min != values[0] || slider.dataset.max != values[1]) {
+  //       let labelText = name === 'vik' ? value + ' ' + changeCaseOfAgeLabel(values[1]) : value;
+
+  //       createOrUpdateTag("range", name, value, labelText);
+  //     } else {
+  //       let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
+  //       $filterTag.remove();
+  //     }
+
+  //     toggleClearFilterButtons();
+  //   });
+
+  //   ['input'].forEach(eventName => {
+  //     fieldsFrom.forEach((field, idx) => {
+  //       field.addEventListener(eventName, function (e) {
+  //         if (!this.value) return;
+
+  //         slider.noUiSlider.set([this.value, null]);
+
+  //         let name = slider.dataset.name;
+  //         let value = `${this.value}-${fieldsTo[idx].value}`;
+
+  //         if (slider.dataset.min != this.value || slider.dataset.max != fieldsTo[idx].value) {
+  //           let labelText = name === 'vik_from' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
+
+  //           createOrUpdateTag("range", name, value, labelText);
+  //         } else {
+  //           let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
+  //           $filterTag.remove();
+  //         }
+
+  //         fieldsFromSuffixes.forEach(fieldSuffix => {
+  //           if (name === 'vik') {
+  //             fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+  //           }
+  //         });
+
+  //         setTimeout(() => {
+  //           toggleClearFilterButtons();
+  //         });
+  //       });
+  //     });
+
+  //     fieldsTo.forEach((field, idx) => {
+  //       field.addEventListener(eventName, function (e) {
+  //         if (!this.value) return;
+
+  //         slider.noUiSlider.set([null, this.value]);
+
+  //         let name = slider.dataset.name;
+  //         let value = `${fieldsFrom[idx].value}-${this.value}`;
+
+  //         if (slider.dataset.min != fieldsFrom[idx].value || slider.dataset.max != this.value) {
+  //           let labelText = name === 'vik_to' ? value + ' ' + changeCaseOfAgeLabel(this.value) : value;
+
+  //           createOrUpdateTag("range", name, value, labelText);
+  //         } else {
+  //           let $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
+  //           $filterTag.remove();
+  //         }
+
+  //         fieldsToSuffixes.forEach(fieldSuffix => {
+  //           if (name === 'vik') {
+  //             fieldSuffix.textContent = changeCaseOfAgeLabel(this.value);
+  //           }
+  //         });
+
+  //         setTimeout(() => {
+  //           toggleClearFilterButtons();
+  //         });
+  //       });
+  //     });
+  //   });
+
+  //   fieldsFrom.forEach((field, idx) => {
+  //     field.addEventListener('change', function (e) {
+  //       let name = slider.dataset.name;
+  //       let fromValue = this.value;
+  //       let toValue = fieldsTo[idx].value;
+
+  //       if (this.value == '') {
+  //         fromValue = slider.noUiSlider.get()[0];
+  //       } else if (this.value < min) {
+  //         fromValue = min;
+  //       } else if (this.value > max) {
+  //         fromValue = max;
+  //       }
+
+  //       let value = `${fromValue}-${toValue}`;
+  //       this.value = fromValue;
+  //       slider.noUiSlider.set([fromValue, null]);
+  //       createOrUpdateTag("range", name, value, name === 'vik_from' ? value + ' років' : value);
+  //     });
+  //   });
+
+  //   fieldsTo.forEach((field, idx) => {
+  //     field.addEventListener('change', function (e) {
+  //       let name = slider.dataset.name;
+  //       let fromValue = fieldsFrom[idx].value;
+  //       let toValue = this.value;
+
+  //       if (this.value == '') {
+  //         toValue = slider.noUiSlider.get()[1];
+  //       } else if (this.value < min) {
+  //         toValue = min;
+  //       } else if (this.value > max) {
+  //         toValue = max;
+  //       }
+
+  //       let value = `${fromValue}-${toValue}`;
+  //       this.value = toValue;
+  //       slider.noUiSlider.set([null, toValue]);
+  //       createOrUpdateTag("range", name, value, name === 'vik_to' ? value + ' років' : value);
+  //     });
+  //   });
+  // });
 
   // toggleClearFilterButtons();
 

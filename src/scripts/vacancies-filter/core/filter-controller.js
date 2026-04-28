@@ -123,6 +123,15 @@ export class FilterController {
       return true;
     }
 
+    if (
+      values.length > 0 &&
+      values.every((value) => {
+        return component?.shouldExcludeValueFromSelectedState?.(value);
+      })
+    ) {
+      return true;
+    }
+
     return false;
   }
 

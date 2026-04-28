@@ -118,6 +118,17 @@ export const filterConfig = {
     },
 
     {
+      type: 'range-slider-field',
+      mode: 'auto',
+      selector: '.filter-element--range[data-filter-key]',
+      keyFrom: 'data-filter-key',
+      props: {
+        currencyFilterKey: 'currency',
+        converterEndpoint: '/api/v1/currency-converter'
+      }
+    },
+
+    {
       type: 'cities-checkboxes',
       key: 'cities',
       containerSelector: '.checkboxes-group--cities .checkboxes-group__list'
