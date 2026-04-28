@@ -80,8 +80,19 @@ export const filterConfig = {
     {
       type: 'checkbox-group',
       mode: 'auto',
-      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius)',
+      selector: '.checkboxes-group:not(.checkboxes-group--cities):not(.checkboxes-tabs--radius):not([data-radio-filter])',
       keyFrom: 'data-filter-key'
+    },
+
+    {
+      type: 'radio-group',
+      mode: 'auto',
+      selector: '.checkboxes-group[data-radio-filter]',
+      keyFrom: 'data-filter-key',
+      props: {
+        defaultValue: 'all',
+        excludeValuesFromTags: ['all']
+      }
     },
 
     {

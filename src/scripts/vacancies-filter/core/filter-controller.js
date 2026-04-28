@@ -72,6 +72,8 @@ export class FilterController {
       countriesFilterKey: this.citiesRequestCountryFilterKey,
       currencyConfig: this.currencyConfig
     });
+
+    this.registerParentChildVisibilityDependencies();
     this.registerRadiusVisibilityDependency();
 
     this.tagsBuilder = new FilterTagsBuilder(this.components);
@@ -92,6 +94,8 @@ export class FilterController {
       this.restoreFromUrl();
     }
 
+    this.applyDefaultSingleValues();
+
     this.dependencies.apply(this.getState(), this.store, {
       components: this.components
     });
@@ -100,15 +104,69 @@ export class FilterController {
     this.syncCitiesOptions();
     this.toggleClearFilterButtons();
 
+    this.dependencies.applyParentChildVisibility(this.getState(), this.store);
     this.dependencies.applyDependentVisibility(this.getState());
   }
 
-  shouldIgnoreFilterInSelectedState(key) {
-    return this.components[key]?.excludeFromSelectedState === true;
+  shouldIgnoreFilterInSelectedState(key, values = []) {
+    const component = this.components[key];
+
+    if (component?.excludeFromSelectedState === true) {
+      return true;
+    }
+
+    if (
+      component?.defaultValue &&
+      values.length === 1 &&
+      String(values[0]) === String(component.defaultValue)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   isSingleValueFilter(key) {
     return this.components[key]?.isSingleValue === true;
+  }
+
+  registerParentChildVisibilityDependencies() {
+    const groups = document.querySelectorAll(
+      '[data-parent-filter-id][data-parent-filter-item-id][data-filter-key]'
+    );
+
+    groups.forEach((group) => {
+      const parentFilterId = group.dataset.parentFilterId;
+      const parentFilterItemId = group.dataset.parentFilterItemId;
+      const targetFilterKey = group.dataset.filterKey;
+
+      const parentGroup = document.querySelector(
+        `[data-filter-id="${parentFilterId}"][data-filter-key]`
+      );
+
+      if (!parentGroup) {
+        return;
+      }
+
+      const parentFilterKey = parentGroup.dataset.filterKey;
+
+      const parentInput = parentGroup.querySelector(
+        `[data-filter-item-id="${parentFilterItemId}"]`
+      );
+
+      if (!parentFilterKey || !parentInput?.value) {
+        return;
+      }
+
+      this.dependencies.registerParentChildVisibility({
+        parentFilterKey,
+        parentItemValue: parentInput.value,
+        targetFilterKey,
+        targetElement: group,
+        hiddenClass: 'hidden',
+        clearWhenHidden: true
+      });
+    });
   }
 
   registerRadiusVisibilityDependency() {
@@ -393,6 +451,13 @@ export class FilterController {
       this.store.setFilter(key, values);
     });
 
+    this.applyDefaultSingleValues();
+
+    this.dependencies.apply(this.getState(), this.store, {
+      syncCountriesWithCities: this.autoSyncCountriesWithCities,
+      components: this.components
+    });
+
     this.syncCitiesOptions();
 
     return changed;
@@ -404,7 +469,7 @@ export class FilterController {
 
   hasSelectedFilters(filters = this.serialize()) {
     return Object.entries(filters).some(([key, values]) => {
-      if (this.shouldIgnoreFilterInSelectedState(key)) {
+      if (this.shouldIgnoreFilterInSelectedState(key, values)) {
         return false;
       }
 
@@ -427,6 +492,20 @@ export class FilterController {
 
     Object.entries(filters).forEach(([key, values]) => {
       this.store.setFilter(key, values);
+    });
+  }
+
+  applyDefaultSingleValues() {
+    Object.entries(this.components).forEach(([key, component]) => {
+      if (!component?.isSingleValue || !component?.defaultValue) {
+        return;
+      }
+
+      if (this.getSelected(key).length) {
+        return;
+      }
+
+      this.store.setFilter(key, [component.defaultValue]);
     });
   }
 

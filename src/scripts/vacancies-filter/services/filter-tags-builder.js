@@ -25,6 +25,10 @@ export class FilterTagsBuilder {
       }
 
       values.forEach((value) => {
+        if (component?.shouldExcludeValueFromTags?.(value)) {
+          return;
+        }
+        
         const label = component?.getLabel?.(value) ?? value;
 
         tags.push({

@@ -11,6 +11,50 @@ export class FilterDependencies {
     this.cityToCountry = new Map();
     this.isApplying = false;
     this.dependentVisibilityItems = [];
+    this.parentChildVisibilityItems = [];
+  }
+
+  registerParentChildVisibility({
+    parentFilterKey,
+    parentItemValue,
+    targetFilterKey,
+    targetElement,
+    hiddenClass = 'hidden',
+    clearWhenHidden = true
+  } = {}) {
+    if (
+      !parentFilterKey ||
+      !parentItemValue ||
+      !targetFilterKey ||
+      !(targetElement instanceof Element)
+    ) {
+      return;
+    }
+
+    this.parentChildVisibilityItems.push({
+      parentFilterKey,
+      parentItemValue: String(parentItemValue),
+      targetFilterKey,
+      targetElement,
+      hiddenClass,
+      clearWhenHidden
+    });
+  }
+
+  applyParentChildVisibility(state = {}, store) {
+    this.parentChildVisibilityItems.forEach((item) => {
+      const selectedParentValues = state[item.parentFilterKey] || new Set();
+
+      const shouldShow =
+        selectedParentValues.has(item.parentItemValue) ||
+        selectedParentValues.has('all');
+
+      item.targetElement.classList.toggle(item.hiddenClass, !shouldShow);
+
+      if (!shouldShow && item.clearWhenHidden) {
+        store.clearFilter(item.targetFilterKey);
+      }
+    });
   }
 
   registerDependentVisibility({
@@ -106,15 +150,16 @@ export class FilterDependencies {
 
     this.isApplying = true;
 
-    this.components = components;
-    this.applyCurrencyDependency(state, store);
-
     try {
+      this.components = components;
+
       if (syncCountriesWithCities) {
         this.syncCountriesWithCities(state, store);
       }
 
       this.applyDependentVisibility(state);
+      this.applyParentChildVisibility(state, store);
+      this.applyCurrencyDependency?.(state, store);
     } finally {
       this.isApplying = false;
     }

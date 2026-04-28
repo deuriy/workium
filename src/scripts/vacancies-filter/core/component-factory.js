@@ -7,6 +7,7 @@ import { ResultField } from '../components/result-field.js';
 import { RadiusField } from '../components/radius-field.js';
 import { CalendarField } from '../components/calendar-field.js';
 import { CurrencyField } from '../components/currency-field.js';
+import { RadioTagsGroup } from '../components/radio-tags-group.js';
 
 export class ComponentFactory {
   constructor({ registry = {}, uiRegistry = {} } = {}) {
@@ -16,6 +17,7 @@ export class ComponentFactory {
       'radius-field': RadiusField,
       'calendar-field': CalendarField,
       'currency-field': CurrencyField,
+      'radio-group': RadioTagsGroup,
       'filter-tags': FilterTags,
       ...registry
     };
