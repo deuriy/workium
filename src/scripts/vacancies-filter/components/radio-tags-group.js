@@ -120,6 +120,10 @@ export class RadioTagsGroup extends BaseFilterComponent {
   getLabelLocal(value) {
     return this.inputsMap.get(String(value))?.label?.textContent?.trim() ?? String(value);
   }
+  
+  shouldExcludeValueFromUrl(value) {
+    return String(value) === String(this.defaultValue);
+  }
 
   shouldExcludeValueFromTags(value) {
     return this.excludeValuesFromTags.has(String(value));

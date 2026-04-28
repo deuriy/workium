@@ -24,6 +24,7 @@ export class CurrencyField extends BaseFilterComponent {
     this.excludeFromTags = true;
     this.preserveOnReset = true;
     this.excludeFromSelectedState = true;
+    this.excludeFromUrl = true;
 
     this.isManuallySelected = false;
     this.draftValue = this.defaultValue;

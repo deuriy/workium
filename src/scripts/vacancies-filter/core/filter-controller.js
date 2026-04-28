@@ -674,6 +674,20 @@ export class FilterController {
     return `/${segments.join('/')}`;
   }
 
+  shouldExcludeValueFromUrl(key, value) {
+    const component = this.components[key];
+
+    if (component?.shouldExcludeValueFromUrl?.(value)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  shouldExcludeFilterFromUrl(key) {
+    return this.components[key]?.excludeFromUrl === true;
+  }
+
   buildQueryString({ phpArrayStyle = false } = {}) {
     const filters = this.serialize();
     const params = new URLSearchParams();
@@ -690,6 +704,10 @@ export class FilterController {
     }
 
     Object.entries(filters).forEach(([key, values]) => {
+      if (this.shouldExcludeFilterFromUrl(key)) {
+        return;
+      }
+
       if (!Array.isArray(values) || values.length === 0) {
         return;
       }
@@ -698,17 +716,25 @@ export class FilterController {
         return;
       }
 
+      const urlValues = values.filter((value) => {
+        return !this.shouldExcludeValueFromUrl(key, value);
+      });
+
+      if (!urlValues.length) {
+        return;
+      }
+
       if (this.isSingleValueFilter(key)) {
-        params.set(key, String(values[0]));
+        params.set(key, String(urlValues[0]));
         return;
       }
 
       if (phpArrayStyle) {
-        values.forEach((value) => {
+        urlValues.forEach((value) => {
           params.append(`${key}[]`, value);
         });
       } else {
-        params.set(key, values.join(','));
+        params.set(key, urlValues.join(','));
       }
     });
 
