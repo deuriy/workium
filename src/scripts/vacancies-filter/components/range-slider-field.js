@@ -20,7 +20,7 @@ export class RangeSliderField extends BaseFilterComponent {
     toInputSelector = '.range-slider-element__input:last-of-type',
     suffixSelector = '.range-slider-element__input-suffix',
     currencyFilterKey = 'currency',
-    converterEndpoint = '/api/v1/currency-converter'
+    converterEndpoint = 'https://workium.test/api/v1/currency-converter'
   }) {
     super(filterKey);
 
@@ -79,10 +79,8 @@ export class RangeSliderField extends BaseFilterComponent {
 
     const initialState = this.store.getState();
 
-    const initialCurrency =
+    this.currentCurrency =
       [...(initialState[this.currencyFilterKey] || new Set())][0] || 'EUR';
-
-    this.currentCurrency = initialCurrency;
 
     this.updateSuffixes();
   }
@@ -379,18 +377,31 @@ export class RangeSliderField extends BaseFilterComponent {
       return;
     }
 
-    const prevCurrency = this.currentCurrency;
+    const prevCurrency = this.currentCurrency || 'EUR';
+
+    const prevFrom = this.toNumber(this.fromInput.value, this.min);
+    const prevTo = this.toNumber(this.toInput.value, this.max);
+    const hadCustomValue = !this.isDefaultRange(prevFrom, prevTo);
+
     this.currentCurrency = nextCurrency;
 
-    await this.applyCurrencyChange(prevCurrency, nextCurrency);
+    await this.applyCurrencyChange({
+      fromCurrency: prevCurrency,
+      toCurrency: nextCurrency,
+      prevFrom,
+      prevTo,
+      hadCustomValue
+    });
   }
 
-  async applyCurrencyChange(fromCurrency, toCurrency) {
+  async applyCurrencyChange({
+    fromCurrency,
+    toCurrency,
+    prevFrom,
+    prevTo,
+    hadCustomValue
+  }) {
     const nextRange = CURRENCY_RANGES[toCurrency] || CURRENCY_RANGES.EUR;
-
-    const currentFrom = this.toNumber(this.fromInput.value, this.min);
-    const currentTo = this.toNumber(this.toInput.value, this.max);
-    const hadCustomValue = !this.isDefaultRange(currentFrom, currentTo);
 
     this.updateSliderRange(nextRange.min, nextRange.max);
     this.updateSuffixes();
@@ -404,8 +415,8 @@ export class RangeSliderField extends BaseFilterComponent {
     const converted = await this.convertRange(
       fromCurrency,
       toCurrency,
-      currentFrom,
-      currentTo
+      prevFrom,
+      prevTo
     );
 
     const nextFrom = this.clamp(converted.from);
@@ -445,10 +456,18 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   async convertAmount(fromCurrency, toCurrency, amount) {
+    const csrfToken = document
+      .querySelector('meta[name="csrf-token"]')
+      ?.getAttribute('content');
+
     const response = await fetch(this.converterEndpoint, {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        ...(csrfToken ? { 'X-CSRF-TOKEN': csrfToken } : {})
       },
       body: JSON.stringify({
         from: fromCurrency,
@@ -463,13 +482,17 @@ export class RangeSliderField extends BaseFilterComponent {
 
     const data = await response.json();
 
-    return Number(
+    const result =
       data.result ??
-      data.amount ??
-      data.converted ??
+      data.converted_amount ??
+      data.convertedAmount ??
+      data.amount_converted ??
       data.value ??
-      amount
-    );
+      data.data?.result ??
+      data.data?.amount ??
+      data.data?.converted_amount;
+
+    return Math.round(Number(result ?? amount));
   }
 
   clamp(value) {

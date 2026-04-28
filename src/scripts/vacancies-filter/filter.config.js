@@ -124,7 +124,7 @@ export const filterConfig = {
       keyFrom: 'data-filter-key',
       props: {
         currencyFilterKey: 'currency',
-        converterEndpoint: '/api/v1/currency-converter'
+        converterEndpoint: 'https://filter.workium.uno/api/v1/currency-converter'
       }
     },
 
