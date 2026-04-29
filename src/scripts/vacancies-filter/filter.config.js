@@ -140,6 +140,13 @@ export const filterConfig = {
     },
 
     {
+      type: 'text-search-field',
+      mode: 'auto',
+      selector: '[data-search-input]',
+      keyFrom: 'data-filter-key',
+    },
+
+    {
       type: 'cities-checkboxes',
       key: 'cities',
       containerSelector: '.checkboxes-group--cities .checkboxes-group__list'

@@ -39,6 +39,16 @@ export class FilterTagsBuilder {
       });
     });
 
+    tags.sort((a, b) => {
+      const componentA = this.components[a.filterKey];
+      const componentB = this.components[b.filterKey];
+
+      const priorityA = componentA?.tagPriority ?? 0;
+      const priorityB = componentB?.tagPriority ?? 0;
+
+      return priorityA - priorityB;
+    });
+
     return tags;
   }
 }

@@ -929,7 +929,15 @@ export class FilterController {
     return [...mergedMap.values()];
   }
 
+  commitBeforeSubmit() {
+    Object.values(this.components).forEach((component) => {
+      component.commit?.();
+    });
+  }
+
   submit() {
+    this.commitBeforeSubmit();
+    
     const serialized = this.serialize();
     const rawState = this.getState();
     const submitUrl = this.buildSubmitUrl();
