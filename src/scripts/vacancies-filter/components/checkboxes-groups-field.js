@@ -29,6 +29,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     this.clearSelector = clearSelector;
     this.countriesFilterKey = countriesFilterKey;
     this.hiddenClass = hiddenClass;
+
     this.isCheckboxesGroupsField = true;
 
     this.inputsMap = new Map();
@@ -36,6 +37,25 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
 
     this.draftValues = new Set();
     this.appliedValues = new Set();
+
+    this.enableCountryAvailabilityNotice =
+      this.container.dataset.countryAvailabilityNotice === 'true';
+
+    this.popupNotice = this.container.querySelector(
+      '[data-checkboxes-groups-popup-notice]'
+    );
+
+    this.mainNotice = document.querySelector(
+      `[data-checkboxes-groups-main-notice="${this.filterKey}"]`
+    );
+
+    this.resultFieldBlock = document.querySelector(
+      `[data-result-field="${this.filterKey}"]`
+    );
+
+    this.emptyNoticeText =
+      this.container.dataset.emptyNoticeText ||
+      '— надбавок і привілеїв немає';
 
     this.handleChange = this.handleChange.bind(this);
     this.handleApply = this.handleApply.bind(this);
@@ -115,12 +135,6 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     this.setSelected([...this.draftValues]);
   }
 
-  updateVacanciesCountDraft() {
-    this.controller?.updateVacanciesCountWithOverrides?.({
-      [this.filterKey]: [...this.draftValues]
-    });
-  }
-
   handleClear(event) {
     event.preventDefault();
 
@@ -142,6 +156,12 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     });
   }
 
+  updateVacanciesCountDraft() {
+    this.controller?.updateVacanciesCountWithOverrides?.({
+      [this.filterKey]: [...this.draftValues]
+    });
+  }
+
   updateGroupsVisibility(state = {}) {
     const selectedCountries = state[this.countriesFilterKey] || new Set();
     const hasCountryFilter = selectedCountries.size > 0;
@@ -156,6 +176,129 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
 
       group.classList.toggle(this.hiddenClass, !shouldShow);
     });
+
+    this.updateCountryAvailabilityNotice(state);
+  }
+
+  getCountriesFromCountryComponent() {
+    const countryComponent = this.controller?.getComponent?.(
+      this.countriesFilterKey
+    );
+
+    if (!countryComponent?.getAllItems) {
+      return [];
+    }
+
+    return countryComponent
+      .getAllItems()
+      .map((country) => ({
+        value: String(country.value || ''),
+        label: String(
+          country.text ||
+          country.label ||
+          country.title ||
+          country.value ||
+          ''
+        ).trim()
+      }))
+      .filter((country) => country.value && country.label);
+  }
+
+  getCountryLabel(countryValue, countries = []) {
+    return (
+      countries.find((country) => country.value === String(countryValue))
+        ?.label || String(countryValue)
+    );
+  }
+
+  getGroupsByCountryMap() {
+    const map = new Map();
+
+    this.groups.forEach((group) => {
+      const countryValue = String(group.dataset.countryValue || '');
+
+      if (!countryValue) {
+        return;
+      }
+
+      if (!map.has(countryValue)) {
+        map.set(countryValue, []);
+      }
+
+      map.get(countryValue).push(group);
+    });
+
+    return map;
+  }
+
+  getRelevantCountryValues(state = {}, countries = []) {
+    const selectedCountries = state[this.countriesFilterKey] || new Set();
+
+    if (selectedCountries.size) {
+      return [...selectedCountries].map(String);
+    }
+
+    return countries.map((country) => country.value);
+  }
+
+  countryHasOptions(countryValue, groupsByCountry) {
+    const groups = groupsByCountry.get(String(countryValue)) || [];
+
+    return groups.some((group) => {
+      return group.querySelectorAll(this.inputSelector).length > 0;
+    });
+  }
+
+  updateCountryAvailabilityNotice(state = {}) {
+    if (!this.enableCountryAvailabilityNotice) {
+      return;
+    }
+
+    const countries = this.getCountriesFromCountryComponent();
+
+    if (!countries.length) {
+      return;
+    }
+
+    const groupsByCountry = this.getGroupsByCountryMap();
+    const relevantCountries = this.getRelevantCountryValues(state, countries);
+
+    const countriesWithoutOptions = relevantCountries.filter((countryValue) => {
+      return !this.countryHasOptions(countryValue, groupsByCountry);
+    });
+
+    const countriesWithOptions = relevantCountries.filter((countryValue) => {
+      return this.countryHasOptions(countryValue, groupsByCountry);
+    });
+
+    const noticeText = countriesWithoutOptions.length
+      ? `${countriesWithoutOptions
+          .map((value) => this.getCountryLabel(value, countries))
+          .join(', ')} ${this.emptyNoticeText}`
+      : '';
+
+    const shouldShowNotice = countriesWithoutOptions.length > 0;
+    const shouldShowResultField = countriesWithOptions.length > 0;
+
+    if (this.popupNotice) {
+      this.popupNotice.textContent = noticeText;
+      this.popupNotice.classList.toggle(this.hiddenClass, !shouldShowNotice);
+    }
+
+    if (this.mainNotice) {
+      this.mainNotice.textContent = noticeText;
+      this.mainNotice.classList.toggle(
+        this.hiddenClass,
+        !shouldShowNotice || shouldShowResultField
+      );
+    }
+
+    if (this.resultFieldBlock) {
+      this.resultFieldBlock.classList.toggle(
+        this.hiddenClass,
+        !shouldShowResultField
+      );
+    }
   }
 
   syncSelected(selectedSet) {
@@ -198,7 +341,10 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
   }
 
   getLabelLocal(value) {
-    return this.inputsMap.get(String(value))?.label?.textContent?.trim() ?? String(value);
+    return (
+      this.inputsMap.get(String(value))?.label?.textContent?.trim() ??
+      String(value)
+    );
   }
 
   getSelectedItems() {
