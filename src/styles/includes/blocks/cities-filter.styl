@@ -73,3 +73,18 @@
 		align-items center
 		gap 16px
 		// grid-template-columns 100%
+
+		&:has(>.cities-filter__clear-link.hidden)
+			grid-template-columns 100%
+			justify-items end
+	
+	&__clear-link
+		font-weight 600
+		font-size 16px
+		line-height 1.625
+		color #0f182a
+		color var(--info)
+		text-decoration none
+
+		@media $xs
+			font-size 14px

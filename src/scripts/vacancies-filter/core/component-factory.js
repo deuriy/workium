@@ -11,6 +11,7 @@ import { RadioTagsGroup } from '../components/radio-tags-group.js';
 import { RangeSliderField } from '../components/range-slider-field.js';
 import { CheckboxesGroupsField } from '../components/checkboxes-groups-field.js';
 import { TextSearchField } from '../components/text-search-field.js';
+import { VacanciesCount } from '../components/vacancies-count.js';
 
 export class ComponentFactory {
   constructor({ registry = {}, uiRegistry = {} } = {}) {
@@ -31,6 +32,7 @@ export class ComponentFactory {
     this.uiRegistry = {
       'additional-filters-search': AdditionalFiltersSearch,
       'cities-filter-search': CitiesFilterSearch,
+      'vacancies-count': VacanciesCount,
       'result-field': ResultField,
       ...uiRegistry
     };
@@ -259,7 +261,9 @@ export class ComponentFactory {
     delete props.mode;
     delete props.selector;
 
-    if (!props.rootSelector && !props.rootElement) {
+    const requiresRoot = ComponentClass.requiresRoot !== false;
+
+    if (requiresRoot && !props.rootSelector && !props.rootElement) {
       throw new Error(
         `ComponentFactory: ui config at index ${index} requires "rootSelector" or "rootElement"`
       );

@@ -107,10 +107,18 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     } else {
       this.draftValues.delete(value);
     }
+
+    this.updateVacanciesCountDraft();
   }
 
   handleApply() {
     this.setSelected([...this.draftValues]);
+  }
+
+  updateVacanciesCountDraft() {
+    this.controller?.updateVacanciesCountWithOverrides?.({
+      [this.filterKey]: [...this.draftValues]
+    });
   }
 
   handleClear(event) {
@@ -123,6 +131,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     });
 
     this.clear();
+    this.updateVacanciesCountDraft();
   }
 
   resetDraftFromStore() {

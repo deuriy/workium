@@ -79,6 +79,7 @@ export class FilterController {
     this.tagsBuilder = new FilterTagsBuilder(this.components);
 
     Object.values(this.components).forEach((component) => {
+      component.controller = this;
       component.connectStore(this.store);
     });
 
@@ -693,12 +694,22 @@ export class FilterController {
     return false;
   }
 
+  updateVacanciesCountWithOverrides(overrides = {}) {
+    this.uiPlugins.forEach((plugin) => {
+      plugin.updateWithOverrides?.(overrides);
+    });
+  }
+
   shouldExcludeFilterFromUrl(key) {
     return this.components[key]?.excludeFromUrl === true;
   }
 
-  buildQueryString({ phpArrayStyle = false } = {}) {
-    const filters = this.serialize();
+  buildQueryString({ phpArrayStyle = false, overrides = null } = {}) {
+    const filters = {
+      ...this.serialize(),
+      ...(overrides || {})
+    };
+
     const params = new URLSearchParams();
     const countryValues = this.getSeoCountryValues(filters);
 

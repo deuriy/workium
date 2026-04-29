@@ -102,6 +102,14 @@ export class CitiesFilterSearch {
     }
   }
 
+  updateVacanciesCountDraft() {
+    const selectedCities = this.controller?.getSelected?.(this.citiesFilterKey) || [];
+
+    this.controller?.updateVacanciesCountWithOverrides?.({
+      [this.citiesFilterKey]: selectedCities
+    });
+  }
+
   getCitiesComponent() {
     return this.controller?.getComponent?.(this.citiesFilterKey) || null;
   }
@@ -146,10 +154,12 @@ export class CitiesFilterSearch {
 
     this.controller?.clearFilter?.(this.citiesFilterKey);
     this.updateClearCitiesButton();
+    this.updateVacanciesCountDraft();
   }
 
   handleApplyCitiesClick() {
     this.applyCitiesSelection();
+    this.updateVacanciesCountDraft();
   }
 
   updateClearButton() {
@@ -197,6 +207,8 @@ export class CitiesFilterSearch {
   rememberCitiesSnapshot() {
     this.initialSelectedCities = this.controller?.getSelected?.(this.citiesFilterKey) || [];
     this.isCitiesApplied = false;
+
+    this.controller?.updateVacanciesCountWithOverrides?.();
   }
 
   applyCitiesSelection() {
@@ -222,5 +234,9 @@ export class CitiesFilterSearch {
 
     this.initialSelectedCities = [];
     this.isCitiesApplied = false;
+
+    this.controller?.updateVacanciesCountWithOverrides?.({
+      [this.citiesFilterKey]: this.controller?.getSelected?.(this.citiesFilterKey) || []
+    });
   }
 }

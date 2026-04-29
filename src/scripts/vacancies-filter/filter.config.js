@@ -73,6 +73,12 @@ export const filterConfig = {
       mode: 'auto',
       selector: '[data-result-field]',
       filterKeyFrom: 'data-result-field'
+    },
+    {
+      enabled: true,
+      type: 'vacancies-count',
+      endpoint: '/api/v1/vacancies-count',
+      debounceDelay: 350
     }
   ],
 
