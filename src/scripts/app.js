@@ -163,7 +163,7 @@ $(() => {
 
   let currentFancybox = null;
 
-  Fancybox.bind("[data-fancybox]:not([data-src='#cities-popup']):not([data-src='#currencies-popup'])", {
+  Fancybox.bind("[data-fancybox]:not([data-src='#cities-popup']):not([data-src='#currencies-popup']):not(.checkboxes-groups-popup-trigger)", {
     dragToClose: false
   });
 

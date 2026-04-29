@@ -113,17 +113,22 @@ function bindFancyboxDrafts(uiPlugins = [], filterController = null) {
       return;
     }
 
+    console.log(component.container.id);
+
     window.Fancybox.bind(`[data-src="#${component.container.id}"]`, {
       on: {
         ready() {
+          console.log('Ready! checkboxesGroupsComponents');
           component.resetDraftFromStore();
         },
 
         reveal() {
+          console.log('reveal! checkboxesGroupsComponents');
           component.resetDraftFromStore();
         },
 
         close() {
+          console.log('close! checkboxesGroupsComponents');
           component.resetDraftFromStore();
         }
       }

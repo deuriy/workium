@@ -10,10 +10,14 @@
   gap 12px
   padding 0 32px 0 12px
   cursor pointer
-  background #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14' fill='none'%3E%3Cpath stroke='%23989db3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m.75 12.75 6-6-6-6'/%3E%3C/svg%3E") right 12px center / 8px no-repeat
-  font-size 14px
+  // background #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14' fill='none'%3E%3Cpath stroke='%23989db3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m.75 12.75 6-6-6-6'/%3E%3C/svg%3E") right 12px center / 8px no-repeat
+  background #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14' fill='none'%3E%3Cpath stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m.75 12.75 6-6-6-6'/%3E%3C/svg%3E") right 12px center / 8px no-repeat
+  // font-size 14px
+  font-weight 500
+  font-size 16px
   font-family var(--base-font)
-  color #989DB2
+  // color #989DB2
+  color #000
   transition all .2s ease
 
   &__text
@@ -24,6 +28,7 @@
   &__count
     flex-shrink 0
     display none
+    margin-left auto
   
   &__currency-name
     color #9095ac
@@ -32,8 +37,6 @@
     border-color #b9bec7
   
   &--selected
-    font-weight 500
-    font-size 16px
     color var(--black)
     background-image url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14' fill='none'%3E%3Cpath stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m.75 12.75 6-6-6-6'/%3E%3C/svg%3E")
 

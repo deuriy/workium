@@ -7,7 +7,8 @@ export class CalendarField extends BaseFilterComponent {
     containerSelector,
     filterKey,
     calendarSelector = '.js-calendar',
-    hiddenInputSelector = '.calendar__input'
+    hiddenInputSelector = '.calendar__input',
+    clearButtonSelector = '[data-result-field-clear]'
   }) {
     super(filterKey);
 
@@ -24,6 +25,8 @@ export class CalendarField extends BaseFilterComponent {
     this.hiddenInputSelector = hiddenInputSelector;
 
     this.hiddenInput = this.container.querySelector(this.hiddenInputSelector);
+    this.clearButton = this.container.querySelector(clearButtonSelector);
+    this.handleClearButtonClick = this.handleClearButtonClick.bind(this);
 
     this.calendar =
       Calendar.getInstance(this.container) || new Calendar(this.container);
@@ -35,6 +38,9 @@ export class CalendarField extends BaseFilterComponent {
     this.handleClear = this.handleClear.bind(this);
 
     this.container.addEventListener('calendar:apply', this.handleApply);
+    if (this.clearButton) {
+      this.clearButton.addEventListener('click', this.handleClearButtonClick);
+    }
 
     this.syncInitialValue();
   }
@@ -62,6 +68,13 @@ export class CalendarField extends BaseFilterComponent {
   }
 
   handleClear() {
+    this.clear();
+  }
+
+  handleClearButtonClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     this.clear();
   }
 
@@ -214,5 +227,9 @@ export class CalendarField extends BaseFilterComponent {
     super.destroy();
 
     this.container.removeEventListener('calendar:apply', this.handleApply);
+
+    if (this.clearButton) {
+      this.clearButton.removeEventListener('click', this.handleClearButtonClick);
+    }
   }
 }
