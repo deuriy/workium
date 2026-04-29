@@ -94,159 +94,159 @@ import { initVacanciesFilter } from "./vacancies-filter";
 //   }
 // }
 
-function getFilterUrl(changedAdditionalFilters = false) {
-  let isMobile = $(window).width() < 576;
-  let urlParamsArr = [];
-  let requestParamsArr = [];
-  let urlParams = '';
-  let requestParams = '';
+// function getFilterUrl(changedAdditionalFilters = false) {
+//   let isMobile = $(window).width() < 576;
+//   let urlParamsArr = [];
+//   let requestParamsArr = [];
+//   let urlParams = '';
+//   let requestParams = '';
 
-  // Get url params
-  // let selectedCountry = '';
+//   // Get url params
+//   // let selectedCountry = '';
 
-  // if (isMobile) {
-  //   selectedCountry = $('.filter__countries-select--mobile').val();
-  //   selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function (index, input) {
-  //     return $(input).attr('data-seo-slug');
-  //   });
-  // } else {
-  //   selectedCountry = $('.filter__countries-select--desktop').val();
-  //   selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function (index, option) {
-  //     return $(option).attr('data-seo-slug');
-  //   });
-  // }
+//   // if (isMobile) {
+//   //   selectedCountry = $('.filter__countries-select--mobile').val();
+//   //   selectedCitiesSlugs = $('.checkbox__input[name="cities"]:checked').map(function (index, input) {
+//   //     return $(input).attr('data-seo-slug');
+//   //   });
+//   // } else {
+//   //   selectedCountry = $('.filter__countries-select--desktop').val();
+//   //   selectedCitiesSlugs = $('.filter__cities-select--desktop option:selected').map(function (index, option) {
+//   //     return $(option).attr('data-seo-slug');
+//   //   });
+//   // }
 
-  // console.log(citiesComponent.getSelected());
-  // console.log(filterController.getSelected());
+//   // console.log(citiesComponent.getSelected());
+//   // console.log(filterController.getSelected());
 
-  // let selectedCitiesSlugs = [];
-  // let selectedCities = Array.from(selectedCitiesSlugs).join('/');
-  // if (selectedCountry) {
-  //   urlParamsArr.push(selectedCountry);
-  // }
+//   // let selectedCitiesSlugs = [];
+//   // let selectedCities = Array.from(selectedCitiesSlugs).join('/');
+//   // if (selectedCountry) {
+//   //   urlParamsArr.push(selectedCountry);
+//   // }
 
-  // urlParamsArr.push(selectedCities);
+//   // urlParamsArr.push(selectedCities);
 
-  // console.log('selectedCities');
-  // console.log(selectedCities);
-  // console.log('selectedCountry');
-  // console.log(selectedCountry);
+//   // console.log('selectedCities');
+//   // console.log(selectedCities);
+//   // console.log('selectedCountry');
+//   // console.log(selectedCountry);
 
-  // const selectedSegmentCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input[data-segment]:not([data-exclude-field]):checked');
-  // selectedSegmentCheckboxes.forEach(el => {
-  //   if (el.value) {
-  //     urlParamsArr.push(el.value);
-  //   }
-  // });
+//   // const selectedSegmentCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input[data-segment]:not([data-exclude-field]):checked');
+//   // selectedSegmentCheckboxes.forEach(el => {
+//   //   if (el.value) {
+//   //     urlParamsArr.push(el.value);
+//   //   }
+//   // });
 
-  // const selectedSegmentRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input[data-segment]:not([data-exclude-field]):checked');
-  // selectedSegmentRadioBtns.forEach(el => {
-  //   if (el.value) {
-  //     urlParamsArr.push(el.value);
-  //   }
-  // });
+//   // const selectedSegmentRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input[data-segment]:not([data-exclude-field]):checked');
+//   // selectedSegmentRadioBtns.forEach(el => {
+//   //   if (el.value) {
+//   //     urlParamsArr.push(el.value);
+//   //   }
+//   // });
 
-  // urlParams = urlParamsArr.join('/');
+//   // urlParams = urlParamsArr.join('/');
 
-  // Get request params
-  // let searchValue = document.querySelector('input[name="vacancy_name"]')?.value;
-  // if (searchValue) {
-  //   requestParamsArr.push(`search=${encodeURIComponent(searchValue)}`);
-  // }
+//   // Get request params
+//   // let searchValue = document.querySelector('input[name="vacancy_name"]')?.value;
+//   // if (searchValue) {
+//   //   requestParamsArr.push(`search=${encodeURIComponent(searchValue)}`);
+//   // }
 
-  // const selectedCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input:not([data-segment]):not([data-exclude-field]):checked');
-  // selectedCheckboxes.forEach(el => {
-  //   if (el.value && !(el.name === 'zitlo[]' && el.value === 'all')) {
-  //     requestParamsArr.push(`${el.name}=${el.value}`);
-  //   }
-  // });
+//   // const selectedCheckboxes = document.querySelectorAll('.additional-filters .checkbox__input:not([data-segment]):not([data-exclude-field]):checked');
+//   // selectedCheckboxes.forEach(el => {
+//   //   if (el.value && !(el.name === 'zitlo[]' && el.value === 'all')) {
+//   //     requestParamsArr.push(`${el.name}=${el.value}`);
+//   //   }
+//   // });
 
-  // const selectedRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input:not([data-segment]):not([data-exclude-field]):checked');
-  // selectedRadioBtns.forEach(el => {
-  //   if (el.value) {
-  //     requestParamsArr.push(`${el.name}=${el.value}`);
-  //   }
-  // });
+//   // const selectedRadioBtns = document.querySelectorAll('.additional-filters .radiobtn__input:not([data-segment]):not([data-exclude-field]):checked');
+//   // selectedRadioBtns.forEach(el => {
+//   //   if (el.value) {
+//   //     requestParamsArr.push(`${el.name}=${el.value}`);
+//   //   }
+//   // });
 
-  const sliders = document.querySelectorAll('.additional-filters .range-slider--single');
-  sliders.forEach(el => {
-    let value = el.noUiSlider.get();
-    let rangeValues = el.noUiSlider.options.range;
-    let name = el.dataset.name;
-    let ageSwitch = document.querySelector('input[name="age_switch"]');
+//   const sliders = document.querySelectorAll('.additional-filters .range-slider--single');
+//   sliders.forEach(el => {
+//     let value = el.noUiSlider.get();
+//     let rangeValues = el.noUiSlider.options.range;
+//     let name = el.dataset.name;
+//     let ageSwitch = document.querySelector('input[name="age_switch"]');
 
-    if (name === 'vik' && ageSwitch.checked) {
-      return;
-    }
+//     if (name === 'vik' && ageSwitch.checked) {
+//       return;
+//     }
 
-    if ((rangeValues.min != value)) {
-      let resultValue = `${name}=${value}`;
-      requestParamsArr.push(resultValue);
-    }
-  });
+//     if ((rangeValues.min != value)) {
+//       let resultValue = `${name}=${value}`;
+//       requestParamsArr.push(resultValue);
+//     }
+//   });
 
-  document.querySelectorAll('.additional-filters .range-slider--range').forEach(el => {
-    let values = el.noUiSlider.get();
-    let rangeValues = el.noUiSlider.options.range;
-    let name = el.dataset.name;
-    let ageSwitch = document.querySelector('input[name="age_switch"]');
+//   document.querySelectorAll('.additional-filters .range-slider--range').forEach(el => {
+//     let values = el.noUiSlider.get();
+//     let rangeValues = el.noUiSlider.options.range;
+//     let name = el.dataset.name;
+//     let ageSwitch = document.querySelector('input[name="age_switch"]');
 
-    if (name === 'vik' && !ageSwitch.checked) {
-      return;
-    }
+//     if (name === 'vik' && !ageSwitch.checked) {
+//       return;
+//     }
 
-    if (rangeValues.min != values[0] || rangeValues.max != values[1]) {
-      let resultValue = `${name}=${values[0]}-${values[1]}`;
-      requestParamsArr.push(resultValue);
-    }
-  });
+//     if (rangeValues.min != values[0] || rangeValues.max != values[1]) {
+//       let resultValue = `${name}=${values[0]}-${values[1]}`;
+//       requestParamsArr.push(resultValue);
+//     }
+//   });
 
-  // document.querySelectorAll('.additional-filters .calendar__input').forEach(el => {
-  //   if (!el.value) return;
+//   // document.querySelectorAll('.additional-filters .calendar__input').forEach(el => {
+//   //   if (!el.value) return;
 
-  //   let resultValue = `${el.name}=${el.value}`;
-  //   requestParamsArr.push(resultValue);
-  // });
+//   //   let resultValue = `${el.name}=${el.value}`;
+//   //   requestParamsArr.push(resultValue);
+//   // });
 
-  // let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
+//   // let selectedCandidatesType = isMobile ? $('.filter__sex-select--mobile').val() : $('.filter__sex-select--desktop').val();
 
-  // let selectedCandidatesSlugs = selectedCandidatesType.map(function (value, index) {
-  //   return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
-  // });
+//   // let selectedCandidatesSlugs = selectedCandidatesType.map(function (value, index) {
+//   //   return $(`select[name="tip-kandidativ[]"] option[value="${value}"]`).attr('data-seo-slug');
+//   // });
 
-  // [...new Set(selectedCandidatesSlugs)].forEach(item => {
-  //   requestParamsArr.push(`tip-kandidativ[]=${item}`);
-  // });
+//   // [...new Set(selectedCandidatesSlugs)].forEach(item => {
+//   //   requestParamsArr.push(`tip-kandidativ[]=${item}`);
+//   // });
 
 
-  // let catWorkerValue = document.querySelector('select[name="kategoriia-pracivnika"]')?.value;
-  // if (catWorkerValue) {
-  //   requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
-  // }
+//   // let catWorkerValue = document.querySelector('select[name="kategoriia-pracivnika"]')?.value;
+//   // if (catWorkerValue) {
+//   //   requestParamsArr.push(`kategoriia-pracivnika=${catWorkerValue}`);
+//   // }
 
-  // const distance = isMobile ? document.querySelector('.filter__distance-select--mobile') : document.querySelector('.filter__distance-select--desktop');
+//   // const distance = isMobile ? document.querySelector('.filter__distance-select--mobile') : document.querySelector('.filter__distance-select--desktop');
 
-  // if (distance.value && selectedCountry && selectedCities) {
-  // if (distance && distance.value) {
-  //   requestParamsArr.push(`radius=${distance.value}`);
-  // }
+//   // if (distance.value && selectedCountry && selectedCities) {
+//   // if (distance && distance.value) {
+//   //   requestParamsArr.push(`radius=${distance.value}`);
+//   // }
 
-  if (changedAdditionalFilters) {
-    requestParamsArr.push('open-popup=1');
-  }
+//   if (changedAdditionalFilters) {
+//     requestParamsArr.push('open-popup=1');
+//   }
 
-  requestParams = requestParamsArr.join('&');
+//   requestParams = requestParamsArr.join('&');
 
-  if (urlParams) {
-    urlParams = '/' + urlParams.replace(/\/+$/, '');
-  }
+//   if (urlParams) {
+//     urlParams = '/' + urlParams.replace(/\/+$/, '');
+//   }
 
-  if (requestParams) {
-    requestParams = '?' + requestParams;
-  }
+//   if (requestParams) {
+//     requestParams = '?' + requestParams;
+//   }
 
-  return urlParams + requestParams;
-}
+//   return urlParams + requestParams;
+// }
 
 // function updateFilterUrl() {
 //   let isMobile = $(window).width() < 576;
@@ -315,33 +315,33 @@ function getFilterUrl(changedAdditionalFilters = false) {
 //                                     </li>`);
 // }
 
-function syncInputFields($input) {
-  let syncFieldIDs = $input.data('sync-field-ids');
+// function syncInputFields($input) {
+//   let syncFieldIDs = $input.data('sync-field-ids');
 
-  if (!syncFieldIDs) return;
+//   if (!syncFieldIDs) return;
 
-  syncFieldIDs.split(',').forEach(id => {
-    let $syncField = $(`#${id.trim()}`);
+//   syncFieldIDs.split(',').forEach(id => {
+//     let $syncField = $(`#${id.trim()}`);
 
-    if (!$syncField.length) return;
+//     if (!$syncField.length) return;
 
-    let nodeName = $syncField.prop('tagName').toLowerCase();
+//     let nodeName = $syncField.prop('tagName').toLowerCase();
 
-    switch (nodeName) {
-      case 'input':
-        let type = $syncField.attr('type');
+//     switch (nodeName) {
+//       case 'input':
+//         let type = $syncField.attr('type');
 
-        if (['text', 'number'].includes(type)) {
-          let value = $input.val();
-          $syncField.val(value);
-          $syncField[0].dispatchEvent(new Event('change'));
-        }
+//         if (['text', 'number'].includes(type)) {
+//           let value = $input.val();
+//           $syncField.val(value);
+//           $syncField[0].dispatchEvent(new Event('change'));
+//         }
 
-        break;
-    }
+//         break;
+//     }
 
-  });
-}
+//   });
+// }
 
 // function clearTextField($input) {
 //   $input.removeClass('form-text--filter-search-filled').val('');
@@ -387,36 +387,36 @@ function copyVacancyText(isMultiVacancy = true) {
   $vacancyCardTextarea.remove();
 }
 
-function toggleClearFilterButtons() {
-  let $clearBtns = $('[data-clear-filter]');
-  let selectedItemsLength = $('.filter .filter-tags__item').length;
-  let $filtersBtn = $('.btn-white--filter');
-  let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
-  let $btnFilterScrollTop = $('.btn-filter--scroll-top');
-  let $btnFilterScrollTopCount = $btnFilterScrollTop.find('.btn-filter__count');
-  let isMobile = $(window).width() < 576;
+// function toggleClearFilterButtons() {
+//   let $clearBtns = $('[data-clear-filter]');
+//   let selectedItemsLength = $('.filter .filter-tags__item').length;
+//   let $filtersBtn = $('.btn-white--filter');
+//   let $filtersBtnCount = $filtersBtn.find('.btn-white__count');
+//   let $btnFilterScrollTop = $('.btn-filter--scroll-top');
+//   let $btnFilterScrollTopCount = $btnFilterScrollTop.find('.btn-filter__count');
+//   let isMobile = $(window).width() < 576;
 
-  if (isMobile) {
-    let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
-    selectedItemsLength += $checkedLabels.length;
-  }
+//   if (isMobile) {
+//     let $checkedLabels = $('.checkboxes-group--cities .checkbox__input:checked + .checkbox__label');
+//     selectedItemsLength += $checkedLabels.length;
+//   }
 
-  if (selectedItemsLength) {
-    $clearBtns.show();
-    $('.additional-filters__filter-tags').show();
-    $filtersBtn.removeClass('btn-white--filter-dark-icon');
-    $filtersBtnCount.removeClass('hidden').text(selectedItemsLength);
-    $btnFilterScrollTop.addClass('btn-filter--non-zero');
-    $btnFilterScrollTopCount.removeClass('hidden').text(selectedItemsLength);
-  } else {
-    $clearBtns.hide();
-    $('.additional-filters__filter-tags').hide();
-    $filtersBtn.addClass('btn-white--filter-dark-icon');
-    $filtersBtnCount.addClass('hidden').text('');
-    $btnFilterScrollTop.removeClass('btn-filter--non-zero');
-    $btnFilterScrollTopCount.addClass('hidden').text('');
-  }
-}
+//   if (selectedItemsLength) {
+//     $clearBtns.show();
+//     $('.additional-filters__filter-tags').show();
+//     $filtersBtn.removeClass('btn-white--filter-dark-icon');
+//     $filtersBtnCount.removeClass('hidden').text(selectedItemsLength);
+//     $btnFilterScrollTop.addClass('btn-filter--non-zero');
+//     $btnFilterScrollTopCount.removeClass('hidden').text(selectedItemsLength);
+//   } else {
+//     $clearBtns.hide();
+//     $('.additional-filters__filter-tags').hide();
+//     $filtersBtn.addClass('btn-white--filter-dark-icon');
+//     $filtersBtnCount.addClass('hidden').text('');
+//     $btnFilterScrollTop.removeClass('btn-filter--non-zero');
+//     $btnFilterScrollTopCount.addClass('hidden').text('');
+//   }
+// }
 
 // function setVisibilitySelectedMoreItem(selectedItemsLength) {
 //   let isMobile = $(window).width() < 576;
@@ -680,70 +680,70 @@ function toggleClearFilterButtons() {
 //   // clearCitiesCheckboxes();
 // }
 
-function findFilterTagByValue(name, value) {
-  let $container = $('.filter-tags__list');
-  let $filterTag = $container.find(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
+// function findFilterTagByValue(name, value) {
+//   let $container = $('.filter-tags__list');
+//   let $filterTag = $container.find(`.filter-tags__item[data-name="${name}"][data-value="${value}"]`);
 
-  return $filterTag;
-}
+//   return $filterTag;
+// }
 
-function createOrUpdateTag(type, name, value, labelText) {
-  let $container = $('.filter-tags__list');
-  let $filterTag = findFilterTagByValue(name, value);
+// function createOrUpdateTag(type, name, value, labelText) {
+//   let $container = $('.filter-tags__list');
+//   let $filterTag = findFilterTagByValue(name, value);
 
-  if ($filterTag.length) return;
+//   if ($filterTag.length) return;
 
-  let htmlStr = `
-              <li class="filter-tags__item" data-type="${type}" data-name="${name}" data-value="${value}">
-                <div class="filter-tag">
-                  <div class="filter-tag__value">${labelText}</div>
-                  <a href="#" class="filter-tag__remove-btn"></a>
-                </div>
-              </li>`;
+//   let htmlStr = `
+//               <li class="filter-tags__item" data-type="${type}" data-name="${name}" data-value="${value}">
+//                 <div class="filter-tag">
+//                   <div class="filter-tag__value">${labelText}</div>
+//                   <a href="#" class="filter-tag__remove-btn"></a>
+//                 </div>
+//               </li>`;
 
-  if (['range', 'date-range', 'textfield', 'select'].includes(type)) {
-    $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
+//   if (['range', 'date-range', 'textfield', 'select'].includes(type)) {
+//     $filterTag = $(`.filter-tags__item[data-name="${name}"]`);
 
-    if ($filterTag.length) {
-      $filterTag.attr('data-type', type);
-      $filterTag.attr('data-name', name);
-      $filterTag.attr('data-value', value);
-      $filterTag.find('.filter-tag__value').html(labelText);
+//     if ($filterTag.length) {
+//       $filterTag.attr('data-type', type);
+//       $filterTag.attr('data-name', name);
+//       $filterTag.attr('data-value', value);
+//       $filterTag.find('.filter-tag__value').html(labelText);
 
-      return;
-    }
-  }
+//       return;
+//     }
+//   }
 
-  $container.find('.filter-tags__more-item').before(htmlStr);
-}
+//   $container.find('.filter-tags__more-item').before(htmlStr);
+// }
 
-function changeCaseOfAgeLabel(age) {
-  if (isNaN(age)) return false;
+// function changeCaseOfAgeLabel(age) {
+//   if (isNaN(age)) return false;
 
-  let result = 'років';
+//   let result = 'років';
 
-  if ([2, 3, 4].includes(age % 10)) {
-    result = 'роки';
-  } else if (age % 10 === 1) {
-    result = 'рік';
-  }
+//   if ([2, 3, 4].includes(age % 10)) {
+//     result = 'роки';
+//   } else if (age % 10 === 1) {
+//     result = 'рік';
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
-function changeCaseOfDaysLabel(days) {
-  if (isNaN(days)) return false;
+// function changeCaseOfDaysLabel(days) {
+//   if (isNaN(days)) return false;
 
-  let result = 'днів';
+//   let result = 'днів';
 
-  if ([2, 3, 4].includes(days % 10)) {
-    result = 'дні';
-  } else if (days % 10 === 1) {
-    result = 'день';
-  }
+//   if ([2, 3, 4].includes(days % 10)) {
+//     result = 'дні';
+//   } else if (days % 10 === 1) {
+//     result = 'день';
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
 
 // $(() => {
@@ -1098,40 +1098,40 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // });
 
-  function setVacanciesCount() {
-    let additionalFiltersSubmitBtn = document.querySelector('.additional-filters__submit-btn');
-    additionalFiltersSubmitBtn.classList.add('btn-default--filter-loading');
+  // function setVacanciesCount() {
+  //   let additionalFiltersSubmitBtn = document.querySelector('.additional-filters__submit-btn');
+  //   additionalFiltersSubmitBtn.classList.add('btn-default--filter-loading');
 
-    $.ajax({
-      url: `/api/v1/vacancies-count${getFilterUrl()}`,
+  //   $.ajax({
+  //     url: `/api/v1/vacancies-count${getFilterUrl()}`,
 
-      success: function (data) {
-        const translations = {
-          'show': {
-            'en': 'Show',
-            'ru': 'Показать',
-            'uk': 'Показати'
-          },
+  //     success: function (data) {
+  //       const translations = {
+  //         'show': {
+  //           'en': 'Show',
+  //           'ru': 'Показать',
+  //           'uk': 'Показати'
+  //         },
 
-          'no_vacancies': {
-            'en': 'No vacancies',
-            'ru': 'Нет вакансий',
-            'uk': 'Немає вакансій'
-          }
-        };
+  //         'no_vacancies': {
+  //           'en': 'No vacancies',
+  //           'ru': 'Нет вакансий',
+  //           'uk': 'Немає вакансій'
+  //         }
+  //       };
 
-        const lang = document.documentElement.lang;
-        const btnText = data.total ? translations.show[lang] + ' ' + data.label : translations.no_vacancies[lang];
+  //       const lang = document.documentElement.lang;
+  //       const btnText = data.total ? translations.show[lang] + ' ' + data.label : translations.no_vacancies[lang];
 
-        additionalFiltersSubmitBtn.classList.remove('btn-default--filter-loading');
-        additionalFiltersSubmitBtn.querySelector('.btn-default__text').textContent = btnText;
-      },
+  //       additionalFiltersSubmitBtn.classList.remove('btn-default--filter-loading');
+  //       additionalFiltersSubmitBtn.querySelector('.btn-default__text').textContent = btnText;
+  //     },
 
-      error: function (data) {
-        console.error(data);
-      }
-    });
-  }
+  //     error: function (data) {
+  //       console.error(data);
+  //     }
+  //   });
+  // }
 
   // function setCalendarVacanciesCount(root) {
   //   const applyBtn = root.querySelector('.calendar-modal__apply-btn');
@@ -1874,10 +1874,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // });
 
   // Synchronized input fields
-  $('input[data-sync-field-ids]').on('input', function (event) {
-    syncInputFields($(this));
-    toggleClearFilterButtons();
-  });
+  // $('input[data-sync-field-ids]').on('input', function (event) {
+  //   syncInputFields($(this));
+  //   toggleClearFilterButtons();
+  // });
 
   // Synchronizing fields when remove tag
   // $(document).on('click', '.filter-tag__remove-btn', function (event) {
