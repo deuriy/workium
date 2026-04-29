@@ -9,19 +9,6 @@ import PerfectScrollbar from 'perfect-scrollbar';
 
 import { initVacanciesFilter } from "./vacancies-filter";
 
-// initVacanciesFilter();
-
-// let filterController = null;
-
-// import { FilterController } from "./vacancies-filter/core/filter-controller";
-// import { CitiesCheckboxes } from "./vacancies-filter/components/cities-checkboxes";
-// import { CheckboxTagsGroup } from "./vacancies-filter/components/checkbox-tags-group";
-// import { FilterTags } from "./vacancies-filter/components/filter-tags";
-
-// import { CheckboxListComponent } from "./vacancies_filter/components/checkbox_list";
-
-// console.log(CitiesCheckboxes);
-
 // let $ageSwitch = $('input[name="age_switch"]');
 
 // let selectedCitiesIds = [];
@@ -29,20 +16,6 @@ import { initVacanciesFilter } from "./vacancies-filter";
 
 // let citySearchInputValue = '';
 // let searchCitiesTimeoutID = null;
-
-// const filterController = new FilterController({
-//   formSelector: 'form[name="vacancies_filter"]',
-//   components: {
-//     cities: new CitiesCheckboxes({
-//       containerSelector: '.checkboxes-group--cities .checkboxes-group__list',
-//       filterKey: 'cities'
-//     })
-//   }
-// });
-
-// const citiesComponent = new CitiesCheckboxes(
-//   '.checkboxes-group--cities .checkboxes-group__list'
-// );
 
 // function removeItemFromArray(array, value) {
 //   let index = array.indexOf(value);
@@ -1629,38 +1602,38 @@ document.addEventListener('DOMContentLoaded', function () {
   // setVisibilitySelectedMoreItem(additionalFiltersSelectedItemsLength);
 
   // Age switch
-  function handleAgeSwitchChange(ageSwitch) {
-    const filterElement = ageSwitch.closest('.filter-element');
-    if (!filterElement) return;
+  // function handleAgeSwitchChange(ageSwitch) {
+  //   const filterElement = ageSwitch.closest('.filter-element');
+  //   if (!filterElement) return;
 
-    const singleSliderElement = filterElement.querySelector('.range-slider-element--single');
-    const rangeSliderElement = filterElement.querySelector('.range-slider-element--range');
+  //   const singleSliderElement = filterElement.querySelector('.range-slider-element--single');
+  //   const rangeSliderElement = filterElement.querySelector('.range-slider-element--range');
 
-    const isChecked = ageSwitch.checked;
+  //   const isChecked = ageSwitch.checked;
 
-    if (singleSliderElement) {
-      singleSliderElement.hidden = isChecked;
-    }
+  //   if (singleSliderElement) {
+  //     singleSliderElement.hidden = isChecked;
+  //   }
 
-    if (rangeSliderElement) {
-      rangeSliderElement.hidden = !isChecked;
-    }
+  //   if (rangeSliderElement) {
+  //     rangeSliderElement.hidden = !isChecked;
+  //   }
 
-    removeAgeSelectedItems();
-  }
+  //   removeAgeSelectedItems();
+  // }
 
-  function removeAgeSelectedItems(scope = document) {
-    scope
-      .querySelectorAll('.filter-tags__item[data-name="vik"][data-type="range"]')
-      .forEach((item) => item.remove());
-  }
+  // function removeAgeSelectedItems(scope = document) {
+  //   scope
+  //     .querySelectorAll('.filter-tags__item[data-name="vik"][data-type="range"]')
+  //     .forEach((item) => item.remove());
+  // }
 
-  document.addEventListener('change', (event) => {
-    const ageSwitch = event.target.closest('input[name="age_switch"]');
-    if (!ageSwitch) return;
+  // document.addEventListener('change', (event) => {
+  //   const ageSwitch = event.target.closest('input[name="age_switch"]');
+  //   if (!ageSwitch) return;
 
-    handleAgeSwitchChange(ageSwitch);
-  });
+  //   handleAgeSwitchChange(ageSwitch);
+  // });
 
   // $ageSwitch.change(function (event) {
   //   let $filterElement = $(this).closest('.filter-element');
