@@ -1,4 +1,8 @@
 export class UrlSync {
+  static normalizeParamKey(rawKey = '') {
+    return String(rawKey).replace(/\[[^\]]*\]$/, '');
+  }
+
   static read({
     seoCountryFilterKey = 'country',
     languagePrefixes = [],
@@ -8,7 +12,7 @@ export class UrlSync {
     const params = new URLSearchParams(window.location.search);
 
     params.forEach((value, rawKey) => {
-      const key = rawKey.replace(/\[\]$/, '');
+      const key = UrlSync.normalizeParamKey(rawKey);
 
       if (!result[key]) {
         result[key] = [];
