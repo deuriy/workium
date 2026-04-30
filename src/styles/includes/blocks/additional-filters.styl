@@ -428,7 +428,10 @@
 	&__not-found
 		display grid
 		align-content center
-		height calc(var(--vh, 100vh) * 100)
+		height 100%
+
+		@media $xs
+			height calc(var(--vh, 100vh) * 100)
 	
 	&__footer
 		display grid

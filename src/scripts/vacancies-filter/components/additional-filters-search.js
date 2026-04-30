@@ -72,9 +72,10 @@ export class AdditionalFiltersSearch {
     this.groupMeta = this.groups.map((group) => this.createGroupMeta(group));
 
     this.handleInput = this.handleInput.bind(this);
+    this.handleInputClick = this.handleInputClick.bind(this);
     this.handleClearClick = this.handleClearClick.bind(this);
     this.handleCancelClick = this.handleCancelClick.bind(this);
-    this.handleInputPointerDown = this.handleInputPointerDown.bind(this);
+    // this.handleInputPointerDown = this.handleInputPointerDown.bind(this);
     this.handleBodyScroll = this.handleBodyScroll.bind(this);
   }
 
@@ -84,7 +85,8 @@ export class AdditionalFiltersSearch {
     }
 
     this.input.addEventListener('input', this.handleInput);
-    this.input.addEventListener('pointerdown', this.handleInputPointerDown);
+    this.input.addEventListener('click', this.handleInputClick);
+    // this.input.addEventListener('pointerdown', this.handleInputPointerDown);
 
     if (this.clearButton) {
       this.clearButton.addEventListener('click', this.handleClearClick);
@@ -104,7 +106,8 @@ export class AdditionalFiltersSearch {
   destroy() {
     if (this.input) {
       this.input.removeEventListener('input', this.handleInput);
-      this.input.removeEventListener('pointerdown', this.handleInputPointerDown);
+      this.input.removeEventListener('click', this.handleInputClick);
+      // this.input.removeEventListener('pointerdown', this.handleInputPointerDown);
     }
 
     if (this.clearButton) {
@@ -193,10 +196,30 @@ export class AdditionalFiltersSearch {
     this.applySearch(searchValue);
   }
 
-  handleInputPointerDown() {
-    if (this.header) {
-      this.header.classList.add(this.headerExtendedClass);
+  // handleInputPointerDown() {
+  //   window.setTimeout(() => {
+  //     if (!this.header) {
+  //       return;
+  //     }
+
+  //     this.header.classList.add(this.headerExtendedClass);
+
+  //     this.input?.focus?.({
+  //       preventScroll: true
+  //     });
+  //   }, 0);
+  // }
+
+  handleInputClick() {
+    if (!this.header) {
+      return;
     }
+
+    this.header.classList.add(this.headerExtendedClass);
+
+    this.input?.focus?.({
+      preventScroll: true
+    });
   }
 
   handleClearClick() {
