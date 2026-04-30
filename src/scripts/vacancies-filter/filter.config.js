@@ -3,6 +3,9 @@ export const filterConfig = {
   syncUrl: false,
   restoreFromUrl: true,
 
+  languagePrefixes: ['en', 'ru'],
+  basePathSegment: 'vacancies',
+
   submitWithPhpArrayStyle: true,
   seoCountryFilterKey: 'country',
 

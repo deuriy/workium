@@ -1,27 +1,40 @@
 export class UrlSync {
-  static read({ seoCountryFilterKey = 'country' } = {}) {
-    const params = new URLSearchParams(window.location.search);
+  static read({
+    seoCountryFilterKey = 'country',
+    languagePrefixes = [],
+    basePathSegment = 'vacancies'
+  } = {}) {
     const result = {};
+    const params = new URLSearchParams(window.location.search);
 
-    for (const [rawKey, value] of params.entries()) {
-      const key = this.normalizeReadKey(rawKey);
-      const parsedValues = this.parseCsv(value);
-
-      if (!parsedValues.length) {
-        continue;
-      }
+    params.forEach((value, rawKey) => {
+      const key = rawKey.replace(/\[\]$/, '');
 
       if (!result[key]) {
         result[key] = [];
       }
 
-      result[key].push(...parsedValues);
+      result[key].push(value);
+    });
+
+    const languageSet = new Set(languagePrefixes.map(String));
+
+    let segments = window.location.pathname
+      .split('/')
+      .filter(Boolean);
+
+    if (segments.length && languageSet.has(segments[0])) {
+      segments = segments.slice(1);
     }
 
-    const pathnameCountry = this.readCountryFromPath(window.location.pathname);
+    const baseIndex = segments.indexOf(basePathSegment);
 
-    if (pathnameCountry.length) {
-      result[seoCountryFilterKey] = pathnameCountry;
+    if (baseIndex !== -1) {
+      const possibleCountrySlug = segments[baseIndex + 1];
+
+      if (possibleCountrySlug && possibleCountrySlug.startsWith('robota-v-')) {
+        result[seoCountryFilterKey] = [possibleCountrySlug];
+      }
     }
 
     return result;

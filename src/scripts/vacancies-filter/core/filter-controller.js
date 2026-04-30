@@ -17,6 +17,8 @@ export class FilterController {
     submitWithPhpArrayStyle = true,
     seoCountryFilterKey = 'country',
     currency = null,
+    languagePrefixes = [],
+    basePathSegment = 'vacancies',
 
     // NEW
     citiesLoader = null,
@@ -45,6 +47,9 @@ export class FilterController {
     this.onChange = onChange;
     this.submitWithPhpArrayStyle = submitWithPhpArrayStyle;
     this.seoCountryFilterKey = seoCountryFilterKey;
+
+    this.languagePrefixes = new Set(languagePrefixes.map(String));
+    this.basePathSegment = String(basePathSegment || '').replace(/^\/+|\/+$/g, '');
 
     // NEW
     this.citiesLoader = citiesLoader;
@@ -107,6 +112,45 @@ export class FilterController {
 
     this.dependencies.applyParentChildVisibility(this.getState(), this.store);
     this.dependencies.applyDependentVisibility(this.getState());
+  }
+
+  stripLanguagePrefixFromSegments(segments = []) {
+    if (!segments.length) {
+      return segments;
+    }
+
+    return this.languagePrefixes.has(segments[0])
+      ? segments.slice(1)
+      : segments;
+  }
+
+  isKnownFilterValue(key, value) {
+    const component = this.components[key];
+
+    if (!component?.getAllItems) {
+      return true;
+    }
+
+    const values = component.getAllItems().map((item) => {
+      return String(item.value ?? item.id ?? '');
+    });
+
+    return values.includes(String(value));
+  }
+
+  sanitizeRestoredFilters(filters = {}) {
+    return Object.fromEntries(
+      Object.entries(filters)
+        .filter(([key]) => this.isRegisteredFilterKey(key))
+        .map(([key, values]) => {
+          const safeValues = values.filter((value) => {
+            return this.isKnownFilterValue(key, value);
+          });
+
+          return [key, safeValues];
+        })
+        .filter(([, values]) => values.length > 0)
+    );
   }
 
   shouldIgnoreFilterInSelectedState(key, values = []) {
@@ -507,16 +551,49 @@ export class FilterController {
     });
   }
 
+  getCurrentLanguagePrefix(pathname = window.location.pathname) {
+    const segments = this.normalizePath(pathname)
+      .split('/')
+      .filter(Boolean);
+
+    const firstSegment = segments[0];
+
+    return this.languagePrefixes?.has?.(firstSegment)
+      ? firstSegment
+      : '';
+  }
+
+  stripLanguagePrefix(pathname = '') {
+    const normalizedPath = this.normalizePath(pathname);
+    const segments = normalizedPath.split('/').filter(Boolean);
+
+    if (segments.length && this.languagePrefixes?.has?.(segments[0])) {
+      return `/${segments.slice(1).join('/')}` || '/';
+    }
+
+    return normalizedPath;
+  }
+
+  addLanguagePrefix(pathname = '/', languagePrefix = '') {
+    const normalizedPath = this.normalizePath(pathname);
+
+    if (!languagePrefix) {
+      return normalizedPath;
+    }
+
+    return `/${languagePrefix}${normalizedPath === '/' ? '' : normalizedPath}`;
+  }
+
   restoreFromUrl() {
     const filters = UrlSync.read({
-      seoCountryFilterKey: this.seoCountryFilterKey
+      seoCountryFilterKey: this.seoCountryFilterKey,
+      languagePrefixes: [...this.languagePrefixes],
+      basePathSegment: this.basePathSegment
     });
 
-    Object.entries(filters).forEach(([key, values]) => {
-      if (!this.isRegisteredFilterKey(key)) {
-        return;
-      }
+    const safeFilters = this.sanitizeRestoredFilters(filters);
 
+    Object.entries(safeFilters).forEach(([key, values]) => {
       this.store.setFilter(key, values);
     });
   }
@@ -774,23 +851,38 @@ export class FilterController {
       }
     });
 
-    return params.toString();
+    return params
+      .toString()
+      .replace(/%5B/g, '[')
+      .replace(/%5D/g, ']');
   }
 
   buildSubmitUrl({ phpArrayStyle = this.submitWithPhpArrayStyle } = {}) {
     const action = this.form.getAttribute('action');
-    const fallbackBaseUrl = action && action.trim() ? action : window.location.pathname;
+    const fallbackBaseUrl = window.location.pathname;
 
-    const url = new URL(fallbackBaseUrl, window.location.origin);
+    const url = new URL(
+      action && action.trim() ? action : fallbackBaseUrl,
+      window.location.origin
+    );
+
     const filters = this.serialize();
     const countryValues = this.getSeoCountryValues(filters);
 
-    const basePath = this.getSubmitBasePath(url.pathname, countryValues);
+    const languagePrefix = this.getCurrentLanguagePrefix(window.location.pathname);
+
+    const pathWithoutLanguage = this.stripLanguagePrefix(url.pathname);
+    const basePath = this.getSubmitBasePath(pathWithoutLanguage, countryValues);
     const singleCountrySlug = this.buildCountryUrlPart(countryValues);
 
-    url.pathname = singleCountrySlug
+    const nextPathWithoutLanguage = singleCountrySlug
       ? `${basePath === '/' ? '' : basePath}/${singleCountrySlug}`
       : basePath;
+
+    url.pathname = this.addLanguagePrefix(
+      nextPathWithoutLanguage,
+      languagePrefix
+    );
 
     url.search = this.buildQueryString({ phpArrayStyle });
 

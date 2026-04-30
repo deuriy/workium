@@ -26,6 +26,10 @@ export function initVacanciesFilter() {
     restoreFromUrl: filterConfig.restoreFromUrl,
     submitWithPhpArrayStyle: filterConfig.submitWithPhpArrayStyle,
     seoCountryFilterKey: filterConfig.seoCountryFilterKey,
+
+    languagePrefixes: filterConfig.languagePrefixes || [],
+    basePathSegment: filterConfig.basePathSegment || 'vacancies',
+    
     currency: filterConfig.currency,
 
     citiesLoader,
