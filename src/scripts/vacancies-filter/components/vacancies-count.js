@@ -7,7 +7,7 @@ export class VacanciesCount {
     textSelector = '[data-vacancies-count-text]',
     baseTextAttribute = 'vacanciesCountBaseText',
     debounceDelay = 350,
-    loadingClass = 'is-loading'
+    loadingClass = 'btn-default--filter-loading'
   } = {}) {
     this.endpoint = endpoint;
     this.buttonSelector = buttonSelector;
@@ -23,6 +23,8 @@ export class VacanciesCount {
     this.lastRequestKey = '';
 
     this.buttons = [];
+    this.loadingTimeout = null;
+    this.loadingDelay = 120; // ms
   }
 
   init() {
@@ -162,8 +164,22 @@ export class VacanciesCount {
   }
 
   setLoading(isLoading) {
+    if (isLoading) {
+      clearTimeout(this.loadingTimeout);
+
+      this.loadingTimeout = setTimeout(() => {
+        this.buttons.forEach(({ button }) => {
+          button.classList.add(this.loadingClass);
+        });
+      }, this.loadingDelay);
+
+      return;
+    }
+
+    clearTimeout(this.loadingTimeout);
+
     this.buttons.forEach(({ button }) => {
-      button.classList.toggle(this.loadingClass, isLoading);
+      button.classList.remove(this.loadingClass);
     });
   }
 
