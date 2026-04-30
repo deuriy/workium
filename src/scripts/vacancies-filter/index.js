@@ -2,6 +2,7 @@ import { FilterController } from './core/filter-controller.js';
 import { ComponentFactory } from './core/component-factory.js';
 import { CitiesLoader } from './services/cities-loader.js';
 import { filterConfig } from './filter.config.js';
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.esm.js';
 
 export function initVacanciesFilter() {
   const factory = new ComponentFactory();
@@ -55,7 +56,7 @@ export function initVacanciesFilter() {
 }
 
 function bindFancyboxDrafts(uiPlugins = [], filterController = null) {
-  if (!window.Fancybox?.bind) {
+  if (!Fancybox?.bind) {
     return;
   }
 
@@ -64,7 +65,7 @@ function bindFancyboxDrafts(uiPlugins = [], filterController = null) {
   });
 
   if (citiesPopupPlugin) {
-    window.Fancybox.bind('[data-src="#cities-popup"]', {
+    Fancybox.bind('[data-src="#cities-popup"]', {
       dragToClose: false,
 
       on: {
@@ -83,7 +84,7 @@ function bindFancyboxDrafts(uiPlugins = [], filterController = null) {
   const currencyComponent = filterController?.getComponent?.('currency');
 
   if (currencyComponent) {
-    window.Fancybox.bind('[data-src="#currencies-popup"]', {
+    Fancybox.bind('[data-src="#currencies-popup"]', {
       dragToClose: false,
       
       on: {
@@ -115,7 +116,7 @@ function bindFancyboxDrafts(uiPlugins = [], filterController = null) {
 
     console.log(component.container.id);
 
-    window.Fancybox.bind(`[data-src="#${component.container.id}"]`, {
+    Fancybox.bind(`[data-src="#${component.container.id}"]`, {
       on: {
         ready() {
           console.log('Ready! checkboxesGroupsComponents');

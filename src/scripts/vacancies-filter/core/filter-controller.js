@@ -135,6 +135,10 @@ export class FilterController {
 
     return false;
   }
+  
+  isRegisteredFilterKey(key) {
+    return Object.prototype.hasOwnProperty.call(this.components, key);
+  }
 
   isSingleValueFilter(key) {
     return this.components[key]?.isSingleValue === true;
@@ -378,12 +382,20 @@ export class FilterController {
     }
   }
 
+  getRegisteredFilters(filters = {}) {
+    return Object.fromEntries(
+      Object.entries(filters).filter(([key]) => {
+        return this.isRegisteredFilterKey(key);
+      })
+    );
+  }
+
   syncTags(filters) {
     if (!this.filterTags.length) {
       return;
     }
 
-    const tags = this.tagsBuilder.build(filters);
+    const tags = this.tagsBuilder.build(this.getRegisteredFilters(filters));
 
     this.filterTags.forEach((filterTagsInstance) => {
       filterTagsInstance.setTags(tags);
@@ -501,6 +513,10 @@ export class FilterController {
     });
 
     Object.entries(filters).forEach(([key, values]) => {
+      if (!this.isRegisteredFilterKey(key)) {
+        return;
+      }
+
       this.store.setFilter(key, values);
     });
   }
