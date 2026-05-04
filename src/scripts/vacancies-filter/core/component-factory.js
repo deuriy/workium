@@ -12,6 +12,7 @@ import { RangeSliderField } from '../components/range-slider-field.js';
 import { CheckboxesGroupsField } from '../components/checkboxes-groups-field.js';
 import { TextSearchField } from '../components/text-search-field.js';
 import { VacanciesCount } from '../components/vacancies-count.js';
+import { LottieHoverPlayer } from '../components/lottie-hover-player.js';
 
 export class ComponentFactory {
   constructor({ registry = {}, uiRegistry = {} } = {}) {
@@ -34,6 +35,7 @@ export class ComponentFactory {
       'cities-filter-search': CitiesFilterSearch,
       'vacancies-count': VacanciesCount,
       'result-field': ResultField,
+      'lottie-hover-player': LottieHoverPlayer,
       ...uiRegistry
     };
   }

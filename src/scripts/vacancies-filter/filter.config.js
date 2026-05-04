@@ -79,6 +79,12 @@ export const filterConfig = {
     },
     {
       enabled: true,
+      type: 'lottie-hover-player',
+      buttonSelector: '.btn-grey--lottie-trash',
+      playerSelector: 'lottie-player, dotlottie-player'
+    },
+    {
+      enabled: true,
       type: 'vacancies-count',
       endpoint: '/api/v1/vacancies-count',
       debounceDelay: 350
