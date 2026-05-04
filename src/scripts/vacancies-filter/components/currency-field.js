@@ -66,6 +66,14 @@ export class CurrencyField extends BaseFilterComponent {
     return label.innerHTML.trim();
   }
 
+  getAllItems() {
+    return [...this.inputsMap.values()].map((item) => ({
+      ...item,
+      value: String(item.value),
+      label: item.label?.textContent?.trim() || String(item.value)
+    }));
+  }
+
   collectItems() {
     this.inputsMap.clear();
 

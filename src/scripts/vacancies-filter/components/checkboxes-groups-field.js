@@ -105,12 +105,30 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
 
     this.container.querySelectorAll(this.inputSelector).forEach((input) => {
       const label = this.container.querySelector(`label[for="${input.id}"]`);
+      const group = input.closest(this.groupSelector);
+
+      const groupTitle = group
+        ?.querySelector('.checkboxes-group__title, .filter-element__title')
+        ?.textContent
+        ?.trim() || '';
+
+      const groupSubtitle = group
+        ?.querySelector('.checkboxes-group__subtitle, .filter-element__subtitle')
+        ?.textContent
+        ?.trim() || '';
+
+      const countryValue = group?.dataset.countryValue || '';
 
       this.inputsMap.set(String(input.value), {
         input,
         label,
         value: String(input.value),
-        countryValue: input.closest(this.groupSelector)?.dataset.countryValue || ''
+        countryValue,
+
+        // важливо для зовнішнього пошуку
+        groupKey: `${this.filterKey}:${countryValue || groupTitle}`,
+        groupTitle,
+        groupSubtitle
       });
     });
   }

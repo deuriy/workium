@@ -22,7 +22,10 @@ export class AdditionalFiltersSearch {
     searchHiddenClass = 'is-search-hidden',
     headerStickyClass = 'additional-filters__header--sticky',
     headerExtendedClass = 'additional-filters__header--search-extended',
-    typingIdleDelay = 500
+    externalResultsSelector = '[data-external-search-results]',
+    externalSearchKeys = ['cities', 'currency'],
+    externalSearchComponents = ['isCheckboxesGroupsField'],
+    typingIdleDelay = 500,
   } = {}) {
     this.root =
       rootElement instanceof Element
@@ -51,6 +54,10 @@ export class AdditionalFiltersSearch {
     this.headerStickyClass = headerStickyClass;
     this.headerExtendedClass = headerExtendedClass;
 
+    this.externalResultsSelector = externalResultsSelector;
+    this.externalSearchKeys = externalSearchKeys;
+    this.externalSearchComponents = externalSearchComponents;
+
     this.typingIdleDelay = typingIdleDelay;
 
     this.isTyping = false;
@@ -65,6 +72,8 @@ export class AdditionalFiltersSearch {
     this.notFoundPlayer = this.notFound?.querySelector('lottie-player, dotlottie-player') || null;
     this.tagsBlock = this.root.querySelector(this.tagsSelector);
 
+    this.externalResults = this.root.querySelector(this.externalResultsSelector);
+
     this.groups = Array.from(
       this.root.querySelectorAll(AdditionalFiltersSearch.GROUP_SELECTOR)
     );
@@ -77,6 +86,7 @@ export class AdditionalFiltersSearch {
     this.handleCancelClick = this.handleCancelClick.bind(this);
     // this.handleInputPointerDown = this.handleInputPointerDown.bind(this);
     this.handleBodyScroll = this.handleBodyScroll.bind(this);
+    this.handleExternalResultsChange = this.handleExternalResultsChange.bind(this);
   }
 
   init() {
@@ -100,6 +110,10 @@ export class AdditionalFiltersSearch {
       this.body.addEventListener('scroll', this.handleBodyScroll, { passive: true });
     }
 
+    if (this.externalResults) {
+      this.externalResults.addEventListener('change', this.handleExternalResultsChange);
+    }
+
     this.resetUiState();
   }
 
@@ -120,6 +134,10 @@ export class AdditionalFiltersSearch {
 
     if (this.body) {
       this.body.removeEventListener('scroll', this.handleBodyScroll);
+    }
+
+    if (this.externalResults) {
+      this.externalResults.removeEventListener('change', this.handleExternalResultsChange);
     }
 
     clearTimeout(this.typingTimeout);
@@ -196,20 +214,6 @@ export class AdditionalFiltersSearch {
     this.applySearch(searchValue);
   }
 
-  // handleInputPointerDown() {
-  //   window.setTimeout(() => {
-  //     if (!this.header) {
-  //       return;
-  //     }
-
-  //     this.header.classList.add(this.headerExtendedClass);
-
-  //     this.input?.focus?.({
-  //       preventScroll: true
-  //     });
-  //   }, 0);
-  // }
-
   handleInputClick() {
     if (!this.header) {
       return;
@@ -248,6 +252,65 @@ export class AdditionalFiltersSearch {
     this.input.blur();
   }
 
+  syncCountryForExternalCity({ filterKey, countryValue = '' } = {}) {
+    const citiesFilterKey = this.controller?.citiesFilterKey || 'cities';
+    const countryFilterKey =
+      this.controller?.citiesRequestCountryFilterKey || 'country';
+
+    if (filterKey !== citiesFilterKey) {
+      return;
+    }
+
+    if (countryValue) {
+      const selectedCountries =
+        this.controller?.getSelected?.(countryFilterKey) || [];
+
+      if (!selectedCountries.includes(countryValue)) {
+        this.controller?.addValue?.(countryFilterKey, countryValue);
+      }
+
+      return;
+    }
+
+    this.controller?.applyCountriesFromSelectedCities?.();
+  }
+
+  handleExternalResultsChange(event) {
+    const input = event.target;
+
+    if (!input.matches('[data-external-filter-key][data-external-filter-value]')) {
+      return;
+    }
+
+    const filterKey = input.dataset.externalFilterKey;
+    const value = input.dataset.externalFilterValue;
+    const countryValue = input.dataset.externalCountryValue || '';
+
+    const component = this.controller?.getComponent?.(filterKey);
+
+    if (!component) {
+      return;
+    }
+
+    if (component.isSingleValue) {
+      component.setSelected([value]);
+      return;
+    }
+
+    if (input.checked) {
+      component.select(value);
+
+      this.syncCountryForExternalCity({
+        filterKey,
+        countryValue
+      });
+
+      return;
+    }
+
+    component.deselect(value);
+  }
+
   handleBodyScroll() {
     if (this.input && document.activeElement === this.input && this.isTyping) {
       return;
@@ -264,6 +327,283 @@ export class AdditionalFiltersSearch {
     this.header.classList.toggle(this.headerStickyClass, this.body.scrollTop > 0);
   }
 
+  getExternalSearchComponents() {
+    const components = this.controller?.components || {};
+
+    return Object.entries(components).filter(([key, component]) => {
+      if (this.externalSearchKeys.includes(key)) {
+        return true;
+      }
+
+      if (component?.isCheckboxesGroupsField) {
+        return true;
+      }
+
+      return false;
+    });
+  }
+
+  renderExternalGroup(group, searchValue = '') {
+    return `
+      <div class="filter-element additional-filters__filter-element additional-filters__filter-element--external-search">
+        <div class="filter-element__header">
+          <div class="filter-element__title">
+            ${this.highlightText(group.title, searchValue)}
+          </div>
+
+          ${
+            group.subtitle
+              ? `<div class="filter-element__subtitle">${this.highlightText(group.subtitle, searchValue)}</div>`
+              : ''
+          }
+        </div>
+
+        <ul class="checkboxes-group__list">
+          ${group.items.map((item) => this.renderExternalResult(item, searchValue)).join('')}
+        </ul>
+      </div>
+    `;
+  }
+
+  getExternalComponentTitle(filterKey, component) {
+    if (component?.container) {
+      const title = component.container
+        .closest('.filter-element, .checkboxes-group, .radiobtns-group, .fancybox-popup')
+        ?.querySelector('.filter-element__title, .checkboxes-group__title, .radiobtns-group__title, .fancybox-popup__title')
+        ?.textContent
+        ?.trim();
+
+      if (title) {
+        return title;
+      }
+    }
+
+    const resultFieldText = document
+      .querySelector(`[data-result-field="${filterKey}"] [data-result-field-text]`)
+      ?.textContent
+      ?.trim();
+
+    return resultFieldText || filterKey;
+  }
+
+  getExternalComponentSubtitle(filterKey, component) {
+    if (!component?.container) {
+      return '';
+    }
+
+    return component.container
+      .closest('.filter-element, .checkboxes-group, .radiobtns-group, .fancybox-popup')
+      ?.querySelector('.filter-element__subtitle, .checkboxes-group__subtitle, .radiobtns-group__subtitle, .fancybox-popup__subtitle')
+      ?.textContent
+      ?.trim() || '';
+  }
+
+  getExternalComponentItems(filterKey, component) {
+    if (!component?.getAllItems) {
+      return [];
+    }
+
+    return component.getAllItems()
+      .map((item) => {
+        const value = String(item.value ?? item.id ?? '');
+
+        const label = String(
+          item.label?.textContent ||
+          item.label ||
+          item.text ||
+          item.title ||
+          item.value ||
+          item.id ||
+          ''
+        ).trim();
+
+        const subtitle = String(
+          item.description ||
+          item.country ||
+          item.countryName ||
+          item.province ||
+          ''
+        ).trim();
+
+        const groupTitle = String(item.groupTitle || '').trim();
+        const groupSubtitle = String(item.groupSubtitle || '').trim();
+
+        const searchText = this.normalizeText([
+          label,
+          subtitle,
+          groupTitle,
+          groupSubtitle
+        ].filter(Boolean).join(' '));
+
+        return {
+          filterKey,
+          value,
+          label,
+          subtitle,
+          groupKey: item.groupKey || filterKey,
+          groupTitle: item.groupTitle || '',
+          groupSubtitle: item.groupSubtitle || '',
+          countryValue: item.countryValue || item.country_value || '',
+          searchText,
+          component,
+          isSingleValue: component.isSingleValue === true,
+        };
+      })
+      .filter((item) => item.value && item.label);
+  }
+
+  getExternalSearchResults(searchValue = '') {
+    if (!searchValue) {
+      return [];
+    }
+
+    return this.getExternalSearchComponents()
+      .flatMap(([filterKey, component]) => {
+        if (!component?.getAllItems) {
+          return [];
+        }
+
+        return component.getAllItems()
+          .map((item) => {
+            const value = String(item.value ?? item.id ?? '');
+            const label = String(
+              item.label?.textContent ||
+              item.text ||
+              item.title ||
+              item.value ||
+              item.id ||
+              ''
+            ).trim();
+
+            const searchText = this.normalizeText([
+              label,
+              item.country,
+              item.countryName,
+              item.description,
+              item.countryValue
+            ].filter(Boolean).join(' '));
+
+            return {
+              filterKey,
+              value,
+              label,
+              searchText,
+              component,
+              isSingleValue: component.isSingleValue === true
+            };
+          })
+          .filter((item) => {
+            return item.value && item.label && item.searchText.includes(searchValue);
+          });
+      });
+  }
+
+  getExternalSearchGroups(searchValue = '') {
+    if (!searchValue) {
+      return [];
+    }
+
+    const groupsMap = new Map();
+
+    this.getExternalSearchComponents().forEach(([filterKey, component]) => {
+      const componentTitle = this.getExternalComponentTitle(filterKey, component);
+      const componentSubtitle = this.getExternalComponentSubtitle(filterKey, component);
+
+      const items = this.getExternalComponentItems(filterKey, component);
+
+      items.forEach((item) => {
+        const title = item.groupTitle || componentTitle;
+        const subtitle = item.groupSubtitle || componentSubtitle;
+
+        const titleMatches = this.normalizeText(title).includes(searchValue);
+        const subtitleMatches = this.normalizeText(subtitle).includes(searchValue);
+        const itemMatches = item.searchText.includes(searchValue);
+
+        if (!(titleMatches || subtitleMatches || itemMatches)) {
+          return;
+        }
+
+        const groupKey = item.groupKey || `${filterKey}:${title}`;
+
+        if (!groupsMap.has(groupKey)) {
+          groupsMap.set(groupKey, {
+            filterKey,
+            component,
+            title,
+            subtitle,
+            items: []
+          });
+        }
+
+        groupsMap.get(groupKey).items.push(item);
+      });
+    });
+
+    return [...groupsMap.values()];
+  }
+
+  renderExternalResults(searchValue = '') {
+    if (!this.externalResults) {
+      return 0;
+    }
+
+    const groups = this.getExternalSearchGroups(searchValue);
+
+    this.externalResults.classList.toggle(this.hiddenClass, groups.length === 0);
+
+    if (!groups.length) {
+      this.externalResults.innerHTML = '';
+      return 0;
+    }
+
+    this.externalResults.innerHTML = groups
+      .map((group) => this.renderExternalGroup(group, searchValue))
+      .join('');
+
+    return groups.reduce((total, group) => total + group.items.length, 0);
+  }
+
+  renderExternalResult(item, searchValue = '') {
+    const id = `external_${item.filterKey}_${item.value}`.replace(/[^a-zA-Z0-9_-]/g, '_');
+    const checked = item.component.has?.(item.value) ? ' checked' : '';
+    const type = item.isSingleValue ? 'radio' : 'checkbox';
+
+    const wrapperClass = type === 'radio' ? 'radiobtn' : 'checkbox';
+    const inputClass = type === 'radio' ? 'radiobtn__input' : 'checkbox__input';
+    const labelClass = type === 'radio' ? 'radiobtn__label' : 'checkbox__label';
+
+    return `
+      <li class="checkboxes-group__item">
+        <div class="${wrapperClass}">
+          <input
+            class="${inputClass}"
+            type="${type}"
+            id="${id}"
+            name="external_${this.escapeHtml(item.filterKey)}"
+            data-external-filter-key="${this.escapeHtml(item.filterKey)}"
+            data-external-filter-value="${this.escapeHtml(item.value)}"
+            data-external-country-value="${this.escapeHtml(item.countryValue || '')}"
+            ${checked}
+          >
+
+          <label class="${labelClass}" for="${id}">
+            <span class="checkbox__label-wrapper">
+              <span class="checkbox__title">
+                ${this.highlightText(item.label, searchValue)}
+              </span>
+
+              ${
+                item.subtitle
+                  ? `<span class="checkbox__description">${this.highlightText(item.subtitle, searchValue)}</span>`
+                  : ''
+              }
+            </span>
+          </label>
+        </div>
+      </li>
+    `;
+  }
+
   applySearch(searchValue) {
     const hasSearch = searchValue.length > 0;
 
@@ -274,7 +614,9 @@ export class AdditionalFiltersSearch {
       this.updateGroupVisibility(meta, searchValue, hasSearch);
     });
 
-    this.toggleNotFound(hasSearch);
+    const externalResultsCount = this.renderExternalResults(searchValue);
+
+    this.toggleNotFound(hasSearch, externalResultsCount);
   }
 
   updateGroupVisibility(meta, searchValue, hasSearch) {
@@ -335,7 +677,7 @@ export class AdditionalFiltersSearch {
     this.tagsBlock.classList.toggle(this.searchHiddenClass, !visible);
   }
 
-  toggleNotFound(hasSearch = false) {
+  toggleNotFound(hasSearch = false, externalResultsCount = 0) {
     if (!this.notFound) {
       return;
     }
@@ -357,13 +699,46 @@ export class AdditionalFiltersSearch {
       return this.isActuallyVisible(group);
     });
 
-    this.notFound.classList.toggle(this.hiddenClass, hasVisibleGroups);
+    const hasAnyResults = hasVisibleGroups || externalResultsCount > 0;
 
-    if (!hasVisibleGroups) {
+    this.notFound.classList.toggle(this.hiddenClass, hasAnyResults);
+
+    if (!hasAnyResults) {
       this.notFoundPlayer?.play?.();
     } else {
       this.notFoundPlayer?.stop?.();
     }
+  }
+
+  escapeHtml(value = '') {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  highlightText(text = '', searchValue = '') {
+    const safeText = this.escapeHtml(text);
+
+    if (!searchValue) {
+      return safeText;
+    }
+
+    const normalizedText = this.normalizeText(text);
+    const index = normalizedText.indexOf(searchValue);
+
+    if (index === -1) {
+      return safeText;
+    }
+
+    const original = String(text);
+    const before = this.escapeHtml(original.slice(0, index));
+    const match = this.escapeHtml(original.slice(index, index + searchValue.length));
+    const after = this.escapeHtml(original.slice(index + searchValue.length));
+
+    return `${before}<span class="${this.highlightClass}">${match}</span>${after}`;
   }
 
   isActuallyVisible(element) {
