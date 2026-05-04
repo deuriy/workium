@@ -125,13 +125,23 @@ export class FilterController {
   }
 
   isKnownFilterValue(key, value) {
+    if (key === this.citiesFilterKey) {
+      return true;
+    }
+
     const component = this.components[key];
 
     if (!component?.getAllItems) {
       return true;
     }
 
-    const values = component.getAllItems().map((item) => {
+    const items = component.getAllItems();
+
+    if (!items.length) {
+      return true;
+    }
+
+    const values = items.map((item) => {
       return String(item.value ?? item.id ?? '');
     });
 
