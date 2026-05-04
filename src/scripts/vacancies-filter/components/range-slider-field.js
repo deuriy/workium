@@ -60,6 +60,7 @@ export class RangeSliderField extends BaseFilterComponent {
 
     this.isSingleValue = true;
     this.isSyncing = false;
+    this.isResetting = false;
 
     this.handleSliderUpdate = this.handleSliderUpdate.bind(this);
     this.handleInputInput = this.handleInputInput.bind(this);
@@ -194,14 +195,32 @@ export class RangeSliderField extends BaseFilterComponent {
     const value = [...selectedSet][0] || '';
 
     if (!value) {
-      this.resetLocal();
+      this.isResetting = true;
+
+      try {
+        this.resetLocal();
+      } finally {
+        queueMicrotask(() => {
+          this.isResetting = false;
+        });
+      }
+
       return;
     }
 
     const parsed = this.parseValue(value);
 
     if (!parsed) {
-      this.resetLocal();
+      this.isResetting = true;
+
+      try {
+        this.resetLocal();
+      } finally {
+        queueMicrotask(() => {
+          this.isResetting = false;
+        });
+      }
+
       return;
     }
 
@@ -366,7 +385,7 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   async handleCurrencyChange(state) {
-    if (!this.isCurrencyRange) {
+    if (!this.isCurrencyRange || this.isResetting) {
       return;
     }
 
@@ -421,6 +440,14 @@ export class RangeSliderField extends BaseFilterComponent {
 
     const nextFrom = this.clamp(converted.from);
     const nextTo = this.clamp(converted.to);
+
+    if (this.isResetting) {
+      this.setValue(nextFrom, nextTo, {
+        updateStore: false
+      });
+
+      return;
+    }
 
     this.setValue(nextFrom, nextTo, {
       updateStore: true
