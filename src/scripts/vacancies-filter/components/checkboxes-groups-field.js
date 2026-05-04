@@ -66,6 +66,8 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     this.applyButton = this.container.querySelector(this.applySelector);
     this.clearButton = this.container.querySelector(this.clearSelector);
 
+    this.updateClearButton();
+
     this.container.addEventListener('change', this.handleChange);
 
     if (this.applyButton) {
@@ -128,6 +130,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
       this.draftValues.delete(value);
     }
 
+    this.updateClearButton();
     this.updateVacanciesCountDraft();
   }
 
@@ -145,6 +148,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     });
 
     this.clear();
+    this.updateClearButton();
     this.updateVacanciesCountDraft();
   }
 
@@ -154,12 +158,24 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     this.inputsMap.forEach((item, value) => {
       item.input.checked = this.draftValues.has(value);
     });
+
+    this.updateClearButton();
   }
 
   updateVacanciesCountDraft() {
     this.controller?.updateVacanciesCountWithOverrides?.({
       [this.filterKey]: [...this.draftValues]
     });
+  }
+
+  updateClearButton() {
+    if (!this.clearButton) {
+      return;
+    }
+
+    const hasSelected = this.draftValues.size > 0;
+
+    this.clearButton.classList.toggle(this.hiddenClass, !hasSelected);
   }
 
   updateGroupsVisibility(state = {}) {
@@ -308,6 +324,8 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     this.inputsMap.forEach((item, value) => {
       item.input.checked = this.appliedValues.has(value);
     });
+
+    this.updateClearButton();
   }
 
   toggleLocal(value) {
