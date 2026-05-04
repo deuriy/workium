@@ -283,9 +283,7 @@ export class CitiesCheckboxes extends BaseFilterComponent {
       return [...selectedItems, ...restItems];
     }
 
-    return items.filter((item) => {
-      return this.getItemSearchText(item).includes(this.searchQuery);
-    });
+    return items;
   }
 
   getGroupedSearchItems() {

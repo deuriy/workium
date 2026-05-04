@@ -27,6 +27,8 @@ export class CitiesLoader {
       throw new Error(`HTTP error: ${response.status}`);
     }
 
+    console.log(response);
+
     return response.json();
   }
 

@@ -65,6 +65,9 @@
 		display grid
 		height 100%
 		align-content center
+
+		@media $xs
+			height calc(var(--vh, 100vh) * 100 - 340px)
 	
 	&__footer
 		display grid
