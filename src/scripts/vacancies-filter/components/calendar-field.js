@@ -34,10 +34,13 @@ export class CalendarField extends BaseFilterComponent {
     this.isSingleValue = true;
     this.isSyncingFromStore = false;
 
+    this.handleChange = this.handleChange.bind(this);
     this.handleApply = this.handleApply.bind(this);
     this.handleClear = this.handleClear.bind(this);
 
+    this.container.addEventListener('calendar:change', this.handleChange);
     this.container.addEventListener('calendar:apply', this.handleApply);
+
     if (this.clearButton) {
       this.clearButton.addEventListener('click', this.handleClearButtonClick);
     }
@@ -53,12 +56,30 @@ export class CalendarField extends BaseFilterComponent {
     }
   }
 
+  updateVacanciesCountDraft(value = this.getValue()) {
+    this.controller?.updateVacanciesCountWithOverrides?.({
+      [this.filterKey]: value ? [value] : []
+    });
+  }
+
+  handleChange(event) {
+    if (this.isSyncingFromStore) {
+      return;
+    }
+
+    const value = event.detail?.value || this.getValue();
+
+    this.updateVacanciesCountDraft(value);
+  }
+
   handleApply(event) {
     if (this.isSyncingFromStore) {
       return;
     }
 
     const value = event.detail?.value || this.getValue();
+
+    this.updateVacanciesCountDraft(value);
 
     if (value) {
       this.setSelected([value]);
@@ -226,10 +247,11 @@ export class CalendarField extends BaseFilterComponent {
   destroy() {
     super.destroy();
 
+    this.container.removeEventListener('calendar:change', this.handleChange);
     this.container.removeEventListener('calendar:apply', this.handleApply);
 
     if (this.clearButton) {
       this.clearButton.removeEventListener('click', this.handleClearButtonClick);
-    }
+    }    
   }
 }

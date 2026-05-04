@@ -44,6 +44,9 @@ export class VacanciesCount {
       };
     });
 
+    console.log('this.buttons');
+    console.log(this.buttons);
+
     this.unsubscribe = this.controller?.store?.subscribe?.(() => {
       this.scheduleUpdate();
     });
