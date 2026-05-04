@@ -121,6 +121,10 @@
 		&:has(~.fancybox__container[aria-hidden="false"])
 			.fancybox__backdrop
 				background transparent
+	
+	&__slide:has(>.fancybox-popup--cities)
+		@media $xs
+			padding 0
 			
 
 // .f-slideInUp
