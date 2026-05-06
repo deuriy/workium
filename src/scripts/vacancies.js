@@ -8,6 +8,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 // import { Calendar } from "./calendar";
 
 import { initVacanciesFilter } from "./vacancies-filter";
+import { FancyboxIOSScrollLock } from "./fancybox-ios-scrolllock";
 
 // let $ageSwitch = $('input[name="age_switch"]');
 
@@ -738,6 +739,7 @@ document.addEventListener('DOMContentLoaded', function () {
     on: {
       ready: () => {
         filterController?.resetUiPlugins?.();
+        FancyboxIOSScrollLock.lock();
       },
 
       // reveal: (fancybox, slide) => {
@@ -754,6 +756,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       destroy: () => {
         filterController?.resetUiPlugins?.();
+        FancyboxIOSScrollLock.unlock();
       }
     }
   };

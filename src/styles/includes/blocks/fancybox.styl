@@ -146,3 +146,51 @@
 // 	to
 // 		transform scale(0.975) translate3d(0, 16px, 0)
 // 		opacity 0
+
+html.is-fancybox-ios-locked,
+html.is-fancybox-ios-locked body {
+  height: calc(var(--fancybox-vvh, 100vh) - 1px);
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  box-sizing: border-box;
+}
+
+html.is-fancybox-ios-locked .fancybox__container {
+  position: fixed !important;
+  top: var(--fancybox-vv-top, 0px) !important;
+  left: var(--fancybox-vv-left, 0px) !important;
+  width: var(--fancybox-vvw, 100vw) !important;
+  height: calc(var(--fancybox-vvh, 100vh) - 1px) !important;
+  max-height: calc(var(--fancybox-vvh, 100vh) - 1px) !important;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+html.is-fancybox-ios-locked .fancybox__backdrop,
+html.is-fancybox-ios-locked .fancybox__carousel,
+html.is-fancybox-ios-locked .fancybox__viewport,
+html.is-fancybox-ios-locked .fancybox__track,
+html.is-fancybox-ios-locked .fancybox__slide {
+  height: calc(var(--fancybox-vvh, 100vh) - 1px) !important;
+  max-height: calc(var(--fancybox-vvh, 100vh) - 1px) !important;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+/* Внутренние зоны, которым реально разрешён скролл */
+// .fancybox__content [data-fancybox-scrollable],
+// .fancybox__content .filter-element-popup__body,
+// .fancybox__content .cities-filter__list,
+// .fancybox__content .cities-filter__items,
+// .fancybox__content .checkboxes-group__items,
+// .fancybox__content .checkboxes-groups-field__items {
+//   overflow-y: auto;
+//   -webkit-overflow-scrolling: touch;
+//   overscroll-behavior: contain;
+// }
+
+.fancybox__content [data-fancybox-scrollable] {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
