@@ -807,7 +807,11 @@ export class FilterController {
     return this.components[key]?.excludeFromUrl === true;
   }
 
-  buildQueryString({ phpArrayStyle = false, overrides = null } = {}) {
+  buildQueryString({
+    phpArrayStyle = false,
+    overrides = null,
+    includeSingleSeoCountry = false
+  } = {}) {
     const filters = {
       ...this.serialize(),
       ...(overrides || {})
@@ -816,7 +820,10 @@ export class FilterController {
     const params = new URLSearchParams();
     const countryValues = this.getSeoCountryValues(filters);
 
-    if (countryValues.length > 1) {
+    if (
+      countryValues.length > 1 ||
+      (includeSingleSeoCountry && countryValues.length === 1)
+    ) {
       if (phpArrayStyle) {
         countryValues.forEach((value) => {
           params.append(`${this.seoCountryFilterKey}[]`, value);

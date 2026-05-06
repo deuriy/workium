@@ -77,7 +77,8 @@ export class VacanciesCount {
   async update(overrides = null) {
     const query = this.controller?.buildQueryString?.({
       phpArrayStyle: this.controller.submitWithPhpArrayStyle,
-      overrides
+      overrides,
+      includeSingleSeoCountry: true
     }) || '';
 
     const requestKey = query;
