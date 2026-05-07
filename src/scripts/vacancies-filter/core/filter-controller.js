@@ -65,6 +65,7 @@ export class FilterController {
     this.preserveSelectedCitiesOnNextLoad = false;
     this.lastCountrySelectionKey = null;
     this.currencyConfig = currency;
+    this.isResettingFilters = false;
 
     this.store = new FilterStore(initialState);
 
@@ -522,26 +523,34 @@ export class FilterController {
   }
 
   reset() {
-    this.resetCitiesRequestCache();
+    this.isResettingFilters = true;
 
-    const preservedState = this.getPreservedResetState();
+    try {
+      this.resetCitiesRequestCache();
 
-    const changed = this.store.resetAll();
+      const preservedState = this.getPreservedResetState();
 
-    Object.entries(preservedState).forEach(([key, values]) => {
-      this.store.setFilter(key, values);
-    });
+      const changed = this.store.resetAll();
 
-    this.applyDefaultSingleValues();
+      Object.entries(preservedState).forEach(([key, values]) => {
+        this.store.setFilter(key, values);
+      });
 
-    this.dependencies.apply(this.getState(), this.store, {
-      syncCountriesWithCities: this.autoSyncCountriesWithCities,
-      components: this.components
-    });
+      this.applyDefaultSingleValues();
 
-    this.syncCitiesOptions();
+      this.dependencies.apply(this.getState(), this.store, {
+        syncCountriesWithCities: this.autoSyncCountriesWithCities,
+        components: this.components
+      });
 
-    return changed;
+      this.syncCitiesOptions();
+
+      return changed;
+    } finally {
+      queueMicrotask(() => {
+        this.isResettingFilters = false;
+      });
+    }
   }
 
   resetCitiesRequestCache() {

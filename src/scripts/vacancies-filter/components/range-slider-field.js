@@ -60,7 +60,7 @@ export class RangeSliderField extends BaseFilterComponent {
 
     this.isSingleValue = true;
     this.isSyncing = false;
-    this.isResetting = false;
+    this.isChangingCurrency = false;
 
     this.handleSliderUpdate = this.handleSliderUpdate.bind(this);
     this.handleInputInput = this.handleInputInput.bind(this);
@@ -145,7 +145,7 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   handleSliderCommit(values) {
-    if (this.isSyncing) {
+    if (this.isSyncing || this.isChangingCurrency) {
       return;
     }
 
@@ -156,7 +156,7 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   handleInputInput() {
-    if (this.isSyncing) {
+    if (this.isSyncing || this.isChangingCurrency) {
       return;
     }
 
@@ -164,10 +164,14 @@ export class RangeSliderField extends BaseFilterComponent {
     const to = this.toNumber(this.toInput.value, this.max);
 
     this.setSlider(from, to);
-    this.updateSuffixes(); // 👈 додай
+    this.updateSuffixes();
   }
 
   handleInputChange() {
+    if (this.isChangingCurrency) {
+      return;
+    }
+
     const from = this.clamp(this.fromInput.value);
     const to = this.clamp(this.toInput.value);
 
@@ -195,32 +199,14 @@ export class RangeSliderField extends BaseFilterComponent {
     const value = [...selectedSet][0] || '';
 
     if (!value) {
-      this.isResetting = true;
-
-      try {
-        this.resetLocal();
-      } finally {
-        queueMicrotask(() => {
-          this.isResetting = false;
-        });
-      }
-
+      this.resetLocal();
       return;
     }
 
     const parsed = this.parseValue(value);
 
     if (!parsed) {
-      this.isResetting = true;
-
-      try {
-        this.resetLocal();
-      } finally {
-        queueMicrotask(() => {
-          this.isResetting = false;
-        });
-      }
-
+      this.resetLocal();
       return;
     }
 
@@ -385,7 +371,7 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   async handleCurrencyChange(state) {
-    if (!this.isCurrencyRange || this.isResetting) {
+    if (!this.isCurrencyRange) {
       return;
     }
 
@@ -398,9 +384,20 @@ export class RangeSliderField extends BaseFilterComponent {
 
     const prevCurrency = this.currentCurrency || 'EUR';
 
-    const prevFrom = this.toNumber(this.fromInput.value, this.min);
-    const prevTo = this.toNumber(this.toInput.value, this.max);
-    const hadCustomValue = !this.isDefaultRange(prevFrom, prevTo);
+    const currentSelectedValue = this.getSelected()[0] || '';
+    const parsedSelectedValue = currentSelectedValue
+      ? this.parseValue(currentSelectedValue)
+      : null;
+
+    const hadCustomValue = !!parsedSelectedValue;
+
+    const prevFrom = parsedSelectedValue
+      ? parsedSelectedValue.from
+      : this.min;
+
+    const prevTo = parsedSelectedValue
+      ? parsedSelectedValue.to
+      : this.max;
 
     this.currentCurrency = nextCurrency;
 
@@ -422,36 +419,44 @@ export class RangeSliderField extends BaseFilterComponent {
   }) {
     const nextRange = CURRENCY_RANGES[toCurrency] || CURRENCY_RANGES.EUR;
 
-    this.updateSliderRange(nextRange.min, nextRange.max);
-    this.updateSuffixes();
+    this.isChangingCurrency = true;
 
-    if (!hadCustomValue) {
-      this.clear();
-      this.resetLocal();
-      return;
-    }
+    try {
+      this.updateSliderRange(nextRange.min, nextRange.max);
+      this.updateSuffixes();
 
-    const converted = await this.convertRange(
-      fromCurrency,
-      toCurrency,
-      prevFrom,
-      prevTo
-    );
+      if (!hadCustomValue) {
+        this.setValue(this.min, this.max, {
+          updateStore: false
+        });
 
-    const nextFrom = this.clamp(converted.from);
-    const nextTo = this.clamp(converted.to);
+        return;
+      }
 
-    if (this.isResetting) {
+      const converted = await this.convertRange(
+        fromCurrency,
+        toCurrency,
+        prevFrom,
+        prevTo
+      );
+
+      const nextFrom = this.clamp(converted.from);
+      const nextTo = this.clamp(converted.to);
+
       this.setValue(nextFrom, nextTo, {
         updateStore: false
       });
 
-      return;
+      if (this.isDefaultRange(nextFrom, nextTo)) {
+        this.clear();
+      } else {
+        this.setSelected([this.formatValue(nextFrom, nextTo)]);
+      }
+    } finally {
+      queueMicrotask(() => {
+        this.isChangingCurrency = false;
+      });
     }
-
-    this.setValue(nextFrom, nextTo, {
-      updateStore: true
-    });
   }
 
   async convertRange(fromCurrency, toCurrency, fromValue, toValue) {
