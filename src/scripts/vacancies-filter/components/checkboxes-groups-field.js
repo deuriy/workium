@@ -29,6 +29,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     this.clearSelector = clearSelector;
     this.countriesFilterKey = countriesFilterKey;
     this.hiddenClass = hiddenClass;
+    this.isApplyingWithCountries = false;
 
     this.isCheckboxesGroupsField = true;
 
@@ -153,7 +154,50 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
   }
 
   handleApply() {
-    this.setSelected([...this.draftValues]);
+    const nextValues = [...this.draftValues];
+
+    this.isApplyingWithCountries = true;
+
+    try {
+      this.setSelected(nextValues);
+      this.syncCountriesFromValues(nextValues);
+    } finally {
+      queueMicrotask(() => {
+        this.isApplyingWithCountries = false;
+      });
+    }
+  }
+
+  pruneSelectedByCountries(selectedCountries = new Set()) {
+    if (this.isApplyingWithCountries) {
+      return;
+    }
+
+    if (!this.appliedValues.size) {
+      return;
+    }
+
+    const availableCountryValues = this.getAvailableCountryValues();
+
+    const nextValues = [...this.appliedValues].filter((value) => {
+      const item = this.inputsMap.get(String(value));
+
+      if (!item?.countryValue) {
+        return true;
+      }
+
+      if (!availableCountryValues.has(item.countryValue)) {
+        return true;
+      }
+
+      return selectedCountries.has(item.countryValue);
+    });
+
+    if (nextValues.length === this.appliedValues.size) {
+      return;
+    }
+
+    this.setSelected(nextValues);
   }
 
   handleClear(event) {
@@ -199,6 +243,8 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
   updateGroupsVisibility(state = {}) {
     const selectedCountries = state[this.countriesFilterKey] || new Set();
     const hasCountryFilter = selectedCountries.size > 0;
+
+    this.pruneSelectedByCountries(selectedCountries);
 
     this.groups.forEach((group) => {
       const countryValue = group.dataset.countryValue || '';
@@ -333,6 +379,44 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
         !shouldShowResultField
       );
     }
+  }
+
+  getAvailableCountryValues() {
+    const countryComponent = this.controller?.getComponent?.(
+      this.countriesFilterKey
+    );
+
+    return new Set(
+      countryComponent?.getAllItems?.().map((item) => {
+        return String(item.value ?? item.id ?? '');
+      }) || []
+    );
+  }
+
+  syncCountriesFromValues(values = []) {
+    const countryValues = new Set();
+
+    values.forEach((value) => {
+      const item = this.inputsMap.get(String(value));
+
+      if (item?.countryValue) {
+        countryValues.add(item.countryValue);
+      }
+    });
+
+    if (!countryValues.size) {
+      return;
+    }
+
+    const availableCountryValues = this.getAvailableCountryValues();
+
+    countryValues.forEach((countryValue) => {
+      if (!availableCountryValues.has(countryValue)) {
+        return;
+      }
+
+      this.controller?.addValue?.(this.countriesFilterKey, countryValue);
+    });
   }
 
   syncSelected(selectedSet) {
