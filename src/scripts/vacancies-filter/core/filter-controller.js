@@ -361,6 +361,7 @@ export class FilterController {
       this.resetCitiesRequestCache();
       this.reset();
       this.syncCitiesOptions();
+      this.submitAfterStateUpdate();
     };
 
     document.addEventListener('click', this.handleGlobalClearClick);
@@ -379,6 +380,7 @@ export class FilterController {
       filterTagsInstance.onClear = () => {
         this.reset();
         this.syncCitiesOptions();
+        this.submitAfterStateUpdate();
       };
 
       filterTagsInstance.onMoreClick = () => {
@@ -471,10 +473,12 @@ export class FilterController {
 
     if (component?.deselect) {
       component.deselect(tag.value);
+      this.submitAfterStateUpdate();
       return;
     }
 
     this.store.removeValue(tag.filterKey, tag.value);
+    this.submitAfterStateUpdate();
   }
 
   setCityCountryMapping(cities = []) {
@@ -1101,6 +1105,12 @@ export class FilterController {
     }
 
     window.location.href = submitUrl;
+  }
+
+  submitAfterStateUpdate() {
+    window.setTimeout(() => {
+      this.submit();
+    }, 0);
   }
 
   destroy() {
