@@ -32,6 +32,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     this.isApplyingWithCountries = false;
 
     this.isCheckboxesGroupsField = true;
+    this.lastSelectedCountryValues = null;
 
     this.inputsMap = new Map();
     this.groups = [];
@@ -168,15 +169,28 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     }
   }
 
-  pruneSelectedByCountries(selectedCountries = new Set()) {
+  pruneSelectedByRemovedCountries(selectedCountries = new Set()) {
     if (this.isApplyingWithCountries) {
+      this.lastSelectedCountryValues = new Set(selectedCountries);
       return;
     }
 
-    if (!this.appliedValues.size) {
+    if (this.lastSelectedCountryValues === null) {
+      this.lastSelectedCountryValues = new Set(selectedCountries);
       return;
     }
 
+    const removedCountries = [...this.lastSelectedCountryValues].filter((countryValue) => {
+      return !selectedCountries.has(countryValue);
+    });
+
+    this.lastSelectedCountryValues = new Set(selectedCountries);
+
+    if (!removedCountries.length || !this.appliedValues.size) {
+      return;
+    }
+
+    const removedCountriesSet = new Set(removedCountries);
     const availableCountryValues = this.getAvailableCountryValues();
 
     const nextValues = [...this.appliedValues].filter((value) => {
@@ -190,7 +204,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
         return true;
       }
 
-      return selectedCountries.has(item.countryValue);
+      return !removedCountriesSet.has(item.countryValue);
     });
 
     if (nextValues.length === this.appliedValues.size) {
@@ -244,7 +258,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     const selectedCountries = state[this.countriesFilterKey] || new Set();
     const hasCountryFilter = selectedCountries.size > 0;
 
-    this.pruneSelectedByCountries(selectedCountries);
+    this.pruneSelectedByRemovedCountries(selectedCountries);
 
     this.groups.forEach((group) => {
       const countryValue = group.dataset.countryValue || '';
