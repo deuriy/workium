@@ -88,10 +88,6 @@ export class FilterController {
       component.connectStore(this.store);
     });
 
-    this.unsubscribe = this.store.subscribe((state) => {
-      this.handleStateChange(state);
-    });
-
     this.bindFilterTags();
     this.bindUiPlugins();
     this.bindEvents();
@@ -102,13 +98,22 @@ export class FilterController {
 
     this.applyDefaultSingleValues();
 
+    this.unsubscribe = this.store.subscribe((state) => {
+      this.handleStateChange(state);
+    });
+
     this.dependencies.apply(this.getState(), this.store, {
       components: this.components
     });
 
+    const serialized = this.serialize();
+
+    this.toggleClearFilterButtons(serialized);
+    this.syncTags(serialized);
+
     // NEW: первичная загрузка городов при старте страницы
     this.syncCitiesOptions();
-    this.toggleClearFilterButtons();
+    // this.toggleClearFilterButtons();
 
     this.dependencies.applyParentChildVisibility(this.getState(), this.store);
     this.dependencies.applyDependentVisibility(this.getState());
