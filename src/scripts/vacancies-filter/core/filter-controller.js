@@ -815,9 +815,9 @@ export class FilterController {
     return false;
   }
 
-  updateVacanciesCountWithOverrides(overrides = {}) {
+  updateVacanciesCountWithOverrides(overrides = {}, options = {}) {
     this.uiPlugins.forEach((plugin) => {
-      plugin.updateWithOverrides?.(overrides);
+      plugin.updateWithOverrides?.(overrides, options);
     });
   }
 

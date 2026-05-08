@@ -54,27 +54,28 @@ export class VacanciesCount {
     this.scheduleUpdate({ immediate: true });
   }
 
-  scheduleUpdate({ immediate = false, overrides = null } = {}) {
+  scheduleUpdate({ immediate = false, overrides = null, options = {} } = {}) {
     clearTimeout(this.timeout);
 
     if (immediate) {
-      this.update(overrides);
+      this.update(overrides, options);
       return;
     }
 
     this.timeout = window.setTimeout(() => {
-      this.update(overrides);
+      this.update(overrides, options);
     }, this.debounceDelay);
   }
 
-  updateWithOverrides(overrides = {}) {
+  updateWithOverrides(overrides = {}, options = {}) {
     this.scheduleUpdate({
       immediate: true,
-      overrides
+      overrides,
+      options
     });
   }
 
-  async update(overrides = null) {
+  async update(overrides = null, options = {}) {
     const query = this.controller?.buildQueryString?.({
       phpArrayStyle: this.controller.submitWithPhpArrayStyle,
       overrides,
@@ -130,7 +131,7 @@ export class VacanciesCount {
             ? data.total
             : null;
 
-      this.render(label, count);
+      this.render(label, count, options);
     } catch (error) {
       if (error?.name === 'AbortError') {
         return;
@@ -142,13 +143,17 @@ export class VacanciesCount {
     }
   }
 
-  render(countLabel = '', count = null) {
+  render(countLabel = '', count = null, options = {}) {
+    const targetButtons = options.button
+      ? this.buttons.filter(({ button }) => button === options.button)
+      : this.buttons;
+
     const hasVacancies =
       typeof count === 'number'
         ? count > 0
         : Boolean(countLabel);
 
-    this.buttons.forEach(({ button, textNode, baseText, emptyText, mode }) => {
+    targetButtons.forEach(({ button, textNode, baseText, emptyText, mode }) => {
       let text = baseText;
 
       if (!hasVacancies) {

@@ -27,6 +27,7 @@ export class CalendarField extends BaseFilterComponent {
     this.hiddenInput = this.container.querySelector(this.hiddenInputSelector);
     this.clearButton = this.container.querySelector(clearButtonSelector);
     this.handleClearButtonClick = this.handleClearButtonClick.bind(this);
+    this.applyButton = this.container.querySelector('.js-apply');
 
     this.calendar =
       Calendar.getInstance(this.container) || new Calendar(this.container);
@@ -56,10 +57,13 @@ export class CalendarField extends BaseFilterComponent {
     }
   }
 
-  updateVacanciesCountDraft(value = this.getValue()) {
-    this.controller?.updateVacanciesCountWithOverrides?.({
-      [this.filterKey]: value ? [value] : []
-    });
+  updateVacanciesCountDraft(value = this.getValue(), options = {}) {
+    this.controller?.updateVacanciesCountWithOverrides?.(
+      {
+        [this.filterKey]: value ? [value] : []
+      },
+      options
+    );
   }
 
   handleChange(event) {
@@ -69,7 +73,9 @@ export class CalendarField extends BaseFilterComponent {
 
     const value = event.detail?.value || this.getValue();
 
-    this.updateVacanciesCountDraft(value);
+    this.updateVacanciesCountDraft(value, {
+      button: this.applyButton
+    });
   }
 
   handleApply(event) {
