@@ -293,7 +293,12 @@ export class AdditionalFiltersSearch {
     }
 
     if (component.isSingleValue) {
-      component.setSelected([value]);
+      if (typeof component.applyValue === 'function') {
+        component.applyValue(value);
+      } else {
+        component.setSelected([value]);
+      }
+
       return;
     }
 

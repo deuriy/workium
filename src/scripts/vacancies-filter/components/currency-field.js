@@ -107,6 +107,17 @@ export class CurrencyField extends BaseFilterComponent {
     this.resetDraftFromStore();
   }
 
+  applyValue(value) {
+    const normalized = String(value || this.defaultValue);
+
+    this.isManuallySelected = true;
+    this.draftValue = normalized;
+
+    this.setSelected([normalized]);
+
+    this.syncSelected(new Set([normalized]));
+  }
+
   syncSelected(selectedSet) {
     const value = [...selectedSet][0] || this.defaultValue;
 
