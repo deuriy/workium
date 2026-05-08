@@ -252,27 +252,55 @@ export class AdditionalFiltersSearch {
     this.input.blur();
   }
 
-  syncCountryForExternalCity({ filterKey, countryValue = '' } = {}) {
+  isAvailableCountryValue(countryFilterKey, countryValue) {
+    const countryComponent = this.controller?.getComponent?.(countryFilterKey);
+
+    if (!countryComponent?.getAllItems) {
+      return true;
+    }
+
+    const availableValues = countryComponent.getAllItems().map((item) => {
+      return String(item.value ?? item.id ?? '');
+    });
+
+    return availableValues.includes(String(countryValue));
+  }
+
+  syncCountryForExternalItem({
+    filterKey,
+    component,
+    countryValue = ''
+  } = {}) {
     const citiesFilterKey = this.controller?.citiesFilterKey || 'cities';
     const countryFilterKey =
       this.controller?.citiesRequestCountryFilterKey || 'country';
 
-    if (filterKey !== citiesFilterKey) {
+    const shouldSyncCountry =
+      filterKey === citiesFilterKey ||
+      component?.isCheckboxesGroupsField === true;
+
+    if (!shouldSyncCountry) {
       return;
     }
 
-    if (countryValue) {
-      const selectedCountries =
-        this.controller?.getSelected?.(countryFilterKey) || [];
-
-      if (!selectedCountries.includes(countryValue)) {
-        this.controller?.addValue?.(countryFilterKey, countryValue);
+    if (!countryValue) {
+      if (filterKey === citiesFilterKey) {
+        this.controller?.applyCountriesFromSelectedCities?.();
       }
 
       return;
     }
 
-    this.controller?.applyCountriesFromSelectedCities?.();
+    if (!this.isAvailableCountryValue(countryFilterKey, countryValue)) {
+      return;
+    }
+
+    const selectedCountries =
+      this.controller?.getSelected?.(countryFilterKey) || [];
+
+    if (!selectedCountries.includes(countryValue)) {
+      this.controller?.addValue?.(countryFilterKey, countryValue);
+    }
   }
 
   handleExternalResultsChange(event) {
@@ -305,8 +333,9 @@ export class AdditionalFiltersSearch {
     if (input.checked) {
       component.select(value);
 
-      this.syncCountryForExternalCity({
+      this.syncCountryForExternalItem({
         filterKey,
+        component,
         countryValue
       });
 
