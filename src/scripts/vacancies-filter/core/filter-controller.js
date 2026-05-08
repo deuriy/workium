@@ -375,12 +375,19 @@ export class FilterController {
     this.filterTags.forEach((filterTagsInstance) => {
       filterTagsInstance.onRemove = (tag) => {
         this.removeTag(tag);
+
+        if (this.isMainFilterTags(filterTagsInstance)) {
+          this.submitAfterStateUpdate();
+        }
       };
 
       filterTagsInstance.onClear = () => {
         this.reset();
         this.syncCitiesOptions();
-        this.submitAfterStateUpdate();
+
+        if (this.isMainFilterTags(filterTagsInstance)) {
+          this.submitAfterStateUpdate();
+        }
       };
 
       filterTagsInstance.onMoreClick = () => {
@@ -473,12 +480,10 @@ export class FilterController {
 
     if (component?.deselect) {
       component.deselect(tag.value);
-      this.submitAfterStateUpdate();
       return;
     }
 
     this.store.removeValue(tag.filterKey, tag.value);
-    this.submitAfterStateUpdate();
   }
 
   setCityCountryMapping(cities = []) {
@@ -819,6 +824,10 @@ export class FilterController {
     this.uiPlugins.forEach((plugin) => {
       plugin.updateWithOverrides?.(overrides, options);
     });
+  }
+
+  isMainFilterTags(filterTagsInstance) {
+    return filterTagsInstance?.root?.classList?.contains('filter-tags--main-filter');
   }
 
   shouldExcludeFilterFromUrl(key) {
