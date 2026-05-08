@@ -377,7 +377,29 @@ export class AdditionalFiltersSearch {
     });
   }
 
-  renderExternalGroup(group, searchValue = '') {
+  renderExternalSection(section, searchValue = '') {
+    return `
+      <div class="filter-element__group">
+        <h4 class="filter-element__title">
+          ${this.escapeHtml(section.title)}
+        </h4>
+
+        ${
+          section.subtitle
+            ? `<div class="filter-element__subtitle">${this.escapeHtml(section.subtitle)}</div>`
+            : ''
+        }
+
+        <div class="checkboxes-group checkboxes-group--row">
+          <ul class="checkboxes-group__list">
+            ${section.items.map((item) => this.renderExternalResult(item, searchValue)).join('')}
+          </ul>
+        </div>
+      </div>
+    `;
+  }
+
+  renderExternalPopupGroup(group, searchValue = '') {
     return `
       <div class="filter-element additional-filters__filter-element additional-filters__filter-element--external-search">
         ${
@@ -386,21 +408,7 @@ export class AdditionalFiltersSearch {
             : ''
         }
 
-        <h4 class="filter-element__title">
-          ${this.escapeHtml(group.title)}
-        </h4>
-
-        ${
-          group.subtitle
-            ? `<div class="filter-element__subtitle">${this.escapeHtml(group.subtitle)}</div>`
-            : ''
-        }
-
-        <div class="checkboxes-group checkboxes-group--row">
-          <ul class="checkboxes-group__list">
-            ${group.items.map((item) => this.renderExternalResult(item, searchValue)).join('')}
-          </ul>
-        </div>
+        ${group.sections.map((section) => this.renderExternalSection(section, searchValue)).join('')}
       </div>
     `;
   }
@@ -566,7 +574,7 @@ export class AdditionalFiltersSearch {
       return [];
     }
 
-    const groupsMap = new Map();
+    const popupGroupsMap = new Map();
 
     this.getExternalSearchComponents().forEach(([filterKey, component]) => {
       const componentTitle = this.getExternalComponentTitle(filterKey, component);
@@ -575,35 +583,47 @@ export class AdditionalFiltersSearch {
       const items = this.getExternalComponentItems(filterKey, component);
 
       items.forEach((item) => {
-        const title = item.groupTitle || componentTitle;
-        const subtitle = item.groupSubtitle || componentSubtitle;
+        const sectionTitle = item.groupTitle || componentTitle;
+        const sectionSubtitle = item.groupSubtitle || componentSubtitle;
 
-        const titleMatches = this.normalizeText(title).includes(searchValue);
-        const subtitleMatches = this.normalizeText(subtitle).includes(searchValue);
+        const titleMatches = this.normalizeText(sectionTitle).includes(searchValue);
+        const subtitleMatches = this.normalizeText(sectionSubtitle).includes(searchValue);
         const itemMatches = item.searchText.includes(searchValue);
 
         if (!(titleMatches || subtitleMatches || itemMatches)) {
           return;
         }
 
-        const groupKey = item.groupKey || `${filterKey}:${title}`;
+        const popupKey = item.popupTitle || componentTitle || filterKey;
+        const sectionKey = item.groupKey || `${filterKey}:${sectionTitle}`;
 
-        if (!groupsMap.has(groupKey)) {
-          groupsMap.set(groupKey, {
+        if (!popupGroupsMap.has(popupKey)) {
+          popupGroupsMap.set(popupKey, {
             filterKey,
             component,
-            popupTitle: item.popupTitle || '',
-            title,
-            subtitle,
+            popupTitle: item.popupTitle || componentTitle || '',
+            sections: new Map()
+          });
+        }
+
+        const popupGroup = popupGroupsMap.get(popupKey);
+
+        if (!popupGroup.sections.has(sectionKey)) {
+          popupGroup.sections.set(sectionKey, {
+            title: sectionTitle,
+            subtitle: sectionSubtitle,
             items: []
           });
         }
 
-        groupsMap.get(groupKey).items.push(item);
+        popupGroup.sections.get(sectionKey).items.push(item);
       });
     });
 
-    return [...groupsMap.values()];
+    return [...popupGroupsMap.values()].map((group) => ({
+      ...group,
+      sections: [...group.sections.values()]
+    }));
   }
 
   renderExternalResults(searchValue = '') {
@@ -621,10 +641,14 @@ export class AdditionalFiltersSearch {
     }
 
     this.externalResults.innerHTML = groups
-      .map((group) => this.renderExternalGroup(group, searchValue))
+      .map((group) => this.renderExternalPopupGroup(group, searchValue))
       .join('');
 
-    return groups.reduce((total, group) => total + group.items.length, 0);
+    return groups.reduce((total, group) => {
+      return total + group.sections.reduce((sectionTotal, section) => {
+        return sectionTotal + section.items.length;
+      }, 0);
+    }, 0);
   }
 
   renderExternalResult(item, searchValue = '') {
