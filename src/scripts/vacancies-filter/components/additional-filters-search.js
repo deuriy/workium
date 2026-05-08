@@ -380,21 +380,27 @@ export class AdditionalFiltersSearch {
   renderExternalGroup(group, searchValue = '') {
     return `
       <div class="filter-element additional-filters__filter-element additional-filters__filter-element--external-search">
-        <div class="filter-element__header">
-          <div class="filter-element__title">
-            ${this.highlightText(group.title, searchValue)}
-          </div>
+        ${
+          group.popupTitle
+            ? `<h3 class="filter-element__title">${this.escapeHtml(group.popupTitle)}</h3>`
+            : ''
+        }
 
-          ${
-            group.subtitle
-              ? `<div class="filter-element__subtitle">${this.highlightText(group.subtitle, searchValue)}</div>`
-              : ''
-          }
+        <h4 class="filter-element__title">
+          ${this.escapeHtml(group.title)}
+        </h4>
+
+        ${
+          group.subtitle
+            ? `<div class="filter-element__subtitle">${this.escapeHtml(group.subtitle)}</div>`
+            : ''
+        }
+
+        <div class="checkboxes-group checkboxes-group--row">
+          <ul class="checkboxes-group__list">
+            ${group.items.map((item) => this.renderExternalResult(item, searchValue)).join('')}
+          </ul>
         </div>
-
-        <ul class="checkboxes-group__list">
-          ${group.items.map((item) => this.renderExternalResult(item, searchValue)).join('')}
-        </ul>
       </div>
     `;
   }
@@ -430,6 +436,28 @@ export class AdditionalFiltersSearch {
       ?.querySelector('.filter-element__subtitle, .checkboxes-group__subtitle, .radiobtns-group__subtitle, .fancybox-popup__subtitle')
       ?.textContent
       ?.trim() || '';
+  }
+
+  getExternalPopupTitle(filterKey, component) {
+    const popup = component?.container?.closest?.(
+      '.filter-element-popup, .fancybox-popup'
+    );
+
+    const popupTitle = popup
+      ?.querySelector('.filter-element-popup__title, .fancybox-popup__title')
+      ?.textContent
+      ?.trim();
+
+    if (popupTitle) {
+      return popupTitle;
+    }
+
+    const resultFieldText = document
+      .querySelector(`[data-result-field="${filterKey}"] [data-result-field-text]`)
+      ?.textContent
+      ?.trim();
+
+    return resultFieldText || '';
   }
 
   getExternalComponentItems(filterKey, component) {
@@ -478,6 +506,7 @@ export class AdditionalFiltersSearch {
           groupTitle: item.groupTitle || '',
           groupSubtitle: item.groupSubtitle || '',
           countryValue: item.countryValue || item.country_value || '',
+          popupTitle: this.getExternalPopupTitle(filterKey, component),
           searchText,
           component,
           isSingleValue: component.isSingleValue === true,
@@ -563,6 +592,7 @@ export class AdditionalFiltersSearch {
           groupsMap.set(groupKey, {
             filterKey,
             component,
+            popupTitle: item.popupTitle || '',
             title,
             subtitle,
             items: []
@@ -602,15 +632,20 @@ export class AdditionalFiltersSearch {
     const checked = item.component.has?.(item.value) ? ' checked' : '';
     const type = item.isSingleValue ? 'radio' : 'checkbox';
 
-    const wrapperClass = type === 'radio' ? 'radiobtn' : 'checkbox';
-    const inputClass = type === 'radio' ? 'radiobtn__input' : 'checkbox__input';
-    const labelClass = type === 'radio' ? 'radiobtn__label' : 'checkbox__label';
+    const isHighlighted = this.normalizeText(item.label).includes(searchValue);
+
+    const checkboxClass = [
+      'checkbox',
+      'checkbox--tag-style',
+      isHighlighted ? this.highlightClass : '',
+      isHighlighted ? this.highlightAnimationClass : ''
+    ].filter(Boolean).join(' ');
 
     return `
       <li class="checkboxes-group__item">
-        <div class="${wrapperClass}">
+        <div class="${checkboxClass}">
           <input
-            class="${inputClass}"
+            class="checkbox__input checkbox__input--job-filter"
             type="${type}"
             id="${id}"
             name="external_${this.escapeHtml(item.filterKey)}"
@@ -620,18 +655,8 @@ export class AdditionalFiltersSearch {
             ${checked}
           >
 
-          <label class="${labelClass}" for="${id}">
-            <span class="checkbox__label-wrapper">
-              <span class="checkbox__title">
-                ${this.highlightText(item.label, searchValue)}
-              </span>
-
-              ${
-                item.subtitle
-                  ? `<span class="checkbox__description">${this.highlightText(item.subtitle, searchValue)}</span>`
-                  : ''
-              }
-            </span>
+          <label class="checkbox__label" for="${id}">
+            ${this.escapeHtml(item.label)}
           </label>
         </div>
       </li>
