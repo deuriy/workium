@@ -160,10 +160,6 @@ export class RangeSliderField extends BaseFilterComponent {
       return;
     }
 
-    const from = this.toNumber(this.fromInput.value, this.min);
-    const to = this.toNumber(this.toInput.value, this.max);
-
-    this.setSlider(from, to);
     this.updateSuffixes();
   }
 
@@ -172,13 +168,14 @@ export class RangeSliderField extends BaseFilterComponent {
       return;
     }
 
-    const from = this.clamp(this.fromInput.value);
-    const to = this.clamp(this.toInput.value);
+    let from = this.clamp(this.fromInput.value);
+    let to = this.clamp(this.toInput.value);
 
-    const normalizedFrom = Math.min(from, to);
-    const normalizedTo = Math.max(from, to);
+    if (to < from) {
+      to = from;
+    }
 
-    this.setValue(normalizedFrom, normalizedTo, {
+    this.setValue(from, to, {
       updateStore: true
     });
   }
