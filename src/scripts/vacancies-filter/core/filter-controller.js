@@ -617,6 +617,18 @@ export class FilterController {
     return `/${languagePrefix}${normalizedPath === '/' ? '' : normalizedPath}`;
   }
 
+  markRestoredManualValues(filters = {}) {
+    Object.entries(filters).forEach(([key, values]) => {
+      const component = this.components[key];
+
+      if (!component || !values?.length) {
+        return;
+      }
+
+      component.markAsManuallySelected?.(values[0]);
+    });
+  }
+
   restoreFromUrl() {
     const filters = UrlSync.read({
       seoCountryFilterKey: this.seoCountryFilterKey,
@@ -625,6 +637,8 @@ export class FilterController {
     });
 
     const safeFilters = this.sanitizeRestoredFilters(filters);
+
+    this.markRestoredManualValues(safeFilters);
 
     Object.entries(safeFilters).forEach(([key, values]) => {
       this.store.setFilter(key, values);

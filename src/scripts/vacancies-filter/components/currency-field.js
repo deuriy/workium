@@ -24,7 +24,7 @@ export class CurrencyField extends BaseFilterComponent {
     this.excludeFromTags = true;
     this.preserveOnReset = true;
     this.excludeFromSelectedState = true;
-    this.excludeFromUrl = true;
+    this.excludeFromUrl = false;
 
     this.isManuallySelected = false;
     this.draftValue = this.defaultValue;
@@ -199,6 +199,15 @@ export class CurrencyField extends BaseFilterComponent {
 
     this.draftValue = value;
     this.syncSelected(new Set([value]));
+  }
+
+  shouldExcludeValueFromUrl(value) {
+    return String(value) === String(this.defaultValue);
+  }
+
+  markAsManuallySelected(value = this.defaultValue) {
+    this.isManuallySelected = true;
+    this.draftValue = String(value || this.defaultValue);
   }
 
   destroy() {
