@@ -342,23 +342,16 @@
 	&--additional-filters
 		padding 0
 		
-		@media $smPlus
-			// width 1032px
-			// width 1068px
-			width 1090px
-			border-radius 16px
-
-			&:has(.calendar-overlay.is-open)
-				width 600px
-
-				.additional-filters__header,
-				.additional-filters__footer
-					display none
-		
 		@media $xs
 			// height 100vh
 			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
+		
+		@media $smPlus
+			// width 1090px
+			width 600px
+			max-height calc(100vh - 40px)
+			// border-radius 16px
 	
 	&--rating
 		padding 0
@@ -391,11 +384,18 @@
 			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
 	
-	&--cities
+	&--cities,
+	&--filter-element
 		@media $xs
 			// height 100vh
 			height calc(var(--vh, 100vh) * 100)
 			border-radius 0
+		
+		@media $smPlus
+			width 600px
+			// max-height calc(100vh - 40px)
+			height calc(100vh - 40px)
+			padding 20px
 	
 	&--share
 		border-top-right-radius 16px
@@ -434,10 +434,10 @@
 			font-size 20px
 			line-height 1.4
 			
-	&--filter-element
-		@media $xs
-			// padding-bottom 8px
-			padding-bottom 0
+	// &--filter-element
+	// 	@media $xs
+	// 		// padding-bottom 8px
+	// 		padding-bottom 0
 	
 	&--order-service,
 	&--book-vacancy,

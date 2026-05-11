@@ -3,8 +3,8 @@ import "../../node_modules/jquery-circle-progress/dist/circle-progress.min.js";
 import IMask from 'imask';
 import { AudioPlayers } from "./audio_player.js";
 
-var count = 200;
-var defaults = {
+const count = 200;
+const defaults = {
   origin: { y: 0.7 },
   zIndex: 10000
 };
@@ -40,11 +40,20 @@ function runConfetti() {
   });
 }
 
-function copyText(input) {
-  input.select();
-  input.setSelectionRange(0, 99999);
+// function copyText(input) {
+//   input.select();
+//   input.setSelectionRange(0, 99999);
 
-  document.execCommand("copy");
+//   document.execCommand("copy");
+// }
+
+async function copyText(input) {
+  try {
+    await navigator.clipboard.writeText(input.value);
+    console.log('Текст скопирован');
+  } catch (error) {
+    console.error('Ошибка копирования:', error);
+  }
 }
 
 function getCoords(elem) {
@@ -154,7 +163,9 @@ $(() => {
 
   let currentFancybox = null;
 
-  Fancybox.bind("[data-fancybox]");
+  Fancybox.bind("[data-fancybox]:not([data-src='#cities-popup']):not([data-src='#currencies-popup']):not(.checkboxes-groups-popup-trigger):not([data-src='#additional-filters-popup'])", {
+    dragToClose: false
+  });
 
   Fancybox.bind("[data-fancybox-mini-gallery]", {
     on: {
@@ -538,7 +549,7 @@ $(() => {
 
   //     // close: (fancybox, event) => {
   //     //   if (event.target.classList.contains('cities-filter__btn-back')) {
-  //     //     // $('.selected-items--cities .selected-items__clear-btn').click();
+  //     //     // $('.filter-tags--cities .filter-tags__clear-btn').click();
   //     //   }
   //     //   // if (slide.src === '#cities-popup') {
   //     //   //   // $(slide.contentEl).find('.cities-filter__search-input').focus();
@@ -568,7 +579,6 @@ $(() => {
   $(window).on('scroll', function (e) {
     $articleHeadings.each(function (index, el) {
       let rect = el.getBoundingClientRect();
-      let rect2 = $articleContent[0].getBoundingClientRect();
 
       // if ($(window).height() + $(window).scrollTop() == $(document).height()) {
       //   console.log('bottom');
@@ -1575,33 +1585,25 @@ $(() => {
 
   // Search input with close button
   $('[data-search-input]').on('input', function (event) {
-    let name = $(this).attr('name');
     let value = $(this).val();
     let $clearBtn = $(this).next('.filter__clear-search-btn');
     let $searchBtnMobile = $('.filter__search-btn-mobile');
-    let type = ['text', 'search'].includes($(this).attr('type')) ? 'textfield' : $(this).attr('type');
 
     if (value) {
       $clearBtn.show();
       $searchBtnMobile.show();
       $(this).addClass('form-text--filter-search-filled');
-      // createOrUpdateTag('textfield', name, value, value);
     } else {
       $clearBtn.hide();
       $searchBtnMobile.hide();
       $(this).removeClass('form-text--filter-search-filled');
-      // removeFilterTag(type, name, value);
     }
   });
 
   $('[data-clear-search-input]').on('click', function (event) {
     let $input = $(this).prev();
-    let name = $input.attr('name');
-    let value = $input.val();
-    let type = ['text', 'search'].includes($input.attr('type')) ? 'textfield' : $input.attr('type');
 
     clearTextField($input);
-    // removeFilterTag(type, name, value);
 
     $input.focus();
 
@@ -1610,7 +1612,5 @@ $(() => {
     if (isMobile && $noResults.length) {
       updateFilterUrl();
     }
-
-    // updateFilterUrl();
   });
 });

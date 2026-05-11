@@ -3,42 +3,146 @@
 	grid auto 1fr auto / 100%
 	height 647px
 	max-height 100vh
-	
-	@media (min-width 1600px)
-		height 890px
+
+	@media $xs
+		height 100vh
 	
 	@media $xxs
 		max-height calc(var(--vh, 100vh) * 100)
 		height calc(var(--vh, 100vh) * 100)
 		// height 100vh
 	
+	@media (min-width 1600px)
+		height 890px
+		max-height calc(100vh - 40px)
+	
+	&__cancel-search-link
+		display none
+		color #5340ff
+		font-weight 500
+		font-size 14px
+		text-decoration none
+
+		@media $xxsPlus
+			font-size 15px
+	
 	&__header
-		padding-bottom 10px
-		border-top-right-radius 16px
-		border-top-left-radius 16px
-		background #FAFBFD
+		border-top-right-radius 24px
+		border-top-left-radius 24px
+		// background #FAFBFD
 		
+		display block
+		text-align center
+		border none
+		background none
+		padding 0
+		cursor pointer
 		@media $smPlus
-			background #F5F7FB
+			// background #F5F7FB
+			background transparent
 		
 		@media $xs
 			border-top-right-radius 0
 			border-top-left-radius 0
-			background #F0F4FA
+			// background #F0F4FA
 		
 		@media $xxs
 			padding-bottom 15px
 		
+		&--sticky
+			border-bottom 1px solid #ebebeb
+
+			@media $xxs
+				padding-bottom 0
+			
+			.additional-filters__header-top
+				grid-template-columns auto 1fr
+				gap 15px
+				padding 8px 20px
+
+				@media $xxs
+					grid-template-columns 100%
+					padding-left 50px
+			
+			.additional-filters__title
+				@media $xxs
+					display none
+			
+			.additional-filters__form-items
+				max-width 324px
+
+				@media $xxs
+					max-width 100%
+			
+			.additional-filters__form-item
+				@media $xxs
+					max-width 230px
+					margin-right auto
+					margin-left auto
+					// transition .3s
+			
+			.form-text--filter-search
+				height 40px
+				padding-left 36px
+				background-size 16px auto
+				background-position 14px center
+				font-size 11px
+				letter-spacing: 0.02em
+
+				@media $xxs
+					// max-width 230px
+					// margin 0 auto
+					padding-right 30px
+					padding-left 49px
+					background-position 25px center
+					background-size 18px auto
+					font-size 13px
+			
+			& + .additional-filters__body
+				padding-top 56px
+			
+		&--search-extended
+			.additional-filters__header-top
+				padding-left 20px
+
+				@media $xxsPlus
+					grid-template-columns auto 1fr
+				
+			.additional-filters__btn-back
+				display none
+			
+			.additional-filters__title
+				@media $xxs
+					display none
+			
+			.additional-filters__cancel-search-link
+				display block
+			
+			.additional-filters__form-items
+				display grid
+				grid-template-columns 1fr auto
+				gap 16px
+				max-width 100%
+			
+			.additional-filters__form-item
+				max-width 100%
+				margin-right 0
+				margin-left 0
+			
+			.form-text--filter-search
+				background-position 14px center
+				background-size 16px auto
+
+		
 	&__header-top
 		display grid
-		// grid-template-columns repeat(2, auto)
-		grid-template-columns auto 1fr auto
-		// justify-content space-between
+		// grid-template-columns auto 1fr auto
+		grid-template-columns 100%
 		align-items center
-		// gap 20px
-		gap 28px
-		// padding 24px 20px 24px 50px
-		padding 16px 20px 14px 50px
+		// gap 28px
+		gap 19px
+		// padding 16px 20px 14px 50px
+		padding 19px 24px
 		
 		@media (max-width: 991px)
 			padding 24px 20px 24px 30px
@@ -47,12 +151,9 @@
 			padding 15px 20px
 		
 		@media $xxs
-			// grid-template-columns auto 1fr auto
 			position relative
 			grid-template-columns 100%
 			gap 6px
-			// padding 17px 37px 17px 22px
-			// padding 17px 37px 13px 22px
 			padding 13px 16px
 	
 	&__btn-back
@@ -68,45 +169,54 @@
 		// font-family var(--graphik-lcg)
 		
 		@media $xs
-			margin-top 4px
-			margin-right 16px
+			// margin-top 4px
+			// margin-right 16px
 			font-size 16px
 			line-height 1.625
 			text-align center
 		
+		@media $xxs
+			margin-bottom 6px
+		
 		@media $smPlus
 			color var(--black)
+			font-size 16px
+			line-height 1.625
+			text-align center
 		
 		// @media $xxs
 		// 	font-size 21px
 		// 	line-height 1.2857
 	
 	&__clear-link
-		position absolute
-		top 13px
-		right 16px
-		// border none
-		// background none
-		// outline none
-		// font-weight 500
-		// font-size 14px
-		// font-family var(--base-font)
-		// text-decoration none
-		// color #5340FF
-		// cursor pointer
+		font-size 16px
+		line-height 1.625
+		color #0f182a
+		// color var(--info)
+		text-decoration none
+		// position absolute
+		// top 13px
+		// right 16px
+
+		@media $xs
+			font-size 14px
+
+		&--blue
+			color var(--info)
+
+		&--semibold
+			font-weight 600
 	
 	&__form-items
 		display grid
-		// grid-template-columns repeat(3, auto)
-		// grid-template-columns 210px 140px 140px
-		// grid-template-columns 340px 1fr
-		grid-template-columns 340px auto
+		// grid-template-columns 340px auto
+		grid-template-columns 100%
 		justify-content start
 		align-items center
 		gap 23px
 		
 		@media $xs
-			grid-template-columns repeat(2, 1fr)
+			// grid-template-columns repeat(2, 1fr)
 			gap 8px
 		
 		&--three-col-md
@@ -138,9 +248,15 @@
 			gap 16px
 			// gap 0
 	
-	&__selected-items
+	&__tags
+		margin-bottom 28px
+
 		@media $xxs
-			order -1
+			padding-right 10px
+			padding-left 16px
+		
+		// @media $xxs
+		// 	order -1
 	
 	&__clear-btn
 		margin-left auto
@@ -151,11 +267,13 @@
 		// max-height calc(100vh - 270px)
 		max-height 473px
 		// max-height none
-		padding 25px 35px 30px 50px
+		// padding 25px 35px 30px 50px
+		padding 10px 24px
 		overflow auto
 		
 		@media (min-width 1600px)
-			max-height 720px
+			// max-height 720px
+			max-height none
 		
 		@media (max-width: 991px)
 			padding-left 30px
@@ -186,39 +304,67 @@
 	&__form-item
 		position relative
 		
+		& + .additional-filters__form-item
+			padding-bottom 32px
+			border-bottom 1px solid #EBEBEB
+
+			@media $xxs
+				padding-bottom 24px
+		
 		@media $xs
 			display grid
+			padding-right 10px
+			padding-left 16px
+
+			&--no-padding
+				padding-right 0
+				padding-left 0
+		
+		&--country
+			order: -1
 			
-			&--two-col-xs
-				grid-column 1 / 3
+			// &--two-col-xs
+			// 	grid-column 1 / 3
 			
-		&--countries-two-col
-			@media $md
-				display grid
-				grid-template-columns 240px auto
-				padding 3px 7px 3px 13px
-				border-radius 12px
-				background rgb(245 247 252)
+		// &--countries-two-col
+		// 	@media $md
+		// 		display grid
+		// 		grid-template-columns 240px auto
+		// 		padding 3px 7px 3px 13px
+		// 		border-radius 12px
+		// 		background rgb(245 247 252)
 			
-			@media $smPlus
-				background #EBEFF9
+		// 	@media $smPlus
+		// 		background #EBEFF9
+	
+	&__form-item-label
+		font-weight 600
+		font-size 18px
+		line-height 1.34
+		
+		@media $xxsPlus
+			margin-bottom 1em
+			color #0F182A
 	
 	&__no-selected-text
 		font-size 14px
-		
-		@media $smPlus
-			color var(--black)
+		// color var(--black)
+		margin-bottom 16px
+		font-weight 400
+		line-height 1.57143
+		color #666B80
 	
 	&__clear-search-btn
 		position absolute
 		top 0
-		right 10px
+		right 8px
 		bottom 0
 		margin auto
 		width 24px
 		height 48px
 		border none
-		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 18'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1 17 17 1M1 1l16 16'/%3E%3C/svg%3E") center / 15px no-repeat
+		// background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 18'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1 17 17 1M1 1l16 16'/%3E%3C/svg%3E") center / 15px no-repeat
+		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm4.707 14.293a1 1 0 1 1-1.414 1.414L12 13.414l-3.293 3.293a1 1 0 1 1-1.414-1.414L10.586 12 7.293 8.707a1 1 0 1 1 1.414-1.414L12 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414L13.414 12Z' style='fill:%237b7a7f'/%3E%3C/svg%3E") center / 18px no-repeat
 		cursor pointer
 	
 	&__cities-dropdown-block
@@ -227,30 +373,31 @@
 		left 0
 	
 	&__countries-select
-		width 140px
+		// width 140px
+		width 325px
 		
 		@media $xs
-			width 100%
+			width 100% !important
 	
 	&__label
 		margin-bottom 4px
 	
-	&__checkboxes-groups
+	&__elements
 		display grid
-		// grid-template-columns repeat(3, 1fr)
-		grid-template-columns 1fr 28% 28%
-		gap 58px 35px
+		// grid-template-columns 1fr 28% 28%
+		grid-template-columns 100%
+		// gap 58px 35px
+		gap 32px
 		
 		@media (max-width: 991px)
 			gap 40px 20px
 		
 		@media $xs
-			grid-template-columns repeat(2, 1fr)
-			// grid-template-columns repeat(2, auto)
+			// grid-template-columns repeat(2, 1fr)
 			gap 30px 20px
 		
 		@media $xxs
-			grid-template-columns 100%
+			// grid-template-columns 100%
 			gap 24px
 	
 	&__checkboxes-group,
@@ -278,66 +425,36 @@
 				padding-bottom 0
 				border-bottom none
 	
-	&__checkboxes-group
-		&--kategoriia-pracivnika
-			order -1
+	&__not-found
+		display grid
+		align-content center
+		height 100%
 
-		&--termin-vidpraciuvannia,
-		&--tip-kandidativ
-			@media $smPlus
-				grid-row 1 / 2
-			
-		&--gender
-			@media $xxs
-				order -2
-		
-		&--specializaciia
-			// order 1
-			
-			@media $smPlus
-				grid-column 1 / 4
-		
-		&--aktualnіst
-			@media $xs
-				order -1
-	
-	&__radiobtns-group
-		&--kategoriia-pracivnika
-			@media $smPlus
-				grid-row 1 / 2
-
-		&--specializaciia
-			order 1
-			
-			@media $smPlus
-				grid-column 1 / 4
-	
-	&__filter-element
-		&--vik
-			order -1
-
-		// &--range
-		// 	@media $xxs
-		// 		order -1
+		@media $xs
+			height calc(var(--vh, 100vh) * 100 - 340px)
 	
 	&__footer
 		display grid
-		grid-template-columns 100%
-		justify-content center
+		grid-template-columns repeat(2, auto)
+		justify-content space-between
 		justify-items center
 		align-items center
 		gap 32px
-		padding 16px
+		padding 12px 16px
 		border-bottom-right-radius 16px
 		border-bottom-left-radius 16px
-		background #FAFBFD
+		background #FFF
+		box-shadow 0 -4px 10px rgba(0, 0, 0, 0.1)
 		
 		@media $smPlus
-			background #F5F7FB
+			padding 16px 24px
 		
-		@media $xxs
+		@media $xs
+			gap 16px
+		
+		&:has(>.additional-filters__clear-link.hidden)
 			grid-template-columns 100%
-			background #FFF
+			justify-items end
 	
 	&__preloader-wrapper
 		position relative
@@ -349,3 +466,53 @@
 		top 0
 		right 0
 		bottom 0
+	
+	&__checkboxes-group,
+	&__radiobtns-group
+		&:first-child,
+		& + .additional-filters__checkboxes-group,
+		& + .additional-filters__radiobtns-group,
+		& + .additional-filters__filter-element
+			padding-bottom 32px
+			border-bottom 1px solid #EBEBEB
+
+			@media $xxs
+				padding-bottom 24px
+			
+		& + .additional-filters__checkboxes-group--no-border-bottom
+			margin-bottom -12px
+			padding-bottom 0
+			border-bottom none
+	
+	&__filter-element
+		margin-bottom 32px
+		padding-bottom 32px
+		border-bottom 1px solid #EBEBEB
+
+		@media $xxs
+			margin-bottom 24px
+			padding-bottom 24px
+		
+		&:last-child
+			margin-bottom 0
+			padding-bottom 0
+			border-bottom none
+	
+	&__elements:has(>*:not(.is-search-hidden)) ~ .additional-filters__external-results
+		margin-top 32px
+
+		@media $xxs
+			margin-top 24px
+	
+	// &__checkboxes-group
+	// 	&--country
+	// 		order -1
+	
+	// &__filter-element
+	// 	&--country,
+	// 	&--cities
+	// 		order -1
+	
+	&:has(>.additional-filters__header--search-extended) + .fancybox-close-button
+		display none
+		

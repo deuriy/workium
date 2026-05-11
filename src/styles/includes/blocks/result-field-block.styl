@@ -1,0 +1,16 @@
+.result-field-block
+  display flex
+  align-items center
+  gap 20px
+  padding-right 8px
+
+  &__clear-btn
+    flex-shrink 0
+    display none
+  
+  &--selected
+    .result-field-block__field
+      flex-grow 1
+
+    .result-field-block__clear-btn
+      display inline-flex

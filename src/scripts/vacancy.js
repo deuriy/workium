@@ -10,11 +10,20 @@ function getUrlWithoutParameter(param) {
   return url.toString();
 }
 
-function copyText(input) {
-  input.select();
-  input.setSelectionRange(0, 99999);
+// function copyText(input) {
+//   input.select();
+//   input.setSelectionRange(0, 99999);
 
-  document.execCommand("copy");
+//   document.execCommand("copy");
+// }
+
+async function copyText(input) {
+  try {
+    await navigator.clipboard.writeText(input.value);
+    console.log('Текст скопирован');
+  } catch (error) {
+    console.error('Ошибка копирования:', error);
+  }
 }
 
 function copyVacancyText() {
@@ -58,12 +67,12 @@ function copyVacancyText() {
   $vacancyCardTextarea.remove();
 }
 
-function toggleMoreLink($link) {
-  let linkText = $link.text() === 'Приховати' ? 'Детальніше' : 'Приховати';
-  $link.text(linkText);
+// function toggleMoreLink($link) {
+//   let linkText = $link.text() === 'Приховати' ? 'Детальніше' : 'Приховати';
+//   $link.text(linkText);
 
-  $link.toggleClass('toggle-link--expanded');
-}
+//   $link.toggleClass('toggle-link--expanded');
+// }
 
 $(() => {
   new Swiper('.vacancy-images-swiper__swiper', {
@@ -137,26 +146,26 @@ $(() => {
     }
   }
 
-  $('.infoblock__more-link').click(function (e) {
-    $(this).closest('.infoblock').find('.infoblock__text').toggleClass('infoblock__text--truncated');
+  // $('.infoblock__more-link').click(function (e) {
+  //   $(this).closest('.infoblock').find('.infoblock__text').toggleClass('infoblock__text--truncated');
 
-    toggleMoreLink($(this));
-    e.preventDefault();
-  });
+  //   toggleMoreLink($(this));
+  //   e.preventDefault();
+  // });
 
-  $('.btn-grey--bookmark').click(function (e) {
-    e.preventDefault();
+  // $('.btn-grey--bookmark').click(function (e) {
+  //   e.preventDefault();
 
-    $(this).toggleClass('btn-grey--bookmark-fill');
-  });
+  //   $(this).toggleClass('btn-grey--bookmark-fill');
+  // });
 
-  $('.vacancy-info__bookmark-icon').click(function (event) {
-    $('.vacancy-footer__bookmark-btn').toggleClass('btn-grey--bookmark-fill');
-  });
+  // $('.vacancy-info__bookmark-icon').click(function (event) {
+  //   $('.vacancy-footer__bookmark-btn').toggleClass('btn-grey--bookmark-fill');
+  // });
 
-  $('.vacancy-footer__bookmark-btn').click(function (event) {
-    $('.vacancy-info__bookmark-icon').toggleClass('bookmark-icon--fill');
-  });
+  // $('.vacancy-footer__bookmark-btn').click(function (event) {
+  //   $('.vacancy-info__bookmark-icon').toggleClass('bookmark-icon--fill');
+  // });
 
   // $(document).on('click', '.vacancy-card__copy-btn', function(event) {
   //   copyVacancyText(this.hasAttribute('data-multi-vacancy'));

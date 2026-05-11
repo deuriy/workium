@@ -1,4 +1,16 @@
-class Calendar {
+export class Calendar {
+  static getInstance(element) {
+    return element?._calendarInstance || null;
+  }
+
+  static initAll(selector = '.js-calendar') {
+    document.querySelectorAll(selector).forEach(el => {
+      if (!el._calendarInstance) {
+        el._calendarInstance = new Calendar(el);
+      }
+    });
+  }
+
   constructor(root) {
     this.root = root;
     this.field = root.querySelector('.js-calendar-field');
@@ -140,6 +152,8 @@ class Calendar {
     document.body.style.overflow = '';
 
     this.updateHiddenInputFromState();
+
+    this.dispatchCancelEvent();
   }
 
   apply() {
@@ -509,6 +523,19 @@ class Calendar {
     this.root.dispatchEvent(event);
   }
 
+  dispatchCancelEvent() {
+    const event = new CustomEvent('calendar:cancel', {
+      bubbles: true,
+      detail: {
+        root: this.root,
+        state: structuredClone(this.state),
+        value: this.hiddenInput ? this.hiddenInput.value : ''
+      }
+    });
+
+    this.root.dispatchEvent(event);
+  }
+
   /* ================= PUBLIC API ================= */
 
   openCalendar() {
@@ -559,13 +586,3 @@ class Calendar {
     return this.hiddenInput ? this.hiddenInput.value : '';
   }
 }
-
-Calendar.getInstance = function (element) {
-  return element?._calendarInstance || null;
-};
-
-window.Calendar = Calendar;
-
-/* --- Init all calendars --- */
-document.querySelectorAll('.js-calendar')
-  .forEach(el => new Calendar(el));

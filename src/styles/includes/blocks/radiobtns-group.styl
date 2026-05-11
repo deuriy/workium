@@ -60,3 +60,20 @@
 		.radiobtns-group__list
 			@media $smPlus
 				grid-template-columns repeat(4, 1fr)
+	
+	&--row
+		@media $smPlus
+			.radiobtns-group__title
+				font-size 18px
+				line-height 1.34
+				color #0F182A
+				
+			.radiobtns-group__list
+				display flex
+				flex-wrap wrap
+				gap 8px
+	
+	&--currencies
+		.radiobtns-group__list
+			max-height none
+			overflow visible
