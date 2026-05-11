@@ -202,7 +202,13 @@ export class CurrencyField extends BaseFilterComponent {
   }
 
   shouldExcludeValueFromUrl(value) {
-    return String(value) === String(this.defaultValue);
+    const normalized = String(value || this.defaultValue);
+
+    if (normalized !== String(this.defaultValue)) {
+      return false;
+    }
+
+    return !this.isManuallySelected;
   }
 
   markAsManuallySelected(value = this.defaultValue) {
