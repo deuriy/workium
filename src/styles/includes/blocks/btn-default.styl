@@ -175,8 +175,12 @@
 	// 		border-radius 8px
 	
 	&--apply-calendar
+		position relative
 		padding 11px 20px
 		font-weight 600
+
+		&:not(.btn-default--filter-loading) .btn-default__preloader
+			display none
 	
 	&--add-employer,
 	&--successfull-payment,

@@ -96,7 +96,7 @@ export class VacanciesCount {
 
     this.abortController = new AbortController();
 
-    this.setLoading(true);
+    this.setLoading(true, options);
 
     try {
       const url = query
@@ -139,7 +139,7 @@ export class VacanciesCount {
 
       console.error('VacanciesCount failed:', error);
     } finally {
-      this.setLoading(false);
+      this.setLoading(false, options);
     }
   }
 
@@ -172,12 +172,16 @@ export class VacanciesCount {
     });
   }
 
-  setLoading(isLoading) {
+  setLoading(isLoading, options = {}) {
+    const targetButtons = options.button
+      ? this.buttons.filter(({ button }) => button === options.button)
+      : this.buttons;
+
     if (isLoading) {
       clearTimeout(this.loadingTimeout);
 
       this.loadingTimeout = setTimeout(() => {
-        this.buttons.forEach(({ button }) => {
+        targetButtons.forEach(({ button }) => {
           button.classList.add(this.loadingClass);
         });
       }, this.loadingDelay);
@@ -187,7 +191,7 @@ export class VacanciesCount {
 
     clearTimeout(this.loadingTimeout);
 
-    this.buttons.forEach(({ button }) => {
+    targetButtons.forEach(({ button }) => {
       button.classList.remove(this.loadingClass);
     });
   }

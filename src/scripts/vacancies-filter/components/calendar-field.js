@@ -38,9 +38,11 @@ export class CalendarField extends BaseFilterComponent {
     this.handleChange = this.handleChange.bind(this);
     this.handleApply = this.handleApply.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
 
     this.container.addEventListener('calendar:change', this.handleChange);
     this.container.addEventListener('calendar:apply', this.handleApply);
+    this.container.addEventListener('calendar:cancel', this.handleCancel);
 
     if (this.clearButton) {
       this.clearButton.addEventListener('click', this.handleClearButtonClick);
@@ -91,6 +93,7 @@ export class CalendarField extends BaseFilterComponent {
       this.setSelected([value]);
     } else {
       this.clear();
+      this.resetApplyButtonText();
     }
   }
 
@@ -103,6 +106,57 @@ export class CalendarField extends BaseFilterComponent {
     event.stopPropagation();
 
     this.clear();
+    this.resetApplyButtonText();
+  }
+
+  handleCancel(event) {
+    const appliedValue = event.detail?.value || this.getValue();
+
+    if (appliedValue) {
+      this.updateVacanciesCountDraft(appliedValue, {
+        button: this.applyButton
+      });
+
+      return;
+    }
+
+    this.resetVacanciesCountButton();
+  }
+
+  resetVacanciesCountButton() {
+    if (!this.applyButton) {
+      return;
+    }
+
+    const textNode = this.applyButton.querySelector(
+      '[data-vacancies-count-text]'
+    );
+
+    const baseText =
+      this.applyButton.dataset.vacanciesCountBaseText || 'Застосувати';
+
+    if (textNode) {
+      textNode.textContent = baseText;
+    }
+  }
+
+  resetApplyButtonText() {
+    if (!this.applyButton) {
+      return;
+    }
+
+    const textNode = this.applyButton.querySelector('[data-vacancies-count-text]');
+    const baseText =
+      this.applyButton.dataset.vacanciesCountBaseText ||
+      textNode?.textContent?.trim() ||
+      this.applyButton.textContent?.trim() ||
+      '';
+
+    if (textNode) {
+      textNode.textContent = baseText;
+    } else {
+      this.applyButton.textContent = baseText;
+    }
   }
 
   getValue() {
@@ -255,6 +309,7 @@ export class CalendarField extends BaseFilterComponent {
 
     this.container.removeEventListener('calendar:change', this.handleChange);
     this.container.removeEventListener('calendar:apply', this.handleApply);
+    this.container.removeEventListener('calendar:cancel', this.handleCancel);
 
     if (this.clearButton) {
       this.clearButton.removeEventListener('click', this.handleClearButtonClick);
