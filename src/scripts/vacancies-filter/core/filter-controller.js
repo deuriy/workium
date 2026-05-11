@@ -323,6 +323,10 @@ export class FilterController {
     return Array.isArray(uiPlugins) ? uiPlugins.filter(Boolean) : [uiPlugins];
   }
 
+  isMainClearFilterButton(button) {
+    return Boolean(button.closest('.filter__bottom'));
+  }
+
   bindEvents() {
     this.handleSubmit = (event) => {
       event.preventDefault();
@@ -354,14 +358,19 @@ export class FilterController {
     this.handleGlobalClearClick = (event) => {
       const btn = event.target.closest('[data-clear-filter]');
 
-      if (!btn) return;
+      if (!btn) {
+        return;
+      }
 
       event.preventDefault();
 
       this.resetCitiesRequestCache();
       this.reset();
       this.syncCitiesOptions();
-      this.submitAfterStateUpdate();
+
+      if (this.isMainClearFilterButton(btn)) {
+        this.submitAfterStateUpdate();
+      }
     };
 
     document.addEventListener('click', this.handleGlobalClearClick);
