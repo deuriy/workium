@@ -143,6 +143,14 @@ export class RadiusField extends BaseFilterComponent {
     };
   }
 
+  shouldExcludeValueFromTags(value) {
+    return String(value) === '0';
+  }
+
+  shouldExcludeValueFromUrl(value) {
+    return String(value) === '0';
+  }
+
   destroy() {
     super.destroy();
 

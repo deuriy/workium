@@ -66,6 +66,8 @@ export class FilterController {
     this.lastCountrySelectionKey = null;
     this.currencyConfig = currency;
     this.isResettingFilters = false;
+    this.isManuallyClearingRadius = false;
+    this.lastSelectedCitiesCount = 0;
 
     this.store = new FilterStore(initialState);
 
@@ -435,11 +437,25 @@ export class FilterController {
     const selectedCities = state[this.citiesFilterKey] || new Set();
     const selectedRadius = state.radius || new Set();
 
-    if (!selectedCities.size) {
+    const selectedCitiesCount = selectedCities.size;
+    const didAddCity = selectedCitiesCount > this.lastSelectedCitiesCount;
+
+    this.lastSelectedCitiesCount = selectedCitiesCount;
+
+    if (!selectedCitiesCount) {
+      this.isManuallyClearingRadius = false;
       return;
     }
 
+    if (didAddCity) {
+      this.isManuallyClearingRadius = false;
+    }
+
     if (selectedRadius.size) {
+      return;
+    }
+
+    if (this.isManuallyClearingRadius) {
       return;
     }
 
@@ -455,6 +471,12 @@ export class FilterController {
     });
 
     this.applyDefaultRadiusWhenCitySelected(this.getState());
+
+    const currentRadius = this.getSelected('radius');
+
+    if (currentRadius.length) {
+      this.isManuallyClearingRadius = false;
+    }
 
     const serialized = this.serialize();
 
@@ -500,6 +522,10 @@ export class FilterController {
   removeTag(tag) {
     if (!tag?.filterKey) {
       return;
+    }
+
+    if (tag.filterKey === 'radius') {
+      this.isManuallyClearingRadius = true;
     }
 
     const component = this.components[tag.filterKey];
