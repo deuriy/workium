@@ -431,6 +431,21 @@ export class FilterController {
     this.dependencies.syncCountriesWithCities(this.getState(), this.store);
   }
 
+  applyDefaultRadiusWhenCitySelected(state = this.getState()) {
+    const selectedCities = state[this.citiesFilterKey] || new Set();
+    const selectedRadius = state.radius || new Set();
+
+    if (!selectedCities.size) {
+      return;
+    }
+
+    if (selectedRadius.size) {
+      return;
+    }
+
+    this.store.setFilter('radius', ['10']);
+  }
+
   handleStateChange(state) {
     const currentState = this.pruneCitiesAfterCountryChange(state);
 
@@ -438,6 +453,8 @@ export class FilterController {
       syncCountriesWithCities: this.autoSyncCountriesWithCities,
       components: this.components
     });
+
+    this.applyDefaultRadiusWhenCitySelected(this.getState());
 
     const serialized = this.serialize();
 
