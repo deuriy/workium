@@ -8,6 +8,7 @@ export const filterConfig = {
 
   submitWithPhpArrayStyle: true,
   seoCountryFilterKey: 'country',
+  countryUrlParam: 'countries',
 
   cities: {
     endpoint: '/api/v1/cities',

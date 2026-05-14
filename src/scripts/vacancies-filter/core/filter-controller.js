@@ -16,6 +16,7 @@ export class FilterController {
     onChange = null,
     submitWithPhpArrayStyle = true,
     seoCountryFilterKey = 'country',
+    countryUrlParam = 'countries',
     currency = null,
     languagePrefixes = [],
     basePathSegment = 'vacancies',
@@ -47,6 +48,7 @@ export class FilterController {
     this.onChange = onChange;
     this.submitWithPhpArrayStyle = submitWithPhpArrayStyle;
     this.seoCountryFilterKey = seoCountryFilterKey;
+    this.countryUrlParam = countryUrlParam;
 
     this.languagePrefixes = new Set(languagePrefixes.map(String));
     this.basePathSegment = String(basePathSegment || '').replace(/^\/+|\/+$/g, '');
@@ -120,6 +122,38 @@ export class FilterController {
 
     this.dependencies.applyParentChildVisibility(this.getState(), this.store);
     this.dependencies.applyDependentVisibility(this.getState());
+  }
+
+  getCountryComponent() {
+    return this.getComponent(this.seoCountryFilterKey);
+  }
+
+  getCountryEntityIdByValue(value) {
+    const country = this.getCountryComponent()
+      ?.getAllItems?.()
+      .find((item) => String(item.value) === String(value));
+
+    return country?.entityId ? String(country.entityId) : '';
+  }
+
+  getCountryValueByEntityId(entityId) {
+    const country = this.getCountryComponent()
+      ?.getAllItems?.()
+      .find((item) => String(item.entityId) === String(entityId));
+
+    return country?.value ? String(country.value) : '';
+  }
+
+  mapCountryValuesToEntityIds(values = []) {
+    return values
+      .map((value) => this.getCountryEntityIdByValue(value))
+      .filter(Boolean);
+  }
+
+  mapCountryEntityIdsToValues(entityIds = []) {
+    return entityIds
+      .map((entityId) => this.getCountryValueByEntityId(entityId))
+      .filter(Boolean);
   }
 
   stripLanguagePrefixFromSegments(segments = []) {
@@ -430,7 +464,28 @@ export class FilterController {
 
   applyCountriesFromSelectedCities() {
     this.preserveSelectedCitiesOnNextLoad = true;
-    this.dependencies.syncCountriesWithCities(this.getState(), this.store);
+
+    const citiesComponent = this.getComponent(this.citiesFilterKey);
+
+    const selectedCities =
+      citiesComponent?.getKnownSelectedItems?.() ||
+      this.getSelectedItems(this.citiesFilterKey) ||
+      [];
+
+    selectedCities.forEach((city) => {
+      const countryValue = this.resolveCountryValue(
+        city.countryValue ||
+        city.country_value ||
+        city.country_id ||
+        ''
+      );
+
+      if (!countryValue) {
+        return;
+      }
+
+      this.addValue(this.citiesRequestCountryFilterKey, countryValue);
+    });
   }
 
   applyDefaultRadiusWhenCitySelected(state = this.getState()) {
@@ -681,6 +736,43 @@ export class FilterController {
     });
   }
 
+  resolveCountryValue(countryValueOrEntityId = '') {
+    const raw = String(countryValueOrEntityId || '');
+
+    if (!raw) {
+      return '';
+    }
+
+    const countryComponent = this.getCountryComponent();
+
+    const country = countryComponent?.getAllItems?.().find((item) => {
+      return (
+        String(item.value || '') === raw ||
+        String(item.entityId || '') === raw
+      );
+    });
+
+    return country?.value ? String(country.value) : '';
+  }
+
+  normalizeCountryUrlFilter(filters = {}) {
+    const normalized = { ...filters };
+
+    const countryEntityIds = normalized[this.countryUrlParam];
+
+    if (Array.isArray(countryEntityIds) && countryEntityIds.length) {
+      const countryValues = this.mapCountryEntityIdsToValues(countryEntityIds);
+
+      if (countryValues.length) {
+        normalized[this.seoCountryFilterKey] = countryValues;
+      }
+
+      delete normalized[this.countryUrlParam];
+    }
+
+    return normalized;
+  }
+
   restoreFromUrl() {
     const filters = UrlSync.read({
       seoCountryFilterKey: this.seoCountryFilterKey,
@@ -688,7 +780,8 @@ export class FilterController {
       basePathSegment: this.basePathSegment
     });
 
-    const safeFilters = this.sanitizeRestoredFilters(filters);
+    const normalizedFilters = this.normalizeCountryUrlFilter(filters);
+    const safeFilters = this.sanitizeRestoredFilters(normalizedFilters);
 
     this.markRestoredManualValues(safeFilters);
 
@@ -913,16 +1006,18 @@ export class FilterController {
     const params = new URLSearchParams();
     const countryValues = this.getSeoCountryValues(filters);
 
+    const countryEntityIds = this.mapCountryValuesToEntityIds(countryValues);
+
     if (
-      countryValues.length > 1 ||
-      (includeSingleSeoCountry && countryValues.length === 1)
+      countryEntityIds.length > 1 ||
+      (includeSingleSeoCountry && countryEntityIds.length === 1)
     ) {
       if (phpArrayStyle) {
-        countryValues.forEach((value) => {
-          params.append(`${this.seoCountryFilterKey}[]`, value);
+        countryEntityIds.forEach((entityId) => {
+          params.append(`${this.countryUrlParam}[]`, entityId);
         });
       } else {
-        params.set(this.seoCountryFilterKey, countryValues.join(','));
+        params.set(this.countryUrlParam, countryEntityIds.join(','));
       }
     }
 
@@ -1040,10 +1135,12 @@ export class FilterController {
     });
 
     return cities.map((city) => {
-      const countryValue = countryValueByEntityId.get(String(city.country_id));
+      const countryEntityId = String(city.country_id || '');
+      const countryValue = countryValueByEntityId.get(countryEntityId);
 
       return {
         ...city,
+        country_entity_id: countryEntityId,
         country_value: countryValue || city.country_value || ''
       };
     });
