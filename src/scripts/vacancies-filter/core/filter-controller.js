@@ -908,6 +908,28 @@ export class FilterController {
     }
   }
 
+  async loadSelectedCitiesByIds(ids = []) {
+    if (!this.citiesLoader || !ids.length) {
+      return [];
+    }
+
+    const response = await this.citiesLoader.load({
+      ids
+    });
+
+    const cities = Array.isArray(response)
+      ? response
+      : Array.isArray(response?.results)
+        ? response.results
+        : Array.isArray(response?.data)
+          ? response.data
+          : Array.isArray(response?.cities)
+            ? response.cities
+            : [];
+
+    return this.attachCountryValuesToCities(cities);
+  }
+
   reloadCitiesOptions() {
     this.lastCitiesRequestKey = null;
 
@@ -1197,6 +1219,23 @@ export class FilterController {
 
       if (this.preserveSelectedCitiesOnNextLoad) {
         citiesWithCountries = this.mergeSelectedKnownCities(citiesWithCountries);
+      }
+
+      const selectedCityIds = this.getSelected(this.citiesFilterKey);
+
+      const missingSelectedCityIds = selectedCityIds.filter((id) => {
+        return !citiesWithCountries.some((city) => {
+          return String(city.id) === String(id);
+        });
+      });
+
+      if (missingSelectedCityIds.length) {
+        const selectedCities = await this.loadSelectedCitiesByIds(missingSelectedCityIds);
+
+        citiesWithCountries = [
+          ...citiesWithCountries,
+          ...selectedCities
+        ];
       }
 
       this.setOptions(this.citiesFilterKey, citiesWithCountries);
