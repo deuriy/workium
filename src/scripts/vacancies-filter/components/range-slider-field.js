@@ -33,15 +33,51 @@ export class RangeSliderField extends BaseFilterComponent {
       throw new Error(`RangeSliderField container not found: ${containerSelector}`);
     }
 
-    this.slider = this.container.querySelector(sliderSelector);
-    this.inputs = [...this.container.querySelectorAll('.range-slider-element__input')];
+    this.singleWrapper = this.container.querySelector(
+      '.range-slider-element--single'
+    );
 
-    this.fromInput = this.inputs[0];
-    this.toInput = this.inputs[1];
+    this.rangeWrapper = this.container.querySelector(
+      '.range-slider-element--range'
+    );
+
+    this.singleSlider = this.singleWrapper?.querySelector(
+      '.range-slider--single'
+    );
+
+    this.rangeSlider = this.rangeWrapper?.querySelector(
+      '.range-slider--range'
+    );
+
+    this.singleInput = this.singleWrapper?.querySelector(
+      '.range-slider-element__input'
+    );
+
+    this.rangeInputs = this.rangeWrapper
+      ? [...this.rangeWrapper.querySelectorAll('.range-slider-element__input')]
+      : [];
+
+    this.fromInput = this.rangeInputs[0] || null;
+    this.toInput = this.rangeInputs[1] || null;
+
+    this.slider = this.rangeSlider || this.singleSlider;
+
+    this.isAgeField = this.filterKey === 'vik';
+
+    this.modeSwitch = this.container.querySelector('#age_switch');
+
+    this.isRangeMode =
+      this.modeSwitch instanceof HTMLInputElement
+        ? this.modeSwitch.checked
+        : true;
 
     this.suffixes = [...this.container.querySelectorAll(suffixSelector)];
 
-    if (!this.slider || !this.fromInput || !this.toInput) {
+    if (!this.slider) {
+      throw new Error(`RangeSliderField "${filterKey}" has invalid HTML structure`);
+    }
+
+    if (!this.isAgeField && (!this.fromInput || !this.toInput)) {
       throw new Error(`RangeSliderField "${filterKey}" has invalid HTML structure`);
     }
 
@@ -95,12 +131,127 @@ export class RangeSliderField extends BaseFilterComponent {
     super.disconnectStore();
   }
 
-  initSlider() {
-    if (!noUiSlider) {
-      throw new Error('RangeSliderField: noUiSlider is not loaded');
+  getAgeLabel(value) {
+    const number = Number(value);
+
+    const mod10 = number % 10;
+    const mod100 = number % 100;
+
+    if (mod10 === 1 && mod100 !== 11) {
+      return 'рік';
     }
 
+    if ([2, 3, 4].includes(mod10) && ![12, 13, 14].includes(mod100)) {
+      return 'роки';
+    }
+
+    return 'років';
+  }
+
+  updateAgeModeVisibility() {
+    if (!this.isAgeField) return;
+
+    this.isRangeMode = !!this.modeSwitch?.checked;
+
+    this.singleWrapper?.classList.toggle('hidden', this.isRangeMode);
+    this.rangeWrapper?.classList.toggle('hidden', !this.isRangeMode);
+
+    // 🔥 гарантуємо, що slider не тригерить store під час переключення
+    this.isSyncing = true;
+
+    queueMicrotask(() => {
+      this.isSyncing = false;
+    });
+  }
+
+  initRangeAgeSlider() {
+    if (!this.rangeSlider || !this.fromInput || !this.toInput) {
+      return;
+    }
+
+    noUiSlider.create(this.rangeSlider, {
+      start: [
+        this.fromInput.value || this.min,
+        this.toInput.value || this.max
+      ],
+      connect: true,
+      range: {
+        min: this.min,
+        max: this.max
+      },
+      format: {
+        to: (value) => Math.round(Number(value)),
+        from: (value) => Math.round(Number(value))
+      }
+    });
+
+    this.rangeSlider.noUiSlider.on('update', ([from, to]) => {
+      this.setInputs(from, to);
+    });
+
+    this.rangeSlider.noUiSlider.on('change', ([from, to]) => {
+      if (this.isSyncing) {
+        return;
+      }
+
+      this.syncStoreFromValues(from, to);
+    });
+  }
+
+  initSingleAgeSlider() {
+    if (!this.singleSlider || !this.singleInput) {
+      return;
+    }
+
+    noUiSlider.create(this.singleSlider, {
+      start: [this.singleInput.value || this.min],
+      connect: [true, false],
+      range: {
+        min: this.min,
+        max: this.max
+      },
+      format: {
+        to: (value) => Math.round(Number(value)),
+        from: (value) => Math.round(Number(value))
+      }
+    });
+
+    this.singleSlider.noUiSlider.on('update', ([value]) => {
+      const normalized = this.clamp(value);
+
+      this.singleInput.value = normalized;
+
+      this.updateAgeSuffix(normalized);
+    });
+
+    this.singleSlider.noUiSlider.on('change', ([value]) => {
+      if (this.isSyncing) {
+        return;
+      }
+
+      const normalized = this.clamp(value);
+
+      if (normalized === this.min) {
+        this.clear();
+
+        return;
+      }
+
+      this.setSelected([String(normalized)]);
+    });
+  }
+
+  initAgeSliders() {
+    this.initSingleAgeSlider();
+
+    this.initRangeAgeSlider();
+
+    this.updateAgeModeVisibility();
+  }
+
+  initRangeSlider() {
     const minValue = this.toNumber(this.slider.dataset.minValue, this.min);
+
     const maxValue = this.toNumber(this.slider.dataset.maxValue, this.max);
 
     if (this.slider.noUiSlider) {
@@ -125,15 +276,179 @@ export class RangeSliderField extends BaseFilterComponent {
     this.slider.noUiSlider.on('set', this.handleSliderCommit);
 
     this.setInputs(minValue, maxValue);
+
     this.updateSuffixes();
   }
 
-  bindEvents() {
+  initSlider() {
+    if (!noUiSlider) {
+      throw new Error('RangeSliderField: noUiSlider is not loaded');
+    }
+
+    if (this.isAgeField) {
+      this.initAgeSliders();
+
+      return;
+    }
+
+    this.initRangeSlider();
+  }
+
+  updateAgeSuffix(value) {
+    if (!this.isAgeField) {
+      return;
+    }
+
+    const label = this.getAgeLabel(value);
+
+    const suffixes = this.container.querySelectorAll(
+      '.range-slider-element__input-suffix'
+    );
+
+    suffixes.forEach((suffix) => {
+      suffix.textContent = label;
+    });
+  }
+
+  bindAgeEvents() {
+    this.bindRangeEvents();
+
+    if (this.singleInput) {
+      this.singleInput.addEventListener('input', () => {
+        this.updateAgeSuffix(this.singleInput.value);
+      });
+
+      this.singleInput.addEventListener('change', () => {
+        const value = this.clamp(this.singleInput.value);
+
+        this.singleInput.value = value;
+
+        this.singleSlider?.noUiSlider?.set(value);
+
+        if (value === this.min) {
+          this.clear();
+
+          return;
+        }
+
+        this.setSelected([String(value)]);
+      });
+    }
+
+    this.modeSwitch?.addEventListener('change', () => {
+      this.handleModeSwitchChange();
+    });
+  }
+
+  bindRangeEvents() {
     this.fromInput.addEventListener('input', this.handleInputInput);
     this.toInput.addEventListener('input', this.handleInputInput);
 
     this.fromInput.addEventListener('change', this.handleInputChange);
     this.toInput.addEventListener('change', this.handleInputChange);
+  }
+
+  bindEvents() {
+    if (this.isAgeField) {
+      this.bindAgeEvents();
+
+      return;
+    }
+
+    this.bindRangeEvents();
+  }
+
+  switchToSingleMode() {
+    const from = this.clamp(
+      this.fromInput?.value || this.min
+    );
+
+    this.isSyncing = true;
+
+    this.singleSlider?.noUiSlider?.set(from);
+
+    this.singleInput.value = from;
+
+    this.updateAgeSuffix(from);
+
+    this.isSyncing = false;
+
+    // default single -> remove tag
+    if (from === this.min) {
+      this.clear();
+      return;
+    }
+
+    this.setSelected([String(from)]);
+  }
+
+  switchToRangeMode() {
+    const singleValue = this.clamp(
+      this.singleInput?.value || this.min
+    );
+
+    this.isSyncing = true;
+
+    this.setInputs(singleValue, singleValue);
+
+    this.rangeSlider?.noUiSlider?.set([
+      singleValue,
+      singleValue
+    ]);
+
+    this.isSyncing = false;
+
+    // default range -> remove tag
+    if (this.isDefaultRange(singleValue, singleValue)) {
+      this.clear();
+      return;
+    }
+
+    this.setSelected([
+      this.formatValue(singleValue, singleValue)
+    ]);
+  }
+
+  handleModeSwitchChange() {
+    this.updateAgeModeVisibility();
+
+    // RANGE MODE
+    if (this.isRangeMode) {
+      const from = this.clamp(
+        this.fromInput?.value || this.min
+      );
+
+      const to = this.clamp(
+        this.toInput?.value || this.max
+      );
+
+      // default values -> just remove tag
+      if (this.isDefaultRange(from, to)) {
+        this.clearSelectedOnly();
+        return;
+      }
+
+      this.setSelected([
+        this.formatValue(from, to)
+      ]);
+
+      return;
+    }
+
+    // SINGLE MODE
+    const singleValue = this.clamp(
+      this.singleInput?.value || this.min
+    );
+
+    // default single -> just remove tag
+    if (singleValue === this.min) {
+      this.clearSelectedOnly();
+      return;
+    }
+
+    this.setSelected([
+      String(singleValue)
+    ]);
   }
 
   handleSliderUpdate(values) {
@@ -180,6 +495,10 @@ export class RangeSliderField extends BaseFilterComponent {
     });
   }
 
+  clearSelectedOnly() {
+    this.setSelected([]);
+  }
+
   syncStoreFromValues(from, to) {
     const normalizedFrom = this.clamp(from);
     const normalizedTo = this.clamp(to);
@@ -196,7 +515,24 @@ export class RangeSliderField extends BaseFilterComponent {
     const value = [...selectedSet][0] || '';
 
     if (!value) {
+      // Для age field не скидаємо mode switch,
+      // а лише очищаємо active slider state
+      if (this.isAgeField) {
+        if (this.isRangeMode) {
+          this.setValue(this.min, this.max, {
+            updateStore: false
+          });
+        } else {
+          this.singleSlider?.noUiSlider?.set(this.min);
+          this.singleInput.value = this.min;
+          this.updateAgeSuffix(this.min);
+        }
+
+        return;
+      }
+
       this.resetLocal();
+
       return;
     }
 
@@ -204,7 +540,28 @@ export class RangeSliderField extends BaseFilterComponent {
 
     if (!parsed) {
       this.resetLocal();
+
       return;
+    }
+
+    if (this.isAgeField && parsed.isSingle) {
+      this.modeSwitch.checked = false;
+
+      this.updateAgeModeVisibility();
+
+      this.singleSlider?.noUiSlider?.set(parsed.from);
+
+      this.singleInput.value = parsed.from;
+
+      this.updateAgeSuffix(parsed.from);
+
+      return;
+    }
+
+    if (this.isAgeField) {
+      this.modeSwitch.checked = true;
+
+      this.updateAgeModeVisibility();
     }
 
     this.setValue(parsed.from, parsed.to, {
@@ -273,6 +630,24 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   resetLocal() {
+    if (this.isAgeField) {
+      this.modeSwitch.checked = false;
+
+      this.updateAgeModeVisibility();
+
+      this.singleSlider?.noUiSlider?.set(this.min);
+
+      this.singleInput.value = this.min;
+
+      this.updateAgeSuffix(this.min);
+
+      this.setValue(this.min, this.max, {
+        updateStore: false
+      });
+
+      return;
+    }
+
     this.setValue(this.min, this.max, {
       updateStore: false
     });
@@ -303,8 +678,30 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   getSelectedLocal() {
-    const from = this.toNumber(this.fromInput.value, this.min);
-    const to = this.toNumber(this.toInput.value, this.max);
+    // SINGLE MODE
+    if (this.isAgeField && !this.isRangeMode) {
+      const value = this.toNumber(
+        this.singleInput.value,
+        this.min
+      );
+
+      if (value === this.min) {
+        return [];
+      }
+
+      return [String(value)];
+    }
+
+    // RANGE MODE
+    const from = this.toNumber(
+      this.fromInput.value,
+      this.min
+    );
+
+    const to = this.toNumber(
+      this.toInput.value,
+      this.max
+    );
 
     if (this.isDefaultRange(from, to)) {
       return [];
@@ -320,6 +717,10 @@ export class RangeSliderField extends BaseFilterComponent {
       return String(value);
     }
 
+    if (this.isAgeField && parsed.isSingle) {
+      return `${parsed.from} ${this.getAgeLabel(parsed.from)}`;
+    }
+
     return `${parsed.from}-${parsed.to} ${this.getSuffix()}`.trim();
   }
 
@@ -331,6 +732,16 @@ export class RangeSliderField extends BaseFilterComponent {
   }
 
   parseValue(value = '') {
+    if (this.isAgeField && !String(value).includes('-')) {
+      const single = this.clamp(value);
+
+      return {
+        from: single,
+        to: single,
+        isSingle: true
+      };
+    }
+
     const [from, to] = String(value).split('-');
 
     if (from == null || to == null) {
@@ -339,12 +750,20 @@ export class RangeSliderField extends BaseFilterComponent {
 
     return {
       from: this.clamp(from),
-      to: this.clamp(to)
+      to: this.clamp(to),
+      isSingle: false
     };
   }
 
   formatValue(from, to) {
-    return `${Math.round(Number(from))}-${Math.round(Number(to))}`;
+    const normalizedFrom = Math.round(Number(from));
+    const normalizedTo = Math.round(Number(to));
+
+    if (this.isAgeField && normalizedFrom === normalizedTo) {
+      return String(normalizedFrom);
+    }
+
+    return `${normalizedFrom}-${normalizedTo}`;
   }
 
   isDefaultRange(from, to) {
