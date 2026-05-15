@@ -485,17 +485,13 @@
 			border-bottom none
 	
 	&__filter-element
-		margin-bottom 32px
 		padding-bottom 32px
 		border-bottom 1px solid #EBEBEB
 
 		@media $xxs
-			margin-bottom 24px
 			padding-bottom 24px
 		
 		&:last-child
-			margin-bottom 0
-			padding-bottom 0
 			border-bottom none
 	
 	&__elements:has(>*:not(.is-search-hidden)) ~ .additional-filters__external-results
@@ -503,6 +499,20 @@
 
 		@media $xxs
 			margin-top 24px
+	
+	&__external-results
+		display grid
+		grid-template-columns 100%
+		gap 32px
+
+		@media (max-width: 991px)
+			gap 40px 20px
+		
+		@media $xs
+			gap 30px 20px
+		
+		@media $xxs
+			gap 24px
 	
 	// &__checkboxes-group
 	// 	&--country
