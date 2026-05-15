@@ -125,6 +125,7 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
         input,
         label,
         value: String(input.value),
+        paramKey: this.normalizeParamKey(input.name || this.filterKey),
         countryValue,
 
         // важливо для зовнішнього пошуку
@@ -487,6 +488,48 @@ export class CheckboxesGroupsField extends BaseFilterComponent {
     return [...this.inputsMap.values()].filter((item) => {
       return selected.has(item.value);
     });
+  }
+
+  normalizeParamKey(rawKey = '') {
+    const key = String(rawKey || this.filterKey);
+
+    return key.endsWith('[]') ? key.slice(0, -2) : key;
+  }
+
+  getUrlParamGroups(values = []) {
+    const groups = {};
+
+    values.forEach((value) => {
+      const normalizedValue = String(value);
+      const item = this.inputsMap.get(normalizedValue);
+      const paramKey = item?.paramKey || this.filterKey;
+
+      if (!groups[paramKey]) {
+        groups[paramKey] = [];
+      }
+
+      groups[paramKey].push(normalizedValue);
+    });
+
+    return groups;
+  }
+
+  getRestoredValuesFromUrl(filters = {}) {
+    const values = new Set(filters[this.filterKey] || []);
+
+    this.inputsMap.forEach((item) => {
+      const paramValues = filters[item.paramKey];
+
+      if (!Array.isArray(paramValues)) {
+        return;
+      }
+
+      if (paramValues.map(String).includes(item.value)) {
+        values.add(item.value);
+      }
+    });
+
+    return [...values];
   }
 
   getAllItems() {

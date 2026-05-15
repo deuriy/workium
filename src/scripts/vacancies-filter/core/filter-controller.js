@@ -534,13 +534,14 @@ export class FilterController {
     }
 
     const serialized = this.serialize();
+    const urlFilters = this.serializeForUrl(serialized);
 
     this.toggleClearFilterButtons(serialized);
 
     this.syncTags(serialized);
 
     if (this.syncUrl) {
-      UrlSync.write(serialized, {
+      UrlSync.write(urlFilters, {
         phpArrayStyle: this.submitWithPhpArrayStyle,
         seoCountryFilterKey: this.seoCountryFilterKey
       });
@@ -773,6 +774,24 @@ export class FilterController {
     return normalized;
   }
 
+  normalizeComponentUrlFilters(filters = {}) {
+    const normalized = { ...filters };
+
+    Object.entries(this.components).forEach(([key, component]) => {
+      if (!component?.getRestoredValuesFromUrl) {
+        return;
+      }
+
+      const values = component.getRestoredValuesFromUrl(filters);
+
+      if (values.length) {
+        normalized[key] = values;
+      }
+    });
+
+    return normalized;
+  }
+
   restoreFromUrl() {
     const filters = UrlSync.read({
       seoCountryFilterKey: this.seoCountryFilterKey,
@@ -780,7 +799,9 @@ export class FilterController {
       basePathSegment: this.basePathSegment
     });
 
-    const normalizedFilters = this.normalizeCountryUrlFilter(filters);
+    const normalizedFilters = this.normalizeComponentUrlFilters(
+      this.normalizeCountryUrlFilter(filters)
+    );
     const safeFilters = this.sanitizeRestoredFilters(normalizedFilters);
 
     this.markRestoredManualValues(safeFilters);
@@ -944,6 +965,31 @@ export class FilterController {
     return this.store.serialize();
   }
 
+  serializeForUrl(filters = this.serialize()) {
+    const result = {};
+
+    Object.entries(filters).forEach(([key, values]) => {
+      const component = this.components[key];
+
+      if (!component?.getUrlParamGroups) {
+        result[key] = values;
+        return;
+      }
+
+      const groups = component.getUrlParamGroups(values);
+
+      Object.entries(groups).forEach(([paramKey, paramValues]) => {
+        if (!result[paramKey]) {
+          result[paramKey] = [];
+        }
+
+        result[paramKey].push(...paramValues);
+      });
+    });
+
+    return result;
+  }
+
   normalizePath(pathname = '') {
     const normalized = String(pathname || '')
       .replace(/\/{2,}/g, '/')
@@ -1020,10 +1066,10 @@ export class FilterController {
     overrides = null,
     includeSingleSeoCountry = false
   } = {}) {
-    const filters = {
+    const filters = this.serializeForUrl({
       ...this.serialize(),
       ...(overrides || {})
-    };
+    });
 
     const params = new URLSearchParams();
     const countryValues = this.getSeoCountryValues(filters);
