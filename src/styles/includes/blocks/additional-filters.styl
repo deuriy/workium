@@ -469,19 +469,22 @@
 	
 	&__checkboxes-group,
 	&__radiobtns-group
-		&:first-child,
-		& + .additional-filters__checkboxes-group,
-		& + .additional-filters__radiobtns-group,
-		& + .additional-filters__filter-element
-			padding-bottom 32px
-			border-bottom 1px solid #EBEBEB
+		// &:first-child,
+		// & + .additional-filters__checkboxes-group,
+		// & + .additional-filters__radiobtns-group,
+		// & + .additional-filters__filter-element
+		padding-bottom 32px
+		border-bottom 1px solid #EBEBEB
 
-			@media $xxs
-				padding-bottom 24px
+		@media $xxs
+			padding-bottom 24px
 			
 		& + .additional-filters__checkboxes-group--no-border-bottom
 			margin-bottom -12px
 			padding-bottom 0
+			border-bottom none
+		
+		&:last-child
 			border-bottom none
 	
 	&__filter-element
@@ -491,8 +494,8 @@
 		@media $xxs
 			padding-bottom 24px
 		
-		&:last-child
-			border-bottom none
+		// &:last-child
+		// 	border-bottom none
 	
 	&__elements:has(>*:not(.is-search-hidden)) ~ .additional-filters__external-results
 		margin-top 32px
@@ -513,15 +516,6 @@
 		
 		@media $xxs
 			gap 24px
-	
-	// &__checkboxes-group
-	// 	&--country
-	// 		order -1
-	
-	// &__filter-element
-	// 	&--country,
-	// 	&--cities
-	// 		order -1
 	
 	&:has(>.additional-filters__header--search-extended) + .fancybox-close-button
 		display none
