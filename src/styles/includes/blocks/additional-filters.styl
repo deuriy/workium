@@ -10,7 +10,6 @@
 	@media $xxs
 		max-height calc(var(--vh, 100vh) * 100)
 		height calc(var(--vh, 100vh) * 100)
-		// height 100vh
 	
 	@media (min-width 1600px)
 		height 890px
@@ -29,7 +28,6 @@
 	&__header
 		border-top-right-radius 24px
 		border-top-left-radius 24px
-		// background #FAFBFD
 		
 		display block
 		text-align center
@@ -37,14 +35,13 @@
 		background none
 		padding 0
 		cursor pointer
+
 		@media $smPlus
-			// background #F5F7FB
 			background transparent
 		
 		@media $xs
 			border-top-right-radius 0
 			border-top-left-radius 0
-			// background #F0F4FA
 		
 		@media $xxs
 			padding-bottom 15px
@@ -79,7 +76,6 @@
 					max-width 230px
 					margin-right auto
 					margin-left auto
-					// transition .3s
 			
 			.form-text--filter-search
 				height 40px
@@ -90,8 +86,6 @@
 				letter-spacing: 0.02em
 
 				@media $xxs
-					// max-width 230px
-					// margin 0 auto
 					padding-right 30px
 					padding-left 49px
 					background-position 25px center
@@ -136,12 +130,9 @@
 		
 	&__header-top
 		display grid
-		// grid-template-columns auto 1fr auto
 		grid-template-columns 100%
 		align-items center
-		// gap 28px
 		gap 19px
-		// padding 16px 20px 14px 50px
 		padding 19px 24px
 		
 		@media (max-width: 991px)
@@ -166,11 +157,8 @@
 		font-weight 600
 		font-size 24px
 		line-height 1.25
-		// font-family var(--graphik-lcg)
 		
 		@media $xs
-			// margin-top 4px
-			// margin-right 16px
 			font-size 16px
 			line-height 1.625
 			text-align center
@@ -183,20 +171,12 @@
 			font-size 16px
 			line-height 1.625
 			text-align center
-		
-		// @media $xxs
-		// 	font-size 21px
-		// 	line-height 1.2857
 	
 	&__clear-link
 		font-size 16px
 		line-height 1.625
 		color #0f182a
-		// color var(--info)
 		text-decoration none
-		// position absolute
-		// top 13px
-		// right 16px
 
 		@media $xs
 			font-size 14px
@@ -209,14 +189,12 @@
 	
 	&__form-items
 		display grid
-		// grid-template-columns 340px auto
 		grid-template-columns 100%
 		justify-content start
 		align-items center
 		gap 23px
 		
 		@media $xs
-			// grid-template-columns repeat(2, 1fr)
 			gap 8px
 		
 		&--three-col-md
@@ -232,12 +210,8 @@
 	&__header-bottom
 		display grid
 		grid-template-columns 1fr auto
-		// align-items start
-		// align-items center
 		align-items end
 		gap 15px
-		// padding 0 13px 10px
-		// padding 0 28px 10px 13px
 		padding 0 28px 0 13px
 		
 		@media $xs
@@ -246,7 +220,6 @@
 		
 		@media $xxs
 			gap 16px
-			// gap 0
 	
 	&__tags
 		margin-bottom 28px
@@ -254,40 +227,28 @@
 		@media $xxs
 			padding-right 10px
 			padding-left 16px
-		
-		// @media $xxs
-		// 	order -1
 	
 	&__clear-btn
 		margin-left auto
 	
 	&__body
-		// max-height calc(100vh - 196px)
-		// min-height 441px
-		// max-height calc(100vh - 270px)
 		max-height 473px
-		// max-height none
-		// padding 25px 35px 30px 50px
 		padding 10px 24px
 		overflow auto
 		
 		@media (min-width 1600px)
-			// max-height 720px
 			max-height none
 		
 		@media (max-width: 991px)
 			padding-left 30px
 		
 		@media $xs
-			// max-height calc(100vh - 168px)
 			max-height calc(var(--vh, 100vh) * 100 - 168px)
 			padding 7px 20px 20px
 		
 		@media $xxs
-			// max-height calc(100vh - 134px)
 			max-height calc(var(--vh, 100vh) * 100 - 134px)
 			padding-top 18px
-			// padding-top 25px
 			padding-right 0
 			padding-left 0
 	
@@ -319,23 +280,6 @@
 			&--no-padding
 				padding-right 0
 				padding-left 0
-		
-		&--country
-			order: -1
-			
-			// &--two-col-xs
-			// 	grid-column 1 / 3
-			
-		// &--countries-two-col
-		// 	@media $md
-		// 		display grid
-		// 		grid-template-columns 240px auto
-		// 		padding 3px 7px 3px 13px
-		// 		border-radius 12px
-		// 		background rgb(245 247 252)
-			
-		// 	@media $smPlus
-		// 		background #EBEFF9
 	
 	&__form-item-label
 		font-weight 600
@@ -348,7 +292,6 @@
 	
 	&__no-selected-text
 		font-size 14px
-		// color var(--black)
 		margin-bottom 16px
 		font-weight 400
 		line-height 1.57143
@@ -363,7 +306,6 @@
 		width 24px
 		height 48px
 		border none
-		// background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 18 18'%3E%3Cpath stroke='%23A1A7B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4' d='M1 17 17 1M1 1l16 16'/%3E%3C/svg%3E") center / 15px no-repeat
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm4.707 14.293a1 1 0 1 1-1.414 1.414L12 13.414l-3.293 3.293a1 1 0 1 1-1.414-1.414L10.586 12 7.293 8.707a1 1 0 1 1 1.414-1.414L12 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414L13.414 12Z' style='fill:%237b7a7f'/%3E%3C/svg%3E") center / 18px no-repeat
 		cursor pointer
 	
@@ -373,7 +315,6 @@
 		left 0
 	
 	&__countries-select
-		// width 140px
 		width 325px
 		
 		@media $xs
@@ -384,20 +325,16 @@
 	
 	&__elements
 		display grid
-		// grid-template-columns 1fr 28% 28%
 		grid-template-columns 100%
-		// gap 58px 35px
 		gap 32px
 		
 		@media (max-width: 991px)
 			gap 40px 20px
 		
 		@media $xs
-			// grid-template-columns repeat(2, 1fr)
 			gap 30px 20px
 		
 		@media $xxs
-			// grid-template-columns 100%
 			gap 24px
 	
 	&__checkboxes-group,
@@ -414,9 +351,7 @@
 	&__radiobtns-group,
 	&__filter-element
 		@media $xxs
-			// padding-right 16px
 			padding-right 10px
-			// padding-bottom 24px
 			padding-bottom 28px
 			padding-left 16px
 			border-bottom 1px solid #DFE2E6
@@ -469,10 +404,6 @@
 	
 	&__checkboxes-group,
 	&__radiobtns-group
-		// &:first-child,
-		// & + .additional-filters__checkboxes-group,
-		// & + .additional-filters__radiobtns-group,
-		// & + .additional-filters__filter-element
 		padding-bottom 32px
 		border-bottom 1px solid #EBEBEB
 
@@ -485,6 +416,7 @@
 			border-bottom none
 		
 		&:last-child
+			padding-bottom 0
 			border-bottom none
 	
 	&__filter-element
@@ -496,8 +428,7 @@
 		
 		&:last-child
 			padding-bottom 24px
-			border-bottom 1px solid #DFE2E6
-			// border-bottom none
+			border-bottom none
 	
 	&__elements:has(>*:not(.is-search-hidden)) ~ .additional-filters__external-results
 		margin-top 32px
