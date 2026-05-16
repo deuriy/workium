@@ -61,6 +61,7 @@ export class FilterController {
     this.citiesSearchParam = citiesSearchParam;
     this.clearCitiesOnCountryChange = clearCitiesOnCountryChange;
     this.lastCitiesRequestKey = null;
+    this.citiesOptionsCache = new Map();
     this.citiesAbortController = null;
     this.isCitiesLoading = false;
     this.autoSyncCountriesWithCities = autoSyncCountriesWithCities;
@@ -458,10 +459,6 @@ export class FilterController {
     });
   }
 
-  resetCitiesRequestCache() {
-    this.lastCitiesRequestKey = null;
-  }
-
   applyCountriesFromSelectedCities() {
     this.preserveSelectedCitiesOnNextLoad = true;
 
@@ -672,6 +669,7 @@ export class FilterController {
 
   resetCitiesRequestCache() {
     this.lastCitiesRequestKey = null;
+    this.citiesOptionsCache.clear();
   }
 
   hasSelectedFilters(filters = this.serialize()) {
@@ -869,7 +867,10 @@ export class FilterController {
     const searchValue = String(query).trim();
 
     if (!searchValue) {
-      this.resetCitiesRequestCache();
+      if (this.restoreCachedCitiesOptions()) {
+        return;
+      }
+
       await this.syncCitiesOptions();
       return;
     }
@@ -955,6 +956,33 @@ export class FilterController {
     this.lastCitiesRequestKey = null;
 
     return this.syncCitiesOptions();
+  }
+
+  restoreCachedCitiesOptions() {
+    const citiesComponent = this.getComponent(this.citiesFilterKey);
+
+    if (citiesComponent?.searchQuery) {
+      return false;
+    }
+
+    const countryComponent = this.getComponent(this.citiesRequestCountryFilterKey);
+
+    const countryIds = countryComponent?.getSelectedItems?.()
+      .map((item) => item.entityId)
+      .filter(Boolean)
+      .map(String) || [];
+
+    const requestKey = this.buildCitiesRequestKey(countryIds);
+    const cachedOptions = this.citiesOptionsCache.get(requestKey);
+
+    if (!cachedOptions) {
+      return false;
+    }
+
+    this.setOptions(this.citiesFilterKey, cachedOptions);
+    this.lastCitiesRequestKey = requestKey;
+
+    return true;
   }
 
   getState() {
@@ -1229,6 +1257,7 @@ export class FilterController {
     const requestKey = this.buildCitiesRequestKey(countryIds);
 
     if (requestKey === this.lastCitiesRequestKey) {
+      this.restoreCachedCitiesOptions();
       return;
     }
 
@@ -1285,6 +1314,7 @@ export class FilterController {
       }
 
       this.setOptions(this.citiesFilterKey, citiesWithCountries);
+      this.citiesOptionsCache.set(requestKey, citiesWithCountries);
 
       // if (this.clearCitiesOnCountryChange && !this.preserveSelectedCitiesOnNextLoad) {
       //   this.pruneSelectedCitiesByOptions(citiesWithCountries);
