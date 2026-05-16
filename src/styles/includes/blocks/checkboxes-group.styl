@@ -60,64 +60,6 @@
 			gap 16px
 			overflow auto
 	
-	&--three-columns
-		grid-column 1 / 4
-		
-		@media $xs
-			grid-column 1 / 3
-			
-		@media $xxs
-			grid-column 1 / 2
-		
-		.checkboxes-group__list
-			grid-auto-flow column
-			grid-template-columns auto
-			
-			@media $xxs
-				grid-auto-flow row
-	
-	&--ten-rows
-		.checkboxes-group__list
-			grid-template-rows repeat(10, auto)
-			
-			@media (max-width: 991px)
-				grid-template-rows repeat(15, auto)
-			
-			@media $xs
-				grid-template-rows repeat(20, auto)
-	
-	&--three-rows
-		.checkboxes-group__list
-			grid-template-rows repeat(3, auto)
-			
-			@media (max-width: 991px)
-				grid-template-rows repeat(4, auto)
-				
-			@media $xs
-				grid-template-rows repeat(6, auto)
-	
-	&--closed
-		.checkboxes-group__title
-			@media $xxs
-				margin-bottom 0
-				
-				&::after
-					transform none
-		
-		.checkboxes-group__list
-			@media $xxs
-				max-height 0
-	
-	&--cities
-		.checkboxes-group__list
-			@media $xxs
-				max-height none
-	
-	&--specializaciia
-		.checkboxes-group__list
-			@media $smPlus
-				grid-template-columns repeat(4, 1fr)
-	
 	&--row
 		.checkboxes-group__title
 			font-size 18px

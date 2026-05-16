@@ -126,7 +126,6 @@
 			.form-text--filter-search
 				background-position 14px center
 				background-size 16px auto
-
 		
 	&__header-top
 		display grid
@@ -252,16 +251,6 @@
 			padding-right 0
 			padding-left 0
 	
-	&__items
-		display grid
-		grid-template-columns 100%
-		gap 22px
-		margin-bottom 24px
-		padding-right 16px
-		padding-bottom 30px
-		padding-left 16px
-		border-bottom 1px solid #DFE2E6
-	
 	&__form-item
 		position relative
 		
@@ -290,13 +279,6 @@
 			margin-bottom 1em
 			color #0F182A
 	
-	&__no-selected-text
-		font-size 14px
-		margin-bottom 16px
-		font-weight 400
-		line-height 1.57143
-		color #666B80
-	
 	&__clear-search-btn
 		position absolute
 		top 0
@@ -308,11 +290,6 @@
 		border none
 		background url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1a11 11 0 1 0 11 11A11 11 0 0 0 12 1Zm4.707 14.293a1 1 0 1 1-1.414 1.414L12 13.414l-3.293 3.293a1 1 0 1 1-1.414-1.414L10.586 12 7.293 8.707a1 1 0 1 1 1.414-1.414L12 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414L13.414 12Z' style='fill:%237b7a7f'/%3E%3C/svg%3E") center / 18px no-repeat
 		cursor pointer
-	
-	&__cities-dropdown-block
-		position absolute
-		top 100%
-		left 0
 	
 	&__countries-select
 		width 325px
@@ -390,17 +367,6 @@
 		&:has(>.additional-filters__clear-link.hidden)
 			grid-template-columns 100%
 			justify-items end
-	
-	&__preloader-wrapper
-		position relative
-		width 120px
-		height 48px
-		
-	&__preloader
-		position absolute
-		top 0
-		right 0
-		bottom 0
 	
 	&__checkboxes-group,
 	&__radiobtns-group
