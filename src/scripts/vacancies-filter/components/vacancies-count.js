@@ -21,6 +21,9 @@ export class VacanciesCount {
     this.timeout = null;
     this.abortController = null;
     this.lastRequestKey = '';
+    this.lastResponse = null;
+    this.pendingRequestKey = '';
+    this.pendingRequest = null;
 
     this.buttons = [];
     this.loadingTimeout = null;
@@ -85,10 +88,32 @@ export class VacanciesCount {
     const requestKey = query;
 
     if (requestKey === this.lastRequestKey) {
+      if (this.lastResponse) {
+        this.render(this.lastResponse.label, this.lastResponse.count, options);
+        return;
+      }
+
+      if (this.pendingRequestKey === requestKey && this.pendingRequest) {
+        this.setLoading(true, options);
+
+        try {
+          await this.pendingRequest;
+
+          if (this.lastResponse) {
+            this.render(this.lastResponse.label, this.lastResponse.count, options);
+          }
+        } catch {
+          // The original request handler owns error reporting for this request.
+        } finally {
+          this.setLoading(false, options);
+        }
+      }
+
       return;
     }
 
     this.lastRequestKey = requestKey;
+    this.lastResponse = null;
 
     if (this.abortController) {
       this.abortController.abort();
@@ -103,33 +128,49 @@ export class VacanciesCount {
         ? `${this.endpoint}?${query}`
         : this.endpoint;
 
-      const response = await fetch(url, {
+      this.pendingRequestKey = requestKey;
+      this.pendingRequest = fetch(url, {
         headers: {
           Accept: 'application/json',
           'X-Requested-With': 'XMLHttpRequest'
         },
         signal: this.abortController.signal
-      });
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Vacancies count HTTP error: ${response.status}`);
+          }
 
-      if (!response.ok) {
-        throw new Error(`Vacancies count HTTP error: ${response.status}`);
-      }
+          return response.json();
+        })
+        .then((data) => {
+          const label =
+            data.label ||
+            data.text ||
+            data.count_text ||
+            data.vacancies_label ||
+            '';
 
-      const data = await response.json();
+          const count =
+            typeof data.count === 'number'
+              ? data.count
+              : typeof data.total === 'number'
+                ? data.total
+                : null;
 
-      const label =
-        data.label ||
-        data.text ||
-        data.count_text ||
-        data.vacancies_label ||
-        '';
+          const result = {
+            label,
+            count
+          };
 
-      const count =
-        typeof data.count === 'number'
-          ? data.count
-          : typeof data.total === 'number'
-            ? data.total
-            : null;
+          if (this.pendingRequestKey === requestKey) {
+            this.lastResponse = result;
+          }
+
+          return result;
+        });
+
+      const { label, count } = await this.pendingRequest;
 
       this.render(label, count, options);
     } catch (error) {
@@ -137,8 +178,17 @@ export class VacanciesCount {
         return;
       }
 
+      if (this.pendingRequestKey === requestKey) {
+        this.lastRequestKey = '';
+      }
+
       console.error('VacanciesCount failed:', error);
     } finally {
+      if (this.pendingRequestKey === requestKey) {
+        this.pendingRequestKey = '';
+        this.pendingRequest = null;
+      }
+
       this.setLoading(false, options);
     }
   }
