@@ -24,7 +24,22 @@ export class FancyboxIOSScrollLock {
     'paddingRight',
   ];
 
+  static isIOS() {
+    const ua = window.navigator.userAgent;
+
+    const isIOSDevice = /iPad|iPhone|iPod/.test(ua);
+    const isIPadOS =
+      navigator.platform === 'MacIntel' &&
+      navigator.maxTouchPoints > 1;
+
+    return isIOSDevice || isIPadOS;
+  }
+
   static lock() {
+    if (!this.isIOS()) {
+      return;
+    }
+
     this.lockCount += 1;
 
     if (this.locked) {
