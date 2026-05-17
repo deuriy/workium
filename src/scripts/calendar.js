@@ -3,7 +3,7 @@ export class Calendar {
     return element?._calendarInstance || null;
   }
 
-  static initAll(selector = '.js-calendar') {
+  static initAll(selector = '[data-calendar]') {
     document.querySelectorAll(selector).forEach(el => {
       if (!el._calendarInstance) {
         el._calendarInstance = new Calendar(el);
@@ -13,11 +13,20 @@ export class Calendar {
 
   constructor(root) {
     this.root = root;
-    this.field = root.querySelector('.js-calendar-field');
+    this.field = root.querySelector('[data-calendar-field]');
     this.overlay = root.querySelector('.calendar-overlay');
-    this.body = root.querySelector('.js-body');
-    this.title = root.querySelector('.js-title');
+    this.body = root.querySelector('.calendar__body');
+    this.title = root.querySelector('.calendar__title');
     this.hiddenInput = root.querySelector('.calendar__input');
+
+    this.applyBtn = root.querySelector('[data-apply-btn]');
+    this.clearBtn = root.querySelector('[data-clear-btn]');
+    this.cancelButtons = root.querySelectorAll('[data-cancel]');
+    this.accuracyButtons = root.querySelectorAll('[data-accuracy]');
+
+    this.overlayPlaceholder = document.createComment('calendar-overlay-placeholder');
+    this.overlayOriginalParent = this.overlay?.parentNode || null;
+    this.isOverlayMountedToBody = false;
 
     this.trans = JSON.parse(root.dataset.translations);
     this.months = this.trans.months_short;
@@ -43,6 +52,36 @@ export class Calendar {
     this.initFromHidden();
     this.init();
     root._calendarInstance = this;
+  }
+
+  mountOverlay() {
+    if (!this.overlay || this.isOverlayMountedToBody) return;
+
+    this.overlayOriginalParent = this.overlay.parentNode;
+
+    if (this.overlayOriginalParent) {
+      this.overlayOriginalParent.insertBefore(this.overlayPlaceholder, this.overlay);
+    }
+
+    document.body.appendChild(this.overlay);
+    document.documentElement.classList.add('calendar-overlay-open');
+    this.isOverlayMountedToBody = true;
+  }
+
+  unmountOverlay() {
+    if (!this.overlay || !this.isOverlayMountedToBody) return;
+
+    this.overlay.classList.remove('is-open');
+
+    if (this.overlayPlaceholder.parentNode) {
+      this.overlayPlaceholder.parentNode.insertBefore(this.overlay, this.overlayPlaceholder);
+      this.overlayPlaceholder.remove();
+    } else if (this.overlayOriginalParent) {
+      this.overlayOriginalParent.appendChild(this.overlay);
+    }
+
+    document.documentElement.classList.remove('calendar-overlay-open');
+    this.isOverlayMountedToBody = false;
   }
 
   initFromHidden() {
@@ -86,27 +125,29 @@ export class Calendar {
 
   init() {
     this.field.addEventListener('click', () => this.open());
-    this.root.querySelectorAll('.js-cancel')
-      .forEach(btn => btn.onclick = () => this.cancel());
+    this.cancelButtons.forEach(btn => {
+      btn.onclick = () => this.cancel();
+    });
 
-    this.root.querySelector('.js-apply')
-      .onclick = () => this.apply();
+    if (this.applyBtn) {
+      this.applyBtn.onclick = () => this.apply();
+    }
 
-    this.root.querySelector('.js-clear')
-      .onclick = () => this.clear();
+    if (this.clearBtn) {
+      this.clearBtn.onclick = () => this.clear();
+    }
 
-    this.root.querySelectorAll('[data-accuracy]')
-      .forEach(btn => {
-        btn.onclick = () => {
-          this.root.querySelectorAll('[data-accuracy]')
-            .forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          this.temp.accuracy = +btn.dataset.accuracy;
-          this.updateTitle();
-          this.updateHiddenInput();
-          this.dispatchChangeEvent();
-        };
-      });
+    this.accuracyButtons.forEach(btn => {
+      btn.onclick = () => {
+        this.root.querySelectorAll('[data-accuracy]')
+          .forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.temp.accuracy = +btn.dataset.accuracy;
+        this.updateTitle();
+        this.updateHiddenInput();
+        this.dispatchChangeEvent();
+      };
+    });
 
     // Close on overlay click
     this.overlay.addEventListener('click', (e) => {
@@ -136,20 +177,17 @@ export class Calendar {
 
     this.syncAccuracyButtons();
     this.toggleClearButton();
-
     this.updateHiddenInputFromState();
 
+    this.mountOverlay();
     this.overlay.classList.add('is-open');
-    document.body.style.overflow = 'hidden'; // блок скролла
 
     this.render();
-
     this.dispatchOpenEvent();
   }
 
   cancel() {
-    this.overlay.classList.remove('is-open');
-    document.body.style.overflow = '';
+    this.unmountOverlay();
 
     this.updateHiddenInputFromState();
 
@@ -161,13 +199,9 @@ export class Calendar {
     this.field.textContent = this.format(this.state);
 
     this.updateFieldState();
-
     this.updateHiddenInputFromState();
 
-    this.overlay.classList.remove('is-open');
-    document.body.style.overflow = '';
-
-    // this.updateHiddenInput();
+    this.unmountOverlay();
 
     this.dispatchApplyEvent();
   }
@@ -180,9 +214,15 @@ export class Calendar {
 
     this.updateHiddenInput();
 
-    this.root.querySelectorAll('[data-accuracy]')
-      .forEach(b => b.classList.remove('active'));
-    this.root.querySelector('[data-accuracy="0"]').classList.add('active');
+    this.accuracyButtons.forEach(b => {
+      b.classList.remove('active');
+    });
+
+    const exactBtn = [...this.accuracyButtons].find(
+      btn => btn.dataset.accuracy === '0'
+    );
+
+    exactBtn?.classList.add('active');
 
     this.render();
 
@@ -364,13 +404,12 @@ export class Calendar {
   }
 
   toggleClearButton() {
-    const clearBtn = this.root.querySelector('.js-clear');
+    if (!this.clearBtn) return;
 
-    if (this.temp.start) {
-      clearBtn.classList.add('is-visible');
-    } else {
-      clearBtn.classList.remove('is-visible');
-    }
+    this.clearBtn.classList.toggle(
+      'is-visible',
+      !!this.temp.start
+    );
   }
 
   updateFieldState() {
@@ -382,7 +421,7 @@ export class Calendar {
   }
 
   syncAccuracyButtons() {
-    const buttons = this.root.querySelectorAll('[data-accuracy]');
+    const buttons = this.accuracyButtons;
 
     buttons.forEach(btn => {
       btn.classList.toggle(
@@ -395,8 +434,8 @@ export class Calendar {
   getAccuracyLabel() {
     if (!this.temp.accuracy) return '';
 
-    const btn = this.root.querySelector(
-      `[data-accuracy="${this.temp.accuracy}"]`
+    const btn = [...this.accuracyButtons].find(
+      btn => +btn.dataset.accuracy === this.temp.accuracy
     );
 
     return btn ? btn.textContent.trim() : '';

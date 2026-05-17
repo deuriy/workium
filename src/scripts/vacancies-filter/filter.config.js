@@ -120,7 +120,7 @@ export const filterConfig = {
     {
       type: 'calendar-field',
       mode: 'auto',
-      selector: '.js-calendar',
+      selector: '[data-calendar]',
       keyFrom: 'data-filter-key'
     },
 

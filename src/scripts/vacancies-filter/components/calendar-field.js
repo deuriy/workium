@@ -6,7 +6,7 @@ export class CalendarField extends BaseFilterComponent {
     containerElement = null,
     containerSelector,
     filterKey,
-    calendarSelector = '.js-calendar',
+    calendarSelector = '[data-calendar]',
     hiddenInputSelector = '.calendar__input',
     clearButtonSelector = '[data-result-field-clear]'
   }) {
@@ -27,7 +27,7 @@ export class CalendarField extends BaseFilterComponent {
     this.hiddenInput = this.container.querySelector(this.hiddenInputSelector);
     this.clearButton = this.container.querySelector(clearButtonSelector);
     this.handleClearButtonClick = this.handleClearButtonClick.bind(this);
-    this.applyButton = this.container.querySelector('.js-apply');
+    this.applyButton = this.container.querySelector('[data-apply-btn]');
 
     this.calendar =
       Calendar.getInstance(this.container) || new Calendar(this.container);
