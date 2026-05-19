@@ -3,13 +3,6 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import PerfectScrollbar from 'perfect-scrollbar';
 
-// function copyText(input) {
-//   input.select();
-//   input.setSelectionRange(0, 99999);
-
-//   document.execCommand("copy");
-// }
-
 async function copyText(input) {
   try {
     await navigator.clipboard.writeText(input.value);
