@@ -328,6 +328,43 @@
 		@media $smPlus
 			margin-left -8px
 	
+	&__description-label
+		display inline-flex
+		margin-bottom 20px
+		padding 2px 12px
+		border-radius 16px
+		background #e3e0ff
+		color #000
+		font-size 13px
+
+		&--beige
+			background #fae0d3
+
+		&--green
+			background #b9d6ab
+
+		&--aqua
+			background #b2d1d9
+
+		&--salad
+			background #ade7e0
+
+		&--grey
+			background #c9d0d3
+	
+	&__liquid-glass-block
+		position sticky
+		z-index 100
+		top 80px
+	
+	&__promo-blocks
+		& + .vacancy-card__liquid-glass-block
+			margin -80px 0 15px 0
+	
+	&__title-wrapper
+		& + .vacancy-card__liquid-glass-block
+			margin 100px 0 -166px 0
+	
 	&__text
 		background var(--light)
 	
@@ -455,6 +492,9 @@
 	
 	&__salary
 		margin-bottom 4px
+
+		&--no-negative-margin
+			margin-left 0
 	
 	&__salary-with-info
 		margin-bottom 4px
@@ -463,6 +503,25 @@
 		@media $smPlus
 			margin-bottom 18px
 			margin-left -8px
+	
+	&__reward-wrapper
+		display flex
+		align-items center
+		gap 12px
+		margin-bottom 10px
+
+		.vacancy-card__salary-with-info,
+		.vacancy-card__salary,
+		.vacancy-card__footnote
+			margin-bottom 0
+		
+		.vacancy-card__salary,
+		.vacancy-card__footnote
+			@media $xs
+				font-size 15px
+		
+		.vacancy-card__footnote
+			align-items center
 	
 	&__promo-label
 		@media $smPlus
@@ -660,6 +719,9 @@
 			
 			@media $smPlus
 				margin-left -8px
+			
+			&--no-negative-margin
+				margin-left 0
 	
 	&--teaser
 		// @media $xs
@@ -761,6 +823,13 @@
 		.vacancy-card__promo-blocks
 			margin-bottom 30px
 			// margin-left 0
+
+			margin-top 0
+
+			@media $smPlus
+				margin-top 20px
+				margin-bottom 0
+				margin-left 0
 		
 		.vacancy-card__header
 			@media $xs
@@ -790,17 +859,14 @@
 				margin-left 0
 		
 		.vacancy-card__title-wrapper
-			// margin-bottom 24px
-			// margin-bottom 16px
 			margin-bottom 8px
 			margin-left -5px
+
+			@media $xs
+				margin-bottom 14px
 			
 			@media $smPlus
 				margin-left -8px
-		
-		// .vacancy-card__salary-per-month
-		// 	@media $xs
-		// 		margin-top 24px
 		
 		.vacancy-card__agency-wrapper
 			display none

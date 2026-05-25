@@ -1,0 +1,68 @@
+.liquid-glass-block
+  position relative
+  display flex
+  justify-content center
+  width 100%
+  border none
+  outline none
+  border-radius 1rem
+  font-weight 600
+  font-family var(--base-font)
+  background transparent
+  box-shadow 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1)
+  // transition all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2)
+  overflow hidden
+  @extend .transition
+
+  &__effect
+    position absolute
+    z-index 0
+    inset 0
+
+    // backdrop-filter blur(3px)
+    backdrop-filter blur(5px)
+    // filter url(#glass-distortion)
+    overflow hidden
+  
+  &__tint
+    z-index 1
+    position absolute
+    inset 0
+    background rgba(255, 255, 255, 0.50)
+  
+  &__shine
+    position absolute
+    inset 0
+    z-index 2
+
+    overflow hidden
+
+    box-shadow inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5), inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5)
+  
+  &__content
+    z-index 3
+    min-width 0
+    font-size 16px
+  
+  &__content-wrapper
+    display flex
+    align-items center
+    justify-content center
+    gap 8px
+    // border-radius 2rem
+    padding 0.6rem
+
+    // &:hover
+    //   padding 0.8rem
+    //   border-radius 2.5rem
+  
+  &__hourly-rate-wrapper
+    display flex
+    justify-content center
+    align-items center
+    gap 4px
+  
+  &__reward
+    font-weight 700
+    font-size 14px
+    color #4c8d50

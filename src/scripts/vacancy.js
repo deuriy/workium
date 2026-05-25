@@ -1,6 +1,6 @@
 import $ from "jquery";
 import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, EffectFade } from 'swiper/modules';
 import PerfectScrollbar from 'perfect-scrollbar';
 
 function getUrlWithoutParameter(param) {
@@ -67,7 +67,7 @@ function copyVacancyText() {
 //   $link.toggleClass('toggle-link--expanded');
 // }
 
-$(() => {
+document.addEventListener('DOMContentLoaded', function () {
   new Swiper('.vacancy-images-swiper__swiper', {
     modules: [Navigation],
     // loop: true,
@@ -90,14 +90,131 @@ $(() => {
     }
   });
 
-  if ($(window).width() < 768) {
+  // if ($(window).width() < 768) {
     let slidesCount = $('.promo-blocks-swiper .swiper-slide').length;
 
+    const agencyTermsSwiper = new Swiper('.agency-terms-swiper', {
+      // loop: true,
+      // modules: [EffectFade],
+      // effect: 'fade',
+      slidesPerView: 1,
+      allowTouchMove: false,
+      autoHeight: true,
+      // speed: 1
+    });
+
+    const salariesSwiper = new Swiper('.salaries-swiper', {
+      // loop: true,
+      // modules: [EffectFade],
+      // effect: 'fade',
+      // fadeEffect: {
+      //   crossFade: true  // ← обязательно!
+      // },
+      slidesPerView: 1,
+      allowTouchMove: false,
+      // speed: 1
+    });
+
+    // const rewardSwiper = new Swiper('.reward-swiper', {
+    //   // loop: true,
+    //   // modules: [EffectFade],
+    //   // effect: 'fade',
+    //   // fadeEffect: {
+    //   //   crossFade: true  // ← обязательно!
+    //   // },
+    //   slidesPerView: 1,
+    //   allowTouchMove: false,
+    //   // speed: 1
+    // });
+    
+    const rewardSwipers = [];
+    document.querySelectorAll('.reward-swiper').forEach(swiperEl => {
+      rewardSwipers.push(new Swiper(swiperEl, {
+        // loop: true,
+        // modules: [EffectFade],
+        // effect: 'fade',
+        // fadeEffect: {
+        //   crossFade: true  // ← обязательно!
+        // },
+        slidesPerView: 1,
+        allowTouchMove: false,
+        // speed: 1
+      }));
+    });
+
+    // const rewardSwiper = new Swiper('.reward-swiper', {
+    //   // loop: true,
+    //   // modules: [EffectFade],
+    //   // effect: 'fade',
+    //   // fadeEffect: {
+    //   //   crossFade: true  // ← обязательно!
+    //   // },
+    //   slidesPerView: 1,
+    //   allowTouchMove: false,
+    //   // speed: 1
+    // });
+
+    // // Вспомогательная функция: скрыть контент активного слайда свайпера
+    // function hideSlideContent(swiperInstance) {
+    //   const content = swiperInstance.slides[swiperInstance.activeIndex]?.querySelector('.agency-terms-swiper__slide-wrapper');
+    //   if (!content) return;
+    //   content.style.transition = 'opacity 0.5s ease';
+    //   content.style.opacity = '0';
+    // }
+
+    // // Вспомогательная функция: показать контент активного слайда свайпера
+    // function showSlideContent(swiperInstance) {
+    //   const content = swiperInstance.slides[swiperInstance.activeIndex]?.querySelector('.agency-terms-swiper__slide-wrapper');
+    //   if (!content) return;
+    //   content.style.transition = 'none';
+    //   content.style.opacity = '0';
+    //   requestAnimationFrame(() => {
+    //     requestAnimationFrame(() => {
+    //       content.style.transition = 'opacity 0.5s ease';
+    //       content.style.opacity = '1';
+    //     });
+    //   });
+    // }
+
+    function activateSlide(swiperInstance, targetIndex) {
+      const targetSlide = swiperInstance.slides[targetIndex];
+
+      swiperInstance.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+        checkbox.checked = false;
+      });
+
+      const activeCheckbox = targetSlide.querySelector('.checkbox__input');
+      if (activeCheckbox) {
+        activeCheckbox.checked = true;
+        activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      const agencyLink = targetSlide.querySelector('.promo-block__stretched-link--multiple-variants');
+      if (agencyLink) {
+        history.replaceState(null, '', agencyLink.getAttribute('href'));
+      }
+
+      // hideSlideContent(agencyTermsSwiper);
+      // hideSlideContent(salariesSwiper);
+
+      agencyTermsSwiper.slideTo(targetIndex, 500);
+      salariesSwiper.slideTo(targetIndex, 500);
+
+      rewardSwipers.forEach(swiper => swiper.slideTo(targetIndex, 500));
+      // rewardSwiper.slideTo(targetIndex, 500);
+
+      // setTimeout(() => {
+      //   showSlideContent(agencyTermsSwiper);
+      //   showSlideContent(salariesSwiper);
+      // }, 500);
+    }
+
     const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
-      modules: [Pagination],
+      modules: [Pagination, Navigation],
       // loop: true,
       slidesPerView: 'auto',
       centeredSlides: slidesCount < 2,
+      slideActiveClass: 'promo-blocks-swiper__slide--active',
       spaceBetween: 8,
 
       pagination: {
@@ -106,23 +223,109 @@ $(() => {
         // clickable: true
       },
 
+      navigation: {
+        nextEl: '.promo-blocks-swiper__next',
+        prevEl: '.promo-blocks-swiper__prev',
+        disabledClass: 'swiper-btn--disabled'
+      },
+
+      breakpoints: {
+        768: {
+          slidesPerView: 2.2,
+          spaceBetween: 16,
+          // centeredSlides: false
+        }
+      },
+
       on: {
-        slideChange: function () {
-          // Снимаем checked со всех радио кнопок в данном слайдере
-          const allCheckboxes = this.el.querySelectorAll('.checkbox__input');
-          allCheckboxes.forEach(checkbox => {
-            checkbox.checked = false;
-          });
+        click: function () {
+          const clickedIndex = this.clickedIndex;
+          if (clickedIndex === undefined) return;
 
-          // Устанавливаем checked для радио кнопки в активном слайде
-          const activeSlide = this.slides[this.activeIndex];
-          const activeCheckbox = activeSlide.querySelector('.checkbox__input');
-
-          if (activeCheckbox) {
-            activeCheckbox.checked = true;
-            // Триггерим событие change для обновления связанной логики
-            activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+          // Если индекс уже активный — всё равно выполняем логику переключения,
+          // так как на широких экранах slideChange может не сработать
+          if (clickedIndex !== this.activeIndex) {
+            this.slideTo(clickedIndex);
           }
+
+          activateSlide(this, clickedIndex);
+
+          // // slideChange не сработает если слайд уже активен или свайпер не прокручивается —
+          // // поэтому дублируем всю логику переключения здесь
+          // const targetIndex = clickedIndex;
+          // const targetSlide = this.slides[targetIndex];
+
+          // // Синхронизируем радио-кнопки
+          // this.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+          //   checkbox.checked = false;
+          // });
+          // const activeCheckbox = targetSlide.querySelector('.checkbox__input');
+          // if (activeCheckbox) {
+          //   activeCheckbox.checked = true;
+          //   activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+          // }
+
+          // // Обновляем URL
+          // const agencyLink = targetSlide.querySelector('.promo-block__stretched-link--multiple-variants');
+          // if (agencyLink) {
+          //   history.replaceState(null, '', agencyLink.getAttribute('href'));
+          // }
+
+          // // Анимация контента зависимых свайперов
+          // // hideSlideContent(agencyTermsSwiper);
+          // // hideSlideContent(salariesSwiper);
+
+          // agencyTermsSwiper.slideTo(targetIndex, 500);
+          // salariesSwiper.slideTo(targetIndex, 500);
+
+          // // setTimeout(() => {
+          // //   showSlideContent(agencyTermsSwiper);
+          // //   showSlideContent(salariesSwiper);
+          // // }, 500);
+        },
+
+        slideChange: function () {
+          activateSlide(this, this.activeIndex);
+          
+          // const targetIndex = this.activeIndex;
+
+          // // Снимаем checked со всех радио кнопок в данном слайдере
+          // this.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+          //   checkbox.checked = false;
+          // });
+
+          // // Устанавливаем checked для радио кнопки в активном слайде
+          // const activeSlide = this.slides[this.activeIndex];
+          // const activeCheckbox = activeSlide.querySelector('.checkbox__input');
+
+          // if (activeCheckbox) {
+          //   activeCheckbox.checked = true;
+          //   // Триггерим событие change для обновления связанной логики
+          //   activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+          // }
+
+          // // Обновляем URL по активному слайду
+          // const agencyLink = activeSlide.querySelector('.promo-block__stretched-link--multiple-variants');
+          // if (agencyLink) {
+          //   history.replaceState(null, '', agencyLink.getAttribute('href'));
+          // }
+
+          // agencyTermsSwiper.slideTo(this.activeIndex, 300);
+          // salariesSwiper.slideTo(this.activeIndex, 300);
+          // rewardSwiper.slideTo(this.activeIndex, 300);
+
+          // // 1. Скрываем контент в обоих зависимых свайперах
+          // // hideSlideContent(agencyTermsSwiper);
+          // // hideSlideContent(salariesSwiper);
+
+          // // 2. Ждём окончания fade-out (0.5с), затем меняем слайды и показываем новый контент
+          // // setTimeout(() => {
+          // //   agencyTermsSwiper.slideTo(targetIndex, 200);
+          // //   salariesSwiper.slideTo(targetIndex, 200);
+
+          // //   showSlideContent(agencyTermsSwiper);
+          // //   showSlideContent(salariesSwiper);
+          // // }, 200);
         }
       }
     });
@@ -137,7 +340,64 @@ $(() => {
     if (promoBlocksSwiper.slides.length === 1) {
       $(promoBlocksSwiper.pagination.el).hide();
     }
-  }
+
+    // ─── Установить URL по активному слайду при загрузке страницы ────────────
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const agencyIdFromUrl = urlParams.get('at');
+
+    let initialIndex = promoBlocksSwiper.activeIndex;
+
+    if (agencyIdFromUrl) {
+      // Ищем слайд с нужным data-agency-id
+      const matchedSlide = [...promoBlocksSwiper.slides].find(slide => {
+        const promoBlock = slide.querySelector('.promo-block[data-agency-id]');
+        return promoBlock?.dataset.agencyId === agencyIdFromUrl;
+      });
+
+      if (matchedSlide) {
+        initialIndex = promoBlocksSwiper.slides.indexOf(matchedSlide);
+
+        // Переключаем все три свайпера на нужный индекс
+        promoBlocksSwiper.slideTo(initialIndex, 0);
+        agencyTermsSwiper.slideTo(initialIndex, 0);
+        salariesSwiper.slideTo(initialIndex, 0);
+
+        // Синхронизируем радио-кнопки
+        promoBlocksSwiper.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        const activeCheckbox = matchedSlide.querySelector('.checkbox__input');
+        if (activeCheckbox) {
+          activeCheckbox.checked = true;
+          activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+    }
+
+    // Устанавливаем финальный URL (с правильным ?at=)
+    const activeSlideOnLoad = promoBlocksSwiper.slides[initialIndex];
+    const activeLinkOnLoad = activeSlideOnLoad?.querySelector('.promo-block__stretched-link--multiple-variants');
+    if (activeLinkOnLoad) {
+      history.replaceState(null, '', activeLinkOnLoad.getAttribute('href'));
+    }
+
+    // const initialSlide = promoBlocksSwiper.slides[promoBlocksSwiper.activeIndex];
+    // const initialLink = initialSlide?.querySelector('.promo-block__stretched-link--multiple-variants');
+    // if (initialLink) {
+    //   history.replaceState(null, '', initialLink.getAttribute('href'));
+    // }
+
+    // ─── Перехватываем клики на ссылки агентств ───────────────────────────────
+
+    document.addEventListener('click', function (e) {
+      const link = e.target.closest('.promo-block__stretched-link--multiple-variants');
+      if (!link) return;
+
+      e.preventDefault();
+      history.replaceState(null, '', link.getAttribute('href'));
+    });
+  // }
 
   // $('.infoblock__more-link').click(function (e) {
   //   $(this).closest('.infoblock').find('.infoblock__text').toggleClass('infoblock__text--truncated');
@@ -193,8 +453,6 @@ $(() => {
   });
 
   // $('.fancybox-popup__show-contacts-btn').click(function(e) {
-  //   console.log('mowmefmw');
-
   //   let $fancyboxPopup = $(this).closest('.fancybox-popup');
 
   //   $(this).slideUp();
@@ -281,30 +539,30 @@ $(() => {
     e.preventDefault();
   });
 
-  if ($(window).width() < 768) {
-    document.querySelectorAll('.employment-variants-swiper:not(.swiper-initialized)').forEach(item => {
-      let slidesCount = $(item).find('.swiper-slide').length;
+  // if ($(window).width() < 768) {
+  //   document.querySelectorAll('.employment-variants-swiper:not(.swiper-initialized)').forEach(item => {
+  //     let slidesCount = $(item).find('.swiper-slide').length;
 
-      const promoBlocksSwiper = new Swiper(item, {
-        modules: [Pagination],
-        // loop: true,
-        slidesPerView: 'auto',
-        centeredSlides: slidesCount < 2,
-        spaceBetween: 15,
-        slideActiveClass: 'employment-variants-swiper__slide--active',
+  //     const promoBlocksSwiper = new Swiper(item, {
+  //       modules: [Pagination],
+  //       // loop: true,
+  //       slidesPerView: 'auto',
+  //       centeredSlides: slidesCount < 2,
+  //       spaceBetween: 15,
+  //       slideActiveClass: 'employment-variants-swiper__slide--active',
 
-        pagination: {
-          el: '.employment-variants-swiper__pagination',
-          bulletActiveClass: 'swiper-pagination-bullet--active',
-          // clickable: true
-        },
-      });
+  //       pagination: {
+  //         el: '.employment-variants-swiper__pagination',
+  //         bulletActiveClass: 'swiper-pagination-bullet--active',
+  //         // clickable: true
+  //       },
+  //     });
 
-      if (promoBlocksSwiper.slides.length === 1) {
-        $(promoBlocksSwiper.pagination.el).hide();
-      }
-    });
-  }
+  //     if (promoBlocksSwiper.slides.length === 1) {
+  //       $(promoBlocksSwiper.pagination.el).hide();
+  //     }
+  //   });
+  // }
 
   const vacancyButtonsPanel = document.querySelectorAll('.vacancy-buttons-panel');
   for (const panel of vacancyButtonsPanel) {
@@ -407,7 +665,57 @@ $(() => {
     true // захват, чтобы событие точно словилось
   );
 
-  // Инициализация состояния при загрузке
-  document.querySelectorAll('.rating-popup').forEach(updateMobileHeaderState);
-
 });
+
+(function () {
+  'use strict';
+ 
+  var MOBILE_BREAKPOINT = 767;
+ 
+  function getScrollContainer() {
+    // Укажите точный селектор вашего wrapper-контейнера
+    return document.querySelector('.wrapper'); // ← замените на актуальный селектор
+  }
+ 
+  function initVacancyBlockVisibility() {
+    if (window.innerWidth > MOBILE_BREAKPOINT) return;
+ 
+    var block = document.querySelector('.vacancy-card__liquid-glass-block');
+    if (!block) return;
+ 
+    var scrollContainer = getScrollContainer();
+    if (!scrollContainer) return;
+ 
+    function update() {
+      // getBoundingClientRect() всегда относительно вьюпорта (окна браузера),
+      // даже если скролл внутри контейнера — это нам и нужно
+      console.log('update vacancy block visibility');
+      var rect = block.getBoundingClientRect();
+ 
+      if (rect.top <= 80) {
+        block.classList.remove('invisible');
+      } else {
+        block.classList.add('invisible');
+      }
+    }
+ 
+    scrollContainer.addEventListener('scroll', update, { passive: true });
+    update(); // установить начальное состояние
+  }
+ 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVacancyBlockVisibility);
+  } else {
+    initVacancyBlockVisibility();
+  }
+
+  document.addEventListener('click', function(event) {
+    if (event.target.closest('[data-scroll-top]')) {
+      const wrapper = document.querySelector('.wrapper');
+
+      wrapper.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  });
+})();

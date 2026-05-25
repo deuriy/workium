@@ -1,6 +1,6 @@
 .vacancy-buttons-panel
   display flex
-  flex-wrap wrap
+  // flex-wrap wrap
   gap 12px
   padding 16px
   background #FFFFFF
@@ -8,8 +8,17 @@
   border-radius 12px
   
   &__btn,
-  &__bookmark-icon
+  &__bookmark-icon,
+  &__copy-btn
     flex-shrink 0
+  
+  &__btn
+    &:first-child
+      flex-shrink 1
+    
+    &.btn-default--promo-blocks
+      @media $smPlus
+        padding 15px 12px
   
   &__bookmark-icon
     align-self center

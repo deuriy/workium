@@ -207,16 +207,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  $('.btn-filter--scroll-top, .btn-scroll-top').on('click', function (event) {
-    $wrapper.animate({
-      scrollTop: 0
-    }, 0);
-
-    $('html, body').animate({
-      scrollTop: 0
-    }, 0);
+  document.addEventListener('click', function(event) {
+    if (event.target.closest('[data-scroll-top]')) {
+      const wrapper = document.querySelector('.wrapper');
+      
+      wrapper.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
   });
 
+  // $('[data-scroll-top]').on('click', function (event) {
+  //   $wrapper.animate({
+  //     scrollTop: 0
+  //   }, 0);
+
+  //   $('html, body').animate({
+  //     scrollTop: 0
+  //   }, 0);
+  // });
 
 
   $(document).on('click', '.vacancy-card__copy-btn', function (event) {

@@ -28,6 +28,12 @@
 		font-size 14px
 		// color #666B80
 		color #555a6d
+
+		@media $smPlus
+			// top -27px
+			top -33px
+			right 2px
+			font-size 13px
 	
 	&__company
 		position absolute
@@ -62,6 +68,10 @@
 			
 			.promo-blocks-swiper__item
 				height 100%
+	
+	&--working-conditions-full-vacancy
+		@media $smPlus
+			padding 30px 24px
 	
 	&--working-conditions-single-item
 		@media $xs
