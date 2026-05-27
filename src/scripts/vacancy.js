@@ -194,13 +194,15 @@ document.addEventListener('DOMContentLoaded', function () {
         history.replaceState(null, '', agencyLink.getAttribute('href'));
       }
 
+      let speed = window.innerWidth < 768 ? 200 : 500;
+
       // hideSlideContent(agencyTermsSwiper);
       // hideSlideContent(salariesSwiper);
 
-      agencyTermsSwiper.slideTo(targetIndex, 500);
-      salariesSwiper.slideTo(targetIndex, 500);
+      agencyTermsSwiper.slideTo(targetIndex, speed);
+      salariesSwiper.slideTo(targetIndex, speed);
 
-      rewardSwipers.forEach(swiper => swiper.slideTo(targetIndex, 500));
+      rewardSwipers.forEach(swiper => swiper.slideTo(targetIndex, speed));
       // rewardSwiper.slideTo(targetIndex, 500);
 
       // setTimeout(() => {
