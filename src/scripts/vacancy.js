@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           // Если индекс уже активный — всё равно выполняем логику переключения,
           // так как на широких экранах slideChange может не сработать
-          if (clickedIndex !== this.activeIndex) {
+          if (window.innerWidth < 768 && clickedIndex !== this.activeIndex) {
             this.slideTo(clickedIndex);
           }
 
