@@ -430,9 +430,21 @@
 			.promo-block__additional-info
 				margin-bottom 0
 				// gap 4px 12px
-				flex-direction column
-				align-items start
+
+				display grid
+				grid-template-columns 1fr auto
+				grid-template-areas "bonus rating" "period rating"
+				justify-self stretch
+				// flex-direction column
+				// align-items start
 				gap 4px 8px
+			
+			.promo-block__rating-block
+				grid-area rating
+			
+			.promo-block__footnote
+				grid-area period
+				justify-self start
 	
 	&--business-pricing
 		@media $md

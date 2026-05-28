@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       breakpoints: {
         768: {
-          slidesPerView: 2.2,
+          slidesPerView: 2.3,
           spaceBetween: 16,
           // centeredSlides: false
         }
