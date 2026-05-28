@@ -142,6 +142,18 @@ document.addEventListener('DOMContentLoaded', function () {
       }));
     });
 
+    const fancyboxPopupSwipers = [];
+    document.querySelectorAll('.fancybox-popup-swiper').forEach(swiperEl => {
+      fancyboxPopupSwipers.push(new Swiper(swiperEl, {
+        // loop: true,
+        // modules: [EffectFade],
+        // effect: 'fade',
+        slidesPerView: 1,
+        allowTouchMove: false
+        // speed: 1
+      }));
+    });
+
     // const rewardSwiper = new Swiper('.reward-swiper', {
     //   // loop: true,
     //   // modules: [EffectFade],
@@ -203,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
       salariesSwiper.slideTo(targetIndex, speed);
 
       rewardSwipers.forEach(swiper => swiper.slideTo(targetIndex, speed));
+      fancyboxPopupSwipers.forEach(swiper => swiper.slideTo(targetIndex, speed));
       // rewardSwiper.slideTo(targetIndex, 500);
 
       // setTimeout(() => {
@@ -364,6 +377,9 @@ document.addEventListener('DOMContentLoaded', function () {
         promoBlocksSwiper.slideTo(initialIndex, 0);
         agencyTermsSwiper.slideTo(initialIndex, 0);
         salariesSwiper.slideTo(initialIndex, 0);
+
+        rewardSwipers.forEach(swiper => swiper.slideTo(initialIndex, 0));
+        fancyboxPopupSwipers.forEach(swiper => swiper.slideTo(initialIndex, 0));
 
         // Синхронизируем радио-кнопки
         promoBlocksSwiper.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
