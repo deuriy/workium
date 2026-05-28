@@ -116,6 +116,7 @@ export class FilterController {
 
     this.toggleClearFilterButtons(serialized);
     this.syncTags(serialized);
+    this.updateCountBadges(serialized);
 
     // NEW: первичная загрузка городов при старте страницы
     this.syncCitiesOptions();
@@ -534,8 +535,8 @@ export class FilterController {
     const urlFilters = this.serializeForUrl(serialized);
 
     this.toggleClearFilterButtons(serialized);
-
     this.syncTags(serialized);
+    this.updateCountBadges(serialized);
 
     if (this.syncUrl) {
       UrlSync.write(urlFilters, {
@@ -687,6 +688,27 @@ export class FilterController {
 
     this.clearFilterButtons.forEach((button) => {
       button.classList.toggle('hidden', !hasSelected);
+    });
+  }
+
+  updateCountBadges(filters = this.serialize()) {
+    const badges = document.querySelectorAll('.btn-white__count');
+
+    if (!badges.length) {
+      return;
+    }
+
+    const totalCount = Object.entries(filters).reduce((sum, [key, values]) => {
+      if (this.shouldIgnoreFilterInSelectedState(key, values)) {
+        return sum;
+      }
+
+      return sum + (Array.isArray(values) ? values.length : 0);
+    }, 0);
+
+    badges.forEach((badge) => {
+      badge.textContent = totalCount;
+      badge.classList.toggle('hidden', totalCount === 0);
     });
   }
 
