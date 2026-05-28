@@ -224,6 +224,22 @@ document.addEventListener('DOMContentLoaded', function () {
       // }, 500);
     }
 
+    let isNavClick = false;
+
+    const nextBtn = document.querySelector('.promo-blocks-swiper__next-btn');
+    const prevBtn = document.querySelector('.promo-blocks-swiper__prev-btn');
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (window.innerWidth >= 768) isNavClick = true;
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (window.innerWidth >= 768) isNavClick = true;
+      });
+    }
+
     const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
       modules: [Pagination, Navigation],
       // loop: true,
@@ -239,8 +255,8 @@ document.addEventListener('DOMContentLoaded', function () {
       },
 
       navigation: {
-        nextEl: '.promo-blocks-swiper__next',
-        prevEl: '.promo-blocks-swiper__prev',
+        nextEl: '.promo-blocks-swiper__next-btn',
+        prevEl: '.promo-blocks-swiper__prev-btn',
         disabledClass: 'swiper-btn--disabled'
       },
 
@@ -300,6 +316,11 @@ document.addEventListener('DOMContentLoaded', function () {
         },
 
         slideChange: function () {
+          if (isNavClick) {
+            isNavClick = false;
+            return;
+          }
+
           activateSlide(this, this.activeIndex);
           
           // const targetIndex = this.activeIndex;

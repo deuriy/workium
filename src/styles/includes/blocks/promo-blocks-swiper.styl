@@ -50,6 +50,58 @@
 		font-weight 700
 		font-size 13px
 	
+	&__prev-btn,
+	&__next-btn
+		position absolute
+		z-index 10
+		top 28px
+		bottom 50px
+		width 32px
+		margin auto
+		border none
+		outline none
+		background var(--light)
+		cursor pointer
+		@extend .transition
+
+		&::after
+			content ''
+			position absolute
+			top 0
+			bottom 0
+			background #fff
+			filter blur(20px)
+		
+		svg
+			position relative
+			z-index 1
+
+			path
+				@extend .transition
+		
+		&:hover
+			svg
+				path
+					fill var(--accent)
+		
+		&.swiper-btn--disabled
+			opacity 0
+			visibility hidden
+	
+	&__prev-btn
+		left 0
+
+		&::after
+			right -38px
+			left -8px
+	
+	&__next-btn
+		right 0
+
+		&::after
+			right -18px
+			left -40px
+	
 	&--working-conditions
 		@media $xs
 			margin-top -42px
