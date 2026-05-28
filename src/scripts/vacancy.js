@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
       slidesPerView: 'auto',
       centeredSlides: slidesCount < 2,
       slideActiveClass: 'promo-blocks-swiper__slide--active',
-      spaceBetween: 8,
+      spaceBetween: 16,
 
       pagination: {
         el: '.promo-blocks-swiper__pagination',
