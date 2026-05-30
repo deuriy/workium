@@ -401,6 +401,22 @@
 	&--working-conditions-full-vacancy
 		cursor pointer
 
+		.promo-block__additional-info
+			display grid
+			grid-template-columns 1fr auto
+			grid-template-areas "bonus rating" "period period"
+			justify-self stretch
+			margin-bottom 0
+			
+		.promo-block__rating-block
+			grid-area rating
+			align-self center
+			margin-bottom 0
+		
+		.promo-block__footnote
+			grid-area period
+			justify-self start
+
 		@media $xs
 			padding 12px 16px 12px 14px
 
@@ -409,16 +425,6 @@
 			
 			.promo-block__checkbox
 				margin-top 3px
-
-			.promo-block__additional-info
-				display grid
-				grid-template-columns 1fr auto
-				grid-template-areas "bonus rating" "period rating"
-				justify-self stretch
-				margin-bottom 0
-			
-			.promo-block__rating-block
-				grid-area rating
 			
 			.promo-block__footnote
 				grid-area period
@@ -429,9 +435,6 @@
 
 			.promo-block__additional-info
 				margin-bottom 0
-				// gap 4px 12px
-				flex-direction column
-				align-items start
 				gap 4px 8px
 	
 	&--business-pricing
