@@ -91,19 +91,45 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // if ($(window).width() < 768) {
-    let slidesCount = $('.promo-blocks-swiper .swiper-slide').length;
+  let slidesCount = $('.promo-blocks-swiper .swiper-slide').length;
 
-    const agencyTermsSwiper = new Swiper('.agency-terms-swiper', {
-      // loop: true,
-      // modules: [EffectFade],
-      // effect: 'fade',
-      slidesPerView: 1,
-      allowTouchMove: false,
-      autoHeight: true,
-      // speed: 1
-    });
+  const agencyTermsSwiper = new Swiper('.agency-terms-swiper', {
+    // loop: true,
+    // modules: [EffectFade],
+    // effect: 'fade',
+    slidesPerView: 1,
+    allowTouchMove: false,
+    autoHeight: true,
+    // speed: 1
+  });
 
-    const salariesSwiper = new Swiper('.salaries-swiper', {
+  const salariesSwiper = new Swiper('.salaries-swiper', {
+    // loop: true,
+    // modules: [EffectFade],
+    // effect: 'fade',
+    // fadeEffect: {
+    //   crossFade: true  // ← обязательно!
+    // },
+    slidesPerView: 1,
+    allowTouchMove: false,
+    // speed: 1
+  });
+
+  // const rewardSwiper = new Swiper('.reward-swiper', {
+  //   // loop: true,
+  //   // modules: [EffectFade],
+  //   // effect: 'fade',
+  //   // fadeEffect: {
+  //   //   crossFade: true  // ← обязательно!
+  //   // },
+  //   slidesPerView: 1,
+  //   allowTouchMove: false,
+  //   // speed: 1
+  // });
+
+  const rewardSwipers = [];
+  document.querySelectorAll('.reward-swiper').forEach(swiperEl => {
+    rewardSwipers.push(new Swiper(swiperEl, {
       // loop: true,
       // modules: [EffectFade],
       // effect: 'fade',
@@ -113,329 +139,303 @@ document.addEventListener('DOMContentLoaded', function () {
       slidesPerView: 1,
       allowTouchMove: false,
       // speed: 1
+    }));
+  });
+
+  const fancyboxPopupSwipers = [];
+  document.querySelectorAll('.fancybox-popup-swiper').forEach(swiperEl => {
+    fancyboxPopupSwipers.push(new Swiper(swiperEl, {
+      // loop: true,
+      // modules: [EffectFade],
+      // effect: 'fade',
+      slidesPerView: 1,
+      allowTouchMove: false
+      // speed: 1
+    }));
+  });
+
+  // const rewardSwiper = new Swiper('.reward-swiper', {
+  //   // loop: true,
+  //   // modules: [EffectFade],
+  //   // effect: 'fade',
+  //   // fadeEffect: {
+  //   //   crossFade: true  // ← обязательно!
+  //   // },
+  //   slidesPerView: 1,
+  //   allowTouchMove: false,
+  //   // speed: 1
+  // });
+
+  // // Вспомогательная функция: скрыть контент активного слайда свайпера
+  // function hideSlideContent(swiperInstance) {
+  //   const content = swiperInstance.slides[swiperInstance.activeIndex]?.querySelector('.agency-terms-swiper__slide-wrapper');
+  //   if (!content) return;
+  //   content.style.transition = 'opacity 0.5s ease';
+  //   content.style.opacity = '0';
+  // }
+
+  // // Вспомогательная функция: показать контент активного слайда свайпера
+  // function showSlideContent(swiperInstance) {
+  //   const content = swiperInstance.slides[swiperInstance.activeIndex]?.querySelector('.agency-terms-swiper__slide-wrapper');
+  //   if (!content) return;
+  //   content.style.transition = 'none';
+  //   content.style.opacity = '0';
+  //   requestAnimationFrame(() => {
+  //     requestAnimationFrame(() => {
+  //       content.style.transition = 'opacity 0.5s ease';
+  //       content.style.opacity = '1';
+  //     });
+  //   });
+  // }
+
+  function activateSlide(swiperInstance, targetIndex) {
+    const targetSlide = swiperInstance.slides[targetIndex];
+
+    swiperInstance.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+      checkbox.checked = false;
     });
 
-    // const rewardSwiper = new Swiper('.reward-swiper', {
-    //   // loop: true,
-    //   // modules: [EffectFade],
-    //   // effect: 'fade',
-    //   // fadeEffect: {
-    //   //   crossFade: true  // ← обязательно!
-    //   // },
-    //   slidesPerView: 1,
-    //   allowTouchMove: false,
-    //   // speed: 1
-    // });
-    
-    const rewardSwipers = [];
-    document.querySelectorAll('.reward-swiper').forEach(swiperEl => {
-      rewardSwipers.push(new Swiper(swiperEl, {
-        // loop: true,
-        // modules: [EffectFade],
-        // effect: 'fade',
-        // fadeEffect: {
-        //   crossFade: true  // ← обязательно!
-        // },
-        slidesPerView: 1,
-        allowTouchMove: false,
-        // speed: 1
-      }));
+    const activeCheckbox = targetSlide.querySelector('.checkbox__input');
+    if (activeCheckbox) {
+      activeCheckbox.checked = true;
+      activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    const agencyLink = targetSlide.querySelector('.promo-block__stretched-link--multiple-variants');
+    if (agencyLink) {
+      history.replaceState(null, '', agencyLink.getAttribute('href'));
+    }
+
+    let speed = window.innerWidth < 768 ? 200 : 500;
+
+    // hideSlideContent(agencyTermsSwiper);
+    // hideSlideContent(salariesSwiper);
+
+    agencyTermsSwiper.slideTo(targetIndex, speed);
+    salariesSwiper.slideTo(targetIndex, speed);
+
+    rewardSwipers.forEach(swiper => swiper.slideTo(targetIndex, speed));
+    fancyboxPopupSwipers.forEach(swiper => swiper.slideTo(targetIndex, speed));
+    // rewardSwiper.slideTo(targetIndex, 500);
+
+    // setTimeout(() => {
+    //   showSlideContent(agencyTermsSwiper);
+    //   showSlideContent(salariesSwiper);
+    // }, 500);
+  }
+
+  let isNavClick = false;
+
+  const nextBtn = document.querySelector('.promo-blocks-swiper__next-btn');
+  const prevBtn = document.querySelector('.promo-blocks-swiper__prev-btn');
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (window.innerWidth >= 768) isNavClick = true;
+    });
+  }
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (window.innerWidth >= 768) isNavClick = true;
+    });
+  }
+
+  const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
+    modules: [Pagination, Navigation],
+    // loop: true,
+    slidesPerView: 'auto',
+    centeredSlides: slidesCount < 2,
+    slideActiveClass: 'promo-blocks-swiper__slide--active',
+    spaceBetween: 16,
+
+    pagination: {
+      el: '.promo-blocks-swiper__pagination',
+      bulletActiveClass: 'swiper-pagination-bullet--active',
+      // clickable: true
+    },
+
+    navigation: {
+      nextEl: '.promo-blocks-swiper__next-btn',
+      prevEl: '.promo-blocks-swiper__prev-btn',
+      disabledClass: 'swiper-btn--disabled'
+    },
+
+    breakpoints: {
+      768: {
+        slidesPerView: 2.3,
+        spaceBetween: 16,
+        // centeredSlides: false
+      }
+    },
+
+    on: {
+      click: function () {
+        const clickedIndex = this.clickedIndex;
+        if (clickedIndex === undefined) return;
+
+        // Если индекс уже активный — всё равно выполняем логику переключения,
+        // так как на широких экранах slideChange может не сработать
+        if (window.innerWidth < 768 && clickedIndex !== this.activeIndex) {
+          this.slideTo(clickedIndex);
+        }
+
+        activateSlide(this, clickedIndex);
+
+        // // slideChange не сработает если слайд уже активен или свайпер не прокручивается —
+        // // поэтому дублируем всю логику переключения здесь
+        // const targetIndex = clickedIndex;
+        // const targetSlide = this.slides[targetIndex];
+
+        // // Синхронизируем радио-кнопки
+        // this.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+        //   checkbox.checked = false;
+        // });
+        // const activeCheckbox = targetSlide.querySelector('.checkbox__input');
+        // if (activeCheckbox) {
+        //   activeCheckbox.checked = true;
+        //   activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        // }
+
+        // // Обновляем URL
+        // const agencyLink = targetSlide.querySelector('.promo-block__stretched-link--multiple-variants');
+        // if (agencyLink) {
+        //   history.replaceState(null, '', agencyLink.getAttribute('href'));
+        // }
+
+        // // Анимация контента зависимых свайперов
+        // // hideSlideContent(agencyTermsSwiper);
+        // // hideSlideContent(salariesSwiper);
+
+        // agencyTermsSwiper.slideTo(targetIndex, 500);
+        // salariesSwiper.slideTo(targetIndex, 500);
+
+        // // setTimeout(() => {
+        // //   showSlideContent(agencyTermsSwiper);
+        // //   showSlideContent(salariesSwiper);
+        // // }, 500);
+      },
+
+      slideChange: function () {
+        if (isNavClick) {
+          isNavClick = false;
+          return;
+        }
+
+        activateSlide(this, this.activeIndex);
+
+        // const targetIndex = this.activeIndex;
+
+        // // Снимаем checked со всех радио кнопок в данном слайдере
+        // this.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+        //   checkbox.checked = false;
+        // });
+
+        // // Устанавливаем checked для радио кнопки в активном слайде
+        // const activeSlide = this.slides[this.activeIndex];
+        // const activeCheckbox = activeSlide.querySelector('.checkbox__input');
+
+        // if (activeCheckbox) {
+        //   activeCheckbox.checked = true;
+        //   // Триггерим событие change для обновления связанной логики
+        //   activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        // }
+
+        // // Обновляем URL по активному слайду
+        // const agencyLink = activeSlide.querySelector('.promo-block__stretched-link--multiple-variants');
+        // if (agencyLink) {
+        //   history.replaceState(null, '', agencyLink.getAttribute('href'));
+        // }
+
+        // agencyTermsSwiper.slideTo(this.activeIndex, 300);
+        // salariesSwiper.slideTo(this.activeIndex, 300);
+        // rewardSwiper.slideTo(this.activeIndex, 300);
+
+        // // 1. Скрываем контент в обоих зависимых свайперах
+        // // hideSlideContent(agencyTermsSwiper);
+        // // hideSlideContent(salariesSwiper);
+
+        // // 2. Ждём окончания fade-out (0.5с), затем меняем слайды и показываем новый контент
+        // // setTimeout(() => {
+        // //   agencyTermsSwiper.slideTo(targetIndex, 200);
+        // //   salariesSwiper.slideTo(targetIndex, 200);
+
+        // //   showSlideContent(agencyTermsSwiper);
+        // //   showSlideContent(salariesSwiper);
+        // // }, 200);
+      }
+    }
+  });
+
+  if (promoBlocksSwiper.slides.length > 1) {
+    let activePromoBlock = promoBlocksSwiper.el.querySelector('.promo-block--active');
+    let promoBlockIndex = $(activePromoBlock).closest('.swiper-slide').index();
+
+    promoBlocksSwiper.slideTo(promoBlockIndex, 0);
+  }
+
+  if (promoBlocksSwiper.slides.length === 1) {
+    $(promoBlocksSwiper.pagination.el).hide();
+  }
+
+  // ─── Установить URL по активному слайду при загрузке страницы ────────────
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const agencyIdFromUrl = urlParams.get('at');
+
+  let initialIndex = promoBlocksSwiper.activeIndex;
+
+  if (agencyIdFromUrl) {
+    // Ищем слайд с нужным data-agency-id
+    const matchedSlide = [...promoBlocksSwiper.slides].find(slide => {
+      const promoBlock = slide.querySelector('.promo-block[data-agency-id]');
+      return promoBlock?.dataset.agencyId === agencyIdFromUrl;
     });
 
-    const fancyboxPopupSwipers = [];
-    document.querySelectorAll('.fancybox-popup-swiper').forEach(swiperEl => {
-      fancyboxPopupSwipers.push(new Swiper(swiperEl, {
-        // loop: true,
-        // modules: [EffectFade],
-        // effect: 'fade',
-        slidesPerView: 1,
-        allowTouchMove: false
-        // speed: 1
-      }));
-    });
+    if (matchedSlide) {
+      initialIndex = promoBlocksSwiper.slides.indexOf(matchedSlide);
 
-    // const rewardSwiper = new Swiper('.reward-swiper', {
-    //   // loop: true,
-    //   // modules: [EffectFade],
-    //   // effect: 'fade',
-    //   // fadeEffect: {
-    //   //   crossFade: true  // ← обязательно!
-    //   // },
-    //   slidesPerView: 1,
-    //   allowTouchMove: false,
-    //   // speed: 1
-    // });
+      // Переключаем все три свайпера на нужный индекс
+      promoBlocksSwiper.slideTo(initialIndex, 0);
+      agencyTermsSwiper.slideTo(initialIndex, 0);
+      salariesSwiper.slideTo(initialIndex, 0);
 
-    // // Вспомогательная функция: скрыть контент активного слайда свайпера
-    // function hideSlideContent(swiperInstance) {
-    //   const content = swiperInstance.slides[swiperInstance.activeIndex]?.querySelector('.agency-terms-swiper__slide-wrapper');
-    //   if (!content) return;
-    //   content.style.transition = 'opacity 0.5s ease';
-    //   content.style.opacity = '0';
-    // }
+      rewardSwipers.forEach(swiper => swiper.slideTo(initialIndex, 0));
+      fancyboxPopupSwipers.forEach(swiper => swiper.slideTo(initialIndex, 0));
 
-    // // Вспомогательная функция: показать контент активного слайда свайпера
-    // function showSlideContent(swiperInstance) {
-    //   const content = swiperInstance.slides[swiperInstance.activeIndex]?.querySelector('.agency-terms-swiper__slide-wrapper');
-    //   if (!content) return;
-    //   content.style.transition = 'none';
-    //   content.style.opacity = '0';
-    //   requestAnimationFrame(() => {
-    //     requestAnimationFrame(() => {
-    //       content.style.transition = 'opacity 0.5s ease';
-    //       content.style.opacity = '1';
-    //     });
-    //   });
-    // }
-
-    function activateSlide(swiperInstance, targetIndex) {
-      const targetSlide = swiperInstance.slides[targetIndex];
-
-      swiperInstance.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
+      // Синхронизируем радио-кнопки
+      promoBlocksSwiper.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
         checkbox.checked = false;
       });
-
-      const activeCheckbox = targetSlide.querySelector('.checkbox__input');
+      const activeCheckbox = matchedSlide.querySelector('.checkbox__input');
       if (activeCheckbox) {
         activeCheckbox.checked = true;
         activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
       }
-
-      const agencyLink = targetSlide.querySelector('.promo-block__stretched-link--multiple-variants');
-      if (agencyLink) {
-        history.replaceState(null, '', agencyLink.getAttribute('href'));
-      }
-
-      let speed = window.innerWidth < 768 ? 200 : 500;
-
-      // hideSlideContent(agencyTermsSwiper);
-      // hideSlideContent(salariesSwiper);
-
-      agencyTermsSwiper.slideTo(targetIndex, speed);
-      salariesSwiper.slideTo(targetIndex, speed);
-
-      rewardSwipers.forEach(swiper => swiper.slideTo(targetIndex, speed));
-      fancyboxPopupSwipers.forEach(swiper => swiper.slideTo(targetIndex, speed));
-      // rewardSwiper.slideTo(targetIndex, 500);
-
-      // setTimeout(() => {
-      //   showSlideContent(agencyTermsSwiper);
-      //   showSlideContent(salariesSwiper);
-      // }, 500);
     }
+  }
 
-    let isNavClick = false;
+  // Устанавливаем финальный URL (с правильным ?at=)
+  const activeSlideOnLoad = promoBlocksSwiper.slides[initialIndex];
+  const activeLinkOnLoad = activeSlideOnLoad?.querySelector('.promo-block__stretched-link--multiple-variants');
+  if (activeLinkOnLoad) {
+    history.replaceState(null, '', activeLinkOnLoad.getAttribute('href'));
+  }
 
-    const nextBtn = document.querySelector('.promo-blocks-swiper__next-btn');
-    const prevBtn = document.querySelector('.promo-blocks-swiper__prev-btn');
+  // const initialSlide = promoBlocksSwiper.slides[promoBlocksSwiper.activeIndex];
+  // const initialLink = initialSlide?.querySelector('.promo-block__stretched-link--multiple-variants');
+  // if (initialLink) {
+  //   history.replaceState(null, '', initialLink.getAttribute('href'));
+  // }
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        if (window.innerWidth >= 768) isNavClick = true;
-      });
-    }
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        if (window.innerWidth >= 768) isNavClick = true;
-      });
-    }
+  // ─── Перехватываем клики на ссылки агентств ───────────────────────────────
 
-    const promoBlocksSwiper = new Swiper('.promo-blocks-swiper', {
-      modules: [Pagination, Navigation],
-      // loop: true,
-      slidesPerView: 'auto',
-      centeredSlides: slidesCount < 2,
-      slideActiveClass: 'promo-blocks-swiper__slide--active',
-      spaceBetween: 16,
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest('.promo-block__stretched-link--multiple-variants');
+    if (!link) return;
 
-      pagination: {
-        el: '.promo-blocks-swiper__pagination',
-        bulletActiveClass: 'swiper-pagination-bullet--active',
-        // clickable: true
-      },
-
-      navigation: {
-        nextEl: '.promo-blocks-swiper__next-btn',
-        prevEl: '.promo-blocks-swiper__prev-btn',
-        disabledClass: 'swiper-btn--disabled'
-      },
-
-      breakpoints: {
-        768: {
-          slidesPerView: 2.3,
-          spaceBetween: 16,
-          // centeredSlides: false
-        }
-      },
-
-      on: {
-        click: function () {
-          const clickedIndex = this.clickedIndex;
-          if (clickedIndex === undefined) return;
-
-          // Если индекс уже активный — всё равно выполняем логику переключения,
-          // так как на широких экранах slideChange может не сработать
-          if (window.innerWidth < 768 && clickedIndex !== this.activeIndex) {
-            this.slideTo(clickedIndex);
-          }
-
-          activateSlide(this, clickedIndex);
-
-          // // slideChange не сработает если слайд уже активен или свайпер не прокручивается —
-          // // поэтому дублируем всю логику переключения здесь
-          // const targetIndex = clickedIndex;
-          // const targetSlide = this.slides[targetIndex];
-
-          // // Синхронизируем радио-кнопки
-          // this.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
-          //   checkbox.checked = false;
-          // });
-          // const activeCheckbox = targetSlide.querySelector('.checkbox__input');
-          // if (activeCheckbox) {
-          //   activeCheckbox.checked = true;
-          //   activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
-          // }
-
-          // // Обновляем URL
-          // const agencyLink = targetSlide.querySelector('.promo-block__stretched-link--multiple-variants');
-          // if (agencyLink) {
-          //   history.replaceState(null, '', agencyLink.getAttribute('href'));
-          // }
-
-          // // Анимация контента зависимых свайперов
-          // // hideSlideContent(agencyTermsSwiper);
-          // // hideSlideContent(salariesSwiper);
-
-          // agencyTermsSwiper.slideTo(targetIndex, 500);
-          // salariesSwiper.slideTo(targetIndex, 500);
-
-          // // setTimeout(() => {
-          // //   showSlideContent(agencyTermsSwiper);
-          // //   showSlideContent(salariesSwiper);
-          // // }, 500);
-        },
-
-        slideChange: function () {
-          if (isNavClick) {
-            isNavClick = false;
-            return;
-          }
-
-          activateSlide(this, this.activeIndex);
-          
-          // const targetIndex = this.activeIndex;
-
-          // // Снимаем checked со всех радио кнопок в данном слайдере
-          // this.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
-          //   checkbox.checked = false;
-          // });
-
-          // // Устанавливаем checked для радио кнопки в активном слайде
-          // const activeSlide = this.slides[this.activeIndex];
-          // const activeCheckbox = activeSlide.querySelector('.checkbox__input');
-
-          // if (activeCheckbox) {
-          //   activeCheckbox.checked = true;
-          //   // Триггерим событие change для обновления связанной логики
-          //   activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
-          // }
-
-          // // Обновляем URL по активному слайду
-          // const agencyLink = activeSlide.querySelector('.promo-block__stretched-link--multiple-variants');
-          // if (agencyLink) {
-          //   history.replaceState(null, '', agencyLink.getAttribute('href'));
-          // }
-
-          // agencyTermsSwiper.slideTo(this.activeIndex, 300);
-          // salariesSwiper.slideTo(this.activeIndex, 300);
-          // rewardSwiper.slideTo(this.activeIndex, 300);
-
-          // // 1. Скрываем контент в обоих зависимых свайперах
-          // // hideSlideContent(agencyTermsSwiper);
-          // // hideSlideContent(salariesSwiper);
-
-          // // 2. Ждём окончания fade-out (0.5с), затем меняем слайды и показываем новый контент
-          // // setTimeout(() => {
-          // //   agencyTermsSwiper.slideTo(targetIndex, 200);
-          // //   salariesSwiper.slideTo(targetIndex, 200);
-
-          // //   showSlideContent(agencyTermsSwiper);
-          // //   showSlideContent(salariesSwiper);
-          // // }, 200);
-        }
-      }
-    });
-
-    if (promoBlocksSwiper.slides.length > 1) {
-      let activePromoBlock = promoBlocksSwiper.el.querySelector('.promo-block--active');
-      let promoBlockIndex = $(activePromoBlock).closest('.swiper-slide').index();
-
-      promoBlocksSwiper.slideTo(promoBlockIndex, 0);
-    }
-
-    if (promoBlocksSwiper.slides.length === 1) {
-      $(promoBlocksSwiper.pagination.el).hide();
-    }
-
-    // ─── Установить URL по активному слайду при загрузке страницы ────────────
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const agencyIdFromUrl = urlParams.get('at');
-
-    let initialIndex = promoBlocksSwiper.activeIndex;
-
-    if (agencyIdFromUrl) {
-      // Ищем слайд с нужным data-agency-id
-      const matchedSlide = [...promoBlocksSwiper.slides].find(slide => {
-        const promoBlock = slide.querySelector('.promo-block[data-agency-id]');
-        return promoBlock?.dataset.agencyId === agencyIdFromUrl;
-      });
-
-      if (matchedSlide) {
-        initialIndex = promoBlocksSwiper.slides.indexOf(matchedSlide);
-
-        // Переключаем все три свайпера на нужный индекс
-        promoBlocksSwiper.slideTo(initialIndex, 0);
-        agencyTermsSwiper.slideTo(initialIndex, 0);
-        salariesSwiper.slideTo(initialIndex, 0);
-
-        rewardSwipers.forEach(swiper => swiper.slideTo(initialIndex, 0));
-        fancyboxPopupSwipers.forEach(swiper => swiper.slideTo(initialIndex, 0));
-
-        // Синхронизируем радио-кнопки
-        promoBlocksSwiper.el.querySelectorAll('.checkbox__input').forEach(checkbox => {
-          checkbox.checked = false;
-        });
-        const activeCheckbox = matchedSlide.querySelector('.checkbox__input');
-        if (activeCheckbox) {
-          activeCheckbox.checked = true;
-          activeCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-      }
-    }
-
-    // Устанавливаем финальный URL (с правильным ?at=)
-    const activeSlideOnLoad = promoBlocksSwiper.slides[initialIndex];
-    const activeLinkOnLoad = activeSlideOnLoad?.querySelector('.promo-block__stretched-link--multiple-variants');
-    if (activeLinkOnLoad) {
-      history.replaceState(null, '', activeLinkOnLoad.getAttribute('href'));
-    }
-
-    // const initialSlide = promoBlocksSwiper.slides[promoBlocksSwiper.activeIndex];
-    // const initialLink = initialSlide?.querySelector('.promo-block__stretched-link--multiple-variants');
-    // if (initialLink) {
-    //   history.replaceState(null, '', initialLink.getAttribute('href'));
-    // }
-
-    // ─── Перехватываем клики на ссылки агентств ───────────────────────────────
-
-    document.addEventListener('click', function (e) {
-      const link = e.target.closest('.promo-block__stretched-link--multiple-variants');
-      if (!link) return;
-
-      e.preventDefault();
-      history.replaceState(null, '', link.getAttribute('href'));
-    });
+    e.preventDefault();
+    history.replaceState(null, '', link.getAttribute('href'));
+  });
   // }
 
   // $('.infoblock__more-link').click(function (e) {
@@ -547,14 +547,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.addEventListener('ratingPopupLoaded', function (event) {
     const ratingPopup = document.querySelector(event.detail.popupId);
-    
+
     ratingPopup.querySelectorAll('.review__positive > p, .review__negative > p').forEach(p => {
       if (getLineCount(p) <= 7) return;
 
       p.parentNode.classList.add('truncated-text');
     });
   });
-  
+
   document.addEventListener('click', function (e) {
     const reviewToggleLink = e.target.closest('.review__toggle-link');
 
@@ -664,12 +664,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const updateMobileHeaderState = (popup) => {
     if (!popup) return;
 
-    const mobileHeader   = popup.querySelector('.popup-mobile-header');
+    const mobileHeader = popup.querySelector('.popup-mobile-header');
     if (!mobileHeader) return;
 
-    const titleEl        = mobileHeader.querySelector('.popup-mobile-header__title');
-    const companyInfoEl  = mobileHeader.querySelector('.company-info--popup-mobile-header');
-    const ratingDropdownCriteriaHeader  = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
+    const titleEl = mobileHeader.querySelector('.popup-mobile-header__title');
+    const companyInfoEl = mobileHeader.querySelector('.company-info--popup-mobile-header');
+    const ratingDropdownCriteriaHeader = mobileHeader.querySelector('.rating-popup__dropdown-criteria-header');
 
     if (!titleEl || !companyInfoEl) return;
 
@@ -704,51 +704,83 @@ document.addEventListener('DOMContentLoaded', function () {
     true // захват, чтобы событие точно словилось
   );
 
+  let $wrapper = $('.wrapper');
+  let $scrollTopBtn = $('.btn-scroll-top');
+
+  $wrapper.on('scroll', function (event) {
+    let scrolled = $wrapper.scrollTop();
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+  });
+
+  $(window).on('scroll', function () {
+    let scrolled = $(window).scrollTop();
+
+    if (scrolled > 170) {
+      $scrollTopBtn.removeClass('btn-scroll-top--invisible');
+    } else {
+      $scrollTopBtn.addClass('btn-scroll-top--invisible');
+    }
+  });
+
+  document.addEventListener('click', function (event) {
+    if (event.target.closest('[data-scroll-top]')) {
+      const wrapper = document.querySelector('.wrapper');
+
+      wrapper.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  });
+
 });
 
 (function () {
   'use strict';
- 
+
   var MOBILE_BREAKPOINT = 767;
- 
+
   function getScrollContainer() {
     // Укажите точный селектор вашего wrapper-контейнера
     return document.querySelector('.wrapper'); // ← замените на актуальный селектор
   }
- 
+
   function initVacancyBlockVisibility() {
     if (window.innerWidth > MOBILE_BREAKPOINT) return;
- 
+
     var block = document.querySelector('.vacancy-card__liquid-glass-block');
     if (!block) return;
- 
+
     var scrollContainer = getScrollContainer();
     if (!scrollContainer) return;
- 
+
     function update() {
       // getBoundingClientRect() всегда относительно вьюпорта (окна браузера),
       // даже если скролл внутри контейнера — это нам и нужно
-      console.log('update vacancy block visibility');
       var rect = block.getBoundingClientRect();
- 
+
       if (rect.top <= 80) {
         block.classList.remove('invisible');
       } else {
         block.classList.add('invisible');
       }
     }
- 
+
     scrollContainer.addEventListener('scroll', update, { passive: true });
     update(); // установить начальное состояние
   }
- 
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initVacancyBlockVisibility);
   } else {
     initVacancyBlockVisibility();
   }
 
-  document.addEventListener('click', function(event) {
+  document.addEventListener('click', function (event) {
     if (event.target.closest('[data-scroll-top]')) {
       const wrapper = document.querySelector('.wrapper');
 
